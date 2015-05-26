@@ -1,0 +1,555 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
+		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
+		3D783D391B12FD0300A893D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* ViewController.m */; };
+		3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3D1B12FD0300A893D9 /* Images.xcassets */; };
+		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
+		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
+		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */; };
+		DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */; };
+		DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE81B147A36005617DA /* RTBleConnector.m */; };
+		DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */; };
+		DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CED1B147A36005617DA /* RTViewController.m */; };
+		DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFC1B147B07005617DA /* Main.storyboard */; };
+		DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFD1B147B07005617DA /* Second.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3D783D471B12FD0300A893D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D783D251B12FD0300A893D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D783D2C1B12FD0300A893D9;
+			remoteInfo = rongtai;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3D783D341B12FD0300A893D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3D783D351B12FD0300A893D9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3D783D371B12FD0300A893D9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../../ViewController.h; sourceTree = "<group>"; };
+		3D783D381B12FD0300A893D9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../../ViewController.m; sourceTree = "<group>"; };
+		3D783D3D1B12FD0300A893D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3D783D401B12FD0300A893D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3D783D461B12FD0300A893D9 /* rongtaiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rongtaiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
+		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBluetoothManager.h; sourceTree = "<group>"; };
+		DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBluetoothManager.m; sourceTree = "<group>"; };
+		DF9C7CE41B147A36005617DA /* JRCBPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCBPeripheral.h; sourceTree = "<group>"; };
+		DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRCBPeripheral.m; sourceTree = "<group>"; };
+		DF9C7CE61B147A36005617DA /* RongTai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RongTai.h; sourceTree = "<group>"; };
+		DF9C7CE71B147A36005617DA /* RTBleConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleConnector.h; sourceTree = "<group>"; };
+		DF9C7CE81B147A36005617DA /* RTBleConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTBleConnector.m; sourceTree = "<group>"; };
+		DF9C7CE91B147A36005617DA /* RTCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCommand.h; sourceTree = "<group>"; };
+		DF9C7CEA1B147A36005617DA /* RTMassageChairStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTMassageChairStatus.h; sourceTree = "<group>"; };
+		DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTMassageChairStatus.m; sourceTree = "<group>"; };
+		DF9C7CEC1B147A36005617DA /* RTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTViewController.h; sourceTree = "<group>"; };
+		DF9C7CED1B147A36005617DA /* RTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTViewController.m; sourceTree = "<group>"; };
+		DF9C7CFC1B147B07005617DA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DF9C7CFD1B147B07005617DA /* Second.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3D783D2A1B12FD0300A893D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D783D431B12FD0300A893D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D783D241B12FD0300A893D9 = {
+			isa = PBXGroup;
+			children = (
+				3D783D2F1B12FD0300A893D9 /* rongtai */,
+				DF9C7D011B147B89005617DA /* Frameworks */,
+				3D783D491B12FD0300A893D9 /* rongtaiTests */,
+				3D783D2E1B12FD0300A893D9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3D783D2E1B12FD0300A893D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D2D1B12FD0300A893D9 /* rongtai.app */,
+				3D783D461B12FD0300A893D9 /* rongtaiTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3D783D2F1B12FD0300A893D9 /* rongtai */ = {
+			isa = PBXGroup;
+			children = (
+				DF9C7D001B147B2D005617DA /* Application */,
+				DF9C7CE01B147A36005617DA /* Classes */,
+				DF9C7CFB1B147B07005617DA /* StoryBoard */,
+				3D783D301B12FD0300A893D9 /* Supporting Files */,
+			);
+			path = rongtai;
+			sourceTree = "<group>";
+		};
+		3D783D301B12FD0300A893D9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D3D1B12FD0300A893D9 /* Images.xcassets */,
+				3D783D311B12FD0300A893D9 /* Info.plist */,
+				3D783D321B12FD0300A893D9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3D783D491B12FD0300A893D9 /* rongtaiTests */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */,
+				3D783D4A1B12FD0300A893D9 /* Supporting Files */,
+			);
+			path = rongtaiTests;
+			sourceTree = "<group>";
+		};
+		3D783D4A1B12FD0300A893D9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D4B1B12FD0300A893D9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DF9C7CE01B147A36005617DA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DF9C7CE11B147A36005617DA /* Ble */,
+				DF9C7CEF1B147A36005617DA /* Categories */,
+				DF9C7CF01B147A36005617DA /* Controllers */,
+				DF9C7CF11B147A36005617DA /* Data */,
+				DF9C7CF21B147A36005617DA /* Lib */,
+				DF9C7CF31B147A36005617DA /* Utils */,
+				DF9C7CF41B147A36005617DA /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		DF9C7CE11B147A36005617DA /* Ble */ = {
+			isa = PBXGroup;
+			children = (
+				DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */,
+				DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */,
+				DF9C7CE41B147A36005617DA /* JRCBPeripheral.h */,
+				DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */,
+				DF9C7CE61B147A36005617DA /* RongTai.h */,
+				DF9C7CE71B147A36005617DA /* RTBleConnector.h */,
+				DF9C7CE81B147A36005617DA /* RTBleConnector.m */,
+				DF9C7CE91B147A36005617DA /* RTCommand.h */,
+				DF9C7CEA1B147A36005617DA /* RTMassageChairStatus.h */,
+				DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */,
+				DF9C7CEC1B147A36005617DA /* RTViewController.h */,
+				DF9C7CED1B147A36005617DA /* RTViewController.m */,
+				3D783D371B12FD0300A893D9 /* ViewController.h */,
+				3D783D381B12FD0300A893D9 /* ViewController.m */,
+			);
+			path = Ble;
+			sourceTree = "<group>";
+		};
+		DF9C7CEF1B147A36005617DA /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		DF9C7CF01B147A36005617DA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DF9C7CF11B147A36005617DA /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		DF9C7CF21B147A36005617DA /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		DF9C7CF31B147A36005617DA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DF9C7CF41B147A36005617DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DF9C7CFB1B147B07005617DA /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */,
+				DF9C7CFC1B147B07005617DA /* Main.storyboard */,
+				DF9C7CFD1B147B07005617DA /* Second.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		DF9C7D001B147B2D005617DA /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D341B12FD0300A893D9 /* AppDelegate.h */,
+				3D783D351B12FD0300A893D9 /* AppDelegate.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		DF9C7D011B147B89005617DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			path = rongtai;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3D783D2C1B12FD0300A893D9 /* rongtai */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D783D501B12FD0300A893D9 /* Build configuration list for PBXNativeTarget "rongtai" */;
+			buildPhases = (
+				3D783D291B12FD0300A893D9 /* Sources */,
+				3D783D2A1B12FD0300A893D9 /* Frameworks */,
+				3D783D2B1B12FD0300A893D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rongtai;
+			productName = rongtai;
+			productReference = 3D783D2D1B12FD0300A893D9 /* rongtai.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3D783D451B12FD0300A893D9 /* rongtaiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D783D531B12FD0300A893D9 /* Build configuration list for PBXNativeTarget "rongtaiTests" */;
+			buildPhases = (
+				3D783D421B12FD0300A893D9 /* Sources */,
+				3D783D431B12FD0300A893D9 /* Frameworks */,
+				3D783D441B12FD0300A893D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D783D481B12FD0300A893D9 /* PBXTargetDependency */,
+			);
+			name = rongtaiTests;
+			productName = rongtaiTests;
+			productReference = 3D783D461B12FD0300A893D9 /* rongtaiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3D783D251B12FD0300A893D9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "William-zhang";
+				TargetAttributes = {
+					3D783D2C1B12FD0300A893D9 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					3D783D451B12FD0300A893D9 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 3D783D2C1B12FD0300A893D9;
+					};
+				};
+			};
+			buildConfigurationList = 3D783D281B12FD0300A893D9 /* Build configuration list for PBXProject "rongtai" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3D783D241B12FD0300A893D9;
+			productRefGroup = 3D783D2E1B12FD0300A893D9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3D783D2C1B12FD0300A893D9 /* rongtai */,
+				3D783D451B12FD0300A893D9 /* rongtaiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3D783D2B1B12FD0300A893D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
+				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
+				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
+				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D783D441B12FD0300A893D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3D783D291B12FD0300A893D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
+				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
+				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
+				3D783D391B12FD0300A893D9 /* ViewController.m in Sources */,
+				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
+				3D783D331B12FD0300A893D9 /* main.m in Sources */,
+				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
+				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D783D421B12FD0300A893D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D783D481B12FD0300A893D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D783D2C1B12FD0300A893D9 /* rongtai */;
+			targetProxy = 3D783D471B12FD0300A893D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D783D401B12FD0300A893D9 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3D783D4E1B12FD0300A893D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D783D4F1B12FD0300A893D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3D783D511B12FD0300A893D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = rongtai/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3D783D521B12FD0300A893D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = rongtai/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3D783D541B12FD0300A893D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = rongtaiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rongtai.app/rongtai";
+			};
+			name = Debug;
+		};
+		3D783D551B12FD0300A893D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = rongtaiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rongtai.app/rongtai";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3D783D281B12FD0300A893D9 /* Build configuration list for PBXProject "rongtai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D783D4E1B12FD0300A893D9 /* Debug */,
+				3D783D4F1B12FD0300A893D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D783D501B12FD0300A893D9 /* Build configuration list for PBXNativeTarget "rongtai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D783D511B12FD0300A893D9 /* Debug */,
+				3D783D521B12FD0300A893D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D783D531B12FD0300A893D9 /* Build configuration list for PBXNativeTarget "rongtaiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D783D541B12FD0300A893D9 /* Debug */,
+				3D783D551B12FD0300A893D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3D783D251B12FD0300A893D9 /* Project object */;
+}
