@@ -21,6 +21,7 @@
 		DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CED1B147A36005617DA /* RTViewController.m */; };
 		DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFC1B147B07005617DA /* Main.storyboard */; };
 		DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFD1B147B07005617DA /* Second.storyboard */; };
+		DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7D031B147D59005617DA /* FirstViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		DF9C7CED1B147A36005617DA /* RTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTViewController.m; sourceTree = "<group>"; };
 		DF9C7CFC1B147B07005617DA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DF9C7CFD1B147B07005617DA /* Second.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
+		DF9C7D021B147D59005617DA /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		DF9C7D031B147D59005617DA /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DF9C7D021B147D59005617DA /* FirstViewController.h */,
+				DF9C7D031B147D59005617DA /* FirstViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
+				DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* ViewController.m in Sources */,
