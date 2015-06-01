@@ -6,24 +6,38 @@
 //  Copyright (c) 2015 William-zhang. All rights reserved.
 //
 
-#import "MusicPickerViewcontrollerViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
+
+#import "MusicPickerViewController.h"
 
 #import "MusicModel.h"
 
-@interface MusicPickerViewcontrollerViewController ()
+@interface MusicPickerViewController ()
 
 @property NSArray *songsArray;
 
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+
 @end
 
-@implementation MusicPickerViewcontrollerViewController
+@implementation MusicPickerViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
     _songsArray = [[NSArray alloc]initWithArray:[MusicModel getAllSong]];
     [self.musicTableView reloadData];
+    
+    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    
+    NSLog(@"Logging items from a generic query...");
+    NSArray *itemsFromGenericQuery = [everything items];
+    for (MPMediaItem *song in itemsFromGenericQuery) {
+        NSString *songTitle = [song valueForProperty: MPMediaItemPropertyTitle];
+        NSLog (@"%@", songTitle);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +99,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+//    [self.musicPlayer setQueueWithQuery: [MPMediaQuery songsQuery]];
+//    MPMediaItem *item = [[MPMediaQuery songsQuery] objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//    [self.musicPlayer setNowPlayingItem:item];
+//    [self.musicPlayer ]
+//    [self.musicPlayer play];
 }
 
+#pragma mark - View Action
+
+- (IBAction)backButtonAction:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
 @end
