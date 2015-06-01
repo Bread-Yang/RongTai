@@ -16,8 +16,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy4-ap-g8S">
-                                <rect key="frame" x="31" y="102" width="65" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ygh-nL-1nV">
+                                <rect key="frame" x="242" y="285" width="117" height="30"/>
+                                <state key="normal" title="ShareSDK share ">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareSDKAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kbI-ul-liA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krZ-xU-typ">
+                                <rect key="frame" x="264" y="544" width="73" height="30"/>
+                                <state key="normal" title="Sina Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sinaLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="feA-fS-QQV"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="社交平台登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-HE-lFL">
+                                <rect key="frame" x="128" y="548" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-F4-IcJ">
+                                <rect key="frame" x="263" y="465" width="75" height="30"/>
+                                <state key="normal" title="新用户注册">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="0B7-hS-S9y" kind="show" id="Ahz-oc-LIy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy4-ap-g8S">
+                                <rect key="frame" x="16" y="93" width="65" height="30"/>
                                 <state key="normal" title="bluetooth">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -25,8 +58,32 @@
                                     <action selector="toBleControllerAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d99-kr-1hK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8RN-nf-xhV">
+                                <rect key="frame" x="263" y="405" width="75" height="30"/>
+                                <state key="normal" title="Pick Music">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="crE-sO-WLm" kind="presentation" id="JOT-a6-4ph"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Q5F-HE-lFL" firstAttribute="baseline" secondItem="krZ-xU-typ" secondAttribute="baseline" id="A7X-B2-Zc2"/>
+                            <constraint firstItem="Uy4-ap-g8S" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BXT-mx-uEo"/>
+                            <constraint firstAttribute="centerY" secondItem="8RN-nf-xhV" secondAttribute="centerY" constant="-120" id="Eu9-DN-edJ"/>
+                            <constraint firstItem="8RN-nf-xhV" firstAttribute="centerX" secondItem="bTc-F4-IcJ" secondAttribute="centerX" id="GdO-Lo-xnB"/>
+                            <constraint firstItem="krZ-xU-typ" firstAttribute="leading" secondItem="Q5F-HE-lFL" secondAttribute="trailing" constant="34" id="Gpy-ga-KOi"/>
+                            <constraint firstAttribute="centerY" secondItem="Ygh-nL-1nV" secondAttribute="centerY" id="Kd3-tN-z94"/>
+                            <constraint firstItem="Uy4-ap-g8S" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="OVd-ES-Mu1"/>
+                            <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="bTc-F4-IcJ" secondAttribute="bottom" constant="49" id="RCq-X5-VNc"/>
+                            <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="Ygh-nL-1nV" secondAttribute="bottom" constant="229" id="VbP-LW-qw6"/>
+                            <constraint firstItem="bTc-F4-IcJ" firstAttribute="centerX" secondItem="krZ-xU-typ" secondAttribute="centerX" id="Wdf-ab-NYk"/>
+                            <constraint firstAttribute="centerX" secondItem="Ygh-nL-1nV" secondAttribute="centerX" id="YYh-FQ-SrO"/>
+                            <constraint firstItem="8RN-nf-xhV" firstAttribute="centerX" secondItem="bTc-F4-IcJ" secondAttribute="centerX" id="isr-8l-ZFV"/>
+                            <constraint firstAttribute="centerX" secondItem="krZ-xU-typ" secondAttribute="centerX" id="jq0-sb-HZe"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uKe-5b-pN2"/>
                 </viewController>
