@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MusicPickerViewcontrollerViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface MusicPickerViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *musicTableView;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
 
+- (IBAction)backButtonAction:(id)sender;
 @end

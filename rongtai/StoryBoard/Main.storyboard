@@ -92,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="517" y="423"/>
         </scene>
-        <!--Music Picker Viewcontroller View Controller-->
+        <!--Music Picker View Controller-->
         <scene sceneID="vh4-QY-F8s">
             <objects>
-                <viewController id="crE-sO-WLm" customClass="MusicPickerViewcontrollerViewController" sceneMemberID="viewController">
+                <viewController id="crE-sO-WLm" customClass="MusicPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tac-r5-jiM"/>
                         <viewControllerLayoutGuide type="bottom" id="py7-fW-DWs"/>
@@ -107,7 +107,13 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3nm-fu-xzi">
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <items>
-                                    <navigationItem title="音乐列表" id="xTD-zp-aRQ"/>
+                                    <navigationItem title="音乐列表" id="xTD-zp-aRQ">
+                                        <barButtonItem key="leftBarButtonItem" title="返回" id="Ybx-w2-3Vo">
+                                            <connections>
+                                                <action selector="backButtonAction:" destination="crE-sO-WLm" id="Rgy-bW-gsN"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O3Q-Ar-fUS">
@@ -137,6 +143,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LMe-DB-jB4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517" y="1159"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dcB-jq-pBC">
+            <objects>
+                <viewController id="xVC-DO-4X6" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r64-ps-u3f"/>
+                        <viewControllerLayoutGuide type="bottom" id="liv-Jv-Lxg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AVw-rM-Hcg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qct-e5-GHr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="517" y="1863"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="EjV-Qj-YPE">
