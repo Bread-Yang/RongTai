@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PinYinUti.h" 
+#import <MediaPlayer/MediaPlayer.h>
+
+#import "PinYinUti.h"
 
 
 @interface MusicModel : NSObject {

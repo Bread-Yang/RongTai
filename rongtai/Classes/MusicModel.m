@@ -39,7 +39,7 @@
 + (NSArray *) getAllPodcasts {
     MPMediaQuery * query = [MPMediaQuery podcastsQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -49,7 +49,7 @@
 + (NSArray *) getAllComposers {
     MPMediaQuery * query = [MPMediaQuery composersQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -59,7 +59,7 @@
 + (NSArray *) getAllCompilations {
     MPMediaQuery * query = [MPMediaQuery compilationsQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -69,7 +69,7 @@
 + (NSArray *) getAllGenres {
     MPMediaQuery * query = [MPMediaQuery genresQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -79,7 +79,7 @@
 + (NSArray *) getAllAudiobooks {
     MPMediaQuery * query = [MPMediaQuery audiobooksQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -89,7 +89,7 @@
 + (NSArray*) getAllAlbumWithOneItem {
     MPMediaQuery * query = [MPMediaQuery albumsQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in songs) {
         [items addObject: playlist.items];
     }
@@ -100,13 +100,13 @@
 + (NSArray *) getAllSong {
     MPMediaQuery * query = [MPMediaQuery songsQuery];
     NSArray *songs = [query collections];
-    NSMutableArray *items = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *items = [[NSMutableArray alloc]init];
     int firstChar = 0;
     for(MPMediaItemCollection *playlist in songs) {
         int get = [MusicModel getItemFirstChar:playlist.representativeItem];
         NSMutableArray *letterArray;
         if (firstChar != get) { //新歌曲
-            letterArray = [[[NSMutableArray alloc]init]autorelease];
+            letterArray = [[NSMutableArray alloc]init];
             [letterArray addObject:playlist.representativeItem];
             [items addObject:letterArray];
             firstChar = get;
@@ -122,10 +122,10 @@
 + (NSArray*) getAllPlaylistWithItem {
     MPMediaQuery * query = [MPMediaQuery playlistsQuery];
     NSArray *playlists = [query collections];
-    NSMutableArray *playLists_ = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *playLists_ = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in playlists) {
         
-        NSMutableArray *items = [[[NSMutableArray alloc]init] autorelease];
+        NSMutableArray *items = [[NSMutableArray alloc]init];
         for (MPMediaItem *item in playlist.items) {
             if ([[item valueForProperty:MPMediaItemPropertyMediaType] intValue] == MPMediaTypeMusic ) {
                 [items addObject:item];
@@ -142,7 +142,7 @@
 + (NSArray *) getAllArtistsItem {
     MPMediaQuery * query = [MPMediaQuery artistsQuery];
     NSArray *playlists = [query collections];
-    NSMutableArray *artists = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *artists = [[NSMutableArray alloc]init];
     for(MPMediaItemCollection *playlist in playlists) {
         [artists addObject:playlist.items];
     }
@@ -152,9 +152,9 @@
 + (NSArray*) getAllPlaylistName {
     MPMediaQuery * query = [MPMediaQuery playlistsQuery];
     NSArray *playlists = [query collections];
-    NSMutableArray *playLists = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *playLists = [[NSMutableArray alloc]init];
     for(MPMediaPlaylist *playlist in playlists) {
-        NSMutableArray *items = [[[NSMutableArray alloc]init] autorelease];
+        NSMutableArray *items = [[NSMutableArray alloc]init];
         for (MPMediaItem *item in playlist.items) {
                 if ([[item valueForProperty:MPMediaItemPropertyMediaType] intValue] == MPMediaTypeMusic ) {
                 [items addObject:item];
@@ -171,7 +171,7 @@
 + (NSArray*)getAllAlbum {
     MPMediaQuery * query = [MPMediaQuery albumsQuery];
     NSString *lastAlbum = @"Album name";
-    NSMutableArray *albums = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *albums = [[NSMutableArray alloc]init];
     NSMutableArray *songs;
     for (MPMediaItem *item in query.items) {
         NSString *currentAlbum = [MusicModel getAlbumNameFrom:item];
@@ -180,7 +180,7 @@
         }else {
             if (![lastAlbum isEqualToString:currentAlbum]) { //发现新专辑
                 lastAlbum = [NSString stringWithString:currentAlbum];
-                songs = [[[NSMutableArray alloc]init]autorelease];
+                songs = [[NSMutableArray alloc]init];
                 [albums addObject:songs];
                 [songs addObject:item];    
             } else { //相同专辑
@@ -195,7 +195,7 @@
 
 //用专辑名字去找专辑所有的歌曲。。。
 + (NSArray*) getAlbumWithAlbumName:(NSString *)albumName {
-    NSMutableArray *album = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *album = [[NSMutableArray alloc]init];
     MPMediaQuery * query = [MPMediaQuery albumsQuery];
     for (MPMediaItem *item in query.items) {
         NSString *currentAlbum = [MusicModel getAlbumNameFrom:item];
@@ -211,7 +211,7 @@
 }
 
 + (NSArray*) getAllAlbumArtwork:(NSArray *)albums withSize:(CGSize)size {
-    NSMutableArray *albumArtworks = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *albumArtworks = [[NSMutableArray alloc]init];
     for (NSArray *album in  albums) {
         [albumArtworks addObject:[MusicModel getImageFrom:[album objectAtIndex:0] size:size]];
     }
@@ -219,7 +219,7 @@
 }
 + (NSArray*)getAllAlbumName {
     NSArray * albums = [MusicModel getAllAlbum];
-    NSMutableArray *albumNames = [[[NSMutableArray alloc]init]autorelease];
+    NSMutableArray *albumNames = [[NSMutableArray alloc]init];
     for (NSArray *album in  albums) {
         [albumNames addObject:[MusicModel getAlbumNameFrom:[album objectAtIndex:0]]];
     }
@@ -233,14 +233,14 @@
 
 #pragma mark - GetAlbum info
 + (NSArray*) getSongsNamesFromAlbum:(NSArray*)album {
-    NSMutableArray * titles = [[[NSMutableArray alloc]init ]autorelease];
+    NSMutableArray * titles = [[NSMutableArray alloc]init];
     for (MPMediaItem* item in album) {
         [titles addObject:[MusicModel getSongName:item]];
     }
     return titles;
 }
 + (NSArray*) getSongsDurationsFromAlbum:(NSArray*)album {
-    NSMutableArray * durations = [[[NSMutableArray alloc]init ]autorelease];
+    NSMutableArray * durations = [[NSMutableArray alloc]init];
     for (MPMediaItem* item in album) {
         NSString *duration = [MusicModel getSongDurationStr:item];
         [durations addObject:duration];
@@ -294,19 +294,19 @@
     return get;
 }
 
-+ (UIImage*) getImageFrom:(MPMediaItem*)item size:(CGSize)size {
-    MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];  
-    UIImage *artworkImage =[artwork imageWithSize:size];
-    if (artworkImage) {  
-        artworkImage = [MusicModel scaleToSize:artworkImage size:size];
-        return artworkImage;
-    } else {  
-        UIImage *noArtworkImage = [UIImage imageNamed:@"AudioPlayerNoArtwork" withExtension:@"png"];
-        noArtworkImage = [MusicModel scaleToSize:noArtworkImage size:size];
-        return noArtworkImage;
-    }  
-    
-}
+//+ (UIImage*) getImageFrom:(MPMediaItem*)item size:(CGSize)size {
+//    MPMediaItemArtwork *artwork = [item valueForProperty: MPMediaItemPropertyArtwork];  
+//    UIImage *artworkImage =[artwork imageWithSize:size];
+//    if (artworkImage) {  
+//        artworkImage = [MusicModel scaleToSize:artworkImage size:size];
+//        return artworkImage;
+//    } else {  
+//        UIImage *noArtworkImage = [UIImage imageNamed:@"AudioPlayerNoArtwork" withExtension:@"png"];
+//        noArtworkImage = [MusicModel scaleToSize:noArtworkImage size:size];
+//        return noArtworkImage;
+//    }  
+//    
+//}
 
 
 + (unsigned long long) getItemIdFrom:(MPMediaItem*)item {
