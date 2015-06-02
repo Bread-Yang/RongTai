@@ -147,6 +147,15 @@
 - (IBAction)save:(id)sender {
 }
 
+#pragma mark - 性别选择
+- (IBAction)sexSelected:(id)sender {
+}
+
+#pragma mark - 身高单位选择
+- (IBAction)heightUnitSelected:(id)sender {
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

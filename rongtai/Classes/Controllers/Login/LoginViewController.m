@@ -11,10 +11,12 @@
 @interface LoginViewController ()
 {
     __weak IBOutlet UIView *_loginFeild;  //登录外边框
-    __weak IBOutlet UIButton *_loginBtn;  //登录按钮
     
     __weak IBOutlet UIButton *_registerBtn;  //注册按钮
     
+    __weak IBOutlet UITextField *_phoneNum;  //手机号码TextField
+    
+    __weak IBOutlet UITextField *_password;  //密码TextField
 }
 
 @end
@@ -29,6 +31,37 @@
     
     // Do any additional setup after loading the view.
 }
+
+#pragma mark - 显示密码方法
+- (IBAction)displayPassword:(UISwitch *)sender {
+    if (sender.on) {
+        _password.secureTextEntry = NO;
+    }
+    else
+    {
+        _password.secureTextEntry = YES;
+    }
+}
+
+#pragma mark - 登陆按钮方法
+- (IBAction)login:(id)sender {
+    
+}
+
+#pragma mark - 注册按钮方法
+- (IBAction)registerUser:(id)sender {
+}
+
+
+#pragma mark - qq登陆按钮方法
+- (IBAction)qqLogin:(id)sender {
+}
+
+#pragma mark - 新浪登陆按钮方法
+- (IBAction)sinaLogin:(id)sender {
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

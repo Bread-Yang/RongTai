@@ -22,8 +22,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tb1-iV-00c">
                                 <rect key="frame" x="60" y="198" width="480" height="270"/>
                                 <subviews>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RVe-hT-U0a">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RVe-hT-U0a">
                                         <rect key="frame" x="383" y="163" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="displayPassword:" destination="vVx-O2-RpR" eventType="valueChanged" id="3q9-ea-IQS"/>
+                                        </connections>
                                     </switch>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbO-Vv-cvy">
                                         <rect key="frame" x="48" y="45" width="384" height="1"/>
@@ -74,7 +77,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="XcR-pa-vC4" firstAttribute="top" secondItem="9m8-5A-Onu" secondAttribute="bottom" constant="6" id="0FM-ml-Ztv"/>
                                     <constraint firstItem="9m8-5A-Onu" firstAttribute="leading" secondItem="YbQ-pD-hcj" secondAttribute="trailing" constant="25" id="0KU-ei-c2l"/>
@@ -120,6 +123,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="registerUser:" destination="vVx-O2-RpR" eventType="touchUpInside" id="YOp-ri-Krs"/>
                                     <segue destination="oLk-FT-Anx" kind="show" id="ayn-QH-lB7"/>
                                 </connections>
                             </button>
@@ -133,18 +137,27 @@
                                 <state key="normal" title="登录">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="login:" destination="vVx-O2-RpR" eventType="touchUpInside" id="MBw-bf-H9W"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ley-RJ-Kz1">
                                 <rect key="frame" x="440" y="556" width="30" height="30"/>
                                 <state key="normal" title="qq">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="qqLogin:" destination="vVx-O2-RpR" eventType="touchUpInside" id="Ahw-o0-aVk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fL4-be-Wlz">
                                 <rect key="frame" x="490" y="556" width="30" height="30"/>
                                 <state key="normal" title="新浪">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="sinaLogin:" destination="vVx-O2-RpR" eventType="touchUpInside" id="eI4-8k-xjo"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="社交平台登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkA-Ml-jXH">
                                 <rect key="frame" x="80" y="568" width="90" height="18"/>
@@ -181,6 +194,8 @@
                     <connections>
                         <outlet property="_loginBtn" destination="CeL-xi-fng" id="aaH-BF-STY"/>
                         <outlet property="_loginFeild" destination="tb1-iV-00c" id="kVM-8u-43j"/>
+                        <outlet property="_password" destination="9m8-5A-Onu" id="ze4-al-OzU"/>
+                        <outlet property="_phoneNum" destination="uy7-e7-eTh" id="JQj-YQ-mkZ"/>
                         <outlet property="_registerBtn" destination="wRS-GH-p16" id="XNi-el-aWI"/>
                     </connections>
                 </viewController>
@@ -224,6 +239,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="registerUser:" destination="bp3-x7-Kbp" eventType="touchUpInside" id="6Oa-AS-KM7"/>
                                     <segue destination="50I-MR-sTY" kind="push" id="E6g-if-CkM"/>
                                 </connections>
                             </button>
@@ -261,7 +277,7 @@
                                             <constraint firstAttribute="height" constant="30" id="ULH-F1-TnJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blZ-dO-yRU">
                                         <rect key="frame" x="397" y="80" width="70" height="29"/>
@@ -269,6 +285,9 @@
                                         <state key="normal" title="获取验证码">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="getAuthCode:" destination="bp3-x7-Kbp" eventType="touchUpInside" id="mPR-Zc-9MM"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="显示密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5r-9y-9wT">
                                         <rect key="frame" x="328" y="188" width="68" height="20.5"/>
@@ -276,8 +295,11 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a9i-pN-NVY">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="a9i-pN-NVY">
                                         <rect key="frame" x="419" y="183" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="displayPassword:" destination="bp3-x7-Kbp" eventType="valueChanged" id="4qQ-Tw-q0K"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TG-Dj-gQf">
                                         <rect key="frame" x="20" y="139" width="34" height="20.5"/>
@@ -329,6 +351,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="_authCode" destination="llt-JX-KOc" id="byN-kx-c68"/>
+                        <outlet property="_password" destination="qDX-NN-t9d" id="ja2-jh-utr"/>
+                        <outlet property="_phoneNum" destination="hnf-q5-gF0" id="UIN-n4-w8B"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SfY-oK-z6c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -346,7 +373,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekt-vL-LFR">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekt-vL-LFR">
                                 <rect key="frame" x="225" y="84" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -360,7 +387,7 @@
                                     <action selector="selectUserIcon:" destination="50I-MR-sTY" eventType="touchUpInside" id="GaG-bv-wo1"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9YU-tm-6q0">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YU-tm-6q0">
                                 <rect key="frame" x="30" y="254" width="540" height="337.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAp-nu-so8">
@@ -386,6 +413,9 @@
                                             <segment title="男" width="35"/>
                                             <segment title="女" width="35"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="sexSelected:" destination="50I-MR-sTY" eventType="valueChanged" id="MBw-qm-iip"/>
+                                        </connections>
                                     </segmentedControl>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5CA-Uh-E2R">
                                         <rect key="frame" x="439" y="88" width="81" height="29"/>
@@ -393,6 +423,9 @@
                                             <segment title="cm"/>
                                             <segment title="inch"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="heightUnitSelected:" destination="50I-MR-sTY" eventType="valueChanged" id="zXC-bZ-Ptc"/>
+                                        </connections>
                                     </segmentedControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="身高" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRb-G3-xBV">
                                         <rect key="frame" x="20" y="92" width="34" height="20.5"/>
