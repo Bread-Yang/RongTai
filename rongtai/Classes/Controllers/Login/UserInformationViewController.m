@@ -53,11 +53,7 @@
     CGRect f = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216);
     
     //改写_hegiht的键盘为身高选择器
-    UIImageView* ig = [[UIImageView alloc]initWithFrame:f];
-    ig.image = [UIImage imageNamed:@"1.jpg"];
-    
     UIView* inputView = [[UIView alloc]initWithFrame:f];
-    [inputView addSubview:ig];
     inputView.backgroundColor = [UIColor whiteColor];
     UIPickerView* heightPicker = [[UIPickerView alloc]initWithFrame:f];
     heightPicker.dataSource = self;
