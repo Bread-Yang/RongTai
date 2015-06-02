@@ -27,10 +27,12 @@
     // Do any additional setup after loading the view.
     
     self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
-    _songsArray = [[NSArray alloc]initWithArray:[MusicModel getAllSong]];
+//    [self.musicPlayer setQueueWithQuery:[MPMediaQuery songsQuery]];
+    self.songsArray = [[NSArray alloc]initWithArray:[MusicModel getAllSong]];
+//    [self.musicPlayer setQueueWithItemCollection:self.songsArray];
     [self.musicTableView reloadData];
     
-    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    MPMediaQuery *everything = [MPMediaQuery songsQuery];
     
     NSLog(@"Logging items from a generic query...");
     NSArray *itemsFromGenericQuery = [everything items];
@@ -89,6 +91,30 @@
     return cell;
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    NSMutableArray *sectionTitleArray = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [self.songsArray count]; i++) {
+        MPMediaItem *item = [[self.songsArray objectAtIndex:i] objectAtIndex:0];
+        int firstChar = [MusicModel getItemFirstChar:item];
+        NSString *sectionTitle = [NSString stringWithFormat:@"%c", firstChar];
+        NSLog(@"sectionTitle : %@", sectionTitle);
+        [sectionTitleArray addObject:sectionTitle];
+    }
+    return sectionTitleArray;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    return index;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    MPMediaItem *item = [[self.songsArray objectAtIndex:section] objectAtIndex:0];
+    int firtChar = [MusicModel getItemFirstChar:item];
+    return [NSString stringWithFormat:@"%c", firtChar];
+}
+
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -99,11 +125,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [self.musicPlayer setQueueWithQuery: [MPMediaQuery songsQuery]];
-//    MPMediaItem *item = [[MPMediaQuery songsQuery] objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//    [self.musicPlayer setNowPlayingItem:item];
-//    [self.musicPlayer ]
-//    [self.musicPlayer play];
+//    MPMediaQuery *allSongs = [MPMediaQuery songsQuery];
+//	NSArray *itemsFromGenericQuery = [allSongs items];
+//    MPMediaItem *selectMusic = [itemsFromGenericQuery objectAtIndex:indexPath.section];
+    
+    MPMediaItem *selectMusic = [[self.songsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSString *songTitle = [selectMusic valueForProperty: MPMediaItemPropertyTitle];
+    NSLog (@"歌曲名字是 : %@", songTitle);
+    
+    [self.musicPlayer setQueueWithItemCollection:self.songsArray];
+    
+    [self.musicPlayer setNowPlayingItem:selectMusic];
+    self.musicPlayer.repeatMode = MPMusicRepeatModeAll;
+    self.musicPlayer.shuffleMode = MPMusicShuffleModeOff;
+    [self.musicPlayer play];
 }
 
 #pragma mark - View Action
