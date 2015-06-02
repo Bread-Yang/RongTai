@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0258D31B1D508C006C9179 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0258D21B1D508C006C9179 /* Login.storyboard */; };
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
 		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
 		3D783D391B12FD0300A893D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* ViewController.m */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D0258D21B1D508C006C9179 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */,
 				DF9C7CFC1B147B07005617DA /* Main.storyboard */,
 				DF9C7CFD1B147B07005617DA /* Second.storyboard */,
+				3D0258D21B1D508C006C9179 /* Login.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
+				3D0258D31B1D508C006C9179 /* Login.storyboard in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
