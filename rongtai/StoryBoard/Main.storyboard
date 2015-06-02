@@ -71,8 +71,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uop-MY-anJ">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-Kt-Sab">
-                                        <rect key="frame" x="455" y="7" width="59" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="因为爱情-陈奕迅 王菲" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skx-4K-WTA">
+                                        <rect key="frame" x="67" y="10" width="107" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="54G-1W-DxK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-Kt-Sab">
+                                        <rect key="frame" x="445" y="7" width="59" height="30"/>
                                         <state key="normal" title="Previous">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -89,15 +98,6 @@
                                             <segue destination="crE-sO-WLm" kind="presentation" id="NZX-9G-1jH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noK-ap-YdI">
-                                        <rect key="frame" x="522" y="7" width="30" height="30"/>
-                                        <state key="normal" title="Play">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="playOrPauseAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YvI-3V-cRR"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWp-2m-iEi">
                                         <rect key="frame" x="560" y="7" width="32" height="30"/>
                                         <state key="normal" title="Next">
@@ -107,15 +107,15 @@
                                             <action selector="nextSongAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YoF-EK-QHr"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="因为爱情-陈奕迅 王菲" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skx-4K-WTA">
-                                        <rect key="frame" x="67" y="10" width="107" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="54G-1W-DxK"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noK-ap-YdI">
+                                        <rect key="frame" x="517" y="7" width="30" height="30"/>
+                                        <state key="normal" title="播放">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playOrPauseAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YvI-3V-cRR"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -165,6 +165,12 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="uKe-5b-pN2"/>
+                    <connections>
+                        <outlet property="currentPlaySongLabel" destination="skx-4K-WTA" id="H0e-7I-ucL"/>
+                        <outlet property="nextSongButton" destination="CWp-2m-iEi" id="kFz-AB-BIY"/>
+                        <outlet property="playOrPauseButton" destination="noK-ap-YdI" id="fQb-B8-Df8"/>
+                        <outlet property="previousSongButton" destination="Gc7-Kt-Sab" id="ZcG-KG-OMU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

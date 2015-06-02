@@ -9,6 +9,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <ShareSDK/ShareSDK.h>
 
+#import "NSString+RT.h"
+
 #import "FirstViewController.h"
 #import "AppIntrouceView.h"
 
@@ -39,13 +41,13 @@
     
     [notificationCenter
      addObserver: self
-     selector:    @selector (handle_NowPlayingItemChanged:)
+     selector:    @selector (handle_NowPlayingItemChanged)
      name:        MPMusicPlayerControllerNowPlayingItemDidChangeNotification
      object:      self.musicPlayer];
     
     [notificationCenter
      addObserver: self
-     selector:    @selector (handle_PlaybackStateChanged:)
+     selector:    @selector (handle_PlaybackStateChanged)
      name:        MPMusicPlayerControllerPlaybackStateDidChangeNotification
      object:      self.musicPlayer];
     
@@ -90,6 +92,28 @@
     }];
 }
 
+#pragma mark - Handle Music Player Notification
+
+- (void)handle_NowPlayingItemChanged {
+	MPMediaItem *nowPlayingItem = self.musicPlayer.nowPlayingItem;
+    NSString *songName = [nowPlayingItem valueForProperty: MPMediaItemPropertyTitle];
+    NSString *artist = [nowPlayingItem valueForProperty: MPMediaItemPropertyArtist];
+    
+    if (![NSString isBlankString:artist]) {
+        songName = [songName stringByAppendingFormat:@" - %@", artist];
+    }
+    
+    self.currentPlaySongLabel.text = songName;
+}
+
+- (void)handle_PlaybackStateChanged {
+    if (self.musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
+        self.playOrPauseButton.titleLabel.text = @"暂停";
+    } else {
+        self.playOrPauseButton.titleLabel.text = @"播放";
+    }
+}
+
 #pragma mark - View Action
 
 - (IBAction)toBleControllerAction:(id)sender {
@@ -102,11 +126,11 @@
      NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"Intro_Screen_Four" ofType:@"png"];
     
     //1、构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:@"要分享的内容"
+    id<ISSContent> publishContent = [ShareSDK content:@"可以连接蓝牙的天空按摩椅"
                                        defaultContent:@"在IOS上分享"
                                                 image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
+                                                title:@"荣泰按摩椅分享"
+                                                  url:@"http://www.rongtai-china.com/product"
                                           description:@"这是一条演示信息"
                                             mediaType:SSPublishContentMediaTypeNews];
   

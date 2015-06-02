@@ -10,6 +10,15 @@
 
 @interface FirstViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *currentPlaySongLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *previousSongButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *nextSongButton;
+
+
 - (IBAction)previousSongAction:(id)sender;
 
 

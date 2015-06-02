@@ -59,6 +59,7 @@
 		56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349581B170D9E007C8B3F /* MusicPickerViewController.m */; };
 		56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C3495E1B17199D007C8B3F /* MediaPlayer.framework */; };
 		56C349621B1C34D9007C8B3F /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349611B1C34D9007C8B3F /* MusicModel.m */; };
+		56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349641B1D59D6007C8B3F /* NSString+RT.m */; };
 		DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */; };
 		DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */; };
 		DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE81B147A36005617DA /* RTBleConnector.m */; };
@@ -161,6 +162,8 @@
 		56C3495E1B17199D007C8B3F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		56C349601B1C34D9007C8B3F /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
 		56C349611B1C34D9007C8B3F /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
+		56C349631B1D59D6007C8B3F /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+RT.h"; path = "rongtai/Classes/Controllers/NSString+RT.h"; sourceTree = SOURCE_ROOT; };
+		56C349641B1D59D6007C8B3F /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+RT.m"; path = "rongtai/Classes/Controllers/NSString+RT.m"; sourceTree = SOURCE_ROOT; };
 		DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBluetoothManager.h; sourceTree = "<group>"; };
 		DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBluetoothManager.m; sourceTree = "<group>"; };
 		DF9C7CE41B147A36005617DA /* JRCBPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCBPeripheral.h; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 		DF9C7CEF1B147A36005617DA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				56C349631B1D59D6007C8B3F /* NSString+RT.h */,
+				56C349641B1D59D6007C8B3F /* NSString+RT.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -651,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
+				56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
