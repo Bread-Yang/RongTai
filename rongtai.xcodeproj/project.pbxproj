@@ -20,6 +20,7 @@
 		3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258EE1B1D525E006C9179 /* UIView+Hierarchy.m */; };
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
+		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
 		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
 		3D783D391B12FD0300A893D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* ViewController.m */; };
@@ -106,6 +107,8 @@
 		3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		3D0258F11B1D525E006C9179 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInformationViewController.h; sourceTree = "<group>"; };
+		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
 		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 		3D0258D41B1D5173006C9179 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */,
+				3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */,
 				3D0258D51B1D5173006C9179 /* LoginViewController.h */,
 				3D0258D61B1D5173006C9179 /* LoginViewController.m */,
 				3D0258D71B1D5173006C9179 /* RegisterViewController.h */,
@@ -659,6 +664,7 @@
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
+				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* ViewController.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
