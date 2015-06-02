@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
+#import <MediaPlayer/MediaPlayer.h>
 #import <ShareSDK/ShareSDK.h>
 
 #import "FirstViewController.h"
@@ -14,6 +15,8 @@
 @interface FirstViewController () <AppIntroduceViewDelegate>
 
 @property AppIntrouceView *introduceView;
+
+@property MPMusicPlayerController *musicPlayer;
 
 @end
 
@@ -29,6 +32,24 @@
         self.introduceView.backgroundColor = [UIColor greenColor];
         [self.view addSubview:self.introduceView];
     }
+    
+    self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    [notificationCenter
+     addObserver: self
+     selector:    @selector (handle_NowPlayingItemChanged:)
+     name:        MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+     object:      self.musicPlayer];
+    
+    [notificationCenter
+     addObserver: self
+     selector:    @selector (handle_PlaybackStateChanged:)
+     name:        MPMusicPlayerControllerPlaybackStateDidChangeNotification
+     object:      self.musicPlayer];
+    
+    [self.musicPlayer beginGeneratingPlaybackNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -146,4 +167,19 @@
      }];
 }
 
+- (IBAction)previousSongAction:(id)sender {
+    [self.musicPlayer skipToPreviousItem];
+}
+
+- (IBAction)nextSongAction:(id)sender {
+    [self.musicPlayer skipToNextItem];
+}
+
+- (IBAction)playOrPauseAction:(id)sender {
+    if (self.musicPlayer.playbackState == MPMusicPlaybackStatePlaying) {
+        [self.musicPlayer pause];
+    } else {
+        [self.musicPlayer play];
+    }
+}
 @end
