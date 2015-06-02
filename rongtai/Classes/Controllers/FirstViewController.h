@@ -10,4 +10,12 @@
 
 @interface FirstViewController : UIViewController
 
+- (IBAction)previousSongAction:(id)sender;
+
+
+- (IBAction)nextSongAction:(id)sender;
+
+
+- (IBAction)playOrPauseAction:(id)sender;
+
 @end
