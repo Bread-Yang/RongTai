@@ -319,7 +319,10 @@ IQ_LoadCategory(IQUIViewToolbar)
 	NSMutableArray *items = [[NSMutableArray alloc] init];
 	
 	//  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:doneAction];
+//    UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:doneAction];
+    //william：改写完成按钮为中文
+    UIBarButtonItem *doneButton =[[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:target action:doneAction];
+
 	
 	if (IQ_IS_IOS7_OR_GREATER)
 	{
