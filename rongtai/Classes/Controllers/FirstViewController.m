@@ -191,6 +191,14 @@
      }];
 }
 
+- (IBAction)qqLoginAction:(id)sender {
+}
+
+- (IBAction)logoutAction:(id)sender {
+    [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+    [ShareSDK cancelAuthWithType:ShareTypeQQ];
+}
+
 - (IBAction)previousSongAction:(id)sender {
     [self.musicPlayer skipToPreviousItem];
 }

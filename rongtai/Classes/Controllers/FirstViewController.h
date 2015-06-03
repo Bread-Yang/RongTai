@@ -18,12 +18,15 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *nextSongButton;
 
+#pragma mark - View Action
+
+- (IBAction)qqLoginAction:(id)sender;
+
+- (IBAction)logoutAction:(id)sender;
 
 - (IBAction)previousSongAction:(id)sender;
 
-
 - (IBAction)nextSongAction:(id)sender;
-
 
 - (IBAction)playOrPauseAction:(id)sender;
 

@@ -26,8 +26,8 @@
                                     <action selector="shareSDKAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kbI-ul-liA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krZ-xU-typ">
-                                <rect key="frame" x="255" y="414" width="73" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krZ-xU-typ">
+                                <rect key="frame" x="255" y="414" width="74" height="30"/>
                                 <state key="normal" title="Sina Login">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -35,7 +35,16 @@
                                     <action selector="sinaLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="feA-fS-QQV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="社交平台登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-HE-lFL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arn-14-Qtk">
+                                <rect key="frame" x="258" y="452" width="66" height="30"/>
+                                <state key="normal" title="QQ Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="qqLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UEr-Tw-eAT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="社交平台登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-HE-lFL">
                                 <rect key="frame" x="119" y="418" width="102" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -135,9 +144,19 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgb-Eg-cbL">
+                                <rect key="frame" x="265" y="490" width="53" height="30"/>
+                                <state key="normal" title="Log out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Dn-zR-KIu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="xgb-Eg-cbL" firstAttribute="top" secondItem="arn-14-Qtk" secondAttribute="bottom" constant="8" id="0gh-Uh-QuH"/>
                             <constraint firstItem="Q5F-HE-lFL" firstAttribute="baseline" secondItem="krZ-xU-typ" secondAttribute="baseline" id="A7X-B2-Zc2"/>
                             <constraint firstItem="Uy4-ap-g8S" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BXT-mx-uEo"/>
                             <constraint firstAttribute="centerY" secondItem="8RN-nf-xhV" secondAttribute="centerY" constant="10" id="Eu9-DN-edJ"/>
@@ -147,7 +166,9 @@
                             <constraint firstItem="krZ-xU-typ" firstAttribute="leading" secondItem="Q5F-HE-lFL" secondAttribute="trailing" constant="34" id="Gpy-ga-KOi"/>
                             <constraint firstAttribute="centerY" secondItem="Ygh-nL-1nV" secondAttribute="centerY" constant="130" id="Kd3-tN-z94"/>
                             <constraint firstItem="Uy4-ap-g8S" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="OVd-ES-Mu1"/>
+                            <constraint firstItem="arn-14-Qtk" firstAttribute="top" secondItem="krZ-xU-typ" secondAttribute="bottom" constant="8" id="OdJ-Lu-x5x"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="P6Q-os-RJ8"/>
+                            <constraint firstAttribute="centerX" secondItem="arn-14-Qtk" secondAttribute="centerX" constant="9" id="QVH-BJ-kz1"/>
                             <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="bTc-F4-IcJ" secondAttribute="bottom" constant="49" id="RCq-X5-VNc"/>
                             <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="Ygh-nL-1nV" secondAttribute="bottom" constant="229" id="VbP-LW-qw6"/>
                             <constraint firstItem="bTc-F4-IcJ" firstAttribute="centerX" secondItem="krZ-xU-typ" secondAttribute="centerX" id="Wdf-ab-NYk"/>
@@ -155,6 +176,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="cU7-B4-slf"/>
                             <constraint firstItem="8RN-nf-xhV" firstAttribute="centerX" secondItem="bTc-F4-IcJ" secondAttribute="centerX" id="isr-8l-ZFV"/>
                             <constraint firstAttribute="centerX" secondItem="krZ-xU-typ" secondAttribute="centerX" constant="8.5" id="jq0-sb-HZe"/>
+                            <constraint firstAttribute="centerX" secondItem="xgb-Eg-cbL" secondAttribute="centerX" constant="8.5" id="kYK-YE-TCn"/>
                             <constraint firstAttribute="bottom" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="mde-7g-ODA"/>
                         </constraints>
                         <variation key="default">
@@ -257,6 +279,11 @@
                     <view key="view" contentMode="scaleToFill" id="lw0-Up-E8X">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <userGuides>
+                            <userLayoutGuide location="267" affinity="minX"/>
+                            <userLayoutGuide location="267" affinity="minX"/>
+                            <userLayoutGuide location="301" affinity="minY"/>
+                        </userGuides>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWc-tI-MTw">
                                 <rect key="frame" x="244" y="285" width="46" height="30"/>
@@ -267,11 +294,17 @@
                                     <segue destination="3ff-zx-u2D" kind="show" id="PR5-IV-i9d"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucP-sV-5pI">
+                                <rect key="frame" x="0.0" y="438" width="600" height="162"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ucP-sV-5pI" firstAttribute="leading" secondItem="lw0-Up-E8X" secondAttribute="leadingMargin" constant="-16" id="492-dK-nIi"/>
                             <constraint firstAttribute="centerX" secondItem="zWc-tI-MTw" secondAttribute="centerX" constant="33" id="AG9-m4-53X"/>
                             <constraint firstAttribute="centerY" secondItem="zWc-tI-MTw" secondAttribute="centerY" id="EWC-CE-cWs"/>
+                            <constraint firstAttribute="bottom" secondItem="ucP-sV-5pI" secondAttribute="bottom" id="dqv-hl-j8n"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ucP-sV-5pI" secondAttribute="trailing" constant="-16" id="sCF-Rm-wkx"/>
                         </constraints>
                     </view>
                 </viewController>
