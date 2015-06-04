@@ -122,11 +122,16 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+- (IBAction)toLoginControllerAction:(id)sender {
+    UIStoryboard *loginStoryBoard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
+}
+
+
 - (IBAction)shareSDKAction:(id)sender {
      NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"Intro_Screen_Four" ofType:@"png"];
     
     //1、构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:@"可以连接蓝牙的天空按摩椅"
+    id<ISSContent> publishContent = [ShareSDK content:@"可以连接蓝牙的太空按摩椅"
                                        defaultContent:@"在IOS上分享"
                                                 image:[ShareSDK imageWithPath:imagePath]
                                                 title:@"荣泰按摩椅分享"
