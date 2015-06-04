@@ -28,6 +28,15 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
+		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
+		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
+		3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35F1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m */; };
+		3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3611B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m */; };
+		3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCDF3631B1FEB7400BA491E /* menu-button.png */; };
+		3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */; };
+		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
+		3DCDF3781B203F1200BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3771B203F1200BA491E /* WLPolar.m */; };
 		5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5604A32A1B159F3C00967191 /* AppIntrouceView.m */; };
 		5604A34A1B15A61E00967191 /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A32E1B15A61E00967191 /* CopyConnection.framework */; };
 		5604A34B1B15A61E00967191 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A32F1B15A61E00967191 /* QQConnection.framework */; };
@@ -123,6 +132,23 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
+		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
+		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
+		3DCDF35A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorScale.h; sourceTree = "<group>"; };
+		3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorScale.m; sourceTree = "<group>"; };
+		3DCDF35C1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorScaleAndFade.h; sourceTree = "<group>"; };
+		3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorScaleAndFade.m; sourceTree = "<group>"; };
+		3DCDF35E1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorSlide.h; sourceTree = "<group>"; };
+		3DCDF35F1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorSlide.m; sourceTree = "<group>"; };
+		3DCDF3601B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorSlideAndFade.h; sourceTree = "<group>"; };
+		3DCDF3611B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorSlideAndFade.m; sourceTree = "<group>"; };
+		3DCDF3631B1FEB7400BA491E /* menu-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button.png"; sourceTree = "<group>"; };
+		3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button@2x.png"; sourceTree = "<group>"; };
+		3DCDF3651B1FEB7400BA491E /* SlideNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationController.h; sourceTree = "<group>"; };
+		3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationController.m; sourceTree = "<group>"; };
+		3DCDF3761B203F1200BA491E /* WLPolar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPolar.h; sourceTree = "<group>"; };
+		3DCDF3771B203F1200BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		5604A3291B159F3C00967191 /* AppIntrouceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIntrouceView.h; sourceTree = "<group>"; };
 		5604A32A1B159F3C00967191 /* AppIntrouceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIntrouceView.m; sourceTree = "<group>"; };
 		5604A32E1B15A61E00967191 /* CopyConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CopyConnection.framework; sourceTree = "<group>"; };
@@ -240,6 +266,8 @@
 		3D0258DB1B1D525E006C9179 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				3DCDF3751B203F1200BA491E /* WLRadarChart */,
+				3DCDF3551B1FEB7400BA491E /* SlideMenu */,
 				3D0258DC1B1D525E006C9179 /* IQKeyBoardManager */,
 			);
 			path = Library;
@@ -329,6 +357,53 @@
 				3D783D4B1B12FD0300A893D9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				3DCDF3561B1FEB7400BA491E /* Animations */,
+				3DCDF3621B1FEB7400BA491E /* Assets */,
+				3DCDF3651B1FEB7400BA491E /* SlideNavigationController.h */,
+				3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */,
+			);
+			path = SlideMenu;
+			sourceTree = "<group>";
+		};
+		3DCDF3561B1FEB7400BA491E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */,
+				3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */,
+				3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */,
+				3DCDF35A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.h */,
+				3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */,
+				3DCDF35C1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.h */,
+				3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */,
+				3DCDF35E1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.h */,
+				3DCDF35F1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m */,
+				3DCDF3601B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.h */,
+				3DCDF3611B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		3DCDF3621B1FEB7400BA491E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3DCDF3631B1FEB7400BA491E /* menu-button.png */,
+				3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		3DCDF3751B203F1200BA491E /* WLRadarChart */ = {
+			isa = PBXGroup;
+			children = (
+				3DCDF3761B203F1200BA491E /* WLPolar.h */,
+				3DCDF3771B203F1200BA491E /* WLPolar.m */,
+			);
+			path = WLRadarChart;
 			sourceTree = "<group>";
 		};
 		5604A32C1B15A61E00967191 /* ShareSDK */ = {
@@ -635,9 +710,11 @@
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				5604A3531B15A61E00967191 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
+				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,19 +735,25 @@
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
 				56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
+				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
+				3DCDF3781B203F1200BA491E /* WLPolar.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				56C349621B1C34D9007C8B3F /* MusicModel.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
+				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
+				3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
 				3D0258F61B1D525E006C9179 /* IQTextView.m in Sources */,
 				DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */,
 				3D0258F51B1D525E006C9179 /* IQSegmentedNextPrevious.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
+				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
+				3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */,
 				3D783D391B12FD0300A893D9 /* ViewController.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
@@ -680,6 +763,7 @@
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
+				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
