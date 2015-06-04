@@ -124,6 +124,9 @@
 
 - (IBAction)toLoginControllerAction:(id)sender {
     UIStoryboard *loginStoryBoard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
+    UIViewController *viewController = [loginStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
+    [self.navigationController pushViewController:viewController animated:YES];
+
 }
 
 

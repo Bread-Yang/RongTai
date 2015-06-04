@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vVx-O2-RpR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vVx-O2-RpR">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -10,7 +10,7 @@
         <!--Login-->
         <scene sceneID="V1j-C8-Eor">
             <objects>
-                <viewController id="vVx-O2-RpR" userLabel="Login" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="vVx-O2-RpR" userLabel="Login" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9nL-Z9-lKf"/>
                         <viewControllerLayoutGuide type="bottom" id="Taw-2h-xjx"/>
@@ -192,7 +192,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="_loginBtn" destination="CeL-xi-fng" id="aaH-BF-STY"/>
                         <outlet property="_loginFeild" destination="tb1-iV-00c" id="kVM-8u-43j"/>
                         <outlet property="_password" destination="9m8-5A-Onu" id="ze4-al-OzU"/>
                         <outlet property="_phoneNum" destination="uy7-e7-eTh" id="JQj-YQ-mkZ"/>
