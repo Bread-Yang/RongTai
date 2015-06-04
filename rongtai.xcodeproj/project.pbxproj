@@ -36,7 +36,7 @@
 		3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCDF3631B1FEB7400BA491E /* menu-button.png */; };
 		3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */; };
 		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
-		3DCDF3781B203F1200BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3771B203F1200BA491E /* WLPolar.m */; };
+		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
 		5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5604A32A1B159F3C00967191 /* AppIntrouceView.m */; };
 		5604A34A1B15A61E00967191 /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A32E1B15A61E00967191 /* CopyConnection.framework */; };
 		5604A34B1B15A61E00967191 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A32F1B15A61E00967191 /* QQConnection.framework */; };
@@ -147,8 +147,8 @@
 		3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-button@2x.png"; sourceTree = "<group>"; };
 		3DCDF3651B1FEB7400BA491E /* SlideNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationController.h; sourceTree = "<group>"; };
 		3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationController.m; sourceTree = "<group>"; };
-		3DCDF3761B203F1200BA491E /* WLPolar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPolar.h; sourceTree = "<group>"; };
-		3DCDF3771B203F1200BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
+		3DCDF37A1B20401600BA491E /* WLPolar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPolar.h; sourceTree = "<group>"; };
+		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		5604A3291B159F3C00967191 /* AppIntrouceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIntrouceView.h; sourceTree = "<group>"; };
 		5604A32A1B159F3C00967191 /* AppIntrouceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIntrouceView.m; sourceTree = "<group>"; };
 		5604A32E1B15A61E00967191 /* CopyConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CopyConnection.framework; sourceTree = "<group>"; };
@@ -266,7 +266,6 @@
 		3D0258DB1B1D525E006C9179 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				3DCDF3751B203F1200BA491E /* WLRadarChart */,
 				3DCDF3551B1FEB7400BA491E /* SlideMenu */,
 				3D0258DC1B1D525E006C9179 /* IQKeyBoardManager */,
 			);
@@ -397,11 +396,11 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		3DCDF3751B203F1200BA491E /* WLRadarChart */ = {
+		3DCDF3791B20401600BA491E /* WLRadarChart */ = {
 			isa = PBXGroup;
 			children = (
-				3DCDF3761B203F1200BA491E /* WLPolar.h */,
-				3DCDF3771B203F1200BA491E /* WLPolar.m */,
+				3DCDF37A1B20401600BA491E /* WLPolar.h */,
+				3DCDF37B1B20401600BA491E /* WLPolar.m */,
 			);
 			path = WLRadarChart;
 			sourceTree = "<group>";
@@ -574,6 +573,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3DCDF3791B20401600BA491E /* WLRadarChart */,
 				5604A3291B159F3C00967191 /* AppIntrouceView.h */,
 				5604A32A1B159F3C00967191 /* AppIntrouceView.m */,
 			);
@@ -737,7 +737,7 @@
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
-				3DCDF3781B203F1200BA491E /* WLPolar.m in Sources */,
+				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				56C349621B1C34D9007C8B3F /* MusicModel.m in Sources */,
