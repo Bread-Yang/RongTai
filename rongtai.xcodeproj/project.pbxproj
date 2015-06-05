@@ -28,6 +28,7 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -132,6 +133,8 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
+		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -358,6 +361,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3DA8D60E1B21B226002328DF /* WLDoughnut */ = {
+			isa = PBXGroup;
+			children = (
+				3DA8D60F1B21B226002328DF /* WLDoughnut.h */,
+				3DA8D6101B21B226002328DF /* WLDoughnut.m */,
+			);
+			path = WLDoughnut;
+			sourceTree = "<group>";
+		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +585,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3DA8D60E1B21B226002328DF /* WLDoughnut */,
 				3DCDF3791B20401600BA491E /* WLRadarChart */,
 				5604A3291B159F3C00967191 /* AppIntrouceView.h */,
 				5604A32A1B159F3C00967191 /* AppIntrouceView.m */,
@@ -760,6 +773,7 @@
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
+				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
