@@ -42,6 +42,25 @@
     [self.view addSubview:_userList];
     [self.view addSubview:_menu];
     
+    //切换按摩椅
+    CGFloat unit = 0.7*SCREENWIDTH/3;
+    UIButton* change = [[UIButton alloc]initWithFrame:CGRectMake(unit/3, SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034, unit, unit*0.4)];
+    change.titleLabel.font =[UIFont systemFontOfSize:13];
+    [change setTitle:@"切换按摩椅" forState:0];
+    [change setTintColor:[UIColor blackColor]];
+    change.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.6];
+    [change addTarget:self action:@selector(changeMessageChair) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:change];
+    
+    //注销
+    UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit*5/3.0, SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034, unit, unit*0.4)];
+    logout.titleLabel.font =[UIFont systemFontOfSize:13];
+    [logout setTitle:@"注销" forState:0];
+    [logout setTintColor:[UIColor blackColor]];
+    logout.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.6];
+    [logout addTarget:self action:@selector(Logout) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:logout];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -69,7 +88,7 @@
     //用户数组
     _users = [NSMutableArray new];
     [_users addObject:@"黄晓明"];   //以后换成用户的数据模型
-//    [_users addObject:@"爸爸"];
+    [_users addObject:@"爸爸"];
 //    [_users addObject:@"妈妈"];
     
     //用户列表
