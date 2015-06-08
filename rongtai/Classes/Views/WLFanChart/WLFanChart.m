@@ -58,7 +58,7 @@
     _r = self.bounds.size.width/2;
     CGFloat startAngle = M_PI*1.5;
     if (_dataSource.count>0&&_colors.count>0) {
-        //绘制扇形
+        //扇形
         for (int i = 0; i < _dataSource.count; i++) {
             NSNumber* num = _dataSource[i];
             CGFloat percent = num.floatValue;
@@ -69,6 +69,7 @@
             startAngle += M_PI*2*percent;
         }
         
+        //文字
         CGFloat sAngle = M_PI;
         for (int i = 0; i<_dataSource.count; i++) {
             
