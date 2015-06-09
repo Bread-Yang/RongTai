@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  rongtai
+
+  Created by William-zhang on 15/6/9.
+  Copyright (c) 2015年 William-zhang. All rights reserved.
+*/
+
+
+"家庭成员管理" = "Family Manage";
+"数据中心" = "Data Center";
+"定时计划" = "Plan";
+"首页天气预报" = "Weather";
+"我要反馈" = "Feedback";
+"使用帮助" = "Help";
+"我要购买" = "Purchase";
+"当前用户" = "CurrentUser";
+"切换按摩椅" = "ChangeMassageChair";
+"注销" = "Logout";
