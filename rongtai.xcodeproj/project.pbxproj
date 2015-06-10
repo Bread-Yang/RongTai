@@ -60,6 +60,10 @@
 		5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5604A3471B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle */; };
 		5604A3591B15A61E00967191 /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A3481B15A61E00967191 /* ShareSDKFlatShareViewUI.framework */; };
 		5604A35A1B15A61E00967191 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5604A3491B15A61E00967191 /* ShareSDKShareActionSheet.framework */; };
+		5661F6961B2810B9006066A0 /* AddTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6951B2810B9006066A0 /* AddTimingMassageViewController.m */; };
+		5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F69F1B281302006066A0 /* LineUICollectionViewCell.m */; };
+		5661F6A31B281302006066A0 /* LineUICollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6A11B281302006066A0 /* LineUICollectionViewFlowLayout.m */; };
+		5661F6A61B281361006066A0 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6A51B281361006066A0 /* MusicModel.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
 		56C349471B15A927007C8B3F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349461B15A927007C8B3F /* CoreTelephony.framework */; };
@@ -72,7 +76,6 @@
 		56C349551B15BCD4007C8B3F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349541B15BCD4007C8B3F /* libsqlite3.dylib */; };
 		56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349581B170D9E007C8B3F /* MusicPickerViewController.m */; };
 		56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C3495E1B17199D007C8B3F /* MediaPlayer.framework */; };
-		56C349621B1C34D9007C8B3F /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349611B1C34D9007C8B3F /* MusicModel.m */; };
 		56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349641B1D59D6007C8B3F /* NSString+RT.m */; };
 		DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */; };
 		DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */; };
@@ -189,6 +192,15 @@
 		5604A3471B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKFlatShareViewUI.bundle; sourceTree = "<group>"; };
 		5604A3481B15A61E00967191 /* ShareSDKFlatShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKFlatShareViewUI.framework; sourceTree = "<group>"; };
 		5604A3491B15A61E00967191 /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
+		5661F6941B2810B9006066A0 /* AddTimingMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTimingMassageViewController.h; sourceTree = "<group>"; };
+		5661F6951B2810B9006066A0 /* AddTimingMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTimingMassageViewController.m; sourceTree = "<group>"; };
+		5661F69E1B281302006066A0 /* LineUICollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineUICollectionViewCell.h; path = LineUICollectionViewFlowLayout/LineUICollectionViewCell.h; sourceTree = "<group>"; };
+		5661F69F1B281302006066A0 /* LineUICollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineUICollectionViewCell.m; path = LineUICollectionViewFlowLayout/LineUICollectionViewCell.m; sourceTree = "<group>"; };
+		5661F6A01B281302006066A0 /* LineUICollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineUICollectionViewFlowLayout.h; path = LineUICollectionViewFlowLayout/LineUICollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		5661F6A11B281302006066A0 /* LineUICollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineUICollectionViewFlowLayout.m; path = LineUICollectionViewFlowLayout/LineUICollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		5661F6A41B281361006066A0 /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
+		5661F6A51B281361006066A0 /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
+		5661F6A71B281384006066A0 /* PinYinUti.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinYinUti.h; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		56C349441B15A699007C8B3F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56C349461B15A927007C8B3F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -201,10 +213,7 @@
 		56C349541B15BCD4007C8B3F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		56C349571B170D9E007C8B3F /* MusicPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicPickerViewController.h; sourceTree = "<group>"; };
 		56C349581B170D9E007C8B3F /* MusicPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicPickerViewController.m; sourceTree = "<group>"; };
-		56C3495D1B1718E3007C8B3F /* PinYinUti.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinYinUti.h; sourceTree = "<group>"; };
 		56C3495E1B17199D007C8B3F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		56C349601B1C34D9007C8B3F /* MusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicModel.h; sourceTree = "<group>"; };
-		56C349611B1C34D9007C8B3F /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
 		56C349631B1D59D6007C8B3F /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+RT.h"; path = "rongtai/Classes/Controllers/NSString+RT.h"; sourceTree = SOURCE_ROOT; };
 		56C349641B1D59D6007C8B3F /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+RT.m"; path = "rongtai/Classes/Controllers/NSString+RT.m"; sourceTree = SOURCE_ROOT; };
 		DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBluetoothManager.h; sourceTree = "<group>"; };
@@ -525,13 +534,21 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				5661F69E1B281302006066A0 /* LineUICollectionViewCell.h */,
+				5661F69F1B281302006066A0 /* LineUICollectionViewCell.m */,
+				5661F6A01B281302006066A0 /* LineUICollectionViewFlowLayout.h */,
+				5661F6A11B281302006066A0 /* LineUICollectionViewFlowLayout.m */,
+			);
+			name = LineUICollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
 		DF9C7CE01B147A36005617DA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				3D0258DB1B1D525E006C9179 /* Library */,
-				56C349601B1C34D9007C8B3F /* MusicModel.h */,
-				56C349611B1C34D9007C8B3F /* MusicModel.m */,
-				56C3495D1B1718E3007C8B3F /* PinYinUti.h */,
 				DF9C7CE11B147A36005617DA /* Ble */,
 				DF9C7CEF1B147A36005617DA /* Categories */,
 				DF9C7CF01B147A36005617DA /* Controllers */,
@@ -585,6 +602,8 @@
 				56C349581B170D9E007C8B3F /* MusicPickerViewController.m */,
 				3D65A4861B25841800B7B411 /* MainViewController.h */,
 				3D65A4871B25841800B7B411 /* MainViewController.m */,
+				5661F6941B2810B9006066A0 /* AddTimingMassageViewController.h */,
+				5661F6951B2810B9006066A0 /* AddTimingMassageViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -592,6 +611,8 @@
 		DF9C7CF11B147A36005617DA /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				5661F6A41B281361006066A0 /* MusicModel.h */,
+				5661F6A51B281361006066A0 /* MusicModel.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -606,6 +627,7 @@
 		DF9C7CF31B147A36005617DA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5661F6A71B281384006066A0 /* PinYinUti.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -613,6 +635,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */,
 				3D65A47F1B25437A00B7B411 /* WLFanChart */,
 				3DA8D60E1B21B226002328DF /* WLDoughnut */,
 				3DCDF3791B20401600BA491E /* WLRadarChart */,
@@ -782,17 +805,19 @@
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
+				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
-				56C349621B1C34D9007C8B3F /* MusicModel.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
 				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
 				3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
+				5661F6A31B281302006066A0 /* LineUICollectionViewFlowLayout.m in Sources */,
 				3D0258F61B1D525E006C9179 /* IQTextView.m in Sources */,
 				DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */,
 				3D0258F51B1D525E006C9179 /* IQSegmentedNextPrevious.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
+				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
@@ -810,6 +835,7 @@
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
+				5661F6961B2810B9006066A0 /* AddTimingMassageViewController.m in Sources */,
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

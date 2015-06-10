@@ -28,21 +28,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    
-    //
-    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
-    MenuViewController* menu = [[MenuViewController alloc]init];
-    slide.leftMenu = menu;
-    slide.enableSwipeGesture = YES;
-    slide.enableShadow = NO;
-    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
-    
-    
-    // Override point for customization after application launch.
-    [ShareSDK registerApp:@"7bbafb4115a9"];
-    [self initializeSocialPlatform];
-    
+
+//    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
+//    MenuViewController* menu = [[MenuViewController alloc]init];
+//    slide.leftMenu = menu;
+//    slide.enableSwipeGesture = YES;
+//    slide.enableShadow = NO;
+//    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+//    
+//    
+//    // Override point for customization after application launch.
+//    [ShareSDK registerApp:@"7bbafb4115a9"];
+//    [self initializeSocialPlatform];
+	
  
     
     return YES;
