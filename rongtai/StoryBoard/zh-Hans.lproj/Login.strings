@@ -1,0 +1,93 @@
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "3TG-Dj-gQf"; */
+"3TG-Dj-gQf.text" = "密码";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "4KC-da-fhe"; */
+"4KC-da-fhe.title" = "注册";
+
+/* Class = "UISegmentedControl"; 5CA-Uh-E2R.segmentTitles[0] = "cm"; ObjectID = "5CA-Uh-E2R"; */
+"5CA-Uh-E2R.segmentTitles[0]" = "cm";
+
+/* Class = "UISegmentedControl"; 5CA-Uh-E2R.segmentTitles[1] = "inch"; ObjectID = "5CA-Uh-E2R"; */
+"5CA-Uh-E2R.segmentTitles[1]" = "inch";
+
+/* Class = "UILabel"; text = "性别"; ObjectID = "8ax-iY-DT3"; */
+"8ax-iY-DT3.text" = "性别";
+
+/* Class = "UIBarButtonItem"; title = "返回"; ObjectID = "9Ap-95-pGh"; */
+"9Ap-95-pGh.title" = "返回";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "CeL-xi-fng"; */
+"CeL-xi-fng.normalTitle" = "登录";
+
+/* Class = "UIButton"; normalTitle = "头像"; ObjectID = "Ekt-vL-LFR"; */
+"Ekt-vL-LFR.normalTitle" = "头像";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "Gtu-bz-Epc"; */
+"Gtu-bz-Epc.normalTitle" = "注册";
+
+/* Class = "UISegmentedControl"; Id0-5i-JlZ.segmentTitles[0] = "男"; ObjectID = "Id0-5i-JlZ"; */
+"Id0-5i-JlZ.segmentTitles[0]" = "男";
+
+/* Class = "UISegmentedControl"; Id0-5i-JlZ.segmentTitles[1] = "女"; ObjectID = "Id0-5i-JlZ"; */
+"Id0-5i-JlZ.segmentTitles[1]" = "女";
+
+/* Class = "UIButton"; normalTitle = "qq"; ObjectID = "Ley-RJ-Kz1"; */
+"Ley-RJ-Kz1.normalTitle" = "qq";
+
+/* Class = "UILabel"; text = "社交平台登录"; ObjectID = "MkA-Ml-jXH"; */
+"MkA-Ml-jXH.text" = "社交平台登录";
+
+/* Class = "UILabel"; text = "生日"; ObjectID = "YKl-U9-7nj"; */
+"YKl-U9-7nj.text" = "生日";
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "YbQ-pD-hcj"; */
+"YbQ-pD-hcj.text" = "密码";
+
+/* Class = "UILabel"; text = "显示密码"; ObjectID = "Z5r-9y-9wT"; */
+"Z5r-9y-9wT.text" = "显示密码";
+
+/* Class = "UITextField"; placeholder = "身高"; ObjectID = "ZRm-fd-rA4"; */
+"ZRm-fd-rA4.placeholder" = "身高";
+
+/* Class = "UIButton"; normalTitle = "获取验证码"; ObjectID = "blZ-dO-yRU"; */
+"blZ-dO-yRU.normalTitle" = "获取验证码";
+
+/* Class = "UIBarButtonItem"; title = "返回"; ObjectID = "bpx-tg-ldM"; */
+"bpx-tg-ldM.title" = "返回";
+
+/* Class = "UIBarButtonItem"; title = "保存"; ObjectID = "e4F-nI-yzH"; */
+"e4F-nI-yzH.title" = "保存";
+
+/* Class = "UIButton"; normalTitle = "新浪"; ObjectID = "fL4-be-Wlz"; */
+"fL4-be-Wlz.normalTitle" = "新浪";
+
+/* Class = "UILabel"; text = "身高"; ObjectID = "fRb-G3-xBV"; */
+"fRb-G3-xBV.text" = "身高";
+
+/* Class = "UILabel"; text = "手机号"; ObjectID = "fdO-yI-LBg"; */
+"fdO-yI-LBg.text" = "手机号";
+
+/* Class = "UILabel"; text = "手机号"; ObjectID = "kIg-GM-g95"; */
+"kIg-GM-g95.text" = "手机号";
+
+/* Class = "UILabel"; text = "显示密码"; ObjectID = "lfG-dI-efC"; */
+"lfG-dI-efC.text" = "显示密码";
+
+/* Class = "UITextField"; placeholder = "昵称"; ObjectID = "mOS-9x-cW7"; */
+"mOS-9x-cW7.placeholder" = "昵称";
+
+/* Class = "UILabel"; text = "昵称"; ObjectID = "rAp-nu-so8"; */
+"rAp-nu-so8.text" = "昵称";
+
+/* Class = "UIButton"; normalTitle = "新用户注册"; ObjectID = "wRS-GH-p16"; */
+"wRS-GH-p16.normalTitle" = "新用户注册";
+
+/* Class = "UITextField"; placeholder = "生日"; ObjectID = "xvK-PD-Df2"; */
+"xvK-PD-Df2.placeholder" = "生日";
+
+/* Class = "UILabel"; text = "验证码"; ObjectID = "yEF-Fs-acn"; */
+"yEF-Fs-acn.text" = "验证码";
+
+/* Class = "UINavigationItem"; title = "个人信息"; ObjectID = "yVE-Mx-G2u"; */
+"yVE-Mx-G2u.title" = "个人信息";

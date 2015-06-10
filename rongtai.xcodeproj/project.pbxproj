@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D0258D31B1D508C006C9179 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D0258D21B1D508C006C9179 /* Login.storyboard */; };
 		3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258D61B1D5173006C9179 /* LoginViewController.m */; };
 		3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258D81B1D5173006C9179 /* RegisterViewController.m */; };
 		3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3D0258DD1B1D525E006C9179 /* IQKeyboardManager.bundle */; };
@@ -95,7 +94,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3D0258D21B1D508C006C9179 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		3D0258D51B1D5173006C9179 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3D0258D61B1D5173006C9179 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3D0258D71B1D5173006C9179 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -626,7 +624,6 @@
 				3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */,
 				DF9C7CFC1B147B07005617DA /* Main.storyboard */,
 				DF9C7CFD1B147B07005617DA /* Second.storyboard */,
-				3D0258D21B1D508C006C9179 /* Login.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -744,7 +741,6 @@
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
-				3D0258D31B1D508C006C9179 /* Login.storyboard in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
