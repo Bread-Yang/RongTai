@@ -32,7 +32,10 @@
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
-		3DBE05A31B27D5C80008EFCA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE05A51B27D5C80008EFCA /* Login.storyboard */; };
+		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
+		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
+		3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE05B41B28154D0008EFCA /* Login.storyboard */; };
+		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -149,9 +152,13 @@
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
-		3DBE05A41B27D5C80008EFCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
-		3DBE05A71B27D5CE0008EFCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
-		3DBE05AB1B27D5D80008EFCA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
+		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
+		3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCenterViewController.m; sourceTree = "<group>"; };
+		3DBE05B01B280CDF0008EFCA /* UseTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseTimeViewController.h; sourceTree = "<group>"; };
+		3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseTimeViewController.m; sourceTree = "<group>"; };
+		3DBE05B41B28154D0008EFCA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		3DBE05B61B282BA10008EFCA /* PowerConsumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerConsumeViewController.h; sourceTree = "<group>"; };
+		3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerConsumeViewController.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -403,6 +410,19 @@
 			path = WLDoughnut;
 			sourceTree = "<group>";
 		};
+		3DBE05AC1B27F28A0008EFCA /* Data Center */ = {
+			isa = PBXGroup;
+			children = (
+				3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */,
+				3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */,
+				3DBE05B01B280CDF0008EFCA /* UseTimeViewController.h */,
+				3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */,
+				3DBE05B61B282BA10008EFCA /* PowerConsumeViewController.h */,
+				3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */,
+			);
+			path = "Data Center";
+			sourceTree = "<group>";
+		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,6 +615,7 @@
 			children = (
 				3D65A4831B25792800B7B411 /* MenuViewController.h */,
 				3D65A4841B25792800B7B411 /* MenuViewController.m */,
+				3DBE05AC1B27F28A0008EFCA /* Data Center */,
 				3D0258D41B1D5173006C9179 /* Login */,
 				DF9C7D021B147D59005617DA /* FirstViewController.h */,
 				DF9C7D031B147D59005617DA /* FirstViewController.m */,
@@ -651,7 +672,7 @@
 				3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */,
 				DF9C7CFC1B147B07005617DA /* Main.storyboard */,
 				DF9C7CFD1B147B07005617DA /* Second.storyboard */,
-				3DBE05A51B27D5C80008EFCA /* Login.storyboard */,
+				3DBE05B41B28154D0008EFCA /* Login.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -769,7 +790,7 @@
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
-				3DBE05A31B27D5C80008EFCA /* Login.storyboard in Resources */,
+				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
@@ -806,6 +827,7 @@
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
+				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
@@ -824,6 +846,8 @@
 				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
 				3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */,
 				3D783D391B12FD0300A893D9 /* ViewController.m in Sources */,
+				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
+				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
@@ -875,16 +899,6 @@
 			);
 			name = LaunchScreen.xib;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		3DBE05A51B27D5C80008EFCA /* Login.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3DBE05A41B27D5C80008EFCA /* Base */,
-				3DBE05A71B27D5CE0008EFCA /* en */,
-				3DBE05AB1B27D5D80008EFCA /* zh-Hans */,
-			);
-			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 		5604A3341B15A61E00967191 /* ShareSDKLocalizable.strings */ = {
