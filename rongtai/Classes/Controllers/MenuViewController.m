@@ -10,6 +10,8 @@
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 #import "MenuViewController.h"
+#import "LoginViewController.h"
+#import "SlideNavigationController.h"
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -193,6 +195,15 @@
             userCell = [tableView cellForRowAtIndexPath:indexPath];
             userCell.accessoryView = [self currentLabel];
             _currentUserIndex = indexPath.row;
+        }
+    }
+    else if (tableView.tag == 2002)
+    {
+        if (indexPath.row == 1) {
+//            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//            LoginViewController* l = [s instantiateViewControllerWithIdentifier:@"LoginVC"];
+//            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
+//            [sl pushViewController:l animated:YES];
         }
     }
 }

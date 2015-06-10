@@ -49,7 +49,7 @@
                                     <action selector="slideMenuAppear:" destination="uMx-iI-zw9" eventType="touchUpInside" id="g1V-Qy-RFs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXy-Cf-iXc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXy-Cf-iXc">
                                 <rect key="frame" x="16" y="152" width="72" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="黄晓明">
@@ -66,17 +66,50 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzF-4B-Ny9">
+                                <rect key="frame" x="162.5" y="470" width="75" height="30"/>
+                                <state key="normal" title="自定义按摩">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ce-rC-EVx">
+                                <rect key="frame" x="370" y="466" width="60" height="30"/>
+                                <state key="normal" title="手动按摩">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1i-XT-T7g">
+                                <rect key="frame" x="270" y="416" width="60" height="30"/>
+                                <state key="normal" title="开始按摩">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ewt-Kd-4Wa">
+                                <rect key="frame" x="0.0" y="510" width="600" height="90"/>
+                                <color key="backgroundColor" red="1" green="0.52379869140000002" blue="0.61599548410000005" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ekm-Ru-ouj" firstAttribute="width" secondItem="Sny-F3-Ua6" secondAttribute="width" multiplier="0.12" id="3Vt-f2-YLf"/>
                             <constraint firstItem="Ekm-Ru-ouj" firstAttribute="leading" secondItem="Sny-F3-Ua6" secondAttribute="leadingMargin" id="4NC-vL-Jes"/>
+                            <constraint firstAttribute="centerX" secondItem="4ce-rC-EVx" secondAttribute="centerX" constant="-100" id="5kf-Ox-5d2"/>
+                            <constraint firstItem="ewt-Kd-4Wa" firstAttribute="leading" secondItem="Sny-F3-Ua6" secondAttribute="leadingMargin" constant="-16" id="65q-7M-QiQ"/>
                             <constraint firstItem="GXy-Cf-iXc" firstAttribute="top" secondItem="Ekm-Ru-ouj" secondAttribute="bottom" constant="1" id="7Bm-Ps-XGO"/>
+                            <constraint firstItem="ewt-Kd-4Wa" firstAttribute="top" secondItem="J1i-XT-T7g" secondAttribute="bottom" constant="64" id="Eoj-65-Gp4"/>
                             <constraint firstItem="M69-2N-Ez7" firstAttribute="top" secondItem="Qcx-NL-knU" secondAttribute="bottom" constant="15" id="Frl-wc-iX4"/>
+                            <constraint firstItem="ewt-Kd-4Wa" firstAttribute="height" secondItem="Sny-F3-Ua6" secondAttribute="height" multiplier="0.15" id="GyJ-Yi-GaH"/>
+                            <constraint firstAttribute="centerX" secondItem="J1i-XT-T7g" secondAttribute="centerX" id="HhZ-P2-UkP"/>
                             <constraint firstItem="GXy-Cf-iXc" firstAttribute="top" secondItem="Ekm-Ru-ouj" secondAttribute="bottom" constant="1" id="K9x-5Q-L6f"/>
                             <constraint firstItem="Ekm-Ru-ouj" firstAttribute="top" secondItem="Qcx-NL-knU" secondAttribute="bottom" constant="15" id="Mm4-En-kkm"/>
+                            <constraint firstItem="ewt-Kd-4Wa" firstAttribute="top" secondItem="qzF-4B-Ny9" secondAttribute="bottom" constant="10" id="OGT-nI-QSO"/>
+                            <constraint firstItem="ewt-Kd-4Wa" firstAttribute="top" secondItem="4ce-rC-EVx" secondAttribute="bottom" constant="14" id="U2K-RL-lo8"/>
+                            <constraint firstAttribute="width" secondItem="ewt-Kd-4Wa" secondAttribute="width" id="Yjg-f8-lUQ"/>
+                            <constraint firstItem="5zh-96-wQM" firstAttribute="top" secondItem="ewt-Kd-4Wa" secondAttribute="bottom" id="Zvr-oy-2jW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ewt-Kd-4Wa" secondAttribute="trailing" constant="-16" id="ogY-5D-7dN"/>
                             <constraint firstItem="GXy-Cf-iXc" firstAttribute="width" secondItem="Ekm-Ru-ouj" secondAttribute="width" id="pEN-91-fgc"/>
                             <constraint firstItem="GXy-Cf-iXc" firstAttribute="leading" secondItem="Ekm-Ru-ouj" secondAttribute="leading" id="pnv-IZ-JaD"/>
+                            <constraint firstAttribute="centerX" secondItem="qzF-4B-Ny9" secondAttribute="centerX" constant="100" id="tYD-gP-Maz"/>
                             <constraint firstItem="M69-2N-Ez7" firstAttribute="trailing" secondItem="Sny-F3-Ua6" secondAttribute="trailingMargin" id="ymF-VI-Ll2"/>
                         </constraints>
                         <variation key="default">
