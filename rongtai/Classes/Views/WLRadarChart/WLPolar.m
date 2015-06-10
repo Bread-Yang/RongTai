@@ -36,6 +36,15 @@
 
 @implementation WLPolar
 
+-(instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setDefaultValues];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

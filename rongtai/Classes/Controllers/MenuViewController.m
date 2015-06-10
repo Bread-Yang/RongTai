@@ -12,6 +12,7 @@
 #import "MenuViewController.h"
 #import "LoginViewController.h"
 #import "SlideNavigationController.h"
+#import "DataCenterViewController.h"
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -204,6 +205,9 @@
 //            LoginViewController* l = [s instantiateViewControllerWithIdentifier:@"LoginVC"];
 //            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
 //            [sl pushViewController:l animated:YES];
+            DataCenterViewController* dataVC = [[DataCenterViewController alloc]init];
+            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
+            [sl pushViewController:dataVC animated:YES];
         }
     }
 }

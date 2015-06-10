@@ -25,12 +25,26 @@
     return self;
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setUp];
+    }
+    return self;
+}
+
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
         [self setUp];
     }
     return self;
+}
+
+-(void)setR:(CGFloat)r
+{
+    _r = r;
+    [self setNeedsDisplay];
 }
 
 
@@ -48,14 +62,14 @@
         [arr addObject:[UIColor colorWithRed:0 green:0.5 blue:1 alpha:0.2+(4-i)*0.2]];
     }
     _colors = arr;
+    _r = self.bounds.size.width/2;
 }
 
 
 #pragma mark - 重写drawRect
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
-    _center = CGPointMake(self.bounds.size.width/2, self.bounds.size.width/2);
-    _r = self.bounds.size.width/2;
+    _center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     CGFloat startAngle = M_PI*1.5;
     if (_dataSource.count>0&&_colors.count>0) {
         //扇形
