@@ -65,7 +65,7 @@
             offsetAdjustment = itemHorizontalCenter - horizontalCenter;
         }
     }
-	NSLog(@"返回的偏移位置是 : %f : ", (proposedContentOffset.x + offsetAdjustment));
+//	NSLog(@"返回的偏移位置是 : %f : ", (proposedContentOffset.x + offsetAdjustment));
     return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);
 }
 

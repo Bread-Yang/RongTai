@@ -8,6 +8,7 @@
 
 #import "AddTimingMassageViewController.h"
 
+#import "AddTimingMassageViewController.h"
 #import "LineUICollectionViewFlowLayout.h"
 #import "LineUICollectionViewCell.h"
 
@@ -25,7 +26,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	NSLog(@"viewDidLoad()");
     // Do any additional setup after loading the view.
 	
 	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"模式4", @"模式5"];
@@ -50,6 +50,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Action
+
+- (IBAction)saveAction:(id)sender {
+	TimingMassageModel *model = [[TimingMassageModel alloc] init];
+	model.loopDate = @"hahah";
+	if (self.returnTimingMassageBlock) {
+		self.returnTimingMassageBlock(model);
+		[self.navigationController popViewControllerAnimated:TRUE];
+	}
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -80,7 +91,6 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	NSLog(@"numberOfRowsInComponent()");
 	if (pickerView.tag == 0) {  // 小时
 		return 24;
 	} else { // 分
@@ -91,7 +101,6 @@
 #pragma mark - UIPickerViewDelegate
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	NSLog(@"titleForRow()");
 	[[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
 	[[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
 	if (pickerView.tag == 0) {

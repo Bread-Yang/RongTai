@@ -6,11 +6,11 @@
 //  Copyright (c) 2014年 Jaben. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "RTBleListViewController.h"
 #import "JRBluetoothManager.h"
 #import "RTBleConnector.h"
 
-@interface ViewController () <RTBleConnectorDelegate>
+@interface RTBleListViewController () <RTBleConnectorDelegate>
 {
     NSMutableArray *blePeriphrals;
     
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation ViewController
+@implementation RTBleListViewController
 
 - (void)viewDidLoad
 {

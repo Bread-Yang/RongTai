@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TimingMassageModel.h"
+
+typedef void (^ReturnTimingMassageBlock)(TimingMassageModel* entity);
+
 @interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
+@property (nonatomic, copy) ReturnTimingMassageBlock returnTimingMassageBlock;
+
+- (void)setReturnTimingMassageBlock:(ReturnTimingMassageBlock)returnTimingMassageBlock;
 
 @end
