@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 
+//
+#import "DataCenterViewController.h"
+
 @interface LoginViewController ()
 {
     __weak IBOutlet UIView *_loginFeild;  //登录外边框
@@ -55,6 +58,7 @@
 
 #pragma mark - qq登陆按钮方法
 - (IBAction)qqLogin:(id)sender {
+    [self.navigationController pushViewController:[DataCenterViewController new] animated:YES];
 }
 
 #pragma mark - 新浪登陆按钮方法

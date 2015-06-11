@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DoughnutCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="186" height="202"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="186" height="202"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyJ-Og-6gr">
+                        <rect key="frame" x="0.0" y="0.0" width="186" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="pjq-qW-XcX"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作减压" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRR-bT-6G1">
+                        <rect key="frame" x="59" y="6" width="68" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="qRR-bT-6G1" secondAttribute="centerX" id="1kU-ST-iy4"/>
+                <constraint firstItem="qRR-bT-6G1" firstAttribute="top" secondItem="VyJ-Og-6gr" secondAttribute="bottom" constant="5" id="CDV-kT-XPb"/>
+                <constraint firstItem="VyJ-Og-6gr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Jwx-yi-yAP"/>
+                <constraint firstItem="VyJ-Og-6gr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fL1-6u-uTg"/>
+                <constraint firstAttribute="trailing" secondItem="VyJ-Og-6gr" secondAttribute="trailing" id="nlP-hB-edO"/>
+            </constraints>
+            <size key="customSize" width="186" height="202"/>
+            <connections>
+                <outlet property="_nameLabel" destination="qRR-bT-6G1" id="Ler-ml-bow"/>
+            </connections>
+            <point key="canvasLocation" x="321" y="186"/>
+        </collectionViewCell>
+    </objects>
+</document>

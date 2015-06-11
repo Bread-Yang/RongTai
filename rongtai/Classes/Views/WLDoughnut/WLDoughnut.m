@@ -84,6 +84,13 @@
     [self setNeedsDisplay];
 }
 
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    _r = frame.size.width<frame.size.height ? frame.size.width/2-2:frame.size.height/2-2;
+    [self setNeedsDisplay];
+}
+
 #pragma mark - 重写drawRect
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];

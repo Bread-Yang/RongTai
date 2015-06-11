@@ -36,6 +36,9 @@
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
 		3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE05B41B28154D0008EFCA /* Login.storyboard */; };
 		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
+		3DCA815A1B29619E0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81581B29619E0064ECDF /* DoughnutCollectionViewCell.m */; };
+		3DCA815B1B29619E0064ECDF /* DoughnutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DCA81591B29619E0064ECDF /* DoughnutCollectionViewCell.xib */; };
+		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -159,6 +162,11 @@
 		3DBE05B41B28154D0008EFCA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		3DBE05B61B282BA10008EFCA /* PowerConsumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerConsumeViewController.h; sourceTree = "<group>"; };
 		3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerConsumeViewController.m; sourceTree = "<group>"; };
+		3DCA81571B29619E0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
+		3DCA81581B29619E0064ECDF /* DoughnutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutCollectionViewCell.m; sourceTree = "<group>"; };
+		3DCA81591B29619E0064ECDF /* DoughnutCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoughnutCollectionViewCell.xib; sourceTree = "<group>"; };
+		3DCA815C1B296EF30064ECDF /* DoughnutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutViewController.h; sourceTree = "<group>"; };
+		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -419,6 +427,11 @@
 				3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */,
 				3DBE05B61B282BA10008EFCA /* PowerConsumeViewController.h */,
 				3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */,
+				3DCA815C1B296EF30064ECDF /* DoughnutViewController.h */,
+				3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */,
+				3DCA81571B29619E0064ECDF /* DoughnutCollectionViewCell.h */,
+				3DCA81581B29619E0064ECDF /* DoughnutCollectionViewCell.m */,
+				3DCA81591B29619E0064ECDF /* DoughnutCollectionViewCell.xib */,
 			);
 			path = "Data Center";
 			sourceTree = "<group>";
@@ -789,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
+				3DCA815B1B29619E0064ECDF /* DoughnutCollectionViewCell.xib in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
@@ -822,6 +836,7 @@
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
 				56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
+				3DCA815A1B29619E0064ECDF /* DoughnutCollectionViewCell.m in Sources */,
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
@@ -854,6 +869,7 @@
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
+				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D65A4881B25841800B7B411 /* MainViewController.m in Sources */,
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
