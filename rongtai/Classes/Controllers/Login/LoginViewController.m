@@ -10,6 +10,7 @@
 
 //
 #import "DataCenterViewController.h"
+#import "FamilyManageViewController.h"
 
 @interface LoginViewController ()
 {
@@ -63,7 +64,7 @@
 
 #pragma mark - 新浪登陆按钮方法
 - (IBAction)sinaLogin:(id)sender {
-    
+        [self.navigationController pushViewController:[FamilyManageViewController new] animated:YES];
 }
 
 

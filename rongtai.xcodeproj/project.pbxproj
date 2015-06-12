@@ -19,6 +19,10 @@
 		3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258EE1B1D525E006C9179 /* UIView+Hierarchy.m */; };
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
+		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
+		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
+		3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FA1B2AB0CC00F52352 /* User.m */; };
+		3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */; };
 		3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D5E901C1B26C43E00B03107 /* Localizable.strings */; };
 		3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4811B25437A00B7B411 /* WLFanChart.m */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
@@ -131,6 +135,13 @@
 		3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		3D0258F11B1D525E006C9179 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyCollectionViewCell.h; sourceTree = "<group>"; };
+		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
+		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
+		3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyManageViewController.m; sourceTree = "<group>"; };
+		3D2C82F91B2AB0CC00F52352 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		3D2C82FA1B2AB0CC00F52352 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = userIcon.jpg; sourceTree = "<group>"; };
 		3D5E901B1B26C43E00B03107 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D5E901D1B26C43F00B03107 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3D65A4801B25437A00B7B411 /* WLFanChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFanChart.h; sourceTree = "<group>"; };
@@ -344,6 +355,18 @@
 				3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */,
 			);
 			path = IQKeyBoardManager;
+			sourceTree = "<group>";
+		};
+		3D2C82F21B2A93B400F52352 /* FamilyManage */ = {
+			isa = PBXGroup;
+			children = (
+				3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */,
+				3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */,
+				3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */,
+				3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */,
+				3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */,
+			);
+			path = FamilyManage;
 			sourceTree = "<group>";
 		};
 		3D65A47F1B25437A00B7B411 /* WLFanChart */ = {
@@ -640,6 +663,7 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
 				3D65A4831B25792800B7B411 /* MenuViewController.h */,
 				3D65A4841B25792800B7B411 /* MenuViewController.m */,
@@ -662,6 +686,8 @@
 				5661F6A51B281361006066A0 /* MusicModel.m */,
 				56E6B32D1B2932FF000178BD /* TimingMassageModel.h */,
 				56E6B32E1B2932FF000178BD /* TimingMassageModel.m */,
+				3D2C82F91B2AB0CC00F52352 /* User.h */,
+				3D2C82FA1B2AB0CC00F52352 /* User.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -826,6 +852,7 @@
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				5604A3531B15A61E00967191 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
+				3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
@@ -864,6 +891,8 @@
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
 				3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
 				5661F6A31B281302006066A0 /* LineUICollectionViewFlowLayout.m in Sources */,
+				3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */,
+				3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */,
 				3D0258F61B1D525E006C9179 /* IQTextView.m in Sources */,
 				DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */,
 				3D0258F51B1D525E006C9179 /* IQSegmentedNextPrevious.m in Sources */,
@@ -881,6 +910,7 @@
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
+				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,

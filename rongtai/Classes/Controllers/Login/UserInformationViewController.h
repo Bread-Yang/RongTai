@@ -8,6 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+@class User;
+@class UserInformationViewController;
+
+@protocol UserInformationDelegate <NSObject>
+
+@optional
+-(void)deleteButtonClicked:(User*)user WithIndex:(NSUInteger)index;
+
+@end
+
 @interface UserInformationViewController : UIViewController
+
+/**
+ *  代理
+ */
+@property(nonatomic, weak)id<UserInformationDelegate> delegate;
+
+/**
+ *  编辑模式
+ */
+-(void)editMode:(User*)user WithIndex:(NSUInteger)index;
 
 @end
