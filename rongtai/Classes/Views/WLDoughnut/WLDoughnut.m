@@ -36,7 +36,8 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self setUp];
-        _r = frame.size.width/2;
+        _r = frame.size.width<frame.size.height ? frame.size.width/2:frame.size.height/2;
+
     }
     return self;
 }
@@ -87,7 +88,7 @@
 -(void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    _r = frame.size.width<frame.size.height ? frame.size.width/2-2:frame.size.height/2-2;
+    _r = frame.size.width<frame.size.height ? frame.size.width/2:frame.size.height/2;
     [self setNeedsDisplay];
 }
 
@@ -96,7 +97,7 @@
     [super drawRect:rect];
     CGContextRef context = UIGraphicsGetCurrentContext();
     //中心点，圆心
-    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.width/2);
+    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     //未完成的比例计算出灰色部分角度大小
     CGFloat pAngle = (1-_percent)*M_PI*2;
     

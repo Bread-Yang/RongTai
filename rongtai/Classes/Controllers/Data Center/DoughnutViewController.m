@@ -41,11 +41,11 @@
     _matgin = width*0.05;
     _countInRow = 2;
     _reuseIdentifier = @"doughnutCell";
-    [_collectView registerNib:[UINib nibWithNibName:@"DoughnutCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:_reuseIdentifier];
+    [_collectView registerClass:[DoughnutCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     
     CGFloat cellWidth = (_collectView.frame.size.width- _countInRow* _matgin) / 2;
-    CGFloat cellHeight = (_collectView.frame.size.height - (3-1)*_matgin)/3;
+    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
     flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = _matgin;
     flowLayout.minimumLineSpacing = _matgin;
@@ -75,7 +75,6 @@
     cell.count = [c integerValue];
     NSNumber* p = _percent[indexPath.row];
     cell.percent = [p floatValue];
-    [cell updateFrame];
     return cell;
 }
 

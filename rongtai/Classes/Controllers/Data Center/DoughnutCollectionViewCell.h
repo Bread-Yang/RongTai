@@ -2,7 +2,7 @@
 //  DoughnutCollectionViewCell.h
 //  rongtai
 //
-//  Created by William-zhang on 15/6/11.
+//  Created by William-zhang on 15/6/12.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
@@ -24,7 +24,5 @@
  *  次数比例
  */
 @property(nonatomic)CGFloat percent;
-
--(void)updateFrame;
 
 @end

@@ -2,7 +2,7 @@
 //  DoughnutCollectionViewCell.m
 //  rongtai
 //
-//  Created by William-zhang on 15/6/11.
+//  Created by William-zhang on 15/6/12.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
@@ -11,43 +11,60 @@
 
 @interface DoughnutCollectionViewCell ()
 {
-   WLDoughnut* _doughnut;  //圆环比例图
-    
-   UILabel *_nameLabel;  //按摩名称Label
-   UILabel *_countLabel; //次数Label
+    UILabel *_nameLabel;  //按摩名称Label
+    WLDoughnut* _doughnut;  //圆环比例图
+    UILabel *_countLabel; //次数Label
 }
 @end
 
-
 @implementation DoughnutCollectionViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-    [self setUp];
-}
-
--(void)setFrame:(CGRect)frame
+-(instancetype)initWithFrame:(CGRect)frame
 {
-    [super setFrame:frame];
-    [self updateFrame];
+    if (self = [super initWithFrame:frame]) {
+        [self setUp];
+    }
+    return self;
 }
 
 #pragma mark - 初始化
 -(void)setUp
 {
-    self.backgroundColor = [UIColor clearColor];
-    _percent = 0.5;
-    CGRect f = self.frame;
-    f.size.width = 0.8;
-    f.size.height = 0.8;
-    f.origin = CGPointMake(f.size.width*0.1, _nameLabel.frame.size.width+15);
-    _doughnut = [[WLDoughnut alloc]initWithFrame:f];
-    _doughnut.percent = _percent;
+//    self.backgroundColor = [UIColor greenColor];
+    
+    CGFloat w = self.frame.size.width;
+    CGFloat h = self.frame.size.height;
+    UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, 1)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:line];
+    
+    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 1+0.05*h, 0.6*w, 0.1*h-1)];
+    _nameLabel.text = @"工作减压";
+    _nameLabel.textAlignment = NSTextAlignmentCenter;
+    _nameLabel.adjustsFontSizeToFitWidth = YES;
+    _nameLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    [self addSubview:_nameLabel];
+    
+    _doughnut = [[WLDoughnut alloc]initWithFrame:CGRectMake(w*0.1, 0.2*h+1, w*0.8, 0.8*h)];
+    _doughnut.percent = 0.5;
     [self addSubview:_doughnut];
-    _countLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _doughnut.r-_doughnut.lineWidth*2, _doughnut.r/4)];
+    
+    _countLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.25*w, 0.4*h+1, 0.5*w, 0.3*h)];
+    _countLabel.text = @"120";
+    _countLabel.font  = [UIFont systemFontOfSize:45];
+    _countLabel.textColor = [UIColor lightGrayColor];
     _countLabel.textAlignment = NSTextAlignmentCenter;
-    _countLabel.backgroundColor = [UIColor blueColor];
+    _countLabel.adjustsFontSizeToFitWidth = YES;
+    _countLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+//    _countLabel.backgroundColor = [UIColor blueColor];
     [self addSubview:_countLabel];
+    
+    UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0.7*h+8, w, 0.1*h-1)];
+    l.text = @"次";
+    l.textAlignment = NSTextAlignmentCenter;
+    l.adjustsFontSizeToFitWidth = YES;
+    l.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    [self addSubview:l];
 }
 
 #pragma mark - set方法
@@ -68,30 +85,5 @@
     _count = count;
     _countLabel.text = [NSString stringWithFormat:@"%d",_count];
 }
-
-#pragma mark - 更新圆环图大小
--(void)updateFrame
-{
-    CGRect f = self.frame;
-    f.size.width *= 0.8;
-    f.size.height *= 0.8;
-    f.origin = CGPointMake(self.frame.size.width*0.1, _nameLabel.frame.size.height+15);
-    _doughnut.frame = f;
-//    [self addSubview:_doughnut];
-//    CGRect f = self.frame;
-////    NSLog(@"cell:%@",NSStringFromCGRect(self.frame));
-//    f.origin = CGPointZero;
-//    f.size.width -= 40;
-//    f.size.height -= 40;
-//    _doughnut.frame = f;
-    
-    NSLog(@"countLabel:%@",NSStringFromCGRect(_countLabel.frame));
-    _countLabel.frame = CGRectMake(0, 0, _doughnut.r-_doughnut.lineWidth*2, _doughnut.r/4);
-//    _countLabel.center = self.center;
-    _countLabel.adjustsFontSizeToFitWidth = YES;
-    _countLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-}
-
-
 
 @end
