@@ -32,7 +32,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = NSLocalizedString(@"家庭成员", nil);
-    
+    UIButton
     CGFloat width = [UIScreen mainScreen].bounds.size.width*0.8;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     _matgin = width*0.05;
