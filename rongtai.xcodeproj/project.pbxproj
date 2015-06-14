@@ -19,6 +19,7 @@
 		3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258EE1B1D525E006C9179 /* UIView+Hierarchy.m */; };
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
+		3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638B1B2D18C500266D9A /* RFSegmentView.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
 		3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FA1B2AB0CC00F52352 /* User.m */; };
@@ -137,6 +138,8 @@
 		3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		3D0258F11B1D525E006C9179 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		3D10638A1B2D18C500266D9A /* RFSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFSegmentView.h; sourceTree = "<group>"; };
+		3D10638B1B2D18C500266D9A /* RFSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFSegmentView.m; sourceTree = "<group>"; };
 		3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyCollectionViewCell.h; sourceTree = "<group>"; };
 		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
 		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
@@ -329,6 +332,7 @@
 		3D0258DB1B1D525E006C9179 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				3D1063891B2D18C500266D9A /* RFSegmentView */,
 				3DCDF3551B1FEB7400BA491E /* SlideMenu */,
 				3D0258DC1B1D525E006C9179 /* IQKeyBoardManager */,
 			);
@@ -362,6 +366,15 @@
 				3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */,
 			);
 			path = IQKeyBoardManager;
+			sourceTree = "<group>";
+		};
+		3D1063891B2D18C500266D9A /* RFSegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				3D10638A1B2D18C500266D9A /* RFSegmentView.h */,
+				3D10638B1B2D18C500266D9A /* RFSegmentView.m */,
+			);
+			path = RFSegmentView;
 			sourceTree = "<group>";
 		};
 		3D2C82F21B2A93B400F52352 /* FamilyManage */ = {
@@ -900,6 +913,7 @@
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
+				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
