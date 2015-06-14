@@ -34,24 +34,43 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 5;
 }
 
-/*
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//	UILabel* headerTitle = [[UILabel alloc] init];
+//	headerTitle.text = @"(具体产品信息由客户提供资料)";
+//	[headerTitle sizeToFit];
+	
+//	NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:headerTitle attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:20.f];
+	
+	UILabel *label = [[UILabel alloc] init];
+	label.text = @"(具体产品信息由客户提供资料)";
+	label.backgroundColor = [UIColor whiteColor];
+	label.textAlignment = NSTextAlignmentCenter;
+	return label;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 50;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BuyUITableViewCell"
+									  forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
