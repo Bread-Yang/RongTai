@@ -34,6 +34,6 @@
 /**
  *  技法偏好
  */
-@property(nonatomic)SkillsPreference skillsPreference;
+@property(nonatomic)SkillPreference skillsPreference;
 
 @end

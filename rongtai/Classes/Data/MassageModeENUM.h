@@ -20,7 +20,7 @@
 typedef NS_ENUM(NSUInteger, MassageUsetiming)
 {
     MUAfterWork = 0,  //工作后
-    MUAfterBusinessTrip,  //出差后
+    MUAfterTraveling,  //出差后
     MUAfterSport,       //运动后
     MUAfterShopping,   //逛街后
 };
@@ -60,7 +60,7 @@ typedef NS_ENUM(NSUInteger, MassageWay)
 /**
  *  技法偏好枚举
  */
-typedef NS_ENUM(NSUInteger, SkillsPreference)
+typedef NS_ENUM(NSUInteger, SkillPreference)
 {
     SPMalaxation = 0, //揉捏
     SPManipulation,  //推拿
