@@ -32,19 +32,19 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = NSLocalizedString(@"家庭成员", nil);
-    CGFloat width = [UIScreen mainScreen].bounds.size.width*0.8;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    _matgin = width*0.05;
+    _matgin = width*0.8*0.05;
     _countInRow = 2;
-    _reuseIdentifier = @"doughnutCell";
+    _reuseIdentifier = @"FamilyCell";
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
-    CGFloat cellWidth = (width- _countInRow* _matgin) / 2;
+    CGFloat cellWidth = (width*0.8- _countInRow* _matgin) / 2;
 //    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
     flowLayout.itemSize = CGSizeMake(cellWidth, cellWidth);
     flowLayout.minimumInteritemSpacing = _matgin;
     flowLayout.minimumLineSpacing = _matgin;
     
-    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width, height -64-30) collectionViewLayout:flowLayout];
+    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
     _collectView.backgroundColor = [UIColor clearColor];
     [_collectView registerClass:[FamilyCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     _collectView.dataSource = self;

@@ -20,6 +20,10 @@
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
 		3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638B1B2D18C500266D9A /* RFSegmentView.m */; };
+		3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */; };
+		3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */; };
+		3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */; };
+		3D1063A31B2D8E4A00266D9A /* WLCheckButon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
 		3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FA1B2AB0CC00F52352 /* User.m */; };
@@ -139,6 +143,14 @@
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
 		3D10638A1B2D18C500266D9A /* RFSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFSegmentView.h; sourceTree = "<group>"; };
 		3D10638B1B2D18C500266D9A /* RFSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFSegmentView.m; sourceTree = "<group>"; };
+		3D10638E1B2D559000266D9A /* CustomProcedureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProcedureViewController.h; sourceTree = "<group>"; };
+		3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomProcedureViewController.m; sourceTree = "<group>"; };
+		3D1063971B2D5D6A00266D9A /* ProcedureManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageViewController.h; sourceTree = "<group>"; };
+		3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageViewController.m; sourceTree = "<group>"; };
+		3D10639A1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageCollectionViewCell.h; sourceTree = "<group>"; };
+		3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageCollectionViewCell.m; sourceTree = "<group>"; };
+		3D1063A11B2D8E4A00266D9A /* WLCheckButon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCheckButon.h; sourceTree = "<group>"; };
+		3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCheckButon.m; sourceTree = "<group>"; };
 		3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyCollectionViewCell.h; sourceTree = "<group>"; };
 		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
 		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
@@ -372,6 +384,28 @@
 				3D10638B1B2D18C500266D9A /* RFSegmentView.m */,
 			);
 			path = RFSegmentView;
+			sourceTree = "<group>";
+		};
+		3D10638D1B2D557C00266D9A /* CustomProcedure */ = {
+			isa = PBXGroup;
+			children = (
+				3D10638E1B2D559000266D9A /* CustomProcedureViewController.h */,
+				3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */,
+				3D1063971B2D5D6A00266D9A /* ProcedureManageViewController.h */,
+				3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */,
+				3D10639A1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.h */,
+				3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */,
+			);
+			path = CustomProcedure;
+			sourceTree = "<group>";
+		};
+		3D1063A01B2D8E4A00266D9A /* WLCheckButton */ = {
+			isa = PBXGroup;
+			children = (
+				3D1063A11B2D8E4A00266D9A /* WLCheckButon.h */,
+				3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */,
+			);
+			path = WLCheckButton;
 			sourceTree = "<group>";
 		};
 		3D2C82F21B2A93B400F52352 /* FamilyManage */ = {
@@ -680,6 +714,7 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
 				3D65A4831B25792800B7B411 /* MenuViewController.h */,
@@ -730,6 +765,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D1063A01B2D8E4A00266D9A /* WLCheckButton */,
 				5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */,
 				3D65A47F1B25437A00B7B411 /* WLFanChart */,
 				3DA8D60E1B21B226002328DF /* WLDoughnut */,
@@ -905,6 +941,7 @@
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
+				3D1063A31B2D8E4A00266D9A /* WLCheckButon.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
@@ -921,6 +958,7 @@
 				56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
+				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
@@ -938,7 +976,9 @@
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
+				3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
+				3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */,
 				3D65A4881B25841800B7B411 /* MainViewController.m in Sources */,
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
 				56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */,

@@ -11,6 +11,7 @@
 //
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
+#import "CustomProcedureViewController.h"
 
 @interface LoginViewController ()
 {
@@ -59,7 +60,11 @@
 
 #pragma mark - qq登陆按钮方法
 - (IBAction)qqLogin:(id)sender {
-    [self.navigationController pushViewController:[DataCenterViewController new] animated:YES];
+//    [self.navigationController pushViewController:[DataCenterViewController new] animated:YES];
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    CustomProcedureViewController* c = (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
+    [self.navigationController pushViewController:c animated:YES];
+    
 }
 
 #pragma mark - 新浪登陆按钮方法
