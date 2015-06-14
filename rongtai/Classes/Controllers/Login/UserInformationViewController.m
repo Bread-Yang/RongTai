@@ -5,9 +5,9 @@
 //  Created by William-zhang on 15/6/2.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
-
-
 #import "UserInformationViewController.h"
+#import "User.h"
+
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
 {
@@ -19,6 +19,8 @@
     NSMutableArray* _month;      //生日月份
     
     __weak IBOutlet UIView *_middleView;
+    CGFloat _index; //记住编辑时传入的Index
+    User* _user;
 }
 @end
 
@@ -155,7 +157,36 @@
 - (IBAction)heightUnitSelected:(id)sender {
 }
 
+#pragma mark - 编辑模式
+-(void)editMode:(User *)user WithIndex:(NSUInteger)index
+{
+    _index = index;
+    _user = user;
+    [self upDateUI];
+    self.title = NSLocalizedString(@"编辑信息", nil);
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    UIButton* delete = [[UIButton alloc]initWithFrame:CGRectMake(width*0.325, height - height*0.15, width*0.35, height*0.06)];
+    delete.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.6];
+    [delete setTitle:NSLocalizedString(@"删除", nil) forState:UIControlStateNormal];
+    [delete addTarget:self action:@selector(deleteUser:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:delete];
+}
 
+#pragma mark - 用户数据绑定在控件上
+-(void)upDateUI
+{
+    
+}
+
+#pragma mark - 删除按钮方法
+-(void)deleteUser:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(deleteButtonClicked:WithIndex:)])
+    {
+        [self.delegate deleteButtonClicked:_user WithIndex:_index];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

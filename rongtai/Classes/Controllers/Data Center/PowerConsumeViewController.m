@@ -9,6 +9,9 @@
 #import "PowerConsumeViewController.h"
 
 @interface PowerConsumeViewController ()
+{
+    __weak IBOutlet UILabel *_ygdf;
+}
 
 @end
 
@@ -16,7 +19,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   //    NSLog(@"%@",NSStringFromCGRect(_ygdf.frame));
     // Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"耗电量：%@",NSStringFromCGRect(_ygdf.frame));
+    _ygdf.adjustsFontSizeToFitWidth = YES;
+    _ygdf.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 }
 
 - (void)didReceiveMemoryWarning {
