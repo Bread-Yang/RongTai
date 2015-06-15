@@ -48,7 +48,6 @@
 		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
 		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
-		3DCB46531B2E737400DFB1CF /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -97,7 +96,6 @@
 		56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */; };
 		56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */; };
 		56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32E1B2932FF000178BD /* TimingMassageModel.m */; };
-		56E6B3361B297766000178BD /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3351B297766000178BD /* BuyRTProductTableViewController.m */; };
 		DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */; };
 		DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE51B147A36005617DA /* JRCBPeripheral.m */; };
 		DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE81B147A36005617DA /* RTBleConnector.m */; };
@@ -201,8 +199,6 @@
 		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCA81621B2A7B6F0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
 		3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutCollectionViewCell.m; sourceTree = "<group>"; };
-		3DCB46511B2E737400DFB1CF /* BuyRTProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyRTProductTableViewController.h; sourceTree = "<group>"; };
-		3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -275,7 +271,6 @@
 		56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingMassageTableViewController.m; sourceTree = "<group>"; };
 		56E6B32D1B2932FF000178BD /* TimingMassageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingMassageModel.h; sourceTree = "<group>"; };
 		56E6B32E1B2932FF000178BD /* TimingMassageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingMassageModel.m; sourceTree = "<group>"; };
-		56E6B3351B297766000178BD /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyRTProductTableViewController.m; path = BuyRTProduct/BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBluetoothManager.h; sourceTree = "<group>"; };
 		DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBluetoothManager.m; sourceTree = "<group>"; };
 		DF9C7CE41B147A36005617DA /* JRCBPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRCBPeripheral.h; sourceTree = "<group>"; };
@@ -524,15 +519,6 @@
 			path = "Data Center";
 			sourceTree = "<group>";
 		};
-		3DCB46501B2E737400DFB1CF /* BuyRTProduct */ = {
-			isa = PBXGroup;
-			children = (
-				3DCB46511B2E737400DFB1CF /* BuyRTProductTableViewController.h */,
-				3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */,
-			);
-			path = BuyRTProduct;
-			sourceTree = "<group>";
-		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -744,7 +730,6 @@
 			isa = PBXGroup;
 			children = (
 				56C6688A1B2D58B300CDC72B /* ProductInstruction */,
-				56E6B3331B297753000178BD /* BuyRTProduct */,
 				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
@@ -996,7 +981,6 @@
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
-				56E6B3361B297766000178BD /* BuyRTProductTableViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
 				3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */,
 				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
@@ -1009,7 +993,6 @@
 				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
-				3DCB46531B2E737400DFB1CF /* BuyRTProductTableViewController.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
