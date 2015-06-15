@@ -41,6 +41,9 @@
 "推拿" = "Manipulation";
 "敲打" = "Strike";
 "组合" = "Mix";
+"自定义程序" = "CustomProcedure";
+"选择已有程序" = "Select";
+"编辑" = "Edit";
 
 
 

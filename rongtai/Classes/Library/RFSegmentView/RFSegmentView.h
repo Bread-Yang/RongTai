@@ -17,6 +17,7 @@
  */
 @property(nonatomic ,strong) UIColor *tintColor;
 @property(nonatomic) id<RFSegmentViewDelegate> delegate;
+@property(nonatomic) NSInteger numberOfLines;
 
 /**
  *  默认构造函数

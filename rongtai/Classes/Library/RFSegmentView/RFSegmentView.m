@@ -37,10 +37,10 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 2, frame.size.width-10, frame.size.height-4)];
         _titleLabel.textAlignment   = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.numberOfLines = 0;
+//        _titleLabel.numberOfLines = 0;
         _titleLabel.adjustsFontSizeToFitWidth = YES;
         _titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self addSubview:_titleLabel];
         
         self.norColor        = norColor;
@@ -104,6 +104,7 @@
 @property(nonatomic ,strong) NSMutableArray *titlesArray;
 @property(nonatomic ,strong) NSMutableArray *itemsArray;
 @property(nonatomic ,strong) NSMutableArray *linesArray;
+
 @end
 @implementation RFSegmentView
 
@@ -200,6 +201,16 @@
         }
     }
     
+}
+
+#pragma mark - set方法
+-(void)setNumberOfLines:(NSInteger)numberOfLines
+{
+    _numberOfLines = numberOfLines;
+    for (int i = 0; i<_itemsArray.count; i++) {
+        RFSegmentItem *item = _itemsArray[i];
+        item.titleLabel.numberOfLines = _numberOfLines;
+    }
 }
 
 #pragma mark - RFSegmentItemDelegate
