@@ -290,10 +290,29 @@
                                     <segue destination="HL4-F4-Opw" kind="show" id="jzP-D1-6AG"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOR-1q-IkZ">
+                                <rect key="frame" x="397" y="518" width="60" height="30"/>
+                                <state key="normal" title="使用帮助">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="0zq-hf-YUu" kind="show" id="3Lx-8j-qnq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YmG-BG-hhl">
+                                <rect key="frame" x="494" y="72" width="90" height="30"/>
+                                <state key="normal" title="更多程序下载">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hot-A2-vuP" kind="show" id="QTB-st-xFS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xgb-Eg-cbL" firstAttribute="top" secondItem="arn-14-Qtk" secondAttribute="bottom" constant="8" id="0gh-Uh-QuH"/>
+                            <constraint firstItem="YmG-BG-hhl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="6vn-ir-scO"/>
                             <constraint firstItem="Q5F-HE-lFL" firstAttribute="baseline" secondItem="krZ-xU-typ" secondAttribute="baseline" id="A7X-B2-Zc2"/>
                             <constraint firstItem="Uy4-ap-g8S" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BXT-mx-uEo"/>
                             <constraint firstAttribute="centerY" secondItem="8RN-nf-xhV" secondAttribute="centerY" constant="10" id="Eu9-DN-edJ"/>
@@ -308,9 +327,11 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="P6Q-os-RJ8"/>
                             <constraint firstAttribute="centerX" secondItem="arn-14-Qtk" secondAttribute="centerX" constant="9" id="QVH-BJ-kz1"/>
                             <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="bTc-F4-IcJ" secondAttribute="bottom" constant="49" id="RCq-X5-VNc"/>
+                            <constraint firstItem="jr3-py-b2t" firstAttribute="top" secondItem="ZOR-1q-IkZ" secondAttribute="top" id="SeM-gZ-Yet"/>
                             <constraint firstItem="krZ-xU-typ" firstAttribute="top" secondItem="Ygh-nL-1nV" secondAttribute="bottom" constant="229" id="VbP-LW-qw6"/>
                             <constraint firstItem="jr3-py-b2t" firstAttribute="top" secondItem="045-CT-wlD" secondAttribute="top" id="WSL-fV-ZQQ"/>
                             <constraint firstItem="bTc-F4-IcJ" firstAttribute="centerX" secondItem="krZ-xU-typ" secondAttribute="centerX" id="Wdf-ab-NYk"/>
+                            <constraint firstItem="YmG-BG-hhl" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="WoE-uD-HKw"/>
                             <constraint firstAttribute="centerX" secondItem="Ygh-nL-1nV" secondAttribute="centerX" constant="8.5" id="YYh-FQ-SrO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="cU7-B4-slf"/>
                             <constraint firstItem="045-CT-wlD" firstAttribute="top" secondItem="xgb-Eg-cbL" secondAttribute="bottom" constant="-2" id="i3V-kk-XVK"/>
@@ -319,6 +340,7 @@
                             <constraint firstAttribute="centerX" secondItem="xgb-Eg-cbL" secondAttribute="centerX" constant="8.5" id="kYK-YE-TCn"/>
                             <constraint firstAttribute="bottom" secondItem="Uop-MY-anJ" secondAttribute="bottom" id="mde-7g-ODA"/>
                             <constraint firstItem="jr3-py-b2t" firstAttribute="leading" secondItem="045-CT-wlD" secondAttribute="trailing" constant="8" id="tjY-5t-kg9"/>
+                            <constraint firstItem="ZOR-1q-IkZ" firstAttribute="leading" secondItem="jr3-py-b2t" secondAttribute="trailing" constant="8" id="up3-Ey-X5u"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -390,6 +412,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LMe-DB-jB4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517" y="1159"/>
+        </scene>
+        <!--使用帮助-->
+        <scene sceneID="8NL-Bd-hz4">
+            <objects>
+                <viewController id="0zq-hf-YUu" userLabel="使用帮助" customClass="ProductInstructionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZDc-9C-8uy"/>
+                        <viewControllerLayoutGuide type="bottom" id="rmT-pE-o8z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VCi-T3-owk" customClass="UIScrollView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wmc-N4-UJc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-184" y="1907"/>
         </scene>
         <!--我要购买-->
         <scene sceneID="GbX-8w-FgO">
@@ -473,6 +513,101 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZ7-eP-b5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="517" y="1898"/>
+        </scene>
+        <!--程序下载-->
+        <scene sceneID="1Xi-up-x3Y">
+            <objects>
+                <tableViewController title="程序下载" id="hot-A2-vuP" userLabel="程序下载" customClass="ProgramDownloadTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="FsD-NX-5ev">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramDownUItableViewCell" id="5ZE-Qn-36B">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ZE-Qn-36B" id="akK-1e-mcb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQ6-ZP-Ahh">
+                                            <rect key="frame" x="0.0" y="8" width="600" height="113.5"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-G3-CIp">
+                                                    <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="6Kp-Fm-BUa"/>
+                                                        <constraint firstAttribute="width" constant="44" id="uSh-16-nXg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5L-eW-ygC">
+                                                    <rect key="frame" x="67" y="19" width="68" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kc-77-YDh">
+                                                    <rect key="frame" x="491" y="12" width="51" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfX-ml-LCk">
+                                                    <rect key="frame" x="562" y="8" width="30" height="30"/>
+                                                    <state key="normal" title="删除">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <real key="value" value="0.5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="起源于韩国,原是一种家庭按摩方法.通过扳,推,挤等松解关节的动作.在按摩过程中起到很好的舒筋活络的作用,能有效治疗各部位的软组织损伤及骨关节劳损,具有很强的保健治疗功能." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pl-aq-XS5">
+                                                    <rect key="frame" x="8" y="65" width="584" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="bfX-ml-LCk" secondAttribute="trailing" constant="8" id="1gl-UA-hy2"/>
+                                                <constraint firstItem="5kc-77-YDh" firstAttribute="top" secondItem="bfX-ml-LCk" secondAttribute="top" constant="4" id="98J-1y-Ejq"/>
+                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="leading" secondItem="s0A-G3-CIp" secondAttribute="trailing" constant="15" id="BOg-g5-BBM"/>
+                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="8" id="BrZ-OC-LMQ"/>
+                                                <constraint firstItem="5kc-77-YDh" firstAttribute="centerY" secondItem="bfX-ml-LCk" secondAttribute="centerY" constant="-0.75" id="Ewm-Du-Cjh"/>
+                                                <constraint firstItem="bfX-ml-LCk" firstAttribute="leading" secondItem="5kc-77-YDh" secondAttribute="trailing" constant="20" id="Iae-sD-bZF"/>
+                                                <constraint firstItem="bfX-ml-LCk" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="8" id="L8f-Aj-Bk1"/>
+                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="top" secondItem="s0A-G3-CIp" secondAttribute="bottom" constant="13" id="POQ-n6-XYV"/>
+                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="8" id="Ryc-Ff-hb4"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Pl-aq-XS5" secondAttribute="trailing" constant="8" id="fAX-B5-LtH"/>
+                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="8" id="xJg-29-e9O"/>
+                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="centerY" secondItem="s0A-G3-CIp" secondAttribute="centerY" constant="-0.5" id="zgD-Kf-8kC"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="98J-1y-Ejq"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="leading" secondItem="akK-1e-mcb" secondAttribute="leadingMargin" constant="-8" id="72A-Da-cbo"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="tQ6-ZP-Ahh" secondAttribute="bottom" id="Dah-xc-fMR"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="tQ6-ZP-Ahh" secondAttribute="trailing" constant="-8" id="kEd-LL-qIS"/>
+                                        <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="top" secondItem="akK-1e-mcb" secondAttribute="topMargin" id="l3A-Rd-ldZ"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hot-A2-vuP" id="c1T-Hg-EKG"/>
+                            <outlet property="delegate" destination="hot-A2-vuP" id="olr-oV-fTZ"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yKx-qE-0uz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1172" y="1898"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BIT-1Q-SLy">
