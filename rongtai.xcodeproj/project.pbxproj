@@ -743,7 +743,8 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3DCB46501B2E737400DFB1CF /* BuyRTProduct */,
+				56C6688A1B2D58B300CDC72B /* ProductInstruction */,
+				56E6B3331B297753000178BD /* BuyRTProduct */,
 				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
