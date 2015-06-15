@@ -913,8 +913,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T7F-ph-BrK">
                                 <rect key="frame" x="16" y="0.0" width="568" height="524"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utn-JK-dZa">
-                                        <rect key="frame" x="16" y="0.0" width="568" height="304"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="utn-JK-dZa">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="304"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="按摩手法" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYo-kb-ffx">
                                                 <rect key="frame" x="8" y="185" width="149.5" height="44"/>
@@ -1020,13 +1020,13 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="J5q-Sp-3ra"/>
                                                 <exclude reference="Qce-Eh-Adr"/>
+                                                <exclude reference="J5q-Sp-3ra"/>
                                             </mask>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vk6-Kr-fSv">
-                                        <rect key="frame" x="16" y="319" width="568" height="138"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vk6-Kr-fSv">
+                                        <rect key="frame" x="0.0" y="319" width="568" height="138"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="速度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jJ-X5-IbV">
                                                 <rect key="frame" x="10" y="28" width="34" height="20.5"/>

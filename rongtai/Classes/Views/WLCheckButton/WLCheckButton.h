@@ -1,5 +1,5 @@
 //
-//  WLCheckButon.h
+//  WLCheckButton.h
 //  UICheckButton
 //
 //  Created by William-zhang on 15/6/14.
@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class WLCheckButon;
+@class WLCheckButton;
 
 @protocol WLCheckButtonDelegate <NSObject>
 
 @optional
--(void)checkButton:(WLCheckButon*) checkButton Clicked:(NSInteger)index;
+-(void)checkButton:(WLCheckButton*) checkButton Clicked:(NSInteger)index;
 
 @end
 
-@interface WLCheckButon : UIView
+@interface WLCheckButton : UIView
 
 /**
  *  选项名称

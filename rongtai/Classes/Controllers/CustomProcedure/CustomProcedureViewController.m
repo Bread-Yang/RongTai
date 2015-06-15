@@ -12,7 +12,7 @@
 #import "CustomProcedureViewController.h"
 #import "ProcedureManageViewController.h"
 #import "RFSegmentView.h"
-#import "WLCheckButon.h"
+#import "WLCheckButton.h"
 
 @interface CustomProcedureViewController ()
 {
@@ -61,10 +61,10 @@
     __weak IBOutlet UIView *_widthView;
     
     //单选按钮
-    WLCheckButon* _speedCheckButton;
-    WLCheckButon* _pressureCheckButton;
-    WLCheckButon* _dynamicsCheckButton;
-    WLCheckButon* _widthCheckButton;
+    WLCheckButton* _speedCheckButton;
+    WLCheckButton* _pressureCheckButton;
+    WLCheckButton* _dynamicsCheckButton;
+    WLCheckButton* _widthCheckButton;
 }
 @end
 
@@ -93,13 +93,10 @@
     //初始化各个分段控制器
     [self setUpSegmentedControl];
     
+    //初始化各个单选按钮
+    [self setUpCheckBox];
+    
     _isEdit = NO;
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    if (_isEdit) {
-           }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -139,7 +136,22 @@
 #pragma mark - 初始化单选按钮
 -(void)setUpCheckBox
 {
+    CGRect f = CGRectMake(0, 0, (SCREENWIDTH-32)*0.3, 44);
+    _speedCheckButton = [[WLCheckButton alloc]initWithFrame:f];
+    _speedCheckButton.itemNames = @[NSLocalizedString(@"偏快", nil),NSLocalizedString(@"偏慢", nil)];
+    [_speedView addSubview:_speedCheckButton];
     
+    _pressureCheckButton = [[WLCheckButton alloc]initWithFrame:f];
+    _pressureCheckButton.itemNames = @[NSLocalizedString(@"偏大", nil),NSLocalizedString(@"偏小", nil)];
+    [_pressureView addSubview:_pressureCheckButton];
+    
+    _dynamicsCheckButton = [[WLCheckButton alloc]initWithFrame:f];
+    _dynamicsCheckButton.itemNames = @[NSLocalizedString(@"偏重", nil),NSLocalizedString(@"偏轻", nil)];
+    [_dynamicsView addSubview:_dynamicsCheckButton];
+    
+    _widthCheckButton = [[WLCheckButton alloc]initWithFrame:f];
+    _widthCheckButton.itemNames = @[NSLocalizedString(@"偏宽", nil),NSLocalizedString(@"偏窄", nil)];
+    [_widthView addSubview:_widthCheckButton];
 }
 
 
@@ -154,8 +166,8 @@
 -(void)editModeWithMassageMode:(MassageMode*)massageMode Index:(NSUInteger)index;
 {
     self.view.backgroundColor = [UIColor whiteColor];
-//    _isEdit = YES;
     self.title = @"编辑";
+    _isEdit = YES;
     UIBarButtonItem* save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveMassageMode)];
     self.navigationItem.rightBarButtonItem = save;
     

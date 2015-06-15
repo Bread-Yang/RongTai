@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
-#import "WLCheckButon.h"
+#import "WLCheckButton.h"
 
-@interface WLCheckButon ()
+@interface WLCheckButton ()
 {
     UILabel* _leftLabel;
     UILabel* _rightLabel;
@@ -18,7 +18,7 @@
 @end
 
 
-@implementation WLCheckButon
+@implementation WLCheckButton
 
 -(instancetype)initWithFrame:(CGRect)frame
 {

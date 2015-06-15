@@ -23,7 +23,7 @@
 		3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */; };
 		3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */; };
 		3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */; };
-		3D1063A31B2D8E4A00266D9A /* WLCheckButon.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */; };
+		3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
 		3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FA1B2AB0CC00F52352 /* User.m */; };
@@ -150,8 +150,8 @@
 		3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageViewController.m; sourceTree = "<group>"; };
 		3D10639A1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageCollectionViewCell.h; sourceTree = "<group>"; };
 		3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageCollectionViewCell.m; sourceTree = "<group>"; };
-		3D1063A11B2D8E4A00266D9A /* WLCheckButon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCheckButon.h; sourceTree = "<group>"; };
-		3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCheckButon.m; sourceTree = "<group>"; };
+		3D1063A11B2D8E4A00266D9A /* WLCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCheckButton.h; sourceTree = "<group>"; };
+		3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCheckButton.m; sourceTree = "<group>"; };
 		3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyCollectionViewCell.h; sourceTree = "<group>"; };
 		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
 		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
@@ -266,7 +266,6 @@
 		56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingMassageTableViewController.m; sourceTree = "<group>"; };
 		56E6B32D1B2932FF000178BD /* TimingMassageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingMassageModel.h; sourceTree = "<group>"; };
 		56E6B32E1B2932FF000178BD /* TimingMassageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingMassageModel.m; sourceTree = "<group>"; };
-		56E6B3341B297766000178BD /* BuyRTProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyRTProductTableViewController.h; path = BuyRTProduct/BuyRTProductTableViewController.h; sourceTree = "<group>"; };
 		56E6B3351B297766000178BD /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyRTProductTableViewController.m; path = BuyRTProduct/BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRBluetoothManager.h; sourceTree = "<group>"; };
 		DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRBluetoothManager.m; sourceTree = "<group>"; };
@@ -405,8 +404,8 @@
 		3D1063A01B2D8E4A00266D9A /* WLCheckButton */ = {
 			isa = PBXGroup;
 			children = (
-				3D1063A11B2D8E4A00266D9A /* WLCheckButon.h */,
-				3D1063A21B2D8E4A00266D9A /* WLCheckButon.m */,
+				3D1063A11B2D8E4A00266D9A /* WLCheckButton.h */,
+				3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */,
 			);
 			path = WLCheckButton;
 			sourceTree = "<group>";
@@ -667,15 +666,6 @@
 				56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */,
 			);
 			name = TimingMassage;
-			sourceTree = "<group>";
-		};
-		56E6B3331B297753000178BD /* BuyRTProduct */ = {
-			isa = PBXGroup;
-			children = (
-				56E6B3341B297766000178BD /* BuyRTProductTableViewController.h */,
-				56E6B3351B297766000178BD /* BuyRTProductTableViewController.m */,
-			);
-			name = BuyRTProduct;
 			sourceTree = "<group>";
 		};
 		DF9C7CE01B147A36005617DA /* Classes */ = {
@@ -953,7 +943,7 @@
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
-				3D1063A31B2D8E4A00266D9A /* WLCheckButon.m in Sources */,
+				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
