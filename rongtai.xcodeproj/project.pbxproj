@@ -48,6 +48,7 @@
 		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
 		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
+		3DCB46531B2E737400DFB1CF /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -198,6 +199,8 @@
 		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCA81621B2A7B6F0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
 		3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutCollectionViewCell.m; sourceTree = "<group>"; };
+		3DCB46511B2E737400DFB1CF /* BuyRTProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyRTProductTableViewController.h; sourceTree = "<group>"; };
+		3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -515,6 +518,15 @@
 			path = "Data Center";
 			sourceTree = "<group>";
 		};
+		3DCB46501B2E737400DFB1CF /* BuyRTProduct */ = {
+			isa = PBXGroup;
+			children = (
+				3DCB46511B2E737400DFB1CF /* BuyRTProductTableViewController.h */,
+				3DCB46521B2E737400DFB1CF /* BuyRTProductTableViewController.m */,
+			);
+			path = BuyRTProduct;
+			sourceTree = "<group>";
+		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +728,7 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3DCB46501B2E737400DFB1CF /* BuyRTProduct */,
 				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
@@ -976,6 +989,7 @@
 				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
+				3DCB46531B2E737400DFB1CF /* BuyRTProductTableViewController.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
