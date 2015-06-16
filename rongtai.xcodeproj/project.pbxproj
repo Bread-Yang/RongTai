@@ -48,6 +48,8 @@
 		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
 		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
+		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
+		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -203,6 +205,10 @@
 		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCA81621B2A7B6F0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
 		3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutCollectionViewCell.m; sourceTree = "<group>"; };
+		3DCB46551B2EA8F700DFB1CF /* CustomMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMassageViewController.h; sourceTree = "<group>"; };
+		3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMassageViewController.m; sourceTree = "<group>"; };
+		3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishMassageViewController.h; sourceTree = "<group>"; };
+		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -531,6 +537,17 @@
 			path = "Data Center";
 			sourceTree = "<group>";
 		};
+		3DCB46541B2EA8C200DFB1CF /* Massage */ = {
+			isa = PBXGroup;
+			children = (
+				3DCB46551B2EA8F700DFB1CF /* CustomMassageViewController.h */,
+				3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */,
+				3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */,
+				3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */,
+			);
+			path = Massage;
+			sourceTree = "<group>";
+		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -769,6 +786,7 @@
 			isa = PBXGroup;
 			children = (
 				56C668941B2E845900CDC72B /* BuyRTProduct */,
+				3DCB46541B2EA8C200DFB1CF /* Massage */,
 				56C6688A1B2D58B300CDC72B /* ProductInstruction */,
 				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
@@ -1003,6 +1021,7 @@
 				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
+				3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
@@ -1033,6 +1052,7 @@
 				3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */,
 				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
 				3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */,
+				3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,

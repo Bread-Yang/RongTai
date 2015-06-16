@@ -109,7 +109,7 @@
     //绘制圆形
     [[UIColor lightGrayColor] setStroke];
     CGContextSaveGState(context);
-    CGFloat r = rect.size.width/(3*_steps);
+    CGFloat r = _r/_steps;
     for (int step = 1; step <= _steps; step++) {
         CGContextAddArc(context, _centerPoint.x, _centerPoint.y, r*(_steps-step+1), 0, M_PI*2, 0);
         CGContextStrokePath(context);

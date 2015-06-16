@@ -13,6 +13,7 @@
 #import "ProcedureManageViewController.h"
 #import "RFSegmentView.h"
 #import "WLCheckButton.h"
+#import "CustomMassageViewController.h"
 
 @interface CustomProcedureViewController ()
 {
@@ -136,7 +137,7 @@
 #pragma mark - 初始化单选按钮
 -(void)setUpCheckBox
 {
-    CGRect f = CGRectMake(0, 0, (SCREENWIDTH-32)*0.3, 44);
+    CGRect f = CGRectMake(0, 0, (SCREENWIDTH-32)*0.3, (SCREENWIDTH-32)*0.3*3/8);
     _speedCheckButton = [[WLCheckButton alloc]initWithFrame:f];
     _speedCheckButton.itemNames = @[NSLocalizedString(@"偏快", nil),NSLocalizedString(@"偏慢", nil)];
     [_speedView addSubview:_speedCheckButton];
@@ -158,7 +159,9 @@
 
 #pragma mark - 开始按摩按钮
 - (IBAction)startMassage:(UIButton *)sender {
-    
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    CustomMassageViewController* c = (CustomMassageViewController*)[s instantiateViewControllerWithIdentifier:@"CustomMassageVC"];
+    [self.navigationController pushViewController:c animated:YES];
 }
 
 
