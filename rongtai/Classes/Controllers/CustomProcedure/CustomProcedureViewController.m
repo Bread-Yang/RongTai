@@ -81,7 +81,7 @@
     //添加导航栏右边按钮
     UIBarButtonItem* select = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"选择已有程序", nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectEsxistingProcedure)];
     self.navigationItem.rightBarButtonItem = select;
-    
+	
     
     //调整各标题字体
     _useTiming.adjustsFontSizeToFitWidth = YES;
