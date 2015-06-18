@@ -445,7 +445,7 @@
         <!--我要购买-->
         <scene sceneID="GbX-8w-FgO">
             <objects>
-                <tableViewController title="我要购买" id="HL4-F4-Opw" sceneMemberID="viewController">
+                <tableViewController title="我要购买" id="HL4-F4-Opw" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="170" sectionHeaderHeight="22" sectionFooterHeight="22" id="S9C-hY-hmf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

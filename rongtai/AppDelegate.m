@@ -37,6 +37,8 @@
 	
 	// MagicalRecord Setup
 	[MagicalRecord setupCoreDataStackWithStoreNamed:@"RongTai.sqlite"];
+	
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
 //    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
 //    MenuViewController* menu = [[MenuViewController alloc]init];

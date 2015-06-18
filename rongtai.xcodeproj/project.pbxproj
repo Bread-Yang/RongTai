@@ -110,6 +110,8 @@
 		5672814E1B32617D0059C18E /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5672812D1B32617D0059C18E /* MagicalRecord+Setup.m */; };
 		5672814F1B32617D0059C18E /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5672812F1B32617D0059C18E /* MagicalRecord+ShorthandSupport.m */; };
 		567281501B32617D0059C18E /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281311B32617D0059C18E /* MagicalRecord.m */; };
+		567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567281511B32A02C0059C18E /* CoreGraphics.framework */; };
+		567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281551B32A0E20059C18E /* MBProgressHUD.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
 		56C349471B15A927007C8B3F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349461B15A927007C8B3F /* CoreTelephony.framework */; };
@@ -349,6 +351,9 @@
 		567281331B32617D0059C18E /* MagicalRecordLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordLogging.h; sourceTree = "<group>"; };
 		567281341B32617D0059C18E /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		567281351B32617D0059C18E /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
+		567281511B32A02C0059C18E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		567281541B32A0E20059C18E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
+		567281551B32A0E20059C18E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		56C349441B15A699007C8B3F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56C349461B15A927007C8B3F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -405,6 +410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */,
 				56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */,
 				56C349551B15BCD4007C8B3F /* libsqlite3.dylib in Frameworks */,
 				56C349531B15BCC9007C8B3F /* libstdc++.dylib in Frameworks */,
@@ -901,6 +907,15 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		567281531B32A0860059C18E /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				567281541B32A0E20059C18E /* MBProgressHUD.h */,
+				567281551B32A0E20059C18E /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		56C6688A1B2D58B300CDC72B /* ProductInstruction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1047,6 +1062,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				567281531B32A0860059C18E /* MBProgressHUD */,
 				56C668A51B30395000CDC72B /* CircleButton */,
 				56C6689E1B300F6700CDC72B /* VerticalSlider */,
 				3D1063A01B2D8E4A00266D9A /* WLCheckButton */,
@@ -1083,6 +1099,7 @@
 		DF9C7D011B147B89005617DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				567281511B32A02C0059C18E /* CoreGraphics.framework */,
 				56C3495E1B17199D007C8B3F /* MediaPlayer.framework */,
 				56C349541B15BCD4007C8B3F /* libsqlite3.dylib */,
 				56C349521B15BCC9007C8B3F /* libstdc++.dylib */,
@@ -1221,6 +1238,7 @@
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
 				56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
+				567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */,
 				567281431B32617D0059C18E /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				567281401B32617D0059C18E /* NSManagedObject+MagicalRecord.m in Sources */,
 				56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */,

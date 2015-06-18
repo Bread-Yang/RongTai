@@ -5,8 +5,13 @@
 //  Created by William-zhang on 15/6/2.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
+#import "NSString+RT.h"
+
 #import "UserInformationViewController.h"
 #import "User.h"
+#import "MBProgressHUD.h"
+#import "CoreData+MagicalRecord.h"
+#import "Member.h"
 
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
@@ -14,6 +19,11 @@
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
+	__weak IBOutlet UISegmentedControl *sexSegmentedControl;
+	__weak IBOutlet UISegmentedControl *heightUnitSegmentedControl;
+	
+	UIDatePicker *birthdayDatePicker;
+	
     NSMutableArray* _heightArr;  //身高数组
     NSMutableArray* _year;       //生日年份
     NSMutableArray* _month;      //生日月份
@@ -68,10 +78,14 @@
     UIView* inputView2 = [[UIView alloc]initWithFrame:f];
     inputView2.backgroundColor = [UIColor whiteColor];
     UIPickerView* birthdayPicker = [[UIPickerView alloc]initWithFrame:f];
-    birthdayPicker.dataSource = self;
-    birthdayPicker.delegate = self;
-    birthdayPicker.tag = 1002;
-    [inputView2 addSubview:birthdayPicker];
+	birthdayDatePicker = [[UIDatePicker alloc] initWithFrame:f];
+	birthdayDatePicker.datePickerMode = UIDatePickerModeDate;
+	[birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+//    birthdayPicker.dataSource = self;
+//    birthdayPicker.delegate = self;
+//    birthdayPicker.tag = 1002;
+//    [inputView2 addSubview:birthdayPicker];
+	[inputView2 addSubview:birthdayDatePicker];
     _birthday.inputView = inputView2;
     
     // Do any additional setup after loading the view.
@@ -131,12 +145,24 @@
     {
         NSInteger yearRow = [pickerView selectedRowInComponent:0];
         NSInteger monthRow = [pickerView selectedRowInComponent:1];
-        _birthday.text = [NSString stringWithFormat:@"%@年%@月",_year[yearRow],_month[monthRow]];
+        _birthday.text = [NSString stringWithFormat:@"%@/%@/",_year[yearRow],_month[monthRow]];
     }
+}
+
+#pragma mark - UIDatePicker
+
+-(void)onDatePickerValueChanged:(UIDatePicker *)datePicker {
+	NSDate *birthday = datePicker.date;
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	[dateFormat setDateStyle:NSDateFormatterShortStyle];
+	NSString *dateString = [dateFormat stringFromDate:birthday];
+	NSLog(@"Date: %@", dateString);
+	 _birthday.text = [NSString stringWithFormat:@"%@", dateString];
 }
 
 #pragma mark - 头像按钮方法
 - (IBAction)selectUserIcon:(id)sender {
+	
 }
 
 
@@ -147,6 +173,60 @@
 
 #pragma mark - 保存信息按钮方法
 - (IBAction)save:(id)sender {
+	NSString *userName = _name.text;
+	if ([NSString isBlankString:userName]) {
+		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+		
+		// Configure for text only and offset down
+		hud.mode = MBProgressHUDModeText;
+		hud.labelText = @"昵称不能为空";
+		hud.margin = 10.f;
+		hud.removeFromSuperViewOnHide = YES;
+		
+		[hud hide:YES afterDelay:1];
+		return;
+	}
+	
+	NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
+	
+	if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
+		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+		
+		// Configure for text only and offset down
+		hud.mode = MBProgressHUDModeText;
+		hud.labelText = @"昵称已经存在";
+		hud.margin = 10.f;
+		hud.removeFromSuperViewOnHide = YES;
+		
+		[hud hide:YES afterDelay:3];
+		return;
+	}
+	
+	Member *editMember;
+	
+	if ([self.title isEqual:NSLocalizedString(@"编辑信息", nil)]) {   // 编辑信息
+		editMember =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
+	} else {													// 新增信息
+		editMember = [Member MR_createEntity];
+	}
+	
+	editMember.name = userName;
+	
+	editMember.sex = [NSNumber numberWithInteger:sexSegmentedControl.selectedSegmentIndex];
+	
+	editMember.height = [NSNumber numberWithFloat:[_height.text floatValue]];
+	
+	if (heightUnitSegmentedControl.selectedSegmentIndex == 0) {
+		editMember.heightUnit = @"cm";
+	} else {
+		editMember.heightUnit = @"inch";
+	}
+	
+	editMember.birthday = birthdayDatePicker.date;
+	
+	[[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+	
+	[self.navigationController popViewControllerAnimated:TRUE];
 }
 
 #pragma mark - 性别选择
@@ -171,6 +251,25 @@
     [delete setTitle:NSLocalizedString(@"删除", nil) forState:UIControlStateNormal];
     [delete addTarget:self action:@selector(deleteUser:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:delete];
+	
+	NSArray *array = [Member MR_findByAttribute:@"name" withValue:user.name];
+	if ([array count] == 1) {
+		Member *editMember = array[0];
+		_name.text = editMember.name;
+		sexSegmentedControl.selectedSegmentIndex = [editMember.sex integerValue];
+		_height.text = [editMember.height stringValue];
+		if ([editMember.heightUnit isEqual:@"cm"]) {
+			heightUnitSegmentedControl.selectedSegmentIndex = 0;
+		} else {
+			heightUnitSegmentedControl.selectedSegmentIndex = 1;
+		}
+		birthdayDatePicker.date = editMember.birthday;
+		
+		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+		[dateFormat setDateStyle:NSDateFormatterShortStyle];
+		NSString *dateString = [dateFormat stringFromDate:editMember.birthday];
+	    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
+	}
 }
 
 #pragma mark - 用户数据绑定在控件上

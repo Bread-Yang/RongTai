@@ -28,6 +28,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+	
     // Do any additional setup after loading the view.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults objectForKey:@"intro_screen_viewed"]) {
@@ -54,24 +57,20 @@
      object:      self.musicPlayer];
     
     [self.musicPlayer beginGeneratingPlaybackNotifications];
-	
-	// MagicalRecord
-	Member *test = [Member MR_findFirstByAttribute:@"name" withValue:@"yoghourt"];
-	
-	Member *member = [Member MR_createEntity];
-	member.name = @"yoghourt";
-	
-	[[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
     [super viewWillAppear:animated];
+	
+	NSLog(@"viewWillAppear");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillDisappear:animated];
+	
+	NSLog(@"viewWillDisappear");
 }
 
 - (void)didReceiveMemoryWarning {

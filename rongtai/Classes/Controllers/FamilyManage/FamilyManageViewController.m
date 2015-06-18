@@ -10,6 +10,9 @@
 #import "FamilyCollectionViewCell.h"
 #import "UserInformationViewController.h"
 
+#import "CoreData+MagicalRecord.h"
+#import "Member.h"
+
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     NSMutableArray* _users;  //用户数组
@@ -21,12 +24,6 @@
 @end
 
 @implementation FamilyManageViewController
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,15 +47,27 @@
     _collectView.dataSource = self;
     _collectView.delegate = self;
     [self.view addSubview:_collectView];
-
-    _users = [NSMutableArray new];
-    for (int i = 0; i < 3; i++) {
-        User* user = [User new];
-        user.name = @"爸爸";
-        user.imageUrl = @"userIcon.jpg";
-        [_users addObject:user];
-    }
+	
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	self.navigationController.navigationBarHidden = NO;
+	
+	_users = [NSMutableArray new];
+	
+	NSArray *memberArray = [Member MR_findAll];
+	
+	for (int i = 0; i < [memberArray count]; i++) {
+		Member *item = memberArray[i];
+		
+		User* user = [User new];
+		user.name = item.name;
+		user.imageUrl = @"userIcon.jpg";
+		[_users addObject:user];
+	}
+	[_collectView reloadData];
 }
 
 
