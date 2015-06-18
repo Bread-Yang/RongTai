@@ -13,6 +13,8 @@
 
 #import "FirstViewController.h"
 #import "AppIntrouceView.h"
+#import "CoreData+MagicalRecord.h"
+#import "Member.h"
 
 @interface FirstViewController () <AppIntroduceViewDelegate>
 
@@ -52,6 +54,14 @@
      object:      self.musicPlayer];
     
     [self.musicPlayer beginGeneratingPlaybackNotifications];
+	
+	// MagicalRecord
+	Member *test = [Member MR_findFirstByAttribute:@"name" withValue:@"yoghourt"];
+	
+	Member *member = [Member MR_createEntity];
+	member.name = @"yoghourt";
+	
+	[[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

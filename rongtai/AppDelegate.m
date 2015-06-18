@@ -10,10 +10,12 @@
 
 #import "AppDelegate.h"
 
-#import "WXApi.h"
 #import <TencentOpenAPI/QQApi.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
+
+#import "CoreData+MagicalRecord.h"
+#import "WXApi.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
 
@@ -28,22 +30,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	
+	// ShareSDK Setup
+	[ShareSDK registerApp:@"7bbafb4115a9"];
+	[self initializeSocialPlatform];
+	
+	// MagicalRecord Setup
+	[MagicalRecord setupCoreDataStackWithStoreNamed:@"RongTai.sqlite"];
 
-    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
-    MenuViewController* menu = [[MenuViewController alloc]init];
-    slide.leftMenu = menu;
-    slide.enableSwipeGesture = YES;
-    slide.enableShadow = NO;
-    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+//    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
+//    MenuViewController* menu = [[MenuViewController alloc]init];
+//    slide.leftMenu = menu;
+//    slide.enableSwipeGesture = YES;
+//    slide.enableShadow = NO;
+//    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+//	
+//	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//	self.window.backgroundColor = [UIColor whiteColor];
+//	self.window.rootViewController = slide;
+//	[self.window makeKeyAndVisible];
 	
-//
-//    
-//    // Override point for customization after application launch.
-    [ShareSDK registerApp:@"7bbafb4115a9"];
-    [self initializeSocialPlatform];
-	
- 
-    
     return YES;
 }
 
@@ -69,13 +75,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - 设置URL Scheme
+
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url {
     return [ShareSDK handleOpenURL:url
                         wxDelegate:self];
 }
-
-#pragma mark - 设置URL Scheme
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

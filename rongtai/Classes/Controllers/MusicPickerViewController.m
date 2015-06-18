@@ -16,6 +16,8 @@
 
 @property NSArray *songsArray;
 
+@property (nonatomic, strong) UIRefreshControl* refreshControl;
+
 @property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 
 @end
@@ -25,6 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+	
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	[self.refreshControl addTarget:self
+						action:@selector(refreshView:)
+			  forControlEvents:UIControlEventValueChanged];
+	[self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"松手更新数据"]];
+	[self.musicTableView addSubview:self.refreshControl];
     
     self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
 //    [self.musicPlayer setQueueWithQuery:[MPMediaQuery songsQuery]];
@@ -56,6 +65,20 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - refresh
+
+-(void) refreshView:(UIRefreshControl *)refresh {
+	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"更新数据中..."];
+	
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"MMM d, h:mm a"];
+	NSString *lastUpdated = [NSString stringWithFormat:@"上次更新日期 %@",
+							 [formatter stringFromDate:[NSDate date]]];
+	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+	
+	[refresh endRefreshing];
+}
 
 #pragma mark - UITableViewDataSource
 
