@@ -118,7 +118,7 @@
         float viewHeight      = CGRectGetHeight(frame);
         float init_x          = CGRectGetMinX(frame);
         float init_y          = CGRectGetMinY(frame);
-        
+        self.selectIndex = 0;
         //
         self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
         self.bgView.backgroundColor    = [UIColor whiteColor];
@@ -213,9 +213,25 @@
     }
 }
 
+-(void)setSelectIndex:(NSUInteger)selectIndex
+{
+    _selectIndex = selectIndex;
+    for (int i = 0; i<_itemsArray.count; i++) {
+        RFSegmentItem* item = _itemsArray[i];
+        if (i == _selectIndex) {
+            item.isSelected = YES;
+        }
+        else
+        {
+            item.isSelected = NO;
+        }
+    }
+}
+
 #pragma mark - RFSegmentItemDelegate
 - (void)ItemStateChanged:(RFSegmentItem *)currentItem index:(NSInteger)index isSelected:(BOOL)isSelected
 {
+    _selectIndex = index;
     if (self.itemsArray.count <=2) {
         return;
     }

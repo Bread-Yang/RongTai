@@ -8,8 +8,10 @@
 
 #import "ProcedureManageTableViewCell.h"
 #import "CustomProgram.h"
+#import "IQKeyboardManager.h"
+#import "CoreData+MagicalRecord.h"
 
-@interface ProcedureManageTableViewCell ()
+@interface ProcedureManageTableViewCell ()<UIAlertViewDelegate>
 {
     UIButton* _btn;
     UIView* _line;
@@ -36,7 +38,6 @@
 {
     _customProgram = customProgram;
     [_btn setTitle:_customProgram.name forState:UIControlStateNormal];
-    
 }
 
 -(void)setIsEdit:(BOOL)isEdit
@@ -60,7 +61,9 @@
         CGFloat w = self.frame.size.width;
         CGFloat h = self.frame.size.height;
         _btn = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 0.15*h, 0.4*w, 0.7*h)];
-        _btn.backgroundColor = [UIColor redColor];
+//        _btn.backgroundColor = [UIColor redColor];
+        [_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_btn addTarget:self action:@selector(clickName) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_btn];
         
         _line = [[UIView alloc]initWithFrame:CGRectMake(0, h-0.5, w, 0.5)];
@@ -73,10 +76,47 @@
 #pragma mark - 点击名称方法
 -(void)clickName
 {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"名称" message:@"名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
-    
-    [alert show];
+    if (_isEdit) {
+        IQKeyboardManager* m = [IQKeyboardManager sharedManager];
+        [m setEnable:NO];
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.delegate = self;
+        UITextField* textFeile = [alert textFieldAtIndex:0];
+        textFeile.text = _customProgram.name;
+        [alert show];
+
+    }
 }
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    IQKeyboardManager* m = [IQKeyboardManager sharedManager];
+    [m setEnable:YES];
+    if (buttonIndex == 1) {
+        CustomProgram* c = [CustomProgram MR_findByAttribute:@"name" withValue:_customProgram.name][0];
+        UITextField* textFeile = [alertView textFieldAtIndex:0];
+        c.name = textFeile.text;
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    }
+    if ([self.delegate respondsToSelector:@selector(cellDidFinishedChangeName:)]) {
+        [self.delegate cellDidFinishedChangeName:self];
+    }
+}
+
+-(BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    UITextField* textFeile = [alertView textFieldAtIndex:0];
+    if (textFeile.text.length>0) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

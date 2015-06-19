@@ -13,11 +13,11 @@
 #import "CoreData+MagicalRecord.h"
 #import "CustomProgram.h"
 
-@interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate, ProcedureManageTableViewCellDelegate>
 {
     UIBarButtonItem* _edit;  //编辑按钮
     BOOL _isEdit;  //是否处在编辑状态
-    NSArray* _massageModes;  //按摩模式数组
+    NSMutableArray* _massageModes;  //按摩模式数组
     UICollectionView* _collectionView;
     CGFloat _matgin;
     NSInteger _countInRow;
@@ -34,7 +34,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"自定义程序", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    _isEdit = YES;
+    _isEdit = NO;
     _edit = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"编辑", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editProcedure)];
     self.navigationItem.rightBarButtonItem = _edit;
      _reuseIdentifier = @"ProcedureManageCell";
@@ -73,7 +73,14 @@
 {
     [super viewWillAppear:animated];
 //     _massageModes  = [CustomProgram MR_findAll];
-    _massageModes = [[NSArray alloc]initWithObjects:[CustomProgram new], [CustomProgram new], [CustomProgram new],nil];
+    NSArray* cp = [CustomProgram MR_findAll];
+    _massageModes = [NSMutableArray new];
+    for (int i = 0; i<cp.count; i++) {
+        CustomProgram* c = cp[i];
+        MassageMode* massageMode = [MassageMode new];
+        massageMode.name = c.name;
+        [_massageModes addObject:c];
+    }
     [_tableView reloadData];
 }
 
@@ -89,12 +96,13 @@
     {
         _edit.title = NSLocalizedString(@"编辑", nil);
     }
+    [_tableView reloadData];
 }
 
 #pragma mark - tableView的代理
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+//    return 3;
     return _massageModes.count;
 }
 
@@ -104,9 +112,10 @@
     if (!cell) {
         cell = [[ProcedureManageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:_reuseIdentifier];
     }
-//    CustomProgram* c = _massageModes[indexPath.row];
-//    cell.customProgram = c;
+    CustomProgram* c = _massageModes[indexPath.row];
+    cell.customProgram = c;
     cell.isEdit = _isEdit;
+    cell.delegate = self;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -123,12 +132,27 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CustomProgram* c = _massageModes[indexPath.row];
+//    CustomProgram* c = _massageModes[indexPath.row];
+    CustomProgram* cp = _massageModes[indexPath.row];
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    if (_isEdit) {
+        CustomProcedureViewController* cpVC = (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
+        [cpVC editModeWithCustomProgram:cp Index:indexPath.row];
+        [self.navigationController pushViewController:cpVC animated:YES];
+    }
+    else
+    {
+        
+    }
     
 }
 
 
-
+#pragma mark - cell代理实现
+-(void)cellDidFinishedChangeName:(ProcedureManageTableViewCell *)cell
+{
+    [_tableView reloadData];
+}
 
 
 
@@ -158,7 +182,7 @@
     if (_isEdit)
     {
         CustomProcedureViewController* c = (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
-        [c editModeWithMassageMode:nil Index:0];
+//        [c editModeWithMassageMode:nil Index:0];
         [self.navigationController pushViewController:c animated:YES];
     }
     else
