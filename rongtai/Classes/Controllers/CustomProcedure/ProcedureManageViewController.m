@@ -9,16 +9,21 @@
 #import "ProcedureManageViewController.h"
 #import "CustomProcedureViewController.h"
 #import "ProcedureManageCollectionViewCell.h"
+#import "ProcedureManageTableViewCell.h"
+#import "CoreData+MagicalRecord.h"
+#import "CustomProgram.h"
 
-@interface ProcedureManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     UIBarButtonItem* _edit;  //编辑按钮
     BOOL _isEdit;  //是否处在编辑状态
-    NSMutableArray* _massageModes;  //按摩模式数组
+    NSArray* _massageModes;  //按摩模式数组
     UICollectionView* _collectionView;
     CGFloat _matgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
+    
+    UITableView* _tableView;
     
 }
 @end
@@ -29,31 +34,107 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"自定义程序", nil);
     self.view.backgroundColor = [UIColor whiteColor];
-    _isEdit = NO;
+    _isEdit = YES;
     _edit = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"编辑", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editProcedure)];
     self.navigationItem.rightBarButtonItem = _edit;
+     _reuseIdentifier = @"ProcedureManageCell";
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    _matgin = width*0.8*0.05;
-    _countInRow = 2;
-    _reuseIdentifier = @"ProcedureManageCell";
-    UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
-    CGFloat cellWidth = (width*0.8- _countInRow* _matgin) / 2;
-    //    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
-    flowLayout.itemSize = CGSizeMake(cellWidth, cellWidth);
-    flowLayout.minimumInteritemSpacing = _matgin;
-    flowLayout.minimumLineSpacing = _matgin;
     
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
-    _collectionView.backgroundColor = [UIColor clearColor];
-    [_collectionView registerClass:[ProcedureManageCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    [self.view addSubview:_collectionView];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, width, height) style:UITableViewStyleGrouped];
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_tableView];
+    
+    
+//    _matgin = width*0.8*0.05;
+//    _countInRow = 2;
+//
+//    UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
+//    CGFloat cellWidth = (width*0.8- _countInRow* _matgin) / 2;
+//    //    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
+//    flowLayout.itemSize = CGSizeMake(cellWidth, cellWidth);
+//    flowLayout.minimumInteritemSpacing = _matgin;
+//    flowLayout.minimumLineSpacing = _matgin;
+//    
+//    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
+//    _collectionView.backgroundColor = [UIColor clearColor];
+//    [_collectionView registerClass:[ProcedureManageCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
+//    _collectionView.dataSource = self;
+//    _collectionView.delegate = self;
+//    [self.view addSubview:_collectionView];
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//     _massageModes  = [CustomProgram MR_findAll];
+    _massageModes = [[NSArray alloc]initWithObjects:[CustomProgram new], [CustomProgram new], [CustomProgram new],nil];
+    [_tableView reloadData];
+}
+
+
+#pragma mark - 编辑/完成 按钮方法
+-(void)editProcedure
+{
+    _isEdit = !_isEdit;
+    if (_isEdit) {
+        _edit.title = NSLocalizedString(@"完成", nil);
+    }
+    else
+    {
+        _edit.title = NSLocalizedString(@"编辑", nil);
+    }
+}
+
+#pragma mark - tableView的代理
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+    return _massageModes.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProcedureManageTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:_reuseIdentifier];
+    if (!cell) {
+        cell = [[ProcedureManageTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:_reuseIdentifier];
+    }
+//    CustomProgram* c = _massageModes[indexPath.row];
+//    cell.customProgram = c;
+    cell.isEdit = _isEdit;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.0001;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CustomProgram* c = _massageModes[indexPath.row];
+    
+}
+
+
+
+
+
+
+
+
+///待删除
 
 #pragma mark - collectionView代理
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -86,18 +167,6 @@
     }
 }
 
-#pragma mark - 编辑/完成 按钮方法
--(void)editProcedure
-{
-    _isEdit = !_isEdit;
-    if (_isEdit) {
-        _edit.title = NSLocalizedString(@"完成", nil);
-    }
-    else
-    {
-        _edit.title = NSLocalizedString(@"编辑", nil);
-    }
-}
 
 
 

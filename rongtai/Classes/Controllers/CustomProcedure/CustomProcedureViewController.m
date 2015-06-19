@@ -14,6 +14,8 @@
 #import "RFSegmentView.h"
 #import "WLCheckButton.h"
 #import "CustomMassageViewController.h"
+#import "CustomProgram.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface CustomProcedureViewController ()
 {
@@ -193,6 +195,14 @@
 #pragma mark - 保存按摩模式
 -(void)saveMassageMode
 {
+    CustomProgram* _customProgram;
+    if (_isEdit) {
+        _customProgram = [CustomProgram MR_findByAttribute:@"name" withValue:_massageMode.name][0];
+    }
+    else
+    {
+        _customProgram = [CustomProgram MR_createEntity];
+    }
     
 }
 
