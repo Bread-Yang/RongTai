@@ -202,7 +202,7 @@
 	}
 	
 	Member *editMember;
-	
+	//
 	if ([self.title isEqual:NSLocalizedString(@"编辑信息", nil)]) {   // 编辑信息
 		editMember =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
 	} else {													// 新增信息
