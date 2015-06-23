@@ -28,6 +28,8 @@
 
 + (NSArray *) getAllAudiobooks;
 
++ (NSDictionary *) getAllSongsDictionary;
+
 + (NSArray *) getAllSong; //返回 按首字母排列  array {Item ,Item,Item,Item,Item}
 
 + (NSArray*) getAllPlaylistName;

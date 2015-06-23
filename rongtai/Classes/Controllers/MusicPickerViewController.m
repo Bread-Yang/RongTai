@@ -12,9 +12,10 @@
 
 #import "MusicModel.h"
 
-@interface MusicPickerViewController ()
-
-@property NSArray *songsArray;
+@interface MusicPickerViewController () {
+	NSArray *alphabeticalIndexTitles;
+	NSDictionary *songsDictionary;
+}
 
 @property (nonatomic, strong) UIRefreshControl* refreshControl;
 
@@ -28,27 +29,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 	
+//	alphabeticalIndexTitles = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
+	
 	self.refreshControl = [[UIRefreshControl alloc] init];
 	[self.refreshControl addTarget:self
 						action:@selector(refreshView:)
 			  forControlEvents:UIControlEventValueChanged];
 	[self.refreshControl setAttributedTitle:[[NSAttributedString alloc] initWithString:@"松手更新数据"]];
 	[self.musicTableView addSubview:self.refreshControl];
+	
+	self.musicTableView.sectionIndexColor = [UIColor blackColor];
+	
+	songsDictionary = [MusicModel getAllSongsDictionary];
+	
+	alphabeticalIndexTitles = [[songsDictionary allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
     self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
 //    [self.musicPlayer setQueueWithQuery:[MPMediaQuery songsQuery]];
-    self.songsArray = [[NSArray alloc]initWithArray:[MusicModel getAllSong]];
 //    [self.musicPlayer setQueueWithItemCollection:self.songsArray];
     [self.musicTableView reloadData];
-    
-    MPMediaQuery *everything = [MPMediaQuery songsQuery];
-    
-    NSLog(@"Logging items from a generic query...");
-    NSArray *itemsFromGenericQuery = [everything items];
-    for (MPMediaItem *song in itemsFromGenericQuery) {
-        NSString *songTitle = [song valueForProperty: MPMediaItemPropertyTitle];
-        NSLog (@"%@", songTitle);
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,17 +82,13 @@
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return 1;
-//    } else {
-//        return [[self.songsArray objectAtIndex:section - 1] count];
-//    }
-
-    return [[self.songsArray objectAtIndex:section] count];
+	NSString *sectionTitle = [alphabeticalIndexTitles objectAtIndex:section];
+	NSArray *sectionSongs = [songsDictionary objectForKey:sectionTitle];
+	return [sectionSongs count];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.songsArray count];
+    return [songsDictionary count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,8 +99,11 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseId];
     }
+	
+	NSString *sectionTitle = [alphabeticalIndexTitles objectAtIndex:indexPath.section];
+	NSArray *sectionSongs = [songsDictionary objectForKey:sectionTitle];
     
-    MPMediaItem *item = [[self.songsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    MPMediaItem *item = [sectionSongs objectAtIndex:indexPath.row];
     [cell.textLabel setText:[MusicModel getSongName:item]];
     [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@-%@", [MusicModel getSingerFrom:item], [MusicModel getAlbumNameFrom:item]]];
     cell.backgroundView = nil;
@@ -115,49 +113,30 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    NSMutableArray *sectionTitleArray = [[NSMutableArray alloc] init];
-    
-    for (int i = 0; i < [self.songsArray count]; i++) {
-        MPMediaItem *item = [[self.songsArray objectAtIndex:i] objectAtIndex:0];
-        int firstChar = [MusicModel getItemFirstChar:item];
-        NSString *sectionTitle = [NSString stringWithFormat:@"%c", firstChar];
-        NSLog(@"sectionTitle : %@", sectionTitle);
-        [sectionTitleArray addObject:sectionTitle];
-    }
-    return sectionTitleArray;
+    return alphabeticalIndexTitles;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return index;
+    return [alphabeticalIndexTitles indexOfObject:title];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    MPMediaItem *item = [[self.songsArray objectAtIndex:section] objectAtIndex:0];
-    int firtChar = [MusicModel getItemFirstChar:item];
-    return [NSString stringWithFormat:@"%c", firtChar];
+    return [alphabeticalIndexTitles objectAtIndex:section];
 }
 
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == [self.songsArray count]) {
-        return 44;
-    }
-    return 0;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    MPMediaQuery *allSongs = [MPMediaQuery songsQuery];
-//	NSArray *itemsFromGenericQuery = [allSongs items];
-//    MPMediaItem *selectMusic = [itemsFromGenericQuery objectAtIndex:indexPath.section];
+	NSString *sectionTitle = [alphabeticalIndexTitles objectAtIndex:indexPath.section];
+	NSArray *sectionSongs = [songsDictionary objectForKey:sectionTitle];
     
-    MPMediaItem *selectMusic = [[self.songsArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    MPMediaItem *selectMusic = [sectionSongs objectAtIndex:indexPath.row];
     NSString *songTitle = [selectMusic valueForProperty: MPMediaItemPropertyTitle];
     NSLog (@"歌曲名字是 : %@", songTitle);
     
-    [self.musicPlayer setQueueWithItemCollection:self.songsArray];
-    
+//    [self.musicPlayer setQueueWithItemCollection:self.songsArray];
+	
     [self.musicPlayer setNowPlayingItem:selectMusic];
     self.musicPlayer.repeatMode = MPMusicRepeatModeAll;
     self.musicPlayer.shuffleMode = MPMusicShuffleModeOff;

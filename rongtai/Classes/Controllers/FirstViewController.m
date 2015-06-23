@@ -29,7 +29,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+	self.navigationController.navigationBar.barTintColor = [UIColor blackColor];   // 背景为黑色
+	self.navigationController.navigationBar.tintColor = [UIColor whiteColor];	   // 返回箭头为白色
+	[self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName]];				// 标题为白色
+	
+	UIBarButtonItem *myBarButtonItem = [[UIBarButtonItem alloc] init];
+	myBarButtonItem.title = @""; // or whatever text you want
+	
+	self.navigationItem.backBarButtonItem = myBarButtonItem;
 	
     // Do any additional setup after loading the view.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
