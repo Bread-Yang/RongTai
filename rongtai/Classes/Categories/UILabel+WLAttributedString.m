@@ -28,7 +28,7 @@
 #pragma mark - 返回字符中所有数字的范围
 -(NSArray*)numberRangeOfString:(NSString*)string
 {
-    NSCharacterSet* numberSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet* numberSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
     NSUInteger index = 0;
     NSUInteger length = 0;
     NSMutableArray* ranges = [NSMutableArray new];
