@@ -1438,6 +1438,7 @@
 /* Begin XCBuildConfiguration section */
 		3D783D4E1B12FD0300A893D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85D795F6A8BAE2B12ACCBD3F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1480,6 +1481,7 @@
 		};
 		3D783D4F1B12FD0300A893D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8E66C336656A2042B2041FF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
