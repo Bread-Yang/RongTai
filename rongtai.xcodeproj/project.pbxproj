@@ -41,6 +41,8 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892B1B39503D002E0962 /* NSString+RT.m */; };
+		3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
@@ -124,7 +126,6 @@
 		56C349551B15BCD4007C8B3F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349541B15BCD4007C8B3F /* libsqlite3.dylib */; };
 		56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349581B170D9E007C8B3F /* MusicPickerViewController.m */; };
 		56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C3495E1B17199D007C8B3F /* MediaPlayer.framework */; };
-		56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349641B1D59D6007C8B3F /* NSString+RT.m */; };
 		56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */; };
 		56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688F1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m */; };
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
@@ -226,6 +227,10 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D9E892A1B39503D002E0962 /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RT.h"; sourceTree = "<group>"; };
+		3D9E892B1B39503D002E0962 /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RT.m"; sourceTree = "<group>"; };
+		3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WLAttributedString.h"; sourceTree = "<group>"; };
+		3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WLAttributedString.m"; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
@@ -371,8 +376,6 @@
 		56C349571B170D9E007C8B3F /* MusicPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicPickerViewController.h; sourceTree = "<group>"; };
 		56C349581B170D9E007C8B3F /* MusicPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicPickerViewController.m; sourceTree = "<group>"; };
 		56C3495E1B17199D007C8B3F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		56C349631B1D59D6007C8B3F /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+RT.h"; path = "rongtai/Classes/Controllers/NSString+RT.h"; sourceTree = SOURCE_ROOT; };
-		56C349641B1D59D6007C8B3F /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+RT.m"; path = "rongtai/Classes/Controllers/NSString+RT.m"; sourceTree = SOURCE_ROOT; };
 		56C6688B1B2D590600CDC72B /* ProductInstructionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductInstructionViewController.h; path = ProductInstruction/ProductInstructionViewController.h; sourceTree = "<group>"; };
 		56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductInstructionViewController.m; path = ProductInstruction/ProductInstructionViewController.m; sourceTree = "<group>"; };
 		56C6688E1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadTableViewController.h; sourceTree = "<group>"; };
@@ -631,6 +634,17 @@
 				3D783D4B1B12FD0300A893D9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3D9E89291B39503D002E0962 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3D9E892A1B39503D002E0962 /* NSString+RT.h */,
+				3D9E892B1B39503D002E0962 /* NSString+RT.m */,
+				3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */,
+				3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		3DA8D60E1B21B226002328DF /* WLDoughnut */ = {
@@ -987,10 +1001,10 @@
 		DF9C7CE01B147A36005617DA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3D9E89291B39503D002E0962 /* Categories */,
 				5672800E1B31857E0059C18E /* Model */,
 				3D0258DB1B1D525E006C9179 /* Library */,
 				DF9C7CE11B147A36005617DA /* Ble */,
-				DF9C7CEF1B147A36005617DA /* Categories */,
 				DF9C7CF01B147A36005617DA /* Controllers */,
 				DF9C7CF11B147A36005617DA /* Data */,
 				DF9C7CF31B147A36005617DA /* Utils */,
@@ -1018,15 +1032,6 @@
 				3D783D381B12FD0300A893D9 /* RTBleListViewController.m */,
 			);
 			path = Ble;
-			sourceTree = "<group>";
-		};
-		DF9C7CEF1B147A36005617DA /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				56C349631B1D59D6007C8B3F /* NSString+RT.h */,
-				56C349641B1D59D6007C8B3F /* NSString+RT.m */,
-			);
-			path = Categories;
 			sourceTree = "<group>";
 		};
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
@@ -1293,7 +1298,6 @@
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
-				56C349651B1D59D6007C8B3F /* NSString+RT.m in Sources */,
 				3DF3042E1B38FE2500DD51D3 /* NSManagedObject+MagicalFinders.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
 				567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */,
@@ -1341,6 +1345,7 @@
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
 				56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */,
+				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
 				567280141B31859F0059C18E /* CustomProgram.m in Sources */,
@@ -1371,6 +1376,7 @@
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
 				3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
+				3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */,
 				3DF304261B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */,
 				3D65A4881B25841800B7B411 /* MainViewController.m in Sources */,
