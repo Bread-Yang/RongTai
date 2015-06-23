@@ -445,7 +445,7 @@
         <!--我要购买-->
         <scene sceneID="GbX-8w-FgO">
             <objects>
-                <tableViewController title="我要购买" id="HL4-F4-Opw" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
+                <tableViewController title="我要购买" id="HL4-F4-Opw" userLabel="我要购买" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="170" sectionHeaderHeight="22" sectionFooterHeight="22" id="S9C-hY-hmf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -665,7 +665,7 @@
         <!--添加定时计划-->
         <scene sceneID="dPg-h9-Qd6">
             <objects>
-                <viewController storyboardIdentifier="AddTimingMassage" title="添加定时计划" id="0k6-pQ-v5b" customClass="AddTimingMassageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddTimingMassage" title="添加定时计划" id="0k6-pQ-v5b" userLabel="添加定时计划" customClass="AddTimingMassageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tm3-N6-ZLP"/>
                         <viewControllerLayoutGuide type="bottom" id="lIk-Cy-0fT"/>
@@ -862,7 +862,7 @@
         <!--手动按摩-->
         <scene sceneID="ZnW-C1-eID">
             <objects>
-                <viewController id="1dA-pU-ml4" userLabel="手动按摩" customClass="ManualMassageViewController" sceneMemberID="viewController">
+                <viewController title="手动按摩" id="1dA-pU-ml4" userLabel="手动按摩" customClass="ManualMassageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="07e-wu-6Xf"/>
                         <viewControllerLayoutGuide type="bottom" id="hL2-88-dEW"/>

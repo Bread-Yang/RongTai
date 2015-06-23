@@ -97,8 +97,29 @@
     return items;
 }
 
++ (NSDictionary *) getAllSongsDictionary {
+	MPMediaQuery *query = [MPMediaQuery songsQuery];
+	NSArray *songs = [query collections];
+	
+	NSMutableDictionary *songsDictionary = [NSMutableDictionary dictionary];
+	
+	for (MPMediaItemCollection *playlist in songs) {
+		NSString *firstChar = [NSString stringWithFormat:@"%c", [MusicModel getItemFirstChar:playlist.representativeItem]];
+		NSMutableArray *songsArray = [songsDictionary objectForKey:firstChar];
+		if (!songsArray) {
+			songsArray = [[NSMutableArray alloc] init];
+			[songsArray addObject:playlist.representativeItem];
+			[songsDictionary setObject:songsArray forKey:firstChar];
+		} else {
+			[songsArray addObject:playlist.representativeItem];
+		}
+	}
+	
+	return songsDictionary;
+}
+
 + (NSArray *) getAllSong {
-    MPMediaQuery * query = [MPMediaQuery songsQuery];
+    MPMediaQuery *query = [MPMediaQuery songsQuery];
     NSArray *songs = [query collections];
     NSMutableArray *items = [[NSMutableArray alloc]init];
     int firstChar = 0;
