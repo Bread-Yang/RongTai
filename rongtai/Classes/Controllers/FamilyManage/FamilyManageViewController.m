@@ -29,6 +29,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = NSLocalizedString(@"家庭成员", nil);
+    
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     _matgin = width*0.8*0.05;
@@ -54,20 +55,21 @@
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = NO;
-	
-	_users = [NSMutableArray new];
-	
-	NSArray *memberArray = [Member MR_findAll];
-	
-	for (int i = 0; i < [memberArray count]; i++) {
-		Member *item = memberArray[i];
-		
-		User* user = [User new];
-		user.name = item.name;
-		user.imageUrl = @"userIcon.jpg";
-		[_users addObject:user];
-	}
-	[_collectView reloadData];
+    
+    _users = [NSMutableArray new];
+    
+    NSArray *memberArray = [Member MR_findAll];
+    
+    for (int i = 0; i < [memberArray count]; i++) {
+        Member *item = memberArray[i];
+        
+        User* user = [User new];
+        user.name = item.name;
+        user.imageUrl = @"userIcon.jpg";
+        [_users addObject:user];
+    }
+    [_collectView reloadData];
+
 }
 
 

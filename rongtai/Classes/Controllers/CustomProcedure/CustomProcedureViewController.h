@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MassageMode.h"
+#import "CustomProgram.h"
+
 
 @interface CustomProcedureViewController : UIViewController
 
@@ -15,7 +17,7 @@
 /**
  *  编辑模式
  */
--(void)editModeWithMassageMode:(MassageMode*)massageMode Index:(NSUInteger)index;
+-(void)editModeWithCustomProgram:(CustomProgram*)customProgram Index:(NSUInteger)index;
 
 
 @end

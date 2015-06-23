@@ -22,7 +22,7 @@
 	__weak IBOutlet UISegmentedControl *sexSegmentedControl;
 	__weak IBOutlet UISegmentedControl *heightUnitSegmentedControl;
 	
-	UIDatePicker *birthdayDatePicker;
+	UIDatePicker *_birthdayDatePicker;
 	
     NSMutableArray* _heightArr;  //身高数组
     NSMutableArray* _year;       //生日年份
@@ -77,15 +77,14 @@
     //改写_birthday的键盘为年月选择器
     UIView* inputView2 = [[UIView alloc]initWithFrame:f];
     inputView2.backgroundColor = [UIColor whiteColor];
-    UIPickerView* birthdayPicker = [[UIPickerView alloc]initWithFrame:f];
-	birthdayDatePicker = [[UIDatePicker alloc] initWithFrame:f];
-	birthdayDatePicker.datePickerMode = UIDatePickerModeDate;
-	[birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+    _birthdayDatePicker = [[UIDatePicker alloc] initWithFrame:f];
+	_birthdayDatePicker.datePickerMode = UIDatePickerModeDate;
+	[_birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 //    birthdayPicker.dataSource = self;
 //    birthdayPicker.delegate = self;
 //    birthdayPicker.tag = 1002;
 //    [inputView2 addSubview:birthdayPicker];
-	[inputView2 addSubview:birthdayDatePicker];
+	[inputView2 addSubview:_birthdayDatePicker];
     _birthday.inputView = inputView2;
     
     // Do any additional setup after loading the view.
@@ -203,7 +202,7 @@
 	}
 	
 	Member *editMember;
-	
+	//
 	if ([self.title isEqual:NSLocalizedString(@"编辑信息", nil)]) {   // 编辑信息
 		editMember =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
 	} else {													// 新增信息
@@ -222,7 +221,7 @@
 		editMember.heightUnit = @"inch";
 	}
 	
-	editMember.birthday = birthdayDatePicker.date;
+	editMember.birthday = _birthdayDatePicker.date;
 	
 	[[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 	
@@ -263,7 +262,7 @@
 		} else {
 			heightUnitSegmentedControl.selectedSegmentIndex = 1;
 		}
-		birthdayDatePicker.date = editMember.birthday;
+		_birthdayDatePicker.date = editMember.birthday;
 		
 		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 		[dateFormat setDateStyle:NSDateFormatterShortStyle];

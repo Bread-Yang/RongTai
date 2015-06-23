@@ -14,6 +14,8 @@
 #import "RFSegmentView.h"
 #import "WLCheckButton.h"
 #import "CustomMassageViewController.h"
+#import "CustomProgram.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface CustomProcedureViewController ()
 {
@@ -43,7 +45,7 @@
     RFSegmentView* _skillPreferenceSegmentView;
     
     //按摩对象
-    MassageMode* _massageMode;
+    CustomProgram* _cp;
     
     //名称textField
     UITextField* _nameField;
@@ -166,11 +168,12 @@
 
 
 #pragma mark - 编辑模式
--(void)editModeWithMassageMode:(MassageMode*)massageMode Index:(NSUInteger)index;
+-(void)editModeWithCustomProgram:(CustomProgram*)customProgram Index:(NSUInteger)index;
 {
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"编辑";
     _isEdit = YES;
+    _cp = customProgram;
     UIBarButtonItem* save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveMassageMode)];
     self.navigationItem.rightBarButtonItem = save;
     
@@ -183,17 +186,49 @@
     CGRect f = CGRectMake(SCREENWIDTH - (SCREENWIDTH-32)*0.7-32, 8, (SCREENWIDTH-32)*0.7, 44);
     _nameField = [[UITextField alloc]initWithFrame:f];
     _nameField.borderStyle = UITextBorderStyleLine;
+    _nameField.text = customProgram.name;
     [_scrollView addSubview:_nameField];
     
     [_stastMassageBtn setTitle:@"删除" forState:UIControlStateNormal];
     _stastMassageBtn.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.6];
     _topConstraint.constant = 59;
+    
+    _importantPartSegmentView.selectIndex = _cp.keyPart.intValue;
+    _skillPreferenceSegmentView.selectIndex = _cp.massagePreference.intValue;
+    _massageWaySegmentView.selectIndex = _cp.massageType.intValue;
+    _usePurposeSegmentView.selectIndex = _cp.useAid.intValue;
+    _useTimingSegmentView.selectIndex = _cp.useTime.intValue;
+    
+    _pressureCheckButton.selectState = _cp.airPressure.intValue;
+    _widthCheckButton.selectState = _cp.width.intValue;
+    _dynamicsCheckButton.selectState = _cp.power.intValue;
+    _speedCheckButton.selectState = _cp.speed.intValue;
+    
 }
 
 #pragma mark - 保存按摩模式
 -(void)saveMassageMode
 {
-    
+    CustomProgram* _customProgram;
+    if (_isEdit) {
+        _customProgram = [CustomProgram MR_findByAttribute:@"name" withValue:_cp.name][0];
+    }
+    else
+    {
+        _customProgram = [CustomProgram MR_createEntity];
+    }
+    _customProgram.name = _nameField.text;
+    _customProgram.keyPart = [NSNumber numberWithInt:_importantPartSegmentView.selectIndex];
+    _customProgram.massagePreference = [NSNumber numberWithInt:_skillPreferenceSegmentView.selectIndex];
+    _customProgram.massageType = [NSNumber numberWithInt:_massageWaySegmentView.selectIndex];
+    _customProgram.useAid = [NSNumber numberWithInt:_usePurposeSegmentView.selectIndex];
+    _customProgram.useTime = [NSNumber numberWithInt:_useTimingSegmentView.selectIndex];
+    _customProgram.speed = [NSNumber numberWithInt:_speedCheckButton.selectState];
+    _customProgram.power = [NSNumber numberWithInt:_dynamicsCheckButton.selectState];
+    _customProgram.width = [NSNumber numberWithInt:_widthCheckButton.selectState];
+    _customProgram.airPressure = [NSNumber numberWithInt:_pressureCheckButton.selectState];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
