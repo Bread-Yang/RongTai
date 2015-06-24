@@ -19,6 +19,21 @@
 		3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258EE1B1D525E006C9179 /* UIView+Hierarchy.m */; };
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
+		3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6B1B3ABBE100FF97C6 /* mini-clouds@2x.png */; };
+		3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6C1B3ABBE100FF97C6 /* mini-fog@2x.png */; };
+		3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6D1B3ABBE100FF97C6 /* mini-hail@2x.png */; };
+		3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6E1B3ABBE100FF97C6 /* mini-lightning@2x.png */; };
+		3D0B4C7E1B3ABBE100FF97C6 /* mini-lightningrain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6F1B3ABBE100FF97C6 /* mini-lightningrain@2x.png */; };
+		3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C701B3ABBE100FF97C6 /* mini-rain@2x.png */; };
+		3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C711B3ABBE100FF97C6 /* mini-snow@2x.png */; };
+		3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C721B3ABBE100FF97C6 /* mini-snowrain@2x.png */; };
+		3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C731B3ABBE100FF97C6 /* mini-sun@2x.png */; };
+		3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C741B3ABBE100FF97C6 /* mini-suncloud@2x.png */; };
+		3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C751B3ABBE100FF97C6 /* mini-sunhaze@2x.png */; };
+		3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C761B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png */; };
+		3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C771B3ABBE100FF97C6 /* mini-sunrain@2x.png */; };
+		3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B4C791B3ABBE100FF97C6 /* WLWeatherView.m */; };
+		3D0B4C891B3ABC2800FF97C6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D0B4C881B3ABC2800FF97C6 /* CoreLocation.framework */; };
 		3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638B1B2D18C500266D9A /* RFSegmentView.m */; };
 		3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */; };
 		3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */; };
@@ -187,6 +202,22 @@
 		3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		3D0258F11B1D525E006C9179 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		3D0B4C6B1B3ABBE100FF97C6 /* mini-clouds@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-clouds@2x.png"; sourceTree = "<group>"; };
+		3D0B4C6C1B3ABBE100FF97C6 /* mini-fog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-fog@2x.png"; sourceTree = "<group>"; };
+		3D0B4C6D1B3ABBE100FF97C6 /* mini-hail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-hail@2x.png"; sourceTree = "<group>"; };
+		3D0B4C6E1B3ABBE100FF97C6 /* mini-lightning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-lightning@2x.png"; sourceTree = "<group>"; };
+		3D0B4C6F1B3ABBE100FF97C6 /* mini-lightningrain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-lightningrain@2x.png"; sourceTree = "<group>"; };
+		3D0B4C701B3ABBE100FF97C6 /* mini-rain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-rain@2x.png"; sourceTree = "<group>"; };
+		3D0B4C711B3ABBE100FF97C6 /* mini-snow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-snow@2x.png"; sourceTree = "<group>"; };
+		3D0B4C721B3ABBE100FF97C6 /* mini-snowrain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-snowrain@2x.png"; sourceTree = "<group>"; };
+		3D0B4C731B3ABBE100FF97C6 /* mini-sun@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-sun@2x.png"; sourceTree = "<group>"; };
+		3D0B4C741B3ABBE100FF97C6 /* mini-suncloud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-suncloud@2x.png"; sourceTree = "<group>"; };
+		3D0B4C751B3ABBE100FF97C6 /* mini-sunhaze@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-sunhaze@2x.png"; sourceTree = "<group>"; };
+		3D0B4C761B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-sunlightningrain@2x.png"; sourceTree = "<group>"; };
+		3D0B4C771B3ABBE100FF97C6 /* mini-sunrain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-sunrain@2x.png"; sourceTree = "<group>"; };
+		3D0B4C781B3ABBE100FF97C6 /* WLWeatherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLWeatherView.h; sourceTree = "<group>"; };
+		3D0B4C791B3ABBE100FF97C6 /* WLWeatherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLWeatherView.m; sourceTree = "<group>"; };
+		3D0B4C881B3ABC2800FF97C6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3D10638A1B2D18C500266D9A /* RFSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFSegmentView.h; sourceTree = "<group>"; };
 		3D10638B1B2D18C500266D9A /* RFSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFSegmentView.m; sourceTree = "<group>"; };
 		3D10638E1B2D559000266D9A /* CustomProcedureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProcedureViewController.h; sourceTree = "<group>"; };
@@ -428,6 +459,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D0B4C891B3ABC2800FF97C6 /* CoreLocation.framework in Frameworks */,
 				567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */,
 				56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */,
 				56C349551B15BCD4007C8B3F /* libsqlite3.dylib in Frameworks */,
@@ -528,6 +560,36 @@
 				3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */,
 			);
 			path = IQKeyBoardManager;
+			sourceTree = "<group>";
+		};
+		3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */ = {
+			isa = PBXGroup;
+			children = (
+				3D0B4C6A1B3ABBE100FF97C6 /* image */,
+				3D0B4C781B3ABBE100FF97C6 /* WLWeatherView.h */,
+				3D0B4C791B3ABBE100FF97C6 /* WLWeatherView.m */,
+			);
+			path = WLWeatherView;
+			sourceTree = "<group>";
+		};
+		3D0B4C6A1B3ABBE100FF97C6 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				3D0B4C6B1B3ABBE100FF97C6 /* mini-clouds@2x.png */,
+				3D0B4C6C1B3ABBE100FF97C6 /* mini-fog@2x.png */,
+				3D0B4C6D1B3ABBE100FF97C6 /* mini-hail@2x.png */,
+				3D0B4C6E1B3ABBE100FF97C6 /* mini-lightning@2x.png */,
+				3D0B4C6F1B3ABBE100FF97C6 /* mini-lightningrain@2x.png */,
+				3D0B4C701B3ABBE100FF97C6 /* mini-rain@2x.png */,
+				3D0B4C711B3ABBE100FF97C6 /* mini-snow@2x.png */,
+				3D0B4C721B3ABBE100FF97C6 /* mini-snowrain@2x.png */,
+				3D0B4C731B3ABBE100FF97C6 /* mini-sun@2x.png */,
+				3D0B4C741B3ABBE100FF97C6 /* mini-suncloud@2x.png */,
+				3D0B4C751B3ABBE100FF97C6 /* mini-sunhaze@2x.png */,
+				3D0B4C761B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png */,
+				3D0B4C771B3ABBE100FF97C6 /* mini-sunrain@2x.png */,
+			);
+			path = image;
 			sourceTree = "<group>";
 		};
 		3D1063891B2D18C500266D9A /* RFSegmentView */ = {
@@ -1107,6 +1169,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */,
 				567281531B32A0860059C18E /* MBProgressHUD */,
 				56C668A51B30395000CDC72B /* CircleButton */,
 				56C6689E1B300F6700CDC72B /* VerticalSlider */,
@@ -1144,6 +1207,7 @@
 		DF9C7D011B147B89005617DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D0B4C881B3ABC2800FF97C6 /* CoreLocation.framework */,
 				567281511B32A02C0059C18E /* CoreGraphics.framework */,
 				56C3495E1B17199D007C8B3F /* MediaPlayer.framework */,
 				56C349541B15BCD4007C8B3F /* libsqlite3.dylib */,
@@ -1250,20 +1314,33 @@
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
+				3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */,
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
+				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
+				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
+				3D0B4C7E1B3ABBE100FF97C6 /* mini-lightningrain@2x.png in Resources */,
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
+				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				5604A3531B15A61E00967191 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
+				3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */,
+				3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */,
+				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */,
+				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
+				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
+				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
+				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1359,6 +1436,7 @@
 				56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
+				3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */,
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,
 				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
