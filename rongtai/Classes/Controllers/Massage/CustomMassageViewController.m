@@ -30,9 +30,6 @@
     __weak IBOutlet UIView *_musicView;  //播放音乐的View
     
     WLPolar* _polar;  //极线图
-    
-    
-    
 }
 @end
 
