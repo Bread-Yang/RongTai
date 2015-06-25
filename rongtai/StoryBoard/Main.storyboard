@@ -853,6 +853,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="afY-pA-Ivf" id="fPz-ol-eTV"/>
+                        <outlet property="leftPickerView" destination="A9D-VO-UWX" id="N86-sj-uvf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKv-9n-nP8" sceneMemberID="firstResponder"/>
