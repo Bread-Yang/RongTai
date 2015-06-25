@@ -13,4 +13,9 @@
 
 @property(nonatomic, strong)CLLocationManager* lManager;
 
+/**
+ *  更新天气
+ */
+-(void)updateWeather;
+
 @end

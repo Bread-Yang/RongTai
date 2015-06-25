@@ -9,15 +9,25 @@
 #import "WLWeatherView.h"
 #import "MBProgressHUD.h"
 
+#define IMAGENAME @"wImagaName"
+#define CITYNAME @"wCityName"
+#define AQI @"wAqi"
+#define TEMPERATURE @"wTemperature"
+#define UPDATEDATE @"wDate"
+#define TIME 600.0
 
-@interface WLWeatherView ()<NSURLConnectionDataDelegate, NSXMLParserDelegate, CLLocationManagerDelegate>
+
+@interface WLWeatherView ()<NSURLConnectionDataDelegate, NSXMLParserDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 {
     UIImageView* _icon;  //天气图像
     UILabel* _temperature;  //温度
     UILabel* _o;          //符号o
     UILabel* _aqi;        //空气污染情况
-    NSString* _city;
+    NSString* _city;      //当前城市
     MBProgressHUD* _hud;
+    NSString* _imageName;  //天气图标名称
+    BOOL _toRequest;     //是否请求数据
+    NSTimer* _timer;
 }
 @end
 
@@ -57,11 +67,12 @@
 #pragma mark - 初始化
 -(void)setUp
 {
+    _toRequest = YES;
     _icon = [[UIImageView alloc]init];
     _icon.contentMode = UIViewContentModeScaleAspectFit;
     _temperature = [self newLabel];
     _o = [self newLabel];
-//    _o.backgroundColor = [UIColor cyanColor];
+    //    _o.backgroundColor = [UIColor cyanColor];
     _o.text = @"o";
     _o.font = [UIFont systemFontOfSize:10];
     _aqi = [self newLabel];
@@ -70,12 +81,23 @@
     [self addSubview:_o];
     [self addSubview:_aqi];
     
-    //
-    _icon.image = [UIImage imageNamed:@"mini-sun"];
-    _temperature.text = @"29";
-    _aqi.text = @"广州  轻度污染";
+    //读取本地数据
+    NSUserDefaults* dic = [NSUserDefaults standardUserDefaults];
+    NSString* c = [dic objectForKey:CITYNAME];
+    if (!c) {
+        NSLog(@"没有本地数据");
+        [dic setObject:@"广州" forKey:CITYNAME];
+        [dic setObject:@"29" forKey:TEMPERATURE];
+        [dic setObject:@"广州  轻度污染" forKey:AQI];
+        [dic setObject:@"mini-sun" forKey:IMAGENAME];
+        [dic setObject:[NSDate distantPast] forKey:UPDATEDATE];
+    }
+    _imageName = [dic objectForKey:IMAGENAME];
+    _icon.image = [UIImage imageNamed:_imageName];
+    _temperature.text = [dic objectForKey:TEMPERATURE];
+    _aqi.text = [dic objectForKey:AQI];
+    _city = [dic objectForKey:CITYNAME];
     
-    _city = @"广州";
     [self locationCity];
     
     //
@@ -90,7 +112,7 @@
     CGFloat w = self.frame.size.width;
     CGFloat h = self.frame.size.height;
     CGFloat hscale = 0.7;
-   
+    
     _icon.frame = CGRectMake(w*(1-0.6), 0, w*0.25, h*hscale);
     _temperature.frame = CGRectMake(w*(1-0.35), 0, w*0.25, h*hscale);
     _o.frame = CGRectMake(w*(1-0.13), h*0.14, w*0.1, w*0.1);
@@ -108,14 +130,24 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError) {
             NSLog(@"请求出错:%@",connectionError);
+            if (_toRequest) {
+                _hud.labelText = @"网络出错，请检测网络";
+                [_hud show:YES];
+                [_hud hide:YES afterDelay:0.7];
+                _toRequest = NO;
+            }
         }
         else
         {
-            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            //            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
             NSError* error;
             NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             if (error) {
                 NSLog(@"解析出错:%@",error);
+                if (_toRequest) {
+                    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"数据解析出错" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重新请求", nil];
+                    [alert show];
+                }
             }
             else
             {
@@ -128,6 +160,7 @@
                     NSArray* arr = [data objectForKey:@"forecast"];
                     NSDictionary* today = arr[0];
                     [self updateWeatherIconByName:[today objectForKey:@"type"]];
+                    _icon.image = [UIImage imageNamed:_imageName];
                     
                     //更新城市空气情况
                     CGFloat aqi = [[data objectForKey:@"aqi"] floatValue];
@@ -141,23 +174,45 @@
                         city = [NSString stringWithFormat:@"%@  %@",_city,[self aqiNameByFloat:aqi]];
                     }
                     _aqi.text = city;
-
+                    //数据保存到本地
+                    [self saveWeather];
+                    _toRequest = YES;
+                    if (!_timer) {
+                        _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
+                    }
                 }
                 else
                 {
                     NSLog(@"当前城市未提供天气服务");
                     [self setDefaultCity:@"当前城市未提供天气服务"];
                 }
-             }
+            }
         }
-
     }];
+}
+
+#pragma mark - 保存当前数据
+-(void)saveWeather
+{
+    NSLog(@"数据保存到本地");
+    NSUserDefaults* dic = [NSUserDefaults standardUserDefaults];
+    [dic setObject:_city forKey:CITYNAME];
+    [dic setObject:_temperature.text forKey:TEMPERATURE];
+    [dic setObject:_aqi.text forKey:AQI];
+    [dic setObject:_imageName forKey:IMAGENAME];
+    [dic setObject:[NSDate distantPast] forKey:UPDATEDATE];
+}
+
+#pragma mark - timer方法
+-(void)updateWeatherByTimer:(NSTimer*)timer
+{
+    NSLog(@"自动更新天气数据");
+    [self updateWeather];
 }
 
 #pragma mark - 城市定位
 -(void)locationCity
 {
-    
     if ([CLLocationManager locationServicesEnabled]) {
         NSLog(@"开始定位");
         self.lManager = [[CLLocationManager alloc]init];
@@ -171,6 +226,7 @@
     else
     {
         NSLog(@"定位服务不被允许");
+        [self setDefaultCity:@"定位服务未开启"];
     }
 }
 
@@ -179,43 +235,43 @@
 {
     NSLog(@"定位结束");
     CLLocation *currLocation = [locations lastObject];
-    NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+    //    NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
     
     // 获取当前所在的城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
     //根据经纬度反向地理编译出地址信息
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
-    {
-        if (array.count > 0)
-        {
-            CLPlacemark *placemark = [array objectAtIndex:0];
-            NSLog(@"%@",placemark.name);
-            //获取城市
-            NSString *city = placemark.locality;
-            if (!city) {
-                //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
-                city = placemark.administrativeArea;
-            }
-            NSLog(@"City:%@",city);
-            if ([self subString:@"市" InString:city]) {
-                city = [city substringWithRange:NSMakeRange(0, city.length-1)];
-            }
-            _city = city;
-//            _city = @"香港";
-            [self updateWeather];
-        }
-        else if (error == nil && [array count] == 0)
-        {
-            NSLog(@"查询不到结果");
-            [self setDefaultCity: @"查询不到当前城市"];
-        }
-        else if (error != nil)
-        {
-            NSLog(@"查询错误:%@", error);
-            [self setDefaultCity:@"查询出错"];
-        }
-    }];
+     {
+         if (array.count > 0)
+         {
+             CLPlacemark *placemark = [array objectAtIndex:0];
+             //            NSLog(@"%@",placemark.name);
+             //获取城市
+             NSString *city = placemark.locality;
+             if (!city) {
+                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
+                 city = placemark.administrativeArea;
+             }
+             NSLog(@"City:%@",city);
+             if ([self subString:@"市" InString:city]) {
+                 city = [city substringWithRange:NSMakeRange(0, city.length-1)];
+             }
+             _city = city;
+             _city = @"香港";
+             [self updateWeather];
+         }
+         else if (error == nil && [array count] == 0)
+         {
+             NSLog(@"查询不到结果");
+             [self setDefaultCity: @"查询不到当前城市"];
+         }
+         else if (error != nil)
+         {
+             NSLog(@"查询错误:%@", error);
+             [self setDefaultCity:@"查询出错"];
+         }
+     }];
     
     [manager stopUpdatingLocation];
 }
@@ -225,9 +281,11 @@
     if ([error code] == kCLErrorDenied)
     {
         NSLog(@"访问被拒绝");
+        [self setDefaultCity:@"定位服务访问被拒绝"];
     }
     if ([error code] == kCLErrorLocationUnknown) {
         NSLog(@"无法获取位置信息");
+        [self setDefaultCity:@"无法获取位置信息"];
     }
 }
 
@@ -277,56 +335,54 @@
 -(void)updateWeatherIconByName:(NSString*)name
 {
     if ([self subString:@"雹" InString:name]) {
-        _icon.image = [UIImage imageNamed:@"mini-hail"];
+        _imageName = @"mini-hail";
         return;
     }
     if ([self subString:@"雨" InString:name]) {
         if ([self subString:@"雪" InString:name]) {
-            _icon.image = [UIImage imageNamed:@"mini-snowrain"];
+            _imageName = @"mini-snowrain";
             return;
         }
         if ([self subString:@"雷" InString:name]) {
             if ([self subString:@"晴" InString:name]) {
-                _icon.image = [UIImage imageNamed:@"mini-sunlightningrain"];
+                _imageName = @"mini-sunlightningrain";
                 return;
             }
-            _icon.image = [UIImage imageNamed:@"mini-lightningrain"];
+            _imageName = @"mini-lightningrain";
             return;
         }
         if ([self subString:@"晴" InString:name]) {
-            _icon.image = [UIImage imageNamed:@"mini-sunrain"];
+            _imageName = @"mini-sunrain";
             return;
         }
-        _icon.image = [UIImage imageNamed:@"mini-rain"];
+        _imageName = @"mini-rain";
         return;
     }
     if ([self subString:@"雪" InString:name]) {
-        _icon.image = [UIImage imageNamed:@"mini-snow"];
+        _imageName = @"mini-snow";
         return;
     }
     if ([self subString:@"雷" InString:name]) {
-        _icon.image = [UIImage imageNamed:@"mini-lightning"];
+        _imageName = @"mini-lightning";
         return;
     }
     if ([self subString:@"雾" InString:name]) {
         if ([self subString:@"晴" InString:name]) {
-            _icon.image = [UIImage imageNamed:@"mini-sunhaze"];
+            _imageName = @"mini-sunhaze";
             return;
         }
-        _icon.image = [UIImage imageNamed:@"mini-fog"];
+        _imageName = @"mini-fog";
         return;
     }
     if ([self subString:@"多云" InString:name]) {
         if ([self subString:@"晴" InString:name]) {
-            _icon.image = [UIImage imageNamed:@"mini-suncloud"];
+            _imageName = @"mini-suncloud";
             return;
         }
-        _icon.image = [UIImage imageNamed:@"mini-clouds"];
+        _imageName = @"mini-clouds";
         return;
     }
-    _icon.image = [UIImage imageNamed:@"mini-sun"];
-    
-    
+    _imageName = @"mini-sun";
 }
 
 -(BOOL)subString:(NSString*)subString InString:(NSString*)string
@@ -344,16 +400,29 @@
     UILabel* l = [[UILabel alloc]init];
     l.textAlignment = NSTextAlignmentCenter;
     l.adjustsFontSizeToFitWidth = YES;
+    l.textColor = [UIColor whiteColor];
     l.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     return l;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+#pragma mark - alertView代理
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"重新请求"]) {
+        [self updateWeather];
+    }
+    else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"取消"])
+    {
+        _toRequest = NO;
+    }
 }
-*/
+
+/*
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end
