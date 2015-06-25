@@ -8,6 +8,9 @@
 
 #import "RegisterViewController.h"
 
+//
+#import "WLWeatherView.h"
+
 @interface RegisterViewController ()
 {
     __weak IBOutlet UITextField *_phoneNum; //手机号码TextField
@@ -21,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
+    self.navigationItem.rightBarButtonItem  = right;
     // Do any additional setup after loading the view.
 }
 
