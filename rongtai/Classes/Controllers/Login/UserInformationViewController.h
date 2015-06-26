@@ -11,10 +11,12 @@
 @class User;
 @class UserInformationViewController;
 
+typedef void (^EditUserInformationBlock)(NSDictionary *entity);
+
 @protocol UserInformationDelegate <NSObject>
 
 @optional
--(void)deleteButtonClicked:(User*)user WithIndex:(NSUInteger)index;
+- (void)deleteButtonClicked:(User*)user WithIndex:(NSUInteger)index;
 
 @end
 
@@ -28,6 +30,10 @@
 /**
  *  编辑模式
  */
--(void)editMode:(User*)user WithIndex:(NSUInteger)index;
+- (void)editMode:(User*)user WithIndex:(NSUInteger)index;
+
+- (void)setEditUserInformation:(NSDictionary *)infoDictionary;
+
+- (void)setEditUserInformationBlock:(EditUserInformationBlock)editUserInformationBlock;
 
 @end
