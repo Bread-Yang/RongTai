@@ -10,7 +10,7 @@
 
 #import "TimingMassageModel.h"
 
-typedef void (^ReturnTimingMassageBlock)(TimingMassageModel* entity);
+typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
 @interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate>
 

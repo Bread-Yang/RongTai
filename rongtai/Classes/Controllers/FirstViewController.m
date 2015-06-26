@@ -199,13 +199,15 @@
          
                                NSString *uid = [userInfo uid];
                                NSString *nickName = [userInfo nickname];
+							   NSString *token = [[userInfo credential] token];
                                
-                               NSString *info = [uid stringByAppendingString:nickName];
+                               NSString *info = [uid stringByAppendingString:token];
+							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
         
                                if (result) {
                                    UIAlertView *alertView = [[UIAlertView alloc]
                                        initWithTitle:@"Hello"
-                                       message:info
+                                       message:information
                                        delegate:nil
                                        cancelButtonTitle:@"知道了"
                                        otherButtonTitles: nil];
