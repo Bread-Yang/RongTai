@@ -41,6 +41,26 @@
  */
 @property(nonatomic)SkillPreference skillsPreference;
 
+/**
+ *  速度
+ */
+@property(nonatomic)NSUInteger speed;
+
+/**
+ *  气压
+ */
+@property(nonatomic)NSUInteger pressure;
+
+/**
+ *  力度
+ */
+@property(nonatomic)NSUInteger power;
+
+/**
+ *  宽度
+ */
+@property(nonatomic)NSUInteger width;
+
 
 /**
  *  根据使用时机枚举类返回对应的字符串

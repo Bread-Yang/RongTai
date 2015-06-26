@@ -61,8 +61,8 @@
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
 		3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */; };
 		3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E89671B3968D8002E0962 /* CWStarRateView.m */; };
-		3D9EBADE1B3D2885000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBADD1B3D2885000FD810 /* Massage.m */; };
 		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
+		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
@@ -272,10 +272,10 @@
 		3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b27_icon_star_yellow@2x.png"; sourceTree = "<group>"; };
 		3D9E89661B3968D8002E0962 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
 		3D9E89671B3968D8002E0962 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
-		3D9EBADC1B3D2885000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Massage.h; path = ../Massage.h; sourceTree = "<group>"; };
-		3D9EBADD1B3D2885000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Massage.m; path = ../Massage.m; sourceTree = "<group>"; };
 		3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRequest.h; sourceTree = "<group>"; };
 		3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRequest.m; sourceTree = "<group>"; };
+		3D9EBAE31B3D3893000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Massage.h; sourceTree = "<group>"; };
+		3D9EBAE41B3D3893000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Massage.m; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
@@ -740,8 +740,8 @@
 		3D9EBADF1B3D2CC1000FD810 /* MassageRequest */ = {
 			isa = PBXGroup;
 			children = (
-				3D9EBADC1B3D2885000FD810 /* Massage.h */,
-				3D9EBADD1B3D2885000FD810 /* Massage.m */,
+				3D9EBAE31B3D3893000FD810 /* Massage.h */,
+				3D9EBAE41B3D3893000FD810 /* Massage.m */,
 				3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */,
 				3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */,
 			);
@@ -1482,8 +1482,8 @@
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
+				3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */,
 				567280141B31859F0059C18E /* CustomProgram.m in Sources */,
-				3D9EBADE1B3D2885000FD810 /* Massage.m in Sources */,
 				3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3DF304321B38FE2500DD51D3 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				3DF3042D1B38FE2500DD51D3 /* NSManagedObject+MagicalDataImport.m in Sources */,

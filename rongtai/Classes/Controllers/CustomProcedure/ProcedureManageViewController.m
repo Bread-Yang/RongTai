@@ -12,8 +12,9 @@
 #import "ProcedureManageTableViewCell.h"
 #import "CoreData+MagicalRecord.h"
 #import "CustomProgram.h"
+#import "MassageRequest.h"
 
-@interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate, ProcedureManageTableViewCellDelegate>
+@interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate, ProcedureManageTableViewCellDelegate,MassageRequestDelegate>
 {
     UIBarButtonItem* _edit;  //编辑按钮
     BOOL _isEdit;  //是否处在编辑状态
@@ -48,6 +49,29 @@
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    
+    
+    //接口测试
+    CustomProgram* cp = [CustomProgram MR_createEntity];
+    cp.useAid = @1;
+    cp.useTime = @1;
+    cp.airPressure = @1;
+    cp.width = @0;
+    cp.speed = @1;
+    cp.power = @0;
+    cp.keyPart = @2;
+    cp.massagePreference = @2;
+    cp.massageType = @0;
+    cp.programId = @27;
+    cp.name = @"自定义程序1";
+
+    MassageRequest* m = [MassageRequest new];
+    m.delegate = self;
+//    [m addCustomProgram:cp Uid:@"1ee329f146104331852238be180a46b4"];
+    [m requsetCustomProgramListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:5];
+//    [m updateCustomProgram:cp Uid:@"1ee329f146104331852238be180a46b4"];
+//    [m deleteCustomProgram:cp Uid:@"1ee329f146104331852238be180a46b4"];
+    
     
     
 //    _matgin = width*0.8*0.05;
@@ -191,7 +215,18 @@
     }
 }
 
-
+#pragma mark - 网络请求代理
+-(void)massageRequestAddCustomProgramFinish:(BOOL)success Result:(CustomProgram *)customProgram
+{
+    if (success) {
+        NSLog(@"成功啦");
+        NSLog(@"%ld",[customProgram.programId integerValue]);
+    }
+    else
+    {
+        NSLog(@"失败");
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {
