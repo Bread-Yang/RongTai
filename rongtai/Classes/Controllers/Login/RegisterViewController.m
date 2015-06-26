@@ -7,16 +7,17 @@
 //
 
 #import "RegisterViewController.h"
+#import "LoginRequest.h"
 
 //
 #import "WLWeatherView.h"
 
-@interface RegisterViewController ()
+@interface RegisterViewController ()<LoginRequestDelegate>
 {
     __weak IBOutlet UITextField *_phoneNum; //手机号码TextField
     __weak IBOutlet UITextField *_authCode; //验证码TextField
     __weak IBOutlet UITextField *_password; //密码TextField
-    
+    LoginRequest* _loginRequest;
 }
 @end
 
@@ -27,16 +28,28 @@
     WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
     self.navigationItem.rightBarButtonItem  = right;
+    _loginRequest = [LoginRequest new];
     // Do any additional setup after loading the view.
 }
 
 #pragma mark - 返回按钮方法
-- (IBAction)goback:(UIBarButtonItem *)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
+//- (IBAction)goback:(UIBarButtonItem *)sender {
+//    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//}
 
 #pragma mark - 获取验证码
 - (IBAction)getAuthCode:(id)sender {
+    [_loginRequest requestAuthCodeByPhone:_phoneNum.text];
+}
+
+#pragma mark - 登录请求代理
+-(void)loginRequestAuthCodeFinished:(BOOL)success
+{
+    
+}
+
+-(void)loginRequestRegisterAccountFinished:(BOOL)success Result:(NSDictionary *)result
+{
     
 }
 
@@ -53,6 +66,7 @@
 
 #pragma mark - 注册方法
 - (IBAction)registerUser:(id)sender {
+    [_loginRequest registerAccountByPhone:_phoneNum.text Password:_password.text Code:_authCode.text];
 }
 
 

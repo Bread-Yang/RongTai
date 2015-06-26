@@ -7,13 +7,14 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginRequest.h"
 
 //
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<LoginRequestDelegate>
 {
     __weak IBOutlet UIView *_loginFeild;  //登录外边框
     
@@ -22,6 +23,8 @@
     __weak IBOutlet UITextField *_phoneNum;  //手机号码TextField
     
     __weak IBOutlet UITextField *_password;  //密码TextField
+    
+    LoginRequest* _loginRequest;
 }
 
 @end
@@ -33,7 +36,7 @@
     _loginFeild.layer.cornerRadius = 5;
     _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _loginFeild.layer.borderWidth = 1;
-    
+    _loginRequest = [LoginRequest new];
     // Do any additional setup after loading the view.
 }
 
@@ -50,11 +53,17 @@
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-    
+    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法
 - (IBAction)registerUser:(id)sender {
+}
+
+#pragma mark - 登录完成后
+-(void)loginRequestLoginFinished:(BOOL)success Result:(NSDictionary *)result
+{
+    
 }
 
 
