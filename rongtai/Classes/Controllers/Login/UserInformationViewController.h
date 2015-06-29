@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class User;
-@class UserInformationViewController;
 
 typedef void (^EditUserInformationBlock)(NSDictionary *entity);
 

@@ -73,6 +73,9 @@
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
 		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
 		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
+		3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD12251B41346500890164 /* UIImage+ImageBlur.m */; };
+		3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3DCD12271B41374000890164 /* userDefaultIcon.jpg */; };
+		3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD122A1B4140EE00890164 /* UserDownload.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -295,6 +298,11 @@
 		3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMassageViewController.m; sourceTree = "<group>"; };
 		3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishMassageViewController.h; sourceTree = "<group>"; };
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
+		3DCD12241B41346500890164 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageBlur.h"; sourceTree = "<group>"; };
+		3DCD12251B41346500890164 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
+		3DCD12271B41374000890164 /* userDefaultIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = userDefaultIcon.jpg; sourceTree = "<group>"; };
+		3DCD12291B4140EE00890164 /* UserDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDownload.h; path = Model/UserDownload.h; sourceTree = "<group>"; };
+		3DCD122A1B4140EE00890164 /* UserDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDownload.m; path = Model/UserDownload.m; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -521,6 +529,7 @@
 		3D0258D41B1D5173006C9179 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3DCD12271B41374000890164 /* userDefaultIcon.jpg */,
 				3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */,
 				3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */,
 				3D0258D51B1D5173006C9179 /* LoginViewController.h */,
@@ -724,6 +733,8 @@
 				3D9E892B1B39503D002E0962 /* NSString+RT.m */,
 				3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */,
 				3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */,
+				3DCD12241B41346500890164 /* UIImage+ImageBlur.h */,
+				3DCD12251B41346500890164 /* UIImage+ImageBlur.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1054,6 +1065,8 @@
 				567280131B31859F0059C18E /* CustomProgram.m */,
 				5672800F1B31859E0059C18E /* Member.h */,
 				567280101B31859E0059C18E /* Member.m */,
+				3DCD12291B4140EE00890164 /* UserDownload.h */,
+				3DCD122A1B4140EE00890164 /* UserDownload.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1372,6 +1385,7 @@
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
+				3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
@@ -1497,6 +1511,7 @@
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,
 				3DF304351B38FE2500DD51D3 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
@@ -1527,6 +1542,7 @@
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 				3DF3042A1B38FE2500DD51D3 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
+				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
