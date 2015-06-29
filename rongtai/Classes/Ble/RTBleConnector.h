@@ -56,6 +56,8 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
 
 + (instancetype)shareManager;
 
++ (BOOL)isBleTurnOn;
+
 - (void)startScanRTPeripheral:(NSArray *)serviceUUIDs;
 
 - (void)stopScanRTPeripheral;

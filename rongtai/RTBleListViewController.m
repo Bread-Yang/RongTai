@@ -10,8 +10,7 @@
 #import "JRBluetoothManager.h"
 #import "RTBleConnector.h"
 
-@interface RTBleListViewController () <RTBleConnectorDelegate>
-{
+@interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
     
     NSArray *segueIdentifiers;
@@ -23,39 +22,41 @@
 
 @implementation RTBleListViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"蓝牙设备列表";
+    self.title = @"蓝牙连接";
+	
+	bleConnector = [RTBleConnector shareManager];
     
     blePeriphrals = [[NSMutableArray alloc] init];
-    
-    bleConnector = [RTBleConnector shareManager];
-    bleConnector.delegate = self;
+	
     segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
     
     UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshTableView)];
     self.navigationItem.rightBarButtonItem = refreshItem;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     bleConnector.delegate = self;
-    [bleConnector startScanRTPeripheral:nil];
+	[bleConnector startScanRTPeripheral:nil];
+	
+	if (![RTBleConnector isBleTurnOn]) {
+		self.periphralTableView.hidden = true;
+	}
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
+	NSLog(@"viewWillDisappear()");
+	[super viewWillDisappear:animated];
+	
+	[bleConnector stopScanRTPeripheral];
+	//    bleConnector.delegate = nil;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+	NSLog(@"viewDidDisappear()");
     [super viewDidDisappear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [bleConnector stopScanRTPeripheral];
-    bleConnector.delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,19 +71,16 @@
 
 #pragma mark - TableView Data Source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return blePeriphrals.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuserId = @"BLE_PERIPHRAL_CELL";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuserId];
     
-    if (!cell)
-    {
+    if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuserId];
     }
     
@@ -96,17 +94,19 @@
 
 #pragma mark - TableView delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     NSDictionary *peripheralInfo = blePeriphrals[indexPath.row];
     CBPeripheral *peripheral = peripheralInfo[RTBle_Periperal];
     
-    NSLog(@"statue %ld",peripheral.state);
+    NSLog(@"statue == CBPeripheralStateConnected : %d",peripheral.state == CBPeripheralStateConnected);
+	
     if (peripheral.state == CBPeripheralStateConnected) {
-        
-    }else {
+		if ([peripheral.name isEqualToString:RTLocalName]) {
+			[self performSegueWithIdentifier:@"rtSegue" sender:nil];
+		}
+    } else {
         [[JRBluetoothManager shareManager] connectPeripheral:peripheral];
     }
     
@@ -120,46 +120,60 @@
     //        [self performSegueWithIdentifier:@"scaleViewController" sender:nil];
     //    }
     
-    if ([peripheral.name isEqualToString:RTLocalName]) {
-        [self performSegueWithIdentifier:@"rtSegue" sender:nil];
-    }
+	
 }
 
-#pragma mark - VMBle Connector Deledate
-
-- (void)didUpdateState:(CBCentralManagerState)state
-{
-    if (state == CBCentralManagerStatePoweredOn)
-    {
-        [bleConnector startScanRTPeripheral:nil];
-    }
-}
+#pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
-    
+	
+	switch (state) {
+		case CBCentralManagerStatePoweredOn :
+			self.periphralTableView.hidden = false;
+			[bleConnector startScanRTPeripheral:nil];
+			break;
+		case CBCentralManagerStatePoweredOff :
+			self.periphralTableView.hidden = true;
+			break;
+	}
 }
 
 - (void)didFoundRTBlePeriperalInfo:(NSDictionary *)periperalInfo {
-    
+	
     CBPeripheral *newPeripheral = periperalInfo[RTBle_Periperal];
-    
+	
+	if (![newPeripheral.name isEqualToString:RTLocalName]) {
+		return;
+	}
+	
     for(NSDictionary *tempInfo in blePeriphrals) {
         CBPeripheral *existPeripheral = tempInfo[RTBle_Periperal];
         if([[existPeripheral.identifier UUIDString] isEqualToString:[newPeripheral.identifier UUIDString]]) {
             return;
         }
     }
+	
     [blePeriphrals addObject:periperalInfo];
+	
     [self.periphralTableView reloadData];
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	NSLog(@"didConnectRTBlePeripheral()");
 //    [SVProgressHUD dismiss];
+	if ([peripheral.name isEqualToString:RTLocalName]) {
+		[self performSegueWithIdentifier:@"rtSegue" sender:nil];
+	}
 }
 
 - (void)didFailToConnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	NSLog(@"didFailToConnectRTBlePeripheral()");
 //    [SVProgressHUD dismiss];
 //    [VMAlertUtil show:@"连接设备失败"];
+}
+
+- (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	NSLog(@"didDisconnectRTBlePeripheral");
 }
 
 #pragma mark --Misc
@@ -170,6 +184,5 @@
     [bleConnector stopScanRTPeripheral];
     [bleConnector startScanRTPeripheral:nil];
 }
-
 
 @end
