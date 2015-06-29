@@ -53,20 +53,9 @@
     
 }
 
-#pragma mark - 显示密码方法
-- (IBAction)displayPassword:(UISwitch *)sender {
-    if (sender.on) {
-        _password.secureTextEntry = NO;
-    }
-    else
-    {
-        _password.secureTextEntry = YES;
-    }
-}
-
 #pragma mark - 注册方法
 - (IBAction)registerUser:(id)sender {
-    [_loginRequest registerAccountByPhone:_phoneNum.text Password:_password.text Code:_authCode.text];
+//    [_loginRequest registerAccountByPhone:_phoneNum.text Password:_password.text Code:_authCode.text];
 }
 
 

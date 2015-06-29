@@ -9,10 +9,12 @@
 #import "LoginViewController.h"
 #import "LoginRequest.h"
 
+
 //
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
+#import "MainViewController.h"
 
 @interface LoginViewController ()<LoginRequestDelegate>
 {
@@ -33,22 +35,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _loginFeild.layer.cornerRadius = 5;
-    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _loginFeild.layer.borderWidth = 1;
+//    _loginFeild.layer.cornerRadius = 5;
+//    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    _loginFeild.layer.borderWidth = 1;
     _loginRequest = [LoginRequest new];
+    _loginRequest.delegate = self;
     // Do any additional setup after loading the view.
-}
-
-#pragma mark - 显示密码方法
-- (IBAction)displayPassword:(UISwitch *)sender {
-    if (sender.on) {
-        _password.secureTextEntry = NO;
-    }
-    else
-    {
-        _password.secureTextEntry = YES;
-    }
 }
 
 #pragma mark - 登陆按钮方法
@@ -63,9 +55,15 @@
 #pragma mark - 登录完成后
 -(void)loginRequestLoginFinished:(BOOL)success Result:(NSDictionary *)result
 {
-    
+    if (success) {
+        NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+        NSString* token = [result objectForKey:@"token"];
+        NSString* uid = [result objectForKey:@"uid"];
+        [ud setObject:token forKey:@"token"];
+        [ud setObject:uid forKey:@"uid"];
+        [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    }
 }
-
 
 #pragma mark - qq登陆按钮方法
 - (IBAction)qqLogin:(id)sender {

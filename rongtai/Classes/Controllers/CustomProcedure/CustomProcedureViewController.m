@@ -218,11 +218,11 @@
         _customProgram = [CustomProgram MR_createEntity];
     }
     _customProgram.name = _nameField.text;
-    _customProgram.keyPart = [NSNumber numberWithInt:_importantPartSegmentView.selectIndex];
-    _customProgram.massagePreference = [NSNumber numberWithInt:_skillPreferenceSegmentView.selectIndex];
-    _customProgram.massageType = [NSNumber numberWithInt:_massageWaySegmentView.selectIndex];
-    _customProgram.useAid = [NSNumber numberWithInt:_usePurposeSegmentView.selectIndex];
-    _customProgram.useTime = [NSNumber numberWithInt:_useTimingSegmentView.selectIndex];
+    _customProgram.keyPart = [NSNumber numberWithInteger:_importantPartSegmentView.selectIndex];
+    _customProgram.massagePreference = [NSNumber numberWithInteger:_skillPreferenceSegmentView.selectIndex];
+    _customProgram.massageType = [NSNumber numberWithInteger:_massageWaySegmentView.selectIndex];
+    _customProgram.useAid = [NSNumber numberWithInteger:_usePurposeSegmentView.selectIndex];
+    _customProgram.useTime = [NSNumber numberWithInteger:_useTimingSegmentView.selectIndex];
     _customProgram.speed = [NSNumber numberWithInt:_speedCheckButton.selectState];
     _customProgram.power = [NSNumber numberWithInt:_dynamicsCheckButton.selectState];
     _customProgram.width = [NSNumber numberWithInt:_widthCheckButton.selectState];

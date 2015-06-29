@@ -61,8 +61,8 @@
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
 		3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */; };
 		3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E89671B3968D8002E0962 /* CWStarRateView.m */; };
-		3D9EBADE1B3D2885000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBADD1B3D2885000FD810 /* Massage.m */; };
 		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
+		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
@@ -73,6 +73,10 @@
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
 		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
 		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
+		3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD12251B41346500890164 /* UIImage+ImageBlur.m */; };
+		3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3DCD12271B41374000890164 /* userDefaultIcon.jpg */; };
+		3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD122A1B4140EE00890164 /* UserDownload.m */; };
+		3DCD122E1B4148A700890164 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCD122D1B4148A700890164 /* camera.png */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -273,10 +277,10 @@
 		3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b27_icon_star_yellow@2x.png"; sourceTree = "<group>"; };
 		3D9E89661B3968D8002E0962 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
 		3D9E89671B3968D8002E0962 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
-		3D9EBADC1B3D2885000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Massage.h; path = ../Massage.h; sourceTree = "<group>"; };
-		3D9EBADD1B3D2885000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Massage.m; path = ../Massage.m; sourceTree = "<group>"; };
 		3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRequest.h; sourceTree = "<group>"; };
 		3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRequest.m; sourceTree = "<group>"; };
+		3D9EBAE31B3D3893000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Massage.h; sourceTree = "<group>"; };
+		3D9EBAE41B3D3893000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Massage.m; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
@@ -296,6 +300,12 @@
 		3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMassageViewController.m; sourceTree = "<group>"; };
 		3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishMassageViewController.h; sourceTree = "<group>"; };
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
+		3DCD12241B41346500890164 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageBlur.h"; sourceTree = "<group>"; };
+		3DCD12251B41346500890164 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
+		3DCD12271B41374000890164 /* userDefaultIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = userDefaultIcon.jpg; path = ../Classes/Controllers/Login/userDefaultIcon.jpg; sourceTree = "<group>"; };
+		3DCD12291B4140EE00890164 /* UserDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDownload.h; path = Model/UserDownload.h; sourceTree = "<group>"; };
+		3DCD122A1B4140EE00890164 /* UserDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDownload.m; path = Model/UserDownload.m; sourceTree = "<group>"; };
+		3DCD122D1B4148A700890164 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -684,6 +694,7 @@
 		3D783D2F1B12FD0300A893D9 /* rongtai */ = {
 			isa = PBXGroup;
 			children = (
+				3DCD122C1B4148A700890164 /* Image */,
 				568C0F941B3BE47D007F6305 /* RongTaiConstant.h */,
 				DF9C7D001B147B2D005617DA /* Application */,
 				DF9C7CE01B147A36005617DA /* Classes */,
@@ -729,6 +740,8 @@
 				3D9E892B1B39503D002E0962 /* NSString+RT.m */,
 				3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */,
 				3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */,
+				3DCD12241B41346500890164 /* UIImage+ImageBlur.h */,
+				3DCD12251B41346500890164 /* UIImage+ImageBlur.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -747,8 +760,8 @@
 		3D9EBADF1B3D2CC1000FD810 /* MassageRequest */ = {
 			isa = PBXGroup;
 			children = (
-				3D9EBADC1B3D2885000FD810 /* Massage.h */,
-				3D9EBADD1B3D2885000FD810 /* Massage.m */,
+				3D9EBAE31B3D3893000FD810 /* Massage.h */,
+				3D9EBAE41B3D3893000FD810 /* Massage.m */,
 				3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */,
 				3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */,
 			);
@@ -801,6 +814,15 @@
 				3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */,
 			);
 			path = Massage;
+			sourceTree = "<group>";
+		};
+		3DCD122C1B4148A700890164 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				3DCD12271B41374000890164 /* userDefaultIcon.jpg */,
+				3DCD122D1B4148A700890164 /* camera.png */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
@@ -1059,6 +1081,8 @@
 				567280131B31859F0059C18E /* CustomProgram.m */,
 				5672800F1B31859E0059C18E /* Member.h */,
 				567280101B31859E0059C18E /* Member.m */,
+				3DCD12291B4140EE00890164 /* UserDownload.h */,
+				3DCD122A1B4140EE00890164 /* UserDownload.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1360,6 +1384,7 @@
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
+				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
@@ -1379,6 +1404,7 @@
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
+				3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
@@ -1492,8 +1518,8 @@
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
+				3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */,
 				567280141B31859F0059C18E /* CustomProgram.m in Sources */,
-				3D9EBADE1B3D2885000FD810 /* Massage.m in Sources */,
 				3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3DF304321B38FE2500DD51D3 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				3DF3042D1B38FE2500DD51D3 /* NSManagedObject+MagicalDataImport.m in Sources */,
@@ -1505,6 +1531,7 @@
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,
 				3DF304351B38FE2500DD51D3 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
@@ -1535,6 +1562,7 @@
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 				3DF3042A1B38FE2500DD51D3 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
+				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1729,6 +1757,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William zhang (R285RFBPPH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

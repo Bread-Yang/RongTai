@@ -170,7 +170,12 @@
             [self.delegate loginRequestThirdLoginFinished:NO Result:nil];
         }
     }];
+}
 
+#pragma mark - 上传图片
+-(void)uploadImage
+{
+    
 }
 
 #pragma mark - 取消请求
