@@ -14,11 +14,21 @@
 /**
  *  用户
  */
-@property(nonatomic, strong)User* user;
+@property(nonatomic, strong) User *user;
+
+/**
+ * 用户头像IamgeView
+ */
+@property(nonatomic, strong) UIImageView* userIconView;
+
+/**
+ * 用户名称Label
+ */
+@property(nonatomic, strong) UILabel* userNameLabel;
 
 /**
  *  是否显示为添加按钮
  */
-@property(nonatomic)BOOL isAdd;
+@property(nonatomic) BOOL isAdd;
 
 @end
