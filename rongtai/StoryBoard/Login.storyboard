@@ -1402,7 +1402,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lQ3-po-mxo">
                                 <rect key="frame" x="0.0" y="64" width="600" height="206"/>
-                                <color key="backgroundColor" red="0.97254901959999995" green="0.26274509800000001" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YU-tm-6q0">
                                 <rect key="frame" x="0.0" y="270" width="600" height="330"/>
@@ -1672,16 +1672,31 @@
                                     <action selector="selectUserIcon:" destination="50I-MR-sTY" eventType="touchUpInside" id="GaG-bv-wo1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAr-KF-paP">
-                                <rect key="frame" x="539" y="225" width="45" height="30"/>
-                                <state key="normal" title="照相机">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAr-KF-paP">
+                                <rect key="frame" x="524" y="208.5" width="60" height="46.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="btS-UZ-6hZ"/>
+                                    <constraint firstAttribute="width" secondItem="kAr-KF-paP" secondAttribute="height" multiplier="9:7" id="pVW-DA-50p"/>
+                                    <constraint firstAttribute="width" constant="45" id="t9k-S6-VFf"/>
+                                </constraints>
+                                <state key="normal" image="camera.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="btS-UZ-6hZ"/>
+                                        <exclude reference="t9k-S6-VFf"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="cameraClick:" destination="50I-MR-sTY" eventType="touchUpInside" id="3CI-sc-rFq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="lQ3-po-mxo" secondAttribute="centerX" id="1DH-nN-Tfg"/>
+                            <constraint firstItem="kAr-KF-paP" firstAttribute="width" secondItem="lQ3-po-mxo" secondAttribute="width" multiplier="0.1" id="5HZ-1y-OOy"/>
                             <constraint firstItem="kAr-KF-paP" firstAttribute="trailing" secondItem="KKh-cG-Ix8" secondAttribute="trailingMargin" id="HTa-12-3P6"/>
                             <constraint firstAttribute="centerX" secondItem="9YU-tm-6q0" secondAttribute="centerX" id="Lps-rb-mxM"/>
                             <constraint firstItem="Ekt-vL-LFR" firstAttribute="width" secondItem="KKh-cG-Ix8" secondAttribute="width" multiplier="0.25" id="Ne6-O1-lN6"/>
@@ -1995,4 +2010,7 @@
             <point key="canvasLocation" x="2851" y="988"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera.png" width="626" height="517"/>
+    </resources>
 </document>

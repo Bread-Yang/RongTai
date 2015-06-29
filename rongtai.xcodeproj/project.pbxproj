@@ -76,6 +76,7 @@
 		3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD12251B41346500890164 /* UIImage+ImageBlur.m */; };
 		3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3DCD12271B41374000890164 /* userDefaultIcon.jpg */; };
 		3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD122A1B4140EE00890164 /* UserDownload.m */; };
+		3DCD122E1B4148A700890164 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCD122D1B4148A700890164 /* camera.png */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
 		3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m */; };
 		3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF35D1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m */; };
@@ -300,9 +301,10 @@
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
 		3DCD12241B41346500890164 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageBlur.h"; sourceTree = "<group>"; };
 		3DCD12251B41346500890164 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
-		3DCD12271B41374000890164 /* userDefaultIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = userDefaultIcon.jpg; sourceTree = "<group>"; };
+		3DCD12271B41374000890164 /* userDefaultIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = userDefaultIcon.jpg; path = ../Classes/Controllers/Login/userDefaultIcon.jpg; sourceTree = "<group>"; };
 		3DCD12291B4140EE00890164 /* UserDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDownload.h; path = Model/UserDownload.h; sourceTree = "<group>"; };
 		3DCD122A1B4140EE00890164 /* UserDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDownload.m; path = Model/UserDownload.m; sourceTree = "<group>"; };
+		3DCD122D1B4148A700890164 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		3DCDF3571B1FEB7400BA491E /* SlideNavigationContorllerAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimator.h; sourceTree = "<group>"; };
 		3DCDF3581B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideNavigationContorllerAnimatorFade.h; sourceTree = "<group>"; };
 		3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationContorllerAnimatorFade.m; sourceTree = "<group>"; };
@@ -529,7 +531,6 @@
 		3D0258D41B1D5173006C9179 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				3DCD12271B41374000890164 /* userDefaultIcon.jpg */,
 				3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */,
 				3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */,
 				3D0258D51B1D5173006C9179 /* LoginViewController.h */,
@@ -689,6 +690,7 @@
 		3D783D2F1B12FD0300A893D9 /* rongtai */ = {
 			isa = PBXGroup;
 			children = (
+				3DCD122C1B4148A700890164 /* Image */,
 				568C0F941B3BE47D007F6305 /* RongTaiConstant.h */,
 				DF9C7D001B147B2D005617DA /* Application */,
 				DF9C7CE01B147A36005617DA /* Classes */,
@@ -807,6 +809,15 @@
 				3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */,
 			);
 			path = Massage;
+			sourceTree = "<group>";
+		};
+		3DCD122C1B4148A700890164 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				3DCD12271B41374000890164 /* userDefaultIcon.jpg */,
+				3DCD122D1B4148A700890164 /* camera.png */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 		3DCDF3551B1FEB7400BA491E /* SlideMenu */ = {
@@ -1366,6 +1377,7 @@
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
+				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
@@ -1735,6 +1747,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William zhang (R285RFBPPH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

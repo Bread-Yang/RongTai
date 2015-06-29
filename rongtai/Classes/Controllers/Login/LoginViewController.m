@@ -9,10 +9,12 @@
 #import "LoginViewController.h"
 #import "LoginRequest.h"
 
+
 //
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
+#import "MainViewController.h"
 
 @interface LoginViewController ()<LoginRequestDelegate>
 {
@@ -37,6 +39,7 @@
 //    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
 //    _loginFeild.layer.borderWidth = 1;
     _loginRequest = [LoginRequest new];
+    _loginRequest.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -58,6 +61,7 @@
         NSString* uid = [result objectForKey:@"uid"];
         [ud setObject:token forKey:@"token"];
         [ud setObject:uid forKey:@"uid"];
+        [self.navigationController pushViewController:[MainViewController new] animated:YES];
     }
 }
 

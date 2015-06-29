@@ -16,7 +16,7 @@
 #import "UIImage+ImageBlur.h"
 
 
-@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
@@ -39,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"荣泰";
     //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
     [_middleView bringSubviewToFront:_birthday];
 //    NSLog(@"%@",_middleView.subviews);
@@ -116,9 +117,53 @@
 
 #pragma mark - 头像按钮方法
 - (IBAction)selectUserIcon:(id)sender {
-	
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        UIImagePickerController* picker = [[UIImagePickerController alloc]init];
+        [picker setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+        [picker setAllowsEditing:YES];
+        picker.delegate = self;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+	else
+    {
+        NSLog(@"访问相册失败");
+    }
 }
 
+#pragma mark - 照相机按钮点击方法
+- (IBAction)cameraClick:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController* picker = [[UIImagePickerController alloc]init];
+        [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [picker setAllowsEditing:YES];
+        picker.delegate = self;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+    else
+    {
+        NSLog(@"访问相机失败");
+    }
+
+}
+
+#pragma mark - UIImagePickerController代理实现
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    _userImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    [_userIcon setImage:_userImage forState:UIControlStateNormal];
+    _bgImageView.image = [_userImage blurImage:15.0];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //照片保存到本地
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString* doc = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+        NSString* path = [doc stringByAppendingString:@"/userIcon.png"];
+        NSLog(@"头像路径:%@",path);
+        NSData* data = UIImagePNGRepresentation(_userImage);
+        [data writeToFile:path atomically:YES];
+    });
+    
+}
 
 #pragma mark - 保存信息按钮方法
 
