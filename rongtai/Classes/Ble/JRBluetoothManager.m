@@ -7,9 +7,9 @@
 //
 
 #import "JRBluetoothManager.h"
+#import "RTBleConnector.h"
 
-@interface JRBluetoothManager ()<CBCentralManagerDelegate,CBPeripheralDelegate,CBPeripheralManagerDelegate>
-{
+@interface JRBluetoothManager ()<CBCentralManagerDelegate,CBPeripheralDelegate,CBPeripheralManagerDelegate> {
     CBCentralManager *centerManager;
     CBPeripheralManager *peripheralManager;
     NSMutableDictionary *connectedPeriphralDictionary;
@@ -19,8 +19,7 @@
 
 @implementation JRBluetoothManager
 
-+ (instancetype)shareManager
-{
++ (instancetype)shareManager {
     static JRBluetoothManager *shareManager = nil;
     static dispatch_once_t onceToken;
     
@@ -31,10 +30,8 @@
     return shareManager;
 }
 
-- (id)init
-{
-    if (self= [super init])
-    {
+- (id)init {
+    if (self= [super init]) {
         centerManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
         connectedPeriphralDictionary = [[NSMutableDictionary alloc] init];
     }
@@ -44,34 +41,28 @@
 
 #pragma mark - Public
 
-- (void)startScanPeripherals:(NSArray *)serviceUUIDs
-{
+- (void)startScanPeripherals:(NSArray *)serviceUUIDs {
     NSLog(@"============ startScanPeripherals ============");
-    [centerManager scanForPeripheralsWithServices:serviceUUIDs options:@{
-                                                                         CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)
-                                                                         }];
+	
+    [centerManager scanForPeripheralsWithServices:serviceUUIDs options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)}];
 }
 
-- (void)stopScanPeripherals
-{
+- (void)stopScanPeripherals {
     NSLog(@"============ stopScanPeripherals ============");
     [centerManager stopScan];
 }
 
-- (void)connectPeripheral:(CBPeripheral *)peripheral
-{
+- (void)connectPeripheral:(CBPeripheral *)peripheral {
+	NSLog(@"connectPeripheral()");
     [centerManager connectPeripheral:peripheral options:nil];
 }
 
-- (void)cancelConnectPeriphral:(CBPeripheral *)peripheral
-{
+- (void)cancelConnectPeriphral:(CBPeripheral *)peripheral {
     [centerManager cancelPeripheralConnection:peripheral];
 }
 
-- (void)readDataFromPeriperal:(CBPeripheral *)peripheral inCharacteristic:(CBCharacteristic *)characteristic
-{
-    if (peripheral && characteristic)
-    {
+- (void)readDataFromPeriperal:(CBPeripheral *)peripheral inCharacteristic:(CBCharacteristic *)characteristic {
+    if (peripheral && characteristic) {
         [peripheral readValueForCharacteristic:characteristic];
     }
 }
@@ -83,8 +74,7 @@
     }
 }
 
-- (void)writeData:(NSData *)data toPeriperal:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic
-{
+- (void)writeData:(NSData *)data toPeriperal:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
     if (peripheral && data && characteristic)
     {
         NSLog(@"============ writeData ============");
@@ -94,8 +84,7 @@
     }
 }
 
-- (void)writeData:(NSData *)data toPeriperal:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic type:(CBCharacteristicWriteType)characteristicWriteType
-{
+- (void)writeData:(NSData *)data toPeriperal:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic type:(CBCharacteristicWriteType)characteristicWriteType {
     if (peripheral && data && characteristic)
     {
         NSLog(@"============ writeData ============");
@@ -120,72 +109,63 @@
 
 #pragma mark - Central Manager Delegate
 
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
-{
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     NSLog(@"============ centralManagerDidUpdateState ============");
     NSLog(@"centerManager state: %d",(int)central.state);
     
-    if (_delegate && [_delegate respondsToSelector:@selector(didUpdateState:)])
-    {
+    if (_delegate && [_delegate respondsToSelector:@selector(didUpdateState:)]) {
         [_delegate didUpdateState:central.state];
     }
     
 }
 
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    NSLog(@"============ didDiscoverPeripheral ============");
-    NSLog(@"periperal Name: %@",peripheral.name);
-    NSLog(@"periperal RSSI: %@",RSSI);
-    NSLog(@"periperal UUID: %@",[peripheral.identifier UUIDString]);
-    NSLog(@"periperal advertisemenetData:%@",advertisementData);
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(didFoundPeripheral:advertisement:rssi:)])
-    {
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
+//    NSLog(@"============ didDiscoverPeripheral ============");
+	
+	if ([peripheral.name isEqualToString:RTLocalName]) {
+		NSLog(@"periperal Name: %@",peripheral.name);
+		NSLog(@"periperal RSSI: %@",RSSI);
+		NSLog(@"periperal UUID: %@",[peripheral.identifier UUIDString]);
+		NSLog(@"periperal advertisemenetData:%@",advertisementData);
+	}
+	
+    if (_delegate && [_delegate respondsToSelector:@selector(didFoundPeripheral:advertisement:rssi:)]) {
         [_delegate didFoundPeripheral:peripheral advertisement:advertisementData rssi:RSSI];
     }
 }
 
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
-{
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
     NSLog(@"============ jr didConnectPeripheral ============");
     [connectedPeriphralDictionary setObject:peripheral forKey:peripheral.name];
     peripheral.delegate = self;
 
     [peripheral discoverServices:nil];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(didConnectPeriphral:)])
-    {
+    if (_delegate && [_delegate respondsToSelector:@selector(didConnectPeriphral:)]) {
         [_delegate didConnectPeriphral:peripheral];
     }
 }
 
-- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     NSLog(@"============ didFailToConnectPeripheral ============");
-    if (_delegate && [_delegate respondsToSelector:@selector(didFailToConnectPeriphral:)])
-    {
+    if (_delegate && [_delegate respondsToSelector:@selector(didFailToConnectPeriphral:)]) {
         [_delegate didFailToConnectPeriphral:peripheral];
     }
 }
 
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-{
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     NSLog(@"============ didDisconnectPeripheral ============");
     
-    if (_delegate && [_delegate respondsToSelector:@selector(didDisconnectPeriphral:)])
-    {
+    if (_delegate && [_delegate respondsToSelector:@selector(didDisconnectPeriphral:)]) {
         [_delegate didDisconnectPeriphral:peripheral];
     }
 }
 
 #pragma mark - Peripheral Delegate
 
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
-{
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     NSLog(@"============ didDiscoverServices ============");
-    if (error)
-    {
+    if (error) {
         NSLog(@"Error occur : %@",error);
         return;
     }
@@ -196,8 +176,7 @@
     }
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
-{
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
     NSLog(@"============ didDiscoverCharacteristicsForService ============");
     if (error)
     {
@@ -211,20 +190,18 @@
     }
 }
 
-- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
-{
-    NSLog(@"============ didUpdateValueForCharacteristic ============");
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+//    NSLog(@"============ didUpdateValueForCharacteristic ============");
     if (error)
     {
         NSLog(@"error occur : %@",error);
         return;
     }
-    NSLog(@"peripheral name: %@",peripheral.name);
-    NSLog(@"characteristic: %@ data: %@",[characteristic.UUID UUIDString],characteristic.value);
-    
+//    NSLog(@"peripheral name: %@",peripheral.name);
+//    NSLog(@"characteristic: %@ data: %@",[characteristic.UUID UUIDString],characteristic.value);
+	
     BOOL flag = [_delegate respondsToSelector:@selector(didUpdateValue:fromPeripheral:characteritic:)];
-    if (_delegate && flag)
-    {
+    if (_delegate && flag) {
         [_delegate didUpdateValue:characteristic.value fromPeripheral:peripheral characteritic:characteristic];
     }
 }

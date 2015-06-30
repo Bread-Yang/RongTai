@@ -10,6 +10,10 @@
 
 @interface RTBleListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *bleTurnOnTipsLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bleImageView;
+
 @property (weak, nonatomic) IBOutlet UITableView *periphralTableView;
 
 @end

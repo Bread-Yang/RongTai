@@ -13,6 +13,9 @@ static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
 
+static BOOL isBleTurnOn;
+static CBPeripheral *connectedDevice;
+
 //FFF1  == read write
 #define kCharacterRW(periphralName) [NSString stringWithFormat:@"RW_%@",periphralName]
 
@@ -29,12 +32,17 @@ static Byte const BYTE_Tail = 0xf1;
 
 @property (nonatomic, strong) NSMutableDictionary *characteristicDicionary;
 
+@property (nonatomic, strong) NSTimer *reconnectTimer;
+
+@property (readonly) NSTimeInterval reconnectInterval;
+
 @end
 
 @implementation RTBleConnector
 
 
 + (instancetype)shareManager {
+	NSLog(@"%@", @"shareManager()");
     static RTBleConnector *shareManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -43,8 +51,15 @@ static Byte const BYTE_Tail = 0xf1;
     return shareManager;
 }
 
++ (BOOL)isBleTurnOn {
+	return isBleTurnOn;
+}
+
 - (instancetype)init {
+	NSLog(@"%@", @"init()");
+	
     self = [super init];
+	
     if (self) {
         
         [JRBluetoothManager shareManager].delegate = self;
@@ -52,14 +67,47 @@ static Byte const BYTE_Tail = 0xf1;
         _rtMassageChairStatus = [[RTMassageChairStatus alloc] init];
         
         _characteristicDicionary = [[NSMutableDictionary alloc] init];
-        
+		
+		_reconnectInterval = 10;
+
     }
     return self;
+}
+
+- (void)handleReconnect {
+	NSLog(@"handleReconnect()");
+	[[JRBluetoothManager shareManager] connectPeripheral:connectedDevice];
 }
 
 #pragma mark - JRBluetoothManagerDelegate
 
 - (void)didUpdateState:(CBCentralManagerState)state {
+	NSLog(@"%@", @"didUpdateState()");
+	
+	NSString *message;
+	
+	switch (state) {
+		case CBCentralManagerStateResetting:
+			message = @"初始化中，请稍后……";
+			break;
+		case CBCentralManagerStateUnsupported:
+			message = @"设备不支持状态，过会请重试……";
+			break;
+		case CBCentralManagerStateUnauthorized:
+			message = @"设备未授权状态，过会请重试……";
+			break;
+		case CBCentralManagerStatePoweredOff:
+			message = @"尚未打开蓝牙，请在设置中打开……";
+			isBleTurnOn = NO;
+			break;
+		case CBCentralManagerStatePoweredOn:
+			message = @"蓝牙已经成功开启，稍后……";
+			isBleTurnOn = YES;
+			break;
+	}
+
+	NSLog(@"%@", message);
+	
     if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateRTBleState:)]) {
         [self.delegate didUpdateRTBleState:state];
     }
@@ -77,9 +125,15 @@ static Byte const BYTE_Tail = 0xf1;
 }
 
 - (void)didConnectPeriphral:(CBPeripheral *)periphral {
+	connectedDevice = periphral;
+	
     if (self.delegate && [self.delegate respondsToSelector:@selector(didConnectRTBlePeripheral:)]) {
         [self.delegate didConnectRTBlePeripheral:periphral];
     }
+	
+	if (_reconnectTimer && [_reconnectTimer isValid]) {
+		[_reconnectTimer invalidate];
+	}
 }
 
 - (void)didFailToConnectPeriphral:(CBPeripheral *)periphral {
@@ -89,9 +143,14 @@ static Byte const BYTE_Tail = 0xf1;
 }
 
 - (void)didDisconnectPeriphral:(CBPeripheral *)periphral {
+	NSLog(@"didDisconnectPeriphral()");
     if (self.delegate && [self.delegate respondsToSelector:@selector(didDisconnectRTBlePeripheral:)]) {
         [self.delegate didDisconnectRTBlePeripheral:periphral];
     }
+	
+//	_reconnectTimer = [NSTimer timerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+	_reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+	[_reconnectTimer fire];
 }
 
 - (void)didDiscoverCharacteristicOfService:(CBService *)service fromPeriperal:(CBPeripheral *)periphral {
@@ -225,12 +284,10 @@ static Byte const BYTE_Tail = 0xf1;
     
     Byte *bodyData = (Byte *)[[rawData subdataWithRange:NSMakeRange(1, 14)] bytes]; // 14 bytes
     
-    NSLog(@"rawData : %@", rawData);
-    
+//    NSLog(@"rawData : %@", rawData);
+	
     [self parseByteOfAddress1:bodyData[0]];
     [self parseByteOfAddress2:bodyData[1]];
-    
-    NSLog(@"重载description : %@", [_rtMassageChairStatus description]);
     
     NSDictionary *package;
     

@@ -18,7 +18,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	NSLog(@"viewDidLoad()");
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	NSLog(@"viewWillAppear()");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	NSLog(@"viewDidAppear()");
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	NSLog(@"viewDidLayoutSubviews()");
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	NSLog(@"viewWillLayoutSubviews()");
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+	NSLog(@"viewWillTransitionToSize");
 }
 
 - (void)didReceiveMemoryWarning {

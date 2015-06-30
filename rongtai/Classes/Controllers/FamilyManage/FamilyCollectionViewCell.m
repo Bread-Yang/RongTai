@@ -7,19 +7,18 @@
 //
 
 #import "FamilyCollectionViewCell.h"
+#import "UIImageView+AFNetworking.h"
+#import "NSString+RT.h"
 
-@interface FamilyCollectionViewCell ()
-{
-    UIImageView* _userIconView; //用户头像IamgeView
-    UILabel* _userNameLabel;  //用户名称Label
+@interface FamilyCollectionViewCell () {
+	
 }
 @end
 
 @implementation FamilyCollectionViewCell
 
 
--(instancetype)initWithFrame:(CGRect)frame
-{
+-(instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self setUp];
     }
@@ -27,8 +26,8 @@
 }
 
 #pragma mark - 初始化
--(void)setUp
-{
+
+- (void)setUp {
     CGFloat w = self.frame.size.width;
     CGFloat h = self.frame.size.height;
     self.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -58,18 +57,35 @@
 }
 
 #pragma mark - set方法
--(void)setIsAdd:(BOOL)isAdd
-{
+
+-(void)setIsAdd:(BOOL)isAdd {
     _isAdd = isAdd;
     _userIconView.hidden = _isAdd;
     _userNameLabel.hidden = _isAdd;
 }
 
--(void)setUser:(User *)user
-{
+-(void)setUser:(User *)user {
     _user = user;
-    _userIconView.image = [UIImage imageNamed:_user.imageUrl];
-    _userNameLabel.text = _user.name;
+//    _userIconView.image = [UIImage imageNamed:_user.imageUrl];
+	
+	_userNameLabel.text = _user.name;
+	
+	if (![NSString isBlankString:_user.imageUrl]) {
+		NSURL *url = [NSURL URLWithString:_user.imageUrl];
+		NSURLRequest *request = [NSURLRequest requestWithURL:url];
+		UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+		
+		__weak FamilyCollectionViewCell *weakCell = self;
+		
+		[_userIconView setImageWithURLRequest:request
+						  placeholderImage:placeholderImage
+								   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+									   
+									   weakCell.userIconView.image = image;
+									   [weakCell setNeedsLayout];
+									   
+								   } failure:nil];
+	}
 }
 
 @end

@@ -1,0 +1,24 @@
+//
+//  PrefixHeader.pch
+//  rongtai
+//
+//  Created by yoghourt on 6/29/15.
+//  Copyright (c) 2015 William-zhang. All rights reserved.
+//
+
+#ifndef rongtai_PrefixHeader_pch
+#define rongtai_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+/*
+ XCode LLVM XXX - Preprocessing中Debug会添加 DEBUG=1 标志
+ */
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s Line:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(FORMAT, ...) nil
+#endif
+
+#endif
