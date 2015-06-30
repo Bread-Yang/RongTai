@@ -140,9 +140,9 @@
 
 - (IBAction)toLoginControllerAction:(id)sender {
     UIStoryboard *loginStoryBoard = [UIStoryboard storyboardWithName:@"Login" bundle:[NSBundle mainBundle]];
-    UIViewController *viewController = [loginStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
-    [self.navigationController pushViewController:viewController animated:YES];
-
+    UINavigationController *viewController = [loginStoryBoard instantiateViewControllerWithIdentifier:@"SliderNavigationVC"];
+    [viewController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 

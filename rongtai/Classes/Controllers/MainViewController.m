@@ -9,11 +9,12 @@
 #import "MainViewController.h"
 #import "SlideNavigationController.h"
 #import "MassageRequest.h"
+#import "WLWeatherView.h"
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate>
 {
     UITableView* _table;
     NSMutableArray* _massageArr;
@@ -26,19 +27,44 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = NSLocalizedString(@"荣泰", nil);
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    //天气预报
+    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
+    self.navigationItem.rightBarButtonItem  = right;
+    
+    //菜单按钮
+    UIBarButtonItem* left = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
+    UIButton* image = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
+    [image setImage:[UIImage imageNamed:@"userDefaultIcon.jpg"] forState:UIControlStateNormal];
+    [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
+    image.layer.cornerRadius = 17;
+    left.customView = image;
+    image.layer.borderColor = [UIColor whiteColor].CGColor;
+    image.layer.borderWidth = 1;
+    image.clipsToBounds = YES;
+//    self.navigationItem.leftBarButtonItem = left;
+    
     SlideNavigationController* s = (SlideNavigationController*)self.navigationController;
-    s.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3].CGColor;
+    s.leftBarButtonItem = left;
+    
+
+    //侧滑菜单
+    s.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
     s.view.layer.shadowOffset = CGSizeMake(-0.5, 0);
-    s.view.layer.shadowOpacity  = 1;
-    s.view.layer.shadowRadius = 1;
+    s.view.layer.shadowOpacity  = 5;
+    s.view.layer.shadowRadius = 10;
     
     //
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-64) style:UITableViewStylePlain];
+    
+    //
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
     [self.view addSubview:_table];
@@ -47,10 +73,30 @@
     _massageRequest = [[MassageRequest alloc]init];
     _massageRequest.delegate = self;
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    [_massageRequest requestFavoriteMassageListByUid:uid Index:0 Size:100];
+    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
     
     _massageArr = [NSMutableArray new];
+    
+    //
+    UITabBar* bar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 50)];
+    bar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
+    bar.tintColor = [UIColor whiteColor];
+    UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:@"负离子" image:[UIImage imageNamed:@"icon_set"] tag:0];
+    UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:@"手动" image:[UIImage imageNamed:@"icon_hand"] tag:1];
+    UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:@"自定义" image:[UIImage imageNamed:@"icon_user"] tag:2];
+    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_set"] tag:3];
+    bar.items = @[item1,item2,item3,item4];
+    bar.selectedItem = item1;
+    bar.delegate = self;
+    [self.view addSubview:bar];
+    
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - tabBar代理
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    NSLog(@"tabBar:%ld",item.tag);
 }
 
 #pragma mark - tableView代理
@@ -68,9 +114,15 @@
     Massage* massage = _massageArr[indexPath.row];
     if (massage) {
         cell.textLabel.text = massage.name;
-        cell.detailTextLabel.text = massage.description;
+        cell.detailTextLabel.text = massage.mDescription;
     }
+    cell.imageView.image = [UIImage imageNamed:@"mode_1"];
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
 
 #pragma mark - massageRequest代理
@@ -97,7 +149,7 @@
 
 #pragma mark - 侧滑菜单出现
 - (IBAction)slideMenuAppear:(id)sender {
-    [[SlideNavigationController sharedInstance] openMenu:MenuLeft withCompletion:nil];
+    [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
 

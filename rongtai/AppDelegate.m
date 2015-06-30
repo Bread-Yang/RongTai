@@ -39,6 +39,16 @@
 	[MagicalRecord setupCoreDataStackWithStoreNamed:@"RongTai.sqlite"];
 	
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    
+    
+    //ios8 需要询问用户是否允许才能发送通知
+    float sysVersion=[[UIDevice currentDevice]systemVersion].floatValue;
+    if (sysVersion>=8.0) {
+        UIUserNotificationType type=UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
+        [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
+    }
 
 //    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
 //    MenuViewController* menu = [[MenuViewController alloc]init];
@@ -46,7 +56,7 @@
 //    slide.enableSwipeGesture = YES;
 //    slide.enableShadow = NO;
 //    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
-//	
+//
 //	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //	self.window.backgroundColor = [UIColor whiteColor];
 //	self.window.rootViewController = slide;
@@ -75,6 +85,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    
 }
 
 #pragma mark - 设置URL Scheme

@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "LoginRequest.h"
+#import "SlideNavigationController.h"
+#import "MenuViewController.h"
 
 
 //
@@ -40,12 +42,22 @@
 //    _loginFeild.layer.borderWidth = 1;
     _loginRequest = [LoginRequest new];
     _loginRequest.delegate = self;
+    
+    //
+    MenuViewController* menu = [[MenuViewController alloc]init];
+    SlideNavigationController* silder = [SlideNavigationController sharedInstance];
+    silder.leftMenu = menu;
+    silder.enableSwipeGesture = YES;
+    silder.enableShadow = NO;
+    silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
+
     // Do any additional setup after loading the view.
 }
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+//    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法
@@ -61,7 +73,7 @@
         NSString* uid = [result objectForKey:@"uid"];
         [ud setObject:token forKey:@"token"];
         [ud setObject:uid forKey:@"uid"];
-        [self.navigationController pushViewController:[MainViewController new] animated:YES];
+        
     }
 }
 

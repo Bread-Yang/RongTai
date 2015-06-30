@@ -39,7 +39,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"荣泰";
     //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
     [_middleView bringSubviewToFront:_birthday];
 //    NSLog(@"%@",_middleView.subviews);
@@ -150,6 +149,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _userImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _bgImageView.image = [_userImage blurImage:15.0];
     [self dismissViewControllerAnimated:YES completion:nil];

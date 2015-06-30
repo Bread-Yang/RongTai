@@ -196,10 +196,10 @@
             </objects>
             <point key="canvasLocation" x="851" y="1012"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Slide Navigation Controller-->
         <scene sceneID="VdB-bD-JYx">
             <objects>
-                <navigationController id="oLk-FT-Anx" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SliderNavigationVC" id="oLk-FT-Anx" customClass="SlideNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hqg-Tj-JHi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

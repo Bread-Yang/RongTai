@@ -8,6 +8,7 @@
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+#define GRAY [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1]
 
 #import "MenuViewController.h"
 #import "LoginViewController.h"
@@ -41,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = GRAY;
     [self.view addSubview:_userList];
     [self.view addSubview:_menu];
     
@@ -112,14 +113,15 @@
     _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, _userList.frame.size.height, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
     _menu.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _menu.tag = 2002;
-    _menu.backgroundColor = [UIColor cyanColor];
+    _menu.backgroundColor = [UIColor clearColor];
     _menu.dataSource = self;
     _menu.delegate = self;
     _menu.scrollEnabled = NO;
     
     //天气开关
     _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
-    
+//    _weatherSwitch.tintColor = [UIColor lightGrayColor];
+    _weatherSwitch.on = YES;
     [self updatTableViewFrame];
 }
 
@@ -163,6 +165,7 @@
                 userCell.accessoryView = nil;
             }
         }
+        userCell.backgroundColor = [UIColor clearColor];
         return userCell;
     }
     else if (tableView.tag == 2002)
@@ -178,8 +181,9 @@
         }
         else
         {
-            menuCell.accessoryView = nil;
+            menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        menuCell.backgroundColor = [UIColor clearColor];
         return menuCell;
     }
     else
