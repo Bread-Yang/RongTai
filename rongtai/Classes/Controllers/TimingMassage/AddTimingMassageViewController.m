@@ -17,6 +17,7 @@
 	NSArray* modeNameArray;
 	NSMutableArray* hourArray;
 	NSMutableArray* minuteArray;
+    __weak IBOutlet UISegmentedControl *_weekSC;
 
 }
 
