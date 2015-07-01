@@ -56,6 +56,8 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D845FCF1B439EEC005F6DF8 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */; };
+		3D845FD21B43C287005F6DF8 /* TimingPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D845FD11B43C287005F6DF8 /* TimingPlan.m */; };
 		3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892B1B39503D002E0962 /* NSString+RT.m */; };
 		3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */; };
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
@@ -274,6 +276,10 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D845FCD1B439EEC005F6DF8 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = localNotificationTransformer.h; sourceTree = "<group>"; };
+		3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = localNotificationTransformer.m; sourceTree = "<group>"; };
+		3D845FD01B43C287005F6DF8 /* TimingPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimingPlan.h; path = rongtai/Classes/Model/TimingPlan.h; sourceTree = SOURCE_ROOT; };
+		3D845FD11B43C287005F6DF8 /* TimingPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimingPlan.m; path = rongtai/Classes/Model/TimingPlan.m; sourceTree = SOURCE_ROOT; };
 		3D9E892A1B39503D002E0962 /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RT.h"; sourceTree = "<group>"; };
 		3D9E892B1B39503D002E0962 /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RT.m"; sourceTree = "<group>"; };
 		3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WLAttributedString.h"; sourceTree = "<group>"; };
@@ -1235,6 +1241,10 @@
 				3D2C83011B2AD90E00F52352 /* MassageModeENUM.h */,
 				3D2C82FE1B2ACD2900F52352 /* MassageMode.h */,
 				3D2C82FF1B2ACD2900F52352 /* MassageMode.m */,
+				3D845FCD1B439EEC005F6DF8 /* localNotificationTransformer.h */,
+				3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */,
+				3D845FD01B43C287005F6DF8 /* TimingPlan.h */,
+				3D845FD11B43C287005F6DF8 /* TimingPlan.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1501,6 +1511,7 @@
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
 				3DF304331B38FE2500DD51D3 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
+				3D845FCF1B439EEC005F6DF8 /* localNotificationTransformer.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
@@ -1535,6 +1546,7 @@
 				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
 				56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */,
+				3D845FD21B43C287005F6DF8 /* TimingPlan.m in Sources */,
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,

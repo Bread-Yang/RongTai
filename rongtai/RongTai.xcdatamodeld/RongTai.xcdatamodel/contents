@@ -24,6 +24,12 @@
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="TimingPlan" representedClassName="TimingPlan" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isOn" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="localNotification" optional="YES" attributeType="Transformable" valueTransformerName="localNotificationTransformer" syncable="YES"/>
+        <attribute name="week" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="6" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="UserDownload" representedClassName="UserDownload" syncable="YES">
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isDownload" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -40,5 +46,6 @@
         <element name="CustomProgram" positionX="126" positionY="27" width="128" height="223"/>
         <element name="Member" positionX="-126" positionY="27" width="128" height="165"/>
         <element name="UserDownload" positionX="0" positionY="117" width="128" height="195"/>
+        <element name="TimingPlan" positionX="0" positionY="144" width="128" height="105"/>
     </elements>
 </model>
