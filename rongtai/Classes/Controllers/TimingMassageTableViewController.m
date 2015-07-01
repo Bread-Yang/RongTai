@@ -8,6 +8,9 @@
 
 #import "TimingMassageTableViewController.h"
 #import "AddTimingMassageViewController.h"
+#import "TimingPlanTableViewCell.h"
+#import "TimingPlan.h"
+#import <MagicalRecord.h>
 
 @interface TimingMassageTableViewController ()
 
@@ -25,8 +28,21 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
-	
-	self.timingMassageArray = [[NSMutableArray alloc] init];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+}
+                    
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.timingMassageArray = [[NSMutableArray alloc] init];
+    NSArray* arr = [TimingPlan MR_findAll];
+    NSLog(@"定时计划数量:%ld",arr.count);
+    for (int i = 0; i<arr.count; i++) {
+        TimingPlan* item = arr[i];
+        [self.timingMassageArray addObject:item];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,13 +53,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.timingMassageArray count];
 }
@@ -53,20 +67,12 @@
 	
 	static NSString *reuseId = @"TIMING_MASSAGE_CELL";
 	
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+    TimingPlanTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
 	
 	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseId];
+		cell = [[TimingPlanTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseId];
 	}
-	
-    // Configure the cell...
-	
-	cell.textLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-	
-	TimingMassageModel* model = (TimingMassageModel *)self.timingMassageArray[indexPath.row];
-	
-	cell.detailTextLabel.text = model.loopDate;
-
+    cell.timingPlan = self.timingMassageArray[indexPath.row];
     return cell;
 }
 
@@ -85,6 +91,11 @@
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 
 /*

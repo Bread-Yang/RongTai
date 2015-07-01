@@ -65,7 +65,10 @@
 //		[self.navigationController popViewControllerAnimated:TRUE];
 //	}
     TimingPlan* timePlan = [TimingPlan MR_createEntity];
-    [timePlan setLocalNotificationByHour:<#(NSUInteger)#> Minute:<#(NSUInteger)#> Week:<#(NSUInteger)#>]
+    [timePlan setLocalNotificationByHour:[_leftPickerView selectedRowInComponent:0] Minute:[_rightPickerView selectedRowInComponent:0] Week:_weekSC.selectedSegmentIndex+1  Message:[NSString stringWithFormat:@"舒展活络 定时计划:每周%ld %ld:%ld",_weekSC.selectedSegmentIndex,[_leftPickerView selectedRowInComponent:0],[_rightPickerView selectedRowInComponent:0]]];
+    timePlan.massageId = [NSNumber numberWithInt:123456];
+    timePlan.massageName = @"舒展活络";
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - UICollectionViewDataSource

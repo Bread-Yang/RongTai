@@ -89,7 +89,11 @@
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    
+    NSDictionary* userInfo = notification.userInfo;
+    NSString* message = [userInfo objectForKey:@"time"];
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"本地通知" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    [alert show];
+    application.applicationIconBadgeNumber -= 1;
 }
 
 #pragma mark - 设置URL Scheme
