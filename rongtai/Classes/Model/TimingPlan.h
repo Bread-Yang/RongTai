@@ -18,4 +18,7 @@
 @property (nonatomic, retain) NSNumber * isOn;
 @property (nonatomic, retain) NSNumber * week;
 
+
+-(void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSUInteger)week;
+
 @end

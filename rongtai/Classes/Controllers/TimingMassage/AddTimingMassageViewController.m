@@ -11,6 +11,8 @@
 #import "AddTimingMassageViewController.h"
 #import "LineUICollectionViewFlowLayout.h"
 #import "LineUICollectionViewCell.h"
+#import <MagicalRecord.h>
+#import "TimingPlan.h"
 
 @interface AddTimingMassageViewController () {
 	
@@ -56,12 +58,14 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
-	TimingMassageModel *model = [[TimingMassageModel alloc] init];
-	model.loopDate = @"hahah";
-	if (self.returnTimingMassageBlock) {
-		self.returnTimingMassageBlock(model);
-		[self.navigationController popViewControllerAnimated:TRUE];
-	}
+//	TimingMassageModel *model = [[TimingMassageModel alloc] init];
+//	model.loopDate = @"hahah";
+//	if (self.returnTimingMassageBlock) {
+//		self.returnTimingMassageBlock(model);
+//		[self.navigationController popViewControllerAnimated:TRUE];
+//	}
+    TimingPlan* timePlan = [TimingPlan MR_createEntity];
+    [timePlan setLocalNotificationByHour:<#(NSUInteger)#> Minute:<#(NSUInteger)#> Week:<#(NSUInteger)#>]
 }
 
 #pragma mark - UICollectionViewDataSource

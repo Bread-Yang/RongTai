@@ -870,6 +870,7 @@
                         <outlet property="_weekSC" destination="4dd-PN-1eM" id="mIQ-WG-PBB"/>
                         <outlet property="collectionView" destination="afY-pA-Ivf" id="fPz-ol-eTV"/>
                         <outlet property="leftPickerView" destination="A9D-VO-UWX" id="N86-sj-uvf"/>
+                        <outlet property="rightPickerView" destination="6mb-0K-uxs" id="ftC-ua-gW5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKv-9n-nP8" sceneMemberID="firstResponder"/>

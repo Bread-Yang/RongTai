@@ -18,6 +18,9 @@ typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (weak, nonatomic) IBOutlet UIPickerView *rightPickerView;
+
+
 @property (nonatomic, copy) ReturnTimingMassageBlock returnTimingMassageBlock;
 
 - (void)setReturnTimingMassageBlock:(ReturnTimingMassageBlock)returnTimingMassageBlock;
