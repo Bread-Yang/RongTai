@@ -49,6 +49,7 @@
         UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
         [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
     }
+//    application.applicationIconBadgeNumber = 0;
 
 //    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
 //    MenuViewController* menu = [[MenuViewController alloc]init];

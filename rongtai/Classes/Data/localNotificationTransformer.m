@@ -28,6 +28,7 @@
     NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
     [archiver encodeObject:value forKey:@"ln"];
     [archiver finishEncoding];
+//     NSLog(@"通知对象写到数据库%@",value);
     return data;
 }
 
@@ -37,6 +38,7 @@
     NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:value];
     UILocalNotification* ln = [unarchiver decodeObjectForKey:@"ln"];
     [unarchiver finishDecoding];
+//    NSLog(@"通知对象从数据库解析得到:%@",ln);
     return ln;
 }
 

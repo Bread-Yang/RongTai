@@ -44,7 +44,15 @@
     _timingPlan = timingPlan;
     _title.text = _timingPlan.massageName;
     _time.text = [_timingPlan planTime];
-    [_switch setOn:[_timingPlan.isOn boolValue] animated:YES];
+    BOOL isOn = [_timingPlan.isOn boolValue];
+    [_switch setOn:isOn animated:YES];
+    if (isOn) {
+        [self setOn];
+    }
+    else
+    {
+        [self setOff];
+    }
     
 }
 
@@ -83,13 +91,16 @@
 {
     if (aSwitch.isOn) {
         [self setOn];
+        [_timingPlan addLocalNotification];
     }
     else
     {
         [self setOff];
+        [_timingPlan cancelLocalNotification];
     }
+    
     _timingPlan.isOn = [NSNumber numberWithBool:aSwitch.isOn];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - 设置开状态的UI

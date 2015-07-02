@@ -227,7 +227,7 @@
     _customProgram.power = [NSNumber numberWithInt:_dynamicsCheckButton.selectState];
     _customProgram.width = [NSNumber numberWithInt:_widthCheckButton.selectState];
     _customProgram.airPressure = [NSNumber numberWithInt:_pressureCheckButton.selectState];
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
