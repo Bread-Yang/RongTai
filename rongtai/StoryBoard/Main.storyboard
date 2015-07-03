@@ -427,7 +427,7 @@
         <!--使用帮助-->
         <scene sceneID="8NL-Bd-hz4">
             <objects>
-                <viewController id="0zq-hf-YUu" userLabel="使用帮助" customClass="ProductInstructionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductInstructionVC" title="使用帮助" id="0zq-hf-YUu" userLabel="使用帮助" customClass="ProductInstructionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZDc-9C-8uy"/>
                         <viewControllerLayoutGuide type="bottom" id="rmT-pE-o8z"/>
@@ -445,7 +445,7 @@
         <!--我要购买-->
         <scene sceneID="GbX-8w-FgO">
             <objects>
-                <tableViewController title="我要购买" id="HL4-F4-Opw" userLabel="我要购买" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="BuyRTProductVC" title="我要购买" id="HL4-F4-Opw" userLabel="我要购买" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="170" sectionHeaderHeight="22" sectionFooterHeight="22" id="S9C-hY-hmf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -528,7 +528,7 @@
         <!--程序下载-->
         <scene sceneID="1Xi-up-x3Y">
             <objects>
-                <tableViewController title="程序下载" id="hot-A2-vuP" userLabel="程序下载" customClass="ProgramDownloadTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProgramDownloadVC" title="程序下载" id="hot-A2-vuP" userLabel="程序下载" customClass="ProgramDownloadTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="FsD-NX-5ev">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -620,10 +620,10 @@
             </objects>
             <point key="canvasLocation" x="1172" y="1898"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Slide Navigation Controller-->
         <scene sceneID="BIT-1Q-SLy">
             <objects>
-                <navigationController id="PpL-Kt-56R" sceneMemberID="viewController">
+                <navigationController id="PpL-Kt-56R" customClass="SlideNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CPJ-4s-5uM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -639,7 +639,7 @@
         <!--定时计划-->
         <scene sceneID="Doj-oS-5bu">
             <objects>
-                <tableViewController title="定时计划" id="IyB-Xv-4Uc" userLabel="定时计划" customClass="TimingMassageTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TimingMassageVC" title="定时计划" id="IyB-Xv-4Uc" userLabel="定时计划" customClass="TimingMassageTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rrX-pQ-3z1">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -880,7 +880,7 @@
         <!--手动按摩-->
         <scene sceneID="ZnW-C1-eID">
             <objects>
-                <viewController title="手动按摩" id="1dA-pU-ml4" userLabel="手动按摩" customClass="ManualMassageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManualMassageVC" title="手动按摩" id="1dA-pU-ml4" userLabel="手动按摩" customClass="ManualMassageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="07e-wu-6Xf"/>
                         <viewControllerLayoutGuide type="bottom" id="hL2-88-dEW"/>

@@ -14,6 +14,10 @@
 #import "LoginViewController.h"
 #import "SlideNavigationController.h"
 #import "DataCenterViewController.h"
+#import "FamilyManageViewController.h"
+#import "TimingMassageTableViewController.h"
+#import "ProductInstructionViewController.h"
+#import "BuyRTProductTableViewController.h"
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -122,7 +126,16 @@
     _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
 //    _weatherSwitch.tintColor = [UIColor lightGrayColor];
     _weatherSwitch.on = YES;
+    [_weatherSwitch addTarget:self action:@selector(switchChangeValue:) forControlEvents:UIControlEventValueChanged];
     [self updatTableViewFrame];
+}
+
+#pragma mark - 天气开关
+-(void)switchChangeValue:(UISwitch*)aSwitch
+{
+    if ([self.delegate respondsToSelector:@selector(switchChange:)]) {
+        [self.delegate switchChange:aSwitch.isOn];
+    }
 }
 
 
@@ -183,6 +196,7 @@
         {
             menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        menuCell.selectionStyle  = UITableViewCellSelectionStyleNone;
         menuCell.backgroundColor = [UIColor clearColor];
         return menuCell;
     }
@@ -204,15 +218,45 @@
     }
     else if (tableView.tag == 2002)
     {
+         SlideNavigationController* sl = [SlideNavigationController sharedInstance];
         if (indexPath.row == 1) {
-//            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//            LoginViewController* l = [s instantiateViewControllerWithIdentifier:@"LoginVC"];
-//            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
-//            [sl pushViewController:l animated:YES];
+            //数据中心
             DataCenterViewController* dataVC = [[DataCenterViewController alloc]init];
-            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
+           
             [sl pushViewController:dataVC animated:YES];
         }
+        else if (indexPath.row == 0)
+        {
+            //家庭成员管理
+            FamilyManageViewController* fVC = [[FamilyManageViewController alloc]init];
+            [sl pushViewController:fVC animated:YES];
+        }
+        else if (indexPath.row == 2)
+        {
+            //定时计划
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            TimingMassageTableViewController* tVC = [s instantiateViewControllerWithIdentifier:@"TimingMassageVC"];
+            [sl pushViewController:tVC animated:YES];
+        }
+        else if (indexPath.row == 4)
+        {
+            //我要反馈
+        }
+        else if (indexPath.row == 5)
+        {
+            //使用帮助
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
+            [sl pushViewController:pVC animated:YES];
+        }
+        else if (indexPath.row == 6)
+        {
+            //我要购买
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            BuyRTProductTableViewController* bVC = [s instantiateViewControllerWithIdentifier:@"BuyRTProductVC"];
+            [sl pushViewController:bVC animated:YES];
+        }
+        
     }
 }
 

@@ -54,6 +54,12 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
     [self.navigationController pushViewController:[MainViewController new] animated:YES];
@@ -73,7 +79,7 @@
         NSString* uid = [result objectForKey:@"uid"];
         [ud setObject:token forKey:@"token"];
         [ud setObject:uid forKey:@"uid"];
-        
+        [self.navigationController pushViewController:[MainViewController new] animated:YES];
     }
 }
 

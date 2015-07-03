@@ -52,8 +52,8 @@
     local.alertLaunchImage = @"iamge";
     local.alertAction = @"action";
     local.hasAction = YES;
-    local.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber+1;
-    local.alertTitle  = [NSString stringWithFormat:@"通知数量:%ld",[UIApplication sharedApplication].applicationIconBadgeNumber+1];
+//    local.applicationIconBadgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber+1;
+//    local.alertTitle  = [NSString stringWithFormat:@"通知数量:%ld",[UIApplication sharedApplication].applicationIconBadgeNumber+1];
     self.localNotification = local;
     [self addLocalNotification];
 }

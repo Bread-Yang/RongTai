@@ -10,15 +10,20 @@
 #import "SlideNavigationController.h"
 #import "MassageRequest.h"
 #import "WLWeatherView.h"
+#import "MenuViewController.h"
+#import "ManualMassageViewController.h"
+#import "CustomProcedureViewController.h"
+#import "ProgramDownloadTableViewController.h"
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
     UITableView* _table;
     NSMutableArray* _massageArr;
     MassageRequest* _massageRequest;
+    WLWeatherView* _weatherView;
 }
 @end
 
@@ -27,16 +32,22 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    
+    //
+    SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
+    MenuViewController* menu = (MenuViewController*)slideNav.leftMenu;
+    menu.delegate = self;
+    
     //天气预报
-    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
+    _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
     self.navigationItem.rightBarButtonItem  = right;
     
     //菜单按钮
@@ -60,8 +71,7 @@
     s.view.layer.shadowOffset = CGSizeMake(-0.5, 0);
     s.view.layer.shadowOpacity  = 5;
     s.view.layer.shadowRadius = 10;
-    
-    //
+ 
     
     //
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49) style:UITableViewStylePlain];
@@ -93,10 +103,46 @@
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - menuController代理
+-(void)switchChange:(BOOL)isOn
+{
+    if (isOn) {
+        _weatherView.hidden = NO;
+        [_weatherView updateWeather];
+    }
+    else
+    {
+        _weatherView.hidden = YES;
+        [_weatherView cancelUpdate];
+    }
+}
+
 #pragma mark - tabBar代理
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    NSLog(@"tabBar:%ld",item.tag);
+    
+//    NSLog(@"tabBar:%ld",item.tag);
+    if (item.tag == 1) {
+        //手动按摩
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ManualMassageViewController* mVC = (ManualMassageViewController*)[s instantiateViewControllerWithIdentifier:@"ManualMassageVC"];
+        [self.navigationController pushViewController:mVC animated:YES];
+    }
+    else if (item.tag == 2)
+    {
+        //自定义
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
+        [self.navigationController pushViewController:cVC animated:YES];
+    }
+    else if (item.tag == 3)
+    {
+        //下载
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ProgramDownloadTableViewController* pVC = (ProgramDownloadTableViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
+        [self.navigationController pushViewController:pVC animated:YES];
+
+    }
 }
 
 #pragma mark - tableView代理

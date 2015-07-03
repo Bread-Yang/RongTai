@@ -191,6 +191,13 @@
     }];
 }
 
+#pragma mark - 取消更新天气
+-(void)cancelUpdate
+{
+    [_timer invalidate];
+    _timer = nil;
+}
+
 #pragma mark - 保存当前数据
 -(void)saveWeather
 {
@@ -258,7 +265,7 @@
                  city = [city substringWithRange:NSMakeRange(0, city.length-1)];
              }
              _city = city;
-             _city = @"香港";
+//             _city = @"香港";
              [self updateWeather];
          }
          else if (error == nil && [array count] == 0)

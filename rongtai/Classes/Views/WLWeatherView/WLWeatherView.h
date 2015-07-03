@@ -18,4 +18,10 @@
  */
 -(void)updateWeather;
 
+
+/**
+ *  停止更新天气
+ */
+-(void)cancelUpdate;
+
 @end

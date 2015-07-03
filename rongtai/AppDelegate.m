@@ -40,6 +40,7 @@
 	
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     
     //ios8 需要询问用户是否允许才能发送通知
@@ -49,14 +50,15 @@
         UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
         [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
     }
-//    application.applicationIconBadgeNumber = 0;
+    application.applicationIconBadgeNumber = 0;
 
-//    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
-//    MenuViewController* menu = [[MenuViewController alloc]init];
-//    slide.leftMenu = menu;
-//    slide.enableSwipeGesture = YES;
-//    slide.enableShadow = NO;
-//    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
+    MenuViewController* menu = [[MenuViewController alloc]init];
+    slide.leftMenu = menu;
+    slide.enableSwipeGesture = YES;
+    slide.enableShadow = NO;
+    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+    [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
 //
 //	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //	self.window.backgroundColor = [UIColor whiteColor];
@@ -94,7 +96,6 @@
     NSString* message = [userInfo objectForKey:@"time"];
     UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"本地通知" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     [alert show];
-    application.applicationIconBadgeNumber -= 1;
 }
 
 #pragma mark - 设置URL Scheme

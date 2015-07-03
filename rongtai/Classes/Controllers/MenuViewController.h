@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MenuViewControllerDelegate <NSObject>
+
+@optional
+-(void)switchChange:(BOOL)isOn;
+
+@end
+
 @interface MenuViewController : UIViewController
+
+@property(nonatomic, weak)id<MenuViewControllerDelegate> delegate;
 
 @end
