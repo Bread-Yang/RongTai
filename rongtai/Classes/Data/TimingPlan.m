@@ -35,7 +35,7 @@
     NSDate* new = [calendar dateFromComponents:dateComponents];
     
     //根据当前这一天来得到最近是星期几（week值）的一天
-    NSDate* result = [NSDate dateWithTimeInterval:value*24*60*60 sinceDate:new];
+    NSDate* result = [NSDate dateWithTimeInterval:-value*24*60*60 sinceDate:new];
 //    NSLog(@"计算后的时间:%@",result);
     UILocalNotification* local = [[UILocalNotification alloc]init];
     local.timeZone = [NSTimeZone defaultTimeZone];
@@ -45,7 +45,7 @@
     self.date = local.fireDate;
     
     local.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"时间:%@",result] forKey:@"time"];
-    local.repeatInterval = NSCalendarUnitWeekday;
+    local.repeatInterval = NSCalendarUnitWeekOfYear;
     local.soundName = UILocalNotificationDefaultSoundName;
     local.alertBody = message;
     
@@ -63,7 +63,7 @@
 {
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSDateComponents* dateComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:self.date];
-    NSString* time = [NSString stringWithFormat:@"%02ld:%02ld",dateComponents.hour,dateComponents.minute];
+    NSString* time = [NSString stringWithFormat:@"%02d:%02d",dateComponents.hour,dateComponents.minute];
     return time;
 }
 
