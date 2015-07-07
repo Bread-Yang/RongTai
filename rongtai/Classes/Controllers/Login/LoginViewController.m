@@ -62,12 +62,13 @@
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-    [self.navigationController pushViewController:[MainViewController new] animated:YES];
-//    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+//    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法
 - (IBAction)registerUser:(id)sender {
+    
 }
 
 #pragma mark - 登录完成后
