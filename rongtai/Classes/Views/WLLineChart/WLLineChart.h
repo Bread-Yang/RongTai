@@ -68,7 +68,7 @@
 /**
  *  y是否显示，默认显示
  */
-@property(nonatomic)BOOL axisHidden;
+@property(nonatomic)BOOL yAxisHidden;
 
 /**
  *  单位，为空时则不显示
@@ -78,12 +78,12 @@
 /**
  *  y轴数值字体
  */
-@property(nonatomic, strong)UIFont* valueFont;
+@property(nonatomic, strong)UIFont* yValueFont;
 
 /**
  *  单位字体
  */
-@property(nonatomic, strong)UIFont* unitFont;
+@property(nonatomic, strong)UIFont* yUnitFont;
 
 /**
  *  y轴线宽，默认1
@@ -98,6 +98,11 @@
  *  显示x轴对齐线，默认不显示
  */
 @property(nonatomic)BOOL showXRuler;
+
+/**
+ *  显示y轴对齐线，默认不显示
+ */
+@property(nonatomic)BOOL showYRuler;
 
 /**
  *  对齐线线宽，默认为0.5

@@ -52,6 +52,8 @@
 		3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */; };
 		3D76E2991B4BE4DD004B83E7 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */; };
 		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
+		3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */; };
+		3D77C9E91B4CCC37005C9810 /* TimingPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E71B4CCC37005C9810 /* TimingPlan.m */; };
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
 		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
 		3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* RTBleListViewController.m */; };
@@ -59,7 +61,6 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
-		3D845FCF1B439EEC005F6DF8 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */; };
 		3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892B1B39503D002E0962 /* NSString+RT.m */; };
 		3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */; };
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
@@ -69,7 +70,6 @@
 		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
-		3DAC3C6B1B43E5BD0087F699 /* TimingPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C6A1B43E5BD0087F699 /* TimingPlan.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
@@ -274,6 +274,10 @@
 		3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLYAxis.m; sourceTree = "<group>"; };
 		3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInformationViewController.h; sourceTree = "<group>"; };
 		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
+		3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localNotificationTransformer.h; path = Model/localNotificationTransformer.h; sourceTree = "<group>"; };
+		3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = localNotificationTransformer.m; path = Model/localNotificationTransformer.m; sourceTree = "<group>"; };
+		3D77C9E61B4CCC37005C9810 /* TimingPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimingPlan.h; path = Model/TimingPlan.h; sourceTree = "<group>"; };
+		3D77C9E71B4CCC37005C9810 /* TimingPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimingPlan.m; path = Model/TimingPlan.m; sourceTree = "<group>"; };
 		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -287,8 +291,6 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		3D845FCD1B439EEC005F6DF8 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = localNotificationTransformer.h; sourceTree = "<group>"; };
-		3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = localNotificationTransformer.m; sourceTree = "<group>"; };
 		3D9E892A1B39503D002E0962 /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RT.h"; sourceTree = "<group>"; };
 		3D9E892B1B39503D002E0962 /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RT.m"; sourceTree = "<group>"; };
 		3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WLAttributedString.h"; sourceTree = "<group>"; };
@@ -305,8 +307,6 @@
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingPlanTableViewCell.h; sourceTree = "<group>"; };
 		3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlanTableViewCell.m; sourceTree = "<group>"; };
-		3DAC3C691B43E5BD0087F699 /* TimingPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingPlan.h; sourceTree = "<group>"; };
-		3DAC3C6A1B43E5BD0087F699 /* TimingPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlan.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
@@ -1133,6 +1133,10 @@
 		5672800E1B31857E0059C18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */,
+				3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */,
+				3D77C9E61B4CCC37005C9810 /* TimingPlan.h */,
+				3D77C9E71B4CCC37005C9810 /* TimingPlan.m */,
 				3D9EBADF1B3D2CC1000FD810 /* MassageRequest */,
 				3DAE1A6C1B3C0B8700B0CA3C /* LoginRequest */,
 				567280121B31859F0059C18E /* CustomProgram.h */,
@@ -1280,10 +1284,6 @@
 				3D2C83011B2AD90E00F52352 /* MassageModeENUM.h */,
 				3D2C82FE1B2ACD2900F52352 /* MassageMode.h */,
 				3D2C82FF1B2ACD2900F52352 /* MassageMode.m */,
-				3D845FCD1B439EEC005F6DF8 /* localNotificationTransformer.h */,
-				3D845FCE1B439EEC005F6DF8 /* localNotificationTransformer.m */,
-				3DAC3C691B43E5BD0087F699 /* TimingPlan.h */,
-				3DAC3C6A1B43E5BD0087F699 /* TimingPlan.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1532,7 +1532,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
-				3DAC3C6B1B43E5BD0087F699 /* TimingPlan.m in Sources */,
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
@@ -1555,13 +1554,14 @@
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
 				3DF304331B38FE2500DD51D3 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
-				3D845FCF1B439EEC005F6DF8 /* localNotificationTransformer.m in Sources */,
 				3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
+				3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3DF3042F1B38FE2500DD51D3 /* NSManagedObject+MagicalRecord.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
+				3D77C9E91B4CCC37005C9810 /* TimingPlan.m in Sources */,
 				3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */,
 				3DF304361B38FE2500DD51D3 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,

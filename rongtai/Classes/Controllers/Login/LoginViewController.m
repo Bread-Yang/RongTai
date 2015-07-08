@@ -10,6 +10,7 @@
 #import "LoginRequest.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
+#import "IQKeyboardManager.h"
 
 
 //
@@ -62,7 +63,12 @@
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-//    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    /*
+     在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
+    */
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
+    
+    //    [self.navigationController pushViewController:[MainViewController new] animated:YES];
     [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 

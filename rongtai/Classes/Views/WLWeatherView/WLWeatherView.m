@@ -14,7 +14,7 @@
 #define AQI @"wAqi"
 #define TEMPERATURE @"wTemperature"
 #define UPDATEDATE @"wDate"
-#define TIME 600.0
+#define TIME 600.0   //自动更新时间
 
 
 @interface WLWeatherView ()<NSURLConnectionDataDelegate, NSXMLParserDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>

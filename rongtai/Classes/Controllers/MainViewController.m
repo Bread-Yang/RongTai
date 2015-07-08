@@ -120,7 +120,6 @@
 #pragma mark - tabBar代理
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    
 //    NSLog(@"tabBar:%ld",item.tag);
     if (item.tag == 1) {
         //手动按摩
@@ -141,7 +140,6 @@
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ProgramDownloadTableViewController* pVC = (ProgramDownloadTableViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
         [self.navigationController pushViewController:pVC animated:YES];
-
     }
 }
 

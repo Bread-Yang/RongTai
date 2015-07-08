@@ -116,8 +116,6 @@
             
         }
     }
-    
-    
 }
 
 #pragma mark - set方法
@@ -187,8 +185,11 @@
     [self setNeedsDisplay];
 }
 
-
-
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self setNeedsDisplay];
+}
 
 
 

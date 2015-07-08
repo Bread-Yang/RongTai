@@ -61,7 +61,6 @@
     _lineRightDit = 10;
     _hScale = 0.9;
     //-------- x轴
-    _xWidth = 200;
     _xAxisHidden = NO;
     _xColor = [UIColor blackColor];
     _xLineWidth = 1;
@@ -119,7 +118,6 @@
     
     //  x轴数值
     if (_xValues.count > 0) {
-        
         CGFloat dit = (w-_lineLeftDit-_lineRightDit)/_xValues.count;
         for (int i = 0; i<_xValues.count; i++) {
             NSString* value = _xValues[i];
@@ -152,7 +150,7 @@
             for (int i = 0; i<_points.count; i++) {
                 NSValue* v = _points[i];
                 CGPoint p = [self postionByPoint:[v CGPointValue]];
-                NSLog(@"点%d:%@",i,NSStringFromCGPoint(p));
+//                NSLog(@"点%d:%@",i,NSStringFromCGPoint(p));
                 if (i+1<_points.count) {
                     CGContextMoveToPoint(context, p.x, p.y);
                     NSValue* v2 = _points[i+1];
@@ -181,14 +179,16 @@
             }
         }
     }
-    
-    
-    
 }
 
 
 
 #pragma mark - set方法
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self setNeedsDisplay];
+}
 
 #pragma mark 折线
 
