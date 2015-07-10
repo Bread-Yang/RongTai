@@ -148,7 +148,7 @@ static CBPeripheral *connectedDevice;
         [self.delegate didDisconnectRTBlePeripheral:periphral];
     }
 	
-//	_reconnectTimer = [NSTimer timerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+//	_reconnectTimer = [NSTimer timerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES]; 
 	_reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
 	[_reconnectTimer fire];
 }
