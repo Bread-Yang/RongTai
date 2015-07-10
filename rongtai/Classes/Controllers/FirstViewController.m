@@ -15,12 +15,15 @@
 #import "AppIntrouceView.h"
 #import "CoreData+MagicalRecord.h"
 #import "Member.h"
+#import "LoginRequest.h"
 
-@interface FirstViewController () <AppIntroduceViewDelegate>
+@interface FirstViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
 @property AppIntrouceView *introduceView;
 
 @property MPMusicPlayerController *musicPlayer;
+
+@property LoginRequest *loginRequest;
 
 @end
 
@@ -28,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.loginRequest = [LoginRequest new];
+	self.loginRequest.delegate = self;
 	
 	self.navigationController.navigationBar.barTintColor = [UIColor blackColor];   // 背景为黑色
 	self.navigationController.navigationBar.tintColor = [UIColor whiteColor];	   // 返回箭头为白色
@@ -94,6 +100,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - LoginRequestDelegate
+
+- (void)loginRequestThirdLoginFinished:(BOOL)success Result:(NSDictionary *)result {
+	NSLog(@"loginRequestThirdLoginFinished() success : %i", success);
+}
 
 #pragma mark - AppIntroduceViewDelegate
 
@@ -194,6 +206,7 @@
 
 
 - (IBAction)sinaLoginAction:(id)sender {
+	
     [ShareSDK getUserInfoWithType:ShareTypeSinaWeibo
                       authOptions:nil
                            result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
@@ -204,6 +217,8 @@
                                
                                NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
+							   NSLog(@"第三方登录之前");
+							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
         
                                if (result) {
                                    UIAlertView *alertView = [[UIAlertView alloc]
@@ -214,11 +229,33 @@
                                        otherButtonTitles: nil];
                                    [alertView show];
                                }
-         
      }];
 }
 
 - (IBAction)qqLoginAction:(id)sender {
+	[ShareSDK getUserInfoWithType:ShareTypeQQ
+					  authOptions:nil
+						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+							   
+							   NSString *uid = [userInfo uid];
+							   NSString *nickName = [userInfo nickname];
+							   NSString *token = [[userInfo credential] token];
+							   
+							   NSString *info = [uid stringByAppendingString:token];
+							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
+							   NSLog(@"第三方登录之前");
+							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
+							   
+							   if (result) {
+								   UIAlertView *alertView = [[UIAlertView alloc]
+															 initWithTitle:@"Hello"
+															 message:information
+															 delegate:nil
+															 cancelButtonTitle:@"知道了"
+															 otherButtonTitles: nil];
+								   [alertView show];
+							   }
+						   }];
 }
 
 - (IBAction)logoutAction:(id)sender {

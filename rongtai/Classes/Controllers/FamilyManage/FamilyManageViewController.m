@@ -16,8 +16,7 @@
 #import "Member.h"
 #import "RongTaiConstant.h"
 
-@interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
-{
+@interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
     NSMutableArray* _users;  //用户数组
     UICollectionView* _collectView;
     CGFloat _matgin;
@@ -68,7 +67,6 @@
     _users = [NSMutableArray new];
 	
 //	manager.responseSerializer = [AFHTTPResponseSerializer serializer]; // 设置这句, 可以成功返回,不过返回的数据要转码
-//	manager.responseSerializer = [AFJSONResponseSerializer serializer];
 	self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];  // 这句是关键
 	
 	NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMember"];

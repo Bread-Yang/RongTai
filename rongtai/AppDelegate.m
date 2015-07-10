@@ -139,7 +139,9 @@
     [ShareSDK connectQQWithQZoneAppKey:@"100371282"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
-    
+	
+//	[ShareSDK connectQQWithAppId:@"100371282" qqApiCls:[QQApiInterface class]];
+	
     /**
      连接新浪微博开放平台应用以使用相关功能，此应用需要引用SinaWeiboConnection.framework
      http://open.weibo.com上注册新浪微博开放平台应用，并将相关信息填写到以下字段
