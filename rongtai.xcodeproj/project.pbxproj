@@ -48,7 +48,12 @@
 		3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4811B25437A00B7B411 /* WLFanChart.m */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
+		3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */; };
+		3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */; };
+		3D76E2991B4BE4DD004B83E7 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */; };
 		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
+		3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */; };
+		3D77C9E91B4CCC37005C9810 /* TimingPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E71B4CCC37005C9810 /* TimingPlan.m */; };
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
 		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
 		3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* RTBleListViewController.m */; };
@@ -64,11 +69,17 @@
 		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
 		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
+		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
 		3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE05B41B28154D0008EFCA /* Login.storyboard */; };
 		3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */; };
+		3DC7908C1B424AEB0034C3C1 /* mode_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC7908B1B424AEB0034C3C1 /* mode_1.png */; };
+		3DC790901B424FD40034C3C1 /* icon_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC7908D1B424FD40034C3C1 /* icon_hand.png */; };
+		3DC790911B424FD40034C3C1 /* icon_set.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC7908E1B424FD40034C3C1 /* icon_set.png */; };
+		3DC790921B424FD40034C3C1 /* icon_user.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC7908F1B424FD40034C3C1 /* icon_user.png */; };
+		3DC790941B4272B00034C3C1 /* navBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC790931B4272B00034C3C1 /* navBar.png */; };
 		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
 		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
@@ -86,6 +97,8 @@
 		3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCDF3641B1FEB7400BA491E /* menu-button@2x.png */; };
 		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
 		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
+		3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */; };
+		3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */; };
 		3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */; };
 		3DF304251B38FE2500DD51D3 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF303E91B38FE2500DD51D3 /* MagicalImportFunctions.m */; };
 		3DF304261B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF303EB1B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -137,7 +150,6 @@
 		5661F6A61B281361006066A0 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6A51B281361006066A0 /* MusicModel.m */; };
 		5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5672800B1B31845B0059C18E /* RongTai.xcdatamodeld */; };
 		567280111B31859E0059C18E /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 567280101B31859E0059C18E /* Member.m */; };
-		567280141B31859F0059C18E /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 567280131B31859F0059C18E /* CustomProgram.m */; };
 		567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567281511B32A02C0059C18E /* CoreGraphics.framework */; };
 		567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281551B32A0E20059C18E /* MBProgressHUD.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
@@ -254,8 +266,20 @@
 		3D65A4841B25792800B7B411 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		3D65A4861B25841800B7B411 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		3D65A4871B25841800B7B411 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		3D76E2911B4BE4DD004B83E7 /* WLLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLineChart.h; sourceTree = "<group>"; };
+		3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLineChart.m; sourceTree = "<group>"; };
+		3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLXAxis.h; sourceTree = "<group>"; };
+		3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLXAxis.m; sourceTree = "<group>"; };
+		3D76E2951B4BE4DD004B83E7 /* WLYAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLYAxis.h; sourceTree = "<group>"; };
+		3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLYAxis.m; sourceTree = "<group>"; };
 		3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInformationViewController.h; sourceTree = "<group>"; };
 		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
+		3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localNotificationTransformer.h; path = Model/localNotificationTransformer.h; sourceTree = "<group>"; };
+		3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = localNotificationTransformer.m; path = Model/localNotificationTransformer.m; sourceTree = "<group>"; };
+		3D77C9E61B4CCC37005C9810 /* TimingPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimingPlan.h; path = Model/TimingPlan.h; sourceTree = "<group>"; };
+		3D77C9E71B4CCC37005C9810 /* TimingPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimingPlan.m; path = Model/TimingPlan.m; sourceTree = "<group>"; };
+		3D77C9EA1B4CD2D6005C9810 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
+		3D77C9EB1B4CD2D6005C9810 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
 		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -283,6 +307,8 @@
 		3D9EBAE41B3D3893000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Massage.m; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
+		3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingPlanTableViewCell.h; sourceTree = "<group>"; };
+		3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlanTableViewCell.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
 		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
@@ -292,6 +318,11 @@
 		3DBE05B41B28154D0008EFCA /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		3DBE05B61B282BA10008EFCA /* PowerConsumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerConsumeViewController.h; sourceTree = "<group>"; };
 		3DBE05B71B282BA10008EFCA /* PowerConsumeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerConsumeViewController.m; sourceTree = "<group>"; };
+		3DC7908B1B424AEB0034C3C1 /* mode_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mode_1.png; sourceTree = "<group>"; };
+		3DC7908D1B424FD40034C3C1 /* icon_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_hand.png; sourceTree = "<group>"; };
+		3DC7908E1B424FD40034C3C1 /* icon_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_set.png; sourceTree = "<group>"; };
+		3DC7908F1B424FD40034C3C1 /* icon_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_user.png; sourceTree = "<group>"; };
+		3DC790931B4272B00034C3C1 /* navBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBar.png; sourceTree = "<group>"; };
 		3DCA815C1B296EF30064ECDF /* DoughnutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutViewController.h; sourceTree = "<group>"; };
 		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCA81621B2A7B6F0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
@@ -323,6 +354,10 @@
 		3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideNavigationController.m; sourceTree = "<group>"; };
 		3DCDF37A1B20401600BA491E /* WLPolar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLPolar.h; sourceTree = "<group>"; };
 		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
+		3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnutStatsView.h; sourceTree = "<group>"; };
+		3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnutStatsView.m; sourceTree = "<group>"; };
+		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = rongtai/Classes/Model/CustomProgram.h; sourceTree = "<group>"; };
+		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = rongtai/Classes/Model/CustomProgram.m; sourceTree = "<group>"; };
 		3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageTableViewCell.h; sourceTree = "<group>"; };
 		3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageTableViewCell.m; sourceTree = "<group>"; };
 		3DF303E81B38FE2500DD51D3 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
@@ -418,8 +453,6 @@
 		5672800C1B31845B0059C18E /* RongTai.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RongTai.xcdatamodel; sourceTree = "<group>"; };
 		5672800F1B31859E0059C18E /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Member.h; path = Model/Member.h; sourceTree = "<group>"; };
 		567280101B31859E0059C18E /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Member.m; path = Model/Member.m; sourceTree = "<group>"; };
-		567280121B31859F0059C18E /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
-		567280131B31859F0059C18E /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
 		567281511B32A02C0059C18E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		567281541B32A0E20059C18E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		567281551B32A0E20059C18E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
@@ -670,11 +703,26 @@
 			path = WLFanChart;
 			sourceTree = "<group>";
 		};
+		3D76E2901B4BE4DD004B83E7 /* WLLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				3D76E2911B4BE4DD004B83E7 /* WLLineChart.h */,
+				3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */,
+				3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */,
+				3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */,
+				3D76E2951B4BE4DD004B83E7 /* WLYAxis.h */,
+				3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */,
+			);
+			path = WLLineChart;
+			sourceTree = "<group>";
+		};
 		3D783D241B12FD0300A893D9 = {
 			isa = PBXGroup;
 			children = (
 				3D783D2F1B12FD0300A893D9 /* rongtai */,
 				5672800B1B31845B0059C18E /* RongTai.xcdatamodeld */,
+				3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */,
+				3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */,
 				DF9C7D011B147B89005617DA /* Frameworks */,
 				3D783D491B12FD0300A893D9 /* rongtaiTests */,
 				3D783D2E1B12FD0300A893D9 /* Products */,
@@ -819,6 +867,11 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DC790931B4272B00034C3C1 /* navBar.png */,
+				3DC7908D1B424FD40034C3C1 /* icon_hand.png */,
+				3DC7908E1B424FD40034C3C1 /* icon_set.png */,
+				3DC7908F1B424FD40034C3C1 /* icon_user.png */,
+				3DC7908B1B424AEB0034C3C1 /* mode_1.png */,
 				3DCD12271B41374000890164 /* userDefaultIcon.jpg */,
 				3DCD122D1B4148A700890164 /* camera.png */,
 			);
@@ -870,6 +923,15 @@
 				3DCDF37B1B20401600BA491E /* WLPolar.m */,
 			);
 			path = WLRadarChart;
+			sourceTree = "<group>";
+		};
+		3DDEE1BF1B4A6EAB005F8324 /* WLDoughnutStatsView */ = {
+			isa = PBXGroup;
+			children = (
+				3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */,
+				3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */,
+			);
+			path = WLDoughnutStatsView;
 			sourceTree = "<group>";
 		};
 		3DF303E51B38FE2500DD51D3 /* MagicalRecord */ = {
@@ -1075,10 +1137,14 @@
 		5672800E1B31857E0059C18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */,
+				3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */,
+				3D77C9E61B4CCC37005C9810 /* TimingPlan.h */,
+				3D77C9E71B4CCC37005C9810 /* TimingPlan.m */,
 				3D9EBADF1B3D2CC1000FD810 /* MassageRequest */,
 				3DAE1A6C1B3C0B8700B0CA3C /* LoginRequest */,
-				567280121B31859F0059C18E /* CustomProgram.h */,
-				567280131B31859F0059C18E /* CustomProgram.m */,
+				3D77C9EA1B4CD2D6005C9810 /* CustomProgram.h */,
+				3D77C9EB1B4CD2D6005C9810 /* CustomProgram.m */,
 				5672800F1B31859E0059C18E /* Member.h */,
 				567280101B31859E0059C18E /* Member.m */,
 				3DCD12291B4140EE00890164 /* UserDownload.h */,
@@ -1137,6 +1203,8 @@
 			children = (
 				56E6B32A1B292997000178BD /* TimingMassageTableViewController.h */,
 				56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */,
+				3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */,
+				3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */,
 				56E6B3271B29295A000178BD /* AddTimingMassageViewController.h */,
 				56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */,
 			);
@@ -1235,6 +1303,8 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D76E2901B4BE4DD004B83E7 /* WLLineChart */,
+				3DDEE1BF1B4A6EAB005F8324 /* WLDoughnutStatsView */,
 				3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */,
 				567281531B32A0860059C18E /* MBProgressHUD */,
 				56C668A51B30395000CDC72B /* CircleButton */,
@@ -1384,15 +1454,19 @@
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
+				3DC7908C1B424AEB0034C3C1 /* mode_1.png in Resources */,
+				3DC790901B424FD40034C3C1 /* icon_hand.png in Resources */,
 				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
+				3DC790911B424FD40034C3C1 /* icon_set.png in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
 				3D0B4C7E1B3ABBE100FF97C6 /* mini-lightningrain@2x.png in Resources */,
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
+				3DC790941B4272B00034C3C1 /* navBar.png in Resources */,
 				5604A3531B15A61E00967191 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
@@ -1410,6 +1484,7 @@
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
+				3DC790921B424FD40034C3C1 /* icon_user.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1471,21 +1546,27 @@
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
+				3D76E2991B4BE4DD004B83E7 /* WLYAxis.m in Sources */,
 				3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */,
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */,
+				3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */,
 				3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */,
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
 				3DF304331B38FE2500DD51D3 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
+				3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
+				3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3DF3042F1B38FE2500DD51D3 /* NSManagedObject+MagicalRecord.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
+				3D77C9E91B4CCC37005C9810 /* TimingPlan.m in Sources */,
+				3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */,
 				3DF304361B38FE2500DD51D3 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				3DF3043B1B38FE2500DD51D3 /* MagicalRecord+iCloud.m in Sources */,
@@ -1504,6 +1585,7 @@
 				563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
 				56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */,
+				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
 				56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
@@ -1519,7 +1601,6 @@
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
 				3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */,
-				567280141B31859F0059C18E /* CustomProgram.m in Sources */,
 				3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3DF304321B38FE2500DD51D3 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				3DF3042D1B38FE2500DD51D3 /* NSManagedObject+MagicalDataImport.m in Sources */,
@@ -1546,6 +1627,7 @@
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DF304301B38FE2500DD51D3 /* NSManagedObject+MagicalRequests.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
+				3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */,
 				3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */,

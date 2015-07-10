@@ -8,7 +8,7 @@
 
 #import "MassageRequest.h"
 #import <AFNetworking.h>
-#define REQUESTURL @"http://192.168.2.49:8080/RongTaiWeb"
+#define REQUESTURL @"http://192.168.2.64:8080/RongTaiWeb"
 #define APPID @"781b7b9b7e074b1685217537ad1ab1c5"
 
 @interface MassageRequest ()

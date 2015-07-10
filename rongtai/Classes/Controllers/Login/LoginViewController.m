@@ -10,6 +10,10 @@
 
 #import "LoginViewController.h"
 #import "LoginRequest.h"
+
+#import "SlideNavigationController.h"
+#import "MenuViewController.h"
+#import "IQKeyboardManager.h"
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
@@ -33,22 +37,44 @@
 @implementation LoginViewController
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
-	//    _loginFeild.layer.cornerRadius = 5;
-	//    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
-	//    _loginFeild.layer.borderWidth = 1;
-	_loginRequest = [LoginRequest new];
-	_loginRequest.delegate = self;
-	// Do any additional setup after loading the view.
+    [super viewDidLoad];
+//    _loginFeild.layer.cornerRadius = 5;
+//    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    _loginFeild.layer.borderWidth = 1;
+    _loginRequest = [LoginRequest new];
+    _loginRequest.delegate = self;
+    
+    //
+    MenuViewController* menu = [[MenuViewController alloc]init];
+    SlideNavigationController* silder = [SlideNavigationController sharedInstance];
+    silder.leftMenu = menu;
+    silder.enableSwipeGesture = YES;
+    silder.enableShadow = NO;
+    silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
+
+    // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-	[_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+    /*
+     在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
+    */
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
+    
+    //    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法
 - (IBAction)registerUser:(id)sender {
+    
 }
 
 #pragma mark - LoginRequestDelegate

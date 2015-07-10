@@ -114,6 +114,7 @@
                                     <constraint firstAttribute="width" constant="120" id="Jci-Ik-CCZ"/>
                                     <constraint firstAttribute="height" constant="30" id="lbg-H9-XhH"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="忘记密码">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -196,10 +197,10 @@
             </objects>
             <point key="canvasLocation" x="851" y="1012"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Slide Navigation Controller-->
         <scene sceneID="VdB-bD-JYx">
             <objects>
-                <navigationController id="oLk-FT-Anx" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SliderNavigationVC" id="oLk-FT-Anx" customClass="SlideNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hqg-Tj-JHi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

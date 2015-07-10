@@ -11,12 +11,15 @@
 #import "AddTimingMassageViewController.h"
 #import "LineUICollectionViewFlowLayout.h"
 #import "LineUICollectionViewCell.h"
+#import <MagicalRecord.h>
+#import "TimingPlan.h"
 
 @interface AddTimingMassageViewController () {
 	
 	NSArray* modeNameArray;
 	NSMutableArray* hourArray;
 	NSMutableArray* minuteArray;
+    __weak IBOutlet UISegmentedControl *_weekSC;
 
 }
 
@@ -55,12 +58,17 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
-	TimingMassageModel *model = [[TimingMassageModel alloc] init];
-	model.loopDate = @"hahah";
-	if (self.returnTimingMassageBlock) {
-		self.returnTimingMassageBlock(model);
-		[self.navigationController popViewControllerAnimated:TRUE];
-	}
+//	TimingMassageModel *model = [[TimingMassageModel alloc] init];
+//	model.loopDate = @"hahah";
+//	if (self.returnTimingMassageBlock) {
+//		self.returnTimingMassageBlock(model);
+//		[self.navigationController popViewControllerAnimated:TRUE];
+//	}
+    TimingPlan* timePlan = [TimingPlan MR_createEntity];
+    [timePlan setLocalNotificationByHour:[_leftPickerView selectedRowInComponent:0] Minute:[_rightPickerView selectedRowInComponent:0] Week:_weekSC.selectedSegmentIndex+1  Message:[NSString stringWithFormat:@"舒展活络 定时计划:每周%ld %02ld:%02ld",_weekSC.selectedSegmentIndex,[_leftPickerView selectedRowInComponent:0],[_rightPickerView selectedRowInComponent:0]]];
+    timePlan.massageId = [NSNumber numberWithInt:123456];
+    timePlan.massageName = @"舒展活络";
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - UICollectionViewDataSource

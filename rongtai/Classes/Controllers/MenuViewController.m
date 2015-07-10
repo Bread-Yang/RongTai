@@ -8,11 +8,16 @@
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+#define GRAY [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1]
 
 #import "MenuViewController.h"
 #import "LoginViewController.h"
 #import "SlideNavigationController.h"
 #import "DataCenterViewController.h"
+#import "FamilyManageViewController.h"
+#import "TimingMassageTableViewController.h"
+#import "ProductInstructionViewController.h"
+#import "BuyRTProductTableViewController.h"
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -41,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = GRAY;
     [self.view addSubview:_userList];
     [self.view addSubview:_menu];
     
@@ -112,15 +117,25 @@
     _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, _userList.frame.size.height, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
     _menu.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _menu.tag = 2002;
-    _menu.backgroundColor = [UIColor cyanColor];
+    _menu.backgroundColor = [UIColor clearColor];
     _menu.dataSource = self;
     _menu.delegate = self;
     _menu.scrollEnabled = NO;
     
     //天气开关
     _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
-    
+//    _weatherSwitch.tintColor = [UIColor lightGrayColor];
+    _weatherSwitch.on = YES;
+    [_weatherSwitch addTarget:self action:@selector(switchChangeValue:) forControlEvents:UIControlEventValueChanged];
     [self updatTableViewFrame];
+}
+
+#pragma mark - 天气开关
+-(void)switchChangeValue:(UISwitch*)aSwitch
+{
+    if ([self.delegate respondsToSelector:@selector(switchChange:)]) {
+        [self.delegate switchChange:aSwitch.isOn];
+    }
 }
 
 
@@ -163,6 +178,7 @@
                 userCell.accessoryView = nil;
             }
         }
+        userCell.backgroundColor = [UIColor clearColor];
         return userCell;
     }
     else if (tableView.tag == 2002)
@@ -178,8 +194,10 @@
         }
         else
         {
-            menuCell.accessoryView = nil;
+            menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        menuCell.selectionStyle  = UITableViewCellSelectionStyleNone;
+        menuCell.backgroundColor = [UIColor clearColor];
         return menuCell;
     }
     else
@@ -200,15 +218,45 @@
     }
     else if (tableView.tag == 2002)
     {
+         SlideNavigationController* sl = [SlideNavigationController sharedInstance];
         if (indexPath.row == 1) {
-//            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//            LoginViewController* l = [s instantiateViewControllerWithIdentifier:@"LoginVC"];
-//            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
-//            [sl pushViewController:l animated:YES];
+            //数据中心
             DataCenterViewController* dataVC = [[DataCenterViewController alloc]init];
-            SlideNavigationController* sl = [SlideNavigationController sharedInstance];
+           
             [sl pushViewController:dataVC animated:YES];
         }
+        else if (indexPath.row == 0)
+        {
+            //家庭成员管理
+            FamilyManageViewController* fVC = [[FamilyManageViewController alloc]init];
+            [sl pushViewController:fVC animated:YES];
+        }
+        else if (indexPath.row == 2)
+        {
+            //定时计划
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            TimingMassageTableViewController* tVC = [s instantiateViewControllerWithIdentifier:@"TimingMassageVC"];
+            [sl pushViewController:tVC animated:YES];
+        }
+        else if (indexPath.row == 4)
+        {
+            //我要反馈
+        }
+        else if (indexPath.row == 5)
+        {
+            //使用帮助
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
+            [sl pushViewController:pVC animated:YES];
+        }
+        else if (indexPath.row == 6)
+        {
+            //我要购买
+            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            BuyRTProductTableViewController* bVC = [s instantiateViewControllerWithIdentifier:@"BuyRTProductVC"];
+            [sl pushViewController:bVC animated:YES];
+        }
+        
     }
 }
 

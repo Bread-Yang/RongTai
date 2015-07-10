@@ -2,8 +2,8 @@
 //  CustomProgram.m
 //  rongtai
 //
-//  Created by yoghourt on 6/17/15.
-//  Copyright (c) 2015 William-zhang. All rights reserved.
+//  Created by William-zhang on 15/7/10.
+//  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
 #import "CustomProgram.h"
