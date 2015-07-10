@@ -23,11 +23,17 @@
 
 @implementation RegisterViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
-    self.navigationItem.rightBarButtonItem  = right;
+//    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+//    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
+//    self.navigationItem.rightBarButtonItem  = right;
     _loginRequest = [LoginRequest new];
     // Do any additional setup after loading the view.
 }

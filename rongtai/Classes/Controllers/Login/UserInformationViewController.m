@@ -14,14 +14,24 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "RongTaiConstant.h"
 #import "UIImage+ImageBlur.h"
+#import "RFSegmentView.h"
+
+#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
-	__weak IBOutlet UISegmentedControl *sexSegmentedControl;
-	__weak IBOutlet UISegmentedControl *heightUnitSegmentedControl;
+
+    RFSegmentView *_sexSegmentView;
+    
+    __weak IBOutlet UIView *_sexView;
+    
+    __weak IBOutlet UIView *_heightUintView;
+    RFSegmentView *_heightUnitSegmentView;
+	
     __weak IBOutlet UIButton *_userIcon;
     __weak IBOutlet UIImageView *_bgImageView;
 	
@@ -72,7 +82,7 @@
     
     //头像按钮设置白色边框
     _userIcon.layer.borderColor = [UIColor whiteColor].CGColor;
-    _userIcon.layer.borderWidth = 4;
+    _userIcon.layer.borderWidth = 3;
     _userIcon.layer.cornerRadius = 0.125*[UIScreen mainScreen].bounds.size.width;
     
     //默认头像
@@ -80,8 +90,17 @@
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _userIcon.clipsToBounds = YES;
     
-    _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
     _bgImageView.image = [_userImage blurImage:15.0];
+    _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.4*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.55)];
+    [_sexSegmentView setItems:@[NSLocalizedString(@"男", nil),NSLocalizedString(@"女", nil)]];
+    [_sexView addSubview:_sexSegmentView];
+    _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.4*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.55)];
+    [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"unit", nil)]];
+    [_heightUintView addSubview:_heightUnitSegmentView];
+//    _bgImageView.clipsToBounds = YES;
     
     // Do any additional setup after loading the view.
 }
@@ -206,7 +225,7 @@
 	}
 	
 	NSString *heightUnit;
-	if (heightUnitSegmentedControl.selectedSegmentIndex == 0) {
+	if (_heightUnitSegmentView.selectIndex == 0) {
 		heightUnit = @"cm";
 	} else {
 		heightUnit = @"inch";
@@ -218,7 +237,7 @@
 	
 	NSDictionary *parameters = @{@"uid" : @"15521377721",
 								 @"name" : [userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]],
-								 @"sex" : [NSString stringWithFormat:@"%i", (int)sexSegmentedControl.selectedSegmentIndex],
+								 @"sex" : [NSString stringWithFormat:@"%i", (int)_sexSegmentView.selectIndex],
 								 @"height" : [NSString stringWithFormat:@"%i", [_height.text intValue]],
 								 @"heightUnit" : heightUnit,
 								 @"imageUrl" : @"http://hiphotos.baidu.com/zhixin/abpic/item/ca5257540923dd541500adbfd309b3de9d8248b2.jpg",
@@ -297,12 +316,12 @@
 	
     
 	_name.text = infoDictionary[@"name"];
-	sexSegmentedControl.selectedSegmentIndex = [infoDictionary[@"sex"] integerValue];
+	_sexSegmentView.selectIndex = [infoDictionary[@"sex"] integerValue];
 	_height.text = infoDictionary[@"height"];
 	if ([infoDictionary[@"heightUnit"] isEqualToString:@"cm"]) {
-		heightUnitSegmentedControl.selectedSegmentIndex = 0;
+		_heightUnitSegmentView.selectIndex = 0;
 	} else {
-		heightUnitSegmentedControl.selectedSegmentIndex = 1;
+		_heightUnitSegmentView.selectIndex = 1;
 	}
 	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init] ;
 	[dateFormat setDateFormat:@"yyyy/MM/dd HH:mm:ss"];

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface RegisterViewController : UIViewController
+@interface RegisterViewController : BasicViewController
 
 @end

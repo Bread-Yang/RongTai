@@ -15,10 +15,17 @@
 /**
  *  设置风格颜色 默认蓝色风格
  */
-@property(nonatomic ,strong) UIColor *tintColor;
+@property(nonatomic ,strong) UIColor *norFontColor;
+@property(nonatomic ,strong) UIColor *selFontColor;
+@property(nonatomic ,strong) UIColor *norBgColor;
+@property(nonatomic ,strong) UIColor *selBgColor;
 @property(nonatomic) id<RFSegmentViewDelegate> delegate;
 @property(nonatomic) NSInteger numberOfLines;
 @property(nonatomic) NSUInteger selectIndex;
+@property(nonatomic) CGFloat cornerRadius;
+@property(nonatomic, strong)UIColor* LineColor;
+@property(nonatomic)CGFloat lineWidth;
+@property(nonatomic, strong)NSArray* items;
 
 /**
  *  默认构造函数

@@ -99,6 +99,19 @@
 		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
 		3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */; };
 		3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */; };
+		3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */; };
+		3DE3FFA21B4F76E7003F8AF7 /* login_icon_forget.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9B1B4F76E7003F8AF7 /* login_icon_forget.png */; };
+		3DE3FFA31B4F76E7003F8AF7 /* login_icon_register.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9C1B4F76E7003F8AF7 /* login_icon_register.png */; };
+		3DE3FFA41B4F76E7003F8AF7 /* login_input.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9D1B4F76E7003F8AF7 /* login_input.png */; };
+		3DE3FFA51B4F76E7003F8AF7 /* login_qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9E1B4F76E7003F8AF7 /* login_qq.png */; };
+		3DE3FFA61B4F76E7003F8AF7 /* login_weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9F1B4F76E7003F8AF7 /* login_weibo.png */; };
+		3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFA01B4F76E7003F8AF7 /* logo.png */; };
+		3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFA81B4F79CA003F8AF7 /* bg.png */; };
+		3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */; };
+		3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFAD1B4FA819003F8AF7 /* register_button.png */; };
+		3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFAF1B4FB19C003F8AF7 /* icon_confirm.png */; };
+		3DE3FFB31B4FB46E003F8AF7 /* program_select3_1_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFB11B4FB46E003F8AF7 /* program_select3_1_2.png */; };
+		3DE3FFB41B4FB46E003F8AF7 /* program_select3_3_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFB21B4FB46E003F8AF7 /* program_select3_3_2.png */; };
 		3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */; };
 		3DF304251B38FE2500DD51D3 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF303E91B38FE2500DD51D3 /* MagicalImportFunctions.m */; };
 		3DF304261B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF303EB1B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -356,8 +369,22 @@
 		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnutStatsView.h; sourceTree = "<group>"; };
 		3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnutStatsView.m; sourceTree = "<group>"; };
-		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = rongtai/Classes/Model/CustomProgram.h; sourceTree = "<group>"; };
-		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = rongtai/Classes/Model/CustomProgram.m; sourceTree = "<group>"; };
+		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = ../Model/CustomProgram.h; sourceTree = "<group>"; };
+		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = ../Model/CustomProgram.m; sourceTree = "<group>"; };
+		3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button.png; sourceTree = "<group>"; };
+		3DE3FF9B1B4F76E7003F8AF7 /* login_icon_forget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_icon_forget.png; sourceTree = "<group>"; };
+		3DE3FF9C1B4F76E7003F8AF7 /* login_icon_register.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_icon_register.png; sourceTree = "<group>"; };
+		3DE3FF9D1B4F76E7003F8AF7 /* login_input.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_input.png; sourceTree = "<group>"; };
+		3DE3FF9E1B4F76E7003F8AF7 /* login_qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_qq.png; sourceTree = "<group>"; };
+		3DE3FF9F1B4F76E7003F8AF7 /* login_weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_weibo.png; sourceTree = "<group>"; };
+		3DE3FFA01B4F76E7003F8AF7 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		3DE3FFA81B4F79CA003F8AF7 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		3DE3FFAA1B4F7C79003F8AF7 /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
+		3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
+		3DE3FFAD1B4FA819003F8AF7 /* register_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = register_button.png; sourceTree = "<group>"; };
+		3DE3FFAF1B4FB19C003F8AF7 /* icon_confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_confirm.png; sourceTree = "<group>"; };
+		3DE3FFB11B4FB46E003F8AF7 /* program_select3_1_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = program_select3_1_2.png; sourceTree = "<group>"; };
+		3DE3FFB21B4FB46E003F8AF7 /* program_select3_3_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = program_select3_3_2.png; sourceTree = "<group>"; };
 		3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageTableViewCell.h; sourceTree = "<group>"; };
 		3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageTableViewCell.m; sourceTree = "<group>"; };
 		3DF303E81B38FE2500DD51D3 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
@@ -721,8 +748,6 @@
 			children = (
 				3D783D2F1B12FD0300A893D9 /* rongtai */,
 				5672800B1B31845B0059C18E /* RongTai.xcdatamodeld */,
-				3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */,
-				3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */,
 				DF9C7D011B147B89005617DA /* Frameworks */,
 				3D783D491B12FD0300A893D9 /* rongtaiTests */,
 				3D783D2E1B12FD0300A893D9 /* Products */,
@@ -867,6 +892,18 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DE3FFB11B4FB46E003F8AF7 /* program_select3_1_2.png */,
+				3DE3FFB21B4FB46E003F8AF7 /* program_select3_3_2.png */,
+				3DE3FFAF1B4FB19C003F8AF7 /* icon_confirm.png */,
+				3DE3FFAD1B4FA819003F8AF7 /* register_button.png */,
+				3DE3FFA81B4F79CA003F8AF7 /* bg.png */,
+				3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */,
+				3DE3FF9B1B4F76E7003F8AF7 /* login_icon_forget.png */,
+				3DE3FF9C1B4F76E7003F8AF7 /* login_icon_register.png */,
+				3DE3FF9D1B4F76E7003F8AF7 /* login_input.png */,
+				3DE3FF9E1B4F76E7003F8AF7 /* login_qq.png */,
+				3DE3FF9F1B4F76E7003F8AF7 /* login_weibo.png */,
+				3DE3FFA01B4F76E7003F8AF7 /* logo.png */,
 				3DC790931B4272B00034C3C1 /* navBar.png */,
 				3DC7908D1B424FD40034C3C1 /* icon_hand.png */,
 				3DC7908E1B424FD40034C3C1 /* icon_set.png */,
@@ -1272,6 +1309,8 @@
 				56C6688F1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m */,
 				56C668981B2EAC5700CDC72B /* ManualMassageViewController.h */,
 				56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */,
+				3DE3FFAA1B4F7C79003F8AF7 /* BasicViewController.h */,
+				3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1279,6 +1318,8 @@
 		DF9C7CF11B147A36005617DA /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */,
+				3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */,
 				5661F6A41B281361006066A0 /* MusicModel.h */,
 				5661F6A51B281361006066A0 /* MusicModel.m */,
 				56E6B32D1B2932FF000178BD /* TimingMassageModel.h */,
@@ -1453,8 +1494,11 @@
 				3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */,
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
+				3DE3FFB41B4FB46E003F8AF7 /* program_select3_3_2.png in Resources */,
+				3DE3FFA51B4F76E7003F8AF7 /* login_qq.png in Resources */,
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
 				3DC7908C1B424AEB0034C3C1 /* mode_1.png in Resources */,
+				3DE3FFA31B4F76E7003F8AF7 /* login_icon_register.png in Resources */,
 				3DC790901B424FD40034C3C1 /* icon_hand.png in Resources */,
 				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
@@ -1466,21 +1510,30 @@
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
+				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
+				3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */,
+				3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */,
 				3DC790941B4272B00034C3C1 /* navBar.png in Resources */,
 				5604A3531B15A61E00967191 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
+				3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */,
+				3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
 				3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */,
 				3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */,
 				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */,
+				3DE3FFA41B4F76E7003F8AF7 /* login_input.png in Resources */,
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
+				3DE3FFB31B4FB46E003F8AF7 /* program_select3_1_2.png in Resources */,
 				3D783D3E1B12FD0300A893D9 /* Images.xcassets in Resources */,
+				3DE3FFA61B4F76E7003F8AF7 /* login_weibo.png in Resources */,
 				3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
+				3DE3FFA21B4F76E7003F8AF7 /* login_icon_forget.png in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
@@ -1616,6 +1669,7 @@
 				3DF304351B38FE2500DD51D3 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
+				3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */,
 				3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
 				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,

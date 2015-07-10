@@ -20,8 +20,10 @@
 @end
 
 @interface RFSegmentItem : UIView
-@property(nonatomic ,strong) UIColor *norColor;
-@property(nonatomic ,strong) UIColor *selColor;
+@property(nonatomic ,strong) UIColor *norFontColor;
+@property(nonatomic ,strong) UIColor *selFontColor;
+@property(nonatomic ,strong) UIColor *norBgColor;
+@property(nonatomic ,strong) UIColor *selBgColor;
 @property(nonatomic ,strong) UILabel *titleLabel;
 @property(nonatomic)         NSInteger index;
 @property(nonatomic)         BOOL isSelected;
@@ -30,7 +32,7 @@
 @end
 
 @implementation RFSegmentItem
-- (id)initWithFrame:(CGRect)frame index:(NSInteger)index title:(NSString *)title norColor:(UIColor *)norColor selColor:(UIColor *)selColor isSelected:(BOOL)isSelected;
+- (id)initWithFrame:(CGRect)frame index:(NSInteger)index title:(NSString *)title norFontColor:(UIColor *)norFontColor selFontColor:(UIColor *)selFontColor norBgColor:(UIColor *)norBgColor selBgColor:(UIColor *)selBgColor isSelected:(BOOL)isSelected;
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -43,8 +45,10 @@
 //        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self addSubview:_titleLabel];
         
-        self.norColor        = norColor;
-        self.selColor        = selColor;
+        self.norFontColor        = norFontColor;
+        self.selFontColor        = selFontColor;
+        self.norBgColor = norBgColor;
+        self.selBgColor = selBgColor;
         self.titleLabel.text = title;
         self.index           = index;
         self.isSelected      = isSelected;
@@ -52,35 +56,17 @@
     return self;
 }
 
-- (void)setSelColor:(UIColor *)selColor
-{
-    if (_selColor != selColor) {
-        _selColor = selColor;
-        
-        if (_isSelected) {
-            self.titleLabel.textColor = self.norColor;
-            self.backgroundColor = self.selColor;
-        }
-        else
-        {
-            self.titleLabel.textColor = self.selColor;
-            self.backgroundColor = self.norColor;
-        }
-
-    }
-}
-
 - (void)setIsSelected:(BOOL)isSelected
 {
     _isSelected = isSelected;
     if (_isSelected) {
-        self.titleLabel.textColor = self.norColor;
-        self.backgroundColor = self.selColor;
+        self.titleLabel.textColor = self.selFontColor;
+        self.backgroundColor = self.selBgColor;
     }
     else
     {
-        self.titleLabel.textColor = self.selColor;
-        self.backgroundColor = self.norColor;
+        self.titleLabel.textColor = self.norFontColor;
+        self.backgroundColor = self.norBgColor;
     }
     
 }
@@ -108,100 +94,113 @@
 @end
 @implementation RFSegmentView
 
-- (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-        self.backgroundColor  = [UIColor clearColor];
-        float viewWidth       = CGRectGetWidth(frame);
-        float viewHeight      = CGRectGetHeight(frame);
-        float init_x          = CGRectGetMinX(frame);
-        float init_y          = CGRectGetMinY(frame);
-        self.selectIndex = 0;
-        //
-        self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
-        self.bgView.backgroundColor    = [UIColor whiteColor];
-        self.bgView.clipsToBounds      = YES;
-//        self.bgView.layer.cornerRadius = 5;
-        self.bgView.layer.borderWidth  = kBorderLineWidth;
-        self.bgView.layer.borderColor  = kDefaultTintColor.CGColor;
-        [self addSubview:self.bgView];
-        
-        init_x = 0;
-        init_y = 0;
-        float itemWidth = CGRectGetWidth(self.bgView.frame)/items.count;
-        float itemHeight = CGRectGetHeight(self.bgView.frame);
-        if (items.count >= 2) {
-            for (NSInteger i =0; i<items.count; i++) {
-                RFSegmentItem *item = [[RFSegmentItem alloc] initWithFrame:CGRectMake(init_x, init_y, itemWidth, itemHeight)
-                                                                     index:i title:items[i]
-                                                                  norColor:[UIColor whiteColor]
-                                                                  selColor:kDefaultTintColor
-                                                                isSelected:(i == 0)? YES: NO];
-                init_x += itemWidth;
-                [self.bgView addSubview:item];
-                item.delegate = self;
-                
-                //save all items
-                if (!self.itemsArray) {
-                    self.itemsArray = [[NSMutableArray alloc] initWithCapacity:items.count];
-                }
-                [self.itemsArray addObject:item];
-            }
-            
-            //add Ver lines
-            init_x = 0;
-            for (NSInteger i = 0; i<items.count-1; i++) {
-                init_x += itemWidth;
-                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(init_x, 0, kBorderLineWidth, itemHeight)];
-                lineView.backgroundColor = kDefaultTintColor;
-                [self.bgView addSubview:lineView];
-                
-                //save all lines
-                if (!self.linesArray) {
-                    self.linesArray = [[NSMutableArray alloc] initWithCapacity:items.count];
-                }
-                [self.linesArray addObject:lineView];
-            }
-            
-        }
-        else
-        {
-            NSException *exc = [[NSException alloc] initWithName:@"items count error"
-                                                          reason:@"items count at least 2"
-                                                        userInfo:nil];
-            @throw exc;
-        }
-        
-        
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setUp];
+        NSLog(@"Sframe：%@",NSStringFromCGRect(self.frame));
     }
     return self;
 }
 
-- (void)setTintColor:(UIColor *)tintColor
+-(instancetype)initWithFrame:(CGRect)frame
 {
-    if (self.itemsArray.count < 2) {
-        return;
+    if (self = [super initWithFrame:frame]) {
+        [self setUp];
     }
-    
-    if (_tintColor != tintColor) {
-        
-        self.bgView.layer.borderColor  = tintColor.CGColor;
-        
-        for (NSInteger i = 0; i<self.itemsArray.count; i++) {
-            RFSegmentItem *item = self.itemsArray[i];
-            item.selColor = tintColor;
-            [item setNeedsDisplay];
-        }
-        
-        for (NSInteger i = 0; i<self.linesArray.count; i++) {
-            UIView *lineView = self.linesArray[i];
-            lineView.backgroundColor = tintColor;
-        }
-    }
-    
+    return self;
 }
+
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    NSLog(@"设置Sframe");
+}
+
+- (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setUp];
+        self.items = items;
+    }
+    return self;
+}
+
+-(void)setUp
+{
+    
+    self.backgroundColor  = [UIColor clearColor];
+    float viewWidth       = CGRectGetWidth(self.frame);
+    float viewHeight      = CGRectGetHeight(self.frame);
+    self.selectIndex = 0;
+    //
+    self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
+    self.bgView.backgroundColor    = [UIColor whiteColor];
+    self.bgView.clipsToBounds      = YES;
+    //        self.bgView.layer.cornerRadius = 5;
+    self.lineWidth = 1;
+    self.cornerRadius = 5;
+    self.bgView.clipsToBounds = YES;
+    self.bgView.layer.cornerRadius = self.cornerRadius;
+    
+    [self addSubview:self.bgView];
+    self.selBgColor = [UIColor colorWithRed:82/255.0 green:203/255.0 blue:82/255.0 alpha:1];
+    self.selFontColor = [UIColor whiteColor];
+    self.LineColor = [UIColor colorWithRed:116/255.0 green:154/255.0 blue:180/255.0 alpha:1];
+    self.norFontColor = [UIColor colorWithRed:116/255.0 green:154/255.0 blue:180/255.0 alpha:1];
+    self.norBgColor = [UIColor clearColor];
+    self.bgView.layer.borderWidth  = self.lineWidth;
+    self.bgView.layer.borderColor  = self.LineColor.CGColor;
+}
+
+-(void)setItems:(NSArray *)items
+{
+    CGFloat init_x = 0;
+    CGFloat init_y = 0;
+    float itemWidth = CGRectGetWidth(self.bgView.frame)/items.count;
+    float itemHeight = CGRectGetHeight(self.bgView.frame);
+    if (items.count >= 2) {
+        for (NSInteger i =0; i<items.count; i++) {
+            RFSegmentItem *item = [[RFSegmentItem alloc] initWithFrame:CGRectMake(init_x, init_y, itemWidth, itemHeight)
+                                                                 index:i title:items[i]
+                                                          norFontColor:self.norFontColor selFontColor:self.selFontColor norBgColor:self.norBgColor selBgColor:self.selBgColor isSelected:(i == 0)? YES: NO];
+            
+            init_x += itemWidth;
+            [self.bgView addSubview:item];
+            item.delegate = self;
+            
+            //save all items
+            if (!self.itemsArray) {
+                self.itemsArray = [[NSMutableArray alloc] initWithCapacity:items.count];
+            }
+            [self.itemsArray setObject:item atIndexedSubscript:i];
+        }
+        
+        //add Ver lines
+        init_x = 0;
+        for (NSInteger i = 0; i<items.count-1; i++) {
+            init_x += itemWidth;
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(init_x, 0, self.lineWidth, itemHeight)];
+            lineView.backgroundColor = self.LineColor;
+            [self.bgView addSubview:lineView];
+            
+            //save all lines
+            if (!self.linesArray) {
+                self.linesArray = [[NSMutableArray alloc] initWithCapacity:items.count];
+            }
+            [self.linesArray setObject:lineView atIndexedSubscript:i];
+        }
+    }
+    else
+    {
+        NSException *exc = [[NSException alloc] initWithName:@"items count error"
+                                                      reason:@"items count at least 2"
+                                                    userInfo:nil];
+        @throw exc;
+    }
+}
+
 
 #pragma mark - set方法
 -(void)setNumberOfLines:(NSInteger)numberOfLines
@@ -228,13 +227,28 @@
     }
 }
 
+-(void)setCornerRadius:(CGFloat)cornerRadius
+{
+    _cornerRadius = cornerRadius;
+    self.bgView.layer.cornerRadius = cornerRadius;
+}
+
+-(void)setLineColor:(UIColor *)LineColor
+{
+    _LineColor = LineColor;
+    self.bgView.layer.borderColor = self.LineColor.CGColor;
+}
+
+-(void)setLineWidth:(CGFloat)lineWidth
+{
+    _lineWidth = lineWidth;
+    self.bgView.layer.borderWidth = lineWidth;
+}
+
 #pragma mark - RFSegmentItemDelegate
 - (void)ItemStateChanged:(RFSegmentItem *)currentItem index:(NSInteger)index isSelected:(BOOL)isSelected
 {
     _selectIndex = index;
-    if (self.itemsArray.count <=2) {
-        return;
-    }
     
     for (int i =0; i<self.itemsArray.count; i++) {
         RFSegmentItem *item = self.itemsArray[i];

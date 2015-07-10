@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
 @class User;
 
@@ -19,7 +20,7 @@ typedef void (^EditUserInformationBlock)(NSDictionary *entity);
 
 @end
 
-@interface UserInformationViewController : UIViewController
+@interface UserInformationViewController : BasicViewController
 
 /**
  *  代理

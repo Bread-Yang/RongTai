@@ -21,6 +21,7 @@
 
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface AppDelegate ()
 
@@ -53,6 +54,8 @@
     application.applicationIconBadgeNumber = 0;
 
     SlideNavigationController* slide = [SlideNavigationController sharedInstance];
+    
+    
     MenuViewController* menu = [[MenuViewController alloc]init];
     slide.leftMenu = menu;
     slide.enableSwipeGesture = YES;
