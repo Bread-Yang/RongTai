@@ -16,7 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
+									 [UIImage imageNamed:@"bg"]];
+	
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -40,33 +43,63 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 5;
+    return 4;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//	UILabel* headerTitle = [[UILabel alloc] init];
-//	headerTitle.text = @"(具体产品信息由客户提供资料)";
-//	[headerTitle sizeToFit];
-	
-//	NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:headerTitle attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:20.f];
-	
-	UILabel *label = [[UILabel alloc] init];
-	label.text = @"(具体产品信息由客户提供资料)";
-	label.backgroundColor = [UIColor whiteColor];
-	label.textAlignment = NSTextAlignmentCenter;
-	return label;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//	UILabel *label = [[UILabel alloc] init];
+//	label.text = @"(具体产品信息由客户提供资料)";
+//	label.backgroundColor = [UIColor whiteColor];
+//	label.textAlignment = NSTextAlignmentCenter;
+//	return label;
+//}
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 50;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//	return 50;
+//}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BuyUITableViewCell"
 									  forIndexPath:indexPath];
-    
-    // Configure the cell...
+	
+	UIImageView *productImageView = (UIImageView *)[cell viewWithTag:1];
+	UILabel *productModelLabel = (UILabel *)[cell viewWithTag:2];
+	UILabel *productAliasLabel = (UILabel *)[cell viewWithTag:3];
+	UILabel *productDescriptionLabel = (UILabel *)[cell viewWithTag:4];
+	
+	NSLog(@"当前行 : %li", indexPath.row);
+	
+	switch (indexPath.row) {
+  		case 0:
+			productImageView = [[UIImageView alloc] initWithImage:
+								[UIImage imageNamed:@"buy_device_1"]];
+			productAliasLabel.text = NSLocalizedString(@"未来太空舱按摩椅", nil);
+			productDescriptionLabel.text = NSLocalizedString(@"未来太空舱按摩椅产品描述", nil);
+
+			break;
+		case 1:
+			productImageView = [[UIImageView alloc] initWithImage:
+								[UIImage imageNamed:@"buy_device_2"]];
+			productAliasLabel.text = NSLocalizedString(@"金钻椅", nil);
+			productDescriptionLabel.text = NSLocalizedString(@"金钻椅产品描述", nil);
+			
+			break;
+		case 2:
+			productImageView = [[UIImageView alloc] initWithImage:
+								[UIImage imageNamed:@"buy_device_3"]];
+			productAliasLabel.text = NSLocalizedString(@"太空舱按摩椅(香槟色)", nil);
+			productDescriptionLabel.text = NSLocalizedString(@"未来太空舱按摩椅产品描述", nil);
+			
+			break;
+		case 3:
+			productImageView = [[UIImageView alloc] initWithImage:
+								[UIImage imageNamed:@"buy_device_4"]];
+			productAliasLabel.text = NSLocalizedString(@"金钻椅", nil);
+			NSLog(NSLocalizedString(@"金钻椅产品描述", nil));
+
+			break;
+	}
     
     return cell;
 }
