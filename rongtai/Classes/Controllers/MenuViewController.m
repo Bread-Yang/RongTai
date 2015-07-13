@@ -6,10 +6,6 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
-#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
-#define GRAY [UIColor colorWithRed:0.94 green:0.94 blue:0.94 alpha:1]
-
 #import "MenuViewController.h"
 #import "LoginViewController.h"
 #import "SlideNavigationController.h"
@@ -18,18 +14,16 @@
 #import "TimingMassageTableViewController.h"
 #import "ProductInstructionViewController.h"
 #import "BuyRTProductTableViewController.h"
+#import "RongTaiConstant.h"
+#import "ChangeUserViewController.h"
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSArray* _menuName;  //菜单名字
     UITableView* _menu;  //菜单列表
-    
-    UITableView* _userList;  //用户列表
-    NSMutableArray* _users;  //用户数组
-    
+    NSArray* _menuIcons; //菜单列表图标
     UISwitch* _weatherSwitch;  //天气开关
-    
-    int _currentUserIndex;  //当前用户标记
+
     int _rowHeight;
 }
 @end
@@ -47,44 +41,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = GRAY;
-    [self.view addSubview:_userList];
     [self.view addSubview:_menu];
+    
+    //横线
+    UIView* V_line = [[UIView alloc]initWithFrame:CGRectMake(0, 63, SCREENWIDTH, 0.5)];
+    [self V_LineStyle:V_line];
+    [self.view addSubview:V_line];
     
     //切换按摩椅
     CGFloat unit = 0.7*SCREENWIDTH/3;
-    UIButton* change = [[UIButton alloc]initWithFrame:CGRectMake(unit/3, SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034, unit, unit*0.4)];
+    CGFloat y = SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034;
+    UIButton* change = [[UIButton alloc]initWithFrame:CGRectMake(unit/3, y, unit, unit*0.4)];
     change.titleLabel.font =[UIFont systemFontOfSize:13];
-    [change setTitle:NSLocalizedString(@"切换按摩椅",nil) forState:0];
-    [change setTintColor:[UIColor blackColor]];
-    change.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.6];
+    [change setTitle:NSLocalizedString(@"切换按摩椅",nil) forState:UIControlStateNormal];
+    [change setImage:[UIImage imageNamed:@"menu_icon_device"] forState:UIControlStateNormal];
+    [change setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
+    [change setTitleColor:BLACK forState:UIControlStateNormal];
     [change addTarget:self action:@selector(changeMessageChair) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:change];
     
+    //竖线
+    UIView* H_line = [[UIView alloc]initWithFrame:CGRectMake(unit*4.5/3, y+unit*0.05, 1, unit*0.3)];
+    H_line.backgroundColor = [UIColor grayColor];
+    H_line.alpha = 0.5;
+    [self.view addSubview:H_line];
+    
     //注销
-    UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit*5/3.0, SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034, unit, unit*0.4)];
+    UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit*5/3.0, y, unit, unit*0.4)];
     logout.titleLabel.font =[UIFont systemFontOfSize:13];
-    [logout setTitle:NSLocalizedString(@"注销",nil) forState:0];
-    [logout setTintColor:[UIColor blackColor]];
-    logout.backgroundColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.6];
+    [logout setTitle:NSLocalizedString(@"注销",nil) forState:UIControlStateNormal];
+    [logout setTitleColor:BLACK forState:UIControlStateNormal];
+    [logout setImage:[UIImage imageNamed:@"menu_icon_logout"] forState:UIControlStateNormal];
+    [logout setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
     [logout addTarget:self action:@selector(Logout) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logout];
     
     // Do any additional setup after loading the view.
-}
-
-#pragma mark - 根据数组个数更新菜单位置
--(void)updatTableViewFrame
-{
-    if (_users.count<3) {
-        _userList.scrollEnabled = NO;
-        _userList.frame = CGRectMake(0, 20, 0.71*SCREENWIDTH, _users.count*_rowHeight+20);
-    }
-    else
-    {
-        _userList.scrollEnabled = YES;
-        _userList.frame = CGRectMake(0, 20, 0.71*SCREENWIDTH, 3*_rowHeight+20);
-    }
-    _menu.frame = CGRectMake(0, _userList.frame.size.height, 0.71*SCREENWIDTH, _menuName.count*_rowHeight);
 }
 
 #pragma mark - 对象初始化
@@ -93,41 +85,27 @@
     //行高
     _rowHeight = SCREENHEIGHT*0.085;
     
-    //用户数组
-    _users = [NSMutableArray new];
-    [_users addObject:@"黄晓明"];   //以后换成用户的数据模型
-    [_users addObject:@"爸爸"];
-//    [_users addObject:@"妈妈"];
-    
-    //用户列表
-    _userList = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, 0.71*SCREENWIDTH, _users.count*_rowHeight+20) style:UITableViewStylePlain];
-    _userList.tag = 2001;
-    _userList.backgroundColor = [UIColor clearColor];
-    _userList.dataSource = self;
-    _userList.delegate = self;
-    _userList.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    _currentUserIndex = 0;
-    
-    
     //菜单数组
-    _menuName = @[NSLocalizedString(@"家庭成员管理",nil), NSLocalizedString(@"数据中心",nil), NSLocalizedString(@"定时计划",nil), NSLocalizedString(@"首页天气预报",nil) ,NSLocalizedString(@"我要反馈",nil) ,NSLocalizedString(@"使用帮助",nil) ,NSLocalizedString(@"我要购买",nil)];
+    _menuName = @[NSLocalizedString(@"切换用户",nil),NSLocalizedString(@"家庭成员管理",nil), NSLocalizedString(@"数据中心",nil), NSLocalizedString(@"定时计划",nil), NSLocalizedString(@"首页天气预报",nil) ,NSLocalizedString(@"我要反馈",nil) ,NSLocalizedString(@"使用帮助",nil) ,NSLocalizedString(@"我要购买",nil)];
+    
+    //菜单图标
+    _menuIcons = @[@"menu_icon_user",@"menu_icon_member",@"menu_icon_data",@"menu_icon_plan",@"menu_icon_weather",@"menu_icon_message",@"menu_icon_help",@"menu_icon_shop"];
+    
     
     //菜单列表
-    _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, _userList.frame.size.height, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
+    _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
     _menu.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _menu.tag = 2002;
     _menu.backgroundColor = [UIColor clearColor];
     _menu.dataSource = self;
     _menu.delegate = self;
     _menu.scrollEnabled = NO;
+    _menu.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //天气开关
-    _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
-//    _weatherSwitch.tintColor = [UIColor lightGrayColor];
+    _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, -4, 300, 100)];
     _weatherSwitch.on = YES;
     [_weatherSwitch addTarget:self action:@selector(switchChangeValue:) forControlEvents:UIControlEventValueChanged];
-    [self updatTableViewFrame];
 }
 
 #pragma mark - 天气开关
@@ -138,7 +116,6 @@
     }
 }
 
-
 #pragma mark - tableView代理实现
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -147,116 +124,78 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView.tag == 2001) {
-        return _users.count;
-    }
-    else if (tableView.tag == 2002)
-    {
-        return _menuName.count;
-    }
-    else
-        return 0;
+    return _menuName.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag == 2001) {
-        UITableViewCell* userCell = [tableView dequeueReusableCellWithIdentifier:@"usercell"];
-        
-        if (!userCell) {
-            userCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"usercell"];
-        }
-        userCell.textLabel.text = _users[indexPath.row];
-        userCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (_users.count > 1) {
-            //用户大于1，才显示当前用户
-            if (indexPath.row == _currentUserIndex) {
-                userCell.accessoryView = [self currentLabel];
-            }
-            else
-            {
-                userCell.accessoryView = nil;
-            }
-        }
-        userCell.backgroundColor = [UIColor clearColor];
-        return userCell;
+    UITableViewCell* menuCell = [tableView dequeueReusableCellWithIdentifier:@"menucell"];
+    
+    if (!menuCell) {
+        menuCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"menucell"];
+        UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, _rowHeight-1, 0.71*SCREENWIDTH, 0.5)];
+        [self V_LineStyle:line];
+        [menuCell addSubview:line];
     }
-    else if (tableView.tag == 2002)
-    {
-        UITableViewCell* menuCell = [tableView dequeueReusableCellWithIdentifier:@"menucell"];
-        
-        if (!menuCell) {
-            menuCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"menucell"];
-        }
-        menuCell.textLabel.text = _menuName[indexPath.row];
-        if ([_menuName[indexPath.row] isEqualToString:NSLocalizedString(@"首页天气预报",nil)]) {
-            menuCell.accessoryView = _weatherSwitch;
-        }
-        else
-        {
-            menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        menuCell.selectionStyle  = UITableViewCellSelectionStyleNone;
-        menuCell.backgroundColor = [UIColor clearColor];
-        return menuCell;
+    menuCell.textLabel.textColor = BLACK;
+    menuCell.textLabel.text = _menuName[indexPath.row];
+    if ([_menuName[indexPath.row] isEqualToString:NSLocalizedString(@"首页天气预报",nil)]) {
+        menuCell.accessoryView = _weatherSwitch;
     }
     else
-        return nil;
+    {
+        menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    NSString* icon = _menuIcons[indexPath.row];
+    menuCell.imageView.image = [UIImage imageNamed:icon];
+    menuCell.selectionStyle  = UITableViewCellSelectionStyleNone;
+    menuCell.backgroundColor = [UIColor clearColor];
+    return menuCell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag == 2001) {
-        if (_users.count > 1) {
-            NSIndexPath* currentIndexPath = [NSIndexPath indexPathForRow:_currentUserIndex inSection:0];
-            UITableViewCell* userCell = [tableView cellForRowAtIndexPath:currentIndexPath];
-            userCell.accessoryView = nil;
-            userCell = [tableView cellForRowAtIndexPath:indexPath];
-            userCell.accessoryView = [self currentLabel];
-            _currentUserIndex = indexPath.row;
-        }
+     SlideNavigationController* sl = [SlideNavigationController sharedInstance];
+    if (indexPath.row == 0) {
+        //切换用户
+        ChangeUserViewController* cVC = [ChangeUserViewController new];
+        [sl pushViewController:cVC animated:YES];
     }
-    else if (tableView.tag == 2002)
+    else if (indexPath.row == 1) {
+        //家庭成员管理
+        FamilyManageViewController* fVC = [[FamilyManageViewController alloc]init];
+        [sl pushViewController:fVC animated:YES];
+    }
+    else if (indexPath.row == 2)
     {
-         SlideNavigationController* sl = [SlideNavigationController sharedInstance];
-        if (indexPath.row == 1) {
-            //数据中心
-            DataCenterViewController* dataVC = [[DataCenterViewController alloc]init];
-           
-            [sl pushViewController:dataVC animated:YES];
-        }
-        else if (indexPath.row == 0)
-        {
-            //家庭成员管理
-            FamilyManageViewController* fVC = [[FamilyManageViewController alloc]init];
-            [sl pushViewController:fVC animated:YES];
-        }
-        else if (indexPath.row == 2)
-        {
-            //定时计划
-            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            TimingMassageTableViewController* tVC = [s instantiateViewControllerWithIdentifier:@"TimingMassageVC"];
-            [sl pushViewController:tVC animated:YES];
-        }
-        else if (indexPath.row == 4)
-        {
-            //我要反馈
-        }
-        else if (indexPath.row == 5)
-        {
-            //使用帮助
-            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
-            [sl pushViewController:pVC animated:YES];
-        }
-        else if (indexPath.row == 6)
-        {
-            //我要购买
-            UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            BuyRTProductTableViewController* bVC = [s instantiateViewControllerWithIdentifier:@"BuyRTProductVC"];
-            [sl pushViewController:bVC animated:YES];
-        }
-        
+        //数据中心
+        DataCenterViewController* dataVC = [[DataCenterViewController alloc]init];
+        [sl pushViewController:dataVC animated:YES];
+    }
+    else if (indexPath.row == 3)
+    {
+        //定时计划
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        TimingMassageTableViewController* tVC = [s instantiateViewControllerWithIdentifier:@"TimingMassageVC"];
+        [sl pushViewController:tVC animated:YES];
+    }
+    else if (indexPath.row == 5)
+    {
+        //我要反馈
+    }
+    else if (indexPath.row == 6)
+    {
+        //使用帮助
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
+        [sl pushViewController:pVC animated:YES];
+    }
+    else if (indexPath.row == 7)
+    {
+        //我要购买
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        BuyRTProductTableViewController* bVC = [s instantiateViewControllerWithIdentifier:@"BuyRTProductVC"];
+        [sl pushViewController:bVC animated:YES];
     }
 }
 
@@ -269,14 +208,6 @@
     return 0.000001;
 }
 
-#pragma mark - 当前用户
--(UILabel*)currentLabel
-{
-    UILabel*  currentUser = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 40)];
-    currentUser.text = NSLocalizedString(@"当前用户",nil);
-    return currentUser;
-}
-
 #pragma mark - 注销
 -(void)Logout
 {
@@ -287,6 +218,18 @@
 -(void)changeMessageChair
 {
     
+}
+
+#pragma mark - 横线样式
+-(void)V_LineStyle:(UIView*)line
+{
+    line.backgroundColor = [UIColor grayColor];
+    line.alpha = 0.2;
+//    line.layer.shadowOffset = CGSizeMake(0, 1);
+//    line.layer.shadowOpacity = 0.4;
+//    line.layer.shadowColor = [UIColor grayColor].CGColor;
+//    line.layer.shadowRadius = 1;
+//    
 }
 
 

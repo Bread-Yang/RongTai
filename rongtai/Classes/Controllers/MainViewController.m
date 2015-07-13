@@ -24,6 +24,7 @@
     NSMutableArray* _massageArr;
     MassageRequest* _massageRequest;
     WLWeatherView* _weatherView;
+    UITabBar* _menuBar;
 }
 @end
 
@@ -39,7 +40,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    
+//    self.navigationController.delegate = self;
     //
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     MenuViewController* menu = (MenuViewController*)slideNav.leftMenu;
@@ -77,6 +78,7 @@
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
+    _table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_table];
     
     //
@@ -88,17 +90,19 @@
     _massageArr = [NSMutableArray new];
     
     //
-    UITabBar* bar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 50)];
-    bar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
-    bar.tintColor = [UIColor whiteColor];
+    _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
+    _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
+    _menuBar.tintColor = [UIColor whiteColor];
     UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:@"负离子" image:[UIImage imageNamed:@"icon_set"] tag:0];
     UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:@"手动" image:[UIImage imageNamed:@"icon_hand"] tag:1];
     UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:@"自定义" image:[UIImage imageNamed:@"icon_user"] tag:2];
     UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_set"] tag:3];
-    bar.items = @[item1,item2,item3,item4];
-    bar.selectedItem = item1;
-    bar.delegate = self;
-    [self.view addSubview:bar];
+    _menuBar.items = @[item1,item2,item3,item4];
+    _menuBar.selectedItem = item1;
+    _menuBar.backgroundImage = [UIImage imageNamed:@"bottom"];
+    _menuBar.delegate = self;
+    _menuBar.barStyle = UIBarStyleBlackOpaque;
+    [self.view addSubview:_menuBar];
     
     // Do any additional setup after loading the view.
 }
@@ -196,6 +200,15 @@
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
+#pragma mark - NavigationController代理
+-(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    NSLog(@"Nav 代理");
+    if (viewController == self) {
+        NSArray* items = _menuBar.items;
+        _menuBar.selectedItem = (UITabBarItem*)items[0];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

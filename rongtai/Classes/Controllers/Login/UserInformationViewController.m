@@ -7,7 +7,6 @@
 //
 #import "NSString+RT.h"
 #import "UserInformationViewController.h"
-#import "User.h"
 #import "MBProgressHUD.h"
 #import "CoreData+MagicalRecord.h"
 #import "Member.h"
@@ -15,9 +14,6 @@
 #import "RongTaiConstant.h"
 #import "UIImage+ImageBlur.h"
 #import "RFSegmentView.h"
-
-#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -40,8 +36,9 @@
     
     __weak IBOutlet UIView *_middleView;
     CGFloat _index; //记住编辑时传入的Index
-    User* _user;
+    Member* _user;
     UIImage* _userImage;  //用户头像
+    BOOL _isEdit;
 }
 @end
 
@@ -100,7 +97,7 @@
     _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.4*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.55)];
     [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"unit", nil)]];
     [_heightUintView addSubview:_heightUnitSegmentView];
-//    _bgImageView.clipsToBounds = YES;
+
     
     // Do any additional setup after loading the view.
 }
@@ -218,7 +215,7 @@
 	
 	NSString *requestURL;
 	
-	if ([self.title isEqual:NSLocalizedString(@"编辑信息", nil)]) {   // 编辑信息
+	if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
 		requestURL = [RongTaiDefaultDomain stringByAppendingString:@"updateMember"];
 	} else {													// 新增信息
 		requestURL = [RongTaiDefaultDomain stringByAppendingString:@"addMember"];
@@ -305,7 +302,7 @@
 
 #pragma mark - 编辑模式
 - (void)setEditUserInformation:(NSDictionary *)infoDictionary {
-	self.title = NSLocalizedString(@"编辑信息", nil);
+	self.title = NSLocalizedString(@"编辑", nil);
 	CGFloat width = [UIScreen mainScreen].bounds.size.width;
 	CGFloat height = [UIScreen mainScreen].bounds.size.height;
 	UIButton *delete = [[UIButton alloc]initWithFrame:CGRectMake(width*0.325, height - height * 0.15, width * 0.35, height * 0.06)];
@@ -348,43 +345,38 @@
 	
 }
 
-- (void)editMode:(User *)user WithIndex:(NSUInteger)index {
-    _index = index;
-    _user = user;
-    [self upDateUI];
-    self.title = NSLocalizedString(@"编辑信息", nil);
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    UIButton *delete = [[UIButton alloc]initWithFrame:CGRectMake(width*0.325, height - height * 0.15, width * 0.35, height * 0.06)];
-    delete.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.6];
-    [delete setTitle:NSLocalizedString(@"删除", nil) forState:UIControlStateNormal];
-    [delete addTarget:self action:@selector(deleteUser:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:delete];
-	
-    
-	// 本地数据库操作
-//	NSArray *array = [Member MR_findByAttribute:@"name" withValue:user.name];
-//	if ([array count] == 1) {
-//		Member *editMember = array[0];
-//		_name.text = editMember.name;
-//		sexSegmentedControl.selectedSegmentIndex = [editMember.sex integerValue];
-//		_height.text = [editMember.height stringValue];
-//		if ([editMember.heightUnit isEqual:@"cm"]) {
-//			heightUnitSegmentedControl.selectedSegmentIndex = 0;
-//		} else {
-//			heightUnitSegmentedControl.selectedSegmentIndex = 1;
-//		}
-//		_birthdayDatePicker.date = editMember.birthday;
-//		
-//		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//		[dateFormat setDateStyle:NSDateFormatterShortStyle];
-//		NSString *dateString = [dateFormat stringFromDate:editMember.birthday];
-//	    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
-//	}
+-(void)editMode:(Member *)user WithIndex:(NSUInteger)index
+{
+    // 本地数据库操作
+    //	NSArray *array = [Member MR_findByAttribute:@"name" withValue:user.name];
+    //	if ([array count] == 1) {
+    //		Member *editMember = array[0];
+    //		_name.text = editMember.name;
+    //		sexSegmentedControl.selectedSegmentIndex = [editMember.sex integerValue];
+    //		_height.text = [editMember.height stringValue];
+    //		if ([editMember.heightUnit isEqual:@"cm"]) {
+    //			heightUnitSegmentedControl.selectedSegmentIndex = 0;
+    //		} else {
+    //			heightUnitSegmentedControl.selectedSegmentIndex = 1;
+    //		}
+    //		_birthdayDatePicker.date = editMember.birthday;
+    //
+    //		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    //		[dateFormat setDateStyle:NSDateFormatterShortStyle];
+    //		NSString *dateString = [dateFormat stringFromDate:editMember.birthday];
+    //	    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
+    //	}
 }
 
-#pragma mark - 用户数据绑定在控件上
 
+	
+    
+
+
+
+
+
+#pragma mark - 用户数据绑定在控件上
 -(void)upDateUI {
     
 }

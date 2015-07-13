@@ -1,14 +1,14 @@
 //
-//  MainViewController.h
+//  ChangeUserViewController.h
 //  rongtai
 //
-//  Created by William-zhang on 15/6/8.
+//  Created by William-zhang on 15/7/13.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
-@interface MainViewController : BasicViewController
+@interface ChangeUserViewController : BasicViewController
 
 @end

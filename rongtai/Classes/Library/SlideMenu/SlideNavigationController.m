@@ -668,6 +668,11 @@ static SlideNavigationController *singletonInstance;
 	  willShowViewController:(UIViewController *)viewController
 					animated:(BOOL)animated
 {
+    UIViewController<SlideNavigationControllerDelegate>* vc = (UIViewController<SlideNavigationControllerDelegate> *)viewController;
+    if ([vc respondsToSelector:@selector(slideNavigationController:willShowViewController:animated:)])
+    {
+        [vc slideNavigationController:navigationController willShowViewController:viewController animated:animated];
+    }
 	if ([self shouldDisplayMenu:MenuLeft forViewController:viewController])
 		viewController.navigationItem.leftBarButtonItem = [self barButtonItemForMenu:MenuLeft];
 	

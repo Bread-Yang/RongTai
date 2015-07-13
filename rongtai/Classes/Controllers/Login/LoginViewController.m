@@ -20,9 +20,7 @@
 #import "MainViewController.h"
 
 @interface LoginViewController ()<LoginRequestDelegate>
-{
-	__weak IBOutlet UIView *_loginFeild;  //登录外边框
-	
+{	
 	__weak IBOutlet UIButton *_registerBtn;  //注册按钮
 	
 	__weak IBOutlet UITextField *_phoneNum;  //手机号码TextField
@@ -68,8 +66,8 @@
     */
     [[IQKeyboardManager sharedManager] resignFirstResponder];
     
-    //    [self.navigationController pushViewController:[MainViewController new] animated:YES];
-    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+//    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法

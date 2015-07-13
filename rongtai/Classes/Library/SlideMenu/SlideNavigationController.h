@@ -34,6 +34,9 @@
 @optional
 - (BOOL)slideNavigationControllerShouldDisplayRightMenu;
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu;
+- (void)slideNavigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                         animated:(BOOL)animated;
 @end
 
 typedef  enum{

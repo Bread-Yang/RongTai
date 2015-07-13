@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
-@class User;
+@class Member;
 
 typedef void (^EditUserInformationBlock)(NSDictionary *entity);
 
 @protocol UserInformationDelegate <NSObject>
 
 @optional
-- (void)deleteButtonClicked:(User*)user WithIndex:(NSUInteger)index;
+- (void)deleteButtonClicked:(Member*)user WithIndex:(NSUInteger)index;
 
 @end
 
@@ -30,7 +30,7 @@ typedef void (^EditUserInformationBlock)(NSDictionary *entity);
 /**
  *  编辑模式
  */
-- (void)editMode:(User*)user WithIndex:(NSUInteger)index;
+- (void)editMode:(Member*)user WithIndex:(NSUInteger)index;
 
 - (void)setEditUserInformation:(NSDictionary *)infoDictionary;
 
