@@ -446,73 +446,96 @@
         <scene sceneID="GbX-8w-FgO">
             <objects>
                 <tableViewController storyboardIdentifier="BuyRTProductVC" title="我要购买" id="HL4-F4-Opw" userLabel="我要购买" customClass="BuyRTProductTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="170" sectionHeaderHeight="22" sectionFooterHeight="22" id="S9C-hY-hmf">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="142" sectionHeaderHeight="22" sectionFooterHeight="22" id="S9C-hY-hmf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BuyUITableViewCell" rowHeight="170" id="8mf-LM-ROe">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BuyUITableViewCell" rowHeight="142" id="8mf-LM-ROe">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="8mf-LM-ROe" id="f2l-u6-VYQ">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2u1-Me-E37">
-                                            <rect key="frame" x="16" y="12" width="568" height="146"/>
+                                            <rect key="frame" x="8" y="8" width="600" height="126"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Intro_Screen_Background" translatesAutoresizingMaskIntoConstraints="NO" id="ghG-Fy-uis" userLabel="ProductImage">
-                                                    <rect key="frame" x="8" y="8" width="130" height="130.5"/>
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy_device_1" translatesAutoresizingMaskIntoConstraints="NO" id="ghG-Fy-uis" userLabel="ProductImage">
+                                                    <rect key="frame" x="0.0" y="8" width="110" height="110"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="130" id="531-9f-Nhd"/>
-                                                        <constraint firstAttribute="height" constant="130.5" id="87i-ac-jaE"/>
+                                                        <constraint firstAttribute="width" constant="110" id="531-9f-Nhd"/>
+                                                        <constraint firstAttribute="height" constant="110" id="87i-ac-jaE"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RT8600金砖椅子" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yg0-ib-KeF">
-                                                    <rect key="frame" x="165" y="11.5" width="128" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RT8600S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yg0-ib-KeF">
+                                                    <rect key="frame" x="120" y="11" width="75" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="0.027450980392156862" green="0.50196078431372548" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未来太空舱按摩椅" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7y-2G-zn3">
+                                                    <rect key="frame" x="120" y="32" width="460" height="18"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="外壳以24K纯金50道工序铸造.椅侧手工镶嵌千克水晶钻石.金质人生.用&quot;芯&quot;体验" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7y-2G-zn3">
-                                                    <rect key="frame" x="165" y="39.5" width="403" height="31.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="menu_list_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="JWJ-tC-qTQ">
+                                                    <rect key="frame" x="523" y="56" width="13" height="13"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="13" id="ZUv-TK-MHg"/>
+                                                        <constraint firstAttribute="width" constant="13" id="r5S-Pe-j86"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="外壳以24K纯金50道工序铸造.椅侧手工镶嵌千克水晶钻石.金质人生.用&quot;芯&quot;体验" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-34-pXx">
+                                                    <rect key="frame" x="120" y="57" width="383" height="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuE-Oz-3Qv">
-                                                    <rect key="frame" x="165" y="108" width="60" height="30"/>
-                                                    <color key="backgroundColor" red="0.2156862745" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <state key="normal" title="了解详情">
-                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="xuE-Oz-3Qv" firstAttribute="leading" secondItem="ghG-Fy-uis" secondAttribute="trailing" constant="27" id="I6N-rw-Y1V"/>
-                                                <constraint firstItem="ghG-Fy-uis" firstAttribute="leading" secondItem="2u1-Me-E37" secondAttribute="leading" constant="8" id="Lru-2T-4N7"/>
-                                                <constraint firstItem="q7y-2G-zn3" firstAttribute="top" secondItem="Yg0-ib-KeF" secondAttribute="bottom" constant="7.5" id="YV3-cs-0Es"/>
-                                                <constraint firstAttribute="trailing" secondItem="q7y-2G-zn3" secondAttribute="trailing" id="baN-wS-TFH"/>
-                                                <constraint firstItem="xuE-Oz-3Qv" firstAttribute="bottom" secondItem="ghG-Fy-uis" secondAttribute="bottom" constant="-0.5" id="fSn-Gn-6yi"/>
+                                                <constraint firstItem="q7y-2G-zn3" firstAttribute="top" secondItem="nmZ-34-pXx" secondAttribute="top" constant="-25" id="81m-NB-p6K"/>
+                                                <constraint firstItem="JWJ-tC-qTQ" firstAttribute="leading" secondItem="nmZ-34-pXx" secondAttribute="trailing" constant="20" id="C0p-sV-vJa"/>
+                                                <constraint firstAttribute="centerY" secondItem="JWJ-tC-qTQ" secondAttribute="centerY" id="FOF-Kw-u84"/>
+                                                <constraint firstAttribute="trailing" secondItem="nmZ-34-pXx" secondAttribute="trailing" constant="20" id="IG5-HG-dKI"/>
+                                                <constraint firstItem="ghG-Fy-uis" firstAttribute="leading" secondItem="2u1-Me-E37" secondAttribute="leading" id="Lru-2T-4N7"/>
+                                                <constraint firstItem="nmZ-34-pXx" firstAttribute="leading" secondItem="Yg0-ib-KeF" secondAttribute="leading" id="PhD-Og-50n"/>
+                                                <constraint firstItem="q7y-2G-zn3" firstAttribute="top" secondItem="Yg0-ib-KeF" secondAttribute="bottom" id="YV3-cs-0Es"/>
+                                                <constraint firstAttribute="trailing" secondItem="q7y-2G-zn3" secondAttribute="trailing" constant="20" id="baN-wS-TFH"/>
+                                                <constraint firstAttribute="trailing" secondItem="JWJ-tC-qTQ" secondAttribute="trailing" constant="15" id="gxz-Rn-M9y"/>
                                                 <constraint firstItem="Yg0-ib-KeF" firstAttribute="top" secondItem="ghG-Fy-uis" secondAttribute="top" constant="3.5" id="hD0-tW-Uca"/>
                                                 <constraint firstAttribute="centerY" secondItem="ghG-Fy-uis" secondAttribute="centerY" id="pAK-vA-aFO"/>
-                                                <constraint firstItem="Yg0-ib-KeF" firstAttribute="leading" secondItem="ghG-Fy-uis" secondAttribute="trailing" constant="27" id="s2i-6j-eoZ"/>
+                                                <constraint firstItem="Yg0-ib-KeF" firstAttribute="leading" secondItem="ghG-Fy-uis" secondAttribute="trailing" constant="10" id="s2i-6j-eoZ"/>
                                                 <constraint firstItem="Yg0-ib-KeF" firstAttribute="leading" secondItem="q7y-2G-zn3" secondAttribute="leading" id="xAb-ya-3gV"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                    <real key="value" value="0.5"/>
+                                                    <integer key="value" value="0"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="IG5-HG-dKI"/>
+                                                </mask>
+                                            </variation>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="2u1-Me-E37" secondAttribute="bottom" constant="4" id="H7b-Kt-VZc"/>
-                                        <constraint firstItem="2u1-Me-E37" firstAttribute="leading" secondItem="f2l-u6-VYQ" secondAttribute="leadingMargin" constant="8" id="JJT-8r-LsZ"/>
-                                        <constraint firstItem="2u1-Me-E37" firstAttribute="top" secondItem="f2l-u6-VYQ" secondAttribute="topMargin" constant="4" id="Nau-Wg-8f8"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="2u1-Me-E37" secondAttribute="trailing" constant="8" id="PON-9P-hmi"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="2u1-Me-E37" secondAttribute="bottom" id="H7b-Kt-VZc"/>
+                                        <constraint firstItem="2u1-Me-E37" firstAttribute="leading" secondItem="f2l-u6-VYQ" secondAttribute="leadingMargin" id="JJT-8r-LsZ"/>
+                                        <constraint firstItem="2u1-Me-E37" firstAttribute="top" secondItem="f2l-u6-VYQ" secondAttribute="topMargin" id="Nau-Wg-8f8"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="2u1-Me-E37" secondAttribute="trailing" constant="-16" id="PON-9P-hmi"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                            <integer key="value" value="0"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -520,6 +543,7 @@
                             <outlet property="delegate" destination="HL4-F4-Opw" id="EoL-jd-RSK"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZ7-eP-b5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1023,7 +1047,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Intro_Screen_Background" width="960" height="600"/>
+        <image name="buy_device_1" width="91" height="91"/>
+        <image name="menu_list_arrow" width="13" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="JOT-a6-4ph"/>
