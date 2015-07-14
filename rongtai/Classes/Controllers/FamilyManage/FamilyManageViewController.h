@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface FamilyManageViewController : UIViewController
+@interface FamilyManageViewController : BasicViewController
 
 @end

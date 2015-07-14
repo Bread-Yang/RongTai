@@ -20,4 +20,17 @@
 @dynamic status;
 @dynamic userId;
 
+-(NSDictionary*)memberToDictionary
+{
+    NSDictionary* dic = @{@"uid" : @"15521377721",
+      @"name" : self.name,
+      @"sex" : self.sex,
+      @"height" : self.height,
+      @"heightUnit" : self.heightUnit,
+      @"imageUrl" : self.imageURL,
+      @"birthday" : self.birthday,
+      };
+    return dic;
+}
+
 @end

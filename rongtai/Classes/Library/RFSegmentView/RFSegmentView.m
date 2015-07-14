@@ -136,7 +136,7 @@
     self.selectIndex = 0;
     //
     self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
-    self.bgView.backgroundColor    = [UIColor whiteColor];
+    self.bgView.backgroundColor    = [UIColor clearColor];
     self.bgView.clipsToBounds      = YES;
     //        self.bgView.layer.cornerRadius = 5;
     self.lineWidth = 1;
