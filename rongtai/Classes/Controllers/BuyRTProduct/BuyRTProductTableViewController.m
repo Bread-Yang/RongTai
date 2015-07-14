@@ -72,29 +72,25 @@
 	
 	switch (indexPath.row) {
   		case 0:
-			productImageView = [[UIImageView alloc] initWithImage:
-								[UIImage imageNamed:@"buy_device_1"]];
+			productImageView.image = [UIImage imageNamed:@"buy_device_1"];
 			productAliasLabel.text = NSLocalizedString(@"未来太空舱按摩椅", nil);
 			productDescriptionLabel.text = NSLocalizedString(@"未来太空舱按摩椅产品描述", nil);
 
 			break;
 		case 1:
-			productImageView = [[UIImageView alloc] initWithImage:
-								[UIImage imageNamed:@"buy_device_2"]];
+			productImageView.image = [UIImage imageNamed:@"buy_device_2"];
 			productAliasLabel.text = NSLocalizedString(@"金钻椅", nil);
 			productDescriptionLabel.text = NSLocalizedString(@"金钻椅产品描述", nil);
 			
 			break;
 		case 2:
-			productImageView = [[UIImageView alloc] initWithImage:
-								[UIImage imageNamed:@"buy_device_3"]];
+			productImageView.image = [UIImage imageNamed:@"buy_device_3"];
 			productAliasLabel.text = NSLocalizedString(@"太空舱按摩椅(香槟色)", nil);
 			productDescriptionLabel.text = NSLocalizedString(@"未来太空舱按摩椅产品描述", nil);
 			
 			break;
 		case 3:
-			productImageView = [[UIImageView alloc] initWithImage:
-								[UIImage imageNamed:@"buy_device_4"]];
+			productImageView.image = [UIImage imageNamed:@"buy_device_4"];
 			productAliasLabel.text = NSLocalizedString(@"金钻椅", nil);
 			NSLog(NSLocalizedString(@"金钻椅产品描述", nil));
 
@@ -103,7 +99,6 @@
     
     return cell;
 }
-
 
 /*
 // Override to support conditional editing of the table view.

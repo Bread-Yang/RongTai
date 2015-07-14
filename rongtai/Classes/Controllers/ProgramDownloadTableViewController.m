@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
+									 [UIImage imageNamed:@"bg"]];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -40,14 +43,52 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 5;
+    return 7;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProgramDownUItableViewCell" forIndexPath:indexPath];
-    
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProgramDownloadUItableViewCell" forIndexPath:indexPath];
+	
+	UIImageView *programImageView = (UIImageView *)[cell viewWithTag:1];
+	UILabel *programNameLabel = (UILabel *)[cell viewWithTag:2];
+	UILabel *programDescriptionLabel = (UILabel *)[cell viewWithTag:3];
+	UIImageView *downloadOrDeleteImageView = (UILabel *)[cell viewWithTag:4];
+	
+	switch (indexPath.row) {
+  		case 0:
+			programImageView.image = [UIImage imageNamed:@"mode_1"];
+			programNameLabel.text = NSLocalizedString(@"韩式按摩", nil);
+			break;
+		case 1:
+			programImageView.image = [UIImage imageNamed:@"mode_2"];
+			programNameLabel.text = NSLocalizedString(@"舒展活络", nil);
+			break;
+		case 2:
+			programImageView.image = [UIImage imageNamed:@"mode_3"];
+			programNameLabel.text = NSLocalizedString(@"工作减压", nil);
+			break;
+		case 3:
+			programImageView.image = [UIImage imageNamed:@"mode_4"];
+			programNameLabel.text = NSLocalizedString(@"运动恢复", nil);
+			break;
+		case 4:
+			programImageView.image = [UIImage imageNamed:@"mode_5"];
+			programNameLabel.text = NSLocalizedString(@"消除疲劳", nil);
+			break;
+		case 5:
+			programImageView.image = [UIImage imageNamed:@"mode_6"];
+			programNameLabel.text = NSLocalizedString(@"女性纤体按摩", nil);
+			break;
+		case 6:
+			programImageView.image = [UIImage imageNamed:@"mode_7"];
+			programNameLabel.text = NSLocalizedString(@"老年按摩", nil);
+			break;
+		case 7:
+			programImageView.image = [UIImage imageNamed:@"mode_8"];
+			break;
+	}
+	
     
     return cell;
 }

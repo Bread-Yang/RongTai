@@ -24,7 +24,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
+	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
+	backgroundImageView.image = [UIImage imageNamed:@"bg"];
+	[self.view insertSubview:backgroundImageView atIndex:0];
+	
+	self.periphralTableView.backgroundView = [[UIImageView alloc] initWithImage:
+									 [UIImage imageNamed:@"bg"]];
+	
     self.title = @"蓝牙连接";
 	
 	bleConnector = [RTBleConnector shareManager];
