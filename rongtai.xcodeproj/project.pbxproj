@@ -184,6 +184,7 @@
 		567280111B31859E0059C18E /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 567280101B31859E0059C18E /* Member.m */; };
 		567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567281511B32A02C0059C18E /* CoreGraphics.framework */; };
 		567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281551B32A0E20059C18E /* MBProgressHUD.m */; };
+		56906AD31B560B3100E37FAB /* BaoSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
 		56C349471B15A927007C8B3F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349461B15A927007C8B3F /* CoreTelephony.framework */; };
@@ -526,6 +527,8 @@
 		567281551B32A0E20059C18E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		568C0F941B3BE47D007F6305 /* RongTaiConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RongTaiConstant.h; sourceTree = "<group>"; };
 		568EC5631B40EB960036AF9E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		56906AD11B560B3100E37FAB /* BaoSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaoSegmentedControl.h; path = BaoSegmentedControl/BaoSegmentedControl.h; sourceTree = "<group>"; };
+		56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaoSegmentedControl.m; path = BaoSegmentedControl/BaoSegmentedControl.m; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		56C349441B15A699007C8B3F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56C349461B15A927007C8B3F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -1262,6 +1265,15 @@
 			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		56906AD01B560AF900E37FAB /* BaoSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				56906AD11B560B3100E37FAB /* BaoSegmentedControl.h */,
+				56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */,
+			);
+			name = BaoSegmentedControl;
+			sourceTree = "<group>";
+		};
 		56C6688A1B2D58B300CDC72B /* ProductInstruction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1407,6 +1419,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				56906AD01B560AF900E37FAB /* BaoSegmentedControl */,
 				3D76E2901B4BE4DD004B83E7 /* WLLineChart */,
 				3DDEE1BF1B4A6EAB005F8324 /* WLDoughnutStatsView */,
 				3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */,
@@ -1686,6 +1699,7 @@
 				5661F6A61B281361006066A0 /* MusicModel.m in Sources */,
 				3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */,
 				3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */,
+				56906AD31B560B3100E37FAB /* BaoSegmentedControl.m in Sources */,
 				3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */,
 				3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */,
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,

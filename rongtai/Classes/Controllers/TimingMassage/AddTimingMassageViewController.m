@@ -9,7 +9,6 @@
 #import "AddTimingMassageViewController.h"
 
 #import "AddTimingMassageViewController.h"
-#import "LineUICollectionViewFlowLayout.h"
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
 #import "TimingPlan.h"
@@ -19,8 +18,8 @@
 	NSArray* modeNameArray;
 	NSMutableArray* hourArray;
 	NSMutableArray* minuteArray;
+	id segment[7];
     __weak IBOutlet UISegmentedControl *_weekSC;
-
 }
 
 @end
@@ -30,6 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+	
+	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
+	backgroundImageView.image = [UIImage imageNamed:@"bg"];
+	[self.view insertSubview:backgroundImageView atIndex:0];
 	
 	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"模式4", @"模式5"];
 	
@@ -43,11 +46,34 @@
 		[minuteArray addObject:[NSString stringWithFormat:@"%d", i]];
 	}
 	
-	LineUICollectionViewFlowLayout* lineLayout = [[LineUICollectionViewFlowLayout alloc] init];
-	[lineLayout setItemSize:CGSizeMake(self.collectionView.bounds.size.height * 0.7, self.collectionView.bounds.size.height * 0.7)];
+	LineUICollectionViewFlowLayout *lineLayout = [[LineUICollectionViewFlowLayout alloc] init];
+	[lineLayout setItemSize:CGSizeMake(self.collectionView.bounds.size.height / 3 * 2, self.collectionView.bounds.size.height / 3 * 2)];
+	lineLayout.delegate = self;
 	self.collectionView.collectionViewLayout = lineLayout;
 	
 	[self.collectionView registerClass:[LineUICollectionViewCell class] forCellWithReuseIdentifier:@"MY_CELL"];
+	
+	[_weekSC addTarget:self
+				action:@selector(segmentedControl:)
+	  forControlEvents:UIControlEventAllEvents];
+	
+	for (int i = 0; i < 7; i++) {
+		segment[i] = [[_weekSC subviews] objectAtIndex:i];
+	}
+}
+
+- (void)segmentedControl:(id)sender {
+	//do some thing
+	[self changeColor];
+}
+
+- (void)changeColor{
+	for (int i = 0; i < 7; i++) {
+		[segment[i] setTintColor:[UIColor lightGrayColor]];
+	}
+	int select = _weekSC.selectedSegmentIndex;
+	NSLog(@"当前的index : %li", (long)_weekSC.selectedSegmentIndex);
+	[segment[6 - select] setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,12 +105,39 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
-	if (indexPath.row < [modeNameArray count]) {
-		cell.label.text = modeNameArray[indexPath.item];
-	} else {
-		cell.label.text = [NSString stringWithFormat:@"%ld",indexPath.item];
+	UIImage *icon;
+	switch (indexPath.row) {
+  		case 0:
+			break;
+		case 1:
+			icon = [UIImage imageNamed:@"mode_1"];
+			break;
+		case 2:
+			icon = [UIImage imageNamed:@"mode_2"];
+			break;
+		case 3:
+			icon = [UIImage imageNamed:@"mode_3"];
+			break;
+		case 4:
+			icon = [UIImage imageNamed:@"mode_4"];
+			break;
+		case 5:
+			icon = [UIImage imageNamed:@"mode_5"];
+			break;
+		case 6:
+			icon = [UIImage imageNamed:@"mode_6"];
+			break;
+		case 7:
+			icon = [UIImage imageNamed:@"mode_7"];
+			break;
+		case 8:
+			icon = [UIImage imageNamed:@"mode_8"];
+			break;
+		case 9:
+			break;
 	}
-	if (indexPath.row == 0) {
+	cell.imageView.image = icon;
+	if (indexPath.row == 0 || indexPath.row == 9) {
 		cell.hidden = YES;
 	} else {
 		cell.hidden = FALSE;
@@ -108,7 +161,7 @@
 
 #pragma mark - UIPickerViewDelegate
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 	[[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
 	[[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
 	if (pickerView.tag == 0) {
@@ -116,6 +169,12 @@
 	} else {
 		return minuteArray[row];
 	}
+}
+
+#pragma mark - LineUICollectionViewFlowLayoutDelegate
+
+- (void)currentHighlightItem:(NSIndexPath *)indexPath {
+	NSLog(@"currentHighlightItem执行了");
 }
 
 /*

@@ -29,6 +29,9 @@
 
 @implementation FirstViewController
 
+id segment[3];
+UISegmentedControl *segmentedControl;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -70,6 +73,35 @@
      object:      self.musicPlayer];
     
     [self.musicPlayer beginGeneratingPlaybackNotifications];
+	
+	NSArray *itens = [NSArray arrayWithObjects: @"Option 1", @"Option 2", @"Option 3", nil];
+	segmentedControl = [[UISegmentedControl alloc] initWithItems:itens];
+	[segmentedControl setFrame:CGRectMake(20, 20, 300, 30)];
+	[segmentedControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+	[segmentedControl addTarget:self
+						 action:@selector(segmentedControl:)
+			   forControlEvents:UIControlEventAllEvents];
+	
+	for (int i=0; i<3; i++) {
+		//The most important trick to work, have to retain the subviews
+		segment[i] = [[segmentedControl subviews] objectAtIndex:i];
+	}
+	[self changeColor];
+	[self.view addSubview:segmentedControl];
+}
+
+- (void)segmentedControl:(id)sender
+{
+	//do some thing
+	[self changeColor];
+}
+
+- (void)changeColor{
+	for (int i=0; i<3; i++) {
+		[segment[i] setTintColor:[UIColor lightGrayColor]];
+	}
+	int select = segmentedControl.selectedSegmentIndex;
+	[segment[select] setTintColor:[UIColor blueColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
