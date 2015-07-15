@@ -86,15 +86,38 @@
     static NSString *reuserId = @"BLE_PERIPHRAL_CELL";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuserId];
-    
+	
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuserId];
     }
+	cell.backgroundColor = [UIColor clearColor];
+	cell.contentView.backgroundColor = [UIColor clearColor];
+
     
     NSDictionary *peripheralInfo = blePeriphrals[indexPath.row];
     CBPeripheral *peripheral = peripheralInfo[RTBle_Periperal];
+	
+	int remainder = indexPath.row % 3;
+	
+	UIImage *image;
+	
+	switch (remainder) {
+  		case 0:
+			image = [UIImage imageNamed:@"connect_device_1"];
+			break;
+		case 1:
+			image = [UIImage imageNamed:@"connect_device_2"];
+			break;
+		case 2:
+			image = [UIImage imageNamed:@"connect_device_3"];
+			break;
+	}
+	
+	cell.imageView.image = image;
     cell.textLabel.text = peripheral.name?:@"Periphral";
     cell.detailTextLabel.text = [peripheral.identifier UUIDString];
+	
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -149,9 +172,9 @@
 	
     CBPeripheral *newPeripheral = periperalInfo[RTBle_Periperal];
 	
-	if (![newPeripheral.name isEqualToString:RTLocalName]) {
-		return;
-	}
+//	if (![newPeripheral.name isEqualToString:RTLocalName]) {
+//		return;
+//	}
 	
     for(NSDictionary *tempInfo in blePeriphrals) {
         CBPeripheral *existPeripheral = tempInfo[RTBle_Periperal];
