@@ -47,21 +47,30 @@
     //ios8 需要询问用户是否允许才能发送通知
     float sysVersion=[[UIDevice currentDevice]systemVersion].floatValue;
     if (sysVersion>=8.0) {
-        UIUserNotificationType type=UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+        UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
         UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
-        [[UIApplication sharedApplication]registerUserNotificationSettings:setting];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:setting];
     }
     application.applicationIconBadgeNumber = 0;
 
-    SlideNavigationController* slide = [SlideNavigationController sharedInstance];
+    SlideNavigationController *slide = [SlideNavigationController sharedInstance];
     
     
-    MenuViewController* menu = [[MenuViewController alloc]init];
+    MenuViewController *menu = [[MenuViewController alloc] init];
     slide.leftMenu = menu;
     slide.enableSwipeGesture = YES;
     slide.enableShadow = NO;
-    slide.portraitSlideOffset = 0.3*SCREENWIDTH;
+    slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+	
+//	UIImage * image = [UIImage imageNamed:@"bg"];
+//	CGSize sacleSize = self.window.frame.size;
+//	UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
+//	[image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
+//	UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+//	UIGraphicsEndImageContext();
+//	[self.window setBackgroundColor:[UIColor colorWithPatternImage:resizedImage]];
+	
 //
 //	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //	self.window.backgroundColor = [UIColor whiteColor];

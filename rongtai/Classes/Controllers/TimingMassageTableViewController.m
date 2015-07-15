@@ -30,7 +30,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
 }
                     
 -(void)viewWillAppear:(BOOL)animated

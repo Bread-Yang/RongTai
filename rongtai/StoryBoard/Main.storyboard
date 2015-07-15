@@ -14,9 +14,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="uMx-iI-zw9" kind="relationship" relationship="rootViewController" id="O0z-od-UK9"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYQ-Pz-I5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -470,78 +467,76 @@
         <scene sceneID="1Xi-up-x3Y">
             <objects>
                 <tableViewController storyboardIdentifier="ProgramDownloadVC" title="程序下载" id="hot-A2-vuP" userLabel="程序下载" customClass="ProgramDownloadTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" id="FsD-NX-5ev">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="FsD-NX-5ev">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramDownUItableViewCell" id="5ZE-Qn-36B">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramDownloadUItableViewCell" id="5ZE-Qn-36B">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ZE-Qn-36B" id="akK-1e-mcb">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQ6-ZP-Ahh">
-                                            <rect key="frame" x="0.0" y="8" width="600" height="113.5"/>
+                                            <rect key="frame" x="0.0" y="8" width="600" height="58.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-G3-CIp">
-                                                    <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mode_1" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-G3-CIp">
+                                                    <rect key="frame" x="30" y="13" width="42" height="42"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="6Kp-Fm-BUa"/>
-                                                        <constraint firstAttribute="width" constant="44" id="uSh-16-nXg"/>
+                                                        <constraint firstAttribute="height" constant="50" id="Ivq-E6-87R"/>
+                                                        <constraint firstAttribute="width" constant="50" id="V2V-ZI-faw"/>
+                                                        <constraint firstAttribute="height" constant="42" id="m9J-Nz-rbq"/>
+                                                        <constraint firstAttribute="width" constant="42" id="ry8-pu-i1H"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Ivq-E6-87R"/>
+                                                            <exclude reference="V2V-ZI-faw"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5L-eW-ygC">
+                                                    <rect key="frame" x="87" y="13" width="76" height="23"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pl-aq-XS5">
+                                                    <rect key="frame" x="87" y="35" width="295" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="program_icon_download" translatesAutoresizingMaskIntoConstraints="NO" id="hnB-zJ-qfQ">
+                                                    <rect key="frame" x="561" y="24" width="19" height="19"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="19" id="Ibb-IF-kot"/>
+                                                        <constraint firstAttribute="height" constant="19" id="pIC-YH-9aB"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5L-eW-ygC">
-                                                    <rect key="frame" x="67" y="19" width="68" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已下载" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kc-77-YDh">
-                                                    <rect key="frame" x="491" y="12" width="51" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfX-ml-LCk">
-                                                    <rect key="frame" x="562" y="8" width="30" height="30"/>
-                                                    <state key="normal" title="删除">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                            <real key="value" value="0.5"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="起源于韩国,原是一种家庭按摩方法.通过扳,推,挤等松解关节的动作.在按摩过程中起到很好的舒筋活络的作用,能有效治疗各部位的软组织损伤及骨关节劳损,具有很强的保健治疗功能." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pl-aq-XS5">
-                                                    <rect key="frame" x="8" y="65" width="584" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="bfX-ml-LCk" secondAttribute="trailing" constant="8" id="1gl-UA-hy2"/>
-                                                <constraint firstItem="5kc-77-YDh" firstAttribute="top" secondItem="bfX-ml-LCk" secondAttribute="top" constant="4" id="98J-1y-Ejq"/>
-                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="leading" secondItem="s0A-G3-CIp" secondAttribute="trailing" constant="15" id="BOg-g5-BBM"/>
-                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="8" id="BrZ-OC-LMQ"/>
-                                                <constraint firstItem="5kc-77-YDh" firstAttribute="centerY" secondItem="bfX-ml-LCk" secondAttribute="centerY" constant="-0.75" id="Ewm-Du-Cjh"/>
-                                                <constraint firstItem="bfX-ml-LCk" firstAttribute="leading" secondItem="5kc-77-YDh" secondAttribute="trailing" constant="20" id="Iae-sD-bZF"/>
-                                                <constraint firstItem="bfX-ml-LCk" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="8" id="L8f-Aj-Bk1"/>
-                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="top" secondItem="s0A-G3-CIp" secondAttribute="bottom" constant="13" id="POQ-n6-XYV"/>
-                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="8" id="Ryc-Ff-hb4"/>
-                                                <constraint firstAttribute="trailing" secondItem="1Pl-aq-XS5" secondAttribute="trailing" constant="8" id="fAX-B5-LtH"/>
-                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="8" id="xJg-29-e9O"/>
-                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="centerY" secondItem="s0A-G3-CIp" secondAttribute="centerY" constant="-0.5" id="zgD-Kf-8kC"/>
+                                                <constraint firstAttribute="centerY" secondItem="hnB-zJ-qfQ" secondAttribute="centerY" id="3Ig-gr-Jaf"/>
+                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="c5L-eW-ygC" secondAttribute="top" id="8nO-WM-1XG"/>
+                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="22" id="BrZ-OC-LMQ"/>
+                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="leading" secondItem="s0A-G3-CIp" secondAttribute="trailing" constant="15" id="EtV-pJ-A3E"/>
+                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="leading" secondItem="c5L-eW-ygC" secondAttribute="leading" id="Idh-oA-0wH"/>
+                                                <constraint firstItem="hnB-zJ-qfQ" firstAttribute="leading" secondItem="1Pl-aq-XS5" secondAttribute="trailing" constant="25" id="OSz-93-KlG"/>
+                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="top" secondItem="c5L-eW-ygC" secondAttribute="bottom" id="RJ9-NO-CPf"/>
+                                                <constraint firstAttribute="trailing" secondItem="hnB-zJ-qfQ" secondAttribute="trailing" constant="20" id="U3t-VH-RYf"/>
+                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="30" id="ZEu-no-9XR"/>
+                                                <constraint firstAttribute="centerY" secondItem="s0A-G3-CIp" secondAttribute="centerY" id="oGC-QJ-XNc"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="98J-1y-Ejq"/>
+                                                    <exclude reference="BrZ-OC-LMQ"/>
                                                 </mask>
                                             </variation>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="leading" secondItem="akK-1e-mcb" secondAttribute="leadingMargin" constant="-8" id="72A-Da-cbo"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="tQ6-ZP-Ahh" secondAttribute="bottom" id="Dah-xc-fMR"/>
@@ -549,6 +544,7 @@
                                         <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="top" secondItem="akK-1e-mcb" secondAttribute="topMargin" id="l3A-Rd-ldZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -966,6 +962,8 @@
     <resources>
         <image name="buy_device_1" width="91" height="91"/>
         <image name="menu_list_arrow" width="13" height="13"/>
+        <image name="mode_1" width="42" height="42"/>
+        <image name="program_icon_download" width="19" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="JOT-a6-4ph"/>
