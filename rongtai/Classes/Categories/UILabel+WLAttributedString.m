@@ -33,7 +33,7 @@
     NSUInteger length = 0;
     NSMutableArray* ranges = [NSMutableArray new];
     for (int i = 0; i < string.length; i++) {
-        NSLog(@"subChar:%c",[string characterAtIndex:i]);
+//        NSLog(@"subChar:%c",[string characterAtIndex:i]);
         if ([numberSet characterIsMember:[string characterAtIndex:i]]) {
             length++;
             if (i == string.length - 1) {
