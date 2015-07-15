@@ -7,15 +7,21 @@
 //
 
 #import "UseTimeViewController.h"
-#import "WLFanChart.h"
+#import "WLDoughnutStatsView.h"
+#import "RongTaiConstant.h"
+#import "WLLineChart.h"
 
 @interface UseTimeViewController ()
 {
-    __weak IBOutlet WLFanChart *_fanView;
-      //扇形的View
+    __weak IBOutlet WLDoughnutStatsView *_doughnutView;   //环形统计图
+    
     __weak IBOutlet UIView *_storeLineChartView;  //用来存放折线图的View
-    __weak IBOutlet UILabel *_todayUseTime; //今日使用时长
-    __weak IBOutlet UILabel *_totalUseTime;  //总计使用时长
+
+    __weak IBOutlet UIButton *_dayBtn;
+    __weak IBOutlet UIButton *_monthBtn;
+    __weak IBOutlet UIButton *_yeayBtn;
+    
+    WLLineChart* _lineChart;  //折线图
 }
 @end
 
@@ -23,37 +29,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setFanView];
+    CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
+    
+    _doughnutView.r = h/2;
+    _doughnutView.doughnutWidth = _doughnutView.r*0.25;
+    
+    
+    _lineChart = [[WLLineChart alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0.15*h, 0.9*SCREENWIDTH, 0.9*h)];
+    _lineChart.showXRuler = NO;
+    _lineChart.isPointDashed = NO;
+    _lineChart.lineColor = BLUE;
+    _lineChart.rulerColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.5];
+    _lineChart.xAxisHidden = YES;
+    _lineChart.yAxisHidden = YES;
+    _lineChart.yUnit = @"(h)";
+    _lineChart.xUnit = @"(Day)";
+//    _lineChart.yValueFont = [UIFont systemFontOfSize:10];
+//    _lineChart.yUnitFont = [UIFont systemFontOfSize:10];
+//    _lineChart.xValueFont = [UIFont systemFontOfSize:10];
+//    _lineChart.xUnitFont = [UIFont systemFontOfSize:10];
+    [_storeLineChartView addSubview:_lineChart];
+    
     // Do any additional setup after loading the view.
 }
 
-#pragma mark - 扇形数据设置
--(void)setFanView
-{
-    _fanView.dataSource = @[@0.33,@0.67];
-    _fanView.colors = @[[UIColor redColor],[UIColor greenColor]];
-    _fanView.r = _fanView.frame.size.height/4;
-}
-
-
-
-#pragma mark - 分段控制器选择时
-- (IBAction)selectTime:(UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0)
-    {
+- (IBAction)dateSelected:(UIButton *)sender {
+    if (sender.tag == 1110) {
+        //日
+        _dayBtn.backgroundColor = BLUE;
+        _monthBtn.backgroundColor = [UIColor clearColor];
+        _yeayBtn.backgroundColor = [UIColor clearColor];
         
     }
-    else if (sender.selectedSegmentIndex == 1)
+    else if (sender.tag == 1111)
     {
-        
+        //月
+        _monthBtn.backgroundColor = BLUE;
+        _dayBtn.backgroundColor = [UIColor clearColor];
+        _yeayBtn.backgroundColor = [UIColor clearColor];
     }
-    else
+    else if (sender.tag == 1112)
     {
-        
+        //年
+        _yeayBtn.backgroundColor = BLUE;
+        _dayBtn.backgroundColor = [UIColor clearColor];
+        _monthBtn.backgroundColor = [UIColor clearColor];
     }
     
 }
-
 
 
 - (void)didReceiveMemoryWarning {

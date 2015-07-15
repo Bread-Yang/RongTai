@@ -51,7 +51,7 @@
     _scroll = [[UIScrollView alloc]init];
     _xAxis = [[WLXAxis alloc]init];
     _yAxis = [[WLYAxis alloc]init];
-    _xWidth = 400;
+    _xWidth = 300;
     [self addSubview:_yAxis];
     [self addSubview:_scroll];
     [_scroll addSubview:_xAxis];
@@ -71,6 +71,7 @@
     _xAxis.frame = CGRectMake(0, 0, _xWidth, h);
     _scroll.frame = CGRectMake(0.1*w, 0, 0.9*w, h);
     _scroll.contentSize = CGSizeMake(_xWidth, h);
+    [self setNeedsDisplay];
 }
 
 #pragma mark x轴
@@ -106,6 +107,7 @@
 -(void)setXSection:(CGPoint)xSection
 {
     _xAxis.xSection = xSection;
+
 }
 
 -(CGPoint)xSection

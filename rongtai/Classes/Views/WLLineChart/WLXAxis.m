@@ -66,7 +66,7 @@
     _xLineWidth = 1;
     _xUnitFont = [UIFont systemFontOfSize:14];
     _xValueFont = [UIFont systemFontOfSize:12];
-    _xValues = @[@"0",@"20",@"40",@"60",@"80",@"100"];
+    _xValues = @[@"5.1",@"5.2",@"5.3",@"5.4",@"5.5",@"5.6"];
     
     //-------- 对齐线
     _showXRuler = YES;
@@ -82,8 +82,9 @@
     NSValue* p2 = [NSValue valueWithCGPoint:CGPointMake(20, 50)];
     NSValue* p3 = [NSValue valueWithCGPoint:CGPointMake(40, 100)];
     NSValue* p4 = [NSValue valueWithCGPoint:CGPointMake(60, 10)];
-    NSValue* p5 = [NSValue valueWithCGPoint:CGPointMake(85, 50)];
-    _points = @[p1,p2,p3,p4,p5];
+    NSValue* p5 = [NSValue valueWithCGPoint:CGPointMake(80, 50)];
+    NSValue* p6 = [NSValue valueWithCGPoint:CGPointMake(100, 30)];
+    _points = @[p1,p2,p3,p4,p5,p6];
     _ySection = CGPointMake(0, 150);
     _xSection = CGPointMake(0, 120);
 }

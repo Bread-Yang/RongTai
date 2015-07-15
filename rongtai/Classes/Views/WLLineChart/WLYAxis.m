@@ -47,7 +47,7 @@
 -(void)setUp
 {
     self.backgroundColor = [UIColor clearColor];
-    _yValues = @[@"0",@"30",@"60",@"90",@"120"];
+    _yValues = @[@"0",@"2",@"4",@"6",@"8"];
     _yColor = [UIColor blackColor];
     _yAxisHidden = NO;
     _yLineWidth = 1;

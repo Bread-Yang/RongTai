@@ -88,7 +88,7 @@
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.width/2);
+    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     CGFloat disAngle = _doughnutDistance/(M_PI*2*_r);
     CGFloat start = M_PI*1.5;
     for (int i = 0; i < _percents.count; i++) {

@@ -59,7 +59,6 @@
 		3D48BF331B53B3DE004EE243 /* menu_list_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF321B53B3DE004EE243 /* menu_list_arrow.png */; };
 		3D48BF351B53C5FC004EE243 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF341B53C5FC004EE243 /* arrow.png */; };
 		3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D5E901C1B26C43E00B03107 /* Localizable.strings */; };
-		3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4811B25437A00B7B411 /* WLFanChart.m */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
 		3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */; };
@@ -83,6 +82,8 @@
 		3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E89671B3968D8002E0962 /* CWStarRateView.m */; };
 		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
 		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
+		3DA170BF1B560F1600A88A10 /* menu_list_arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA170BE1B560F1600A88A10 /* menu_list_arrow_left.png */; };
+		3DA170C11B563EC600A88A10 /* icon_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DA170C01B563EC600A88A10 /* icon_share.png */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
@@ -307,8 +308,6 @@
 		3D48BF341B53C5FC004EE243 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		3D5E901B1B26C43E00B03107 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D5E901D1B26C43F00B03107 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		3D65A4801B25437A00B7B411 /* WLFanChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLFanChart.h; sourceTree = "<group>"; };
-		3D65A4811B25437A00B7B411 /* WLFanChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLFanChart.m; sourceTree = "<group>"; };
 		3D65A4831B25792800B7B411 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		3D65A4841B25792800B7B411 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		3D65A4861B25841800B7B411 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -354,6 +353,8 @@
 		3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRequest.m; sourceTree = "<group>"; };
 		3D9EBAE31B3D3893000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Massage.h; sourceTree = "<group>"; };
 		3D9EBAE41B3D3893000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Massage.m; sourceTree = "<group>"; };
+		3DA170BE1B560F1600A88A10 /* menu_list_arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_list_arrow_left.png; sourceTree = "<group>"; };
+		3DA170C01B563EC600A88A10 /* icon_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_share.png; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingPlanTableViewCell.h; sourceTree = "<group>"; };
@@ -768,15 +769,6 @@
 			path = FamilyManage;
 			sourceTree = "<group>";
 		};
-		3D65A47F1B25437A00B7B411 /* WLFanChart */ = {
-			isa = PBXGroup;
-			children = (
-				3D65A4801B25437A00B7B411 /* WLFanChart.h */,
-				3D65A4811B25437A00B7B411 /* WLFanChart.m */,
-			);
-			path = WLFanChart;
-			sourceTree = "<group>";
-		};
 		3D76E2901B4BE4DD004B83E7 /* WLLineChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -939,6 +931,8 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DA170C01B563EC600A88A10 /* icon_share.png */,
+				3DA170BE1B560F1600A88A10 /* menu_list_arrow_left.png */,
 				3DBDCEA21B5507290006EA18 /* button.png */,
 				3DBDCEA01B5505690006EA18 /* icon_delete.png */,
 				3DBDCE9E1B54B1370006EA18 /* user_edit_photo.png */,
@@ -1415,7 +1409,6 @@
 				56C6689E1B300F6700CDC72B /* VerticalSlider */,
 				3D1063A01B2D8E4A00266D9A /* WLCheckButton */,
 				5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */,
-				3D65A47F1B25437A00B7B411 /* WLFanChart */,
 				3DA8D60E1B21B226002328DF /* WLDoughnut */,
 				3DCDF3791B20401600BA491E /* WLRadarChart */,
 				5604A3291B159F3C00967191 /* AppIntrouceView.h */,
@@ -1555,6 +1548,7 @@
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
 				3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */,
+				3DA170BF1B560F1600A88A10 /* menu_list_arrow_left.png in Resources */,
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
 				3DE3FFB41B4FB46E003F8AF7 /* program_select3_3_2.png in Resources */,
@@ -1579,6 +1573,7 @@
 				3D48BF2E1B53A9A8004EE243 /* menu_icon_plan.png in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */,
+				3DA170C11B563EC600A88A10 /* icon_share.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
 				3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */,
@@ -1752,7 +1747,6 @@
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
 				3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */,
-				3D65A4821B25437A00B7B411 /* WLFanChart.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
 				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3DF304311B38FE2500DD51D3 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,

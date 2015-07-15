@@ -7,7 +7,8 @@
 //  
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface DataCenterViewController : UIViewController
+@interface DataCenterViewController : BasicViewController
 
 @end
