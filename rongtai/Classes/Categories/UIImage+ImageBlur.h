@@ -15,4 +15,9 @@
  */
 -(UIImage*)blurImage:(CGFloat)blur;
 
+/**
+ *  Image保存到本地
+ */
+-(void)saveImageByName:(NSString*)fileName;
+
 @end

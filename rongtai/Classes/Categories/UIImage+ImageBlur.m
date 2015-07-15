@@ -32,4 +32,14 @@
     return new;
 }
 
+#pragma mark - Image保存到本地
+-(void)saveImageByName:(NSString*)fileName
+{
+    NSString* doc = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString* path = [doc stringByAppendingPathComponent:fileName];
+    NSLog(@"头像路径:%@",path);
+    NSData* data = UIImagePNGRepresentation(self);
+    [data writeToFile:path atomically:YES];
+}
+
 @end

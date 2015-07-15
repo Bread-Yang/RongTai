@@ -75,6 +75,7 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */; };
 		3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892B1B39503D002E0962 /* NSString+RT.m */; };
 		3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E892D1B39503D002E0962 /* UILabel+WLAttributedString.m */; };
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
@@ -85,6 +86,10 @@
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
+		3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */; };
+		3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBDCE9E1B54B1370006EA18 /* user_edit_photo.png */; };
+		3DBDCEA11B5505690006EA18 /* icon_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBDCEA01B5505690006EA18 /* icon_delete.png */; };
+		3DBDCEA31B5507290006EA18 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DBDCEA21B5507290006EA18 /* button.png */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
 		3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE05B41B28154D0008EFCA /* Login.storyboard */; };
@@ -335,6 +340,8 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D8F37B11B55F78900C135A8 /* SegmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTableViewCell.h; sourceTree = "<group>"; };
+		3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentTableViewCell.m; sourceTree = "<group>"; };
 		3D9E892A1B39503D002E0962 /* NSString+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RT.h"; sourceTree = "<group>"; };
 		3D9E892B1B39503D002E0962 /* NSString+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RT.m"; sourceTree = "<group>"; };
 		3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WLAttributedString.h"; sourceTree = "<group>"; };
@@ -353,6 +360,11 @@
 		3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlanTableViewCell.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
+		3DBDCE9B1B549E270006EA18 /* BasicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTableViewCell.h; sourceTree = "<group>"; };
+		3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTableViewCell.m; sourceTree = "<group>"; };
+		3DBDCE9E1B54B1370006EA18 /* user_edit_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_edit_photo.png; sourceTree = "<group>"; };
+		3DBDCEA01B5505690006EA18 /* icon_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delete.png; sourceTree = "<group>"; };
+		3DBDCEA21B5507290006EA18 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
 		3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCenterViewController.m; sourceTree = "<group>"; };
 		3DBE05B01B280CDF0008EFCA /* UseTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseTimeViewController.h; sourceTree = "<group>"; };
@@ -719,6 +731,8 @@
 			children = (
 				3D10638E1B2D559000266D9A /* CustomProcedureViewController.h */,
 				3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */,
+				3D8F37B11B55F78900C135A8 /* SegmentTableViewCell.h */,
+				3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */,
 				3D1063971B2D5D6A00266D9A /* ProcedureManageViewController.h */,
 				3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */,
 				3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */,
@@ -748,6 +762,8 @@
 				3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */,
 				3D48BF1B1B53A72B004EE243 /* ChangeUserViewController.h */,
 				3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */,
+				3DBDCE9B1B549E270006EA18 /* BasicTableViewCell.h */,
+				3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */,
 			);
 			path = FamilyManage;
 			sourceTree = "<group>";
@@ -923,6 +939,9 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DBDCEA21B5507290006EA18 /* button.png */,
+				3DBDCEA01B5505690006EA18 /* icon_delete.png */,
+				3DBDCE9E1B54B1370006EA18 /* user_edit_photo.png */,
 				3D48BF341B53C5FC004EE243 /* arrow.png */,
 				3D48BF321B53B3DE004EE243 /* menu_list_arrow.png */,
 				3D48BF1E1B53A9A8004EE243 /* menu_icon_data.png */,
@@ -1544,6 +1563,7 @@
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
 				3DC7908C1B424AEB0034C3C1 /* mode_1.png in Resources */,
 				3DE3FFA31B4F76E7003F8AF7 /* login_icon_register.png in Resources */,
+				3DBDCEA31B5507290006EA18 /* button.png in Resources */,
 				3DC790901B424FD40034C3C1 /* icon_hand.png in Resources */,
 				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
@@ -1558,6 +1578,7 @@
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				3D48BF2E1B53A9A8004EE243 /* menu_icon_plan.png in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
+				3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
 				3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */,
@@ -1593,6 +1614,7 @@
 				3D48BF291B53A9A8004EE243 /* menu_icon_device.png in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
+				3DBDCEA11B5505690006EA18 /* icon_delete.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
 				3DC790921B424FD40034C3C1 /* icon_user.png in Resources */,
 			);
@@ -1699,6 +1721,7 @@
 				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
 				56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
+				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
 				3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */,
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,
@@ -1721,6 +1744,7 @@
 				3DF304281B38FE2500DD51D3 /* NSNumber+MagicalDataImport.m in Sources */,
 				3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
+				3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,

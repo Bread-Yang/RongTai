@@ -10,12 +10,14 @@
 #import "CoreData+MagicalRecord.h"
 #import "Member.h"
 #import "RongTaiConstant.h"
+#import "BasicTableViewCell.h"
 
 @interface ChangeUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSArray* _users;  //用户数据，数据从本地读取
     UITableView* _table;
     NSInteger _selectIndex;
+    CGFloat _rowHeight;
 }
 @end
 
@@ -24,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"切换用户", nil);
-    
+    _rowHeight = 60;
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-64)];
     _table.backgroundColor = [UIColor clearColor];
     _table.dataSource = self;
@@ -35,21 +37,21 @@
     
     _selectIndex = 0;
     
-//    //查询用户
-//    _users = [Member MR_findAll];
-//    [_table reloadData];
+    //查询用户
+    _users = [Member MR_findAll];
+    [_table reloadData];
     
     
     //测试用
-    NSMutableArray* _arr = [NSMutableArray new];
-    for (int i =0 ; i<5; i++) {
-        Member* m = [Member MR_createEntity];
-        m.name = @"用户名";
-        m.imageURL = @"userIcon.jpg";
-        [_arr addObject:m];
-    }
-    _users = _arr;
-    [_table reloadData];
+//    NSMutableArray* _arr = [NSMutableArray new];
+//    for (int i =0 ; i<5; i++) {
+//        Member* m = [Member MR_createEntity];
+//        m.name = @"用户名";
+//        m.imageURL = @"userIcon.jpg";
+//        [_arr addObject:m];
+//    }
+//    _users = _arr;
+//    [_table reloadData];
     
     // Do any additional setup after loading the view.
 }
@@ -58,10 +60,10 @@
 #pragma mark - tableView代理现实
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"userCell"];
+    BasicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"userCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userCell"];
-        UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 49, SCREENWIDTH, 1)];
+        cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userCell"];
+        UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, _rowHeight-1, SCREENWIDTH, 1)];
         line.backgroundColor = [UIColor grayColor];
         line.alpha = 0.2;
         [cell addSubview:line];
@@ -72,7 +74,7 @@
     cell.backgroundColor = [UIColor clearColor];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.imageView.image = [UIImage imageNamed:m.imageURL];
-    cell.imageView.layer.cornerRadius = 25;
+    cell.imageView.layer.cornerRadius = 21;
     cell.imageView.clipsToBounds = YES;
     cell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
     cell.imageView.layer.borderWidth = 2;
@@ -99,7 +101,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return _rowHeight;
 }
 
 #pragma mark - 生成一个打钩的View

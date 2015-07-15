@@ -17,7 +17,6 @@
 #import "RongTaiConstant.h"
 
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
-    NSMutableArray* _users;  //用户数组
     UICollectionView* _collectView;
     CGFloat _matgin;
     NSInteger _countInRow;
@@ -45,17 +44,23 @@
     _reuseIdentifier = @"FamilyCell";
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     CGFloat cellWidth = (width*0.8- _countInRow* _matgin) / 2;
-//    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
-    flowLayout.itemSize = CGSizeMake(cellWidth, cellWidth);
+    CGFloat cellHeight = (height - 3*_matgin)/3;
+    cellHeight = MIN(cellHeight, 170);
+    flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight);
     flowLayout.minimumInteritemSpacing = _matgin;
     flowLayout.minimumLineSpacing = _matgin;
     
-    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
+    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30+64, width*0.8, height -64-30) collectionViewLayout:flowLayout];
     _collectView.backgroundColor = [UIColor clearColor];
     [_collectView registerClass:[FamilyCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     _collectView.dataSource = self;
     _collectView.delegate = self;
+    _collectView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_collectView];
+    
+    //添加成员按钮
+    UIBarButtonItem* add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember:)];
+    self.navigationItem.rightBarButtonItem = add;
 	
     // Do any additional setup after loading the view.
 }
@@ -64,46 +69,36 @@
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = NO;
     
-    _users = [NSMutableArray new];
+//    _users = [NSMutableArray new];
 	
 //	manager.responseSerializer = [AFHTTPResponseSerializer serializer]; // 设置这句, 可以成功返回,不过返回的数据要转码
-	self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];  // 这句是关键
+//	self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];  // 这句是关键
+//	
+//	NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMember"];
+//	NSDictionary *parameters = @{@"uid": @"15521377721"};
+//	
+//	[self.httpRequestManager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+////		NSLog(@"success return json : %@", responseObject);
+//		NSDictionary *jsonDictionary = (NSDictionary *)responseObject;
+//		
+//		if ([jsonDictionary[@"responseCode"] intValue] == 200) {
+//			self.memberArray = jsonDictionary[@"result"];
+//			
+//			for (int i = 0; i < [self.memberArray count]; i++) {
+//				NSDictionary *itemDictionary = self.memberArray[i];
+//				Member *user = [Member MR_createEntity];
+//				user.name = itemDictionary[@"name"];
+//				user.imageURL = itemDictionary[@"imageUrl"];
+//				[_users addObject:user];
+//			}
+//			[_collectView reloadData];
+//		}
+//	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//		NSLog(@"Error: %@", error);
+//	}];
 	
-	NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMember"];
-	
-	NSDictionary *parameters = @{@"uid": @"15521377721"};
-	
-	[self.httpRequestManager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//		NSLog(@"success return json : %@", responseObject);
-		NSDictionary *jsonDictionary = (NSDictionary *)responseObject;
-		
-		if ([jsonDictionary[@"responseCode"] intValue] == 200) {
-			self.memberArray = jsonDictionary[@"result"];
-			
-			for (int i = 0; i < [self.memberArray count]; i++) {
-				NSDictionary *itemDictionary = self.memberArray[i];
-				User *user = [User alloc];
-				user.name = itemDictionary[@"name"];
-				user.imageUrl = itemDictionary[@"imageUrl"];
-				[_users addObject:user];
-			}
-			[_collectView reloadData];
-		}
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		NSLog(@"Error: %@", error);
-	}];
-	
-//    NSArray *memberArray = [Member MR_findAll];
-//    
-//    for (int i = 0; i < [memberArray count]; i++) {
-//        Member *item = memberArray[i];
-//        
-//        User* user = [User new];
-//        user.name = item.name;
-//        user.imageUrl = @"userIcon.jpg";
-//        [_users addObject:user];
-//    }
-//    [_collectView reloadData];
+    _memberArray = [Member MR_findAll];
+    [_collectView reloadData];
 }
 
 
@@ -113,33 +108,33 @@
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _users.count + 1;  //最后是返回按钮
+    return _memberArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FamilyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_reuseIdentifier forIndexPath:indexPath];
-    if (indexPath.row >= _users.count) {
-        cell.isAdd = YES;
-    } else {
-        cell.isAdd = NO;
-        User* user = _users[indexPath.row];
-        cell.user = user;
-    }
+    Member* user = _memberArray[indexPath.row];
+    cell.member = user;
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
-    if (indexPath.row < _users.count) {
-        User* user = _users[indexPath.row];
-//        [uVC editMode:user WithIndex:indexPath.row];
-		[uVC setEditUserInformation:self.memberArray[indexPath.row]];
-        [self.navigationController pushViewController:uVC animated:YES];
-    } else {
-        uVC.title = NSLocalizedString(@"添加成员", nil);
-        [self.navigationController pushViewController:uVC animated:YES];
-    }
+    Member* user = _memberArray[indexPath.row];
+    [uVC editMode:user WithIndex:indexPath.row];
+//    [uVC setEditUserInformation:self.memberArray[indexPath.row]];
+    [self.navigationController pushViewController:uVC animated:YES];
+
+}
+
+#pragma mark - 添加成员方法
+-(void)addMember:(id)sender
+{
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+    uVC.title = NSLocalizedString(@"添加成员", nil);
+    [self.navigationController pushViewController:uVC animated:YES];
 }
 
 

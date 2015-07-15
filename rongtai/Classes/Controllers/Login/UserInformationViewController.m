@@ -39,6 +39,13 @@
     Member* _user;
     UIImage* _userImage;  //用户头像
     BOOL _isEdit;
+    
+    //约束
+    
+    __weak IBOutlet NSLayoutConstraint *_inputViewConstraint;
+    
+    __weak IBOutlet NSLayoutConstraint *_bottomConstraint;
+    
 }
 @end
 
@@ -91,10 +98,10 @@
     _bgImageView.image = [_userImage blurImage:15.0];
     _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     
-    _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.4*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.55)];
+    _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
     [_sexSegmentView setItems:@[NSLocalizedString(@"男", nil),NSLocalizedString(@"女", nil)]];
     [_sexView addSubview:_sexSegmentView];
-    _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.4*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.55)];
+    _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
     [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"unit", nil)]];
     [_heightUintView addSubview:_heightUnitSegmentView];
 
@@ -169,138 +176,114 @@
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _bgImageView.image = [_userImage blurImage:15.0];
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    //照片保存到本地
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString* doc = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-        NSString* path = [doc stringByAppendingString:@"/userIcon.png"];
-        NSLog(@"头像路径:%@",path);
-        NSData* data = UIImagePNGRepresentation(_userImage);
-        [data writeToFile:path atomically:YES];
-    });
-    
 }
 
 #pragma mark - 保存信息按钮方法
 
 - (IBAction)save:(id)sender {
-	NSString *userName = _name.text;
-	if ([NSString isBlankString:userName]) {
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-		
-		// Configure for text only and offset down
-		hud.mode = MBProgressHUDModeText;
-		hud.labelText = @"昵称不能为空";
-		hud.margin = 10.f;
-		hud.removeFromSuperViewOnHide = YES;
-		
-		[hud hide:YES afterDelay:1];
-		return;
-	}
-	
-	NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
-	
-	if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-		
-		// Configure for text only and offset down
-		hud.mode = MBProgressHUDModeText;
-		hud.labelText = @"昵称已经存在";
-		hud.margin = 10.f;
-		hud.removeFromSuperViewOnHide = YES;
-		
-		[hud hide:YES afterDelay:3];
-		return;
-	}
-	
-	NSString *requestURL;
-	
-	if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
-		requestURL = [RongTaiDefaultDomain stringByAppendingString:@"updateMember"];
-	} else {													// 新增信息
-		requestURL = [RongTaiDefaultDomain stringByAppendingString:@"addMember"];
-	}
-	
-	NSString *heightUnit;
-	if (_heightUnitSegmentView.selectIndex == 0) {
-		heightUnit = @"cm";
-	} else {
-		heightUnit = @"inch";
-	}
-	
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-	NSString *dateString = [dateFormat stringFromDate:_birthdayDatePicker.date];
-	
-	NSDictionary *parameters = @{@"uid" : @"15521377721",
-								 @"name" : [userName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]],
-								 @"sex" : [NSString stringWithFormat:@"%i", (int)_sexSegmentView.selectIndex],
-								 @"height" : [NSString stringWithFormat:@"%i", [_height.text intValue]],
-								 @"heightUnit" : heightUnit,
-								 @"imageUrl" : @"http://hiphotos.baidu.com/zhixin/abpic/item/ca5257540923dd541500adbfd309b3de9d8248b2.jpg",
-								 @"birthday" : dateString,
-								 };
-	
-	NSLog(@"提交的json数据是 : %@", parameters);
-	
-	// 服务器提交
-	AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//	manager.responseSerializer = [AFJSONResponseSerializer serializer];
-	manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-	
-	[manager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"Success Submit return json : %@", responseObject);
-		[self.navigationController popViewControllerAnimated:TRUE];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		NSLog(@"Error: %@", error);
-		
-		MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-		
-		// Configure for text only and offset down
-		hud.mode = MBProgressHUDModeText;
-		hud.labelText = @"增加成员失败";
-		hud.margin = 10.f;
-		hud.removeFromSuperViewOnHide = YES;
-		
-		[hud hide:YES afterDelay:3];
-	}];
-	
-	// 下面是本地数据库提交
-	
-//	Member *editMember;
-//	
-//	if ([self.title isEqual:NSLocalizedString(@"编辑信息", nil)]) {   // 编辑信息
-//		editMember =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
-//	} else {													// 新增信息
-//		editMember = [Member MR_createEntity];
-//	}
-//	
-//	editMember.name = userName;
-//	
-//	editMember.sex = [NSNumber numberWithInteger:sexSegmentedControl.selectedSegmentIndex];
-//	
-//	editMember.height = [NSNumber numberWithFloat:[_height.text floatValue]];
-//	
-//	if (heightUnitSegmentedControl.selectedSegmentIndex == 0) {
-//		editMember.heightUnit = @"cm";
-//	} else {
-//		editMember.heightUnit = @"inch";
-//	}
-//	
-//	editMember.birthday = _birthdayDatePicker.date;
-//	
-//	[[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-}
-
-#pragma mark - 性别选择
-- (IBAction)sexSelected:(id)sender {
-}
-
-#pragma mark - 身高单位选择
-- (IBAction)heightUnitSelected:(id)sender {
+    
+    if (_isEdit) {
+        //编辑模式，执行删除
+    }
+    else
+    {
+        //不是编辑模式，添加新成员
+        if ([self judgeMemberInformation]) {
+            // 下面是本地数据库提交
+            if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
+                _user =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
+            } else if(!_user){													// 新增信息
+                _user = [Member MR_createEntity];
+            }
+            [self saveMember];
+            _user.status = [NSNumber numberWithInt:1];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+            
+            //    //照片保存到本地
+            //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //        [_userImage saveImageByName:@"userIcon.png"];
+            //    });
+            
+            
+            //服务器提交
+            NSString *requestURL;
+            
+            if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
+                requestURL = [RongTaiDefaultDomain stringByAppendingString:@"updateMember"];
+            } else {													// 新增信息
+                requestURL = [RongTaiDefaultDomain stringByAppendingString:@"addMember"];
+            }
+            
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *dateString = [dateFormat stringFromDate:_birthdayDatePicker.date];
+            NSDictionary *parameters = @{@"uid" : @"15521377721",
+                                         @"name" : _user.name,
+                                         @"sex" : _user.sex,
+                                         @"height" : _user.height,
+                                         @"heightUnit" : _user.heightUnit,
+                                         @"imageUrl" : @"http://hiphotos.baidu.com/zhixin/abpic/item/ca5257540923dd541500adbfd309b3de9d8248b2.jpg",
+                                         @"birthday" : dateString,
+                                         };
+            NSLog(@"提交的json数据是 : %@", parameters);
+            
+            // 服务器提交
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            //	manager.responseSerializer = [AFJSONResponseSerializer serializer];
+            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+            
+            [manager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Success Submit return json : %@", responseObject);
+#warning 服务器提交成功后要改变本地数据的状态
+                
+                
+                [self.navigationController popViewControllerAnimated:TRUE];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                // Configure for text only and offset down
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"增加成员失败";
+                hud.margin = 10.f;
+                hud.removeFromSuperViewOnHide = YES;
+                [hud hide:YES afterDelay:3];
+            }];
+        }
+    }
 }
 
 #pragma mark - 编辑模式
+-(void)editMode:(Member *)user WithIndex:(NSUInteger)index
+{
+    self.title = NSLocalizedString(@"编辑", nil);
+    _isEdit = YES;
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
+    
+    //保存按钮
+    CGFloat h = MIN(SCREENHEIGHT*0.2*0.45, 44);
+    CGFloat w = h*2.8;
+    UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, SCREENHEIGHT - h*1.05, w, h*0.8)];
+    [saveBtn setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
+    [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [saveBtn addTarget:self action:@selector(saveButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveBtn];
+    
+    //删除按钮
+    UIBarButtonItem* item = self.navigationItem.rightBarButtonItem;
+    [item setImage:[UIImage imageNamed:@"icon_delete"]];
+    
+    
+    //数据显示
+    _user = user;
+    NSLog(@"Member:%@",_user);
+    [self upDateUI];
+    
+}
+
+
 - (void)setEditUserInformation:(NSDictionary *)infoDictionary {
 	self.title = NSLocalizedString(@"编辑", nil);
 	CGFloat width = [UIScreen mainScreen].bounds.size.width;
@@ -310,7 +293,6 @@
 	[delete setTitle:NSLocalizedString(@"删除", nil) forState:UIControlStateNormal];
 	[delete addTarget:self action:@selector(deleteUser:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:delete];
-	
     
 	_name.text = infoDictionary[@"name"];
 	_sexSegmentView.selectIndex = [infoDictionary[@"sex"] integerValue];
@@ -345,40 +327,98 @@
 	
 }
 
--(void)editMode:(Member *)user WithIndex:(NSUInteger)index
+#pragma mark - 保存按钮方法（编辑模式下）
+-(void)saveButtonClicked
 {
-    // 本地数据库操作
-    //	NSArray *array = [Member MR_findByAttribute:@"name" withValue:user.name];
-    //	if ([array count] == 1) {
-    //		Member *editMember = array[0];
-    //		_name.text = editMember.name;
-    //		sexSegmentedControl.selectedSegmentIndex = [editMember.sex integerValue];
-    //		_height.text = [editMember.height stringValue];
-    //		if ([editMember.heightUnit isEqual:@"cm"]) {
-    //			heightUnitSegmentedControl.selectedSegmentIndex = 0;
-    //		} else {
-    //			heightUnitSegmentedControl.selectedSegmentIndex = 1;
-    //		}
-    //		_birthdayDatePicker.date = editMember.birthday;
-    //
-    //		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    //		[dateFormat setDateStyle:NSDateFormatterShortStyle];
-    //		NSString *dateString = [dateFormat stringFromDate:editMember.birthday];
-    //	    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
-    //	}
+    if ([self judgeMemberInformation]) {
+        [self saveMember];
+        _user.status = [NSNumber numberWithInt:2];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        //服务器提交
+        
+        
+        //更新本地数据
+        
+    }
 }
 
+#pragma mark - 数据保存到对象中
+-(void)saveMember
+{
+    _user.name = [_name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _user.sex = [NSNumber numberWithInteger:_sexSegmentView.selectIndex];
+    _user.height = [NSNumber numberWithFloat:[_height.text floatValue]];
+    if (_heightUnitSegmentView.selectIndex == 0) {
+        _user.heightUnit = @"cm";
+    } else {
+        _user.heightUnit = @"inch";
+    }
+    _user.birthday = _birthdayDatePicker.date;
+}
 
-	
+#pragma mark - 信息正确性判断
+-(BOOL)judgeMemberInformation
+{
+    BOOL result = NO;
+    //用户名不能为空
+    NSString *userName = _name.text;
+    if ([NSString isBlankString:userName]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"昵称不能为空";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1];
+        return result;
+    }
     
+    //用户名不能重复
+    NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
+    if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"昵称已经存在";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:3];
+        return result;
+    }
 
-
-
-
+    //身高必须选择
+    
+    //生日必须选择
+    
+    result = YES;
+    return result;
+}
 
 #pragma mark - 用户数据绑定在控件上
 -(void)upDateUI {
-    
+    _name.text = _user.name;
+    _sexSegmentView.selectIndex = [_user.sex integerValue];
+    _height.text = [_user.height stringValue];
+    if ([_user.heightUnit isEqual:@"cm"]) {
+        _heightUnitSegmentView.selectIndex = 0;
+    } else {
+        _heightUnitSegmentView.selectIndex = 1;
+    }
+    if (_user.imageURL.length <1 ) {
+        UIImage* img = [UIImage imageNamed:@"userIcon.jpg"];
+        [_userIcon setImage:img forState:UIControlStateNormal];
+        _bgImageView.image = [img blurImage:15];
+    }
+    else
+    {
+        //用网络请求来读取照片，或者从本地读取
+    }
+    _birthdayDatePicker.date = _user.birthday;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy/MM/dd"];
+    NSString *dateString = [dateFormat stringFromDate:_user.birthday];
+    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
 }
 
 #pragma mark - 删除按钮方法

@@ -19,6 +19,25 @@
             </objects>
             <point key="canvasLocation" x="-556" y="-490"/>
         </scene>
+        <!--Main View Controller-->
+        <scene sceneID="c6y-ve-Qlp">
+            <objects>
+                <viewController storyboardIdentifier="MainView" id="uMx-iI-zw9" userLabel="Main View Controller" customClass="MainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qcx-NL-knU"/>
+                        <viewControllerLayoutGuide type="bottom" id="5zh-96-wQM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Sny-F3-Ua6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Dgb-Sg-LNX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H3r-If-qCL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="166" y="-490"/>
+        </scene>
         <!--First View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>

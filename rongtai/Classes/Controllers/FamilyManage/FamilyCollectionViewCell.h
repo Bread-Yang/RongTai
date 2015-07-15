@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
+#import "Member.h"
 
 @interface FamilyCollectionViewCell : UICollectionViewCell
 
 /**
  *  用户
  */
-@property(nonatomic, strong) User *user;
+@property(nonatomic, strong) Member *member;
 
 /**
  * 用户头像IamgeView
@@ -25,10 +25,5 @@
  * 用户名称Label
  */
 @property(nonatomic, strong) UILabel* userNameLabel;
-
-/**
- *  是否显示为添加按钮
- */
-@property(nonatomic) BOOL isAdd;
 
 @end

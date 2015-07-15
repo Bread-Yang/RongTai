@@ -72,14 +72,11 @@
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
     self.isSelected = !_isSelected;
     
     if (_delegate) {
         [_delegate ItemStateChanged:self index:self.index isSelected:self.isSelected];
     }
-    
-    
 }
 
 @end
@@ -93,6 +90,14 @@
 
 @end
 @implementation RFSegmentView
+
+-(instancetype)init
+{
+    if (self = [super init]) {
+        [self setUp];
+    }
+    return self;
+}
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -114,7 +119,9 @@
 -(void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    NSLog(@"设置Sframe");
+    float viewWidth       = CGRectGetWidth(self.frame);
+    float viewHeight      = CGRectGetHeight(self.frame);
+    self.bgView.frame = CGRectMake(0, 0, viewWidth, viewHeight);
 }
 
 - (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
@@ -129,14 +136,13 @@
 
 -(void)setUp
 {
-    
     self.backgroundColor  = [UIColor clearColor];
     float viewWidth       = CGRectGetWidth(self.frame);
     float viewHeight      = CGRectGetHeight(self.frame);
     self.selectIndex = 0;
     //
     self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
-    self.bgView.backgroundColor    = [UIColor whiteColor];
+    self.bgView.backgroundColor    = [UIColor clearColor];
     self.bgView.clipsToBounds      = YES;
     //        self.bgView.layer.cornerRadius = 5;
     self.lineWidth = 1;

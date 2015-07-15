@@ -75,7 +75,7 @@
  
     
     //
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49) style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
     _table.backgroundColor = [UIColor clearColor];
@@ -203,7 +203,6 @@
 #pragma mark - NavigationController代理
 -(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    NSLog(@"Nav 代理");
     if (viewController == self) {
         NSArray* items = _menuBar.items;
         _menuBar.selectedItem = (UITabBarItem*)items[0];

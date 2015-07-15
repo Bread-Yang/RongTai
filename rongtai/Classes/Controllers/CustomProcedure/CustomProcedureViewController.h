@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "MassageMode.h"
 #import "CustomProgram.h"
+#import "BasicViewController.h"
 
 
-@interface CustomProcedureViewController : UIViewController
+@interface CustomProcedureViewController : BasicViewController
 
 
 /**

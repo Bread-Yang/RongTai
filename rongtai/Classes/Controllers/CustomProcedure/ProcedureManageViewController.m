@@ -33,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"自定义程序", nil);
+    self.title = NSLocalizedString(@"已有程序", nil);
     self.view.backgroundColor = [UIColor whiteColor];
     _isEdit = NO;
     _edit = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"编辑", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editProcedure)];
