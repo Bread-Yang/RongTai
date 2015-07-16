@@ -12,6 +12,6 @@
 
 @interface TimingPlanTableViewCell : UITableViewCell
 
-@property(nonatomic, strong)TimingPlan* timingPlan;
+@property(nonatomic, strong) TimingPlan *timingPlan;
 
 @end

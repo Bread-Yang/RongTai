@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "TimingMassageModel.h"
+#import "LineUICollectionViewFlowLayout.h"
+#import "THSegmentedControl.h"
 
 typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
-@interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewFlowLayoutDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *leftPickerView;
 

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LineUICollectionViewFlowLayoutDelegate <NSObject>
+
+- (void)currentHighlightItem:(NSIndexPath *)indexPath;
+
+@end
+
 @interface LineUICollectionViewFlowLayout : UICollectionViewFlowLayout
+
+@property(assign, nonatomic) id<LineUICollectionViewFlowLayoutDelegate> delegate;
 
 @end
