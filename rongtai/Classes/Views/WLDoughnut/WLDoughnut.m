@@ -46,10 +46,11 @@
 -(void)setUp
 {
     self.backgroundColor = [UIColor clearColor];
-    _unFinishColor = [UIColor lightGrayColor];
+    _unFinishColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8];
     _finishColor = [UIColor cyanColor];
     _r = 50;
     _lineWidth = 5;
+    _unFinishLineWidth = 5;
     _percent = 0.36;
     _animationTime = 1;
 }
@@ -92,6 +93,12 @@
     [self setNeedsDisplay];
 }
 
+-(void)setUnFinishLineWidth:(CGFloat)unFinishLineWidth
+{
+    _unFinishLineWidth = unFinishLineWidth;
+    [self setNeedsDisplay];
+}
+
 #pragma mark - 重写drawRect
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
@@ -103,8 +110,8 @@
     
     //绘制未完成的圆
     [_unFinishColor setStroke];
-    CGContextSetLineWidth(context, _lineWidth);
-    CGContextAddArc(context, center.x, center.y, _r-_lineWidth/2, M_PI*1.5, M_PI*1.5-0.0001, 0) ;
+    CGContextSetLineWidth(context, _unFinishLineWidth);
+    CGContextAddArc(context, center.x, center.y, _r-_unFinishLineWidth/2, M_PI*1.5, M_PI*1.5-0.0001, 0) ;
     CGContextStrokePath(context);
     
     //绘制完成的弧形

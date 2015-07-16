@@ -8,6 +8,9 @@
 
 #import "DoughnutViewController.h"
 #import "DoughnutCollectionViewCell.h"
+#import "UIView+AddBorder.h"
+#import "UILabel+WLAttributedString.h"
+#import "RongTaiConstant.h"
 
 @interface DoughnutViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -18,6 +21,8 @@
     CGFloat _matgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
+    UIFont* _font;
+    NSArray* _colors;  //颜色数组
 }
 @end
 
@@ -25,6 +30,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([UIScreen mainScreen].bounds.size.width > 320) {
+        _font = [UIFont fontWithName:@"Helvetica-Light" size:40];
+    }
+    else
+    {
+        _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
+    }
+    _colors = @[BLUE, LIGHTGREEN,ORANGE];
     // Do any additional setup after loading the view.
 }
 
@@ -38,16 +51,16 @@
 -(void)setUp
 {
     CGFloat width = _collectView.frame.size.width;
-    _matgin = width*0.05;
+    _matgin = width*0.03;
     _countInRow = 2;
     _reuseIdentifier = @"doughnutCell";
     [_collectView registerClass:[DoughnutCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     
-    CGFloat cellWidth = (_collectView.frame.size.width- _countInRow* _matgin) / 2;
-    CGFloat cellHeight = (_collectView.frame.size.height - 3*_matgin)/3;
+    CGFloat cellWidth = _collectView.frame.size.width/ 2;
+    CGFloat cellHeight = (_collectView.frame.size.height - 2*_matgin)/3;
     flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = _matgin;
+    flowLayout.minimumInteritemSpacing = 0;
     flowLayout.minimumLineSpacing = _matgin;
     _collectView.collectionViewLayout = flowLayout;
     
@@ -70,11 +83,15 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DoughnutCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_reuseIdentifier forIndexPath:indexPath];
-    cell.name = _names[indexPath.row];
+    cell.nameLabel.text = _names[indexPath.row];
     NSNumber* c = _count[indexPath.row];
     cell.count = [c integerValue];
     NSNumber* p = _percent[indexPath.row];
-    cell.percent = [p floatValue];
+    cell.doughnut.percent = [p floatValue];
+    [cell addLineBorder];
+    cell.countLabel.font = _font;
+    cell.doughnut.finishColor = _colors[indexPath.row/2];
+    [cell.countLabel setNumebrByFont:_font Color:_colors[indexPath.row/2]];
     return cell;
 }
 

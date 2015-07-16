@@ -36,6 +36,11 @@
 @property(nonatomic)CGFloat lineWidth;
 
 /**
+ *  未完成圆环半径
+ */
+@property(nonatomic)CGFloat unFinishLineWidth;
+
+/**
  *  动画时间
  */
 @property(nonatomic)CFTimeInterval animationTime;
