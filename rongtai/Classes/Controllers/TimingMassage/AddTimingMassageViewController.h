@@ -10,6 +10,7 @@
 
 #import "TimingMassageModel.h"
 #import "LineUICollectionViewFlowLayout.h"
+#import "THSegmentedControl.h"
 
 typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
