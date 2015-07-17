@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WLDoughnut.h"
 
 @interface DoughnutCollectionViewCell : UICollectionViewCell
 
@@ -20,9 +21,27 @@
  */
 @property(nonatomic)NSUInteger count;
 
+
 /**
- *  次数比例
+ *  按摩次数Label
  */
-@property(nonatomic)CGFloat percent;
+@property(nonatomic, strong)UILabel* countLabel;
+
+/**
+ *  进度View
+ */
+@property(nonatomic, strong)WLDoughnut* doughnut;
+
+/**
+ *  标题Label
+ */
+@property(nonatomic, strong)UILabel *nameLabel;
+
+/**
+ *  小标题Label
+ */
+@property(nonatomic, strong)UILabel* detailLabel;
+
+-(void)changeUIFrame;
 
 @end

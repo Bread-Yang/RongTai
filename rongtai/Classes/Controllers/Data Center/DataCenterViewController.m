@@ -144,12 +144,36 @@
 {
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
+    if (_pageControl.currentPage == 0) {
+        _titleLabel.text = @"总使用时长:30 h 25 m";
+        [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
+    }
+    else if (_pageControl.currentPage == 1)
+    {
+        _titleLabel.text = @"耗电量";
+    }
+    else
+    {
+        _titleLabel.text = @"爱用程序";
+    }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
+    if (_pageControl.currentPage == 0) {
+        _titleLabel.text = @"总使用时长:30 h 25 m";
+        [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
+    }
+    else if (_pageControl.currentPage == 1)
+    {
+        _titleLabel.text = @"耗电量";
+    }
+    else
+    {
+        _titleLabel.text = @"爱用程序";
+    }
 }
 #pragma mark - 分享方法
 -(void)share

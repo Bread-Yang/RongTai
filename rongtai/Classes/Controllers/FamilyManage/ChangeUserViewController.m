@@ -107,7 +107,7 @@
 #pragma mark - 生成一个打钩的View
 -(UIImageView*)selectedView
 {
-    UIImageView* select = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow"]];
+    UIImageView* select = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"user_list_select"]];
     return select;
 }
 

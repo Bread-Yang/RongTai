@@ -44,10 +44,10 @@
     _lineChart.yAxisHidden = YES;
     _lineChart.yUnit = @"(h)";
     _lineChart.xUnit = @"(Day)";
-//    _lineChart.yValueFont = [UIFont systemFontOfSize:10];
-//    _lineChart.yUnitFont = [UIFont systemFontOfSize:10];
-//    _lineChart.xValueFont = [UIFont systemFontOfSize:10];
-//    _lineChart.xUnitFont = [UIFont systemFontOfSize:10];
+    _lineChart.yValueFont = [UIFont systemFontOfSize:11];
+    _lineChart.yUnitFont = [UIFont systemFontOfSize:11];
+    _lineChart.xValueFont = [UIFont systemFontOfSize:11];
+    _lineChart.xUnitFont = [UIFont systemFontOfSize:11];
     [_storeLineChartView addSubview:_lineChart];
     
     // Do any additional setup after loading the view.

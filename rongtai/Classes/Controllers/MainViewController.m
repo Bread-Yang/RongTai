@@ -11,9 +11,9 @@
 #import "MassageRequest.h"
 #import "WLWeatherView.h"
 #import "MenuViewController.h"
-#import "ManualMassageViewController.h"
 #import "CustomProcedureViewController.h"
 #import "ProgramDownloadTableViewController.h"
+#import "ManualViewController.h"
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -127,8 +127,8 @@
 //    NSLog(@"tabBar:%ld",item.tag);
     if (item.tag == 1) {
         //手动按摩
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ManualMassageViewController* mVC = (ManualMassageViewController*)[s instantiateViewControllerWithIdentifier:@"ManualMassageVC"];
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
         [self.navigationController pushViewController:mVC animated:YES];
     }
     else if (item.tag == 2)
