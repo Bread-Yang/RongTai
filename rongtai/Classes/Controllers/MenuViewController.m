@@ -17,6 +17,10 @@
 #import "RongTaiConstant.h"
 #import "ChangeUserViewController.h"
 
+//测试
+#import "FinishMassageViewController.h"
+
+
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSArray* _menuName;  //菜单名字
@@ -182,6 +186,12 @@
     else if (indexPath.row == 5)
     {
         //我要反馈
+        
+        //测试，跳转到按摩结束
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+        [sl pushViewController:fVC animated:YES];
+        
     }
     else if (indexPath.row == 6)
     {
