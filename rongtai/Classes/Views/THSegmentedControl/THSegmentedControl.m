@@ -128,9 +128,10 @@ float const THSegmentedControlAnimationDuration = 0.1f;
 #pragma mark - THSegmentedControl Public Instance Methods
 
 - (void)insertSegmentWithTitle:(NSString *)title atIndex:(NSUInteger)segment {
-    while (segment > self.segments.count) {
-        [self.segments insertObject:@"" atIndex:self.segments.count];
-    }
+//    while (segment > self.segments.count) {
+//        [self.segments insertObject:@"" atIndex:self.segments.count];
+//    }
+	NSLog(@"title : %@", title);
     [self.segments insertObject:[title copy] atIndex:segment];
     [self setNeedsDisplay];
 }
