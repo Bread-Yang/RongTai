@@ -74,6 +74,19 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D7D19B91B5CEC170057B955 /* AdjustTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */; };
+		3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */; };
+		3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */; };
+		3D7D19C91B5CF9060057B955 /* set_button_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BF1B5CF9060057B955 /* set_button_down.png */; };
+		3D7D19CA1B5CF9060057B955 /* set_button_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C01B5CF9060057B955 /* set_button_up.png */; };
+		3D7D19CB1B5CF9060057B955 /* set_leg_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C11B5CF9060057B955 /* set_leg_down.png */; };
+		3D7D19CC1B5CF9060057B955 /* set_leg_long.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C21B5CF9060057B955 /* set_leg_long.png */; };
+		3D7D19CD1B5CF9060057B955 /* set_leg_short.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C31B5CF9060057B955 /* set_leg_short.png */; };
+		3D7D19CE1B5CF9060057B955 /* set_leg_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C41B5CF9060057B955 /* set_leg_up.png */; };
+		3D7D19CF1B5CF9060057B955 /* set_rear_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C51B5CF9060057B955 /* set_rear_down.png */; };
+		3D7D19D01B5CF9060057B955 /* set_rear_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C61B5CF9060057B955 /* set_rear_up.png */; };
+		3D7D19D11B5CF9060057B955 /* set_zero.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C71B5CF9060057B955 /* set_zero.png */; };
+		3D7D19D21B5CF9060057B955 /* sit.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C81B5CF9060057B955 /* sit.png */; };
 		3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */; };
 		3D92FDC91B5763BB0021E727 /* UIView+AddBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D92FDC81B5763BB0021E727 /* UIView+AddBorder.m */; };
 		3D92FDCD1B58D8030021E727 /* data_icon_cost.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDCA1B58D8030021E727 /* data_icon_cost.png */; };
@@ -358,6 +371,21 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D7D19B71B5CEC170057B955 /* AdjustTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustTableViewCell.h; sourceTree = "<group>"; };
+		3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustTableViewCell.m; sourceTree = "<group>"; };
+		3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualTableViewCell.h; sourceTree = "<group>"; };
+		3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewCell.m; sourceTree = "<group>"; };
+		3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualTableViewCell.xib; sourceTree = "<group>"; };
+		3D7D19BF1B5CF9060057B955 /* set_button_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_button_down.png; sourceTree = "<group>"; };
+		3D7D19C01B5CF9060057B955 /* set_button_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_button_up.png; sourceTree = "<group>"; };
+		3D7D19C11B5CF9060057B955 /* set_leg_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_leg_down.png; sourceTree = "<group>"; };
+		3D7D19C21B5CF9060057B955 /* set_leg_long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_leg_long.png; sourceTree = "<group>"; };
+		3D7D19C31B5CF9060057B955 /* set_leg_short.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_leg_short.png; sourceTree = "<group>"; };
+		3D7D19C41B5CF9060057B955 /* set_leg_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_leg_up.png; sourceTree = "<group>"; };
+		3D7D19C51B5CF9060057B955 /* set_rear_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_rear_down.png; sourceTree = "<group>"; };
+		3D7D19C61B5CF9060057B955 /* set_rear_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_rear_up.png; sourceTree = "<group>"; };
+		3D7D19C71B5CF9060057B955 /* set_zero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_zero.png; sourceTree = "<group>"; };
+		3D7D19C81B5CF9060057B955 /* sit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sit.png; sourceTree = "<group>"; };
 		3D8F37B11B55F78900C135A8 /* SegmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTableViewCell.h; sourceTree = "<group>"; };
 		3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentTableViewCell.m; sourceTree = "<group>"; };
 		3D92FDC71B5763BB0021E727 /* UIView+AddBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AddBorder.h"; sourceTree = "<group>"; };
@@ -893,6 +921,11 @@
 			children = (
 				3D92FE181B590A350021E727 /* ManualViewController.h */,
 				3D92FE191B590A350021E727 /* ManualViewController.m */,
+				3D7D19B71B5CEC170057B955 /* AdjustTableViewCell.h */,
+				3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */,
+				3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */,
+				3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */,
+				3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */,
 			);
 			path = ManualMassage;
 			sourceTree = "<group>";
@@ -994,6 +1027,16 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3D7D19BF1B5CF9060057B955 /* set_button_down.png */,
+				3D7D19C01B5CF9060057B955 /* set_button_up.png */,
+				3D7D19C11B5CF9060057B955 /* set_leg_down.png */,
+				3D7D19C21B5CF9060057B955 /* set_leg_long.png */,
+				3D7D19C31B5CF9060057B955 /* set_leg_short.png */,
+				3D7D19C41B5CF9060057B955 /* set_leg_up.png */,
+				3D7D19C51B5CF9060057B955 /* set_rear_down.png */,
+				3D7D19C61B5CF9060057B955 /* set_rear_up.png */,
+				3D7D19C71B5CF9060057B955 /* set_zero.png */,
+				3D7D19C81B5CF9060057B955 /* sit.png */,
 				3D92FE1F1B590FBF0021E727 /* arrow_down.png */,
 				3D92FE201B590FBF0021E727 /* arrow_up.png */,
 				3D92FE211B590FBF0021E727 /* button_set_bg.png */,
@@ -1645,6 +1688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
+				3D7D19D01B5CF9060057B955 /* set_rear_up.png in Resources */,
 				3D0258F31B1D525E006C9179 /* IQKeyboardManager.bundle in Resources */,
 				3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */,
 				3DA170BF1B560F1600A88A10 /* menu_list_arrow_left.png in Resources */,
@@ -1661,10 +1705,12 @@
 				3DBDCEA31B5507290006EA18 /* button.png in Resources */,
 				3DC790901B424FD40034C3C1 /* icon_hand.png in Resources */,
 				3DCD122E1B4148A700890164 /* camera.png in Resources */,
+				3D7D19CC1B5CF9060057B955 /* set_leg_long.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
 				3D48BF1A1B539DE4004EE243 /* bottom.png in Resources */,
 				3D48BF2A1B53A9A8004EE243 /* menu_icon_help.png in Resources */,
+				3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */,
 				3DC790911B424FD40034C3C1 /* icon_set.png in Resources */,
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				3D48BF2C1B53A9A8004EE243 /* menu_icon_member.png in Resources */,
@@ -1674,12 +1720,17 @@
 				5604A3501B15A61E00967191 /* Resource.bundle in Resources */,
 				3D48BF2E1B53A9A8004EE243 /* menu_icon_plan.png in Resources */,
 				5604A3581B15A61E00967191 /* ShareSDKFlatShareViewUI.bundle in Resources */,
+				3D7D19CD1B5CF9060057B955 /* set_leg_short.png in Resources */,
 				3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */,
 				3DA170C11B563EC600A88A10 /* icon_share.png in Resources */,
 				3D92FE0E1B5905130021E727 /* function_1.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
+				3D7D19CA1B5CF9060057B955 /* set_button_up.png in Resources */,
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
+				3D7D19CF1B5CF9060057B955 /* set_rear_down.png in Resources */,
 				3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */,
+				3D7D19D21B5CF9060057B955 /* sit.png in Resources */,
+				3D7D19CE1B5CF9060057B955 /* set_leg_up.png in Resources */,
 				3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */,
 				3D92FDCF1B58D8030021E727 /* user_list_select.png in Resources */,
 				3DC790941B4272B00034C3C1 /* navBar.png in Resources */,
@@ -1688,6 +1739,7 @@
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3D48BF331B53B3DE004EE243 /* menu_list_arrow.png in Resources */,
 				3D92FE261B590FBF0021E727 /* button_set_bg.png in Resources */,
+				3D7D19CB1B5CF9060057B955 /* set_leg_down.png in Resources */,
 				3D48BF311B53A9A8004EE243 /* menu_icon_weather.png in Resources */,
 				3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */,
 				3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */,
@@ -1697,6 +1749,7 @@
 				3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */,
 				3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */,
 				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
+				3D7D19C91B5CF9060057B955 /* set_button_down.png in Resources */,
 				3D48BF281B53A9A8004EE243 /* menu_icon_data.png in Resources */,
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */,
@@ -1713,6 +1766,7 @@
 				3DCD12281B41374000890164 /* userDefaultIcon.jpg in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				3D92FE241B590FBF0021E727 /* arrow_down.png in Resources */,
+				3D7D19D11B5CF9060057B955 /* set_zero.png in Resources */,
 				3D92FE121B5905130021E727 /* function_3.png in Resources */,
 				5604A3551B15A61E00967191 /* WeiboSDK.bundle in Resources */,
 				3D92FE271B590FBF0021E727 /* button_set_bg2.png in Resources */,
@@ -1888,11 +1942,13 @@
 				56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */,
 				3DF3043D1B38FE2500DD51D3 /* MagicalRecord+Setup.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
+				3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
 				3DF3042A1B38FE2500DD51D3 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
 				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
+				3D7D19B91B5CEC170057B955 /* AdjustTableViewCell.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

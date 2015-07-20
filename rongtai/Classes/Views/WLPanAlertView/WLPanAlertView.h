@@ -23,6 +23,21 @@
  */
 -(void)wlPanAlertViewWillDown:(WLPanAlertView*)panAlertView;
 
+/**
+ *  弹出完成
+ */
+-(void)wlPanAlertViewDidAlert:(WLPanAlertView*)panAlertView;
+
+/**
+ *  弹下完成
+ */
+-(void)wlPanAlertViewDidDown:(WLPanAlertView*)panAlertView;
+
+/**
+ *  拖拽中
+ */
+-(void)wlPanAlertViewDidPan:(WLPanAlertView*)panAlertView ByDirection:(BOOL)isDown;
+
 @end
 
 @interface WLPanAlertView : UIView
