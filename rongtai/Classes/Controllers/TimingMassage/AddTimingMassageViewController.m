@@ -12,8 +12,9 @@
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
 #import "TimingPlan.h"
+#import "NAPickerView.h"
 
-@interface AddTimingMassageViewController () {
+@interface AddTimingMassageViewController () <NAPickerViewDelegate> {
 	
 	NSArray* modeNameArray;
 	NSMutableArray* hourArray;
@@ -33,6 +34,14 @@
 	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
 	[self.view insertSubview:backgroundImageView atIndex:0];
+	
+    NSArray *segments = @[@"一", @"二", @"三", @"四", @"五", @"六", @"日"];
+	
+	for (int i = 0; i < [segments count]; i++) {
+		[self.weekDaySegmentControl insertSegmentWithTitle:[segments objectAtIndex:i] atIndex:i];
+	}
+	self.weekDaySegmentControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+	[self.weekDaySegmentControl setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 	
 	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"模式4", @"模式5"];
 	
@@ -62,6 +71,46 @@
 	}
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	CGSize size = [UIScreen mainScreen].bounds.size;
+	
+	NSMutableArray *leftItems = [[NSMutableArray alloc] init];
+	for (int i = 0; i < 30;  i++) {
+		[leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+	}
+	
+	NAPickerView *leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:leftItems andDelegate:self];
+	leftPickView.infiniteScrolling = YES;
+	[leftPickView setIndex:0];
+	leftPickView.highlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor whiteColor];
+		cell.textView.font = [UIFont systemFontOfSize:30];
+	};
+	leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor blackColor];
+		cell.textView.font = [UIFont systemFontOfSize:18];
+	};
+	[self.containView addSubview:leftPickView];
+	
+	NSMutableArray *rightItems = [[NSMutableArray alloc] init];
+	for (int i = 0; i < 60;  i++) {
+		[rightItems addObject:[NSString stringWithFormat:@"%d", i]];
+	}
+	
+	NAPickerView *rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:rightItems andDelegate:self];
+	rightPickView.infiniteScrolling = YES;
+	[rightPickView setIndex:0];
+	rightPickView.highlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor whiteColor];
+		cell.textView.font = [UIFont systemFontOfSize:30];
+	};
+	rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor blackColor];
+		cell.textView.font = [UIFont systemFontOfSize:18];
+	};
+	[self.containView addSubview:rightPickView];
+}
+
 - (void)segmentedControl:(id)sender {
 	//do some thing
 	[self changeColor];
@@ -84,14 +133,9 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
-//	TimingMassageModel *model = [[TimingMassageModel alloc] init];
-//	model.loopDate = @"hahah";
-//	if (self.returnTimingMassageBlock) {
-//		self.returnTimingMassageBlock(model);
-//		[self.navigationController popViewControllerAnimated:TRUE];
-//	}
     TimingPlan* timePlan = [TimingPlan MR_createEntity];
-    [timePlan setLocalNotificationByHour:[_leftPickerView selectedRowInComponent:0] Minute:[_rightPickerView selectedRowInComponent:0] Week:_weekSC.selectedSegmentIndex+1  Message:[NSString stringWithFormat:@"舒展活络 定时计划:每周%ld %02ld:%02ld",_weekSC.selectedSegmentIndex,[_leftPickerView selectedRowInComponent:0],[_rightPickerView selectedRowInComponent:0]]];
+//    [timePlan setLocalNotificationByHour:[_leftPickerView selectedRowInComponent:0] Minute:[_rightPickerView selectedRowInComponent:0] Week:_weekSC.selectedSegmentIndex+1  Message:[NSString stringWithFormat:@"舒展活络 定时计划:每周%ld %02ld:%02ld",_weekSC.selectedSegmentIndex,[_leftPickerView selectedRowInComponent:0],[_rightPickerView selectedRowInComponent:0]]];
+	
     timePlan.massageId = [NSNumber numberWithInt:123456];
     timePlan.massageName = @"舒展活络";
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -102,6 +146,26 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 	return 10;
 }
+
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    NSString *reuseIdentifier;
+//	if ([kind isEqualToString: UICollectionElementKindSectionFooter ]) {
+//		reuseIdentifier = @"Footer";
+//	}else{
+//		reuseIdentifier = @"Header";
+//	}
+//	UICollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:reuseIdentifier   forIndexPath:indexPath];
+//	collectionView 
+//	if (!view) {
+//		view = [[UICollectionReusableView alloc] ];
+//	}
+//	if (kind == UICollectionElementKindSectionHeader) {
+//		
+//	} else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+//
+//	}
+//	return view;
+//}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
@@ -162,6 +226,7 @@
 #pragma mark - UIPickerViewDelegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+	NSLog(@"currentRow : %i", row);
 	[[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
 	[[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
 	if (pickerView.tag == 0) {
@@ -171,10 +236,57 @@
 	}
 }
 
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+//	UILabel * label = [[UILabel alloc] init];
+//	NSUInteger selectedRow = [pickerView selectedRowInComponent:component];
+//	NSLog(@"selectedRow : %i, currentRow : %i", selectedRow, row);
+//	
+//	for (int i = 0; i < [hourArray count]; i++) {
+//		if (i == selectedRow) {
+//			label.attributedText = [[NSAttributedString alloc] initWithString:hourArray[i]
+//																   attributes:@
+//									{
+//									NSForegroundColorAttributeName:[UIColor redColor]
+//									}];
+//			continue;
+//		}
+//		UILabel *label = [pickerView viewWithTag:i];
+//		if (label && [label respondsToSelector:@selector(setAttributedText:)]) {
+//			NSLog(@"里面执行了");
+//			label.attributedText = [[NSAttributedString alloc] initWithString:hourArray[i]
+//																   attributes:@
+//									{
+//									NSForegroundColorAttributeName:[UIColor blackColor]
+//									}];
+//		}
+//	}
+//	
+//	NSAttributedString *attribute;
+//	if (selectedRow == row) {
+//		attribute = [[NSAttributedString alloc] initWithString:hourArray[row] attributes:@ {
+//		NSForegroundColorAttributeName:[UIColor redColor]
+//		}];
+//	} else {
+//		attribute = [[NSAttributedString alloc] initWithString:hourArray[row] attributes:@ {
+//		NSForegroundColorAttributeName:[UIColor blackColor]
+//		}];
+//	}
+//	label.attributedText = attribute;
+//	label.tag = row;
+//	return label;
+//}
+
 #pragma mark - LineUICollectionViewFlowLayoutDelegate
 
 - (void)currentHighlightItem:(NSIndexPath *)indexPath {
 	NSLog(@"currentHighlightItem执行了");
+}
+
+#pragma mark - NAPickerViewDelegate
+
+- (void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index {
+	NSLog(@"当前选择的index : %i", index);
+	NSLog(@"highlightIndex : %i", pickerView.getHighlightIndex);
 }
 
 /*
