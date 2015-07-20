@@ -115,7 +115,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row < _menu.count - 1) {
         NSInteger i = indexPath.row*2;
-        [cell.leftButton setImage:[UIImage imageNamed:@"set_button_up"] forState:0];
+        [cell.leftButton setImage:[UIImage imageNamed:_images[i]] forState:0];
         [cell.rightButton setImage:[UIImage imageNamed:_images[i+1]] forState:0];
     }
     else
