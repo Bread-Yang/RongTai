@@ -83,11 +83,11 @@
 	leftPickView.infiniteScrolling = YES;
 	[leftPickView setIndex:0];
 	leftPickView.highlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor greenColor];
-		cell.textView.font = [UIFont systemFontOfSize:40];
+		cell.textView.textColor = [UIColor whiteColor];
+		cell.textView.font = [UIFont systemFontOfSize:30];
 	};
 	leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor redColor];
+		cell.textView.textColor = [UIColor blackColor];
 		cell.textView.font = [UIFont systemFontOfSize:18];
 	};
 	[self.containView addSubview:leftPickView];
@@ -101,11 +101,11 @@
 	rightPickView.infiniteScrolling = YES;
 	[rightPickView setIndex:0];
 	rightPickView.highlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor greenColor];
-		cell.textView.font = [UIFont systemFontOfSize:40];
+		cell.textView.textColor = [UIColor whiteColor];
+		cell.textView.font = [UIFont systemFontOfSize:30];
 	};
 	rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor redColor];
+		cell.textView.textColor = [UIColor blackColor];
 		cell.textView.font = [UIFont systemFontOfSize:18];
 	};
 	[self.containView addSubview:rightPickView];
@@ -284,8 +284,9 @@
 
 #pragma mark - NAPickerViewDelegate
 
-- (void)didSelectedItemAtIndex:(NSInteger)index {
-	
+- (void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index {
+	NSLog(@"当前选择的index : %i", index);
+	NSLog(@"highlightIndex : %i", pickerView.getHighlightIndex);
 }
 
 /*

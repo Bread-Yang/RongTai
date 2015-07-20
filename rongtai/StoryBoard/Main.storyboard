@@ -499,13 +499,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5L-eW-ygC">
                                                     <rect key="frame" x="87" y="13" width="76" height="23"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pl-aq-XS5">
                                                     <rect key="frame" x="87" y="35" width="295" height="12"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                    <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="program_icon_download" translatesAutoresizingMaskIntoConstraints="NO" id="hnB-zJ-qfQ">
@@ -658,7 +658,27 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xR-KZ-m5k" userLabel="ContainView">
                                 <rect key="frame" x="0.0" y="132" width="600" height="192"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rr-j5-tfR">
+                                        <rect key="frame" x="0.0" y="77" width="600" height="38"/>
+                                        <color key="backgroundColor" red="0.30588235294117649" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXp-Be-yJb">
+                                        <rect key="frame" x="295.5" y="78.5" width="8.5" height="36"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="6rr-j5-tfR" firstAttribute="leading" secondItem="9xR-KZ-m5k" secondAttribute="leading" id="GhA-5s-t5p"/>
+                                    <constraint firstAttribute="centerY" secondItem="kXp-Be-yJb" secondAttribute="centerY" id="Hng-5H-x6b"/>
+                                    <constraint firstItem="6rr-j5-tfR" firstAttribute="height" secondItem="9xR-KZ-m5k" secondAttribute="height" multiplier="0.2" id="b4N-5B-KZb"/>
+                                    <constraint firstAttribute="centerX" secondItem="kXp-Be-yJb" secondAttribute="centerX" id="sPT-m3-NK8"/>
+                                    <constraint firstAttribute="centerY" secondItem="6rr-j5-tfR" secondAttribute="centerY" id="sdf-B7-Ix0"/>
+                                    <constraint firstAttribute="trailing" secondItem="6rr-j5-tfR" secondAttribute="trailing" id="xPZ-eb-Sju"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJe-vj-ybn" userLabel="Lower Divider">
                                 <rect key="frame" x="0.0" y="324" width="600" height="1"/>

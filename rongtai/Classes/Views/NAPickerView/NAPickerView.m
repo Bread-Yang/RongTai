@@ -10,13 +10,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define INFINITE_SCROLLING_COUNT 5
+#define OVERLAY_COLOR [UIColor colorWithRed:78.0/255.0 green:174.0/255.0 blue:239.0/255.0 alpha:1.0f]
 
 @interface NAPickerView() <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSArray *items;
 @property (strong, nonatomic) NSString *cellClassName;
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) NSIndexPath *currentIndex;
+@property (strong, nonatomic) NSIndexPath *highlightIndex;
 @property (strong, nonatomic) UIView *overlay;
 
 @end
@@ -62,6 +63,10 @@
     self.cellClassName = className;
 	
 	self.backgroundColor = [UIColor clearColor];
+	
+//	mShowOverlay = NO;
+//	self.showOverlay = YES;
+	
     self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -72,10 +77,7 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.tableView];
     
-    self.currentIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-    
-    mShowOverlay = NO;
-    self.showOverlay = YES;
+    self.highlightIndex = [NSIndexPath indexPathForRow:0 inSection:0];
     
     self.configureBlock = ^(NALabelCell *cell, NSString *item) {
         [cell.textView setText:item];
@@ -99,7 +101,7 @@
 }
 
 - (CGFloat)cellHeight {
-    return [NSClassFromString(self.cellClassName) cellHeight];
+	return self.frame.size.height / INFINITE_SCROLLING_COUNT;
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
@@ -118,13 +120,13 @@
 - (void)setIndex:(NSInteger)index {
 	if (self.infiniteScrolling) {
 		if (index < self.items.count - 2) {
-			self.currentIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
+			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
 //			NSLog(@"self.current : %i", self.currentIndex.row);
 		}
 	} else {
-		self.currentIndex = [NSIndexPath indexPathForItem:index inSection:0];
+		self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
 	}
-    [self.tableView scrollToRowAtIndexPath:self.currentIndex
+    [self.tableView scrollToRowAtIndexPath:self.highlightIndex
                           atScrollPosition:UITableViewScrollPositionMiddle
                                   animated:NO];
 }
@@ -136,14 +138,13 @@
     }
 }
 
-- (void)setOverlayView
-{
+- (void)setOverlayView {
     if (self.showOverlay) {
         self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                self.frame.size.height/2 - [self cellHeight]/2,
+                                                                self.frame.size.height / 2 - [self cellHeight] / 2,
                                                                 self.frame.size.width,
                                                                 [self cellHeight])];
-//        self.overlay.backgroundColor = [UIColor grayColor];
+        self.overlay.backgroundColor = OVERLAY_COLOR;
         self.overlay.alpha = 0.5;
         self.overlay.userInteractionEnabled = NO;
         [self addSubview:self.overlay];
@@ -188,8 +189,7 @@
     return emptyHeader;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return [self cellHeight];
 }
 
@@ -202,20 +202,19 @@
 	}
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"NACellIdentifier";
     NAPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if(!cell) {
         cell = [[NSClassFromString(self.cellClassName) alloc] initWithStyle:UITableViewCellStyleDefault
                                                             reuseIdentifier:cellIdentifier
-                                                                  cellWidth:self.tableView.bounds.size.width];
+                                                                  cellWidth:self.tableView.bounds.size.width cellHeight:self.tableView.bounds.size.height / 5];
     }
 	
 	
     self.configureBlock(cell, [self.items objectAtIndex:indexPath.row % self.items.count]);
-    if(indexPath.row == self.currentIndex.row) {
+    if(indexPath.row == self.highlightIndex.row) {
         self.highlightBlock(cell);
     } else {
         self.unhighlightBlock(cell);
@@ -231,8 +230,12 @@
     CGFloat floatVal = targetContentOffset -> y / rowHeight;
 	NSInteger rounded = (NSInteger)(lround(floatVal));
 	targetContentOffset -> y = rounded * rowHeight;
-	if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectedItemAtIndex:)]) {
-		[self.delegate didSelectedItemAtIndex:rounded % (self.items.count - 1)];
+	if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectedItemAtIndex:andIndex:)]) {
+		NSInteger selectIndex = rounded % (self.items.count);
+		if (self.infiniteScrolling) {
+			selectIndex = (rounded + INFINITE_SCROLLING_COUNT / 2) % (self.items.count);
+		}
+		[self.delegate didSelectedItemAtIndex:self andIndex:selectIndex];
 	}
 }
 
@@ -264,35 +267,41 @@
     }];
     
     NSIndexPath *middleIndex = [visibleIndexSorted objectAtIndex:0];
-    if (!self.currentIndex) {
-        self.currentIndex = middleIndex;
+    if (!self.highlightIndex) {
+        self.highlightIndex = middleIndex;
     }
-    if (self.currentIndex.row == middleIndex.row) {
+    if (self.highlightIndex.row == middleIndex.row) {
         return;
     }
     
-    NAPickerCell *currentCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:self.currentIndex];
+    NAPickerCell *currentCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:self.highlightIndex];
     self.unhighlightBlock(currentCell);
     NAPickerCell *middleCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:middleIndex];
     self.highlightBlock(middleCell);
-    self.currentIndex = middleIndex;
+    self.highlightIndex = middleIndex;
 }
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-	
+//	[self.tableView scrollToRowAtIndexPath:self.currentIndex
+//						  atScrollPosition:UITableViewScrollPositionMiddle
+//								  animated:YES];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	NSLog(@"scrollViewDidEndDragging");
 }
 
-- (void)setInfiniteScrolling:(BOOL)infiniteScrolling {
+- (void)setInfiniteScrolling	:(BOOL)infiniteScrolling {
 	if (_items.count >= INFINITE_SCROLLING_COUNT) {
 		_infiniteScrolling = infiniteScrolling;
 	} else {
 		_infiniteScrolling = NO;
 	}
+}
+
+- (NSInteger)getHighlightIndex {
+	return self.highlightIndex.row % self.items.count;
 }
 
 @end

@@ -10,22 +10,16 @@
 
 @implementation NALabelCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellWidth:(CGFloat)cellWidth
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellWidth:(CGFloat)cellWidth cellHeight:(CGFloat)cellHeight {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 40)];
+        self.textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellHeight)];
 		self.textView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.textView];
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
-}
-
-+ (CGFloat)cellHeight
-{
-    return 40.f;
 }
 
 @end

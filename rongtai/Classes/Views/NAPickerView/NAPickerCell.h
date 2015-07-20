@@ -10,11 +10,6 @@
 
 @interface NAPickerCell : UITableViewCell
 
-
-- (id)initWithStyle:(UITableViewCellStyle)style
-    reuseIdentifier:(NSString *)reuseIdentifier
-          cellWidth:(CGFloat)cellWidth;
-
-+ (CGFloat)cellHeight;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier cellWidth:(CGFloat)cellWidth cellHeight:(CGFloat)cellHeight;
 
 @end
