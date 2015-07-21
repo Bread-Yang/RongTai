@@ -30,7 +30,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
-        [self setUp];
+        
     }
     return self;
 }
@@ -38,7 +38,7 @@
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        [self setUp];
+        
     }
     return self;
 }

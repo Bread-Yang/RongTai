@@ -29,17 +29,23 @@
 {
     NSUInteger _numOfV;  //坐标轴数量，又赋值的数据源数据决定
     CGPoint _centerPoint;  //中心点
-    NSArray* _colorArr; //颜色数组
+    NSMutableArray* _points;  //各点坐标
+    CGFloat _radPerV;
+    CGPoint _startPoint;
+    CGPoint _endPoint;
+    BOOL _isTouchInPoint;
+    NSUInteger _touchPointIndex;
+    UIImage* _touchImage;
+    CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
+    CGPoint _Line2;
 }
-
 @end
 
 @implementation WLPolar
 
 -(instancetype)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         [self setDefaultValues];
     }
     return self;
@@ -65,44 +71,170 @@
 - (void)setDefaultValues {
     self.backgroundColor = [UIColor whiteColor];
     _maxValue = 100.0;
+    _minValue = 0;
     _centerPoint = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
     _r = MIN(self.frame.size.width / 2 - PADDING, self.frame.size.height / 2 - PADDING);
     _steps = 1;
     _drawPoints = NO;
     _showStepText = NO;
-    _fillArea = YES;
-    _minValue = 0;
-    _colorOpacity = 1.0;
+    _fillArea = NO;
+    _lineColor = [UIColor redColor];
+    _lineWidth = 2;
+    _isPointDashed = YES;
     _backgroundLineColorRadial = [UIColor darkGrayColor];
     _backgroundFillColor = [UIColor whiteColor];
     _attributes = @[@"you", @"should", @"set", @"these", @"data", @"titles,",
                     @"this", @"is", @"just", @"a", @"placeholder"];
     _scaleFont = [UIFont systemFontOfSize:ATTRIBUTE_TEXT_SIZE];
+    _pointR = 6;
+    _fillColor = [UIColor cyanColor];
+    _points = [NSMutableArray new];
+    _showLine = YES;
+    _isTouchInPoint = NO;
+    _touchImage = [UIImage imageNamed:@"piont_2"];
+    _touchLine = CGPointZero;
+    _Line2 = CGPointZero;
 }
 
-#pragma mark - 设置颜色
-- (void)setColors:(NSArray *)colors {
-    _colorArr = colors;
-}
-
-#pragma mark - 设置数据源
+#pragma mark - set方法
 - (void)setDataSeries:(NSArray *)dataSeries {
     _dataSeries = dataSeries;
-    _numOfV = [_dataSeries[0] count];
+    _numOfV = [_dataSeries count];
+    _radPerV = M_PI * 2 / _numOfV;
+    [self countPointPosition];
+    [self setNeedsDisplay];
+}
+
+-(void)setR:(CGFloat)r
+{
+    _r = r;
+    [self countPointPosition];
+    [self setNeedsDisplay];
+}
+
+-(void)setMaxValue:(CGFloat)maxValue
+{
+    _maxValue = maxValue;
+    [self countPointPosition];
+    [self setNeedsDisplay];
+}
+
+-(void)setMinValue:(CGFloat)minValue
+{
+    _minValue = minValue;
+    [self countPointPosition];
+    [self setNeedsDisplay];
 }
 
 
+#pragma mark - 调节坐标
+-(void)countPointPosition
+{
+//    NSLog(@"Center Point:%@",NSStringFromCGPoint(_centerPoint));
+    for (int i = 0; i<_dataSeries.count; i++) {
+        CGFloat value = [_dataSeries[i] floatValue];
+        value = (value - _minValue)/ (_maxValue - _minValue)*_r;
+        CGFloat angle = i * _radPerV;
+        CGPoint p = CGPointMake(_centerPoint.x - value * sin(angle), _centerPoint.y - value * cos(angle));
+        
+//        NSLog(@"{\n%d,%@",i,NSStringFromCGPoint(p));
+//        NSLog(@"angle:%lf",angle);
+//        NSLog(@"sin:%lf,cos:%lf\n}",sin(angle),cos(angle));
+        [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:i];
+    }
+//    NSLog(@"Points:%@",_points);
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+//    NSLog(@"触摸开始");
+    UITouch* touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+//    NSLog(@"开始位置:%@", NSStringFromCGPoint(point));
+    for (int i = 0; i<_points.count; i++) {
+        NSValue* v = _points[i];
+        CGPoint p = [v CGPointValue];
+        BOOL xIn = ABS(p.x - point.x)<=6;
+        BOOL yIn = ABS(p.y - point.y)<=6;
+        if (xIn&&yIn) {
+            _isTouchInPoint = YES;
+            _touchPointIndex = i;
+            _startPoint = p;
+            NSValue* v = _points[_touchPointIndex];
+            CGPoint p2 = [v CGPointValue];
+            
+            _touchLine = lineFunction(_centerPoint, p2);
+//            NSLog(@"触碰在点内");
+//            NSLog(@"Line1 Point:%@",NSStringFromCGPoint(p2));
+//            NSLog(@"Line1 :%@",NSStringFromCGPoint(_touchLine));
+            p2.x = _centerPoint.x - _r * sin(_touchPointIndex * _radPerV)/2;
+            p2.y = _centerPoint.y - _r * cos(_touchPointIndex * _radPerV)/2;
+            
+//            NSLog(@"Line2 Point:%@",NSStringFromCGPoint(p2));
+            _Line2.x = -1/_touchLine.x;
+            if (_Line2.x>CGFLOAT_MAX) {
+                _Line2.y = p2.x;
+            }
+            else
+            {
+                _Line2.y = p2.y - _Line2.x*p2.x;
+            }
+//            NSLog(@"Line2:%@",NSStringFromCGPoint(_Line2));
+            
+            [self setNeedsDisplay];
+            break;
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+//    NSLog(@"触摸移动");
+    if (_isTouchInPoint) {
+        UITouch* touch = [touches anyObject];
+        _endPoint = [touch locationInView:self];
+//        NSLog(@"TouchPoint:%@",NSStringFromCGPoint(_endPoint));
+        BOOL isIn  = YES;
+        CGFloat angle = _touchPointIndex * _radPerV;
+        angle  = M_PI_2 - angleFouction(angle);
+        CGFloat range = 22*cos(angle);
+        isIn = inLineRange(_endPoint, _touchLine, range);
+        
+        angle  = M_PI_2 - angle;
+        range = 40*cos(angle);
+//        isIn = isIn && inLineRange(_endPoint, _Line2, range);
+       
+        if (isIn) {
+            CGFloat newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2)+pow((_endPoint.y - _centerPoint.y), 2));
+            if (newR > _r)
+            {
+                newR = _r;
+            }
+            NSValue* v = _points[_touchPointIndex];
+            CGPoint p = [v CGPointValue];
+            CGFloat angle = _touchPointIndex * _radPerV;
+            p.x = _centerPoint.x - newR * sin(angle);
+            p.y = _centerPoint.y - newR * cos(angle);
+            [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
+            [self setNeedsDisplay];
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+//    NSLog(@"接触结束");
+    _isTouchInPoint = NO;
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
-    NSArray *colors = _colorArr;
-    CGFloat radPerV = M_PI * 2 / _numOfV;
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    
     //绘制填充背景颜色
     [_backgroundFillColor setFill];
     CGContextMoveToPoint(context, _centerPoint.x, _centerPoint.y - _r);
     for (int i = 1; i <= _numOfV; ++i) {
-        CGContextAddArc(context, _centerPoint.x, _centerPoint.y, rect.size.width/3, 0, M_PI*2, 0);
+        CGContextAddArc(context, _centerPoint.x, _centerPoint.y, _r, 0, M_PI*2, 0);
     }
     CGContextFillPath(context);
     
@@ -114,60 +246,67 @@
         CGContextAddArc(context, _centerPoint.x, _centerPoint.y, r*(_steps-step+1), 0, M_PI*2, 0);
         CGContextStrokePath(context);
     }
-    CGContextRestoreGState(context);
+//    CGContextRestoreGState(context);
     
     //绘制坐标轴
     [_backgroundLineColorRadial setStroke];
     for (int i = 0; i < _numOfV; i++) {
         CGContextMoveToPoint(context, _centerPoint.x, _centerPoint.y);
-        CGContextAddLineToPoint(context, _centerPoint.x - _r * sin(i * radPerV),
-                                _centerPoint.y - _r * cos(i * radPerV));
+        CGContextAddLineToPoint(context, _centerPoint.x - _r * sin(i * _radPerV),
+                                _centerPoint.y - _r * cos(i * _radPerV));
+        CGContextStrokePath(context);
+    }
+
+    //绘制连线
+    if (_showLine) {
+        [_lineColor setStroke];
+        CGContextSetLineWidth(context, _lineWidth);
+        NSValue* value = _points[0];
+        CGPoint point = [value CGPointValue];
+        CGContextMoveToPoint(context, point.x, point.y);
+        for (int i = 1; i<_points.count; i++) {
+            NSValue* v = _points[i];
+            CGPoint p = [v CGPointValue];
+            CGContextAddLineToPoint(context, p.x, p.y);
+        }
+        CGContextAddLineToPoint(context, point.x, point.y);
         CGContextStrokePath(context);
     }
     
+    //填充区域
+    if (_fillArea) {
+        
+    }
     
-   
-    //根据数据源绘制连线区域
-//    CGContextSetLineWidth(context, 2.0);
-    CGContextSetAlpha(context, self.colorOpacity);
-    for (int serie = 0; serie < [_dataSeries count]; serie++) {
-        if (self.fillArea) {
-            [colors[serie] setFill];
-        }
-        else {
-            [colors[serie] setStroke];
-        }
-        for (int i = 0; i < _numOfV; ++i) {
-            CGFloat value = [_dataSeries[serie][i] floatValue];
-            if (i == 0) {
-                CGContextMoveToPoint(context, _centerPoint.x, _centerPoint.y - (value - _minValue) / (_maxValue - _minValue) * _r);
+    //绘制点
+    if (_drawPoints)
+    {
+        for (int i = 0; i < _points.count; i++)
+        {
+            NSValue* v = _points[i];
+            CGPoint p = [v CGPointValue];
+            CGFloat xVal = p.x;
+            CGFloat yVal = p.y;
+            [_lineColor setFill];
+            [_lineColor setStroke];
+            CGContextSetLineWidth(context, _lineWidth);
+            if (_isPointDashed) {
+                 CGContextStrokeEllipseInRect(context, CGRectMake(xVal - _pointR/2, yVal - _pointR/2, _pointR, _pointR));
             }
-            else {
-                CGContextAddLineToPoint(context, _centerPoint.x - (value - _minValue) / (_maxValue - _minValue) * _r * sin(i * radPerV),
-                                        _centerPoint.y - (value - _minValue) / (_maxValue - _minValue) * _r * cos(i * radPerV));
-            }
-        }
-        CGFloat value = [_dataSeries[serie][0] floatValue];
-        CGContextAddLineToPoint(context, _centerPoint.x, _centerPoint.y - (value - _minValue) / (_maxValue - _minValue) * _r);
-        
-        if (self.fillArea) {
-            CGContextFillPath(context);
-        }
-        else {
-            CGContextStrokePath(context);
-        }
-        
-        
-        //绘制交点
-        if (_drawPoints) {
-            for (int i = 0; i < _numOfV; i++) {
-                CGFloat value = [_dataSeries[serie][i] floatValue];
-                CGFloat xVal = _centerPoint.x - (value - _minValue) / (_maxValue - _minValue) * _r * sin(i * radPerV);
-                CGFloat yVal = _centerPoint.y - (value - _minValue) / (_maxValue - _minValue) * _r * cos(i * radPerV);
-                [colors[serie] setFill];
-                CGContextFillEllipseInRect(context, CGRectMake(xVal - 3, yVal - 3, 6, 6));
+            else
+            {
+                 CGContextFillEllipseInRect(context, CGRectMake(xVal - _pointR/2, yVal - _pointR/2, _pointR, _pointR));
             }
         }
+    }
+  
+    //绘制触摸点图片
+    if (_isTouchInPoint) {
+        NSValue* v = _points[_touchPointIndex];
+        CGPoint p = [v CGPointValue];
+        p.x -= 12;
+        p.y -= 12;
+        [_touchImage drawAtPoint:p blendMode:kCGBlendModeNormal alpha:1];
     }
     
     //绘制最大最小值
@@ -190,12 +329,12 @@
     CGFloat padding = 2.0;
     for (int i = 0; i < _numOfV; i++) {
         NSString *attributeName = _attributes[i];
-        CGPoint pointOnEdge = CGPointMake(_centerPoint.x - _r * sin(i * radPerV), _centerPoint.y - _r * cos(i * radPerV));
+        CGPoint pointOnEdge = CGPointMake(_centerPoint.x - _r * sin(i * _radPerV), _centerPoint.y - _r * cos(i * _radPerV));
         
         CGSize attributeTextSize = JY_TEXT_SIZE(attributeName, self.scaleFont);
         NSInteger width = attributeTextSize.width;
-        CGFloat xOffset = (-width / 2.0 - padding)*sin(i*radPerV);
-        CGFloat yOffset = (-height / 2.0 - padding)*cos(i*radPerV);
+        CGFloat xOffset = (-width / 2.0 - padding)*sin(i*_radPerV);
+        CGFloat yOffset = (-height / 2.0 - padding)*cos(i*_radPerV);
         CGPoint legendCenter = CGPointMake(pointOnEdge.x + xOffset, pointOnEdge.y + yOffset);
         
         if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 70000) {
@@ -222,7 +361,60 @@
                             alignment:NSTextAlignmentCenter];
         }
     }
+//    NSLog(@"Center Point:%@",NSStringFromCGPoint(_centerPoint));
+}
 
+#pragma mark - 计算函数
+bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
+{
+    CGFloat y;
+    bool result;
+    if (line.x>CGFLOAT_MAX||line.x<-CGFLOAT_MAX) {
+        result = ABS(p.x-line.y) <= range;
+    }
+    else
+    {
+        y = p.x*line.x+line.y;
+        result = ABS(y - p.y) <= range;
+    }
+//    NSLog(@"reslut:%d，k:%lf,range:%lf,Y_Reslut:%lf",result,line.x,range,ABS(p.y - y));
+    return result;
+}
+
+CGPoint lineFunction(CGPoint p1,CGPoint p2)
+{
+    CGPoint line = CGPointZero;
+//    NSLog(@"P1:%@,P2:%@",NSStringFromCGPoint(p1),NSStringFromCGPoint(p2));
+    CGFloat k = (p1.y - p2.y)/(p1.x - p2.x);
+//    NSLog(@"%.20f",k);
+    CGFloat b = p1.y - k*p1.x;
+    line.x = k;
+    line.y = b;
+    if (p1.x - p2.x == 0) {
+        line.y = p1.x;
+    }
+//    NSLog(@"line:%@",NSStringFromCGPoint(line));
+    return line;
+}
+
+CGFloat angleFouction(CGFloat angle)
+{
+    if (angle>0&&angle<=M_PI_2) {
+        angle = M_PI_2 - angle;
+    }
+    else if (angle>M_PI_2&&angle<=M_PI)
+    {
+        angle = angle - M_PI_2;
+    }
+    else if (angle>M_PI&&angle<=1.5*M_PI)
+    {
+        angle = 1.5*M_PI - angle;
+    }
+    else
+    {
+        angle = angle - 1.5*M_PI;
+    }
+    return angle;
 }
 
 

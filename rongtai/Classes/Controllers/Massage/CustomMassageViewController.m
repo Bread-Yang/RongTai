@@ -64,7 +64,6 @@
     _polar.minValue = 0;
     _polar.dataSeries = @[@[@2,@4.5,@1.5,@2.3]];
     _polar.steps = 2;
-    [_polar setColors:@[[UIColor blueColor]]];
     [_polarView addSubview:_polar];
 }
 
