@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface FinishMassageViewController : UIViewController
+@interface FinishMassageViewController : BasicViewController
 
 @end

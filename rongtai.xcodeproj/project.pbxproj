@@ -162,6 +162,8 @@
 		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
 		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
 		3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */; };
+		3DE3216A1B5FA4C20075E54F /* score_big_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE321681B5FA4C20075E54F /* score_big_2.png */; };
+		3DE3216B1B5FA4C20075E54F /* score_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE321691B5FA4C20075E54F /* score_big.png */; };
 		3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */; };
 		3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */; };
 		3DE3FFA21B4F76E7003F8AF7 /* login_icon_forget.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9B1B4F76E7003F8AF7 /* login_icon_forget.png */; };
@@ -525,6 +527,8 @@
 		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnutStatsView.h; sourceTree = "<group>"; };
 		3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnutStatsView.m; sourceTree = "<group>"; };
+		3DE321681B5FA4C20075E54F /* score_big_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score_big_2.png; sourceTree = "<group>"; };
+		3DE321691B5FA4C20075E54F /* score_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score_big.png; sourceTree = "<group>"; };
 		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = ../Model/CustomProgram.h; sourceTree = "<group>"; };
 		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = ../Model/CustomProgram.m; sourceTree = "<group>"; };
 		3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button.png; sourceTree = "<group>"; };
@@ -1123,6 +1127,8 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DE321681B5FA4C20075E54F /* score_big_2.png */,
+				3DE321691B5FA4C20075E54F /* score_big.png */,
 				3DE5D66F1B5F6B1400489C62 /* icon_back.png */,
 				3D3E711C1B5F3C7C00C47CD0 /* body_scan.png */,
 				3D3E711D1B5F3C7C00C47CD0 /* mode_2.png */,
@@ -1870,7 +1876,6 @@
 				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
 				3D48BF2C1B53A9A8004EE243 /* menu_icon_member.png in Resources */,
 				3D3E71291B5F3C7C00C47CD0 /* mode_7.png in Resources */,
-				5604A34F1B15A61E00967191 /* ShareSDKLocalizable.strings in Resources */,
 				3D92FE0F1B5905130021E727 /* function_2_select.png in Resources */,
 				3D0B4C7E1B3ABBE100FF97C6 /* mini-lightningrain@2x.png in Resources */,
 				3D48BF2E1B53A9A8004EE243 /* menu_icon_plan.png in Resources */,
@@ -1878,6 +1883,7 @@
 				3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */,
 				3DA170C11B563EC600A88A10 /* icon_share.png in Resources */,
 				3D92FE0E1B5905130021E727 /* function_1.png in Resources */,
+				3DE3216B1B5FA4C20075E54F /* score_big.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				3D7D19CA1B5CF9060057B955 /* set_button_up.png in Resources */,
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
@@ -1896,6 +1902,7 @@
 				3D3E712B1B5F3C7C00C47CD0 /* scan.png in Resources */,
 				3D7D19CB1B5CF9060057B955 /* set_leg_down.png in Resources */,
 				3D48BF311B53A9A8004EE243 /* menu_icon_weather.png in Resources */,
+				3DE3216A1B5FA4C20075E54F /* score_big_2.png in Resources */,
 				3D3E71241B5F3C7C00C47CD0 /* body_scan.png in Resources */,
 				3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */,
 				3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */,

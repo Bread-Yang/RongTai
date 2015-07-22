@@ -188,7 +188,7 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
         [sl pushViewController:fVC animated:YES];
         
