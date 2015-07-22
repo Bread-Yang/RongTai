@@ -63,7 +63,6 @@
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
 		3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */; };
 		3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */; };
-		3D76E2991B4BE4DD004B83E7 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */; };
 		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
 		3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */; };
 		3D77C9E91B4CCC37005C9810 /* TimingPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E71B4CCC37005C9810 /* TimingPlan.m */; };
@@ -74,7 +73,6 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
-		3D7D19B91B5CEC170057B955 /* AdjustTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */; };
 		3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */; };
 		3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */; };
 		3D7D19C91B5CF9060057B955 /* set_button_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BF1B5CF9060057B955 /* set_button_down.png */; };
@@ -87,6 +85,12 @@
 		3D7D19D01B5CF9060057B955 /* set_rear_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C61B5CF9060057B955 /* set_rear_up.png */; };
 		3D7D19D11B5CF9060057B955 /* set_zero.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C71B5CF9060057B955 /* set_zero.png */; };
 		3D7D19D21B5CF9060057B955 /* sit.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19C81B5CF9060057B955 /* sit.png */; };
+		3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */; };
+		3D8EEBC11B5DF1D400626EB2 /* body.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBE1B5DF1D400626EB2 /* body.png */; };
+		3D8EEBC21B5DF1D400626EB2 /* piont_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBF1B5DF1D400626EB2 /* piont_2.png */; };
+		3D8EEBC31B5DF1D400626EB2 /* piont_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D8EEBC01B5DF1D400626EB2 /* piont_3.png */; };
+		3D8EEBC61B5E1E7D00626EB2 /* LineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBC51B5E1E7D00626EB2 /* LineLabel.m */; };
+		3D8EEBCB1B5E43EF00626EB2 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */; };
 		3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */; };
 		3D92FDC91B5763BB0021E727 /* UIView+AddBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D92FDC81B5763BB0021E727 /* UIView+AddBorder.m */; };
 		3D92FDCD1B58D8030021E727 /* data_icon_cost.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDCA1B58D8030021E727 /* data_icon_cost.png */; };
@@ -363,7 +367,6 @@
 		3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLXAxis.h; sourceTree = "<group>"; };
 		3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLXAxis.m; sourceTree = "<group>"; };
 		3D76E2951B4BE4DD004B83E7 /* WLYAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLYAxis.h; sourceTree = "<group>"; };
-		3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLYAxis.m; sourceTree = "<group>"; };
 		3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInformationViewController.h; sourceTree = "<group>"; };
 		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
 		3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localNotificationTransformer.h; path = Model/localNotificationTransformer.h; sourceTree = "<group>"; };
@@ -385,8 +388,6 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		3D7D19B71B5CEC170057B955 /* AdjustTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustTableViewCell.h; sourceTree = "<group>"; };
-		3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustTableViewCell.m; sourceTree = "<group>"; };
 		3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualTableViewCell.h; sourceTree = "<group>"; };
 		3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewCell.m; sourceTree = "<group>"; };
 		3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualTableViewCell.xib; sourceTree = "<group>"; };
@@ -400,6 +401,14 @@
 		3D7D19C61B5CF9060057B955 /* set_rear_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_rear_up.png; sourceTree = "<group>"; };
 		3D7D19C71B5CF9060057B955 /* set_zero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_zero.png; sourceTree = "<group>"; };
 		3D7D19C81B5CF9060057B955 /* sit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sit.png; sourceTree = "<group>"; };
+		3D8EEBB91B5DF07A00626EB2 /* ManualHumanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualHumanView.h; sourceTree = "<group>"; };
+		3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualHumanView.m; sourceTree = "<group>"; };
+		3D8EEBBE1B5DF1D400626EB2 /* body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = body.png; sourceTree = "<group>"; };
+		3D8EEBBF1B5DF1D400626EB2 /* piont_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piont_2.png; sourceTree = "<group>"; };
+		3D8EEBC01B5DF1D400626EB2 /* piont_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piont_3.png; sourceTree = "<group>"; };
+		3D8EEBC41B5E1E7D00626EB2 /* LineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLabel.h; sourceTree = "<group>"; };
+		3D8EEBC51B5E1E7D00626EB2 /* LineLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLabel.m; sourceTree = "<group>"; };
+		3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLYAxis.m; sourceTree = "<group>"; };
 		3D8F37B11B55F78900C135A8 /* SegmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTableViewCell.h; sourceTree = "<group>"; };
 		3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentTableViewCell.m; sourceTree = "<group>"; };
 		3D92FDC71B5763BB0021E727 /* UIView+AddBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AddBorder.h"; sourceTree = "<group>"; };
@@ -891,7 +900,7 @@
 				3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */,
 				3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */,
 				3D76E2951B4BE4DD004B83E7 /* WLYAxis.h */,
-				3D76E2961B4BE4DD004B83E7 /* WLYAxis.m */,
+				3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */,
 			);
 			path = WLLineChart;
 			sourceTree = "<group>";
@@ -964,11 +973,13 @@
 			children = (
 				3D92FE181B590A350021E727 /* ManualViewController.h */,
 				3D92FE191B590A350021E727 /* ManualViewController.m */,
-				3D7D19B71B5CEC170057B955 /* AdjustTableViewCell.h */,
-				3D7D19B81B5CEC170057B955 /* AdjustTableViewCell.m */,
 				3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */,
 				3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */,
 				3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */,
+				3D8EEBB91B5DF07A00626EB2 /* ManualHumanView.h */,
+				3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */,
+				3D8EEBC41B5E1E7D00626EB2 /* LineLabel.h */,
+				3D8EEBC51B5E1E7D00626EB2 /* LineLabel.m */,
 			);
 			path = ManualMassage;
 			sourceTree = "<group>";
@@ -1070,6 +1081,9 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3D8EEBBE1B5DF1D400626EB2 /* body.png */,
+				3D8EEBBF1B5DF1D400626EB2 /* piont_2.png */,
+				3D8EEBC01B5DF1D400626EB2 /* piont_3.png */,
 				3D7D19BF1B5CF9060057B955 /* set_button_down.png */,
 				3D7D19C01B5CF9060057B955 /* set_button_up.png */,
 				3D7D19C11B5CF9060057B955 /* set_leg_down.png */,
@@ -1781,6 +1795,7 @@
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
 				3DE3FFB41B4FB46E003F8AF7 /* program_select3_3_2.png in Resources */,
 				3DE3FFA51B4F76E7003F8AF7 /* login_qq.png in Resources */,
+				3D8EEBC11B5DF1D400626EB2 /* body.png in Resources */,
 				3D48BF301B53A9A8004EE243 /* menu_icon_user.png in Resources */,
 				3D0B4C7D1B3ABBE100FF97C6 /* mini-lightning@2x.png in Resources */,
 				3DC7908C1B424AEB0034C3C1 /* mode_1.png in Resources */,
@@ -1826,6 +1841,8 @@
 				3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */,
 				3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
+				3D8EEBC31B5DF1D400626EB2 /* piont_3.png in Resources */,
+				3D8EEBC21B5DF1D400626EB2 /* piont_2.png in Resources */,
 				3D92FE101B5905130021E727 /* function_2.png in Resources */,
 				3D48BF2D1B53A9A8004EE243 /* menu_icon_message.png in Resources */,
 				3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */,
@@ -1925,7 +1942,6 @@
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
-				3D76E2991B4BE4DD004B83E7 /* WLYAxis.m in Sources */,
 				3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */,
@@ -1946,6 +1962,7 @@
 				561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */,
 				3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */,
 				56E9E4E21B5907E600F01ECB /* NAPickerView.m in Sources */,
+				3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
 				3DF3042F1B38FE2500DD51D3 /* NSManagedObject+MagicalRecord.m in Sources */,
 				3D0258D91B1D5173006C9179 /* LoginViewController.m in Sources */,
@@ -2013,6 +2030,7 @@
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,
 				3D783D331B12FD0300A893D9 /* main.m in Sources */,
 				3DF3043C1B38FE2500DD51D3 /* MagicalRecord+Options.m in Sources */,
+				3D8EEBCB1B5E43EF00626EB2 /* WLYAxis.m in Sources */,
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DF304301B38FE2500DD51D3 /* NSManagedObject+MagicalRequests.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
@@ -2033,11 +2051,11 @@
 				3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
+				3D8EEBC61B5E1E7D00626EB2 /* LineLabel.m in Sources */,
 				3DF3042A1B38FE2500DD51D3 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
 				56E9E4E01B5907E600F01ECB /* NALabelCell.m in Sources */,
 				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
-				3D7D19B91B5CEC170057B955 /* AdjustTableViewCell.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

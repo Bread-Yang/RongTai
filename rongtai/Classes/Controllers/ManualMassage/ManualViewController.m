@@ -10,8 +10,10 @@
 #import "WLPanAlertView.h"
 #import "AppDelegate.h"
 #import "ManualTableViewCell.h"
+#import "ManualHumanView.h"
+#import "WLPolar.h"
 
-@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate>
 {
     WLPanAlertView* _panAlertView;
     UIImageView* _arrow;
@@ -22,6 +24,10 @@
     NSArray* _menu;
     NSString* _reuseIdentifier;
     NSArray* _images;
+    CGFloat _cH;
+    __weak IBOutlet UIScrollView *_scrollView;
+    ManualHumanView* _humanView;
+    WLPolar* _polar;
 }
 @end
 
@@ -30,7 +36,11 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"手动按摩:", nil);
+    self.title = NSLocalizedString(@"手动按摩", nil);
+    
+    //
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
+    self.navigationItem.rightBarButtonItem = right;
     
     //
     _menu = @[NSLocalizedString(@"肩部位置:", nil),NSLocalizedString(@"背部升降:",nil),NSLocalizedString(@"小腿升降:",nil),NSLocalizedString(@"小腿伸缩:",nil),NSLocalizedString(@"零重力:",nil)];
@@ -83,13 +93,14 @@
     UIWindow* appWindow = app.window;
     [appWindow addSubview:_panAlertView];
     
-    
     //
     f =_panAlertView.contentView.frame;
+    _cH = CGRectGetHeight(f);
     f.origin = CGPointZero;
     f.size.width *= 0.8;
-    f.size.height *= 0.8;
+    f.size.height = 0.7*_cH;
     f.origin.x = f.size.width*0.25/2;
+    f.origin.y = _cH*0.03;
     _adjustTable = [[UITableView alloc]initWithFrame:f];
     _adjustTable.backgroundColor = [UIColor clearColor];
     _adjustTable.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -98,6 +109,25 @@
     _adjustTable.scrollEnabled = NO;
     [_adjustTable registerNib:[UINib nibWithNibName:@"ManualTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:_reuseIdentifier];
     [_panAlertView.contentView addSubview:_adjustTable];
+    
+    //
+    _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    [_scrollView addSubview:_humanView];
+    
+    //
+    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
+    _polar.steps = 3;
+    _polar.r = 80;
+    _polar.minValue = 20;
+    _polar.maxValue = 120;
+    _polar.drawPoints = YES;
+    _polar.backgroundFillColor = [UIColor colorWithRed:0 green:1 blue:1 alpha:1];
+    _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
+    _polar.scaleFont = [UIFont systemFontOfSize:14];
+    [_scrollView addSubview:_polar];
+
+    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -113,6 +143,8 @@
     cell.titleLabel.text = _menu[indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
+    cell.tag = indexPath.row+1;
     if (indexPath.row < _menu.count - 1) {
         NSInteger i = indexPath.row*2;
         [cell.leftButton setImage:[UIImage imageNamed:_images[i]] forState:0];
@@ -121,6 +153,7 @@
     else
     {
         [cell.leftButton setImage:[UIImage imageNamed:_images[_images.count -1]] forState:0];
+        [cell.rightButton setHidden:YES];
     }
     return cell;
 }
@@ -132,7 +165,38 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 54;
+    return _cH*0.6/_menu.count;
+}
+
+#pragma mark - cell代理
+-(void)manualTableViewCell:(ManualTableViewCell *)cell Clicked:(NSInteger)index
+{
+    if (cell.tag == 1)
+    {
+        NSLog(@"肩部位置");
+    }
+    else if (cell.tag == 2)
+    {
+        NSLog(@"背部升降");
+    }
+    else if (cell.tag == 3)
+    {
+        NSLog(@"小腿升降");
+    }
+    else if (cell.tag == 4)
+    {
+        NSLog(@"小腿伸缩");
+    }
+    else if (cell.tag == 5)
+    {
+        NSLog(@"零重力");
+    }
+}
+
+#pragma mark - 导航栏右边按钮方法
+-(void)rightItemClicked:(id)sender
+{
+    
 }
 
 

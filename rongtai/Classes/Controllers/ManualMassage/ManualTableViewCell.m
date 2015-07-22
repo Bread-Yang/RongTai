@@ -12,9 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [_rightButton setTitle:@"" forState:0];
-    [_leftButton setTitle:@"" forState:0];
-    [self layoutSubviews];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,12 +21,17 @@
     // Configure the view for the selected state
 }
 
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    CGFloat w = CGRectGetWidth(self.frame)/20;
-    CGFloat h = CGRectGetHeight(self.frame);
-    _titleLabel.frame = CGRectMake(w, 0, w*5, h);
+- (IBAction)leftButtonClicked:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:)]) {
+        [self.delegate manualTableViewCell:self Clicked:0];
+    }
+}
+
+
+- (IBAction)rightButtonClicked:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:)]) {
+        [self.delegate manualTableViewCell:self Clicked:1];
+    }
 }
 
 @end

@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class WLPolar;
+
+@protocol WLPolarDelegate <NSObject>
+
+@optional
+-(void)WLPolarMoveFinished:(WLPolar*)polar;
+
+@end
+
 @interface WLPolar : UIView
 
 /**
@@ -31,10 +40,34 @@
 @property (nonatomic, assign) BOOL drawPoints;
 
 /**
- *  是否用颜色填充描绘区域，默认为是
- *  否则只是用线连接各个点
+*  点是否空心，默认空心
+*/
+@property(nonatomic)BOOL isPointDashed;
+
+/**
+ *  点半径
+ */
+@property(nonatomic)CGFloat pointR;
+
+/**
+ *  线条颜色
+ */
+@property(nonatomic, strong)UIColor* lineColor;
+
+/**
+ *  线条宽度
+ */
+@property(nonatomic)CGFloat lineWidth;
+
+/**
+ *  是否用颜色填充描绘区域
  */
 @property (nonatomic, assign) BOOL fillArea;
+
+/**
+ *  显示线条
+ */
+@property(nonatomic, assign)BOOL showLine;
 
 /**
  *  是否显示坐标最大最小值
@@ -42,17 +75,12 @@
 @property (nonatomic, assign) BOOL showStepText;
 
 /**
- *  绘制区域的透明度
- */
-@property (nonatomic, assign) CGFloat colorOpacity;
-
-/**
  *  坐标轴颜色
  */
 @property (nonatomic, strong) UIColor *backgroundLineColorRadial;
 
 /**
- *  数据源，存放一个元素为数组的数组，元素数组才是用来存放各个坐标的值
+ *  数据源
  */
 @property (nonatomic, strong) NSArray *dataSeries;
 
@@ -76,10 +104,9 @@
  */
 @property (nonatomic, strong) UIFont *scaleFont;
 
-
 /**
- *  设置颜色数组
+ *  填充颜色
  */
-- (void)setColors:(NSArray *)colors;
+@property(nonatomic, strong)UIColor* fillColor;
 
 @end
