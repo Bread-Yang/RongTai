@@ -26,10 +26,16 @@
     CGFloat h = CGRectGetHeight(self.frame);
 //    CGFloat w = CGRectGetWidth(self.frame);
     CGRect f = self.imageView.frame;
-    f.size.height = 0.7*h;
-    f.size.width = 0.7*h;
-    f.origin.y = 0.15*h;
+    f.size.height = self.imageViewScale*h;
+    f.size.width = self.imageViewScale*h;
+    f.origin.y = (1-self.imageViewScale)*h/2;
     self.imageView.frame = f;
+    
+//    self.detailTextLabel.backgroundColor = [UIColor blueColor];
+    f = self.detailTextLabel.frame;
+    f.size.width *= 0.85;
+    f.size.height = h*0.3;
+    self.detailTextLabel.frame = f;
     
 }
 

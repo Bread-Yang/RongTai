@@ -63,6 +63,7 @@
     BasicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"userCell"];
     if (!cell) {
         cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userCell"];
+        cell.imageViewScale = 0.7;
         UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, _rowHeight-1, SCREENWIDTH, 1)];
         line.backgroundColor = [UIColor grayColor];
         line.alpha = 0.2;

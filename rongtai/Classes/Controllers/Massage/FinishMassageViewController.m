@@ -8,22 +8,11 @@
 
 #import "FinishMassageViewController.h"
 #import "IQKeyboardManager.h"
+#import "RongTaiConstant.h"
 
 @interface FinishMassageViewController ()<UIAlertViewDelegate>
 {
-    __weak IBOutlet UILabel *_timeLabel;
     
-    __weak IBOutlet UIView *_polarView;
-    
-    __weak IBOutlet UILabel *_useTimingLabel;  //使用时机Label
-    
-    __weak IBOutlet UILabel *_usePurposeLabel;  //使用目的Label
-    
-    __weak IBOutlet UILabel *_importantPartLabel;  //重点部分Label
-    
-    __weak IBOutlet UILabel *_massageWayLabel;  //按摩手法
-    
-    __weak IBOutlet UILabel *_skillPreference;  //技法偏好Label
 }
 @end
 
@@ -32,12 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"按摩完毕", nil);
-    _timeLabel.adjustsFontSizeToFitWidth = YES;
     
-    UIBarButtonItem* back = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"返回", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    self.navigationItem.leftBarButtonItem = back;
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
-    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"分享", nil) style:UIBarButtonItemStylePlain target:self action:@selector(share)];
+    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
     self.navigationItem.rightBarButtonItem = share;
     // Do any additional setup after loading the view.
 }
@@ -55,7 +42,7 @@
 #pragma mark - 返回方法
 -(void)goBack
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 分享

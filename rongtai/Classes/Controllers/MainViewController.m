@@ -14,9 +14,9 @@
 #import "CustomProcedureViewController.h"
 #import "ProgramDownloadTableViewController.h"
 #import "ManualViewController.h"
-
-#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+#import "BasicTableViewCell.h"
+#import "RongTaiConstant.h"
+#import "ScanViewController.h"
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
@@ -58,8 +58,6 @@
     [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
     image.layer.cornerRadius = 17;
     left.customView = image;
-    image.layer.borderColor = [UIColor whiteColor].CGColor;
-    image.layer.borderWidth = 1;
     image.clipsToBounds = YES;
 //    self.navigationItem.leftBarButtonItem = left;
     
@@ -79,15 +77,25 @@
     _table.dataSource = self;
     _table.delegate = self;
     _table.backgroundColor = [UIColor clearColor];
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.showsHorizontalScrollIndicator = NO;
+    _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
     
     //
     _massageRequest = [[MassageRequest alloc]init];
     _massageRequest.delegate = self;
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
+//    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
     
     _massageArr = [NSMutableArray new];
+    for (int i = 0; i<8; i++) {
+        Massage* m = [Massage new];
+        m.name = @"舒展活络";
+        m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
+        m.imageUrl = [NSString stringWithFormat:@"mode_%d",i+1];
+        [_massageArr addObject:m];
+    }
     
     //
     _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
@@ -155,22 +163,47 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    BasicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        cell.imageViewScale = 0.55;
+        CGRect f = CGRectMake(0, 0, SCREENWIDTH, 78);
+        UIImageView* bg = [[UIImageView alloc]initWithFrame:f];
+        NSLog(@"f:%@",NSStringFromCGRect(f));
+        bg.image = [UIImage imageNamed:@"list_bg"];
+        bg.contentMode = UIViewContentModeScaleToFill;
+        bg.alpha = 0.5;
+        [cell addSubview:bg];
+        [cell sendSubviewToBack:bg];
     }
+    cell.backgroundColor = [UIColor clearColor];
     Massage* massage = _massageArr[indexPath.row];
     if (massage) {
         cell.textLabel.text = massage.name;
+        cell.textLabel.textColor = BLACK;
+        cell.textLabel.font = [UIFont systemFontOfSize:18];
         cell.detailTextLabel.text = massage.mDescription;
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.textColor = BLACK;
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
+        cell.imageView.image = [UIImage imageNamed:massage.imageUrl];
     }
-    cell.imageView.image = [UIImage imageNamed:@"mode_1"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow"]];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 80;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    ScanViewController* scan = (ScanViewController*)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+    scan.massage = _massageArr[indexPath.row];
+    [self.navigationController pushViewController:scan animated:YES];
 }
 
 #pragma mark - massageRequest代理

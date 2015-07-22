@@ -10,4 +10,6 @@
 
 @interface BasicTableViewCell : UITableViewCell
 
+@property(nonatomic)CGFloat imageViewScale;
+
 @end
