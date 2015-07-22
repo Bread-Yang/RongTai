@@ -85,8 +85,8 @@
     _massageRequest = [[MassageRequest alloc]init];
     _massageRequest.delegate = self;
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
-    
+//    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
+	
     _massageArr = [NSMutableArray new];
     
     //

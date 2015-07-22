@@ -265,7 +265,7 @@ UISegmentedControl *segmentedControl;
 }
 
 - (IBAction)qqLoginAction:(id)sender {
-	[ShareSDK getUserInfoWithType:ShareTypeQQ
+	[ShareSDK getUserInfoWithType:ShareTypeQQSpace
 					  authOptions:nil
 						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
 							   
@@ -288,11 +288,35 @@ UISegmentedControl *segmentedControl;
 								   [alertView show];
 							   }
 						   }];
+	
+}
+
+- (void)authroizedWithShareType:(ShareType)type {
+	
+//	id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//														 allowCallback:YES
+//														 authViewStyle:SSAuthViewStyleFullScreenPopup
+//														  viewDelegate:nil
+//											   authManagerViewDelegate:appDelegate.viewDelegate];
+//	
+//	[ShareSDK getUserInfoWithType:type
+//					  authOptions:authOptions
+//						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+//							   if (result)
+//							   {
+//								   
+//								   NSLog(@"userInfo%@",userInfo);
+//								   
+//								   [item setObject:[userInfo nickname] forKey:@"username"];
+//								   [_shareTypeArray writeToFile:[NSString stringWithFormat:@"%@/authListCache.plist",NSTemporaryDirectory()] atomically:YES];
+//							   }
+//							   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+//						   }];
 }
 
 - (IBAction)logoutAction:(id)sender {
     [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
-    [ShareSDK cancelAuthWithType:ShareTypeQQ];
+    [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
 }
 
 - (IBAction)previousSongAction:(id)sender {

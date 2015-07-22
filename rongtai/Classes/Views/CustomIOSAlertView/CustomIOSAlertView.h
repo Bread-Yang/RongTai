@@ -28,6 +28,11 @@
 @property (nonatomic, retain) NSArray *buttonTitles;
 @property (nonatomic, assign) BOOL useMotionEffects;
 
+@property (nonatomic, retain) UIColor *dialogBackgroundColor;
+@property (nonatomic, retain) UIColor *dividerColor;
+
+@property (nonatomic, assign) NSInteger dialogBorderWidth;
+
 @property (copy) void (^onButtonTouchUpInside)(CustomIOSAlertView *alertView, int buttonIndex) ;
 
 - (id)init;

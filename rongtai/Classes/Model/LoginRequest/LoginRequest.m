@@ -9,6 +9,7 @@
 #import "LoginRequest.h"
 #import <AFNetworking.h>
 #import <AFURLRequestSerialization.h>
+#import "NSString+RT.h"
 
 #define REQUESTURL @"http://api.gizwits.com/app"
 #define APPID @"781b7b9b7e074b1685217537ad1ab1c5"
@@ -140,6 +141,9 @@
     [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/users",REQUESTURL];
 //    NSString* auth = [NSString stringWithFormat:@"{\"src\":\"%@\",\"uid\":\"%@\",\"token\":\"%@\"}",name,uid,token];
+	if ([NSString isBlankString:token]) {
+		return;
+	}
     NSMutableDictionary* auth = [NSMutableDictionary new];
     [auth setObject:@"sina" forKey:@"src"];
     [auth setObject:[NSNumber numberWithInteger:[uid integerValue]] forKey:@"uid"];
