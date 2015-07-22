@@ -113,8 +113,6 @@
 	//    CustomProcedureViewController* c = (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
 	//    [self.navigationController pushViewController:c animated:YES];
 	
-	NSLog(@"1111");
-	
 	[ShareSDK getUserInfoWithType:ShareTypeQQSpace
 					  authOptions:nil
 						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
@@ -139,6 +137,8 @@
 							   
 							   NSString *uid = [userInfo uid];
 							   NSString *token = [[userInfo credential] token];
+							   
+							   NSLog(@"SINA登录返回的uid : %@, token : %@", uid, token);
 							   
 							   [_loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
 						   }];

@@ -242,17 +242,17 @@ UISegmentedControl *segmentedControl;
     [ShareSDK getUserInfoWithType:ShareTypeSinaWeibo
                       authOptions:nil
                            result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-         
+							if (result) {
                                NSString *uid = [userInfo uid];
                                NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
                                
                                NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
-							   NSLog(@"第三方登录之前");
+							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
         
-                               if (result) {
+							   
                                    UIAlertView *alertView = [[UIAlertView alloc]
                                        initWithTitle:@"Hello"
                                        message:information
@@ -260,7 +260,7 @@ UISegmentedControl *segmentedControl;
                                        cancelButtonTitle:@"知道了"
                                        otherButtonTitles: nil];
                                    [alertView show];
-                               }
+							}
      }];
 }
 
@@ -268,17 +268,16 @@ UISegmentedControl *segmentedControl;
 	[ShareSDK getUserInfoWithType:ShareTypeQQSpace
 					  authOptions:nil
 						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-							   
+							if (result) {
 							   NSString *uid = [userInfo uid];
 							   NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
 							   
 							   NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
-							   NSLog(@"第三方登录之前");
+							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
 							   
-							   if (result) {
 								   UIAlertView *alertView = [[UIAlertView alloc]
 															 initWithTitle:@"Hello"
 															 message:information

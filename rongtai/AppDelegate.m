@@ -10,15 +10,19 @@
 
 #import "AppDelegate.h"
 
+//以下是腾讯QQ和QQ空间
 #import <TencentOpenAPI/QQApi.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 
-#import "CoreData+MagicalRecord.h"
 #import "WXApi.h"
+
+//开启QQ网页授权需要
+#import <QZoneConnection/ISSQZoneApp.h>
+
+#import "CoreData+MagicalRecord.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
-
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -152,6 +156,10 @@
 						   appSecret:@"aed9b0303e3ed1e27bae87c33761161d"
 				   qqApiInterfaceCls:[QQApiInterface class]
 					 tencentOAuthCls:[TencentOAuth class]];
+	
+	//开启QQ空间网页授权开关(optional)
+	id<ISSQZoneApp> app =(id<ISSQZoneApp>)[ShareSDK getClientWithType:ShareTypeQQSpace];
+	[app setIsAllowWebAuthorize:YES];
 	
     /**
      连接新浪微博开放平台应用以使用相关功能，此应用需要引用SinaWeiboConnection.framework

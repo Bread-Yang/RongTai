@@ -58,9 +58,17 @@
 	LineUICollectionViewFlowLayout *lineLayout = [[LineUICollectionViewFlowLayout alloc] init];
 	[lineLayout setItemSize:CGSizeMake(self.collectionView.bounds.size.height / 3 * 2, self.collectionView.bounds.size.height / 3 * 2)];
 	lineLayout.delegate = self;
+	
+	lineLayout.headerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
+	lineLayout.footerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
+	
 	self.collectionView.collectionViewLayout = lineLayout;
 	
 	[self.collectionView registerClass:[LineUICollectionViewCell class] forCellWithReuseIdentifier:@"MY_CELL"];
+	
+	[self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+	
+	[self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"Footer"];
 	
 	[_weekSC addTarget:self
 				action:@selector(segmentedControl:)
@@ -71,6 +79,10 @@
 	}
 }
 
+- (void)hello {
+	
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 	CGSize size = [UIScreen mainScreen].bounds.size;
 	
@@ -78,6 +90,8 @@
 	for (int i = 0; i < 30;  i++) {
 		[leftItems addObject:[NSString stringWithFormat:@"%d", i]];
 	}
+	
+	NSLog(@"width : %f, height : %f", [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
 	
 	NAPickerView *leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:leftItems andDelegate:self];
 	leftPickView.infiniteScrolling = YES;
@@ -144,68 +158,63 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-	return 10;
+	return 8;
 }
 
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-//    NSString *reuseIdentifier;
-//	if ([kind isEqualToString: UICollectionElementKindSectionFooter ]) {
-//		reuseIdentifier = @"Footer";
-//	}else{
-//		reuseIdentifier = @"Header";
-//	}
-//	UICollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:reuseIdentifier   forIndexPath:indexPath];
-//	collectionView 
-//	if (!view) {
-//		view = [[UICollectionReusableView alloc] ];
-//	}
-//	if (kind == UICollectionElementKindSectionHeader) {
-//		
-//	} else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-//
-//	}
-//	return view;
-//}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    NSString *reuseIdentifier;
+	if ([kind isEqualToString: UICollectionElementKindSectionFooter ]) {
+		reuseIdentifier = @"Footer";
+	}else{
+		reuseIdentifier = @"Header";
+	}
+	UICollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:reuseIdentifier   forIndexPath:indexPath];
+	
+	if (!view) {
+		view = [[UICollectionReusableView alloc] init];
+	}
+	if (kind == UICollectionElementKindSectionHeader) {
+		
+	} else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+
+	}
+	view.backgroundColor = [UIColor blackColor];
+	view.layer.borderWidth = .5f;
+	view.layer.borderColor = [UIColor colorWithRed:221.0 / 255.0 green:223.0 / 255.0 blue:220.0 / 255.0 alpha:1.0].CGColor;
+//	view.frame = CGRectMake(0, 0, 100, 100);
+	return view;
+}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
 	UIImage *icon;
 	switch (indexPath.row) {
-  		case 0:
-			break;
-		case 1:
+		case 0:
 			icon = [UIImage imageNamed:@"mode_1"];
 			break;
-		case 2:
+		case 1:
 			icon = [UIImage imageNamed:@"mode_2"];
 			break;
-		case 3:
+		case 2:
 			icon = [UIImage imageNamed:@"mode_3"];
 			break;
-		case 4:
+		case 3:
 			icon = [UIImage imageNamed:@"mode_4"];
 			break;
-		case 5:
+		case 4:
 			icon = [UIImage imageNamed:@"mode_5"];
 			break;
-		case 6:
+		case 5:
 			icon = [UIImage imageNamed:@"mode_6"];
 			break;
-		case 7:
+		case 6:
 			icon = [UIImage imageNamed:@"mode_7"];
 			break;
-		case 8:
+		case 7:
 			icon = [UIImage imageNamed:@"mode_8"];
-			break;
-		case 9:
 			break;
 	}
 	cell.imageView.image = icon;
-	if (indexPath.row == 0 || indexPath.row == 9) {
-		cell.hidden = YES;
-	} else {
-		cell.hidden = FALSE;
-	}
 	return cell;
 }
 
