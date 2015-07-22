@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	NSLog(@"dfsdf");
 //    _loginFeild.layer.cornerRadius = 5;
 //    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
 //    _loginFeild.layer.borderWidth = 1;
@@ -112,15 +113,19 @@
 	//    CustomProcedureViewController* c = (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
 	//    [self.navigationController pushViewController:c animated:YES];
 	
-	[ShareSDK getUserInfoWithType:ShareTypeQQ
+	[ShareSDK getUserInfoWithType:ShareTypeQQSpace
 					  authOptions:nil
 						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
 							   
 							   NSString *uid = [userInfo uid];
 							   NSString *token = [[userInfo credential] token];
 							   
+							   NSLog(@"QQ登录返回的uid : %@, token : %@", uid, token);
+							   
 							   [_loginRequest thirdLoginBySrc:@"qq" Uid:uid Token:token];
 						   }];
+	
+	
 }
 
 #pragma mark - 新浪登陆按钮方法
@@ -132,6 +137,8 @@
 							   
 							   NSString *uid = [userInfo uid];
 							   NSString *token = [[userInfo credential] token];
+							   
+							   NSLog(@"SINA登录返回的uid : %@, token : %@", uid, token);
 							   
 							   [_loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
 						   }];

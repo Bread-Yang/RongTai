@@ -9,6 +9,7 @@
 #import "LoginRequest.h"
 #import <AFNetworking.h>
 #import <AFURLRequestSerialization.h>
+#import "NSString+RT.h"
 
 #define REQUESTURL @"http://api.gizwits.com/app"
 #define APPID @"781b7b9b7e074b1685217537ad1ab1c5"
@@ -135,18 +136,24 @@
 }
 
 #pragma mark - 第三方登录
--(void)thirdLoginBySrc:(NSString*)name Uid:(NSString*)uid Token:(NSString*)token
+-(void)thirdLoginBySrc:(NSString *)name Uid:(NSString *)uid Token:(NSString *)token
 {
     [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/users",REQUESTURL];
 //    NSString* auth = [NSString stringWithFormat:@"{\"src\":\"%@\",\"uid\":\"%@\",\"token\":\"%@\"}",name,uid,token];
-    NSMutableDictionary* auth = [NSMutableDictionary new];
-    [auth setObject:@"sina" forKey:@"src"];
-    [auth setObject:[NSNumber numberWithInteger:[uid integerValue]] forKey:@"uid"];
-    [auth setObject:token forKey:@"token"];
+	if ([NSString isBlankString:token]) {
+		return;
+	}
+    NSMutableDictionary *auth = [NSMutableDictionary new];
+    [auth setObject:[NSString stringWithString:name] forKey:@"src"];
+    [auth setObject:[NSString stringWithString:uid] forKey:@"uid"];
+    [auth setObject:[NSString stringWithString:token] forKey:@"token"];
+	NSLog(@"传过去的参数是 : %@", auth);
 //    NSLog(@"请求链接：%@\n请求参数：authData：%@\n",url,auth);
-    NSMutableDictionary* parameters = [NSMutableDictionary new];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
     [parameters setObject:auth forKey:@"authData"];
+	
+//	NSDictionary *temp = @{@"authData" : @{@"src": @"qq", @"token": @"07F63CF53BF98A6556ABB57AD4E28DB3", @"uid": @"5CAF4D827B2DDAAE2AAF2BEFE945F1E1"}};
 
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError* error;

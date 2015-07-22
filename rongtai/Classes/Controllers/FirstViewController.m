@@ -242,17 +242,17 @@ UISegmentedControl *segmentedControl;
     [ShareSDK getUserInfoWithType:ShareTypeSinaWeibo
                       authOptions:nil
                            result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-         
+							if (result) {
                                NSString *uid = [userInfo uid];
                                NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
                                
                                NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
-							   NSLog(@"第三方登录之前");
+							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
         
-                               if (result) {
+							   
                                    UIAlertView *alertView = [[UIAlertView alloc]
                                        initWithTitle:@"Hello"
                                        message:information
@@ -260,25 +260,24 @@ UISegmentedControl *segmentedControl;
                                        cancelButtonTitle:@"知道了"
                                        otherButtonTitles: nil];
                                    [alertView show];
-                               }
+							}
      }];
 }
 
 - (IBAction)qqLoginAction:(id)sender {
-	[ShareSDK getUserInfoWithType:ShareTypeQQ
+	[ShareSDK getUserInfoWithType:ShareTypeQQSpace
 					  authOptions:nil
 						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-							   
+							if (result) {
 							   NSString *uid = [userInfo uid];
 							   NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
 							   
 							   NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
-							   NSLog(@"第三方登录之前");
+							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
 							   
-							   if (result) {
 								   UIAlertView *alertView = [[UIAlertView alloc]
 															 initWithTitle:@"Hello"
 															 message:information
@@ -288,11 +287,35 @@ UISegmentedControl *segmentedControl;
 								   [alertView show];
 							   }
 						   }];
+	
+}
+
+- (void)authroizedWithShareType:(ShareType)type {
+	
+//	id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//														 allowCallback:YES
+//														 authViewStyle:SSAuthViewStyleFullScreenPopup
+//														  viewDelegate:nil
+//											   authManagerViewDelegate:appDelegate.viewDelegate];
+//	
+//	[ShareSDK getUserInfoWithType:type
+//					  authOptions:authOptions
+//						   result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+//							   if (result)
+//							   {
+//								   
+//								   NSLog(@"userInfo%@",userInfo);
+//								   
+//								   [item setObject:[userInfo nickname] forKey:@"username"];
+//								   [_shareTypeArray writeToFile:[NSString stringWithFormat:@"%@/authListCache.plist",NSTemporaryDirectory()] atomically:YES];
+//							   }
+//							   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
+//						   }];
 }
 
 - (IBAction)logoutAction:(id)sender {
     [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
-    [ShareSDK cancelAuthWithType:ShareTypeQQ];
+    [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
 }
 
 - (IBAction)previousSongAction:(id)sender {

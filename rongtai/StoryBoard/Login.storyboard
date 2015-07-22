@@ -155,7 +155,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="qqLogin:" destination="vVx-O2-RpR" eventType="touchUpInside" id="Ahw-o0-aVk"/>
+                                            <action selector="qqLogin:" destination="vVx-O2-RpR" eventType="touchUpInside" id="tmp-8j-Ld6"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -10,15 +10,19 @@
 
 #import "AppDelegate.h"
 
+//以下是腾讯QQ和QQ空间
 #import <TencentOpenAPI/QQApi.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 
-#import "CoreData+MagicalRecord.h"
 #import "WXApi.h"
+
+//开启QQ网页授权需要
+#import <QZoneConnection/ISSQZoneApp.h>
+
+#import "CoreData+MagicalRecord.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
-
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -142,14 +146,20 @@
      连接QQ应用以使用相关功能，此应用需要引用QQConnection.framework和QQApi.framework库
      http://mobile.qq.com/api/上注册应用，并将相关信息填写到以下字段
      **/
-    //旧版中申请的AppId（如：QQxxxxxx类型），可以通过下面方法进行初始化
-    //    [ShareSDK connectQQWithAppId:@"QQ075BCD15" qqApiCls:[QQApi class]];
-    
+	// 实现在QQ好友,Q群,讨论组,QQ空间分享消息
     [ShareSDK connectQQWithQZoneAppKey:@"100371282"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
 	
-//	[ShareSDK connectQQWithAppId:@"100371282" qqApiCls:[QQApiInterface class]];
+	// 实现QQ授权登录
+	[ShareSDK connectQZoneWithAppKey:@"100371282"
+						   appSecret:@"aed9b0303e3ed1e27bae87c33761161d"
+				   qqApiInterfaceCls:[QQApiInterface class]
+					 tencentOAuthCls:[TencentOAuth class]];
+	
+	//开启QQ空间网页授权开关(optional)
+	id<ISSQZoneApp> app =(id<ISSQZoneApp>)[ShareSDK getClientWithType:ShareTypeQQSpace];
+	[app setIsAllowWebAuthorize:YES];
 	
     /**
      连接新浪微博开放平台应用以使用相关功能，此应用需要引用SinaWeiboConnection.framework
