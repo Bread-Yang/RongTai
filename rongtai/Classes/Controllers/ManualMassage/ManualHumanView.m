@@ -52,6 +52,7 @@
     _partLabel = [[UILabel alloc]init];
     _partLabel.font = [UIFont systemFontOfSize:15];
     _partLabel.text = @"请选择需要的按摩部位";
+    _partLabel.textColor = ORANGE;
     _partLabel.textAlignment = NSTextAlignmentCenter;
 //    _partLabel.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:_partLabel];
@@ -143,9 +144,10 @@
         }
     }
     _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+    _partLabel.textColor = BLUE;
     NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
     
-    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:BLUE,NSForegroundColorAttributeName, nil];
+    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
     NSRange r = [string.string rangeOfString:@"："];
     r.location ++;
     r.length = string.string.length - r.location;

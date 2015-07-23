@@ -12,6 +12,7 @@
 #import "ManualTableViewCell.h"
 #import "ManualHumanView.h"
 #import "WLPolar.h"
+#import "RongTaiConstant.h"
 
 @interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate>
 {
@@ -41,6 +42,9 @@
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
+    
+    //
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
     //
     _menu = @[NSLocalizedString(@"肩部位置:", nil),NSLocalizedString(@"背部升降:",nil),NSLocalizedString(@"小腿升降:",nil),NSLocalizedString(@"小腿伸缩:",nil),NSLocalizedString(@"零重力:",nil)];
@@ -118,22 +122,33 @@
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
     _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
     _polar.steps = 3;
-    _polar.r = 80;
+    _polar.r = SCREENHEIGHT*0.57*0.3;
     _polar.minValue = 20;
     _polar.maxValue = 120;
     _polar.drawPoints = YES;
-    _polar.backgroundFillColor = [UIColor colorWithRed:0 green:1 blue:1 alpha:1];
+    _polar.fillArea = YES;
+    _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
+    _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
+    _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
     _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
+//    UIResponder
     [_scrollView addSubview:_polar];
 
     _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [_panAlertView removeFromSuperview];
+}
+
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - tableView代理
