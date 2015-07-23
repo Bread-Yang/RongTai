@@ -87,7 +87,7 @@ UISegmentedControl *segmentedControl;
 		segment[i] = [[segmentedControl subviews] objectAtIndex:i];
 	}
 	[self changeColor];
-	[self.view addSubview:segmentedControl];
+//	[self.view addSubview:segmentedControl];
 }
 
 - (void)segmentedControl:(id)sender
@@ -143,8 +143,8 @@ UISegmentedControl *segmentedControl;
 
 - (void)onDoneButtonPressed {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
-    [defaults synchronize];
+//    [defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
+//    [defaults synchronize];
     [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.introduceView.alpha = 0;
     } completion:^(BOOL finished) {

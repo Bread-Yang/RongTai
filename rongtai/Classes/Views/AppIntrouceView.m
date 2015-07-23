@@ -25,15 +25,18 @@
     
     if(self){
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
-        backgroundImageView.image = [UIImage imageNamed:@"Intro_Screen_Background"];
-        [self addSubview:backgroundImageView];
-        
+//        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
+//        backgroundImageView.image = [UIImage imageNamed:@"Intro_Screen_Background"];
+//        [self addSubview:backgroundImageView];
+		
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
         self.scrollView.pagingEnabled = YES;
+		self.scrollView.backgroundColor = [UIColor whiteColor];
+		self.scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.scrollView];
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.8, self.frame.size.width, 10)];
+		self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
         self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
         [self addSubview:self.pageControl];
         
@@ -44,7 +47,7 @@
         
         
         //Done Button
-        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.85, self.frame.size.width*.8, 60)];
+        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height * 0.9, self.frame.size.width * 0.5, 40)];
         [self.doneButton setTintColor:[UIColor whiteColor]];
         [self.doneButton setTitle:@"Let's Go!" forState:UIControlStateNormal];
         [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0]];
@@ -96,7 +99,12 @@
 -(void)createViewOne{
     
     UIView *view = [[UIView alloc] initWithFrame:self.frame];
-    
+	
+	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+	imageview.contentMode = UIViewContentModeScaleAspectFit;
+	imageview.image = [UIImage imageNamed:@"guide1"];
+	[view addSubview:imageview];
+	
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
     titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
     titleLabel.text = [NSString stringWithFormat:@"Pixifly"];
@@ -104,13 +112,8 @@
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment =  NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_One"];
-    [view addSubview:imageview];
-    
+//    [view addSubview:titleLabel];
+	
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
     descriptionLabel.text = [NSString stringWithFormat:@"Description for First Screen."];
     descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
@@ -118,8 +121,8 @@
     descriptionLabel.textAlignment =  NSTextAlignmentCenter;
     descriptionLabel.numberOfLines = 0;
     [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
+//    [view addSubview:descriptionLabel];
+	
     CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
     descriptionLabel.center = labelCenter;
     
@@ -135,7 +138,12 @@
     CGFloat originHeight = self.frame.size.height;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth, 0, originWidth, originHeight)];
-    
+	
+	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+	imageview.contentMode = UIViewContentModeScaleAspectFit;
+	imageview.image = [UIImage imageNamed:@"guide2"];
+	[view addSubview:imageview];
+	
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
     titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
     titleLabel.text = [NSString stringWithFormat:@"DropShot"];
@@ -143,13 +151,8 @@
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment =  NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
-    [view addSubview:imageview];
-    
+//    [view addSubview:titleLabel];
+	
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
     descriptionLabel.text = [NSString stringWithFormat:@"Description for Second Screen."];
     descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
@@ -157,8 +160,8 @@
     descriptionLabel.textAlignment =  NSTextAlignmentCenter;
     descriptionLabel.numberOfLines = 0;
     [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
+//    [view addSubview:descriptionLabel];
+	
     CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
     descriptionLabel.center = labelCenter;
     
@@ -173,7 +176,12 @@
     CGFloat originHeight = self.frame.size.height;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth*2, 0, originWidth, originHeight)];
-    
+	
+	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+	imageview.contentMode = UIViewContentModeScaleAspectFit;
+	imageview.image = [UIImage imageNamed:@"guide3"];
+	[view addSubview:imageview];
+	
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
     titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
     titleLabel.text = [NSString stringWithFormat:@"Shaktaya"];
@@ -181,17 +189,8 @@
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment =  NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
-    [view addSubview:imageview];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Three"];
-    [view addSubview:imageview];
-    
-    
+//    [view addSubview:titleLabel];
+	
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
     descriptionLabel.text = [NSString stringWithFormat:@"Description for Third Screen."];
     descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
@@ -199,8 +198,8 @@
     descriptionLabel.textAlignment =  NSTextAlignmentCenter;
     descriptionLabel.numberOfLines = 0;
     [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
+//    [view addSubview:descriptionLabel];
+	
     CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
     descriptionLabel.center = labelCenter;
     
@@ -216,7 +215,12 @@
     CGFloat originHeight = self.frame.size.height;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth*3, 0, originWidth, originHeight)];
-    
+	
+	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+	imageview.contentMode = UIViewContentModeScaleAspectFit;
+	imageview.image = [UIImage imageNamed:@"guide4"];
+	[view addSubview:imageview];
+	
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
     titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
     titleLabel.text = [NSString stringWithFormat:@"Punctual"];
@@ -224,16 +228,8 @@
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment =  NSTextAlignmentCenter;
     titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
-    [view addSubview:imageview];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Four"];
-    [view addSubview:imageview];
-    
+//    [view addSubview:titleLabel];
+	
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
     descriptionLabel.text = [NSString stringWithFormat:@"Description for Fourth Screen."];
     descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
@@ -241,8 +237,8 @@
     descriptionLabel.textAlignment =  NSTextAlignmentCenter;
     descriptionLabel.numberOfLines = 0;
     [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
+//    [view addSubview:descriptionLabel];
+	
     CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
     descriptionLabel.center = labelCenter;
     

@@ -161,29 +161,28 @@
 	return 8;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    NSString *reuseIdentifier;
-	if ([kind isEqualToString: UICollectionElementKindSectionFooter ]) {
-		reuseIdentifier = @"Footer";
-	}else{
-		reuseIdentifier = @"Header";
-	}
-	UICollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:reuseIdentifier   forIndexPath:indexPath];
-	
-	if (!view) {
-		view = [[UICollectionReusableView alloc] init];
-	}
-	if (kind == UICollectionElementKindSectionHeader) {
-		
-	} else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-
-	}
-	view.backgroundColor = [UIColor blackColor];
-	view.layer.borderWidth = .5f;
-	view.layer.borderColor = [UIColor colorWithRed:221.0 / 255.0 green:223.0 / 255.0 blue:220.0 / 255.0 alpha:1.0].CGColor;
-//	view.frame = CGRectMake(0, 0, 100, 100);
-	return view;
-}
+// Header和Footer的样式
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    NSString *reuseIdentifier;
+//	if ([kind isEqualToString: UICollectionElementKindSectionFooter ]) {
+//		reuseIdentifier = @"Footer";
+//	}else{
+//		reuseIdentifier = @"Header";
+//	}
+//	UICollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:reuseIdentifier   forIndexPath:indexPath];
+//	
+//	if (!view) {
+//		view = [[UICollectionReusableView alloc] init];
+//	}
+//	if (kind == UICollectionElementKindSectionHeader) {
+//		
+//	} else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+//
+//	}
+//	view.backgroundColor = [UIColor blackColor];
+//	view.layer.borderWidth = .5f;
+//	return view;
+//}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
