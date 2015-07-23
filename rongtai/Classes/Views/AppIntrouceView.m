@@ -25,15 +25,18 @@
     
     if(self){
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
-        backgroundImageView.image = [UIImage imageNamed:@"Intro_Screen_Background"];
-        [self addSubview:backgroundImageView];
-        
+//        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
+//        backgroundImageView.image = [UIImage imageNamed:@"Intro_Screen_Background"];
+//        [self addSubview:backgroundImageView];
+		
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
         self.scrollView.pagingEnabled = YES;
+		self.scrollView.backgroundColor = [UIColor whiteColor];
+		self.scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.scrollView];
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.8, self.frame.size.width, 10)];
+		self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
         self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
         [self addSubview:self.pageControl];
         
@@ -44,7 +47,7 @@
         
         
         //Done Button
-        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.85, self.frame.size.width*.8, 60)];
+        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height * 0.9, self.frame.size.width * 0.5, 40)];
         [self.doneButton setTintColor:[UIColor whiteColor]];
         [self.doneButton setTitle:@"Let's Go!" forState:UIControlStateNormal];
         [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0]];
