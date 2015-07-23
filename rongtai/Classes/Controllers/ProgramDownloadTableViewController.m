@@ -36,7 +36,7 @@
 #pragma mark - 返回
 -(void)goBack
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
