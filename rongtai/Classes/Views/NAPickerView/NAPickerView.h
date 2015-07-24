@@ -36,15 +36,18 @@ typedef void (^NACellUnHighlightConfigureBlock)(id);
 @property (assign, nonatomic) CGFloat borderWidth;
 @property (strong, nonatomic) UIColor *borderColor;
 @property (assign, nonatomic) CGFloat cornerRadius;
+@property (strong, nonatomic) UIImage *overlayLeftImage;
+@property (strong, nonatomic) NSString *overlayRightString;
+@property (strong, nonatomic) UIColor *overlayColor;
 
 - (id)initWithFrame:(CGRect)frame
-           andItems:(NSArray *)items
+		   andItems:(NSArray *)items
    andCellClassName:(NSString *)className
-        andDelegate:(id)delegate;
+		andDelegate:(id)delegate;
 
 - (id)initWithFrame:(CGRect)frame
-           andItems:(NSArray *)items
-        andDelegate:(id)delegate;
+		   andItems:(NSArray *)items
+		andDelegate:(id)delegate;
 
 - (NSInteger)getHighlightIndex;
 

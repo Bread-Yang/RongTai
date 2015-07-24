@@ -12,15 +12,16 @@
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
 #import "TimingPlan.h"
-#import "NAPickerView.h"
 
-@interface AddTimingMassageViewController () <NAPickerViewDelegate> {
+@interface AddTimingMassageViewController () {
 	
-	NSArray* modeNameArray;
-	NSMutableArray* hourArray;
-	NSMutableArray* minuteArray;
+	NSArray *modeNameArray;
+	NSMutableArray *hourArray;
+	NSMutableArray *minuteArray;
 	id segment[7];
     __weak IBOutlet UISegmentedControl *_weekSC;
+	NAPickerView *leftPickView, *rightPickView;
+	BOOL isNotFirstInvokeDidLayoutSubviews;
 }
 
 @end
@@ -43,7 +44,7 @@
 	self.weekDaySegmentControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[self.weekDaySegmentControl setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 	
-	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"模式4", @"模式5"];
+	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
 	
 	hourArray = [NSMutableArray new];
 	for (int i = 0; i < 24; i++) {
@@ -55,14 +56,7 @@
 		[minuteArray addObject:[NSString stringWithFormat:@"%d", i]];
 	}
 	
-	LineUICollectionViewFlowLayout *lineLayout = [[LineUICollectionViewFlowLayout alloc] init];
-	[lineLayout setItemSize:CGSizeMake(self.collectionView.bounds.size.height / 3 * 2, self.collectionView.bounds.size.height / 3 * 2)];
-	lineLayout.delegate = self;
-	
-	lineLayout.headerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
-	lineLayout.footerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
-	
-	self.collectionView.collectionViewLayout = lineLayout;
+	self.collectionView.delegate = self;
 	
 	[self.collectionView registerClass:[LineUICollectionViewCell class] forCellWithReuseIdentifier:@"MY_CELL"];
 	
@@ -79,50 +73,54 @@
 	}
 }
 
-- (void)hello {
-	
+- (void)viewDidLayoutSubviews {
+	if (!isNotFirstInvokeDidLayoutSubviews) {
+		isNotFirstInvokeDidLayoutSubviews = true;
+		
+		CGSize size = [UIScreen mainScreen].bounds.size;
+		
+		NSMutableArray *leftItems = [[NSMutableArray alloc] init];
+		for (int i = 0; i < 30;  i++) {
+			[leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+		}
+		
+		NSLog(@"width : %f, height : %f", [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+		
+		leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:leftItems andDelegate:self];
+		leftPickView.infiniteScrolling = YES;
+		leftPickView.highlightBlock = ^(NALabelCell *cell) {
+			cell.textView.textColor = [UIColor whiteColor];
+//			cell.textView.font = [UIFont systemFontOfSize:30];
+			cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:30.0];
+		};
+		leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
+			cell.textView.textColor = [UIColor blackColor];
+			        cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:18.0];
+//			cell.textView.font = [UIFont systemFontOfSize:18];
+		};
+		[self.containView addSubview:leftPickView];
+		
+		NSMutableArray *rightItems = [[NSMutableArray alloc] init];
+		for (int i = 0; i < 60;  i++) {
+			[rightItems addObject:[NSString stringWithFormat:@"%d", i]];
+		}
+		
+		rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:rightItems andDelegate:self];
+		rightPickView.infiniteScrolling = YES;
+		rightPickView.highlightBlock = ^(NALabelCell *cell) {
+			cell.textView.textColor = [UIColor whiteColor];
+			cell.textView.font = [UIFont systemFontOfSize:30];
+		};
+		rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
+			cell.textView.textColor = [UIColor blackColor];
+			cell.textView.font = [UIFont systemFontOfSize:18];
+		};
+		[self.containView addSubview:rightPickView];
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	CGSize size = [UIScreen mainScreen].bounds.size;
 	
-	NSMutableArray *leftItems = [[NSMutableArray alloc] init];
-	for (int i = 0; i < 30;  i++) {
-		[leftItems addObject:[NSString stringWithFormat:@"%d", i]];
-	}
-	
-	NSLog(@"width : %f, height : %f", [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-	
-	NAPickerView *leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:leftItems andDelegate:self];
-	leftPickView.infiniteScrolling = YES;
-	[leftPickView setIndex:0];
-	leftPickView.highlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor whiteColor];
-		cell.textView.font = [UIFont systemFontOfSize:30];
-	};
-	leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor blackColor];
-		cell.textView.font = [UIFont systemFontOfSize:18];
-	};
-	[self.containView addSubview:leftPickView];
-	
-	NSMutableArray *rightItems = [[NSMutableArray alloc] init];
-	for (int i = 0; i < 60;  i++) {
-		[rightItems addObject:[NSString stringWithFormat:@"%d", i]];
-	}
-	
-	NAPickerView *rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:rightItems andDelegate:self];
-	rightPickView.infiniteScrolling = YES;
-	[rightPickView setIndex:0];
-	rightPickView.highlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor whiteColor];
-		cell.textView.font = [UIFont systemFontOfSize:30];
-	};
-	rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
-		cell.textView.textColor = [UIColor blackColor];
-		cell.textView.font = [UIFont systemFontOfSize:18];
-	};
-	[self.containView addSubview:rightPickView];
 }
 
 - (void)segmentedControl:(id)sender {
@@ -130,7 +128,7 @@
 	[self changeColor];
 }
 
-- (void)changeColor{
+- (void)changeColor {
 	for (int i = 0; i < 7; i++) {
 		[segment[i] setTintColor:[UIColor lightGrayColor]];
 	}
@@ -284,10 +282,12 @@
 //	return label;
 //}
 
-#pragma mark - LineUICollectionViewFlowLayoutDelegate
+#pragma mark - LineCollectionViewDelegate
 
-- (void)currentHighlightItem:(NSIndexPath *)indexPath {
-	NSLog(@"currentHighlightItem执行了");
+- (void)currentHighlightItemIndex:(NSIndexPath *)indexPath {
+	NSLog(@"currentHighlightItem执行了, indexPath.row : %i, indexPath.section : %i", indexPath.row, indexPath.section);
+	self.modeLabel.text = [modeNameArray objectAtIndex:indexPath.row];
+	[self.modeLabel setNeedsDisplay];
 }
 
 #pragma mark - NAPickerViewDelegate

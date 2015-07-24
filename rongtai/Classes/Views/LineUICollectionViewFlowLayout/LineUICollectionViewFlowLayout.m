@@ -70,11 +70,14 @@
 	CGRect centerItemRect = CGRectMake(adjustItemOffset, 0.0, self.itemSize.width / 4, self.itemSize.width);
 	NSArray *itemArray = [super layoutAttributesForElementsInRect:centerItemRect];
 	NSLog(@"itemArray count : %i", [itemArray count]);
+	
 	for (UICollectionViewLayoutAttributes *layoutAttributes in itemArray) {
 		NSLog(@"index : %i", layoutAttributes.indexPath.row);
 	}
+	
+	self.currentSelectItem = ((UICollectionViewLayoutAttributes *)[itemArray objectAtIndex:0]).indexPath.row;
 	if (self.delegate && [self.delegate respondsToSelector:@selector(currentHighlightItem:)]) {
-		[self.delegate currentHighlightItem:[NSIndexPath indexPathForRow:0 inSection:0]];
+		[self.delegate currentHighlightItem:[NSIndexPath indexPathForRow:self.currentSelectItem inSection:0]];
 	}
     return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);
 }

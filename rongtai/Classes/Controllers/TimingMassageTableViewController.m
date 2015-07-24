@@ -23,6 +23,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
+	backgroundImageView.image = [UIImage imageNamed:@"bg"];
+	[self.view insertSubview:backgroundImageView atIndex:0];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

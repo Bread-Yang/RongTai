@@ -18,4 +18,6 @@
 
 @property(assign, nonatomic) id<LineUICollectionViewFlowLayoutDelegate> delegate;
 
+@property(assign, nonatomic) NSInteger currentSelectItem;
+
 @end

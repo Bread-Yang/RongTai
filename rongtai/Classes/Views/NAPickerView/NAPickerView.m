@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define INFINITE_SCROLLING_COUNT 5
-#define OVERLAY_COLOR [UIColor colorWithRed:78.0/255.0 green:174.0/255.0 blue:239.0/255.0 alpha:1.0f]
 
 @interface NAPickerView() <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,7 +22,6 @@
 @end
 
 @implementation NAPickerView
-@synthesize showOverlay = mShowOverlay;
 
 - (id)initWithFrame:(CGRect)frame
 		   andItems:(NSArray *)items
@@ -40,64 +38,64 @@
 }
 
 - (id)initWithFrame:(CGRect)frame
-           andItems:(NSArray *)items
+		   andItems:(NSArray *)items
    andCellClassName:(NSString *)className
-        andDelegate:(id)delegate {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self configWithFrame:frame
-                     andItems:items
-             andCellClassName:className
-                  andDelegate:delegate];
-    }
-    return self;
+		andDelegate:(id)delegate {
+	self = [super initWithFrame:frame];
+	if (self) {
+		// Initialization code
+		[self configWithFrame:frame
+					 andItems:items
+			 andCellClassName:className
+				  andDelegate:delegate];
+	}
+	return self;
 }
 
 - (void)configWithFrame:(CGRect)frame
-               andItems:(NSArray *)items
-       andCellClassName:(NSString *)className
-            andDelegate:(id)delegate {
-    self.items = items;
-    self.delegate = delegate;
-    self.cellClassName = className;
+			   andItems:(NSArray *)items
+	   andCellClassName:(NSString *)className
+			andDelegate:(id)delegate {
+	self.items = items;
+	self.delegate = delegate;
+	self.cellClassName = className;
 	
 	self.backgroundColor = [UIColor clearColor];
 	
-//	mShowOverlay = NO;
-//	self.showOverlay = YES;
+	//	mShowOverlay = NO;
+	//	self.showOverlay = YES;
 	
-    self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.showsHorizontalScrollIndicator = NO;
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.allowsSelection = NO;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.tableView];
-    
-    self.highlightIndex = [NSIndexPath indexPathForRow:0 inSection:0];
-    
-    self.configureBlock = ^(NALabelCell *cell, NSString *item) {
-        [cell.textView setText:item];
-        cell.textView.textAlignment = UITextAlignmentCenter;
-        cell.textView.font = [UIFont systemFontOfSize:30];
-        cell.textView.backgroundColor = [UIColor clearColor];
-        cell.textView.textColor = [UIColor grayColor];
-    };
-    
-    self.highlightBlock = ^(NALabelCell *cell) {
-        cell.textView.textColor = [UIColor greenColor];
-    };
-    
-    self.unhighlightBlock = ^(NALabelCell *cell) {
-        cell.textView.textColor = [UIColor grayColor];
-    };
+	self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	self.tableView.showsHorizontalScrollIndicator = NO;
+	self.tableView.showsVerticalScrollIndicator = NO;
+	self.tableView.allowsSelection = NO;
+	self.tableView.backgroundColor = [UIColor clearColor];
+	[self addSubview:self.tableView];
+	
+	self.highlightIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+	
+	self.configureBlock = ^(NALabelCell *cell, NSString *item) {
+		[cell.textView setText:item];
+		cell.textView.textAlignment = UITextAlignmentCenter;
+		cell.textView.font = [UIFont systemFontOfSize:30];
+		cell.textView.backgroundColor = [UIColor clearColor];
+		cell.textView.textColor = [UIColor grayColor];
+	};
+	
+	self.highlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor greenColor];
+	};
+	
+	self.unhighlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor grayColor];
+	};
 }
 
 - (CGFloat)headerHeight {
-    return self.bounds.size.height / 2 - [self cellHeight] / 2;
+	return self.bounds.size.height / 2 - [self cellHeight] / 2;
 }
 
 - (CGFloat)cellHeight {
@@ -105,52 +103,66 @@
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
-    self.layer.borderWidth = borderWidth;
+	self.layer.borderWidth = borderWidth;
 }
 
 - (void)setBorderColor:(UIColor *)borderColor {
-    [self.layer setBorderColor:[borderColor CGColor]];
+	[self.layer setBorderColor:[borderColor CGColor]];
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
-    self.layer.cornerRadius = cornerRadius;
-    self.layer.masksToBounds = YES;
+	self.layer.cornerRadius = cornerRadius;
+	self.layer.masksToBounds = YES;
 }
 
 - (void)setIndex:(NSInteger)index {
 	if (self.infiniteScrolling) {
 		if (index < self.items.count - 2) {
 			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
-//			NSLog(@"self.current : %i", self.currentIndex.row);
+			//			NSLog(@"self.current : %i", self.currentIndex.row);
 		}
 	} else {
 		self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
 	}
-    [self.tableView scrollToRowAtIndexPath:self.highlightIndex
-                          atScrollPosition:UITableViewScrollPositionMiddle
-                                  animated:NO];
-}
-
-- (void)setShowOverlay:(BOOL)showOverlay {
-    if (showOverlay != mShowOverlay) {
-        mShowOverlay = showOverlay;
-        [self setOverlayView];
-    }
+	[self.tableView scrollToRowAtIndexPath:self.highlightIndex
+						  atScrollPosition:UITableViewScrollPositionMiddle
+								  animated:NO];
 }
 
 - (void)setOverlayView {
-    if (self.showOverlay) {
-        self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                self.frame.size.height / 2 - [self cellHeight] / 2,
-                                                                self.frame.size.width,
-                                                                [self cellHeight])];
-        self.overlay.backgroundColor = OVERLAY_COLOR;
-        self.overlay.alpha = 0.5;
-        self.overlay.userInteractionEnabled = NO;
-        [self addSubview:self.overlay];
-    } else {
-        [self.overlay removeFromSuperview];
-    }
+	[self.overlay removeFromSuperview];
+	
+	self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
+															self.frame.size.height / 2 - [self cellHeight] / 2,
+															self.frame.size.width,
+															[self cellHeight])];
+	// 左边的图片
+	if (self.overlayLeftImage) {
+		CGFloat width = [self cellHeight] * 0.5;
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlay.frame.size.width / 2 - 50, [self cellHeight] / 4, width, width)];
+		imageView.image = self.overlayLeftImage;
+		[self.overlay addSubview:imageView];
+	}
+	
+	// 右边的文字
+	if (self.overlayRightString) {
+		UILabel *label = [[UILabel alloc] init];
+		label.font = [UIFont systemFontOfSize:12];
+		label.text = self.overlayRightString;
+		[label sizeToFit];
+		label.frame = CGRectMake(self.overlay.frame.size.width / 2 + [self cellHeight] / 2, [self cellHeight] / 4.0 * 3.0 - label.frame.size.height, label.frame.size.width, label.frame.size.height);
+		[self.overlay addSubview:label];
+	}
+	
+	if (self.overlayColor)  {
+		self.overlay.backgroundColor = self.overlayColor;
+	} else {
+		self.overlay.backgroundColor = [UIColor grayColor];
+	}
+	
+	self.overlay.alpha = 0.5;
+	self.overlay.userInteractionEnabled = NO;
+	[self insertSubview:self.overlay atIndex:0];
 }
 
 #pragma mark - UITableView delegate
@@ -159,16 +171,16 @@
 	if (self.infiniteScrolling) {
 		return 0;
 	}
-    return [self headerHeight];
+	return [self headerHeight];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *emptyHeader = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                   0,
-                                                                   self.tableView.frame.size.width,
-                                                                   [self headerHeight])];
-    emptyHeader.backgroundColor = [UIColor clearColor];
-    return emptyHeader;
+	UIView *emptyHeader = [[UIView alloc] initWithFrame:CGRectMake(0,
+																   0,
+																   self.tableView.frame.size.width,
+																   [self headerHeight])];
+	emptyHeader.backgroundColor = [UIColor clearColor];
+	return emptyHeader;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -176,17 +188,17 @@
 	if (self.infiniteScrolling) {
 		return 0;
 	}
-    return [self headerHeight];
+	return [self headerHeight];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *emptyHeader = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                                   0,
-                                                                   self.tableView.frame.size.width,
-                                                                   [self headerHeight])];
-    emptyHeader.backgroundColor = [UIColor clearColor];
-    return emptyHeader;
+	UIView *emptyHeader = [[UIView alloc] initWithFrame:CGRectMake(0,
+																   0,
+																   self.tableView.frame.size.width,
+																   [self headerHeight])];
+	emptyHeader.backgroundColor = [UIColor clearColor];
+	return emptyHeader;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -203,31 +215,31 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"NACellIdentifier";
-    NAPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(!cell) {
-        cell = [[NSClassFromString(self.cellClassName) alloc] initWithStyle:UITableViewCellStyleDefault
-                                                            reuseIdentifier:cellIdentifier
-                                                                  cellWidth:self.tableView.bounds.size.width cellHeight:self.tableView.bounds.size.height / 5];
-    }
+	static NSString *cellIdentifier = @"NACellIdentifier";
+	NAPickerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	
+	if(!cell) {
+		cell = [[NSClassFromString(self.cellClassName) alloc] initWithStyle:UITableViewCellStyleDefault
+															reuseIdentifier:cellIdentifier
+																  cellWidth:self.tableView.bounds.size.width cellHeight:self.tableView.bounds.size.height / 5];
+	}
 	
 	
-    self.configureBlock(cell, [self.items objectAtIndex:indexPath.row % self.items.count]);
-    if(indexPath.row == self.highlightIndex.row) {
-        self.highlightBlock(cell);
-    } else {
-        self.unhighlightBlock(cell);
-    }
-    return cell;
+	self.configureBlock(cell, [self.items objectAtIndex:indexPath.row % self.items.count]);
+	if(indexPath.row == self.highlightIndex.row) {
+		self.highlightBlock(cell);
+	} else {
+		self.unhighlightBlock(cell);
+	}
+	return cell;
 }
 
 #pragma mark - ScrollViewDelegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-    GLfloat rowHeight = [self cellHeight];
-    CGFloat floatVal = targetContentOffset -> y / rowHeight;
+					 withVelocity:(CGPoint)velocity
+			  targetContentOffset:(inout CGPoint *)targetContentOffset {
+	GLfloat rowHeight = [self cellHeight];
+	CGFloat floatVal = targetContentOffset -> y / rowHeight;
 	NSInteger rounded = (NSInteger)(lround(floatVal));
 	targetContentOffset -> y = rounded * rowHeight;
 	if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectedItemAtIndex:andIndex:)]) {
@@ -254,54 +266,77 @@
 		}
 	}
 	
-    NSArray *visibleIndex = [self.tableView indexPathsForVisibleRows];
-    NSArray *visibleIndexSorted = [visibleIndex sortedArrayUsingComparator:^NSComparisonResult(id a, id b){
-        CGRect r1 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)a];
-        CGRect r2 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)b];
-        CGFloat y1 = fabsf(r1.origin.y + r1.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
-        CGFloat y2 = fabsf(r2.origin.y + r2.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
-        if (y1 > y2) {
-            return NSOrderedDescending;
-        }
-        return NSOrderedAscending;
-    }];
-    
-    NSIndexPath *middleIndex = [visibleIndexSorted objectAtIndex:0];
-    if (!self.highlightIndex) {
-        self.highlightIndex = middleIndex;
-    }
-    if (self.highlightIndex.row == middleIndex.row) {
-        return;
-    }
-    
-    NAPickerCell *currentCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:self.highlightIndex];
-    self.unhighlightBlock(currentCell);
-    NAPickerCell *middleCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:middleIndex];
-    self.highlightBlock(middleCell);
-    self.highlightIndex = middleIndex;
+	NSArray *visibleIndex = [self.tableView indexPathsForVisibleRows];
+	NSArray *visibleIndexSorted = [visibleIndex sortedArrayUsingComparator:^NSComparisonResult(id a, id b){
+		CGRect r1 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)a];
+		CGRect r2 = [self.tableView rectForRowAtIndexPath:(NSIndexPath *)b];
+		CGFloat y1 = fabsf(r1.origin.y + r1.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
+		CGFloat y2 = fabsf(r2.origin.y + r2.size.height/2 - self.tableView.contentOffset.y - self.tableView.center.y);
+		if (y1 > y2) {
+			return NSOrderedDescending;
+		}
+		return NSOrderedAscending;
+	}];
+	
+	NSIndexPath *middleIndex = [visibleIndexSorted objectAtIndex:0];
+	if (!self.highlightIndex) {
+		self.highlightIndex = middleIndex;
+	}
+	if (self.highlightIndex.row == middleIndex.row) {
+		return;
+	}
+	
+	NAPickerCell *currentCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:self.highlightIndex];
+	self.unhighlightBlock(currentCell);
+	NAPickerCell *middleCell = (NAPickerCell *)[self.tableView cellForRowAtIndexPath:middleIndex];
+	self.highlightBlock(middleCell);
+	self.highlightIndex = middleIndex;
 }
 
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//	[self.tableView scrollToRowAtIndexPath:self.currentIndex
-//						  atScrollPosition:UITableViewScrollPositionMiddle
-//								  animated:YES];
+	//	[self.tableView scrollToRowAtIndexPath:self.currentIndex
+	//						  atScrollPosition:UITableViewScrollPositionMiddle
+	//								  animated:YES];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	NSLog(@"scrollViewDidEndDragging");
 }
 
-- (void)setInfiniteScrolling	:(BOOL)infiniteScrolling {
+- (void)setInfiniteScrolling:(BOOL)infiniteScrolling {
 	if (_items.count >= INFINITE_SCROLLING_COUNT) {
 		_infiniteScrolling = infiniteScrolling;
+		if (_infiniteScrolling) {
+			[self setIndex:0];
+		}
 	} else {
 		_infiniteScrolling = NO;
 	}
 }
 
+#pragma mark - setter and getter
+
+- (void)setShowOverlay:(BOOL)showOverlay {
+	if (showOverlay != _showOverlay) {
+		_showOverlay = showOverlay;
+		[self setOverlayView];
+	}
+}
+
+- (void)setOverlayLeftImage:(UIImage *)overlayLeftImage {
+	_overlayLeftImage = overlayLeftImage;
+	[self setOverlayView];
+}
+
+- (void)setOverlayRightString:(NSString *)overlayRightString {
+	_overlayRightString = overlayRightString;
+	[self setOverlayView];
+}
+
 - (NSInteger)getHighlightIndex {
 	return self.highlightIndex.row % self.items.count;
 }
+
 
 @end
