@@ -13,8 +13,9 @@
 #import "ManualHumanView.h"
 #import "WLPolar.h"
 #import "RongTaiConstant.h"
+#import "SMPageControl.h"
 
-@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate>
+@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,UIScrollViewDelegate>
 {
     WLPanAlertView* _panAlertView;
     UIImageView* _arrow;
@@ -29,6 +30,9 @@
     __weak IBOutlet UIScrollView *_scrollView;
     ManualHumanView* _humanView;
     WLPolar* _polar;
+    __weak IBOutlet UIView *_addPageControl;
+    SMPageControl* _pageControl;
+    UIView* _testView;
 }
 @end
 
@@ -119,7 +123,7 @@
     [_scrollView addSubview:_humanView];
     
     //
-    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
     _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
     _polar.steps = 3;
     _polar.r = SCREENHEIGHT*0.57*0.3;
@@ -132,11 +136,23 @@
     _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
     _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
-//    UIResponder
-    [_scrollView addSubview:_polar];
-
-    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
     
+    [_scrollView addSubview:_polar];
+    UIPageControl* page = [[UIPageControl alloc]initWithFrame:CGRectMake(100, 100, 100, 30)];
+    
+    page.numberOfPages = 3;
+    
+    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
+    _scrollView.delegate = self;
+    
+    //
+    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
+    _pageControl.numberOfPages = 2;
+//    _pageControl.backgroundColor = [UIColor blueColor];
+    _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
+    _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
+    [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
+    [_addPageControl addSubview:_pageControl];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -149,6 +165,43 @@
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - pageControl方法
+-(void)pageControlChange:(SMPageControl*)pageControl
+{
+    CGFloat w = CGRectGetWidth(_scrollView.frame);
+    CGFloat h = CGRectGetHeight(_scrollView.frame);
+    if (pageControl.currentPage == 0) {
+        [_scrollView scrollRectToVisible:CGRectMake(0, 0, w, h) animated:YES];
+    }
+    else
+    {
+        [_scrollView scrollRectToVisible:CGRectMake(w, 0, w, h) animated:YES];
+    }
+}
+
+#pragma mark - scroll代理
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (_scrollView.contentOffset.x==0) {
+        _pageControl.currentPage = 0;
+    }
+    else
+    {
+        _pageControl.currentPage = 1;
+    }
+}
+
+-(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    if (_scrollView.contentOffset.x==0) {
+        _pageControl.currentPage = 0;
+    }
+    else
+    {
+        _pageControl.currentPage = 1;
+    }
 }
 
 #pragma mark - tableView代理

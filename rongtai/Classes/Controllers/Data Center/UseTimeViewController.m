@@ -10,6 +10,7 @@
 #import "WLDoughnutStatsView.h"
 #import "RongTaiConstant.h"
 #import "WLLineChart.h"
+#import "UILabel+WLAttributedString.h"
 
 @interface UseTimeViewController ()
 {
@@ -21,6 +22,9 @@
     __weak IBOutlet UIButton *_monthBtn;
     __weak IBOutlet UIButton *_yeayBtn;
     
+    __weak IBOutlet UILabel *_usingTime;
+    
+
     WLLineChart* _lineChart;  //折线图
 }
 @end
@@ -50,11 +54,15 @@
     _lineChart.xUnitFont = [UIFont systemFontOfSize:11];
     [_storeLineChartView addSubview:_lineChart];
     
+    _usingTime.font = [UIFont fontWithName:@"Helvetica" size:10*HSCALE];
+    [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
+    
     // Do any additional setup after loading the view.
 }
 
 - (IBAction)dateSelected:(UIButton *)sender {
-    if (sender.tag == 1110) {
+    if (sender.tag == 1110)
+    {
         //日
         _dayBtn.backgroundColor = BLUE;
         _monthBtn.backgroundColor = [UIColor clearColor];
@@ -75,7 +83,6 @@
         _dayBtn.backgroundColor = [UIColor clearColor];
         _monthBtn.backgroundColor = [UIColor clearColor];
     }
-    
 }
 
 

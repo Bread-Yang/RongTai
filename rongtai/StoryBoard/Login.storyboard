@@ -290,7 +290,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOA-tX-snV" customClass="WLDoughnutStatsView">
                                 <rect key="frame" x="0.0" y="25" width="600" height="240"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDT-Me-yC4">
+                                        <rect key="frame" x="283" y="141" width="34" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.088841488489999995" green="0.0979649405" blue="0.1411852385" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="ZDT-Me-yC4" secondAttribute="centerX" id="b9q-qx-ExU"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每日使用时长" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0B-6T-8YZ">
                                 <rect key="frame" x="258" y="518" width="84" height="42"/>
@@ -373,6 +384,16 @@
                                     <action selector="dateSelected:" destination="lYZ-Go-uPN" eventType="touchUpInside" id="qSI-Qc-f2U"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h30m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUC-XV-GUu">
+                                <rect key="frame" x="228" y="94" width="144" height="72"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FUC-XV-GUu" secondAttribute="height" multiplier="4:2" id="Dhp-fj-jGP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -394,11 +415,15 @@
                             <constraint firstAttribute="width" secondItem="zOA-tX-snV" secondAttribute="width" id="JJI-lP-O3Q"/>
                             <constraint firstItem="aX5-OY-TP0" firstAttribute="top" secondItem="zOA-tX-snV" secondAttribute="bottom" id="JTO-48-Wh3"/>
                             <constraint firstItem="zOA-tX-snV" firstAttribute="top" secondItem="KaO-Ne-ZgL" secondAttribute="bottom" constant="5" id="L8b-QQ-WU4"/>
+                            <constraint firstItem="FUC-XV-GUu" firstAttribute="height" secondItem="zOA-tX-snV" secondAttribute="height" multiplier="0.3" id="LAk-ES-gqk"/>
                             <constraint firstItem="10G-5K-K3q" firstAttribute="top" secondItem="BDe-zY-avi" secondAttribute="bottom" id="MQ2-eh-b15"/>
                             <constraint firstItem="aX5-OY-TP0" firstAttribute="leading" secondItem="4Zm-Wo-QuM" secondAttribute="leadingMargin" constant="-16" id="NhG-mW-7ka"/>
+                            <constraint firstItem="zOA-tX-snV" firstAttribute="width" secondItem="FUC-XV-GUu" secondAttribute="width" id="QLg-bi-79h"/>
                             <constraint firstItem="Rei-33-N3Q" firstAttribute="width" secondItem="4Zm-Wo-QuM" secondAttribute="width" id="Qlu-y9-REi"/>
                             <constraint firstItem="dx9-fj-YOb" firstAttribute="height" secondItem="4Zm-Wo-QuM" secondAttribute="height" multiplier="0.08" id="TRz-bd-uLY"/>
                             <constraint firstItem="BDe-zY-avi" firstAttribute="top" secondItem="Rei-33-N3Q" secondAttribute="bottom" constant="-1" id="URI-hZ-PHX"/>
+                            <constraint firstItem="zOA-tX-snV" firstAttribute="centerX" secondItem="FUC-XV-GUu" secondAttribute="centerX" id="VJO-Xl-RqV"/>
+                            <constraint firstItem="ZDT-Me-yC4" firstAttribute="top" secondItem="FUC-XV-GUu" secondAttribute="bottom" id="VVp-o8-v4z"/>
                             <constraint firstAttribute="centerX" secondItem="Rei-33-N3Q" secondAttribute="centerX" id="VjC-a0-eLi"/>
                             <constraint firstItem="BDe-zY-avi" firstAttribute="top" secondItem="fMO-ut-aYk" secondAttribute="bottom" constant="-2" id="YoA-SR-X2w"/>
                             <constraint firstItem="dx9-fj-YOb" firstAttribute="leading" secondItem="90I-hd-j6W" secondAttribute="trailing" id="aKc-X9-89L"/>
@@ -420,10 +445,12 @@
                             <constraint firstAttribute="width" secondItem="fMO-ut-aYk" secondAttribute="width" id="uif-xa-o9n"/>
                             <constraint firstItem="Y3i-Bk-Od3" firstAttribute="height" secondItem="4Zm-Wo-QuM" secondAttribute="height" multiplier="0.08" id="wRj-pu-atO"/>
                             <constraint firstItem="Rei-33-N3Q" firstAttribute="top" secondItem="BDe-zY-avi" secondAttribute="bottom" id="wVY-IS-kpn"/>
+                            <constraint firstItem="zOA-tX-snV" firstAttribute="centerY" secondItem="FUC-XV-GUu" secondAttribute="centerY" constant="15" id="xbd-RM-D9P"/>
                             <constraint firstItem="m5a-up-1Dv" firstAttribute="top" secondItem="aX5-OY-TP0" secondAttribute="bottom" id="ziQ-of-Qwd"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="QLg-bi-79h"/>
                                 <exclude reference="NhG-mW-7ka"/>
                                 <exclude reference="8VZ-Bq-Srt"/>
                                 <exclude reference="l0c-yn-Ep6"/>
@@ -439,12 +466,13 @@
                         <outlet property="_doughnutView" destination="zOA-tX-snV" id="PAM-fx-lhc"/>
                         <outlet property="_monthBtn" destination="BDe-zY-avi" id="Q4I-yX-YAm"/>
                         <outlet property="_storeLineChartView" destination="m5a-up-1Dv" id="5jM-Gq-c0P"/>
+                        <outlet property="_usingTime" destination="FUC-XV-GUu" id="rE6-Kj-tpe"/>
                         <outlet property="_yeayBtn" destination="dx9-fj-YOb" id="gsb-pO-N5C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00B-W9-mHf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="161" y="1674"/>
+            <point key="canvasLocation" x="161" y="1680"/>
         </scene>
         <!--Manual View Controller-->
         <scene sceneID="xhC-yt-PV7">
@@ -615,7 +643,7 @@
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfm-yR-xX6">
                                 <rect key="frame" x="270" y="442" width="60" height="18"/>
-                                <color key="backgroundColor" red="0.35240878710000001" green="0.97020991160000003" blue="0.61284705210000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -635,6 +663,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_addPageControl" destination="Kfm-yR-xX6" id="DsL-AL-paL"/>
                         <outlet property="_scrollView" destination="UoP-jt-gLb" id="3bc-Dn-Ol5"/>
                     </connections>
                 </viewController>

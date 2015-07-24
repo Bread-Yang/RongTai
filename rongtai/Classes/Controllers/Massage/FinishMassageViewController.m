@@ -65,7 +65,9 @@
 
 -(void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
 {
-    _score.text = [NSString stringWithFormat:@"%.1f分",newScorePercent];
+    _score.text = [NSString stringWithFormat:@"%.1f分",newScorePercent*5];
+    UIFont* font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:50];
+    [_score setNumebrByFont:font Color:ORANGE];
 }
 
 

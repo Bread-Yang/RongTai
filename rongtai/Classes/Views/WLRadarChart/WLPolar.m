@@ -144,14 +144,14 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"触摸开始");
-//    [super touchesBegan:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
     UITouch* touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     for (int i = 0; i<_points.count; i++) {
         NSValue* v = _points[i];
         CGPoint p = [v CGPointValue];
-        BOOL xIn = ABS(p.x - point.x)<=6;
-        BOOL yIn = ABS(p.y - point.y)<=6;
+        BOOL xIn = ABS(p.x - point.x)<=10;
+        BOOL yIn = ABS(p.y - point.y)<=10;
         if (xIn&&yIn) {
             _isTouchInPoint = YES;
             _touchPointIndex = i;
@@ -181,7 +181,7 @@
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"触摸移动");
-//    [super touchesMoved:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
     if (_isTouchInPoint) {
         UITouch* touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
@@ -201,11 +201,11 @@
         angle  = M_PI_2 - angle;
         sinA = ABS(sin(angle));
         if (sinA<0.01) {
-            range = 40;
+            range = _r/2;
         }
         else
         {
-            range = 40/sinA;
+            range = (_r/2)/sinA;
         }
         isIn = isIn && inLineRange(_endPoint, _Line2, range);
        
@@ -231,7 +231,7 @@
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"触摸结束");
-//    [super touchesEnded:touches withEvent:event];
+    [super touchesEnded:touches withEvent:event];
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
 }
@@ -386,6 +386,18 @@
     }
 }
 
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    NSLog(@"ddd:%d",[super pointInside:point withEvent:event]);
+    return [super pointInside:point withEvent:event];
+}
+
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    NSLog(@"ddd:%@",[super hitTest:point withEvent:event]);
+    return [super hitTest:point withEvent:event];
+}
+
 #pragma mark - 计算函数
 bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
 {
@@ -399,8 +411,8 @@ bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
         y = p.x*line.x+line.y;
         result = ABS(y - p.y) <= range;
     }
-    printf("{\n line->k:%lf   b:%lf\n point->x:%lf   y:%lf\n",line.x,line.y,p.x,p.y);
-    printf(" range:%lf\n InRange:%d\n}\n",range,result);
+//    printf("{\n line->k:%lf   b:%lf\n point->x:%lf   y:%lf\n",line.x,line.y,p.x,p.y);
+//    printf(" range:%lf\n InRange:%d\n}\n",range,result);
     return result;
 }
 
