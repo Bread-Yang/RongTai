@@ -40,6 +40,8 @@
     self.title = NSLocalizedString(@"数据中心", nil);
     UIBarButtonItem* rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
     self.navigationItem.rightBarButtonItem = rightItem;
+
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
     //分页控制器
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 64+5, 60, 10)];
@@ -101,6 +103,12 @@
     [_scroll addSubview:_doughnutVC.view];
     [self addChildViewController:_doughnutVC];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 左切换按钮

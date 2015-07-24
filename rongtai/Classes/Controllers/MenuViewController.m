@@ -53,9 +53,9 @@
     [self.view addSubview:V_line];
     
     //切换按摩椅
-    CGFloat unit = 0.7*SCREENWIDTH/3;
+    CGFloat unit = 0.7*SCREENWIDTH/2;
     CGFloat y = SCREENHEIGHT - unit*0.5-SCREENWIDTH*0.034;
-    UIButton* change = [[UIButton alloc]initWithFrame:CGRectMake(unit/3, y, unit, unit*0.4)];
+    UIButton* change = [[UIButton alloc]initWithFrame:CGRectMake(0, y, unit, unit*0.4)];
     change.titleLabel.font =[UIFont systemFontOfSize:13];
     [change setTitle:NSLocalizedString(@"切换按摩椅",nil) forState:UIControlStateNormal];
     [change setImage:[UIImage imageNamed:@"menu_icon_device"] forState:UIControlStateNormal];
@@ -65,13 +65,13 @@
     [self.view addSubview:change];
     
     //竖线
-    UIView* H_line = [[UIView alloc]initWithFrame:CGRectMake(unit*4.5/3, y+unit*0.05, 1, unit*0.3)];
+    UIView* H_line = [[UIView alloc]initWithFrame:CGRectMake(unit, y+unit*0.05, 1, unit*0.3)];
     H_line.backgroundColor = [UIColor grayColor];
     H_line.alpha = 0.5;
     [self.view addSubview:H_line];
     
     //注销
-    UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit*5/3.0, y, unit, unit*0.4)];
+    UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit+1, y, unit, unit*0.4)];
     logout.titleLabel.font =[UIFont systemFontOfSize:13];
     [logout setTitle:NSLocalizedString(@"注销",nil) forState:UIControlStateNormal];
     [logout setTitleColor:BLACK forState:UIControlStateNormal];
@@ -188,7 +188,7 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
         [sl pushViewController:fVC animated:YES];
         

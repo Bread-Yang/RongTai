@@ -19,6 +19,8 @@
 #define BLUE [UIColor colorWithRed:26/255.0 green:154/255.0 blue:222/255.0 alpha:1]
 #define LIGHTGREEN [UIColor colorWithRed:32/255.0 green:179/255.0 blue:37/255.0 alpha:1]
 #define ORANGE [UIColor colorWithRed:241/255.0 green:141/255.0 blue:15/255.0 alpha:1]
+#define WSCALE [UIScreen mainScreen].bounds.size.width/320
+#define HSCALE [UIScreen mainScreen].bounds.size.height/320
 
 // 荣泰服务器域名
 #define RongTaiDefaultDomain	@"http://192.168.2.49:8080/RongTaiWeb/"

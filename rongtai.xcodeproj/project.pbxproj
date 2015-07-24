@@ -54,6 +54,9 @@
 		3D3E712A1B5F3C7C00C47CD0 /* mode_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E71221B5F3C7C00C47CD0 /* mode_8.png */; };
 		3D3E712B1B5F3C7C00C47CD0 /* scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E71231B5F3C7C00C47CD0 /* scan.png */; };
 		3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */; };
+		3D4873601B622993003D2C24 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48735F1B622993003D2C24 /* SMPageControl.m */; };
+		3D4873631B622D6E003D2C24 /* page_piont_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D4873611B622D6E003D2C24 /* page_piont_1.png */; };
+		3D4873641B622D6E003D2C24 /* page_piont_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D4873621B622D6E003D2C24 /* page_piont_2.png */; };
 		3D48BF1A1B539DE4004EE243 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF191B539DE4004EE243 /* bottom.png */; };
 		3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */; };
 		3D48BF281B53A9A8004EE243 /* menu_icon_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF1E1B53A9A8004EE243 /* menu_icon_data.png */; };
@@ -162,6 +165,8 @@
 		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
 		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
 		3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */; };
+		3DE3216A1B5FA4C20075E54F /* score_big_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE321681B5FA4C20075E54F /* score_big_2.png */; };
+		3DE3216B1B5FA4C20075E54F /* score_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE321691B5FA4C20075E54F /* score_big.png */; };
 		3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */; };
 		3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */; };
 		3DE3FFA21B4F76E7003F8AF7 /* login_icon_forget.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FF9B1B4F76E7003F8AF7 /* login_icon_forget.png */; };
@@ -366,6 +371,10 @@
 		3D3E71231B5F3C7C00C47CD0 /* scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan.png; sourceTree = "<group>"; };
 		3D3E712D1B5F3DA900C47CD0 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		3D48735E1B622993003D2C24 /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
+		3D48735F1B622993003D2C24 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
+		3D4873611B622D6E003D2C24 /* page_piont_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page_piont_1.png; sourceTree = "<group>"; };
+		3D4873621B622D6E003D2C24 /* page_piont_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page_piont_2.png; sourceTree = "<group>"; };
 		3D48BF191B539DE4004EE243 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		3D48BF1B1B53A72B004EE243 /* ChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeUserViewController.h; sourceTree = "<group>"; };
 		3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeUserViewController.m; sourceTree = "<group>"; };
@@ -526,6 +535,8 @@
 		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnutStatsView.h; sourceTree = "<group>"; };
 		3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnutStatsView.m; sourceTree = "<group>"; };
+		3DE321681B5FA4C20075E54F /* score_big_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score_big_2.png; sourceTree = "<group>"; };
+		3DE321691B5FA4C20075E54F /* score_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score_big.png; sourceTree = "<group>"; };
 		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = ../Model/CustomProgram.h; sourceTree = "<group>"; };
 		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = ../Model/CustomProgram.m; sourceTree = "<group>"; };
 		3DE3FF9A1B4F76E7003F8AF7 /* login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button.png; sourceTree = "<group>"; };
@@ -935,6 +946,15 @@
 			path = AutoMassage;
 			sourceTree = "<group>";
 		};
+		3D48735D1B622993003D2C24 /* SMPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				3D48735E1B622993003D2C24 /* SMPageControl.h */,
+				3D48735F1B622993003D2C24 /* SMPageControl.m */,
+			);
+			path = SMPageControl;
+			sourceTree = "<group>";
+		};
 		3D76E2901B4BE4DD004B83E7 /* WLLineChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -1126,6 +1146,10 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3D4873611B622D6E003D2C24 /* page_piont_1.png */,
+				3D4873621B622D6E003D2C24 /* page_piont_2.png */,
+				3DE321681B5FA4C20075E54F /* score_big_2.png */,
+				3DE321691B5FA4C20075E54F /* score_big.png */,
 				3DE5D66F1B5F6B1400489C62 /* icon_back.png */,
 				3D3E711C1B5F3C7C00C47CD0 /* body_scan.png */,
 				3D3E711D1B5F3C7C00C47CD0 /* mode_2.png */,
@@ -1703,6 +1727,7 @@
 			isa = PBXGroup;
 			children = (
 				568C3BB11B60D13D0092A431 /* AppIntrouceView */,
+				3D48735D1B622993003D2C24 /* SMPageControl */,
 				561BC3531B5CEEF200F2E63F /* CustomIOSAlertView */,
 				56E9E4D91B5907E600F01ECB /* NAPickerView */,
 				3D92FE1B1B590CDA0021E727 /* WLPanAlertView */,
@@ -1874,6 +1899,7 @@
 				3DCD122E1B4148A700890164 /* camera.png in Resources */,
 				3D7D19CC1B5CF9060057B955 /* set_leg_long.png in Resources */,
 				3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */,
+				3D4873641B622D6E003D2C24 /* page_piont_2.png in Resources */,
 				3D3E71281B5F3C7C00C47CD0 /* mode_6.png in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
 				3D48BF1A1B539DE4004EE243 /* bottom.png in Resources */,
@@ -1890,6 +1916,7 @@
 				3DBDCE9F1B54B1370006EA18 /* user_edit_photo.png in Resources */,
 				3DA170C11B563EC600A88A10 /* icon_share.png in Resources */,
 				3D92FE0E1B5905130021E727 /* function_1.png in Resources */,
+				3DE3216B1B5FA4C20075E54F /* score_big.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				3D7D19CA1B5CF9060057B955 /* set_button_up.png in Resources */,
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
@@ -1900,6 +1927,7 @@
 				3D7D19CE1B5CF9060057B955 /* set_leg_up.png in Resources */,
 				3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */,
 				3D92FDCF1B58D8030021E727 /* user_list_select.png in Resources */,
+				3D4873631B622D6E003D2C24 /* page_piont_1.png in Resources */,
 				3DC790941B4272B00034C3C1 /* navBar.png in Resources */,
 				3D92FE251B590FBF0021E727 /* arrow_up.png in Resources */,
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
@@ -1908,6 +1936,7 @@
 				3D3E712B1B5F3C7C00C47CD0 /* scan.png in Resources */,
 				3D7D19CB1B5CF9060057B955 /* set_leg_down.png in Resources */,
 				3D48BF311B53A9A8004EE243 /* menu_icon_weather.png in Resources */,
+				3DE3216A1B5FA4C20075E54F /* score_big_2.png in Resources */,
 				3D3E71241B5F3C7C00C47CD0 /* body_scan.png in Resources */,
 				3DE3FFA11B4F76E7003F8AF7 /* login_button.png in Resources */,
 				3DE3FFA71B4F76E7003F8AF7 /* logo.png in Resources */,
@@ -2052,6 +2081,7 @@
 				567280111B31859E0059C18E /* Member.m in Sources */,
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
 				3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
+				3D4873601B622993003D2C24 /* SMPageControl.m in Sources */,
 				3DF304251B38FE2500DD51D3 /* MagicalImportFunctions.m in Sources */,
 				5661F6A31B281302006066A0 /* LineUICollectionViewFlowLayout.m in Sources */,
 				3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */,
@@ -2274,7 +2304,7 @@
 			baseConfigurationReference = 85D795F6A8BAE2B12ACCBD3F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: William zhang (R285RFBPPH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
@@ -2310,7 +2340,7 @@
 			baseConfigurationReference = D8E66C336656A2042B2041FF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: William zhang (R285RFBPPH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",

@@ -34,6 +34,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = NSLocalizedString(@"家庭成员", nil);
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
 	
 	self.httpRequestManager = [AFHTTPRequestOperationManager manager];
     
@@ -101,7 +103,11 @@
     [_collectView reloadData];
 }
 
-
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - collectionView代理
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

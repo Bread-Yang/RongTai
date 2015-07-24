@@ -26,6 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"切换用户", nil);
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    
     _rowHeight = 60;
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-64)];
     _table.backgroundColor = [UIColor clearColor];
@@ -54,6 +57,12 @@
 //    [_table reloadData];
     
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
