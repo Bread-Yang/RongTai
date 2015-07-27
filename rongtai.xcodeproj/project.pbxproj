@@ -213,7 +213,6 @@
 		3DF3043D1B38FE2500DD51D3 /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041C1B38FE2500DD51D3 /* MagicalRecord+Setup.m */; };
 		3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m */; };
 		3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF304201B38FE2500DD51D3 /* MagicalRecord.m */; };
-		5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5604A32A1B159F3C00967191 /* AppIntrouceView.m */; };
 		561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */; };
 		563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */; };
 		565E718A1B5E547200E51C1C /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71641B5E547200E51C1C /* CopyConnection.framework */; };
@@ -249,6 +248,8 @@
 		567280111B31859E0059C18E /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 567280101B31859E0059C18E /* Member.m */; };
 		567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567281511B32A02C0059C18E /* CoreGraphics.framework */; };
 		567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281551B32A0E20059C18E /* MBProgressHUD.m */; };
+		568C3BB41B60D13D0092A431 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C3BB31B60D13D0092A431 /* AppIntrouceView.m */; };
+		568C3BBA1B60D1C40092A431 /* LineCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C3BB91B60D1C40092A431 /* LineCollectionView.m */; };
 		56906AD31B560B3100E37FAB /* BaoSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
@@ -620,8 +621,6 @@
 		3DF304221B38FE2500DD51D3 /* MagicalRecordLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordLogging.h; sourceTree = "<group>"; };
 		3DF304231B38FE2500DD51D3 /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		3DF304241B38FE2500DD51D3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
-		5604A3291B159F3C00967191 /* AppIntrouceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIntrouceView.h; sourceTree = "<group>"; };
-		5604A32A1B159F3C00967191 /* AppIntrouceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIntrouceView.m; sourceTree = "<group>"; };
 		561BC3541B5CEEF200F2E63F /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleBaseBusinessViewController.h; sourceTree = "<group>"; };
@@ -672,6 +671,10 @@
 		567281541B32A0E20059C18E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		567281551B32A0E20059C18E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		568C0F941B3BE47D007F6305 /* RongTaiConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RongTaiConstant.h; sourceTree = "<group>"; };
+		568C3BB21B60D13D0092A431 /* AppIntrouceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIntrouceView.h; sourceTree = "<group>"; };
+		568C3BB31B60D13D0092A431 /* AppIntrouceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIntrouceView.m; sourceTree = "<group>"; };
+		568C3BB81B60D1C40092A431 /* LineCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineCollectionView.h; path = LineUICollectionViewFlowLayout/LineCollectionView.h; sourceTree = "<group>"; };
+		568C3BB91B60D1C40092A431 /* LineCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LineCollectionView.m; path = LineUICollectionViewFlowLayout/LineCollectionView.m; sourceTree = "<group>"; };
 		568EC5631B40EB960036AF9E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		56906AD11B560B3100E37FAB /* BaoSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaoSegmentedControl.h; path = BaoSegmentedControl/BaoSegmentedControl.h; sourceTree = "<group>"; };
 		56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaoSegmentedControl.m; path = BaoSegmentedControl/BaoSegmentedControl.m; sourceTree = "<group>"; };
@@ -1505,6 +1508,8 @@
 				5661F69F1B281302006066A0 /* LineUICollectionViewCell.m */,
 				5661F6A01B281302006066A0 /* LineUICollectionViewFlowLayout.h */,
 				5661F6A11B281302006066A0 /* LineUICollectionViewFlowLayout.m */,
+				568C3BB81B60D1C40092A431 /* LineCollectionView.h */,
+				568C3BB91B60D1C40092A431 /* LineCollectionView.m */,
 			);
 			name = LineUICollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -1535,6 +1540,15 @@
 				567281551B32A0E20059C18E /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		568C3BB11B60D13D0092A431 /* AppIntrouceView */ = {
+			isa = PBXGroup;
+			children = (
+				568C3BB21B60D13D0092A431 /* AppIntrouceView.h */,
+				568C3BB31B60D13D0092A431 /* AppIntrouceView.m */,
+			);
+			path = AppIntrouceView;
 			sourceTree = "<group>";
 		};
 		56906AD01B560AF900E37FAB /* BaoSegmentedControl */ = {
@@ -1715,6 +1729,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				568C3BB11B60D13D0092A431 /* AppIntrouceView */,
 				3D48735D1B622993003D2C24 /* SMPageControl */,
 				561BC3531B5CEEF200F2E63F /* CustomIOSAlertView */,
 				56E9E4D91B5907E600F01ECB /* NAPickerView */,
@@ -2068,6 +2083,7 @@
 				3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */,
 				3DF304361B38FE2500DD51D3 /* NSManagedObjectModel+MagicalRecord.m in Sources */,
 				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
+				568C3BB41B60D13D0092A431 /* AppIntrouceView.m in Sources */,
 				3DF3043B1B38FE2500DD51D3 /* MagicalRecord+iCloud.m in Sources */,
 				567280111B31859E0059C18E /* Member.m in Sources */,
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
@@ -2096,7 +2112,6 @@
 				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
 				56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */,
-				5604A32B1B159F3C00967191 /* AppIntrouceView.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
 				56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */,
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
@@ -2117,6 +2132,7 @@
 				3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
+				568C3BBA1B60D1C40092A431 /* LineCollectionView.m in Sources */,
 				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,
 				3DF304351B38FE2500DD51D3 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,

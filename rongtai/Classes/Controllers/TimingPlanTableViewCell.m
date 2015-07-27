@@ -10,7 +10,7 @@
 #import "TimingPlan.h"
 #import <MagicalRecord.h>
 
-#define TIME_COLOR [UIColor colorWithRed:4 / 255.0 green:120 / 255.0 blue:230 / 255.0 alpha:1.0]
+#define TIME_COLOR [UIColor colorWithRed:3 / 255.0 green:124 / 255.0 blue:230 / 255.0 alpha:1.0]
 
 @interface TimingPlanTableViewCell () {
     UISwitch* _switch;
@@ -69,6 +69,7 @@
     [self addSubview:_title];
     [self addSubview:_time];
     [self addSubview:_line];
+	self.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - 定位UI

@@ -41,13 +41,13 @@ typedef void (^NACellUnHighlightConfigureBlock)(id);
 @property (strong, nonatomic) UIColor *overlayColor;
 
 - (id)initWithFrame:(CGRect)frame
-           andItems:(NSArray *)items
+		   andItems:(NSArray *)items
    andCellClassName:(NSString *)className
-        andDelegate:(id)delegate;
+		andDelegate:(id)delegate;
 
 - (id)initWithFrame:(CGRect)frame
-           andItems:(NSArray *)items
-        andDelegate:(id)delegate;
+		   andItems:(NSArray *)items
+		andDelegate:(id)delegate;
 
 - (NSInteger)getHighlightIndex;
 

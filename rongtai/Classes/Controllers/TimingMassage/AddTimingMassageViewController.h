@@ -9,18 +9,21 @@
 #import <UIKit/UIKit.h>
 
 #import "TimingMassageModel.h"
-#import "LineUICollectionViewFlowLayout.h"
 #import "THSegmentedControl.h"
+#import "NAPickerView.h"
+#import "LineCollectionView.h"
 
 typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
-@interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewFlowLayoutDelegate>
+@interface AddTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewDelegate, NAPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *containView;
 
-@property (weak, nonatomic) IBOutlet THSegmentedControl *weekDaySegmentControl;
+@property (weak, nonatomic) IBOutlet LineCollectionView *collectionView;
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UILabel *modeLabel;
+
+@property (weak, nonatomic) IBOutlet THSegmentedControl *weekDaySegmentControl;
 
 @property (nonatomic, copy) ReturnTimingMassageBlock returnTimingMassageBlock;
 
