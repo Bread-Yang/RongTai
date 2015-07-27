@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define INFINITE_SCROLLING_COUNT 5
-#define OVERLAY_COLOR [UIColor colorWithRed:78.0/255.0 green:174.0/255.0 blue:239.0/255.0 alpha:1.0f]
 
 @interface NAPickerView() <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,7 +22,6 @@
 @end
 
 @implementation NAPickerView
-@synthesize showOverlay = mShowOverlay;
 
 - (id)initWithFrame:(CGRect)frame
 		   andItems:(NSArray *)items
@@ -131,26 +129,40 @@
                                   animated:NO];
 }
 
-- (void)setShowOverlay:(BOOL)showOverlay {
-    if (showOverlay != mShowOverlay) {
-        mShowOverlay = showOverlay;
-        [self setOverlayView];
-    }
-}
-
 - (void)setOverlayView {
-    if (self.showOverlay) {
+		[self.overlay removeFromSuperview];
+	
         self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                                 self.frame.size.height / 2 - [self cellHeight] / 2,
                                                                 self.frame.size.width,
                                                                 [self cellHeight])];
-        self.overlay.backgroundColor = OVERLAY_COLOR;
+		// 左边的图片
+		if (self.overlayLeftImage) {
+			CGFloat width = [self cellHeight] * 0.5;
+			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlay.frame.size.width / 2 - 50, [self cellHeight] / 4, width, width)];
+			imageView.image = self.overlayLeftImage;
+			[self.overlay addSubview:imageView];
+		}
+	
+		// 右边的文字
+		if (self.overlayRightString) {
+			UILabel *label = [[UILabel alloc] init];
+			label.font = [UIFont systemFontOfSize:12];
+			label.text = self.overlayRightString;
+			[label sizeToFit];
+			label.frame = CGRectMake(self.overlay.frame.size.width / 2 + [self cellHeight] / 2, [self cellHeight] / 4.0 * 3.0 - label.frame.size.height, label.frame.size.width, label.frame.size.height);
+			[self.overlay addSubview:label];
+		}
+		
+		if (self.overlayColor)  {
+			 self.overlay.backgroundColor = self.overlayColor;
+		} else {
+			 self.overlay.backgroundColor = [UIColor grayColor];
+		}
+		
         self.overlay.alpha = 0.5;
         self.overlay.userInteractionEnabled = NO;
-        [self addSubview:self.overlay];
-    } else {
-        [self.overlay removeFromSuperview];
-    }
+        [self insertSubview:self.overlay atIndex:0];
 }
 
 #pragma mark - UITableView delegate
@@ -292,16 +304,39 @@
 	NSLog(@"scrollViewDidEndDragging");
 }
 
-- (void)setInfiniteScrolling	:(BOOL)infiniteScrolling {
+- (void)setInfiniteScrolling:(BOOL)infiniteScrolling {
 	if (_items.count >= INFINITE_SCROLLING_COUNT) {
 		_infiniteScrolling = infiniteScrolling;
+		if (_infiniteScrolling) {
+			[self setIndex:0];
+		}
 	} else {
 		_infiniteScrolling = NO;
 	}
 }
 
+#pragma mark - setter and getter
+
+- (void)setShowOverlay:(BOOL)showOverlay {
+	if (showOverlay != _showOverlay) {
+		_showOverlay = showOverlay;
+		[self setOverlayView];
+	}
+}
+
+- (void)setOverlayLeftImage:(UIImage *)overlayLeftImage {
+	_overlayLeftImage = overlayLeftImage;
+	[self setOverlayView];
+}
+
+- (void)setOverlayRightString:(NSString *)overlayRightString {
+	_overlayRightString = overlayRightString;
+	[self setOverlayView];
+}
+
 - (NSInteger)getHighlightIndex {
 	return self.highlightIndex.row % self.items.count;
 }
+
 
 @end

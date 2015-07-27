@@ -36,6 +36,9 @@ typedef void (^NACellUnHighlightConfigureBlock)(id);
 @property (assign, nonatomic) CGFloat borderWidth;
 @property (strong, nonatomic) UIColor *borderColor;
 @property (assign, nonatomic) CGFloat cornerRadius;
+@property (strong, nonatomic) UIImage *overlayLeftImage;
+@property (strong, nonatomic) NSString *overlayRightString;
+@property (strong, nonatomic) UIColor *overlayColor;
 
 - (id)initWithFrame:(CGRect)frame
            andItems:(NSArray *)items
