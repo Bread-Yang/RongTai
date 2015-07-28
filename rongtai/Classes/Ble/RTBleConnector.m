@@ -14,7 +14,7 @@ static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
 
 static BOOL isBleTurnOn;
-static CBPeripheral *connectedDevice;
+static CBPeripheral *currentConnectedPeripheral;
 
 //FFF1  == read write
 #define kCharacterRW(periphralName) [NSString stringWithFormat:@"RW_%@",periphralName]
@@ -31,8 +31,6 @@ static CBPeripheral *connectedDevice;
 @interface RTBleConnector ()<JRBluetoothManagerDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *characteristicDicionary;
-
-@property (nonatomic, strong) NSTimer *reconnectTimer;
 
 @property (readonly) NSTimeInterval reconnectInterval;
 
@@ -76,7 +74,7 @@ static CBPeripheral *connectedDevice;
 
 - (void)handleReconnect {
 	NSLog(@"handleReconnect()");
-	[[JRBluetoothManager shareManager] connectPeripheral:connectedDevice];
+	[[JRBluetoothManager shareManager] connectPeripheral:currentConnectedPeripheral];
 }
 
 #pragma mark - JRBluetoothManagerDelegate
@@ -125,7 +123,9 @@ static CBPeripheral *connectedDevice;
 }
 
 - (void)didConnectPeriphral:(CBPeripheral *)periphral {
-	connectedDevice = periphral;
+	self.isConnectedDevice = YES;
+	
+	currentConnectedPeripheral = periphral;
 	
     if (self.delegate && [self.delegate respondsToSelector:@selector(didConnectRTBlePeripheral:)]) {
         [self.delegate didConnectRTBlePeripheral:periphral];
@@ -144,13 +144,16 @@ static CBPeripheral *connectedDevice;
 
 - (void)didDisconnectPeriphral:(CBPeripheral *)periphral {
 	NSLog(@"didDisconnectPeriphral()");
+	
     if (self.delegate && [self.delegate respondsToSelector:@selector(didDisconnectRTBlePeripheral:)]) {
         [self.delegate didDisconnectRTBlePeripheral:periphral];
     }
 	
-//	_reconnectTimer = [NSTimer timerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES]; 
-	_reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
-	[_reconnectTimer fire];
+	if (currentConnectedPeripheral) {
+		//	_reconnectTimer = [NSTimer timerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+		_reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+		[_reconnectTimer fire];
+	}
 }
 
 - (void)didDiscoverCharacteristicOfService:(CBService *)service fromPeriperal:(CBPeripheral *)periphral {
@@ -191,7 +194,10 @@ static CBPeripheral *connectedDevice;
         }
         
         [self parseData:data];
-        
+		
+		if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
+			[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
+		}
     }
 }
 
@@ -269,6 +275,17 @@ static CBPeripheral *connectedDevice;
 
 - (void)cancelConnectRTPeripheral:(CBPeripheral *)peripheral {
     [[JRBluetoothManager shareManager] cancelConnectPeriphral:peripheral];
+}
+
+- (void)cancelCurrentConnectedRTPeripheral {
+	NSLog(@"cancelCurrentConnectedRTPeripheral:");
+	if (currentConnectedPeripheral) {
+		CBPeripheral *temp = currentConnectedPeripheral;
+		
+		currentConnectedPeripheral = nil;
+		
+		[[JRBluetoothManager shareManager] cancelConnectPeriphral:temp];
+	}
 }
 
 

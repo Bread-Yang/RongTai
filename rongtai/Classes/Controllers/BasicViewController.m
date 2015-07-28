@@ -8,7 +8,15 @@
 
 #import "BasicViewController.h"
 
-@interface BasicViewController ()
+#import "CustomIOSAlertView.h"
+
+@interface BasicViewController () <CustomIOSAlertViewDelegate> {
+	
+	RTBleConnector *bleConnector;
+	
+	CustomIOSAlertView *reconnectDialog;
+	
+}
 
 @end
 
@@ -16,12 +24,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
     CGSize size = [UIScreen mainScreen].bounds.size;
-    UIImageView* bg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     bg.image = [UIImage imageNamed:@"bg"];
+	
     [self.view addSubview:bg];
     [self.view sendSubviewToBack:bg];
-    // Do any additional setup after loading the view.
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	if (self.isListenBluetoothStatus) {
+		bleConnector = [RTBleConnector shareManager];
+		bleConnector.delegate = self;
+		
+		if (!bleConnector.isConnectedDevice) {
+			reconnectDialog = [[CustomIOSAlertView alloc] init];
+			reconnectDialog.isReconnectDialog = YES;
+			
+			reconnectDialog.reconnectTipsString = NSLocalizedString(@"未连接设备", nil);
+			[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"重新连接", nil), nil]];
+			
+			__weak UIViewController *weakSelf = self;
+			[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+				UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
+    			UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
+    			[weakSelf.navigationController pushViewController:viewController animated:YES];
+				
+				[alertView close];
+			}];
+			
+			[reconnectDialog show];
+		}
+	}
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	if (self.isListenBluetoothStatus) {
+		bleConnector.delegate = nil;
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,5 +80,43 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - RTBleConnectorDelegate
+
+- (void)didUpdateRTBleState:(CBCentralManagerState)state {
+	NSLog(@"didUpdateRTBleState:");
+}
+
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+	NSLog(@"didUpdateMassageChairStatus:");
+}
+
+- (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	// dimiss reconnect dialog
+	[reconnectDialog close];
+}
+
+- (void)didFailToConnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	
+}
+
+- (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral {
+	// show reconnect dialog
+	reconnectDialog = [[CustomIOSAlertView alloc] init];
+	reconnectDialog.isReconnectDialog = YES;
+	reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
+	
+	[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
+	
+	__weak RTBleConnector *weakPointer = bleConnector;
+	[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+		if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
+			[weakPointer.reconnectTimer invalidate];
+		}
+		[alertView close];
+	}];
+	
+	[reconnectDialog show];
+}
 
 @end

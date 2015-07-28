@@ -31,7 +31,6 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
-	// todo
 	
 	if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateRTBleState:)]) {
 		[self.delegate didUpdateRTBleState:state];
@@ -39,7 +38,6 @@
 }
 
 - (void)didFoundRTBlePeriperalInfo:(NSDictionary *)periperalInfo {
-	// todo
 	
 }
 

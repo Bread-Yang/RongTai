@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RTBleConnector.h"
 
-@interface BasicViewController : UIViewController
+@interface BasicViewController : UIViewController <RTBleConnectorDelegate>
+
+@property(nonatomic, assign) BOOL isListenBluetoothStatus;
 
 @end

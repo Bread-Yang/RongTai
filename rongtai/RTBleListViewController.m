@@ -9,6 +9,7 @@
 #import "RTBleListViewController.h"
 #import "JRBluetoothManager.h"
 #import "RTBleConnector.h"
+#import "MainViewController.h"
 
 @interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
@@ -137,7 +138,8 @@
 			[self performSegueWithIdentifier:@"rtSegue" sender:nil];
 		}
     } else {
-        [[JRBluetoothManager shareManager] connectPeripheral:peripheral];
+		[bleConnector cancelCurrentConnectedRTPeripheral];  // cancal current device connection, then connect another device
+        [bleConnector connectRTPeripheral:peripheral];
     }
     
     //    if ([peripheral.name isEqualToString:kDeviceThermometerName]) {
@@ -156,6 +158,7 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
+	NSLog(@"didUpdateRTBleState:");
 	
 	switch (state) {
 		case CBCentralManagerStatePoweredOn :
@@ -168,13 +171,17 @@
 	}
 }
 
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+//	NSLog(@"didUpdateMassageChairStatus:");
+}
+
 - (void)didFoundRTBlePeriperalInfo:(NSDictionary *)periperalInfo {
-	
+
     CBPeripheral *newPeripheral = periperalInfo[RTBle_Periperal];
 	
-//	if (![newPeripheral.name isEqualToString:RTLocalName]) {
-//		return;
-//	}
+	if (![newPeripheral.name isEqualToString:RTLocalName]) {
+		return;
+	}
 	
     for(NSDictionary *tempInfo in blePeriphrals) {
         CBPeripheral *existPeripheral = tempInfo[RTBle_Periperal];
@@ -192,7 +199,9 @@
 	NSLog(@"didConnectRTBlePeripheral()");
 //    [SVProgressHUD dismiss];
 	if ([peripheral.name isEqualToString:RTLocalName]) {
-		[self performSegueWithIdentifier:@"rtSegue" sender:nil];
+//		[self performSegueWithIdentifier:@"rtSegue" sender:nil];
+		
+		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 	}
 }
 
