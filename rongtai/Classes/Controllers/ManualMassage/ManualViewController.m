@@ -16,9 +16,10 @@
 #import "SMPageControl.h"
 #import "CustomIOSAlertView.h"
 #import "NAPickerView.h"
-#import "WLScrollView.h"
+#import "SlideNavigationController.h"
 
-@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,UIScrollViewDelegate,NAPickerViewDelegate,WLPolarDelegate>
+
+@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,NAPickerViewDelegate,WLPolarDelegate>
 {
     WLPanAlertView* _panAlertView;
     UIImageView* _arrow;
@@ -31,7 +32,7 @@
     NSArray* _images;
     CGFloat _cH;
     
-    __weak IBOutlet UIScrollView *_scrollView;
+   
     ManualHumanView* _humanView;
     WLPolar* _polar;
     __weak IBOutlet UIView *_addPageControl;
@@ -47,7 +48,12 @@
     NSInteger _pickerSelectedItem;
     
     //
+    
+    __weak IBOutlet UIView *_addScrollView;
     UIScrollView* _scroll;
+    
+    //
+    BOOL _enableSwipeGesture;
 }
 @end
 
@@ -58,24 +64,26 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"手动按摩", nil);
     
+    //关闭SlideNavigationController的滑动手势，不然会影响WLPolar
+    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
+    _enableSwipeGesture = sl.enableSwipeGesture;
+    sl.enableSwipeGesture = NO;
+    
+    
     //
     _skillsPreferenceArray = @[@"揉捏",@"推拿",@"敲打",@"组合"];
     
+//    _addScrollView.backgroundColor = [UIColor yellowColor];
     //
-    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT*0.1+15+16, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
     _scroll.pagingEnabled = YES;
     _scroll.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
     _scroll.bounces = NO;
-    _scroll.backgroundColor = [UIColor redColor];
+    _scroll.delegate = self;
+//    _scroll.backgroundColor = [UIColor redColor];
     _scroll.showsHorizontalScrollIndicator = NO;
     _scroll.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_scroll];
-    
-    
-    //
-//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
-//    _scrollView.delegate = self;
-    _scrollView.hidden = YES;
+    [_addScrollView addSubview:_scroll];
     
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
@@ -152,14 +160,14 @@
     [_adjustTable registerNib:[UINib nibWithNibName:@"ManualTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:_reuseIdentifier];
     [_panAlertView.contentView addSubview:_adjustTable];
     
+    
+    
     //
     _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
-    _humanView.backgroundColor = [UIColor blueColor];
+//    _humanView.backgroundColor = [UIColor blueColor];
     [_scroll addSubview:_humanView];
     
     //
-//    UIView* test = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
-//    test.backgroundColor = [UIColor redColor];
     
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
 //    _polar.backgroundColor = [UIColor blueColor];
@@ -176,19 +184,12 @@
     _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
     _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
-//    [test addSubview:_polar];
     [_scroll addSubview:_polar];
-    UIPageControl* page = [[UIPageControl alloc]initWithFrame:CGRectMake(100, 100, 100, 30)];
-    
-    page.numberOfPages = 3;
-  
-//    _scrollView.delaysContentTouches = NO;
-//    _scrollView.canCancelContentTouches = NO;
+
     
     //
     _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
     _pageControl.numberOfPages = 2;
-//    _pageControl.backgroundColor = [UIColor blueColor];
     _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
     _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
     [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
@@ -208,6 +209,9 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
+    sl.enableSwipeGesture = _enableSwipeGesture;
+    
     [_panAlertView removeFromSuperview];
 }
 

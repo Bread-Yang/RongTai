@@ -72,7 +72,7 @@
     self.backgroundColor = [UIColor clearColor];
     _maxValue = 100.0;
     _minValue = 0;
-    _centerPoint = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    _centerPoint = CGPointMake((int)(self.bounds.size.width / 2), (int)(self.bounds.size.height / 2));
     _r = MIN(self.frame.size.width / 2 - PADDING, self.frame.size.height / 2 - PADDING);
     _steps = 1;
     _drawPoints = NO;
@@ -214,16 +214,14 @@
         isIn = isIn && inLineRange(_endPoint, _Line2, range);
        
         if (isIn) {
-            CGFloat newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2)+pow((_endPoint.y - _centerPoint.y), 2));
-            if (newR > _r)
-            {
-                newR = _r;
-            }
+            float newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2)+pow((_endPoint.y - _centerPoint.y), 2));
             NSValue* v = _points[_touchPointIndex];
             CGPoint p = [v CGPointValue];
-            float angle = _touchPointIndex * _radPerV;
-            float x = _centerPoint.x - newR * sin(angle);
-            float y = _centerPoint.y - newR * cos(angle);
+            CGFloat angle = _touchPointIndex * _radPerV;
+            int sinA = newR * sin(angle);
+            int cosA = newR * cos(angle);
+            float x = _centerPoint.x - sinA;
+            float y = _centerPoint.y - cosA;
             p.x = x;
             p.y = y;
             [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
@@ -233,13 +231,13 @@
     if ([self.delegate respondsToSelector:@selector(WLPolarDidMove:)]) {
         [self.delegate WLPolarDidMove:self];
     }
-
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 //    NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
+    NSLog(@"Points:%@",_points);
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
     if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:)]) {
@@ -396,18 +394,6 @@
         }
     }
 }
-
-//-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-//{
-//    NSLog(@"ddd:%d",[super pointInside:point withEvent:event]);
-//    return [super pointInside:point withEvent:event];
-//}
-//
-//-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-//{
-//    NSLog(@"ddd:%@",[super hitTest:point withEvent:event]);
-//    return [super hitTest:point withEvent:event];
-//}
 
 #pragma mark - 计算函数
 bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
