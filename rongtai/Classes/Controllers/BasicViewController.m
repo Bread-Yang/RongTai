@@ -26,8 +26,7 @@
     [super viewDidLoad];
 	
     CGSize size = [UIScreen mainScreen].bounds.size;
-    UIImageView* bg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    bg.userInteractionEnabled = YES;
+    UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     bg.image = [UIImage imageNamed:@"bg"];
 	
     [self.view addSubview:bg];
