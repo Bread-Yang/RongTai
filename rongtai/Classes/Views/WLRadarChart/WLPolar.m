@@ -143,8 +143,11 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"触摸开始");
-    [super touchesBegan:touches withEvent:event];
+//    NSLog(@"触摸开始");
+//    [super touchesBegan:touches withEvent:event];
+    if ([self.delegate respondsToSelector:@selector(WLPolarWillStartTouch:)]) {
+        [self.delegate WLPolarWillStartTouch:self];
+    }
     UITouch* touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     for (int i = 0; i<_points.count; i++) {
@@ -176,12 +179,13 @@
             break;
         }
     }
+
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"触摸移动");
-    [super touchesMoved:touches withEvent:event];
+//    NSLog(@"触摸移动");
+//    [super touchesMoved:touches withEvent:event];
     if (_isTouchInPoint) {
         UITouch* touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
@@ -226,14 +230,21 @@
             [self setNeedsDisplay];
         }
     }
+    if ([self.delegate respondsToSelector:@selector(WLPolarDidMove:)]) {
+        [self.delegate WLPolarDidMove:self];
+    }
+
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"触摸结束");
-    [super touchesEnded:touches withEvent:event];
+//    NSLog(@"触摸结束");
+//    [super touchesEnded:touches withEvent:event];
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
+    if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:)]) {
+        [self.delegate WLPolarMoveFinished:self];
+    }
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -346,7 +357,7 @@
     
     //绘制坐标轴名称
     CGFloat height = [self.scaleFont lineHeight];
-    CGFloat padding = 2.0;
+    CGFloat padding = 10.0;
     
     for (int i = 0; i < _numOfV; i++) {
         NSString *attributeName = _attributes[i];
@@ -386,17 +397,17 @@
     }
 }
 
--(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    NSLog(@"ddd:%d",[super pointInside:point withEvent:event]);
-    return [super pointInside:point withEvent:event];
-}
-
--(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    NSLog(@"ddd:%@",[super hitTest:point withEvent:event]);
-    return [super hitTest:point withEvent:event];
-}
+//-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    NSLog(@"ddd:%d",[super pointInside:point withEvent:event]);
+//    return [super pointInside:point withEvent:event];
+//}
+//
+//-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    NSLog(@"ddd:%@",[super hitTest:point withEvent:event]);
+//    return [super hitTest:point withEvent:event];
+//}
 
 #pragma mark - 计算函数
 bool inLineRange (CGPoint p,CGPoint line,CGFloat range)

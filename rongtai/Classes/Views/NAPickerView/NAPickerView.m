@@ -124,45 +124,45 @@
 	} else {
 		self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
 	}
-	[self.tableView scrollToRowAtIndexPath:self.highlightIndex
-						  atScrollPosition:UITableViewScrollPositionMiddle
-								  animated:NO];
+    [self.tableView scrollToRowAtIndexPath:self.highlightIndex
+                          atScrollPosition:UITableViewScrollPositionMiddle
+                                  animated:NO];
 }
 
 - (void)setOverlayView {
-	[self.overlay removeFromSuperview];
+		[self.overlay removeFromSuperview];
 	
-	self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
-															self.frame.size.height / 2 - [self cellHeight] / 2,
-															self.frame.size.width,
-															[self cellHeight])];
-	// 左边的图片
-	if (self.overlayLeftImage) {
-		CGFloat width = [self cellHeight] * 0.5;
-		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlay.frame.size.width / 2 - 50, [self cellHeight] / 4, width, width)];
-		imageView.image = self.overlayLeftImage;
-		[self.overlay addSubview:imageView];
-	}
+        self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                self.frame.size.height / 2 - [self cellHeight] / 2,
+                                                                self.frame.size.width,
+                                                                [self cellHeight])];
+		// 左边的图片
+		if (self.overlayLeftImage) {
+			CGFloat width = [self cellHeight] * 0.5;
+			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.overlay.frame.size.width / 2 - 50, [self cellHeight] / 4, width, width)];
+			imageView.image = self.overlayLeftImage;
+			[self.overlay addSubview:imageView];
+		}
 	
-	// 右边的文字
-	if (self.overlayRightString) {
-		UILabel *label = [[UILabel alloc] init];
-		label.font = [UIFont systemFontOfSize:12];
-		label.text = self.overlayRightString;
-		[label sizeToFit];
-		label.frame = CGRectMake(self.overlay.frame.size.width / 2 + [self cellHeight] / 2, [self cellHeight] / 4.0 * 3.0 - label.frame.size.height, label.frame.size.width, label.frame.size.height);
-		[self.overlay addSubview:label];
-	}
-	
-	if (self.overlayColor)  {
-		self.overlay.backgroundColor = self.overlayColor;
-	} else {
-		self.overlay.backgroundColor = [UIColor grayColor];
-	}
-	
-	self.overlay.alpha = 0.5;
-	self.overlay.userInteractionEnabled = NO;
-	[self insertSubview:self.overlay atIndex:0];
+		// 右边的文字
+		if (self.overlayRightString) {
+			UILabel *label = [[UILabel alloc] init];
+			label.font = [UIFont systemFontOfSize:12];
+			label.text = self.overlayRightString;
+			[label sizeToFit];
+			label.frame = CGRectMake(self.overlay.frame.size.width / 2 + [self cellHeight] / 2, [self cellHeight] / 4.0 * 3.0 - label.frame.size.height, label.frame.size.width, label.frame.size.height);
+			[self.overlay addSubview:label];
+		}
+		
+		if (self.overlayColor)  {
+			 self.overlay.backgroundColor = self.overlayColor;
+		} else {
+			 self.overlay.backgroundColor = [UIColor grayColor];
+		}
+		
+        self.overlay.alpha = 0.5;
+        self.overlay.userInteractionEnabled = NO;
+        [self insertSubview:self.overlay atIndex:0];
 }
 
 #pragma mark - UITableView delegate

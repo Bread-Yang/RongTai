@@ -170,7 +170,7 @@
         cell.imageViewScale = 0.55;
         CGRect f = CGRectMake(0, 0, SCREENWIDTH, 78);
         UIImageView* bg = [[UIImageView alloc]initWithFrame:f];
-        NSLog(@"f:%@",NSStringFromCGRect(f));
+//        NSLog(@"f:%@",NSStringFromCGRect(f));
         bg.image = [UIImage imageNamed:@"list_bg"];
         bg.contentMode = UIViewContentModeScaleToFill;
         bg.alpha = 0.5;

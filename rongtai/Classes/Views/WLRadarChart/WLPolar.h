@@ -13,6 +13,11 @@
 @protocol WLPolarDelegate <NSObject>
 
 @optional
+
+-(void)WLPolarWillStartTouch:(WLPolar*)polar;
+
+-(void)WLPolarDidMove:(WLPolar*)polar;
+
 -(void)WLPolarMoveFinished:(WLPolar*)polar;
 
 @end
@@ -108,5 +113,10 @@
  *  填充颜色
  */
 @property(nonatomic, strong)UIColor* fillColor;
+
+/**
+ *  代理
+ */
+@property(nonatomic, weak)id<WLPolarDelegate> delegate;
 
 @end

@@ -14,8 +14,11 @@
 #import "WLPolar.h"
 #import "RongTaiConstant.h"
 #import "SMPageControl.h"
+#import "CustomIOSAlertView.h"
+#import "NAPickerView.h"
+#import "WLScrollView.h"
 
-@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,UIScrollViewDelegate>
+@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,UIScrollViewDelegate,NAPickerViewDelegate,WLPolarDelegate>
 {
     WLPanAlertView* _panAlertView;
     UIImageView* _arrow;
@@ -27,12 +30,24 @@
     NSString* _reuseIdentifier;
     NSArray* _images;
     CGFloat _cH;
+    
     __weak IBOutlet UIScrollView *_scrollView;
     ManualHumanView* _humanView;
     WLPolar* _polar;
     __weak IBOutlet UIView *_addPageControl;
     SMPageControl* _pageControl;
     UIView* _testView;
+    
+    //
+    NSArray* _skillsPreferenceArray;
+    NAPickerView *_skillsPreferencePickerView;  //技法偏好选择器
+    
+    __weak IBOutlet UILabel *_skillsPreferenceLabel;
+    __weak IBOutlet UIView *_skillsPreferenceView;
+    NSInteger _pickerSelectedItem;
+    
+    //
+    UIScrollView* _scroll;
 }
 @end
 
@@ -42,6 +57,25 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"手动按摩", nil);
+    
+    //
+    _skillsPreferenceArray = @[@"揉捏",@"推拿",@"敲打",@"组合"];
+    
+    //
+    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT*0.1+15+16, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    _scroll.pagingEnabled = YES;
+    _scroll.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
+    _scroll.bounces = NO;
+    _scroll.backgroundColor = [UIColor redColor];
+    _scroll.showsHorizontalScrollIndicator = NO;
+    _scroll.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_scroll];
+    
+    
+    //
+//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
+//    _scrollView.delegate = self;
+    _scrollView.hidden = YES;
     
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
@@ -120,10 +154,15 @@
     
     //
     _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
-    [_scrollView addSubview:_humanView];
+    _humanView.backgroundColor = [UIColor blueColor];
+    [_scroll addSubview:_humanView];
     
     //
-    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
+//    UIView* test = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
+//    test.backgroundColor = [UIColor redColor];
+    
+    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
+//    _polar.backgroundColor = [UIColor blueColor];
     _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
     _polar.steps = 3;
     _polar.r = SCREENHEIGHT*0.57*0.3;
@@ -131,19 +170,20 @@
     _polar.maxValue = 120;
     _polar.drawPoints = YES;
     _polar.fillArea = YES;
+    _polar.delegate = self;
     _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
     _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
     _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
     _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
-    
-    [_scrollView addSubview:_polar];
+//    [test addSubview:_polar];
+    [_scroll addSubview:_polar];
     UIPageControl* page = [[UIPageControl alloc]initWithFrame:CGRectMake(100, 100, 100, 30)];
     
     page.numberOfPages = 3;
-    
-    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
-    _scrollView.delegate = self;
+  
+//    _scrollView.delaysContentTouches = NO;
+//    _scrollView.canCancelContentTouches = NO;
     
     //
     _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
@@ -153,6 +193,16 @@
     _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
     [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
     [_addPageControl addSubview:_pageControl];
+    
+    //
+    UITapGestureRecognizer* sTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(skillsPreferenceTap)];
+    [_skillsPreferenceView addGestureRecognizer:sTap];
+    
+    _skillsPreferencePickerView = [self createskillsPreferencePickerView];
+    
+    //
+    
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -167,24 +217,129 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - 技法偏好点击方法
+-(void)skillsPreferenceTap
+{
+    CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
+    
+    // Add some custom content to the alert view
+    [skillPreferenceAlerView setContainerView:_skillsPreferencePickerView];
+    
+    //	timingAlerView.dialogBackgroundColor = [UIColor colorWithRed:36.0 / 255.0 green:142.0 / 255.0 blue:215.5/ 255.0 alpha:1];
+    
+    // Modify the parameters
+    [skillPreferenceAlerView setTitleString:@"模式"];
+    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
+    // You may use a Block, rather than a delegate.
+    [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+        if (buttonIndex == 0) {
+            [alertView close];
+        }
+        else if (buttonIndex == 1)
+        {
+            //保存方法
+            NSString* sp = _skillsPreferenceArray[_pickerSelectedItem];
+            _skillsPreferenceLabel.text = sp;
+        }
+    }];
+    
+    [skillPreferenceAlerView setUseMotionEffects:true];
+    [skillPreferenceAlerView show];
+}
+
+
+#pragma mark - 创建技法偏好选择器
+- (NAPickerView *)createskillsPreferencePickerView
+{
+    NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:_skillsPreferenceArray andDelegate:self];
+    pickerView.overlayColor = [UIColor colorWithRed:223.0 / 255.0 green:1 blue:1 alpha:1];
+    pickerView.showOverlay = YES;
+    pickerView.overlayColor = [UIColor colorWithRed:0 green:0.5 blue:1 alpha:0.5];
+    pickerView.delegate = self;
+    pickerView.highlightBlock = ^(NALabelCell *cell) {
+        cell.textView.textColor = BLUE;
+        cell.textView.font = [UIFont systemFontOfSize:30];
+    };
+    pickerView.unhighlightBlock = ^(NALabelCell *cell) {
+        cell.textView.textColor = [UIColor colorWithRed:26/255.0 green:154/255.0 blue:222/255.0 alpha:0.6];
+;
+        cell.textView.font = [UIFont systemFontOfSize:18];
+    };
+    return pickerView;
+}
+
+
+#pragma mark - 创建时间选择器
+- (UIView *)createMinuteView
+{
+    NSMutableArray *leftItems = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 30;  i++) {
+        [leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    //
+    NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:leftItems andDelegate:self];
+    pickerView.overlayColor = [UIColor colorWithRed:223.0 / 255.0 green:1 blue:1 alpha:1];
+    
+    pickerView.infiniteScrolling = YES;
+    pickerView.overlayLeftImage = [UIImage imageNamed:@"icon_set_time"];
+    pickerView.overlayRightString = @"分钟";
+    pickerView.showOverlay = YES;
+    
+    pickerView.highlightBlock = ^(NALabelCell *cell) {
+        cell.textView.textColor = [UIColor whiteColor];
+        cell.textView.font = [UIFont systemFontOfSize:30];
+    };
+    pickerView.unhighlightBlock = ^(NALabelCell *cell) {
+        cell.textView.textColor = [UIColor blackColor];
+        cell.textView.font = [UIFont systemFontOfSize:18];
+    };
+    
+    return pickerView;
+}
+
+#pragma mark - NAPickerView代理
+-(void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index
+{
+    _pickerSelectedItem = index;
+}
+
 #pragma mark - pageControl方法
 -(void)pageControlChange:(SMPageControl*)pageControl
 {
-    CGFloat w = CGRectGetWidth(_scrollView.frame);
-    CGFloat h = CGRectGetHeight(_scrollView.frame);
+    CGFloat w = CGRectGetWidth(_scroll.frame);
+    CGFloat h = CGRectGetHeight(_scroll.frame);
     if (pageControl.currentPage == 0) {
-        [_scrollView scrollRectToVisible:CGRectMake(0, 0, w, h) animated:YES];
+        [_scroll scrollRectToVisible:CGRectMake(0, 0, w, h) animated:YES];
     }
     else
     {
-        [_scrollView scrollRectToVisible:CGRectMake(w, 0, w, h) animated:YES];
+        [_scroll scrollRectToVisible:CGRectMake(w, 0, w, h) animated:YES];
     }
 }
+
+#pragma mark - PolarView代理
+-(void)WLPolarWillStartTouch:(WLPolar *)polar
+{
+    NSLog(@"滑动开始");
+    _scroll.scrollEnabled = NO;
+}
+
+-(void)WLPolarDidMove:(WLPolar *)polar
+{
+    
+}
+
+-(void)WLPolarMoveFinished:(WLPolar *)polar
+{
+    NSLog(@"滑动结束");
+    _scroll.scrollEnabled = YES;
+}
+
 
 #pragma mark - scroll代理
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (_scrollView.contentOffset.x==0) {
+    if (_scroll.contentOffset.x==0) {
         _pageControl.currentPage = 0;
     }
     else
@@ -195,7 +350,7 @@
 
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    if (_scrollView.contentOffset.x==0) {
+    if (_scroll.contentOffset.x==0) {
         _pageControl.currentPage = 0;
     }
     else
