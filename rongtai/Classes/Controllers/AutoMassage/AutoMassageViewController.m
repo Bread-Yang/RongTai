@@ -14,6 +14,8 @@
 #import "AppDelegate.h"
 #import "UILabel+WLAttributedString.h"
 #import "RongTaiConstant.h"
+#import "RTCommand.h"
+#import "RTBleConnector.h"
 
 @interface AutoMassageViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate>
 {
@@ -37,6 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	self.isListenBluetoothStatus = YES;
+	
     self.title  = self.massage.name;
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem =item;
@@ -135,10 +139,11 @@
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
-    cell.tag = indexPath.row+1;
+    cell.tag = indexPath.row + 1;
     if (indexPath.row < _menu.count - 1) {
-        NSInteger i = indexPath.row*2;
+        NSInteger i = indexPath.row * 2;
         [cell.leftButton setImage:[UIImage imageNamed:_images[i]] forState:0];
+		
         [cell.rightButton setImage:[UIImage imageNamed:_images[i+1]] forState:0];
     }
     else
@@ -160,34 +165,81 @@
 }
 
 #pragma mark - cell代理
--(void)manualTableViewCell:(ManualTableViewCell *)cell Clicked:(NSInteger)index
-{
-    if (cell.tag == 1)
-    {
-        NSLog(@"肩部位置");
-    }
-    else if (cell.tag == 2)
-    {
-        NSLog(@"背部升降");
-    }
-    else if (cell.tag == 3)
-    {
-        NSLog(@"小腿升降");
-    }
-    else if (cell.tag == 4)
-    {
-        NSLog(@"小腿伸缩");
-    }
-    else if (cell.tag == 5)
-    {
-        NSLog(@"零重力");
-    }
+
+-(void)manualTableViewCell:(ManualTableViewCell *)cell Clicked:(NSInteger)index UIControlEvents:(UIControlEvents)controlEvent {
+	NSLog(@"manualTableViewCell");
+	switch (cell.tag) {
+  		case 1:		// 肩部位置
+			if (index == 0) {
+				if (controlEvent == UIControlEventTouchDown) {
+					NSLog(@"肩部开始");
+					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_UP_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_UP_STOP];
+				}
+			} else {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_DOWN_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_DOWN_STOP];
+				}
+			}
+			break;
+		case 2:		// 背部升降
+			if (index == 0) {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_DOWN_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_DOWN_STOP];
+				}
+			} else {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_UP_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_UP_STOP];
+				}
+			}
+			break;
+		case 3:		// 小腿升降
+			if (index == 0) {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_DOWN_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_DOWN_STOP];
+				}
+			} else {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_UP_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_UP_STOP];
+				}
+			}
+			break;
+		case 4:		// 小腿伸缩
+			if (index == 0) {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_EXTEND_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_EXTEND_STOP];
+				}
+			} else {
+				if (controlEvent == UIControlEventTouchDown) {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_CONTRACT_START];
+				} else {
+					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_CONTRACT_STOP];
+				}
+			}
+			break;
+		case 5:		// 零重力
+			[[RTBleConnector shareManager] controlMode:H10_KEY_ZERO_START];
+			break;
+	}
 }
 
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender
 {
-    
+	NSLog(@"rightItemClicked");
 }
 
 

@@ -84,11 +84,9 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
-	NSLog(@"didUpdateRTBleState:");
 }
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	NSLog(@"didUpdateMassageChairStatus:");
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {

@@ -305,12 +305,22 @@ static CBPeripheral *currentConnectedPeripheral;
 	
     [self parseByteOfAddress1:bodyData[0]];
     [self parseByteOfAddress2:bodyData[1]];
+	[self parseByteOfAddress3:bodyData[2]];
+	[self parseByteOfAddress4:bodyData[3]];
+	[self parseByteOfAddress5:bodyData[4]];
+	[self parseByteOfAddress6:bodyData[5]];
+	[self parseByteOfAddress7:bodyData[6]];
+	[self parseByteOfAddress8:bodyData[7]];
+	[self parseByteOfAddress9:bodyData[8]];
+	[self parseByteOfAddress10:bodyData[9]];
+	[self parseByteOfAddress11:bodyData[10]];
+	[self parseByteOfAddress12:bodyData[11]];
+	[self parseByteOfAddress13:bodyData[12]];
+	[self parseByteOfAddress14:bodyData[13]];
     
-    NSDictionary *package;
-    
-    
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"name" object:package];
+//    NSDictionary *package;
+//	
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"name" object:package];
 }
 
 // 地址14 3D机芯状态（非3D机型无此字节）
@@ -486,6 +496,11 @@ static CBPeripheral *currentConnectedPeripheral;
 // 地址9 体型检测数据
 
 - (void)parseByteOfAddress9:(Byte)addr {
+	
+	NSInteger i = addr;
+	
+//	NSLog(@"byte[9] : %zd", i);
+	
     /**
      bit 0, bit 1, bit 2, bit 3 : 体型检测位置
      0000：体型检测中间位置

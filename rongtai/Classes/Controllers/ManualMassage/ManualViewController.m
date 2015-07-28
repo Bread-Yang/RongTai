@@ -392,8 +392,7 @@
 }
 
 #pragma mark - cell代理
--(void)manualTableViewCell:(ManualTableViewCell *)cell Clicked:(NSInteger)index
-{
+-(void)manualTableViewCell:(ManualTableViewCell *)cell Clicked:(NSInteger)index UIControlEvents:(UIControlEvents)controlEvent {
     if (cell.tag == 1)
     {
         NSLog(@"肩部位置");

@@ -21,17 +21,40 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)leftButtonClicked:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:)]) {
-        [self.delegate manualTableViewCell:self Clicked:0];
-    }
+- (IBAction)leftButtonTouchDown:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:0 UIControlEvents:UIControlEventTouchDown];
+	}
 }
 
+- (IBAction)leftButtonTouchUpInside:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:0 UIControlEvents:UIControlEventTouchUpInside];
+	}
+}
 
-- (IBAction)rightButtonClicked:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:)]) {
-        [self.delegate manualTableViewCell:self Clicked:1];
-    }
+- (IBAction)leftButtonTouchUpOutside:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:0 UIControlEvents:UIControlEventTouchUpOutside];
+	}
+}
+
+- (IBAction)rightButtonTouchDown:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:1 UIControlEvents:UIControlEventTouchDown];
+	}
+}
+
+- (IBAction)rightButtonTouchUpInside:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:1 UIControlEvents:UIControlEventTouchUpInside];
+	}
+}
+
+- (IBAction)rightButtonTouchUpOutside:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(manualTableViewCell:Clicked:UIControlEvents:)]) {
+		[self.delegate manualTableViewCell:self Clicked:1 UIControlEvents:UIControlEventTouchUpOutside];
+	}
 }
 
 @end

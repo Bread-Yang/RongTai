@@ -15,7 +15,7 @@
 /**
  *  cell按钮被点击时调用，index是0为左边按钮，index是1为右边按钮
  */
--(void)manualTableViewCell:(ManualTableViewCell*)cell Clicked:(NSInteger)index;
+-(void)manualTableViewCell:(ManualTableViewCell*)cell Clicked:(NSInteger)index UIControlEvents:(UIControlEvents)controlEvent;
 
 @end
 

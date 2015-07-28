@@ -17,6 +17,9 @@
 #import "BasicTableViewCell.h"
 #import "RongTaiConstant.h"
 #import "ScanViewController.h"
+#import "RTCommand.h"
+#import "RTBleConnector.h"
+#import "AutoMassageViewController.h"
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
@@ -90,11 +93,12 @@
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 //    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
     _massageArr = [NSMutableArray new];
-    for (int i = 0; i<8; i++) {
+	NSArray *modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
+    for (int i = 0; i < 8; i++) {
         Massage* m = [Massage new];
-        m.name = @"舒展活络";
+        m.name = modeNameArray[i];
         m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
-        m.imageUrl = [NSString stringWithFormat:@"mode_%d",i+1];
+        m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
         [_massageArr addObject:m];
     }
     
@@ -157,6 +161,7 @@
 }
 
 #pragma mark - tableView代理
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _massageArr.count;
@@ -199,12 +204,27 @@
     return 80;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    ScanViewController* scan = (ScanViewController*)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
-    scan.massage = _massageArr[indexPath.row];
-    [self.navigationController pushViewController:scan animated:YES];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	switch (indexPath.row) {
+			// 舒展活络
+		case 0: {
+			[[RTBleConnector shareManager] controlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
+			[[RTBleConnector shareManager] controlMode:H10_KEY_CHAIR_AUTO_0];
+			
+//			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//			ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+//			scan.massage = _massageArr[indexPath.row];
+//			[self.navigationController pushViewController:scan animated:YES];
+			
+			break;
+		}
+		case 1:		// 工作减压
+			break;
+		case 2: 	// 运动恢复
+			break;
+		case 3:		// 消除疲劳
+			break;
+	}
 }
 
 #pragma mark - massageRequest代理
@@ -235,12 +255,35 @@
 }
 
 #pragma mark - NavigationController代理
+
 -(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (viewController == self) {
         NSArray* items = _menuBar.items;
         _menuBar.selectedItem = (UITabBarItem*)items[0];
     }
+}
+
+#pragma mark - RTBleConnectorDelegate
+
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+	
+	NSLog(@"体型检测标记 : %zd", 	rtMassageChairStatus.figureCheckFlag);
+	
+	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+		scan.massage = _massageArr[_table.indexPathForSelectedRow.row];
+		
+		[self.navigationController pushViewController:scan animated:YES];
+	} else if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
+		[RTBleConnector shareManager].delegate = nil;  // 停止接收回调
+		
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+//		autoVC.massage = self.massage;
+		[self.navigationController pushViewController:autoVC animated:YES];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
