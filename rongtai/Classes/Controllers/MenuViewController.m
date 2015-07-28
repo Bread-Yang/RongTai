@@ -16,6 +16,7 @@
 #import "BuyRTProductTableViewController.h"
 #import "RongTaiConstant.h"
 #import "ChangeUserViewController.h"
+#import "RTBleConnector.h"
 
 //测试
 #import "FinishMassageViewController.h"
@@ -226,9 +227,10 @@
 }
 
 #pragma mark - 切换按摩椅
--(void)changeMessageChair
-{
-    
+-(void)changeMessageChair {
+	UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
+	UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
+	[[SlideNavigationController sharedInstance] pushViewController:viewController animated:YES];
 }
 
 #pragma mark - 横线样式

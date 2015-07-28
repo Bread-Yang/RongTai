@@ -10,8 +10,7 @@
 #import "AutoMassageViewController.h"
 #import "RongTaiConstant.h"
 
-@interface ScanViewController ()
-{
+@interface ScanViewController () {
     UIImageView* _scanLight;
     __weak IBOutlet UIImageView *_body;
     int i;
@@ -24,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	self.isListenBluetoothStatus = YES;
+	
     i = 0;
     self.title = NSLocalizedString(@"体型智能检测", nil);
     _scanLight = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"scan"]];
@@ -46,20 +47,17 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
+//      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
 }
 
--(void)timerScan:(NSTimer*)timer
-{
-    if (i>4) {
+-(void)timerScan:(NSTimer*)timer {
+    if (i > 4) {
         [timer invalidate];
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
         autoVC.massage = self.massage;
         [self.navigationController pushViewController:autoVC animated:YES];
-    }
-    else
-    {
+    } else {
         _scanLight.frame = frame;
         [self scanAnimation];
         i++;
@@ -78,7 +76,16 @@
     }];
 }
 
+#pragma mark - RTBleConnectorDelegate
 
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+	if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+		autoVC.massage = self.massage;
+		[self.navigationController pushViewController:autoVC animated:YES];
+	}
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

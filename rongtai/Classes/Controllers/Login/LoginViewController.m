@@ -36,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	NSLog(@"dfsdf");
 //    _loginFeild.layer.cornerRadius = 5;
 //    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
 //    _loginFeild.layer.borderWidth = 1;
@@ -159,5 +158,10 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+	[super didUpdateMassageChairStatus:rtMassageChairStatus];
+	NSLog(@"didUpdateMassageChairStatus:");
+}
 
 @end

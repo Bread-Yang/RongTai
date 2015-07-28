@@ -40,6 +40,8 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
 - (void)didFailToConnectRTBlePeripheral:(CBPeripheral *)peripheral;
 
 - (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral;
+
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus;
 @end
 
 #pragma mark - RTBleConnector
@@ -51,6 +53,10 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
 @interface RTBleConnector : NSObject
 
 @property (nonatomic, strong) id<RTBleConnectorDelegate> delegate;
+
+@property (nonatomic, assign) BOOL isConnectedDevice;
+
+@property (nonatomic, strong) NSTimer *reconnectTimer;
 
 @property (nonatomic, strong) RTMassageChairStatus *rtMassageChairStatus;
 
@@ -65,6 +71,8 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
 - (void)connectRTPeripheral:(CBPeripheral *)peripheral;
 
 - (void)cancelConnectRTPeripheral:(CBPeripheral *)peripheral;
+
+- (void)cancelCurrentConnectedRTPeripheral;
 
 /*======================================================
  业务命令

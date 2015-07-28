@@ -1677,10 +1677,10 @@
 				3D10638D1B2D557C00266D9A /* CustomProcedure */,
 				3D2C82F21B2A93B400F52352 /* FamilyManage */,
 				56E6B3261B292932000178BD /* TimingMassage */,
-				3D65A4831B25792800B7B411 /* MenuViewController.h */,
-				3D65A4841B25792800B7B411 /* MenuViewController.m */,
 				3DBE05AC1B27F28A0008EFCA /* Data Center */,
 				3D0258D41B1D5173006C9179 /* Login */,
+				3D65A4831B25792800B7B411 /* MenuViewController.h */,
+				3D65A4841B25792800B7B411 /* MenuViewController.m */,
 				DF9C7D021B147D59005617DA /* FirstViewController.h */,
 				DF9C7D031B147D59005617DA /* FirstViewController.m */,
 				56C349571B170D9E007C8B3F /* MusicPickerViewController.h */,
@@ -2304,7 +2304,7 @@
 			baseConfigurationReference = 85D795F6A8BAE2B12ACCBD3F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: William zhang (R285RFBPPH)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
@@ -2340,7 +2340,7 @@
 			baseConfigurationReference = D8E66C336656A2042B2041FF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: William zhang (R285RFBPPH)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",

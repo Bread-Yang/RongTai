@@ -66,6 +66,9 @@
 "手动按摩" = "ManualMassage";
 "按摩调整" = "Adjust";
 "体型智能检测" = "Intelligent Body Scan";
+"重新连接" = "reconnect";
+"未连接设备" = "Bluetooth disconnect, please reconnect!";
+"设备连接断开" = "Bluetooth disconnect, reconnecting...";
 
 
 

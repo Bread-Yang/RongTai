@@ -63,7 +63,11 @@ CGFloat buttonSpacerHeight = 0;
 
 // Create the dialog view, and animate opening the dialog
 - (void)show {
-	dialogView = [self createContainerView];
+	if (self.isReconnectDialog) {
+		dialogView = [self createReconnectDialog];
+	} else {
+		dialogView = [self createContainerView];
+	}
 	
 	dialogView.layer.shouldRasterize = YES;
 	dialogView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
@@ -188,9 +192,99 @@ CGFloat buttonSpacerHeight = 0;
 	 ];
 }
 
-- (void)setSubView: (UIView *)subView
-{
+- (void)setSubView: (UIView *)subView {
 	containerView = subView;
+}
+
+- (UIView *)createReconnectDialog {
+	if (containerView == NULL) {
+		containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 150)];
+		if (self.reconnectTipsString) {
+			UILabel *reconnectTipsLabel = [[UILabel alloc] initWithFrame:containerView.frame];
+			reconnectTipsLabel.textAlignment = NSTextAlignmentCenter;
+			reconnectTipsLabel.text = self.reconnectTipsString;
+			reconnectTipsLabel.textColor = [UIColor whiteColor];
+			
+			[containerView addSubview:reconnectTipsLabel];
+		}
+	}
+	
+	CGSize screenSize = [self countScreenSize];
+	// For the black background
+	[self setFrame:CGRectMake(0, 0, screenSize.width, screenSize.height)];
+	
+	if (buttonTitles != NULL && [buttonTitles count] > 0) {
+		buttonHeight       = kCustomIOSAlertViewDefaultButtonHeight;
+		buttonSpacerHeight = kCustomIOSAlertViewDefaultButtonSpacerHeight;
+		if (self.titleString) {
+			titleHeight = kCustomIOSAlertViewDefaultTitleHeight;
+		} else {
+			titleHeight = 0;
+		}
+	} else {
+		buttonHeight = 0;
+		buttonSpacerHeight = 0;
+	}
+	
+	CGFloat dialogWidth = containerView.frame.size.width;
+	CGFloat dialogHeight = containerView.frame.size.height + buttonHeight + buttonSpacerHeight;
+	
+	CGSize dialogSize = CGSizeMake(dialogWidth, dialogHeight);
+	
+	// This is the dialog's container; we attach the custom content and the buttons to this one
+	UIView *dialogContainer = [[UIView alloc] initWithFrame:CGRectMake((screenSize.width - dialogSize.width) / 2, (screenSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height)];
+	
+	dialogContainer.clipsToBounds = YES;
+	
+	dialogContainer.backgroundColor = [UIColor colorWithRed:3.0 / 255.0 green:150.0 / 255.0 blue:253 / 255.0 alpha:1.0
+									   ];
+	
+	[dialogContainer addSubview:containerView];
+	
+	if (buttonTitles != NULL) {
+		
+		CGFloat buttonWidth =
+		dialogContainer.bounds.size.width / [buttonTitles count];
+		
+		for (int i = 0; i < [buttonTitles count]; i++) {
+			
+			UIButton *closeButton =
+			[UIButton buttonWithType:UIButtonTypeCustom];
+			
+			[closeButton
+			 setFrame:CGRectMake(i * buttonWidth,
+								 dialogContainer.bounds.size.height -
+								 buttonHeight,
+								 buttonWidth, buttonHeight)];
+			
+			[closeButton
+			 addTarget:self
+			 action:@selector(customIOS7dialogButtonTouchUpInside:)
+			 forControlEvents:UIControlEventTouchUpInside];
+			[closeButton setTag:i];
+			
+			[closeButton setTitle:[buttonTitles objectAtIndex:i]
+						 forState:UIControlStateNormal];
+			
+			closeButton.backgroundColor = [UIColor whiteColor];
+			
+			[closeButton setTitleColor:[UIColor whiteColor]
+							  forState:UIControlStateHighlighted];
+			[closeButton setTitleColor:[UIColor colorWithRed:0.2f
+													   green:0.2f
+														blue:0.2f
+													   alpha:0.5f]
+							  forState:UIControlStateNormal];
+			
+			[closeButton.titleLabel
+			 setFont:[UIFont boldSystemFontOfSize:18.0f]];
+			[closeButton.layer setCornerRadius:kCustomIOSAlertViewCornerRadius];
+			
+			[dialogContainer addSubview:closeButton];
+		}
+	}
+	
+	return dialogContainer;
 }
 
 // Creates the container view here: create the dialog, then add the custom content and buttons
