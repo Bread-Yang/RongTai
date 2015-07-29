@@ -79,7 +79,7 @@
 	
 	self.configureBlock = ^(NALabelCell *cell, NSString *item) {
 		[cell.textView setText:item];
-		cell.textView.textAlignment = UITextAlignmentCenter;
+		cell.textView.textAlignment = NSTextAlignmentCenter;
 		cell.textView.font = [UIFont systemFontOfSize:30];
 		cell.textView.backgroundColor = [UIColor clearColor];
 		cell.textView.textColor = [UIColor grayColor];

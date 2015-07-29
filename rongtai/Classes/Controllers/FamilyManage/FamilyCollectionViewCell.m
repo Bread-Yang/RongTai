@@ -90,27 +90,30 @@
     }
     else
     {
-        //使用网络请求
+        //先使用本地图片，若本地读不到图片则使用网络请求
+        
+        
+        //网络请求
+        if (![NSString isBlankString:member.imageURL]) {
+            NSURL *url = [NSURL URLWithString:member.imageURL];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+            
+            __weak FamilyCollectionViewCell *weakCell = self;
+            
+            [_userIconView setImageWithURLRequest:request
+                                 placeholderImage:placeholderImage
+                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                              weakCell.userIconView.image = image;
+                                              [weakCell setNeedsLayout];
+                                              
+                                          } failure:nil];
+        }
         
     }
 	_userNameLabel.text = member.name;
 	
-	if (![NSString isBlankString:member.imageURL]) {
-		NSURL *url = [NSURL URLWithString:member.imageURL];
-		NSURLRequest *request = [NSURLRequest requestWithURL:url];
-		UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
-		
-		__weak FamilyCollectionViewCell *weakCell = self;
-		
-		[_userIconView setImageWithURLRequest:request
-						  placeholderImage:placeholderImage
-								   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-									   
-									   weakCell.userIconView.image = image;
-									   [weakCell setNeedsLayout];
-									   
-								   } failure:nil];
-	}
+
 }
 
 @end
