@@ -38,6 +38,7 @@
     UIImage* _touchImage;
     CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
     CGPoint _Line2;
+    NSMutableArray* _values;
 }
 @end
 
@@ -94,11 +95,13 @@
     _touchImage = [UIImage imageNamed:@"piont_2"];
     _touchLine = CGPointZero;
     _Line2 = CGPointZero;
+    _FontColors = @[[UIColor colorWithRed:65/255.0 green:170/255.0 blue:196/255.0 alpha:1],[UIColor colorWithRed:128/255.0 green:199/255.0 blue:134/255.0 alpha:1],[UIColor colorWithRed:63/255.0 green:157/255.0 blue:244/255.0 alpha:1],[UIColor colorWithRed:245/255.0 green:122/255.0 blue:72/255.0 alpha:1],[UIColor colorWithRed:128/255.0 green:199/255.0 blue:134/255.0 alpha:1]];
 }
 
 #pragma mark - set方法
 - (void)setDataSeries:(NSArray *)dataSeries {
     _dataSeries = dataSeries;
+    _values = [NSMutableArray arrayWithArray:_dataSeries];
     _numOfV = [_dataSeries count];
     _radPerV = M_PI * 2 / _numOfV;
     [self countPointPosition];
@@ -145,6 +148,7 @@
 {
 //    NSLog(@"触摸开始");
 //    [super touchesBegan:touches withEvent:event];
+//    NSLog(@"Center Point:%@",NSStringFromCGPoint(_centerPoint));
     if ([self.delegate respondsToSelector:@selector(WLPolarWillStartTouch:)]) {
         [self.delegate WLPolarWillStartTouch:self];
     }
@@ -159,14 +163,14 @@
             _isTouchInPoint = YES;
             _touchPointIndex = i;
             _startPoint = p;
-            NSValue* v = _points[_touchPointIndex];
-            CGPoint p2 = [v CGPointValue];
-            
-            _touchLine = lineFunction(_centerPoint, p2);
+
+            CGPoint p2 = CGPointZero;
             float x = _centerPoint.x - _r * sin(_touchPointIndex * _radPerV)/2;
             float y = _centerPoint.y - _r * cos(_touchPointIndex * _radPerV)/2;
             p2.x = x;
             p2.y = y;
+            _touchLine = lineFunction(_centerPoint, p2);
+            
             _Line2.x = -1/_touchLine.x;
             if (_Line2.x>CGFLOAT_MAX||_Line2.x<-CGFLOAT_MAX) {
                 _Line2.y = p2.x;
@@ -179,7 +183,6 @@
             break;
         }
     }
-
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -225,6 +228,9 @@
             p.x = x;
             p.y = y;
             [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
+            newR = sqrt(pow((p.x - _centerPoint.x), 2)+pow((p.y - _centerPoint.y), 2));
+            float newNum = (newR/_r)*(_maxValue - _minValue)+_minValue;
+            [_values setObject:[NSNumber numberWithFloat:newNum] atIndexedSubscript:_touchPointIndex];
             [self setNeedsDisplay];
         }
     }
@@ -238,6 +244,9 @@
 //    NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
     NSLog(@"Points:%@",_points);
+    if (_isTouchInPoint) {
+        _dataSeries = [NSArray arrayWithArray:_values];
+    }
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
     if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:)]) {
@@ -358,40 +367,26 @@
     CGFloat padding = 10.0;
     
     for (int i = 0; i < _numOfV; i++) {
-        NSString *attributeName = _attributes[i];
+        NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
+        [paragraphStyle setAlignment:NSTextAlignmentCenter];
+        NSMutableDictionary* attributes = [NSMutableDictionary new];
+        [attributes setObject:self.scaleFont forKey:NSFontAttributeName];
+        [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        if (_FontColors[i]) {
+            [attributes setObject:_FontColors[i] forKey:NSForegroundColorAttributeName];
+        }
+        NSAttributedString* attributeName = [[NSAttributedString alloc]initWithString:_attributes[i] attributes:attributes];
         CGPoint pointOnEdge = CGPointMake(_centerPoint.x - _r * sin(i * _radPerV), _centerPoint.y - _r * cos(i * _radPerV));
-        
-        
-        CGSize attributeTextSize = JY_TEXT_SIZE(attributeName, self.scaleFont);
+        CGSize attributeTextSize = [attributeName size];
         NSInteger width = attributeTextSize.width;
         CGFloat xOffset = (-width / 2.0 - padding)*sin(i*_radPerV);
         CGFloat yOffset = (-height / 2.0 - padding)*cos(i*_radPerV);
-        CGPoint legendCenter = CGPointMake(pointOnEdge.x + xOffset, pointOnEdge.y + yOffset);
-        
-        if (__IPHONE_OS_VERSION_MIN_REQUIRED >= 70000) {
-            NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            
-            NSDictionary *attributes = @{ NSFontAttributeName: self.scaleFont,
-                                          NSParagraphStyleAttributeName: paragraphStyle ,NSForegroundColorAttributeName:[UIColor colorWithRed:115/255.0 green:182/255.0 blue:197/255.0 alpha:1]};
-            
-            [attributeName drawInRect:CGRectMake(legendCenter.x - width / 2.0,
-                                                 legendCenter.y - height / 2.0,
-                                                 width,
-                                                 height)
-                       withAttributes:attributes];
-        }
-        else {
-           
-            [attributeName drawInRect:CGRectMake(legendCenter.x - width / 2.0,
-                                                 legendCenter.y - height / 2.0,
-                                                 width,
-                                                 height)
-                             withFont:self.scaleFont
-                        lineBreakMode:NSLineBreakByClipping
-                            alignment:NSTextAlignmentCenter];
-        }
+        CGPoint legendCenter = CGPointMake(pointOnEdge.x + xOffset-width/2.0, pointOnEdge.y + yOffset+padding/2.0);
+        CGRect f = CGRectZero;
+        f.size = attributeTextSize;
+        f.origin = legendCenter;
+        [attributeName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
     }
 }
 

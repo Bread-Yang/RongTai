@@ -43,7 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.isListenBluetoothStatus = YES;
+	self.isListenBluetoothStatus = NO;
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -68,16 +68,15 @@
     image.clipsToBounds = YES;
 //    self.navigationItem.leftBarButtonItem = left;
     
-    SlideNavigationController* s = (SlideNavigationController*)self.navigationController;
-    s.leftBarButtonItem = left;
+  
+    slideNav.leftBarButtonItem = left;
     
 
     //侧滑菜单
-    s.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
-    s.view.layer.shadowOffset = CGSizeMake(-0.5, 0);
-    s.view.layer.shadowOpacity  = 5;
-    s.view.layer.shadowRadius = 10;
- 
+    slideNav.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
+    slideNav.view.layer.shadowOffset = CGSizeMake(-0.5, 0);
+    slideNav.view.layer.shadowOpacity  = 5;
+    slideNav.view.layer.shadowRadius = 10;
     
     //
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
@@ -184,7 +183,6 @@
         cell.imageViewScale = 0.55;
         CGRect f = CGRectMake(0, 0, SCREENWIDTH, 78);
         UIImageView* bg = [[UIImageView alloc]initWithFrame:f];
-//        NSLog(@"f:%@",NSStringFromCGRect(f));
         bg.image = [UIImage imageNamed:@"list_bg"];
         bg.contentMode = UIViewContentModeScaleToFill;
         bg.alpha = 0.5;
