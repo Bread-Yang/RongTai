@@ -37,6 +37,8 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
+    slideNav.enableSwipeGesture = YES;
 }
 
 - (void)viewDidLoad {
@@ -118,6 +120,13 @@
     [self.view addSubview:_menuBar];
     
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
+    slideNav.enableSwipeGesture = NO;
 }
 
 #pragma mark - menuController代理

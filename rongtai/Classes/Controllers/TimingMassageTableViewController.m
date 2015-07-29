@@ -11,7 +11,6 @@
 #import "TimingPlanTableViewCell.h"
 #import "TimingPlan.h"
 #import <MagicalRecord.h>
-#import <MagicalRecord.h>
 
 @interface TimingMassageTableViewController ()
 

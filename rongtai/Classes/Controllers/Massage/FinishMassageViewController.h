@@ -11,4 +11,9 @@
 
 @interface FinishMassageViewController : BasicViewController
 
+/**
+ *  保存模式
+ */
+-(void)saveMode;
+
 @end

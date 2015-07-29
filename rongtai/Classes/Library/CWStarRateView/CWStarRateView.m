@@ -88,7 +88,7 @@
         default:
             break;
     }
-    NSLog(@"%lf",starScore);
+//    NSLog(@"%lf",starScore);
     self.scorePercent = starScore / self.numberOfStars;
 }
 
@@ -119,7 +119,7 @@
 {
     CGFloat new = ceilf(score);
     CGFloat s = new - score;
-    NSLog(@"s:%lf",s);
+//    NSLog(@"s:%lf",s);
     if (s<0.5) {
         return new;
     }
