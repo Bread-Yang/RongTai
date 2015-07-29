@@ -15,6 +15,8 @@ static NSString *const RTBle_Periperal     = @"RTPeriperal";
 static NSString *const RTBle_BroadcastData = @"RTBroadcastData";
 static NSString *const RTBle_RSSI          = @"RTRSSI";
 
+static BOOL isBleTurnOn;
+
 #define RTLocalName @"RT8600S"
 #define RTBroadServiceUUID @"1802"
 
@@ -60,6 +62,8 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
 
 @property (nonatomic, strong) RTMassageChairStatus *rtMassageChairStatus;
 
+@property (nonatomic, retain) CBPeripheral *currentConnectedPeripheral;
+
 + (instancetype)shareManager;
 
 + (BOOL)isBleTurnOn;
@@ -79,5 +83,5 @@ static NSString *const RTBle_RSSI          = @"RTRSSI";
  /======================================================*/
 #pragma mark - Control Command
 
-- (void)controlMode:(NSInteger)mode;
+- (void)sendControlMode:(NSInteger)mode;
 @end
