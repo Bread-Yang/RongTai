@@ -65,22 +65,19 @@
     self.title = NSLocalizedString(@"手动按摩", nil);
     
     //关闭SlideNavigationController的滑动手势，不然会影响WLPolar
-    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
-    _enableSwipeGesture = sl.enableSwipeGesture;
-    sl.enableSwipeGesture = NO;
-    
+//    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
+//    _enableSwipeGesture = sl.enableSwipeGesture;
+//    sl.enableSwipeGesture = NO;
     
     //
     _skillsPreferenceArray = @[@"揉捏",@"推拿",@"敲打",@"组合"];
     
-//    _addScrollView.backgroundColor = [UIColor yellowColor];
     //
     _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
     _scroll.pagingEnabled = YES;
     _scroll.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
     _scroll.bounces = NO;
     _scroll.delegate = self;
-//    _scroll.backgroundColor = [UIColor redColor];
     _scroll.showsHorizontalScrollIndicator = NO;
     _scroll.showsVerticalScrollIndicator = NO;
     [_addScrollView addSubview:_scroll];
@@ -164,13 +161,11 @@
     
     //
     _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
-//    _humanView.backgroundColor = [UIColor blueColor];
     [_scroll addSubview:_humanView];
     
     //
     
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
-//    _polar.backgroundColor = [UIColor blueColor];
     _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
     _polar.steps = 3;
     _polar.r = SCREENHEIGHT*0.57*0.3;
@@ -209,8 +204,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
-    sl.enableSwipeGesture = _enableSwipeGesture;
+//    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
+//    sl.enableSwipeGesture = _enableSwipeGesture;
     
     [_panAlertView removeFromSuperview];
 }

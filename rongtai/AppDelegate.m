@@ -62,7 +62,7 @@
     
     MenuViewController *menu = [[MenuViewController alloc] init];
     slide.leftMenu = menu;
-    slide.enableSwipeGesture = YES;
+    slide.enableSwipeGesture = NO;
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
