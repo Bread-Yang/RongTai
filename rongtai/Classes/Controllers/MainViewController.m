@@ -215,8 +215,8 @@
 	switch (indexPath.row) {
 			// 舒展活络
 		case 0: {
-			[[RTBleConnector shareManager] controlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
-			[[RTBleConnector shareManager] controlMode:H10_KEY_CHAIR_AUTO_0];
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
 			
 //			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 //			ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];

@@ -25,19 +25,18 @@
 	
 	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
-	[self.view insertSubview:backgroundImageView atIndex:0];
-    
+	self.tableView.backgroundView = backgroundImageView;
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+	
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
                     
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+	
     //清空本地通知
     NSInteger number =[[UIApplication sharedApplication]scheduledLocalNotifications].count;
     NSLog(@"本地通知数量:%ld",number);
@@ -48,7 +47,7 @@
 //    NSLog(@"清空后本地通知数量:%ld",[[UIApplication sharedApplication]scheduledLocalNotifications].count);
     
     self.timingMassageArray = [[NSMutableArray alloc] init];
-    NSArray* arr = [TimingPlan MR_findAll];
+    NSArray *arr = [TimingPlan MR_findAll];
     NSLog(@"定时计划数量:%ld",arr.count);
     for (int i = 0; i<arr.count; i++) {
         TimingPlan* item = arr[i];
@@ -65,15 +64,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
     return [self.timingMassageArray count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -85,6 +81,7 @@
 		cell = [[TimingPlanTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseId];
 	}
     cell.timingPlan = self.timingMassageArray[indexPath.row];
+	
     return cell;
 }
 
@@ -96,6 +93,7 @@
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         TimingPlan* timingPlan = self.timingMassageArray[indexPath.row];
@@ -105,6 +103,7 @@
         
 		[self.timingMassageArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+		
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -117,6 +116,7 @@
 #pragma mark - selector
 
 - (void)addTimingMassage {
+	
 	UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
 	AddTimingMassageViewController *viewController = (AddTimingMassageViewController *)[mainStoryBoard instantiateViewControllerWithIdentifier:@"AddTimingMassage"];
 	

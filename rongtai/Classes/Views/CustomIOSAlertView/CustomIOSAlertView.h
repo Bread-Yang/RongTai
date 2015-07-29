@@ -13,6 +13,7 @@
 
 @protocol CustomIOSAlertViewDelegate
 
+@optional
 - (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 @end
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) UIView *dialogView;    // Dialog's container view
 @property (nonatomic, retain) UIView *containerView; // Container within the dialog (place your ui elements here)
 
+@property (nonatomic, assign) BOOL isShowing;
 @property (nonatomic, assign) id<CustomIOSAlertViewDelegate> delegate;
 @property (nonatomic, retain) NSString *titleString;
 @property (nonatomic, retain) NSArray *buttonTitles;

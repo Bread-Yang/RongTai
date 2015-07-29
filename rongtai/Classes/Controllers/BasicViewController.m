@@ -18,7 +18,7 @@
 	
 }
 
-@end
+@end 
 
 @implementation BasicViewController
 
@@ -39,7 +39,7 @@
 		bleConnector = [RTBleConnector shareManager];
 		bleConnector.delegate = self;
 		
-		if (!bleConnector.isConnectedDevice) {
+		if (!bleConnector.currentConnectedPeripheral) {
 			reconnectDialog = [[CustomIOSAlertView alloc] init];
 			reconnectDialog.isReconnectDialog = YES;
 			
@@ -56,6 +56,19 @@
 			}];
 			
 			[reconnectDialog show];
+		} else {
+			reconnectDialog = [[CustomIOSAlertView alloc] init];
+			reconnectDialog.isReconnectDialog = YES;
+			reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
+			[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
+			
+			__weak RTBleConnector *weakPointer = bleConnector;
+			[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+				if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
+					[weakPointer.reconnectTimer invalidate];
+				}
+				[alertView close];
+			}];
 		}
 	}
 }
@@ -100,19 +113,6 @@
 
 - (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral {
 	// show reconnect dialog
-	reconnectDialog = [[CustomIOSAlertView alloc] init];
-	reconnectDialog.isReconnectDialog = YES;
-	reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
-	
-	[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
-	
-	__weak RTBleConnector *weakPointer = bleConnector;
-	[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-		if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
-			[weakPointer.reconnectTimer invalidate];
-		}
-		[alertView close];
-	}];
 	
 	[reconnectDialog show];
 }

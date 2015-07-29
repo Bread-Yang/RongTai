@@ -63,6 +63,12 @@ CGFloat buttonSpacerHeight = 0;
 
 // Create the dialog view, and animate opening the dialog
 - (void)show {
+	if (self.isShowing) {
+		return;
+	}
+	
+	self.isShowing = YES;
+	
 	if (self.isReconnectDialog) {
 		dialogView = [self createReconnectDialog];
 	} else {
@@ -164,8 +170,9 @@ CGFloat buttonSpacerHeight = 0;
 }
 
 // Dialog close animation then cleaning and removing the view from the parent
-- (void)close
-{
+- (void)close {
+	self.isShowing = NO;
+	
 	CATransform3D currentTransform = dialogView.layer.transform;
 	
 	if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {

@@ -173,65 +173,65 @@
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
 					NSLog(@"肩部开始");
-					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_UP_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_UP_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_UP_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_UP_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_DOWN_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_WALK_DOWN_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_DOWN_STOP];
 				}
 			}
 			break;
 		case 2:		// 背部升降
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_DOWN_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_DOWN_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_DOWN_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_UP_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_UP_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_BACKPAD_UP_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_UP_STOP];
 				}
 			}
 			break;
 		case 3:		// 小腿升降
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_DOWN_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_DOWN_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_DOWN_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_UP_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_UP_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_UP_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_UP_STOP];
 				}
 			}
 			break;
 		case 4:		// 小腿伸缩
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_EXTEND_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_EXTEND_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_EXTEND_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_EXTEND_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_CONTRACT_START];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_CONTRACT_START];
 				} else {
-					[[RTBleConnector shareManager] controlMode:H10_KEY_LEGPAD_CONTRACT_STOP];
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_CONTRACT_STOP];
 				}
 			}
 			break;
 		case 5:		// 零重力
-			[[RTBleConnector shareManager] controlMode:H10_KEY_ZERO_START];
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_ZERO_START];
 			break;
 	}
 }

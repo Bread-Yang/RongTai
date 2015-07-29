@@ -23,6 +23,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
+#import "TimingMassageTableViewController.h"
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -58,14 +59,16 @@
     application.applicationIconBadgeNumber = 0;
 
     SlideNavigationController *slide = [SlideNavigationController sharedInstance];
-    
-    
+	
     MenuViewController *menu = [[MenuViewController alloc] init];
     slide.leftMenu = menu;
     slide.enableSwipeGesture = NO;
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+	
+	
+	UIViewController *controller = [[TimingMassageTableViewController alloc] init];
 	
 //	UIImage * image = [UIImage imageNamed:@"bg"];
 //	CGSize sacleSize = self.window.frame.size;
@@ -75,10 +78,9 @@
 //	UIGraphicsEndImageContext();
 //	[self.window setBackgroundColor:[UIColor colorWithPatternImage:resizedImage]];
 	
-//
 //	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //	self.window.backgroundColor = [UIColor whiteColor];
-//	self.window.rootViewController = slide;
+//	self.window.rootViewController = controller;
 //	[self.window makeKeyAndVisible];
 	
     return YES;
