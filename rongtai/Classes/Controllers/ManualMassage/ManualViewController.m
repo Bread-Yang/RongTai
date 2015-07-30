@@ -68,8 +68,6 @@
     //
     __weak IBOutlet UIView *_addScrollView;
     UIScrollView* _scroll;
-    
-    
 
 }
 @end
@@ -97,9 +95,11 @@
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
-    
+
     //
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+//    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    
+   
     
     //
     _menu = @[NSLocalizedString(@"肩部位置:", nil),NSLocalizedString(@"背部升降:",nil),NSLocalizedString(@"小腿升降:",nil),NSLocalizedString(@"小腿伸缩:",nil),NSLocalizedString(@"零重力:",nil)];

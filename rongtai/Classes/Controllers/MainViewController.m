@@ -44,6 +44,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = NO;
+    
+    
+    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
+    
+    NSLog(@"Main:%@",self.navigationItem);
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
