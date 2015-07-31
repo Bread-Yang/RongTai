@@ -8,8 +8,8 @@
 
 #import "MassageRequest.h"
 #import <AFNetworking.h>
-#define REQUESTURL @"http://192.168.2.64:8080/RongTaiWeb"
-#define APPID @"781b7b9b7e074b1685217537ad1ab1c5"
+#define REQUESTURL @"http://recipe.xtremeprog.com/RongTaiWeb/"
+
 
 @interface MassageRequest ()
 {
@@ -32,7 +32,7 @@
 #pragma mark - 获取按摩程序列表
 -(void)requestMassageListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/loadMassage",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
@@ -65,7 +65,7 @@
 #pragma mark - 获取用户下载的按摩程序列表
 -(void)requestFavoriteMassageListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/loadFavoriteMassage",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
@@ -97,7 +97,7 @@
 #pragma mark - 添加用户按摩程序下载
 -(void)requestAddFavoriteMassageByUid:(NSString*)uid MassageIds:(NSString*)masssageIds
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/addFavorite",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：uids:%@\n MassageIds：%@",url,uid,masssageIds);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
@@ -133,7 +133,7 @@
 #pragma mark - 获取自定义程序列表
 -(void)requsetCustomProgramListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/loadCustomProgram",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
@@ -166,7 +166,7 @@
 #pragma mark - 添加自定义程序
 -(void)addCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/addCustomProgram",REQUESTURL];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
@@ -211,7 +211,7 @@
 #pragma mark - 编辑自定义程序
 -(void)updateCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/updateCustomProgram",REQUESTURL];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
@@ -257,7 +257,7 @@
 #pragma mark - 删除自定义程序
 -(void)deleteCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
-    [self cancelRequest];
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/deleteCustomProgram",REQUESTURL];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];

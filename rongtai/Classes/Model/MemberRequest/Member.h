@@ -54,6 +54,11 @@
  */
 @property (nonatomic, retain) NSNumber * userId;
 
+/**
+ *  成员Id
+ */
+@property (nonatomic, retain) NSNumber* memberId;
+
 
 -(NSDictionary*)memberToDictionary;
 

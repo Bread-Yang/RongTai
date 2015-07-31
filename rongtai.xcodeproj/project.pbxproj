@@ -19,6 +19,8 @@
 		3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258EE1B1D525E006C9179 /* UIView+Hierarchy.m */; };
 		3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */; };
 		3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */; };
+		3D0709A31B6B66430010920D /* MemberRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0709A21B6B66430010920D /* MemberRequest.m */; };
+		3D0709A61B6B6A0E0010920D /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0709A51B6B6A0E0010920D /* Member.m */; };
 		3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6B1B3ABBE100FF97C6 /* mini-clouds@2x.png */; };
 		3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6C1B3ABBE100FF97C6 /* mini-fog@2x.png */; };
 		3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0B4C6D1B3ABBE100FF97C6 /* mini-hail@2x.png */; };
@@ -246,7 +248,6 @@
 		5661F6A31B281302006066A0 /* LineUICollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6A11B281302006066A0 /* LineUICollectionViewFlowLayout.m */; };
 		5661F6A61B281361006066A0 /* MusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F6A51B281361006066A0 /* MusicModel.m */; };
 		5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5672800B1B31845B0059C18E /* RongTai.xcdatamodeld */; };
-		567280111B31859E0059C18E /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 567280101B31859E0059C18E /* Member.m */; };
 		567281521B32A02C0059C18E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567281511B32A02C0059C18E /* CoreGraphics.framework */; };
 		567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 567281551B32A0E20059C18E /* MBProgressHUD.m */; };
 		568C3BB41B60D13D0092A431 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C3BB31B60D13D0092A431 /* AppIntrouceView.m */; };
@@ -326,6 +327,10 @@
 		3D0258F01B1D525E006C9179 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		3D0258F11B1D525E006C9179 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
 		3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		3D0709A11B6B66430010920D /* MemberRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberRequest.h; sourceTree = "<group>"; };
+		3D0709A21B6B66430010920D /* MemberRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberRequest.m; sourceTree = "<group>"; };
+		3D0709A41B6B6A0E0010920D /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
+		3D0709A51B6B6A0E0010920D /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		3D0B4C6B1B3ABBE100FF97C6 /* mini-clouds@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-clouds@2x.png"; sourceTree = "<group>"; };
 		3D0B4C6C1B3ABBE100FF97C6 /* mini-fog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-fog@2x.png"; sourceTree = "<group>"; };
 		3D0B4C6D1B3ABBE100FF97C6 /* mini-hail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-hail@2x.png"; sourceTree = "<group>"; };
@@ -666,8 +671,6 @@
 		5661F6A51B281361006066A0 /* MusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicModel.m; sourceTree = "<group>"; };
 		5661F6A71B281384006066A0 /* PinYinUti.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinYinUti.h; sourceTree = "<group>"; };
 		5672800C1B31845B0059C18E /* RongTai.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RongTai.xcdatamodel; sourceTree = "<group>"; };
-		5672800F1B31859E0059C18E /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Member.h; path = Model/Member.h; sourceTree = "<group>"; };
-		567280101B31859E0059C18E /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Member.m; path = Model/Member.m; sourceTree = "<group>"; };
 		567281511B32A02C0059C18E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		567281541B32A0E20059C18E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		567281551B32A0E20059C18E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
@@ -856,6 +859,18 @@
 				3D0258F21B1D525E006C9179 /* UIWindow+Hierarchy.m */,
 			);
 			path = IQKeyBoardManager;
+			sourceTree = "<group>";
+		};
+		3D0709A01B6B66160010920D /* MemberRequest */ = {
+			isa = PBXGroup;
+			children = (
+				3D0709A41B6B6A0E0010920D /* Member.h */,
+				3D0709A51B6B6A0E0010920D /* Member.m */,
+				3D0709A11B6B66430010920D /* MemberRequest.h */,
+				3D0709A21B6B66430010920D /* MemberRequest.m */,
+			);
+			name = MemberRequest;
+			path = Model/MemberRequest;
 			sourceTree = "<group>";
 		};
 		3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */ = {
@@ -1524,12 +1539,11 @@
 				3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */,
 				3D77C9E61B4CCC37005C9810 /* TimingPlan.h */,
 				3D77C9E71B4CCC37005C9810 /* TimingPlan.m */,
+				3D0709A01B6B66160010920D /* MemberRequest */,
 				3D9EBADF1B3D2CC1000FD810 /* MassageRequest */,
 				3DAE1A6C1B3C0B8700B0CA3C /* LoginRequest */,
 				3D77C9EA1B4CD2D6005C9810 /* CustomProgram.h */,
 				3D77C9EB1B4CD2D6005C9810 /* CustomProgram.m */,
-				5672800F1B31859E0059C18E /* Member.h */,
-				567280101B31859E0059C18E /* Member.m */,
 				3DCD12291B4140EE00890164 /* UserDownload.h */,
 				3DCD122A1B4140EE00890164 /* UserDownload.m */,
 			);
@@ -2086,7 +2100,6 @@
 				3DCDF36B1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlideAndFade.m in Sources */,
 				568C3BB41B60D13D0092A431 /* AppIntrouceView.m in Sources */,
 				3DF3043B1B38FE2500DD51D3 /* MagicalRecord+iCloud.m in Sources */,
-				567280111B31859E0059C18E /* Member.m in Sources */,
 				56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */,
 				3DCDF3691B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScaleAndFade.m in Sources */,
 				3D4873601B622993003D2C24 /* SMPageControl.m in Sources */,
@@ -2100,6 +2113,7 @@
 				3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */,
 				56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */,
 				3D0258F51B1D525E006C9179 /* IQSegmentedNextPrevious.m in Sources */,
+				3D0709A61B6B6A0E0010920D /* Member.m in Sources */,
 				563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
 				56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */,
@@ -2143,6 +2157,7 @@
 				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3DF304311B38FE2500DD51D3 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				3D92FE1E1B590CDA0021E727 /* WLPanAlertView.m in Sources */,
+				3D0709A31B6B66430010920D /* MemberRequest.m in Sources */,
 				3D0258F81B1D525E006C9179 /* IQToolbar.m in Sources */,
 				3DE5D6731B5F6E6600489C62 /* UIBarButtonItem+goBack.m in Sources */,
 				3D0258F71B1D525E006C9179 /* IQTitleBarButtonItem.m in Sources */,

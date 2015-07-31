@@ -14,6 +14,8 @@
 #import "RongTaiConstant.h"
 #import "UIImage+ImageBlur.h"
 #import "RFSegmentView.h"
+#import "AppDelegate.h"
+#import "MemberRequest.h"
 
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -38,7 +40,10 @@
     CGFloat _index; //记住编辑时传入的Index
     Member* _user;
     UIImage* _userImage;  //用户头像
+    BOOL _isNewImage;  //是否更改了用户头像
     BOOL _isEdit;
+    
+    MBProgressHUD* _loadingHUD;
     
     //约束
     
@@ -55,7 +60,6 @@
     [super viewDidLoad];
     //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
     [_middleView bringSubviewToFront:_birthday];
-//    NSLog(@"%@",_middleView.subviews);
     
     //身高数组：范围为100~250cm
     _heightArr = [NSMutableArray new];
@@ -71,6 +75,7 @@
     UIPickerView* heightPicker = [[UIPickerView alloc]initWithFrame:f];
     heightPicker.dataSource = self;
     heightPicker.delegate = self;
+    [heightPicker selectRow:_heightArr.count/2 inComponent:0 animated:NO];
     heightPicker.tag = 1001;
     [inputView addSubview:heightPicker];
     _height.inputView = inputView;
@@ -93,20 +98,28 @@
     _userImage = [UIImage imageNamed:@"userDefaultIcon.jpg"];
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _userIcon.clipsToBounds = YES;
+    _isNewImage = NO;
     
+    _isEdit = NO;
     
+    //模糊背景
     _bgImageView.image = [_userImage blurImage:15.0];
     _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     
+    //性别选择
     _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
     [_sexSegmentView setItems:@[NSLocalizedString(@"男", nil),NSLocalizedString(@"女", nil)]];
     [_sexView addSubview:_sexSegmentView];
+    
+    //身高单位选择
     _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
     [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"unit", nil)]];
     [_heightUintView addSubview:_heightUnitSegmentView];
-
     
-    // Do any additional setup after loading the view.
+    //
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    _loadingHUD = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
+    [appDelegate.window addSubview:_loadingHUD];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -179,7 +192,6 @@
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:2];
     }
-
 }
 
 #pragma mark - UIImagePickerController代理实现
@@ -188,44 +200,68 @@
     _userImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _bgImageView.image = [_userImage blurImage:15.0];
+    _isNewImage = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - 保存信息按钮方法
-
 - (IBAction)save:(id)sender {
-    
+    [_loadingHUD show:YES];
+    MemberRequest* m = [MemberRequest new];
+    [m uploadImage:_userImage success:^(NSString *urlKey) {
+        
+    } failure:^(id responseObject) {
+        
+    }];
     if (_isEdit) {
         //编辑模式，执行删除
-        
+        NSLog(@"删除");
     }
     else
     {
         //不是编辑模式，添加新成员
         if ([self judgeMemberInformation]) {
             // 下面是本地数据库提交
-            if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
-                _user =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
-            } else if(!_user){													// 新增信息
+            BOOL isAdd = ![self.title isEqual:NSLocalizedString(@"编辑", nil)];
+            if (isAdd) {
+                // 新增信息
                 _user = [Member MR_createEntity];
+            } else if(!_user){
+                // 编辑信息
+                _user =[Member MR_findByAttribute:@"name" withValue:_user.name][0];
             }
+            
+            _user.status = [NSNumber numberWithInt:0];
             [self saveMember];
-            _user.status = [NSNumber numberWithInt:1];
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
             
-            //    //照片保存到本地
-            //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //        [_userImage saveImageByName:@"userIcon.png"];
-            //    });
+                //照片保存到本地
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [_userImage saveImageByName:[NSString stringWithFormat:@"%@.png",_user.name]];
+                });
+            
+            //服务器提交：先提交图片，图片提交成功再提交用户所有信息；图片提交失败，则不提交用户信息，改变用户的信息状态
             
             
-            //服务器提交
+            //提交图片
+            if (_isNewImage) {
+                
+            }
+            else
+            {
+                
+            }
+            
+            
             NSString *requestURL;
-            
-            if ([self.title isEqual:NSLocalizedString(@"编辑", nil)]) {   // 编辑信息
-                requestURL = [RongTaiDefaultDomain stringByAppendingString:@"updateMember"];
-            } else {													// 新增信息
+            if (isAdd) {
+                // 新增信息
                 requestURL = [RongTaiDefaultDomain stringByAppendingString:@"addMember"];
+            }
+            else
+            {
+                // 编辑信息
+                requestURL = [RongTaiDefaultDomain stringByAppendingString:@"updateMember"];
             }
             
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -236,7 +272,7 @@
                                          @"sex" : _user.sex,
                                          @"height" : _user.height,
                                          @"heightUnit" : _user.heightUnit,
-                                         @"imageUrl" : @"http://hiphotos.baidu.com/zhixin/abpic/item/ca5257540923dd541500adbfd309b3de9d8248b2.jpg",
+                                         @"imageUrl" : @"default",
                                          @"birthday" : dateString,
                                          };
             NSLog(@"提交的json数据是 : %@", parameters);
@@ -248,13 +284,21 @@
             
             [manager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Success Submit return json : %@", responseObject);
-#warning 服务器提交成功后要改变本地数据的状态
-                
-                
+                [_loadingHUD hide:YES];
                 [self.navigationController popViewControllerAnimated:TRUE];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
-                
+                [_loadingHUD hide:YES];
+                // 服务器提交失败后，改变本地数据的状态，下次联网时再同步数据
+                _user = [Member MR_findByAttribute:@"name" withValue:_user.name][0];
+                if (isAdd) {
+                    _user.status = [NSNumber numberWithInt:1];
+                }
+                else
+                {
+                    _user.status = [NSNumber numberWithInt:2];
+                }
+
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 // Configure for text only and offset down
                 hud.mode = MBProgressHUDModeText;
@@ -277,10 +321,10 @@
 -(void)editMode:(Member *)user WithIndex:(NSUInteger)index
 {
     self.title = NSLocalizedString(@"编辑", nil);
-    _isEdit = YES;
-    
     self.view.backgroundColor = [UIColor clearColor];
     _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
+    
+    _isEdit = YES;
     
     //保存按钮
     CGFloat h = MIN(SCREENHEIGHT*0.2*0.45, 44);
@@ -348,6 +392,9 @@
 #pragma mark - 保存按钮方法（编辑模式下）
 -(void)saveButtonClicked
 {
+    NSLog(@"编辑用户信息");
+    _loadingHUD.labelText = @"保存中...";
+    [_loadingHUD show:YES];
     if ([self judgeMemberInformation]) {
         [self saveMember];
         _user.status = [NSNumber numberWithInt:2];
@@ -428,6 +475,7 @@
         [hud hide:YES afterDelay:3];
         return result;
     }
+    result = YES;
     return result;
 }
 
@@ -459,6 +507,7 @@
 
 #pragma mark - 删除按钮方法
 -(void)deleteUser:(id)sender {
+    
     if([self.delegate respondsToSelector:@selector(deleteButtonClicked:WithIndex:)]) {
         [self.delegate deleteButtonClicked:_user WithIndex:_index];
     }

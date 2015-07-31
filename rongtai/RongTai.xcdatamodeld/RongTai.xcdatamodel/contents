@@ -19,6 +19,7 @@
         <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="heightUnit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memberId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -46,7 +47,7 @@
     </entity>
     <elements>
         <element name="CustomProgram" positionX="126" positionY="27" width="128" height="225"/>
-        <element name="Member" positionX="-126" positionY="27" width="128" height="165"/>
+        <element name="Member" positionX="-126" positionY="27" width="128" height="180"/>
         <element name="TimingPlan" positionX="0" positionY="144" width="128" height="135"/>
         <element name="UserDownload" positionX="0" positionY="117" width="128" height="195"/>
     </elements>

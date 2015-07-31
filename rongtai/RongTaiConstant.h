@@ -23,6 +23,6 @@
 #define HSCALE [UIScreen mainScreen].bounds.size.height/480
 
 // 荣泰服务器域名
-#define RongTaiDefaultDomain	@"http://192.168.2.49:8080/RongTaiWeb/"
+#define RongTaiDefaultDomain	@"http://recipe.xtremeprog.com/RongTaiWeb/"
 
 #endif

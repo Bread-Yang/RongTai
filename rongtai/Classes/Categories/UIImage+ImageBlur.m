@@ -42,4 +42,13 @@
     [data writeToFile:path atomically:YES];
 }
 
+#pragma mark - 读取本地图片
++(UIImage*)imageInLocalByName:(NSString*)fileName
+{
+    NSString* doc = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString* path = [doc stringByAppendingPathComponent:fileName];
+    UIImage* img = [[UIImage alloc]initWithContentsOfFile:path];
+    return img;
+}
+
 @end
