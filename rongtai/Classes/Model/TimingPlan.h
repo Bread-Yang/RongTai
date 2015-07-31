@@ -6,37 +6,44 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
 
 @interface TimingPlan : NSManagedObject
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSNumber * isOn;
-@property (nonatomic, retain) id localNotification;
-@property (nonatomic, retain) NSNumber * week;
-@property (nonatomic, retain) NSNumber * massageId;
-@property (nonatomic, retain) NSString * massageName;
+@property (nonatomic, retain) NSDate *date;
+@property (nonatomic, retain) NSNumber *isOn;
+@property (nonatomic, retain) id localNotifications;
+@property (nonatomic, retain) id weekdays;
+@property (nonatomic, retain) NSNumber *massageId;
+@property (nonatomic, retain) NSString *massageName;
 
 /**
  *  设置通知
  */
--(void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSUInteger)week Message:(NSString*)message;
+- (void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSOrderedSet *)weekdays Message:(NSString*)message;
 
 /**
  *  计划时间字符串
  */
--(NSString*)planTime;
+- (NSString *)planTime;
 
 /**
  *  添加通知
  */
--(void)addLocalNotification;
+- (void)addLocalNotification:(UILocalNotification *)addNotification;
+
 
 /**
- *  取消通知
+ *	打开通知
  */
--(void)cancelLocalNotification;
+- (void)turnOnLocalNotification;
+
+/**
+ *  关闭通知
+ */
+- (void)cancelLocalNotification;
 
 @end

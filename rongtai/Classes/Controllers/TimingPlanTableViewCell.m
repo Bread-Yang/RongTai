@@ -26,7 +26,7 @@
     // Initialization code
 }
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setUp];
     }
@@ -87,7 +87,7 @@
 -(void)switchChange:(UISwitch*)aSwitch {
     if (aSwitch.isOn) {
         [self setOn];
-        [_timingPlan addLocalNotification];
+        [_timingPlan turnOnLocalNotification];
     }
     else
     {

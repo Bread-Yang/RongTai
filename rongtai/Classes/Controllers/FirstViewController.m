@@ -147,6 +147,9 @@ UISegmentedControl *segmentedControl;
 //    [defaults synchronize];
     [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.introduceView.alpha = 0;
+		
+		// 清空所有本地的UILocalNotification
+		[[UIApplication sharedApplication] cancelAllLocalNotifications];
     } completion:^(BOOL finished) {
         [self.introduceView removeFromSuperview];
     }];

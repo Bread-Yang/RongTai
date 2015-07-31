@@ -44,8 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = NO;
-    
-    
+	
     [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
     
     NSLog(@"Main:%@",self.navigationItem);

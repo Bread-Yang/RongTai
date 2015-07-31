@@ -49,6 +49,8 @@ typedef void (^NACellUnHighlightConfigureBlock)(id);
 		   andItems:(NSArray *)items
 		andDelegate:(id)delegate;
 
+- (NSString *)getHighlightItemString;
+
 - (NSInteger)getHighlightIndex;
 
 - (void)setIndex:(NSInteger)index;
