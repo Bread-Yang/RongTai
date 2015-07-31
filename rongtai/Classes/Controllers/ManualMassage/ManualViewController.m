@@ -21,39 +21,54 @@
 
 @interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,NAPickerViewDelegate,WLPolarDelegate>
 {
-    WLPanAlertView* _panAlertView;
-    UIImageView* _arrow;
-    UIImageView* _bgCircle;
-    UILabel* _titleLabel;
-    UIImageView* _contentImageView;
-    UITableView* _adjustTable;
-    NSArray* _menu;
-    NSString* _reuseIdentifier;
-    NSArray* _images;
+    WLPanAlertView* _panAlertView;  //按摩调整
+    UIImageView* _arrow;  //剪头
+    UIImageView* _bgCircle;  //半圆
+    UILabel* _titleLabel;   //半圆内的Label
+    UIImageView* _contentImageView;   //蓝色背景图片
+    UITableView* _adjustTable;  //所有调整按钮的TableView
+    NSArray* _menu;  //调整选项名称数组
+    NSString* _reuseIdentifier;   //cell重用标识符
+    NSArray* _images;  //调整按钮的图片名称数组
     CGFloat _cH;
     
    
-    ManualHumanView* _humanView;
-    WLPolar* _polar;
-    __weak IBOutlet UIView *_addPageControl;
-    SMPageControl* _pageControl;
-    UIView* _testView;
+    ManualHumanView* _humanView;  //人体部位选择View
+    WLPolar* _polar;   //极限图
+    __weak IBOutlet UIView *_addPageControl;  //添加分页控制器的View
+    SMPageControl* _pageControl;  //分页控制器
     
-    //
-    NSArray* _skillsPreferenceArray;
+    //技法偏好
+    NSArray* _skillsPreferenceArray;    //技法偏好选项数组
     NAPickerView *_skillsPreferencePickerView;  //技法偏好选择器
     
     __weak IBOutlet UILabel *_skillsPreferenceLabel;
     __weak IBOutlet UIView *_skillsPreferenceView;
-    NSInteger _pickerSelectedItem;
+    NSInteger _pickerSelectedItem;  //记录picker选项
+    
+    //定时
+    NAPickerView* _timePickerView;   //时间选择器
+    __weak IBOutlet UILabel *_timeLabel;
+    __weak IBOutlet UIView *_timeView;
+    
+    //背部加热
+    
+    __weak IBOutlet UIView *_backWarm;
+    __weak IBOutlet UIImageView *_backWarmImagaView;
+    __weak IBOutlet UILabel *_backWarmLabel;
+    BOOL _backWarmOn;
+    
+    //脚步滚轮
+    
+    __weak IBOutlet UIView *_footWheel;
+    __weak IBOutlet UIImageView *_footWheelImageView;
+    __weak IBOutlet UILabel *_footWheelLabel;
+    BOOL _footWheelOn;
     
     //
-    
     __weak IBOutlet UIView *_addScrollView;
     UIScrollView* _scroll;
-    
-    //
-    BOOL _enableSwipeGesture;
+
 }
 @end
 
@@ -63,11 +78,6 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"手动按摩", nil);
-    
-    //关闭SlideNavigationController的滑动手势，不然会影响WLPolar
-//    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
-//    _enableSwipeGesture = sl.enableSwipeGesture;
-//    sl.enableSwipeGesture = NO;
     
     //
     _skillsPreferenceArray = @[@"揉捏",@"推拿",@"敲打",@"组合"];
@@ -85,9 +95,11 @@
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
-    
+
     //
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+//    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    
+   
     
     //
     _menu = @[NSLocalizedString(@"肩部位置:", nil),NSLocalizedString(@"背部升降:",nil),NSLocalizedString(@"小腿升降:",nil),NSLocalizedString(@"小腿伸缩:",nil),NSLocalizedString(@"零重力:",nil)];
@@ -165,7 +177,7 @@
     
     //
     
-    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH*1.1, SCREENHEIGHT*0.57*0.1, SCREENWIDTH*0.8, SCREENHEIGHT*0.57*0.8)];
+    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
     _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
     _polar.steps = 3;
     _polar.r = SCREENHEIGHT*0.57*0.3;
@@ -197,15 +209,26 @@
     _skillsPreferencePickerView = [self createskillsPreferencePickerView];
     
     //
+    UITapGestureRecognizer* tTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timeViewTap)];
+    [_timeView addGestureRecognizer:tTap];
     
+     _timePickerView = [self createMinutePickerView];
+    
+    //
+    _backWarmOn = NO;
+    UITapGestureRecognizer* bTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(backWarmTap)];
+    [_backWarm addGestureRecognizer:bTap];
+    
+    //
+    _footWheelOn = NO;
+    UITapGestureRecognizer* fTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(footWheelTap)];
+    [_footWheel addGestureRecognizer:fTap];
     
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    SlideNavigationController* sl = (SlideNavigationController*)self.navigationController;
-//    sl.enableSwipeGesture = _enableSwipeGesture;
     
     [_panAlertView removeFromSuperview];
 }
@@ -221,15 +244,14 @@
 {
     CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
     
-    // Add some custom content to the alert view
     [skillPreferenceAlerView setContainerView:_skillsPreferencePickerView];
     
     //	timingAlerView.dialogBackgroundColor = [UIColor colorWithRed:36.0 / 255.0 green:142.0 / 255.0 blue:215.5/ 255.0 alpha:1];
     
-    // Modify the parameters
+
     [skillPreferenceAlerView setTitleString:@"模式"];
     [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
-    // You may use a Block, rather than a delegate.
+    
     [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         if (buttonIndex == 0) {
             [alertView close];
@@ -244,6 +266,65 @@
     
     [skillPreferenceAlerView setUseMotionEffects:true];
     [skillPreferenceAlerView show];
+}
+
+
+#pragma mark - 时间选择点击方法
+-(void)timeViewTap
+{
+    CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
+    
+    [skillPreferenceAlerView setContainerView:_timePickerView];
+    
+    //	timingAlerView.dialogBackgroundColor = [UIColor colorWithRed:36.0 / 255.0 green:142.0 / 255.0 blue:215.5/ 255.0 alpha:1];
+    
+    
+    [skillPreferenceAlerView setTitleString:@"定时"];
+    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
+    
+    [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+        if (buttonIndex == 0) {
+            [alertView close];
+        }
+        else if (buttonIndex == 1)
+        {
+            //保存方法
+          
+        }
+    }];
+    
+    [skillPreferenceAlerView setUseMotionEffects:true];
+    [skillPreferenceAlerView show];
+}
+
+#pragma mark - 背部加热方法
+-(void)backWarmTap
+{
+    _backWarmOn = !_backWarmOn;
+    if (_backWarmOn) {
+        _backWarmImagaView.image = [UIImage imageNamed:@"function_1_select"];
+        _backWarmLabel.textColor = ORANGE;
+    }
+    else
+    {
+        _backWarmImagaView.image = [UIImage imageNamed:@"function_1"];
+        _backWarmLabel.textColor = [UIColor lightGrayColor];
+    }
+}
+
+#pragma mark - 脚步滚轮方法
+-(void)footWheelTap
+{
+    _footWheelOn = !_footWheelOn;
+    if (_footWheelOn) {
+        _footWheelImageView.image = [UIImage imageNamed:@"function_2_select"];
+        _footWheelLabel.textColor = ORANGE;
+    }
+    else
+    {
+        _footWheelImageView.image = [UIImage imageNamed:@"function_2"];
+        _footWheelLabel.textColor = [UIColor lightGrayColor];
+    }
 }
 
 
@@ -267,13 +348,12 @@
     return pickerView;
 }
 
-
 #pragma mark - 创建时间选择器
-- (UIView *)createMinuteView
+- (NAPickerView *)createMinutePickerView
 {
     NSMutableArray *leftItems = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 30;  i++) {
-        [leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+    for (int i = 1; i < 20;  i++) {
+        [leftItems addObject:[NSString stringWithFormat:@"%d", i*10]];
     }
     //
     NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:leftItems andDelegate:self];
@@ -285,12 +365,12 @@
     pickerView.showOverlay = YES;
     
     pickerView.highlightBlock = ^(NALabelCell *cell) {
-        cell.textView.textColor = [UIColor whiteColor];
-        cell.textView.font = [UIFont systemFontOfSize:30];
+        cell.textView.textColor = BLUE;
+        cell.textView.font = [UIFont fontWithName:@"DS-Digital-Bold" size:30];
     };
     pickerView.unhighlightBlock = ^(NALabelCell *cell) {
-        cell.textView.textColor = [UIColor blackColor];
-        cell.textView.font = [UIFont systemFontOfSize:18];
+        cell.textView.textColor = [UIColor colorWithRed:26/255.0 green:154/255.0 blue:222/255.0 alpha:0.6];
+        cell.textView.font = [UIFont fontWithName:@"DS-Digital-Bold" size:18];
     };
     
     return pickerView;

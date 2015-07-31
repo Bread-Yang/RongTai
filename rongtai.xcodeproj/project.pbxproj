@@ -105,6 +105,8 @@
 		3D8EEBC61B5E1E7D00626EB2 /* LineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBC51B5E1E7D00626EB2 /* LineLabel.m */; };
 		3D8EEBCB1B5E43EF00626EB2 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */; };
 		3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */; };
+		3D908B021B68CCBB000F62A5 /* DS-DIGIB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 3D908B011B68CCBB000F62A5 /* DS-DIGIB.TTF */; };
+		3D908B041B68D623000F62A5 /* icon_set_time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D908B031B68D623000F62A5 /* icon_set_time@2x.png */; };
 		3D92FDC91B5763BB0021E727 /* UIView+AddBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D92FDC81B5763BB0021E727 /* UIView+AddBorder.m */; };
 		3D92FDCD1B58D8030021E727 /* data_icon_cost.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDCA1B58D8030021E727 /* data_icon_cost.png */; };
 		3D92FDCE1B58D8030021E727 /* data_icon_power.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D92FDCB1B58D8030021E727 /* data_icon_power.png */; };
@@ -445,6 +447,8 @@
 		3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLYAxis.m; sourceTree = "<group>"; };
 		3D8F37B11B55F78900C135A8 /* SegmentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentTableViewCell.h; sourceTree = "<group>"; };
 		3D8F37B21B55F78900C135A8 /* SegmentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentTableViewCell.m; sourceTree = "<group>"; };
+		3D908B011B68CCBB000F62A5 /* DS-DIGIB.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DS-DIGIB.TTF"; sourceTree = "<group>"; };
+		3D908B031B68D623000F62A5 /* icon_set_time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_set_time@2x.png"; sourceTree = "<group>"; };
 		3D92FDC71B5763BB0021E727 /* UIView+AddBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AddBorder.h"; sourceTree = "<group>"; };
 		3D92FDC81B5763BB0021E727 /* UIView+AddBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AddBorder.m"; sourceTree = "<group>"; };
 		3D92FDCA1B58D8030021E727 /* data_icon_cost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = data_icon_cost.png; sourceTree = "<group>"; };
@@ -992,6 +996,7 @@
 		3D783D2F1B12FD0300A893D9 /* rongtai */ = {
 			isa = PBXGroup;
 			children = (
+				3D908B011B68CCBB000F62A5 /* DS-DIGIB.TTF */,
 				3DCD122C1B4148A700890164 /* Image */,
 				568C0F941B3BE47D007F6305 /* RongTaiConstant.h */,
 				DF9C7D001B147B2D005617DA /* Application */,
@@ -1146,6 +1151,7 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3D908B031B68D623000F62A5 /* icon_set_time@2x.png */,
 				3D4873611B622D6E003D2C24 /* page_piont_1.png */,
 				3D4873621B622D6E003D2C24 /* page_piont_2.png */,
 				3DE321681B5FA4C20075E54F /* score_big_2.png */,
@@ -1922,6 +1928,7 @@
 				3DE3FFAE1B4FA819003F8AF7 /* register_button.png in Resources */,
 				3D7D19CF1B5CF9060057B955 /* set_rear_down.png in Resources */,
 				565E719F1B5E547200E51C1C /* ShareSDKFlatShareViewUI.bundle in Resources */,
+				3D908B041B68D623000F62A5 /* icon_set_time@2x.png in Resources */,
 				3DE3FFB01B4FB19C003F8AF7 /* icon_confirm.png in Resources */,
 				3D7D19D21B5CF9060057B955 /* sit.png in Resources */,
 				3D7D19CE1B5CF9060057B955 /* set_leg_up.png in Resources */,
@@ -1932,6 +1939,7 @@
 				3D92FE251B590FBF0021E727 /* arrow_up.png in Resources */,
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3D48BF331B53B3DE004EE243 /* menu_list_arrow.png in Resources */,
+				3D908B021B68CCBB000F62A5 /* DS-DIGIB.TTF in Resources */,
 				3D92FE261B590FBF0021E727 /* button_set_bg.png in Resources */,
 				3D3E712B1B5F3C7C00C47CD0 /* scan.png in Resources */,
 				3D7D19CB1B5CF9060057B955 /* set_leg_down.png in Resources */,

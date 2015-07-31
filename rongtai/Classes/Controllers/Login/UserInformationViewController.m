@@ -149,6 +149,13 @@
 	else
     {
         NSLog(@"访问相册失败");
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"访问相册失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
     }
 }
 
@@ -164,6 +171,13 @@
     else
     {
         NSLog(@"访问相机失败");
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"访问相机失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
     }
 
 }
@@ -172,7 +186,6 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _userImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _bgImageView.image = [_userImage blurImage:15.0];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -184,6 +197,7 @@
     
     if (_isEdit) {
         //编辑模式，执行删除
+        
     }
     else
     {
@@ -253,6 +267,12 @@
     }
 }
 
+#pragma mark - 添加方法
+-(void)addMember
+{
+    
+}
+
 #pragma mark - 编辑模式
 -(void)editMode:(Member *)user WithIndex:(NSUInteger)index
 {
@@ -275,12 +295,10 @@
     UIBarButtonItem* item = self.navigationItem.rightBarButtonItem;
     [item setImage:[UIImage imageNamed:@"icon_delete"]];
     
-    
     //数据显示
     _user = user;
     NSLog(@"Member:%@",_user);
     [self upDateUI];
-    
 }
 
 
@@ -337,7 +355,7 @@
         //服务器提交
         
         
-        //更新本地数据
+        //提交成功则更新本地数据的状态
         
     }
 }
@@ -388,10 +406,28 @@
     }
 
     //身高必须选择
+    if (_height.text.length < 1) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请选择身高";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:3];
+        return result;
+    }
     
     //生日必须选择
-    
-    result = YES;
+    if (_birthday.text.length < 1 ) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请选择生日";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:3];
+        return result;
+    }
     return result;
 }
 
@@ -422,7 +458,6 @@
 }
 
 #pragma mark - 删除按钮方法
-
 -(void)deleteUser:(id)sender {
     if([self.delegate respondsToSelector:@selector(deleteButtonClicked:WithIndex:)]) {
         [self.delegate deleteButtonClicked:_user WithIndex:_index];

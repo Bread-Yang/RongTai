@@ -28,6 +28,7 @@
     NSString* _imageName;  //天气图标名称
     BOOL _toRequest;     //是否请求数据
     NSTimer* _timer;
+    UIColor* _oColor;
 }
 @end
 
@@ -73,8 +74,10 @@
     _temperature = [self newLabel];
     _o = [self newLabel];
     //    _o.backgroundColor = [UIColor cyanColor];
+    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
     _o.text = @"o";
     _o.font = [UIFont systemFontOfSize:10];
+    _o.textColor = _oColor;
     _aqi = [self newLabel];
     [self addSubview:_icon];
     [self addSubview:_temperature];
@@ -174,6 +177,7 @@
                         city = [NSString stringWithFormat:@"%@  %@",_city,[self aqiNameByFloat:aqi]];
                     }
                     _aqi.text = city;
+                    _o.textColor  = _oColor;
                     //数据保存到本地
                     [self saveWeather];
                     _toRequest = YES;
@@ -341,6 +345,7 @@
 #pragma mark - 根据天气情况改变图标
 -(void)updateWeatherIconByName:(NSString*)name
 {
+    _oColor = [UIColor colorWithRed:161/255.0 green:207/255.0 blue:245/255.0 alpha:1];
     if ([self subString:@"雹" InString:name]) {
         _imageName = @"mini-hail";
         return;
@@ -389,6 +394,7 @@
         _imageName = @"mini-clouds";
         return;
     }
+    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
     _imageName = @"mini-sun";
 }
 

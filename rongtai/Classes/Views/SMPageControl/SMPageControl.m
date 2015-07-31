@@ -95,7 +95,14 @@
 		[fillColor set];
 
 		if (image) {
-			[image drawAtPoint:CGPointMake(xOffset, yOffset)];
+            if (image == _currentPageIndicatorImage) {
+//                [image drawAtPoint:CGPointMake(xOffset, yOffset)];
+                [image drawInRect:CGRectMake(xOffset-1, yOffset-1, 9, 9)];
+            }
+            else
+            {
+                [image drawAtPoint:CGPointMake(xOffset, yOffset)];
+            }
 		} else {
 			CGContextFillEllipseInRect(context, CGRectMake(xOffset, yOffset, _measuredIndicatorWidth, _measuredIndicatorHeight));
 		}

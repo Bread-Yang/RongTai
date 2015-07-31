@@ -665,8 +665,16 @@
                     <connections>
                         <outlet property="_addPageControl" destination="Kfm-yR-xX6" id="DsL-AL-paL"/>
                         <outlet property="_addScrollView" destination="TUe-ZL-VuD" id="z3H-Io-b1v"/>
+                        <outlet property="_backWarm" destination="65v-8z-2NA" id="lfm-OD-L7C"/>
+                        <outlet property="_backWarmImagaView" destination="ndc-eC-OIj" id="pnY-8k-1JN"/>
+                        <outlet property="_backWarmLabel" destination="TL0-2B-6gI" id="C9K-TG-8k0"/>
+                        <outlet property="_footWheel" destination="3os-N8-Jac" id="mvY-Oz-a1o"/>
+                        <outlet property="_footWheelImageView" destination="y8w-SV-gof" id="rHT-PG-gC1"/>
+                        <outlet property="_footWheelLabel" destination="T2w-Hl-KXH" id="VtJ-L8-RFZ"/>
                         <outlet property="_skillsPreferenceLabel" destination="sC2-B0-iUe" id="bbn-Na-ji0"/>
                         <outlet property="_skillsPreferenceView" destination="iKC-Li-K8P" id="8xK-2R-IO1"/>
+                        <outlet property="_timeLabel" destination="jz3-un-F8B" id="RZK-zp-N3N"/>
+                        <outlet property="_timeView" destination="D6h-wZ-m2Y" id="JBi-s8-Fbu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ohv-b8-6wd" userLabel="First Responder" sceneMemberID="firstResponder"/>

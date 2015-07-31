@@ -110,6 +110,11 @@
 @property (nonatomic, strong) UIFont *scaleFont;
 
 /**
+ *  坐标轴名称颜色
+ */
+@property(nonatomic, strong)NSArray* FontColors;
+
+/**
  *  填充颜色
  */
 @property(nonatomic, strong)UIColor* fillColor;
