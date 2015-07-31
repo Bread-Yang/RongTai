@@ -15,14 +15,21 @@
 
 @interface AddTimingMassageViewController () {
 	
-	NSArray *modeNameArray;
-	NSMutableArray *hourArray;
-	NSMutableArray *minuteArray;
 	id segment[7];
     __weak IBOutlet UISegmentedControl *_weekSC;
-	NAPickerView *leftPickView, *rightPickView;
 	BOOL isNotFirstInvokeDidLayoutSubviews;
+	
 }
+
+@property (nonatomic, retain) NSArray *modeNameArray;
+
+@property (nonatomic, retain) NSMutableArray *hourArray, *minuteArray;
+
+@property (nonatomic, retain) NAPickerView *leftPickView, *rightPickView;
+
+@property (nonatomic, retain) NSMutableArray *leftItems;
+
+@property (nonatomic, retain) NSMutableArray *rightItems;
 
 @end
 
@@ -32,11 +39,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 	
-	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
+	UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
 	[self.view insertSubview:backgroundImageView atIndex:0];
 	
-    NSArray *segments = @[@"一", @"二", @"三", @"四", @"五", @"六", @"日"];
+    NSArray *segments = @[ @"日", @"一", @"二", @"三", @"四", @"五", @"六"];
 	
 	for (int i = 0; i < [segments count]; i++) {
 		[self.weekDaySegmentControl insertSegmentWithTitle:[segments objectAtIndex:i] atIndex:i];
@@ -44,16 +51,16 @@
 	self.weekDaySegmentControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[self.weekDaySegmentControl setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 	
-	modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
+	self.modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
 	
-	hourArray = [NSMutableArray new];
+	self.hourArray = [NSMutableArray new];
 	for (int i = 0; i < 24; i++) {
-		[hourArray addObject:[NSString stringWithFormat:@"%d", i]];
+		[self.hourArray addObject:[NSString stringWithFormat:@"%d", i]];
 	}
 	
-	minuteArray = [NSMutableArray new];
+	self.minuteArray = [NSMutableArray new];
 	for (int i = 0; i < 60; i++) {
-		[minuteArray addObject:[NSString stringWithFormat:@"%d", i]];
+		[self.minuteArray addObject:[NSString stringWithFormat:@"%d", i]];
 	}
 	
 	self.collectionView.delegate = self;
@@ -79,43 +86,43 @@
 		
 		CGSize size = [UIScreen mainScreen].bounds.size;
 		
-		NSMutableArray *leftItems = [[NSMutableArray alloc] init];
-		for (int i = 0; i < 30;  i++) {
-			[leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+		self.leftItems = [[NSMutableArray alloc] init];
+		for (int i = 0; i < 24;  i++) {
+			[self.leftItems addObject:[NSString stringWithFormat:@"%d", i]];
 		}
 		
 		NSLog(@"width : %f, height : %f", [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
 		
-		leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:leftItems andDelegate:self];
-		leftPickView.infiniteScrolling = YES;
-		leftPickView.highlightBlock = ^(NALabelCell *cell) {
+		self.leftPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2 - 100, 0, 100, self.containView.frame.size.height) andItems:self.leftItems andDelegate:self];
+		self.leftPickView.infiniteScrolling = YES;
+		self.leftPickView.highlightBlock = ^(NALabelCell *cell) {
 			cell.textView.textColor = [UIColor whiteColor];
-//			cell.textView.font = [UIFont systemFontOfSize:30];
-			cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:30.0];
+			cell.textView.font = [UIFont systemFontOfSize:30];
+//			cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:30.0];
 		};
-		leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
+		self.leftPickView.unhighlightBlock = ^(NALabelCell *cell) {
 			cell.textView.textColor = [UIColor blackColor];
-			        cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:18.0];
-//			cell.textView.font = [UIFont systemFontOfSize:18];
+//			cell.textView.font = [UIFont fontWithName:@"DBLCDTempBlack" size:18.0];
+			cell.textView.font = [UIFont systemFontOfSize:18];
 		};
-		[self.containView addSubview:leftPickView];
+		[self.containView addSubview:self.leftPickView];
 		
-		NSMutableArray *rightItems = [[NSMutableArray alloc] init];
+		self.rightItems = [[NSMutableArray alloc] init];
 		for (int i = 0; i < 60;  i++) {
-			[rightItems addObject:[NSString stringWithFormat:@"%d", i]];
+			[self.rightItems addObject:[NSString stringWithFormat:@"%d", i]];
 		}
 		
-		rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:rightItems andDelegate:self];
-		rightPickView.infiniteScrolling = YES;
-		rightPickView.highlightBlock = ^(NALabelCell *cell) {
+		self.rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:self.rightItems andDelegate:self];
+		self.rightPickView.infiniteScrolling = YES;
+		self.rightPickView.highlightBlock = ^(NALabelCell *cell) {
 			cell.textView.textColor = [UIColor whiteColor];
 			cell.textView.font = [UIFont systemFontOfSize:30];
 		};
-		rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
+		self.rightPickView.unhighlightBlock = ^(NALabelCell *cell) {
 			cell.textView.textColor = [UIColor blackColor];
 			cell.textView.font = [UIFont systemFontOfSize:18];
 		};
-		[self.containView addSubview:rightPickView];
+		[self.containView addSubview:self.rightPickView];
 	}
 }
 
@@ -132,8 +139,10 @@
 	for (int i = 0; i < 7; i++) {
 		[segment[i] setTintColor:[UIColor lightGrayColor]];
 	}
-	int select = _weekSC.selectedSegmentIndex;
+	NSInteger select = _weekSC.selectedSegmentIndex;
+	
 	NSLog(@"当前的index : %li", (long)_weekSC.selectedSegmentIndex);
+	
 	[segment[6 - select] setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 }
 
@@ -145,12 +154,17 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
-    TimingPlan* timePlan = [TimingPlan MR_createEntity];
-//    [timePlan setLocalNotificationByHour:[_leftPickerView selectedRowInComponent:0] Minute:[_rightPickerView selectedRowInComponent:0] Week:_weekSC.selectedSegmentIndex+1  Message:[NSString stringWithFormat:@"舒展活络 定时计划:每周%ld %02ld:%02ld",_weekSC.selectedSegmentIndex,[_leftPickerView selectedRowInComponent:0],[_rightPickerView selectedRowInComponent:0]]];
+    TimingPlan *timePlan = [TimingPlan MR_createEntity];
+	NSInteger hour = [[self.leftPickView getHighlightItemString] intValue];
+	NSInteger minute = [[self.rightPickView getHighlightItemString] intValue];
+	timePlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
+	NSString *message = [NSString stringWithFormat:@"%@", timePlan.massageName];
 	
-    timePlan.massageId = [NSNumber numberWithInt:123456];
-    timePlan.massageName = @"舒展活络";
+    [timePlan setLocalNotificationByHour:hour Minute:minute Week:[self.weekDaySegmentControl selectedIndexes] Message:message];
+	
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+	
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -184,34 +198,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
-	UIImage *icon;
-	switch (indexPath.row) {
-		case 0:
-			icon = [UIImage imageNamed:@"mode_1"];
-			break;
-		case 1:
-			icon = [UIImage imageNamed:@"mode_2"];
-			break;
-		case 2:
-			icon = [UIImage imageNamed:@"mode_3"];
-			break;
-		case 3:
-			icon = [UIImage imageNamed:@"mode_4"];
-			break;
-		case 4:
-			icon = [UIImage imageNamed:@"mode_5"];
-			break;
-		case 5:
-			icon = [UIImage imageNamed:@"mode_6"];
-			break;
-		case 6:
-			icon = [UIImage imageNamed:@"mode_7"];
-			break;
-		case 7:
-			icon = [UIImage imageNamed:@"mode_8"];
-			break;
-	}
-	cell.imageView.image = icon;
+	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%li", indexPath.row + 1]];
 	return cell;
 }
 
@@ -232,13 +219,13 @@
 #pragma mark - UIPickerViewDelegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	NSLog(@"currentRow : %i", row);
+	NSLog(@"currentRow : %zd", row);
 	[[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
 	[[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
 	if (pickerView.tag == 0) {
-		return hourArray[row];
+		return self.hourArray[row];
 	} else {
-		return minuteArray[row];
+		return self.minuteArray[row];
 	}
 }
 
@@ -285,16 +272,16 @@
 #pragma mark - LineCollectionViewDelegate
 
 - (void)currentHighlightItemIndex:(NSIndexPath *)indexPath {
-	NSLog(@"currentHighlightItem执行了, indexPath.row : %i, indexPath.section : %i", indexPath.row, indexPath.section);
-	self.modeLabel.text = [modeNameArray objectAtIndex:indexPath.row];
+	NSLog(@"currentHighlightItem执行了, indexPath.row : %zd, indexPath.section : %zd", indexPath.row, indexPath.section);
+	self.modeLabel.text = [self.modeNameArray objectAtIndex:indexPath.row];
 	[self.modeLabel setNeedsDisplay];
 }
 
 #pragma mark - NAPickerViewDelegate
 
 - (void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index {
-	NSLog(@"当前选择的index : %i", index);
-	NSLog(@"highlightIndex : %i", pickerView.getHighlightIndex);
+	NSLog(@"当前选择的index : %zd", index);
+	NSLog(@"highlightIndex : %zd", pickerView.getHighlightIndex);
 }
 
 /*

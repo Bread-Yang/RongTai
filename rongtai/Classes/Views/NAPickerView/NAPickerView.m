@@ -166,8 +166,8 @@
 }
 
 #pragma mark - UITableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	if (self.infiniteScrolling) {
 		return 0;
 	}
@@ -338,5 +338,8 @@
 	return self.highlightIndex.row % self.items.count;
 }
 
+- (NSString *)getHighlightItemString {
+	return [self.items objectAtIndex:[self getHighlightIndex]];
+}
 
 @end

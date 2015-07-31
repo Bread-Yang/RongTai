@@ -108,12 +108,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    NSDictionary* userInfo = notification.userInfo;
-    NSString* message = [userInfo objectForKey:@"time"];
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"本地通知" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-    [alert show];
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+	
+	// 判断应用程序当前的运行状态，如果是激活状态，则进行提醒，否则不提醒
+	if (application.applicationState == UIApplicationStateActive) {
+    	NSDictionary *userInfo = notification.userInfo;
+    	NSString *message = [userInfo objectForKey:@"time"];
+    	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"本地通知" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    	[alert show];
+	}
 }
 
 #pragma mark - 设置URL Scheme

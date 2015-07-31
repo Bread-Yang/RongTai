@@ -48,6 +48,7 @@
 #pragma mark - LineUICollectionViewFlowLayoutDelegate
 
 - (void)currentHighlightItem:(NSIndexPath *)indexPath {
+	self.currentSelectItemIndex = indexPath.row;
 	if (self.delegate && [self.delegate respondsToSelector:@selector(currentHighlightItemIndex:)]) {
 		[self.delegate currentHighlightItemIndex:indexPath];
 	}

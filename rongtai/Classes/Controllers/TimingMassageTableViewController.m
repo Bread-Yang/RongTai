@@ -14,7 +14,7 @@
 
 @interface TimingMassageTableViewController ()
 
-@property (nonatomic, retain) NSMutableArray* timingMassageArray;
+@property (nonatomic, retain) NSMutableArray *timingMassageArray;
 
 @end
 
@@ -30,17 +30,19 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 	
-     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
                     
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 	
     //清空本地通知
-    NSInteger number =[[UIApplication sharedApplication]scheduledLocalNotifications].count;
+    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
+	
     NSLog(@"本地通知数量:%ld",number);
-    NSLog(@"本地通知:%@",[[UIApplication sharedApplication]scheduledLocalNotifications]);
+    NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
+	
     [UIApplication sharedApplication].applicationIconBadgeNumber -= number;
     
 //    [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -48,9 +50,11 @@
     
     self.timingMassageArray = [[NSMutableArray alloc] init];
     NSArray *arr = [TimingPlan MR_findAll];
+	
     NSLog(@"定时计划数量:%ld",arr.count);
-    for (int i = 0; i<arr.count; i++) {
-        TimingPlan* item = arr[i];
+	
+    for (int i = 0; i < arr.count; i++) {
+        TimingPlan *item = arr[i];
         [self.timingMassageArray addObject:item];
     }
     [self.tableView reloadData];
@@ -61,7 +65,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - TableView data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -96,7 +100,7 @@
 	
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        TimingPlan* timingPlan = self.timingMassageArray[indexPath.row];
+        TimingPlan *timingPlan = self.timingMassageArray[indexPath.row];
         [timingPlan cancelLocalNotification];
         [timingPlan MR_deleteEntity];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -109,11 +113,11 @@
     }   
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
 
-#pragma mark - selector
+#pragma mark - Action
 
 - (void)addTimingMassage {
 	
@@ -123,7 +127,6 @@
 	__weak __typeof(self) weakSelf = self;
 	
 	[viewController setReturnTimingMassageBlock:^(TimingMassageModel *entity) {
-//		weakSelf.tableView
 		[weakSelf.timingMassageArray addObject:entity];
 		[weakSelf.tableView reloadData];
 	}];
