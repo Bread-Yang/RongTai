@@ -20,6 +20,20 @@
 @dynamic status;
 @dynamic userId;
 
+-(void)setValueBy:(NSDictionary *)dic
+{
+    self.name = [dic objectForKey:@"name"];
+    self.sex = [dic objectForKey:@"sex"];
+    self.height = [dic objectForKey:@"height"];
+    self.heightUnit = [dic objectForKey:@"heightUnit"];
+    self.imageURL = [dic objectForKey:@"imageUrl"];
+    self.memberId = [dic objectForKey:@"memberId"];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* d = [dic objectForKey:@"birthday"];
+    self.birthday = [formatter dateFromString:d];
+}
+
 -(NSDictionary*)memberToDictionary
 {
     NSDictionary* dic = @{@"uid" : @"15521377721",

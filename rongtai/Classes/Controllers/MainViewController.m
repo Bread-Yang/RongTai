@@ -21,6 +21,9 @@
 #import "RTBleConnector.h"
 #import "AutoMassageViewController.h"
 
+//
+#import "MemberRequest.h"
+
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
     UITableView* _table;
@@ -44,10 +47,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = NO;
-	
-    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
     
-    NSLog(@"Main:%@",self.navigationItem);
+    //
+//    MemberRequest* r = [MemberRequest new];
+//    [r requestMemberListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:100 success:^(NSArray *members) {
+//        NSLog(@"%@",members);
+//    } failure:^(id responseObject) {
+//        NSLog(@"%@",responseObject);
+//    }];
+    
+    //
+	self.navigationItem.backBarButtonItem.title = @"";
+    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -70,12 +81,8 @@
     image.layer.cornerRadius = 17;
     left.customView = image;
     image.clipsToBounds = YES;
-//    self.navigationItem.leftBarButtonItem = left;
-    
-  
     slideNav.leftBarButtonItem = left;
     
-
     //侧滑菜单
     slideNav.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
     slideNav.view.layer.shadowOffset = CGSizeMake(-0.5, 0);

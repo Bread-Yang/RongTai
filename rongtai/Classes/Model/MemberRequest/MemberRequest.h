@@ -25,16 +25,16 @@
 /**
  *  添加成员列表
  */
--(void)addMember:(Member*)member ByUid:(NSString*)uid;
+-(void)addMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(NSString* memberId))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  编辑成员列表
  */
--(void)editMember:(Member*)member;
+-(void)editMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  删除成员列表
  */
--(void)deleteMember:(Member*)member;
+-(void)deleteMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
 
 @end

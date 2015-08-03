@@ -24,6 +24,7 @@
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
 #import "TimingMassageTableViewController.h"
+#import <AFNetworkReachabilityManager.h>
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
@@ -36,6 +37,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //开启网络监听
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 	
 	// ShareSDK Setup
 	[ShareSDK registerApp:@"7bbafb4115a9"];

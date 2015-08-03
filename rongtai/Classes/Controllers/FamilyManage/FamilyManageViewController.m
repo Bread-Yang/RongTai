@@ -15,12 +15,15 @@
 #import "CoreData+MagicalRecord.h"
 #import "Member.h"
 #import "RongTaiConstant.h"
+#import "MemberRequest.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
     UICollectionView* _collectView;
     CGFloat _matgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
+    AFNetworkReachabilityManager* _reachability;
 }
 
 @property(nonatomic, strong) NSArray *memberArray;
@@ -98,9 +101,34 @@
 //	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //		NSLog(@"Error: %@", error);
 //	}];
-	
-    _memberArray = [Member MR_findAll];
-    [_collectView reloadData];
+    
+    _reachability = [AFNetworkReachabilityManager sharedManager];
+    if (_reachability.reachable) {
+        //网络请求
+        NSLog(@"请求成员");
+        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        NSMutableArray* arr = [NSMutableArray new];
+        MemberRequest* mr = [MemberRequest new];
+        [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
+            for (NSDictionary* dic in members) {
+                Member* m = [Member MR_createEntity];
+                [m setValueBy:dic];
+                [arr addObject:m];
+            }
+            _memberArray = [NSArray arrayWithArray:arr];
+            [_collectView reloadData];
+            
+        } failure:^(id responseObject) {
+            
+        }];
+    }
+    else
+    {
+        NSLog(@"本地记录读取成员");
+        _memberArray = [Member MR_findAll];
+        [_collectView reloadData];
+    }
+
 }
 
 #pragma mark - 返回
