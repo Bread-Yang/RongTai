@@ -310,6 +310,8 @@ static Byte const BYTE_Tail = 0xf1;
     Byte *bodyData = (Byte *)[[rawData subdataWithRange:NSMakeRange(1, 14)] bytes]; // 14 bytes
     
 //    NSLog(@"rawData : %@", rawData);
+//	
+//	NSLog(@"rawData[6] : %hhu", bodyData[6]);
 	
     [self parseByteOfAddress1:bodyData[0]];
     [self parseByteOfAddress2:bodyData[1]];
@@ -390,7 +392,15 @@ static Byte const BYTE_Tail = 0xf1;
      0A：全身气压
      0B：3D 按摩
      */
-    _rtMassageChairStatus.autoMassageProgram = (addr >> 2) & 15;
+    _rtMassageChairStatus.massageProgram = (addr >> 2) & 15;
+	
+	if (_rtMassageChairStatus.massageProgram < 7) {
+		_rtMassageChairStatus.programType = RtMassageChairAutoProgram;
+	} else if (_rtMassageChairStatus.massageProgram == 7) {
+		_rtMassageChairStatus.programType = RtMassageChairManualProgram;
+	} else {
+		_rtMassageChairStatus.programType = RtMassageChairNetworkProgram;
+	}
 }
 
 // 地址12 时间和气囊
@@ -553,6 +563,7 @@ static Byte const BYTE_Tail = 0xf1;
 // 地址7 气囊按摩部位和按摩椅工作状态
 
 - (void)parseByteOfAddress7:(Byte)addr {
+	
     /**
      bit 0, bit 1, bit 2, bit 3 : 按摩椅工作状态
      0：待机状态
@@ -585,6 +596,21 @@ static Byte const BYTE_Tail = 0xf1;
      1：相关部位有至少一个气囊动作
      */
     _rtMassageChairStatus.neckAirBagFlag = (addr >> 6) & 1;
+	
+	switch (_rtMassageChairStatus.workingStatus) {
+  		case 0:
+			_rtMassageChairStatus.deviceStatus = RtMassageChairStandby;
+			break;
+		case 1:
+			_rtMassageChairStatus.deviceStatus = RtMassageChairResetting;
+			break;
+		case 2:
+			_rtMassageChairStatus.deviceStatus = RtMassageChairWaiting;
+			break;
+		case 3:
+			_rtMassageChairStatus.deviceStatus = RtMassageChairMassaging;
+			break;
+	}
 }
 
 // 地址 6气囊或气阀运行状态指示, 滚轮状态指示

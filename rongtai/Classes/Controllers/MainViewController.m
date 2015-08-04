@@ -20,6 +20,7 @@
 #import "RTCommand.h"
 #import "RTBleConnector.h"
 #import "AutoMassageViewController.h"
+#import "CustomIOSAlertView.h"
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
@@ -28,22 +29,23 @@
     MassageRequest* _massageRequest;
     WLWeatherView* _weatherView;
     UITabBar* _menuBar;
+	CustomIOSAlertView *reconnectDialog;
+	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
 }
 @end
 
 @implementation MainViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
+    SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     slideNav.enableSwipeGesture = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.isListenBluetoothStatus = NO;
+	self.isListenBluetoothStatus = YES;
 	
     [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
     
@@ -53,7 +55,7 @@
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
 //    self.navigationController.delegate = self;
     //
-    SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
+    SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     MenuViewController* menu = (MenuViewController*)slideNav.leftMenu;
     menu.delegate = self;
     
@@ -121,8 +123,21 @@
     _menuBar.delegate = self;
     _menuBar.barStyle = UIBarStyleBlackOpaque;
     [self.view addSubview:_menuBar];
-    
-    // Do any additional setup after loading the view.
+	
+	reconnectDialog = [[CustomIOSAlertView alloc] init];
+	reconnectDialog.isReconnectDialog = YES;
+	
+	reconnectDialog.reconnectTipsString = NSLocalizedString(@"未连接设备", nil);
+	[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"重新连接", nil), nil]];
+	
+	__weak UIViewController *weakSelf = self;
+	[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+		UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
+		UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
+		[weakSelf.navigationController pushViewController:viewController animated:YES];
+		
+		[alertView close];
+	}];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -150,6 +165,10 @@
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
 //    NSLog(@"tabBar:%ld",item.tag);
+	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+		[reconnectDialog show];
+		return;
+	}
     if (item.tag == 1) {
         //手动按摩
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -216,10 +235,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+		[reconnectDialog show];
+		return;
+	}
+	
 	switch (indexPath.row) {
 			// 舒展活络
 		case 0: {
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
 			
 //			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -271,7 +295,8 @@
 {
     if (viewController == self) {
         NSArray* items = _menuBar.items;
-        _menuBar.selectedItem = (UITabBarItem*)items[0];
+//		 _menuBar.selectedItem = (UITabBarItem*)items[0];
+        _menuBar.selectedItem = nil;
     }
 }
 
@@ -281,19 +306,34 @@
 	
 	NSLog(@"体型检测标记 : %zd", 	rtMassageChairStatus.figureCheckFlag);
 	
-	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-		ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
-		scan.massage = _massageArr[_table.indexPathForSelectedRow.row];
-		
-		[self.navigationController pushViewController:scan animated:YES];
-	} else if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
+	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+		_menuBar.selectedItem = nil;
+	} else {
+		 _menuBar.selectedItem = (UITabBarItem*)_menuBar.items[0];
+	}
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairMassaging) {
 		[RTBleConnector shareManager].delegate = nil;  // 停止接收回调
 		
-		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-		AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-//		autoVC.massage = self.massage;
-		[self.navigationController pushViewController:autoVC animated:YES];
+			if (rtMassageChairStatus.programType == RtMassageChairAutoProgram) {  // 自动按摩
+				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+					
+					UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+					ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+					scan.massage = _massageArr[_table.indexPathForSelectedRow.row];
+					
+					[self.navigationController pushViewController:scan animated:YES];
+				} else {
+					UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+					AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+					//		autoVC.massage = self.massage;
+					[self.navigationController pushViewController:autoVC animated:YES];
+				}
+			} else if (rtMassageChairStatus.programType == RtMassageChairManualProgram) {  // 手动按摩
+				UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+				ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
+				[self.navigationController pushViewController:mVC animated:YES];
+			}
 	}
 }
 

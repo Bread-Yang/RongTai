@@ -13,4 +13,6 @@
 
 @property(nonatomic, assign) BOOL isListenBluetoothStatus;
 
+- (void)backToMainViewController;
+
 @end

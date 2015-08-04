@@ -8,7 +8,64 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, RTMassageChairDeviceStatus) {
+	
+	/** 
+	 *	待机状态, 第七位中 : workingStatus == 0
+	 */
+	RtMassageChairStandby,
+	/** 
+	 *	按摩椅复位, 第七位中 : workingStatus == 1
+	 */
+	RtMassageChairResetting,
+	/** 
+	 *	按摩椅复位,按摩椅点亮主屏，等待用户操作, 第七位 : workingStatus == 2
+	 */
+	RtMassageChairWaiting,
+	/** 
+	 *	正常运行模式：此时手控器需要显示时间，按摩手法，或按摩程序等信息, 第七位 : workingStatus == 3
+	 */
+	RtMassageChairMassaging,
+	/** 
+	 *	数据存储
+	 */
+	RtMassageChairDataStore,
+	/** 
+	 *	严重的故障模式
+	 */
+	RtMassageChairError
+	
+};
+
+typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
+	
+	/**
+	 *	自动按摩程序, 地址13位 : massageProgram < 7
+	 */
+	RtMassageChairAutoProgram,
+	/**
+	 *	手动按摩程序, 地址13位 : massageProgram == 7
+	 */
+	RtMassageChairManualProgram,
+	/**
+	 *	网络按摩程序, 地址13位 : massageProgram > 7
+	 */
+	RtMassageChairNetworkProgram
+	
+};
+
 @interface RTMassageChairStatus : NSObject
+
+/**
+ *	按摩椅运行状态
+ */
+@property (nonatomic, assign) RTMassageChairDeviceStatus deviceStatus;
+
+/**
+ *	按摩椅按摩程序类型
+ */
+@property (nonatomic, assign) RTMassageChairProgramType programType;
+
 
 #pragma mark - 地址 1 按摩椅程序运行状态和按摩手法
 
@@ -363,7 +420,7 @@
 @property (nonatomic, assign) NSInteger rollerDirection;
 
 /**
- bit 2, bit 3, bit 4, bit 5 : 自动按摩程序
+ bit 2, bit 3, bit 4, bit 5 : 按摩程序
  00：无
  01：疲劳恢复
  02：舒适按摩
@@ -377,7 +434,7 @@
  0A：全身气压
  0B：3D 按摩
  */
-@property (nonatomic, assign) NSInteger autoMassageProgram;
+@property (nonatomic, assign) NSInteger massageProgram;
 
 #pragma mark - 地址14 3D机芯状态（非3D机型无此字节）
 
