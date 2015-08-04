@@ -36,13 +36,16 @@
 
 -(NSDictionary*)memberToDictionary
 {
-    NSDictionary* dic = @{@"uid" : @"15521377721",
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDictionary* dic = @{
       @"name" : self.name,
       @"sex" : self.sex,
       @"height" : self.height,
       @"heightUnit" : self.heightUnit,
       @"imageUrl" : self.imageURL,
-      @"birthday" : self.birthday,
+      @"birthday" : [formatter stringFromDate:self.birthday],
+      @"memberId" : self.memberId
       };
     return dic;
 }

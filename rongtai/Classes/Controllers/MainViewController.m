@@ -49,14 +49,6 @@
 	self.isListenBluetoothStatus = NO;
     
     //
-//    MemberRequest* r = [MemberRequest new];
-//    [r requestMemberListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:100 success:^(NSArray *members) {
-//        NSLog(@"%@",members);
-//    } failure:^(id responseObject) {
-//        NSLog(@"%@",responseObject);
-//    }];
-    
-    //
 	self.navigationItem.backBarButtonItem.title = @"";
     [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
 	
@@ -69,14 +61,18 @@
     menu.delegate = self;
     
     //天气预报
-    _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
-    self.navigationItem.rightBarButtonItem  = right;
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber* loadWeather = [defaults valueForKey:@"weather"];
+    if ([loadWeather boolValue]) {
+        _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+        UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
+        self.navigationItem.rightBarButtonItem  = right;
+    }
     
     //菜单按钮
     UIBarButtonItem* left = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
     UIButton* image = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
-    [image setImage:[UIImage imageNamed:@"userDefaultIcon.jpg"] forState:UIControlStateNormal];
+    [image setImage:[UIImage imageNamed:@"userIcon.jpg"] forState:UIControlStateNormal];
     [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
     image.layer.cornerRadius = 17;
     left.customView = image;
@@ -124,9 +120,7 @@
     UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_set"] tag:3];
     _menuBar.items = @[item1,item2,item3,item4];
     _menuBar.selectedItem = item1;
-    _menuBar.backgroundImage = [UIImage imageNamed:@"bottom"];
     _menuBar.delegate = self;
-    _menuBar.barStyle = UIBarStyleBlackOpaque;
     [self.view addSubview:_menuBar];
     
     // Do any additional setup after loading the view.
@@ -142,6 +136,12 @@
 #pragma mark - menuController代理
 -(void)switchChange:(BOOL)isOn
 {
+    if (!_weatherView) {
+        _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+        UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
+        self.navigationItem.rightBarButtonItem  = right;
+    }
+    
     if (isOn) {
         _weatherView.hidden = NO;
         [_weatherView updateWeather];

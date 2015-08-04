@@ -59,7 +59,6 @@
 		3D4873601B622993003D2C24 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48735F1B622993003D2C24 /* SMPageControl.m */; };
 		3D4873631B622D6E003D2C24 /* page_piont_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D4873611B622D6E003D2C24 /* page_piont_1.png */; };
 		3D4873641B622D6E003D2C24 /* page_piont_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D4873621B622D6E003D2C24 /* page_piont_2.png */; };
-		3D48BF1A1B539DE4004EE243 /* bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF191B539DE4004EE243 /* bottom.png */; };
 		3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */; };
 		3D48BF281B53A9A8004EE243 /* menu_icon_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF1E1B53A9A8004EE243 /* menu_icon_data.png */; };
 		3D48BF291B53A9A8004EE243 /* menu_icon_device.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D48BF1F1B53A9A8004EE243 /* menu_icon_device.png */; };
@@ -381,7 +380,6 @@
 		3D48735F1B622993003D2C24 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		3D4873611B622D6E003D2C24 /* page_piont_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page_piont_1.png; sourceTree = "<group>"; };
 		3D4873621B622D6E003D2C24 /* page_piont_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page_piont_2.png; sourceTree = "<group>"; };
-		3D48BF191B539DE4004EE243 /* bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottom.png; sourceTree = "<group>"; };
 		3D48BF1B1B53A72B004EE243 /* ChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeUserViewController.h; sourceTree = "<group>"; };
 		3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeUserViewController.m; sourceTree = "<group>"; };
 		3D48BF1E1B53A9A8004EE243 /* menu_icon_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon_data.png; sourceTree = "<group>"; };
@@ -1223,7 +1221,6 @@
 				3D48BF251B53A9A8004EE243 /* menu_icon_shop.png */,
 				3D48BF261B53A9A8004EE243 /* menu_icon_user.png */,
 				3D48BF271B53A9A8004EE243 /* menu_icon_weather.png */,
-				3D48BF191B539DE4004EE243 /* bottom.png */,
 				3DE3FFB11B4FB46E003F8AF7 /* program_select3_1_2.png */,
 				3DE3FFB21B4FB46E003F8AF7 /* program_select3_3_2.png */,
 				3DE3FFAF1B4FB19C003F8AF7 /* icon_confirm.png */,
@@ -1919,7 +1916,6 @@
 				3D4873641B622D6E003D2C24 /* page_piont_2.png in Resources */,
 				3D3E71281B5F3C7C00C47CD0 /* mode_6.png in Resources */,
 				3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */,
-				3D48BF1A1B539DE4004EE243 /* bottom.png in Resources */,
 				3D48BF2A1B53A9A8004EE243 /* menu_icon_help.png in Resources */,
 				3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */,
 				3DC790911B424FD40034C3C1 /* icon_set.png in Resources */,

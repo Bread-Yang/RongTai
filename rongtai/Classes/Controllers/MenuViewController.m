@@ -108,14 +108,22 @@
     _menu.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //天气开关
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber* loadWeather = [defaults valueForKey:@"weather"];
+    if (!loadWeather) {
+        loadWeather = [NSNumber numberWithBool:YES];
+        [defaults setValue:loadWeather forKey:@"weather"];
+    }
     _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, -4, 300, 100)];
-    _weatherSwitch.on = YES;
+    _weatherSwitch.on = [loadWeather boolValue];
     [_weatherSwitch addTarget:self action:@selector(switchChangeValue:) forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - 天气开关
 -(void)switchChangeValue:(UISwitch*)aSwitch
 {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:[NSNumber numberWithBool:aSwitch.isOn] forKey:@"weather"];
     if ([self.delegate respondsToSelector:@selector(switchChange:)]) {
         [self.delegate switchChange:aSwitch.isOn];
     }
