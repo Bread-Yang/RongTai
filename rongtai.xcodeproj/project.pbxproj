@@ -109,7 +109,6 @@
 		3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFA81B4F79CA003F8AF7 /* bg.png */; };
 		3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */; };
 		3DE5D66E1B5F470200489C62 /* AutoMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5D66D1B5F470200489C62 /* AutoMassageViewController.m */; };
-		3DE5D6701B5F6B1400489C62 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE5D66F1B5F6B1400489C62 /* icon_back.png */; };
 		3DE5D6731B5F6E6600489C62 /* UIBarButtonItem+goBack.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5D6721B5F6E6600489C62 /* UIBarButtonItem+goBack.m */; };
 		3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */; };
 		3DF304251B38FE2500DD51D3 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF303E91B38FE2500DD51D3 /* MagicalImportFunctions.m */; };
@@ -409,7 +408,6 @@
 		3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
 		3DE5D66C1B5F470200489C62 /* AutoMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoMassageViewController.h; sourceTree = "<group>"; };
 		3DE5D66D1B5F470200489C62 /* AutoMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoMassageViewController.m; sourceTree = "<group>"; };
-		3DE5D66F1B5F6B1400489C62 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_back.png; sourceTree = "<group>"; };
 		3DE5D6711B5F6E6600489C62 /* UIBarButtonItem+goBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+goBack.h"; sourceTree = "<group>"; };
 		3DE5D6721B5F6E6600489C62 /* UIBarButtonItem+goBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+goBack.m"; sourceTree = "<group>"; };
 		3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageTableViewCell.h; sourceTree = "<group>"; };
@@ -1011,7 +1009,6 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				3DE5D66F1B5F6B1400489C62 /* icon_back.png */,
 				3DE3FFA81B4F79CA003F8AF7 /* bg.png */,
 				3DC790931B4272B00034C3C1 /* navBar.png */,
 			);
@@ -1682,7 +1679,6 @@
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3D908B021B68CCBB000F62A5 /* DS-DIGIB.TTF in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
-				3DE5D6701B5F6B1400489C62 /* icon_back.png in Resources */,
 				3D0B4C801B3ABBE100FF97C6 /* mini-snow@2x.png in Resources */,
 				3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */,
 				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
