@@ -43,7 +43,6 @@
 		3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
-		3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FA1B2AB0CC00F52352 /* User.m */; };
 		3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */; };
 		3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FF1B2ACD2900F52352 /* MassageMode.m */; };
 		3D3E711B1B5F355400C47CD0 /* list_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E711A1B5F355400C47CD0 /* list_bg.png */; };
@@ -359,8 +358,6 @@
 		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
 		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
 		3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyManageViewController.m; sourceTree = "<group>"; };
-		3D2C82F91B2AB0CC00F52352 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		3D2C82FA1B2AB0CC00F52352 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = userIcon.jpg; sourceTree = "<group>"; };
 		3D2C82FE1B2ACD2900F52352 /* MassageMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageMode.h; sourceTree = "<group>"; };
 		3D2C82FF1B2ACD2900F52352 /* MassageMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageMode.m; sourceTree = "<group>"; };
@@ -1720,8 +1717,6 @@
 				5661F6A51B281361006066A0 /* MusicModel.m */,
 				56E6B32D1B2932FF000178BD /* TimingMassageModel.h */,
 				56E6B32E1B2932FF000178BD /* TimingMassageModel.m */,
-				3D2C82F91B2AB0CC00F52352 /* User.h */,
-				3D2C82FA1B2AB0CC00F52352 /* User.m */,
 				3D2C83011B2AD90E00F52352 /* MassageModeENUM.h */,
 				3D2C82FE1B2ACD2900F52352 /* MassageMode.h */,
 				3D2C82FF1B2ACD2900F52352 /* MassageMode.m */,
@@ -2146,7 +2141,6 @@
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
 				3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
-				3D2C82FB1B2AB0CC00F52352 /* User.m in Sources */,
 				3DF304311B38FE2500DD51D3 /* NSManagedObjectContext+MagicalChainSave.m in Sources */,
 				3D92FE1E1B590CDA0021E727 /* WLPanAlertView.m in Sources */,
 				3D0709A31B6B66430010920D /* MemberRequest.m in Sources */,

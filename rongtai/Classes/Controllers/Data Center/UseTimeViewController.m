@@ -60,7 +60,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (IBAction)dateSelected:(UIButton *)sender {
+- (IBAction)dateSelected:(UIButton*)sender {
     if (sender.tag == 1110)
     {
         //日

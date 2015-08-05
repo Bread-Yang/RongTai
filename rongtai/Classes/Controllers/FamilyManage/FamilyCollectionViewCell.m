@@ -36,18 +36,6 @@
     self.layer.borderColor = [UIColor colorWithRed:116/255.0 green:154/255.0 blue:180/255.0 alpha:0.3].CGColor;
     self.layer.borderWidth = 1;
     self.layer.cornerRadius = 3;
-//    self.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.layer.shadowOpacity = 1;
-//    self.layer.shadowRadius = 4;
-//    self.layer.shadowOffset = CGSizeMake(4, 4);
-//    self.clipsToBounds = YES;
-    
-//    UILabel* add = [[UILabel alloc]initWithFrame:CGRectMake(0.1*w, 0.4*h, 0.8*w, 0.2*h)];
-//    add.textAlignment = NSTextAlignmentCenter;
-//    add.adjustsFontSizeToFitWidth = YES;
-//    add.text = @"+ 添加成员";
-//    add.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-//    [self.contentView addSubview:add];
     
     UIView* bg = [[UIView alloc]initWithFrame:self.bounds];
     bg.backgroundColor = [UIColor clearColor];
@@ -81,10 +69,9 @@
 }
 
 #pragma mark - set方法
-
-
 -(void)setMember:(Member *)member {
     _member = member;
+    _userNameLabel.text = _member.name;
     if ([_member.imageURL isEqualToString:@"default"]) {
         //空的用默认头像
         _userIconView.image = [UIImage imageNamed:@"userIcon.jpg"];
@@ -92,7 +79,7 @@
     else
     {
         //先使用本地图片，若本地读不到图片则使用网络请求
-        UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.png",member.imageURL]];
+        UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",member.imageURL]];
         _userIconView.image  = img;
         //网络请求  //[NSString isBlankString:member.imageURL]
         if (!img) {
@@ -108,15 +95,13 @@
                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                               weakCell.userIconView.image = image;
                                               [weakCell setNeedsLayout];
-                                              [image saveImageByName:[NSString stringWithFormat:@"%@.png",member.imageURL]];
+                                              [image saveImageByName:[NSString stringWithFormat:@"%@.jpg",member.imageURL]];
                                               
                                           } failure:nil];
         }
         
     }
-	_userNameLabel.text = member.name;
 	
-
 }
 
 @end

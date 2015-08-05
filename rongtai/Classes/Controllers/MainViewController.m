@@ -24,13 +24,14 @@
 //
 #import "MemberRequest.h"
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
     NSMutableArray* _massageArr;
     MassageRequest* _massageRequest;
     WLWeatherView* _weatherView;
     UITabBar* _menuBar;
+    NSUInteger _vcCount;
 }
 @end
 
@@ -47,10 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = NO;
-    
+
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    _vcCount = self.navigationController.viewControllers.count;
+     NSLog(@"VC:%ld",_vcCount);
     //
-	self.navigationItem.backBarButtonItem.title = @"";
-    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -131,6 +133,18 @@
     [super viewWillDisappear:animated];
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     slideNav.enableSwipeGesture = NO;
+}
+
+#pragma mark - UIGestureRecognizer代理
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (self.navigationController.viewControllers.count == _vcCount) {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 #pragma mark - menuController代理

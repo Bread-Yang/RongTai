@@ -59,18 +59,10 @@
     NSString* _uid;
     
     NSDictionary* _tmp;
-
-    
 }
 @end
 
 @implementation UserInformationViewController
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self saveMember];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -209,6 +201,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _userImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    _userImage = [_userImage autoCompress];
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _bgImageView.image = [_userImage blurImage:15.0];
     _isNewImage = YES;
@@ -245,7 +238,7 @@
                         _imgUrl = urlKey;
                         _isNewImage = NO;
                         //照片保存到本地
-                        [_userImage saveImageByName:[NSString stringWithFormat:@"%@.png",_user.imageURL]];
+                        [self saveImage:_imgUrl];
 
                         [self uploadMember];
                     } failure:^(id responseObject) {
@@ -312,10 +305,8 @@
     self.title = NSLocalizedString(@"编辑", nil);
     self.view.backgroundColor = [UIColor clearColor];
     _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
-    
     _isEdit = YES;
-    
-    _tmp = [user memberToDictionary];
+    _tmp = [user memberToDictionary];  //便于数据提交不成功时，进行数据恢复
     
     //保存按钮
     CGFloat h = MIN(SCREENHEIGHT*0.2*0.45, 44);
@@ -339,7 +330,6 @@
 #pragma mark - 保存按钮方法（编辑模式下）
 -(void)saveButtonClicked
 {
-    NSLog(@"编辑用户信息");
     if (_manager.reachable) {
         if ([self judgeMemberInformation]) {
             _loadingHUD.labelText = @"保存中...";
@@ -351,7 +341,7 @@
                     _imgUrl = urlKey;
                     _isNewImage = NO;
                     //照片保存到本地
-                    [_userImage saveImageByName:[NSString stringWithFormat:@"%@.png",_user.imageURL]];
+                    [self saveImage:_imgUrl];
                     
                     //编辑成员（服务器请求）
                     [self editMember];
@@ -375,6 +365,20 @@
     }
 }
 
+#pragma mark - 保存图片
+-(void)saveImage:(NSString*)newName
+{
+    NSString* old = _user.imageURL;
+    [_userImage saveImageByName:[NSString stringWithFormat:@"%@.jpg",newName]];
+    NSString* doc = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString* path = [doc stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",old]];
+    NSLog(@"头像路径:%@",path);
+    BOOL result = [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    if (!result) {
+        NSLog(@"图片删除失败");
+    }
+}
+
 #pragma mark - 编辑成员对象
 -(void)editMember
 {
@@ -385,15 +389,12 @@
         [self showProgressHUDByString:@"保存成功"];
         [self performSelector:@selector(back) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
-       
         [_user setValueBy:_tmp];
-        _user.name = @"Fuck";
         NSLog(@"复原数据：%@",[_user memberToDictionary]);
         [_loadingHUD hide:YES];
         NSString* str = [NSString stringWithFormat:@"编辑成员请求错误:%@",responseObject];
         [self showProgressHUDByString:str];
     }];
-
 }
 
 #pragma mark - 数据保存到对象中
@@ -465,13 +466,14 @@
     else
     {
         //用网络请求来读取照片，或者从本地读取
-        img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.png",_user.imageURL]];
+        img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",_user.imageURL]];
         if (!img) {
             NSLog(@"网络读取头像");
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://recipe.xtremeprog.com/file/g/%@",_user.imageURL]];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
             [_userIcon setImageForState:UIControlStateNormal withURLRequest:request placeholderImage:placeholderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                [_userIcon setImage:image forState:UIControlStateNormal];
                 _bgImageView.image = [image blurImage:15];
                 
             } failure:^(NSError *error) {

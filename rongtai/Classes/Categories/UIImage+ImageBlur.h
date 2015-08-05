@@ -25,4 +25,9 @@
  */
 +(UIImage*)imageInLocalByName:(NSString*)fileName;
 
+/**
+ *  自动压缩
+ */
+-(UIImage*)autoCompress;
+
 @end

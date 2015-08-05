@@ -67,17 +67,13 @@
     //添加成员按钮
     UIBarButtonItem* add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember:)];
     self.navigationItem.rightBarButtonItem = add;
-    
-    //更新数据库
-    
-	
     // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    //读取家庭成员
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
@@ -91,7 +87,7 @@
         MemberRequest* mr = [MemberRequest new];
         [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
             for (NSDictionary* dic in members) {
-                Member* m = [self updateMemberDB:dic];
+                Member* m = [Member updateMemberDB:dic];
                 [arr addObject:m];
             }
             _memberArray = [NSArray arrayWithArray:arr];
@@ -111,30 +107,6 @@
         _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
         [_collectView reloadData];
     }
-}
-
--(void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	self.navigationController.navigationBarHidden = NO;
-}
-
-#pragma mark - 根据一条Member的Json数据更新数据库
--(Member*)updateMemberDB:(NSDictionary*)dic
-{
-    NSString* mid = [dic valueForKey:@"memberId"];
-    NSNumber* memberId = [NSNumber numberWithInteger:[mid integerValue]];
-    NSArray* arr = [Member MR_findByAttribute:@"memberId" withValue:memberId];
-    Member* m;
-    if (arr.count == 0) {
-        m = [Member MR_createEntity];
-    }
-    else
-    {
-        m = arr[0];
-    }
-    [m setValueBy:dic];
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-    return m;
 }
 
 #pragma mark - 返回
@@ -163,7 +135,6 @@
     UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
     Member* user = _memberArray[indexPath.row];
     [uVC editMode:user WithIndex:indexPath.row];
-//    [uVC setEditUserInformation:self.memberArray[indexPath.row]];
     [self.navigationController pushViewController:uVC animated:YES];
 
 }

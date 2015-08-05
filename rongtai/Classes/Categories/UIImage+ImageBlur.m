@@ -51,4 +51,57 @@
     return img;
 }
 
+
+/////
+
+#pragma mark - 自动压缩
+-(UIImage*)autoCompress
+{
+    //把图片控制在200k左右
+    NSData* data = UIImageJPEGRepresentation(self, 1.0);
+    NSLog(@"原图大小：%ld",data.length);
+    UIImage* image;
+    if (data.length/1024.0 > 250) {
+        NSLog(@"图片大小超过要求，大小约为：%.2fK",data.length/1024.0);
+        //计算需要压缩的比例
+        CGFloat percent = 280*1024.0/data.length;
+        NSLog(@"图片压缩率：%.2f",percent);
+        image = [self compressImageBySizePercent:percent];
+        image = [image compressImageByQualityPercent:percent];
+    }
+    if (image) {
+        NSLog(@"图片压缩后大小为：%ld",[UIImageJPEGRepresentation(image,1.0) length]);
+        return image;
+    }
+    else
+    {
+        return self;
+    }
+}
+
+#pragma mark -  尺寸压缩
+-(UIImage*)compressImageBySizePercent:(CGFloat)percent
+{
+    CGSize size = self.size;
+    size.width = size.width * percent;
+    size.height = size.height * percent;
+    UIGraphicsBeginImageContext(size);
+    CGRect f = CGRectZero;
+    f.size = size;
+    [self drawInRect:f];
+    UIImage* new = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return new;
+}
+
+#pragma mark - 质量压缩
+-(UIImage*)compressImageByQualityPercent:(CGFloat)percent
+{
+    NSData* data = UIImageJPEGRepresentation(self, percent);
+    //    NSLog(@"压缩率：%.2f,压缩后大小：%ld",percent,data.length);
+    UIImage* newImage = [UIImage imageWithData:data];
+    return newImage;
+}
+
+
 @end

@@ -16,6 +16,7 @@
 #import "CustomMassageViewController.h"
 #import "CustomProgram.h"
 #import "CoreData+MagicalRecord.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface CustomProcedureViewController ()
 {
@@ -46,15 +47,20 @@
     UIBarButtonItem* select = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"选择已有程序", nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectEsxistingProcedure)];
     self.navigationItem.rightBarButtonItem = select;
     
+    //返回按钮设置
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    
+    //初始化数据
     _isEdit = NO;
 }
 
--(void)viewDidAppear:(BOOL)animated
+#pragma mark - 导航栏返回方法
+-(void)goBack
 {
-    [super viewWillAppear:animated];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 选择以后程序
+#pragma mark - 选择已有程序
 -(void)selectEsxistingProcedure
 {
     [self.navigationController pushViewController:[ProcedureManageViewController new] animated:YES];

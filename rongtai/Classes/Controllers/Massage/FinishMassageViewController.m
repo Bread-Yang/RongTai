@@ -39,17 +39,17 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"按摩完毕", nil);
     
+    //返回按钮设置
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
-//    UIBarButtonItem* item = self.navigationItem.leftBarButtonItem;
-//    item.customView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"icon_back"]];
     
+    //导航栏右边按钮，分享按钮
     UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
     self.navigationItem.rightBarButtonItem = share;
     
-    //
+    //保存按钮圆角设置
     _saveBtn.layer.cornerRadius = 5;
     
-    //
+    //按比例设置各个控件的字体
     _functionTextView.font = [UIFont systemFontOfSize:WSCALE*13];
     _functionL.font = [UIFont systemFontOfSize:WSCALE*14];
     _usingTimeL.font = [UIFont systemFontOfSize:WSCALE*14];
@@ -58,23 +58,19 @@
     _nameLabel.font = [UIFont systemFontOfSize:WSCALE*20];
     _saveBtn.titleLabel.font = [UIFont systemFontOfSize:HSCALE*13];
     
-    //
+    //分数数字字体设置
     UIFont* font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:38*WSCALE];
     [_score setNumebrByFont:font Color:ORANGE];
     
-    //
+    //使用时间数字字体设置
     [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
     
-    
-    //
+    //创建星级评分控件
     _starRateView = [[CWStarRateView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.84*0.7, 0.1*SCREENHEIGHT*0.6) numberOfStars:5];
     _starRateView.scorePercent = 0.9;
     _starRateView.delegate = self;
     _starRateView.starRateType = WLStarRateViewHalfType;
     [_addStarView addSubview:_starRateView];
-    
-    //
-
     
     // Do any additional setup after loading the view.
 }
@@ -111,12 +107,6 @@
 -(void)share
 {
     
-}
-
--(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    IQKeyboardManager* key = [IQKeyboardManager sharedManager];
-    [key setEnable:YES];
 }
 
 - (void)didReceiveMemoryWarning {

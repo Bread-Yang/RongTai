@@ -32,7 +32,6 @@
     NSArray* _images;  //调整按钮的图片名称数组
     CGFloat _cH;
     
-   
     ManualHumanView* _humanView;  //人体部位选择View
     WLPolar* _polar;   //极限图
     __weak IBOutlet UIView *_addPageControl;  //添加分页控制器的View
@@ -56,14 +55,14 @@
     __weak IBOutlet UIView *_backWarm;
     __weak IBOutlet UIImageView *_backWarmImagaView;
     __weak IBOutlet UILabel *_backWarmLabel;
-    BOOL _backWarmOn;
+    BOOL _backWarmOn;  //是否开启背部加热
     
     //脚步滚轮
     
     __weak IBOutlet UIView *_footWheel;
     __weak IBOutlet UIImageView *_footWheelImageView;
     __weak IBOutlet UILabel *_footWheelLabel;
-    BOOL _footWheelOn;
+    BOOL _footWheelOn;   //是否开启脚步滚轮
     
     //
     __weak IBOutlet UIView *_addScrollView;
@@ -79,53 +78,83 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"手动按摩", nil);
     
-    //
+    //技法偏好类型数组
     _skillsPreferenceArray = @[@"揉捏",@"推拿",@"敲打",@"组合"];
     
-    //
-    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
+    //创建scrollView
+    CGFloat w = SCREENWIDTH;
+    CGFloat h = SCREENHEIGHT*0.57;
+    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     _scroll.pagingEnabled = YES;
-    _scroll.contentSize = CGSizeMake(SCREENWIDTH*2, SCREENHEIGHT*0.57);
+    _scroll.contentSize = CGSizeMake(w*2, h);
     _scroll.bounces = NO;
     _scroll.delegate = self;
     _scroll.showsHorizontalScrollIndicator = NO;
     _scroll.showsVerticalScrollIndicator = NO;
     [_addScrollView addSubview:_scroll];
     
-    //
+    
+    //创建 人体图
+    _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    [_scroll addSubview:_humanView];
+    
+    //创建 极线图
+    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(w, 0, w, h)];
+    _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
+    _polar.steps = 3;
+    _polar.r = h*0.3;
+    _polar.minValue = 20;
+    _polar.maxValue = 120;
+    _polar.drawPoints = YES;
+    _polar.fillArea = YES;
+    _polar.delegate = self;
+    _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
+    _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
+    _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
+    _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
+    _polar.scaleFont = [UIFont systemFontOfSize:14];
+    [_scroll addSubview:_polar];
+    
+    
+    //创建 自定义分页控制器
+    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
+    _pageControl.numberOfPages = 2;
+    _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
+    _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
+    [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
+    [_addPageControl addSubview:_pageControl];
+    
+    //导航栏右边按钮
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
-
+ 
+    //返回按钮设置
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
-//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    //
-//    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
-    
-   
-    
-    //
+    //调节选项数组
     _menu = @[NSLocalizedString(@"肩部位置:", nil),NSLocalizedString(@"背部升降:",nil),NSLocalizedString(@"小腿升降:",nil),NSLocalizedString(@"小腿伸缩:",nil),NSLocalizedString(@"零重力:",nil)];
+    
     _reuseIdentifier = @"manualCell";
     
-    //
+    //调节选项按钮图片名称
     _images = @[@"set_button_up",@"set_button_down",@"set_rear_down",@"set_rear_up",@"set_leg_down",@"set_leg_up",@"set_leg_long",@"set_leg_short",@"set_zero"];
     
-    //
+    //创建 WLPanAlertView，即调节菜单
     _panAlertView = [[WLPanAlertView alloc]init];
     _panAlertView.delegate = self;
     CGRect f = _panAlertView.buttonView.frame;
-    CGFloat h = _panAlertView.buttonView.frame.size.height;
+    h = _panAlertView.buttonView.frame.size.height;
     f.origin.x = 0;
     f.origin.y = 0;
     f.size.height  = h*0.17;
     
-    //
+    // 菜单蓝色箭头
     _arrow = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_up"]];
     _arrow.frame = f;
     _arrow.contentMode = UIViewContentModeScaleAspectFit;
     [_panAlertView.buttonView addSubview:_arrow];
     
-    //
+    // 菜单蓝色半圆
     _bgCircle = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"button_set_bg"]];
     f.size.height  = h*0.83;
     f.origin.y = h*0.21;
@@ -134,7 +163,7 @@
     [_panAlertView.buttonView addSubview:_bgCircle];
     
     
-    //
+    // 菜单标题Label
     h = _bgCircle.frame.size.height;
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0.3*h, CGRectGetWidth(_bgCircle.frame), h*0.4)];
     label.text = NSLocalizedString(@"按摩调整", nil);
@@ -143,6 +172,7 @@
     label.textColor = [UIColor whiteColor];
     [_bgCircle addSubview:label];
     
+    //设置WLPanAlertView背景
     f = _panAlertView.contentView.frame;
     f.origin.x = 0;
     f.origin.y = 0;
@@ -150,11 +180,12 @@
     _contentImageView.image = [UIImage imageNamed:@"set_bg"];
     [_panAlertView.contentView addSubview:_contentImageView];
     
+    //WLPanAlertView加入到UIWindow里面
     AppDelegate* app = [UIApplication sharedApplication].delegate;
     UIWindow* appWindow = app.window;
     [appWindow addSubview:_panAlertView];
     
-    //
+    // 菜单选项TableView
     f =_panAlertView.contentView.frame;
     _cH = CGRectGetHeight(f);
     f.origin = CGPointZero;
@@ -172,56 +203,24 @@
     [_panAlertView.contentView addSubview:_adjustTable];
     
     
-    
-    //
-    _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
-    [_scroll addSubview:_humanView];
-    
-    //
-    
-    _polar = [[WLPolar alloc]initWithFrame:CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT*0.57)];
-    _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
-    _polar.steps = 3;
-    _polar.r = SCREENHEIGHT*0.57*0.3;
-    _polar.minValue = 20;
-    _polar.maxValue = 120;
-    _polar.drawPoints = YES;
-    _polar.fillArea = YES;
-    _polar.delegate = self;
-    _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
-    _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
-    _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
-    _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
-    _polar.scaleFont = [UIFont systemFontOfSize:14];
-    [_scroll addSubview:_polar];
-
-    
-    //
-    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
-    _pageControl.numberOfPages = 2;
-    _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
-    _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
-    [_pageControl addTarget:self action:@selector(pageControlChange:) forControlEvents:UIControlEventValueChanged];
-    [_addPageControl addSubview:_pageControl];
-    
-    //
+    // 技法偏好View加入单击手势
     UITapGestureRecognizer* sTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(skillsPreferenceTap)];
     [_skillsPreferenceView addGestureRecognizer:sTap];
     
     _skillsPreferencePickerView = [self createskillsPreferencePickerView];
     
-    //
+    // 定时View加入单击手势
     UITapGestureRecognizer* tTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timeViewTap)];
     [_timeView addGestureRecognizer:tTap];
-    
+
      _timePickerView = [self createMinutePickerView];
     
-    //
+    //背部加热View加入单击手势
     _backWarmOn = NO;
     UITapGestureRecognizer* bTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(backWarmTap)];
     [_backWarm addGestureRecognizer:bTap];
     
-    //
+    //脚步滚轮View加入单击手势
     _footWheelOn = NO;
     UITapGestureRecognizer* fTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(footWheelTap)];
     [_footWheel addGestureRecognizer:fTap];
@@ -232,6 +231,7 @@
 {
     [super viewWillDisappear:animated];
     
+    //页面消失时，要把WLPanAlertView移除掉
     [_panAlertView removeFromSuperview];
 }
 
@@ -245,15 +245,9 @@
 -(void)skillsPreferenceTap
 {
     CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
-    
     [skillPreferenceAlerView setContainerView:_skillsPreferencePickerView];
-    
-    //	timingAlerView.dialogBackgroundColor = [UIColor colorWithRed:36.0 / 255.0 green:142.0 / 255.0 blue:215.5/ 255.0 alpha:1];
-    
-
     [skillPreferenceAlerView setTitleString:@"模式"];
     [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
-    
     [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         if (buttonIndex == 0) {
             [alertView close];
@@ -265,7 +259,6 @@
             _skillsPreferenceLabel.text = sp;
         }
     }];
-    
     [skillPreferenceAlerView setUseMotionEffects:true];
     [skillPreferenceAlerView show];
 }
@@ -275,15 +268,9 @@
 -(void)timeViewTap
 {
     CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
-    
     [skillPreferenceAlerView setContainerView:_timePickerView];
-    
-    //	timingAlerView.dialogBackgroundColor = [UIColor colorWithRed:36.0 / 255.0 green:142.0 / 255.0 blue:215.5/ 255.0 alpha:1];
-    
-    
     [skillPreferenceAlerView setTitleString:@"定时"];
     [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
-    
     [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         if (buttonIndex == 0) {
             [alertView close];
@@ -294,7 +281,6 @@
           
         }
     }];
-    
     [skillPreferenceAlerView setUseMotionEffects:true];
     [skillPreferenceAlerView show];
 }
@@ -329,7 +315,6 @@
     }
 }
 
-
 #pragma mark - 创建技法偏好选择器
 - (NAPickerView *)createskillsPreferencePickerView
 {
@@ -357,7 +342,6 @@
     for (int i = 1; i < 20;  i++) {
         [leftItems addObject:[NSString stringWithFormat:@"%d", i*10]];
     }
-    //
     NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:leftItems andDelegate:self];
     pickerView.overlayColor = [UIColor colorWithRed:223.0 / 255.0 green:1 blue:1 alpha:1];
     
