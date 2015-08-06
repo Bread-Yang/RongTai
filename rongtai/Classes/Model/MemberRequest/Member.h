@@ -40,7 +40,7 @@
 @property (nonatomic, retain) NSString * name;
 
 /**
- *  性别
+ *  性别（0是男，1是女）
  */
 @property (nonatomic, retain) NSNumber * sex;
 
@@ -53,6 +53,16 @@
  *  用户id
  */
 @property (nonatomic, retain) NSNumber * userId;
+
+/**
+ *  成员Id
+ */
+@property (nonatomic, retain) NSNumber* memberId;
+
+/**
+ *  按照字典赋值
+ */
+-(void)setValueBy:(NSDictionary*)dic;
 
 
 -(NSDictionary*)memberToDictionary;

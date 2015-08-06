@@ -32,8 +32,5 @@ typedef void (^EditUserInformationBlock)(NSDictionary *entity);
  */
 - (void)editMode:(Member*)user WithIndex:(NSUInteger)index;
 
-- (void)setEditUserInformation:(NSDictionary *)infoDictionary;
-
-- (void)setEditUserInformationBlock:(EditUserInformationBlock)editUserInformationBlock;
 
 @end

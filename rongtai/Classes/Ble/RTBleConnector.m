@@ -32,6 +32,8 @@ static Byte const BYTE_Tail = 0xf1;
 
 @property (readonly) NSTimeInterval reconnectInterval;
 
+@property (nonatomic, retain) NSTimer *turnOnTimer;
+
 @end
 
 @implementation RTBleConnector
@@ -215,12 +217,37 @@ static Byte const BYTE_Tail = 0xf1;
     //	NSInteger commnad[] = {NORMAL_CTRL,ENGGER_CTRL,H10_KEY_CHAIR_AUTO_0};
 	
 	if (self.isConnectedDevice) {
-		NSData *bodyData = [self dataWithFuc:mode];
-		NSData *sendData = [self fillDataHeadAndTail:bodyData];
-		[self sendDataToPeripheral:sendData];
-	} else {
-		[self didDisconnectPeriphral:self.currentConnectedPeripheral];
+		
+		if (self.rtMassageChairStatus.deviceStatus == RtMassageChairResetting) { // 复位状态下不发送指令
+			return;
+		}
+		
+		if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStandby) { // 先发开机指令,过一秒再发模式指令
+			if  (_turnOnTimer && [_turnOnTimer isValid]) {
+				[_turnOnTimer invalidate];
+			}
+			// 先开机
+			NSData *bodyData = [self dataWithFuc:H10_KEY_POWER_SWITCH];
+			NSData *sendData = [self fillDataHeadAndTail:bodyData];
+			[self sendDataToPeripheral:sendData];
+			
+			_turnOnTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(delaySendCommand:) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], @"mode", nil] repeats:NO];
+		} else {
+			NSData *bodyData = [self dataWithFuc:mode];
+			NSData *sendData = [self fillDataHeadAndTail:bodyData];
+			[self sendDataToPeripheral:sendData];
+		}
 	}
+//	else {
+//		[self didDisconnectPeriphral:self.currentConnectedPeripheral];
+//	}
+}
+
+- (void)delaySendCommand:(NSTimer *)timer {
+	NSInteger mode = [[[timer userInfo] objectForKey:@"mode"] integerValue];
+	NSData *bodyData = [self dataWithFuc:mode];
+	NSData *sendData = [self fillDataHeadAndTail:bodyData];
+	[self sendDataToPeripheral:sendData];
 }
 
 #pragma mark - Write
@@ -419,31 +446,57 @@ static Byte const BYTE_Tail = 0xf1;
      bit 2 : 腿脚气囊程序
      当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
      */
-    _rtMassageChairStatus.feetAirBagProgram = (addr >> 2) & 1;
+    _rtMassageChairStatus.legAndFootAirBagProgram = (addr >> 2) & 1;
     
     /**
      bit 3 : 背腰气囊程序
      当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
      */
-    _rtMassageChairStatus.waistAirBagProgram = (addr >> 3) & 1;
+    _rtMassageChairStatus.backAndWaistAirBagProgram = (addr >> 3) & 1;
     
     /**
      bit 4 : 臂肩气囊程序
      当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
      */
-    _rtMassageChairStatus.shoulderAirBagProgram = (addr >> 4) & 1;
+    _rtMassageChairStatus.armAndShoulderAirBagProgram = (addr >> 4) & 1;
     
     /**
      bit 5 : 坐垫气囊程序
      当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
      */
-    _rtMassageChairStatus.cushionAirBagProgram = (addr >> 5) & 1;
+    _rtMassageChairStatus.buttockAirBagProgram = (addr >> 5) & 1;
     
     /**
      bit 6 : 全身气囊程序
      当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
      */
-    _rtMassageChairStatus.bodyAirBagProgram = (addr >> 6) & 1;
+    _rtMassageChairStatus.FullBodyAirBagProgram = (addr >> 6) & 1;
+	
+	if (_rtMassageChairStatus.FullBodyAirBagProgram == 1) {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramFullBody;
+		
+	} else if (_rtMassageChairStatus.armAndShoulderAirBagProgram == 1) {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramArmAndShoulder;
+		
+	} else if (_rtMassageChairStatus.backAndWaistAirBagProgram == 1) {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramBackAndWaist;
+		
+	} else if (_rtMassageChairStatus.buttockAirBagProgram == 1) {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramButtock;
+		
+	} else if (_rtMassageChairStatus.legAndFootAirBagProgram == 1) {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramLegAndFeet;
+		
+	} else {
+		
+		_rtMassageChairStatus.airBagProgram = RTMassageChairAirBagProgramNone;
+		
+	}
 }
 
 // 地址11 音乐指示
@@ -660,6 +713,8 @@ static Byte const BYTE_Tail = 0xf1;
      数值范围0-127
      */
     _rtMassageChairStatus.remainingTimeLow7Bit = (addr & 127);
+	
+	_rtMassageChairStatus.remainingTime = _rtMassageChairStatus.remainingTimeHigh5Bit * 128 + _rtMassageChairStatus.remainingTimeLow7Bit;
 }
 
 // 地址 4 运行时间高5位，单位秒
@@ -740,6 +795,10 @@ static Byte const BYTE_Tail = 0xf1;
      1：开
      */
     _rtMassageChairStatus.heatingSwitchFlag = (addr >> 6) & 1;
+	
+	_rtMassageChairStatus.isRollerOn = (_rtMassageChairStatus.rollerSwitchFlag == 1);
+	
+	_rtMassageChairStatus.isHeating = (_rtMassageChairStatus.heatingSwitchFlag == 1);
 }
 
 // 地址 1 按摩椅程序运行状态和按摩手法
@@ -777,7 +836,7 @@ static Byte const BYTE_Tail = 0xf1;
      06：韵律按摩
      07：搓背
      */
-    _rtMassageChairStatus.massageTechnique = (addr >> 3) & 7;
+    _rtMassageChairStatus.massageTechniqueFlag = (addr >> 3) & 7;
     
     /**
      按摩椅运行状态
@@ -785,5 +844,39 @@ static Byte const BYTE_Tail = 0xf1;
      1：按摩椅处于非待机状态，此时手控器相应的图标点亮
      */
     _rtMassageChairStatus.runningStatus = (addr >> 6) & 1;
+	
+	switch (_rtMassageChairStatus.massageTechniqueFlag) {
+  		case 0:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueStop;
+			break;
+			
+		case 1:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueKnead;
+			break;
+			
+		case 2:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueKnock;
+			break;
+			
+		case 3:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueSync;
+			break;
+			
+		case 4:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueTapping;
+			break;
+			
+		case 5:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueShiatsu;
+			break;
+			
+		case 6:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueRhythm;
+			break;
+			
+		case 7:
+			_rtMassageChairStatus.massageTechnique = RTMassageChairMassageTechniqueBackRub;
+			break;
+	}
 }
 @end

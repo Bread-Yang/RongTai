@@ -22,6 +22,9 @@
 #import "AutoMassageViewController.h"
 #import "CustomIOSAlertView.h"
 
+//
+#import "MemberRequest.h"
+
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
 {
     UITableView* _table;
@@ -45,11 +48,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
 	self.isListenBluetoothStatus = YES;
-	
-    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
     
-    NSLog(@"Main:%@",self.navigationItem);
+    //
+//    MemberRequest* r = [MemberRequest new];
+//    [r requestMemberListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:100 success:^(NSArray *members) {
+//        NSLog(@"%@",members);
+//    } failure:^(id responseObject) {
+//        NSLog(@"%@",responseObject);
+//    }];
+    
+    //
+	self.navigationItem.backBarButtonItem.title = @"";
+    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -72,12 +84,8 @@
     image.layer.cornerRadius = 17;
     left.customView = image;
     image.clipsToBounds = YES;
-//    self.navigationItem.leftBarButtonItem = left;
-    
-  
     slideNav.leftBarButtonItem = left;
     
-
     //侧滑菜单
     slideNav.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
     slideNav.view.layer.shadowOffset = CGSizeMake(-0.5, 0);
@@ -169,21 +177,19 @@
 		[reconnectDialog show];
 		return;
 	}
-    if (item.tag == 1) {
+	if (item.tag == 0) {
+		[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
+	} else if (item.tag == 1) {
         //手动按摩
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
         [self.navigationController pushViewController:mVC animated:YES];
-    }
-    else if (item.tag == 2)
-    {
+    } else if (item.tag == 2) {
         //自定义
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
         [self.navigationController pushViewController:cVC animated:YES];
-    }
-    else if (item.tag == 3)
-    {
+    } else if (item.tag == 3) {
         //下载
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ProgramDownloadTableViewController* pVC = (ProgramDownloadTableViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];

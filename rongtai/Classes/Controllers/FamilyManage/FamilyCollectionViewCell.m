@@ -11,6 +11,7 @@
 #import "NSString+RT.h"
 
 #import "RongTaiConstant.h"
+#import "UIImage+ImageBlur.h"
 
 @interface FamilyCollectionViewCell () {
 	
@@ -84,18 +85,19 @@
 
 -(void)setMember:(Member *)member {
     _member = member;
-    if (_member.imageURL.length<1) {
+    if ([_member.imageURL isEqualToString:@"default"]) {
         //空的用默认头像
         _userIconView.image = [UIImage imageNamed:@"userIcon.jpg"];
     }
     else
     {
         //先使用本地图片，若本地读不到图片则使用网络请求
-        
-        
-        //网络请求
-        if (![NSString isBlankString:member.imageURL]) {
-            NSURL *url = [NSURL URLWithString:member.imageURL];
+        UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.png",member.imageURL]];
+        _userIconView.image  = img;
+        //网络请求  //[NSString isBlankString:member.imageURL]
+        if (!img) {
+            NSLog(@"网络读取头像");
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://recipe.xtremeprog.com/file/g/%@",member.imageURL]];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
             
@@ -106,6 +108,7 @@
                                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                               weakCell.userIconView.image = image;
                                               [weakCell setNeedsLayout];
+                                              [image saveImageByName:[NSString stringWithFormat:@"%@.png",member.imageURL]];
                                               
                                           } failure:nil];
         }

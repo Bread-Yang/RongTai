@@ -9,8 +9,6 @@
 #import "BasicViewController.h"
 #import "MainViewController.h"
 
-#import "CustomIOSAlertView.h"
-
 @interface BasicViewController () <CustomIOSAlertViewDelegate> {
 	
 	RTBleConnector *bleConnector;
@@ -33,6 +31,9 @@
     [self.view addSubview:bg];
     [self.view sendSubviewToBack:bg];
 	
+	self.resettingDialog = [[CustomIOSAlertView alloc] init];
+	self.resettingDialog.isReconnectDialog = YES;
+	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"复位中", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

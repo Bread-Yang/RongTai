@@ -20,4 +20,9 @@
  */
 -(void)saveImageByName:(NSString*)fileName;
 
+/**
+ *  读取本地图片
+ */
++(UIImage*)imageInLocalByName:(NSString*)fileName;
+
 @end

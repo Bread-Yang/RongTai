@@ -8,6 +8,8 @@
 
 #import "ManualHumanView.h"
 #import "LineLabel.h"
+#import "RTCommand.h"
+#import "RTBleConnector.h"
 
 @interface ManualHumanView ()
 {
@@ -129,32 +131,97 @@
 #pragma mark - 按钮方法
 -(void)buttonClicked:(UIButton*)btn
 {
-//    NSLog(@"%@",_parts[btn.tag - 2100]);
-    for (int i = 0; i<_parts.count; i++) {
-        UIButton* b = (UIButton*)[self viewWithTag:2100+i];
-        LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
-        if (b.tag == btn.tag) {
-            [b setSelected:YES];
-            l.isSelected = YES;
-        }
-        else
-        {
-            [b setSelected:NO];
-            l.isSelected = NO;
-        }
-    }
-    _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
-    _partLabel.textColor = BLUE;
-    NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
-    
-    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
-    NSRange r = [string.string rangeOfString:@"："];
-    r.location ++;
-    r.length = string.string.length - r.location;
-    [string setAttributes:dic range:r];
-    _partLabel.attributedText = string;
+//    for (int i = 0; i<_parts.count; i++) {
+//        UIButton* b = (UIButton*)[self viewWithTag:2100+i];
+//        LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
+//        if (b.tag == btn.tag) {
+//            [b setSelected:YES];
+//            l.isSelected = YES;
+//        }
+//        else
+//        {
+//            [b setSelected:NO];
+//            l.isSelected = NO;
+//        }
+//    }
+//    _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+//    _partLabel.textColor = BLUE;
+//    NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
+//    
+//    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
+//    NSRange r = [string.string rangeOfString:@"："];
+//    r.location ++;
+//    r.length = string.string.length - r.location;
+//    [string setAttributes:dic range:r];
+//    _partLabel.attributedText = string;
 
-    
+	switch (btn.tag) {
+  		case 2100:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_AUTO];
+			break;
+		case 2101:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_ARM];
+			break;
+		case 2102:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_WAIST];
+			break;
+		case 2103:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_BUTTOCKS];
+			break;
+		case 2104:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_LEG];
+			break;
+	}
+}
+
+- (void)checkButtonByAirBagProgram:(RTMassageChairAirBagProgram)airBagProgram {
+	UIButton *btn;
+	
+	switch (airBagProgram) {
+  		case RTMassageChairAirBagProgramFullBody:
+			btn = _bodyBtn;
+			break;
+		case RTMassageChairAirBagProgramArmAndShoulder:
+			btn = _shoulderBtn;
+			break;
+		case RTMassageChairAirBagProgramBackAndWaist:
+			btn = _waistBtn;
+			break;
+		case RTMassageChairAirBagProgramButtock:
+			btn = _hipBtn;
+			break;
+		case RTMassageChairAirBagProgramLegAndFeet:
+			btn = _footBtn;
+			break;
+		case RTMassageChairAirBagProgramNone:
+			break;
+	}
+	
+	for (int i = 0; i<_parts.count; i++) {
+		UIButton* b = (UIButton*)[self viewWithTag:2100+i];
+		LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
+		if (btn && b.tag == btn.tag) {
+			[b setSelected:YES];
+			l.isSelected = YES;
+		}
+		else
+		{
+			[b setSelected:NO];
+			l.isSelected = NO;
+		}
+	}
+	if (btn) {
+		_partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+		_partLabel.textColor = BLUE;
+		NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
+		
+		NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
+		NSRange r = [string.string rangeOfString:@"："];
+		r.location ++;
+		r.length = string.string.length - r.location;
+		[string setAttributes:dic range:r];
+		_partLabel.attributedText = string;
+	}
 }
 
 @end

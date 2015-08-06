@@ -38,14 +38,14 @@
 //ZONE2:手动程序键值
 /**********************************************************/
 
-#define H10_KEY_KNEAD					0x20
-#define H10_KEY_KNOCK					0x21
-#define H10_KEY_PRESS					0x22
-#define H10_KEY_SOFT_KNOCK				0x23
-#define H10_KEY_WAVELET					0x24
+#define H10_KEY_KNEAD					0x20 // 揉捏
+#define H10_KEY_KNOCK					0x21 // 敲击
+#define H10_KEY_PRESS					0x22 // 指压
+#define H10_KEY_SOFT_KNOCK				0x23 // 叩击
+#define H10_KEY_WAVELET					0x24 // 揉敲同步
 
 #define H10_KEY_MANUAL					0x25
-#define H10_KEY_MUSIC                   0x26
+#define H10_KEY_MUSIC                   0x26 // 韵律按摩
 #define H10_KEY_HEAT_ON  				0x27 //背部加热开
 #define H10_KEY_HEAT  				    0x27 //背部加热开
 
@@ -125,7 +125,7 @@
 #define H10_KEY_3DMODE_1                                0x39 //3D手法1
 #define H10_KEY_3DMODE_2                                0x3A //3D手法2
 #define H10_KEY_3DMODE_3                                0x3B //3D手法3
-#define H10_KEY_3DMODE                                  0x3D //3D手法切换
+#define H10_KEY_3DMODE        \                          0x3D //3D手法切换
 #define H10_KEY_3DSPEED_1                               0x58 //3D手法1
 #define H10_KEY_3DSPEED_2                               0x59 //3D手法2
 #define H10_KEY_3DSPEED_3                               0x5A //3D手法3

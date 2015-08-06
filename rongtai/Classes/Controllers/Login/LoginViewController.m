@@ -10,10 +10,10 @@
 
 #import "LoginViewController.h"
 #import "LoginRequest.h"
-
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
 #import "IQKeyboardManager.h"
+
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
@@ -41,6 +41,9 @@
 //    _loginFeild.layer.borderWidth = 1;
     _loginRequest = [LoginRequest new];
     _loginRequest.delegate = self;
+
+    _phoneNum.text = @"13435814424";
+    _password.text = @"123456";
     
     //
     MenuViewController* menu = [[MenuViewController alloc]init];
@@ -66,8 +69,8 @@
     */
     [[IQKeyboardManager sharedManager] resignFirstResponder];
     
-    [self.navigationController pushViewController:[MainViewController new] animated:YES];
-//    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+//    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
 }
 
 #pragma mark - 注册按钮方法

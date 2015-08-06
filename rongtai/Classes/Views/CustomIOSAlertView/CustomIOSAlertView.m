@@ -50,7 +50,7 @@ CGFloat buttonSpacerHeight = 0;
 		
 		delegate = self;
 		useMotionEffects = false;
-		buttonTitles = @[@"Close"];
+//		buttonTitles = @[@"Close"];
 		
 		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 		
@@ -236,6 +236,14 @@ CGFloat buttonSpacerHeight = 0;
 	CGFloat dialogWidth = containerView.frame.size.width;
 	CGFloat dialogHeight = containerView.frame.size.height + buttonHeight + buttonSpacerHeight;
 	
+//	CGFloat dialogHeight;
+//	
+//	if (buttonTitles != nil) {
+//		dialogHeight = containerView.frame.size.height + buttonHeight + buttonSpacerHeight;
+//	} else {
+//		dialogHeight = containerView.frame.size.height;
+//	}
+	
 	CGSize dialogSize = CGSizeMake(dialogWidth, dialogHeight);
 	
 	// This is the dialog's container; we attach the custom content and the buttons to this one
@@ -248,7 +256,7 @@ CGFloat buttonSpacerHeight = 0;
 	
 	[dialogContainer addSubview:containerView];
 	
-	if (buttonTitles != NULL) {
+	if (buttonTitles != nil) {
 		
 		CGFloat buttonWidth =
 		dialogContainer.bounds.size.width / [buttonTitles count];

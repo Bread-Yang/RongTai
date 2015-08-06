@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "RongTaiConstant.h"
+#import "RTMassageChairStatus.h"
 
 @interface ManualHumanView : UIView
+
+- (void)checkButtonByAirBagProgram:(RTMassageChairAirBagProgram)airBagProgram;
 
 @end
