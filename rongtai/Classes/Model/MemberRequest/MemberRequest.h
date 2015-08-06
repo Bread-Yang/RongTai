@@ -10,7 +10,26 @@
 #import <AFNetworking.h>
 #import "Member.h"
 
+@class MemberRequest;
+
+@protocol MemberRequestDelegate <NSObject>
+
+@optional
+-(void)requestTimeOut:(MemberRequest*)request;
+
+@end
+
 @interface MemberRequest : NSObject
+
+/**
+ *  超时设置，若设置时间小于等于0，则不启用超时检测，默认为0
+ */
+@property(nonatomic)NSTimeInterval overTime;
+
+/**
+ *  代理
+ */
+@property(nonatomic, weak) id<MemberRequestDelegate> delegate;
 
 /**
  *  上传图片
@@ -36,5 +55,10 @@
  *  删除成员列表
  */
 -(void)deleteMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
+
+/**
+ *  取消请求
+ */
+-(void)cancelRequest;
 
 @end

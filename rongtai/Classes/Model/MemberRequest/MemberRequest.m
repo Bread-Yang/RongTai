@@ -27,6 +27,7 @@
         _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         _uid = [defaults objectForKey:@"uid"];
+        _overTime = 0;
     }
     return self;
 }
@@ -35,10 +36,8 @@
 -(void)uploadImage:(UIImage *)image success:(void (^)(NSString *))success failure:(void (^)(id))failure
 {
     NSString* url = @"http://recipe.xtremeprog.com/file/upload";
-//    NSString* url = @"http://192.168.2.70:8080/File/upload";
     [_manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) { 
         [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1) name:@"file1" fileName:@"Image" mimeType:@"image/*"];
-
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString* urlKey = [responseObject objectForKey:@"urlKey"];
         if (urlKey) {
@@ -162,7 +161,18 @@
         NSLog(@"删除成员错误:%@",error);
         failure(nil);
     }];
+}
 
+#pragma mark - 超时方法
+-(void)requestTimeOut
+{
+    [self cancelRequest];
+}
+
+#pragma mark - 取消请求
+-(void)cancelRequest
+{
+    [_manager.operationQueue cancelAllOperations];
 }
 
 @end

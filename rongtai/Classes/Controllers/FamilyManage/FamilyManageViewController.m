@@ -18,6 +18,7 @@
 #import "MemberRequest.h"
 #import "CoreData+MagicalRecord.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
     UICollectionView* _collectView;
@@ -25,6 +26,9 @@
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
     AFNetworkReachabilityManager* _reachability;
+    BOOL _isTimeOut;
+    MBProgressHUD* _loading;
+    MemberRequest* _mr;
 }
 
 @property(nonatomic, strong) NSArray *memberArray;
@@ -67,6 +71,16 @@
     //添加成员按钮
     UIBarButtonItem* add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember:)];
     self.navigationItem.rightBarButtonItem = add;
+    
+    //MBProgressHUD
+    _loading = [[MBProgressHUD alloc]init];
+    //
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    _loading = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
+    [appDelegate.window addSubview:_loading];
+    
+    //
+    _mr = [MemberRequest new];
     // Do any additional setup after loading the view.
 }
 
@@ -77,28 +91,31 @@
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.labelText = @"读取中...";
-        [hud show:YES];
+        _isTimeOut = YES;
+        _loading.labelText = @"读取中...";
+        [_loading show:YES];
         
         NSLog(@"请求成员");
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSMutableArray* arr = [NSMutableArray new];
-        MemberRequest* mr = [MemberRequest new];
-        [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
+        
+        [self performSelector:@selector(requestTimeout:) withObject:_mr afterDelay:30]; //30请求超时
+        [_mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
+            _isTimeOut = NO;
             for (NSDictionary* dic in members) {
                 Member* m = [Member updateMemberDB:dic];
                 [arr addObject:m];
             }
             _memberArray = [NSArray arrayWithArray:arr];
             [_collectView reloadData];
-            [hud hide:YES];
+            [_loading hide:YES];
 
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
+            _isTimeOut = NO;
             _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
             [_collectView reloadData];
-            [hud hide:YES];
+            [_loading hide:YES];
         }];
     }
     else
@@ -106,6 +123,16 @@
         NSLog(@"没网，本地记录读取成员");
         _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
         [_collectView reloadData];
+    }
+}
+
+#pragma mark - 请求超时
+-(void)requestTimeout:(MemberRequest*)request
+{
+    if (_isTimeOut) {
+        [_loading hide:YES];
+        [request cancelRequest];
+        [self showProgressHUDByString:@"请求超时，请检测网络"];
     }
 }
 
@@ -147,6 +174,18 @@
     uVC.title = NSLocalizedString(@"添加成员", nil);
     [self.navigationController pushViewController:uVC animated:YES];
 }
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
+}
+
 
 
 - (void)didReceiveMemoryWarning {
