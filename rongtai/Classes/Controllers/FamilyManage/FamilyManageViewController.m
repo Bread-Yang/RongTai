@@ -17,6 +17,7 @@
 #import "RongTaiConstant.h"
 #import "MemberRequest.h"
 #import "CoreData+MagicalRecord.h"
+#import "MBProgressHUD.h"
 
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
     UICollectionView* _collectView;
@@ -66,69 +67,46 @@
     //添加成员按钮
     UIBarButtonItem* add = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMember:)];
     self.navigationItem.rightBarButtonItem = add;
-	
     // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	self.navigationController.navigationBarHidden = NO;
-    
-//    _users = [NSMutableArray new];
-	
-//	manager.responseSerializer = [AFHTTPResponseSerializer serializer]; // 设置这句, 可以成功返回,不过返回的数据要转码
-//	self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];  // 这句是关键
-//	
-//	NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMember"];
-//	NSDictionary *parameters = @{@"uid": @"15521377721"};
-//	
-//	[self.httpRequestManager POST:requestURL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-////		NSLog(@"success return json : %@", responseObject);
-//		NSDictionary *jsonDictionary = (NSDictionary *)responseObject;
-//		
-//		if ([jsonDictionary[@"responseCode"] intValue] == 200) {
-//			self.memberArray = jsonDictionary[@"result"];
-//			
-//			for (int i = 0; i < [self.memberArray count]; i++) {
-//				NSDictionary *itemDictionary = self.memberArray[i];
-//				Member *user = [Member MR_createEntity];
-//				user.name = itemDictionary[@"name"];
-//				user.imageURL = itemDictionary[@"imageUrl"];
-//				[_users addObject:user];
-//			}
-//			[_collectView reloadData];
-//		}
-//	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//		NSLog(@"Error: %@", error);
-//	}];
-    
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //读取家庭成员
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText = @"读取中...";
+        [hud show:YES];
+        
         NSLog(@"请求成员");
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSMutableArray* arr = [NSMutableArray new];
         MemberRequest* mr = [MemberRequest new];
         [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
             for (NSDictionary* dic in members) {
-                Member* m = [Member MR_createEntity];
-                [m setValueBy:dic];
+                Member* m = [Member updateMemberDB:dic];
                 [arr addObject:m];
             }
             _memberArray = [NSArray arrayWithArray:arr];
             [_collectView reloadData];
-            
+            [hud hide:YES];
+
         } failure:^(id responseObject) {
-            
+            NSLog(@"有网，本地记录读取成员");
+            _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+            [_collectView reloadData];
+            [hud hide:YES];
         }];
     }
     else
     {
-        NSLog(@"本地记录读取成员");
-        _memberArray = [Member MR_findAll];
+        NSLog(@"没网，本地记录读取成员");
+        _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
         [_collectView reloadData];
     }
-
 }
 
 #pragma mark - 返回
@@ -157,7 +135,6 @@
     UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
     Member* user = _memberArray[indexPath.row];
     [uVC editMode:user WithIndex:indexPath.row];
-//    [uVC setEditUserInformation:self.memberArray[indexPath.row]];
     [self.navigationController pushViewController:uVC animated:YES];
 
 }

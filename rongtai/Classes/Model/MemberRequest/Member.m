@@ -7,6 +7,7 @@
 //
 
 #import "Member.h"
+#import "CoreData+MagicalRecord.h"
 
 
 @implementation Member
@@ -19,7 +20,9 @@
 @dynamic sex;
 @dynamic status;
 @dynamic userId;
+@dynamic memberId;
 
+#pragma mark - 根据字典来设置Member
 -(void)setValueBy:(NSDictionary *)dic
 {
     self.name = [dic objectForKey:@"name"];
@@ -34,17 +37,42 @@
     self.birthday = [formatter dateFromString:d];
 }
 
+#pragma mark - 把Member转成字典
 -(NSDictionary*)memberToDictionary
 {
-    NSDictionary* dic = @{@"uid" : @"15521377721",
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDictionary* dic = @{
       @"name" : self.name,
       @"sex" : self.sex,
       @"height" : self.height,
       @"heightUnit" : self.heightUnit,
       @"imageUrl" : self.imageURL,
-      @"birthday" : self.birthday,
+      @"birthday" : [formatter stringFromDate:self.birthday],
+      @"memberId" : self.memberId
       };
     return dic;
 }
+
+
+#pragma mark - 根据一条Member的Json数据更新数据库
++(Member*)updateMemberDB:(NSDictionary*)dic
+{
+    NSString* mid = [dic valueForKey:@"memberId"];
+    NSNumber* memberId = [NSNumber numberWithInteger:[mid integerValue]];
+    NSArray* arr = [Member MR_findByAttribute:@"memberId" withValue:memberId];
+    Member* m;
+    if (arr.count == 0) {
+        m = [Member MR_createEntity];
+    }
+    else
+    {
+        m = arr[0];
+    }
+    [m setValueBy:dic];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    return m;
+}
+
 
 @end

@@ -76,7 +76,7 @@
     _footLabel = [self lineLabelByTag:2114 Name:_parts[4]];
 }
 
-#pragma mark - 调整位置
+#pragma mark - 调整UI位置
 -(void)adjustPositin
 {
     CGFloat h = CGRectGetHeight(self.frame);

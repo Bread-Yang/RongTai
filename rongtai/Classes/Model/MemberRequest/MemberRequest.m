@@ -65,7 +65,7 @@
     [parmeters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取成员列表:%@",responseObject);
+//        NSLog(@"获取成员列表:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             NSArray* arr = [responseObject objectForKey:@"result"];

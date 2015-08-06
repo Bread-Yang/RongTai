@@ -11,6 +11,11 @@
 #import "Member.h"
 #import "RongTaiConstant.h"
 #import "BasicTableViewCell.h"
+#import "MemberRequest.h"
+#import "CoreData+MagicalRecord.h"
+#import "MBProgressHUD.h"
+#import "UIImage+ImageBlur.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ChangeUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -18,6 +23,7 @@
     UITableView* _table;
     NSInteger _selectIndex;
     CGFloat _rowHeight;
+    AFNetworkReachabilityManager* _reachability;
 }
 @end
 
@@ -36,27 +42,47 @@
     _table.delegate = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
-    
-    
+
     _selectIndex = 0;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-    //查询用户
-    _users = [Member MR_findAll];
-    [_table reloadData];
-    
-    
-    //测试用
-//    NSMutableArray* _arr = [NSMutableArray new];
-//    for (int i =0 ; i<5; i++) {
-//        Member* m = [Member MR_createEntity];
-//        m.name = @"用户名";
-//        m.imageURL = @"userIcon.jpg";
-//        [_arr addObject:m];
-//    }
-//    _users = _arr;
-//    [_table reloadData];
-    
-    // Do any additional setup after loading the view.
+    _reachability = [AFNetworkReachabilityManager sharedManager];
+    if (_reachability.reachable) {
+        //网络请求
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.labelText = @"读取中...";
+        [hud show:YES];
+        
+        NSLog(@"请求成员");
+        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        NSMutableArray* arr = [NSMutableArray new];
+        MemberRequest* mr = [MemberRequest new];
+        [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
+            for (NSDictionary* dic in members) {
+                Member* m = [Member updateMemberDB:dic];
+                [arr addObject:m];
+            }
+            _users = [NSArray arrayWithArray:arr];
+            [_table reloadData];
+            [hud hide:YES];
+            
+        } failure:^(id responseObject) {
+            NSLog(@"有网，本地记录读取成员");
+            _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+            [_table reloadData];
+            [hud hide:YES];
+        }];
+    }
+    else
+    {
+        NSLog(@"没网，本地记录读取成员");
+        _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+        [_table reloadData];
+    }
 }
 
 #pragma mark - 返回
@@ -65,7 +91,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 #pragma mark - tableView代理现实
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -73,6 +98,12 @@
     if (!cell) {
         cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userCell"];
         cell.imageViewScale = 0.7;
+        cell.backgroundColor = [UIColor clearColor];
+        cell.imageView.layer.cornerRadius = _rowHeight*0.35;
+        cell.imageView.clipsToBounds = YES;
+        cell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        cell.imageView.layer.borderWidth = 2;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, _rowHeight-1, SCREENWIDTH, 1)];
         line.backgroundColor = [UIColor grayColor];
         line.alpha = 0.2;
@@ -81,14 +112,33 @@
     Member* m = _users[indexPath.row];
     cell.textLabel.text = m.name;
     cell.textLabel.textColor = BLACK;
-    cell.backgroundColor = [UIColor clearColor];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    cell.imageView.image = [UIImage imageNamed:m.imageURL];
-    cell.imageView.layer.cornerRadius = 21;
-    cell.imageView.clipsToBounds = YES;
-    cell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
-    cell.imageView.layer.borderWidth = 2;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if ([m.imageURL isEqualToString:@"default"]) {
+        //空的用默认头像
+        cell.imageView.image = [UIImage imageNamed:@"userIcon.jpg"];
+    }
+    else
+    {
+        //先使用本地图片，若本地读不到图片则使用网络请求
+        UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",m.imageURL]];
+        cell.imageView.image  = img;
+        //网络请求  //[NSString isBlankString:member.imageURL]
+        if (!img) {
+            NSLog(@"网络读取头像");
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://recipe.xtremeprog.com/file/g/%@",m.imageURL]];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+            __weak BasicTableViewCell* weakCell = cell;
+            [cell.imageView setImageWithURLRequest:request
+                                 placeholderImage:placeholderImage
+                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                              weakCell.imageView.image = image;
+                                              [image saveImageByName:[NSString stringWithFormat:@"%@.jpg",m.imageURL]];
+                                          } failure:nil];
+        }
+        
+    }
+    
+    
     if (indexPath.row == _selectIndex) {
         cell.accessoryView = [self selectedView];
     }

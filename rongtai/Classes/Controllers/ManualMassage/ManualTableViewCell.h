@@ -21,12 +21,24 @@
 
 @interface ManualTableViewCell : UITableViewCell
 
+/**
+ *  标题
+ */
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+/**
+ *  左边按钮
+ */
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 
+/**
+ *  右边按钮
+ */
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 
+/**
+ *  代理
+ */
 @property (weak, nonatomic) id<ManualTableViewCellDelegate> delegate;
 
 @end

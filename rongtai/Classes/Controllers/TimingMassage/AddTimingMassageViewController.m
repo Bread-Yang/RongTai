@@ -12,6 +12,7 @@
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
 #import "TimingPlan.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface AddTimingMassageViewController () {
 	
@@ -38,6 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //导航栏返回按钮设置
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
 	
 	UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
@@ -126,8 +130,10 @@
 	}
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-	
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)segmentedControl:(id)sender {

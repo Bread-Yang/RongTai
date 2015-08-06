@@ -25,7 +25,7 @@
 //
 #import "MemberRequest.h"
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
     NSMutableArray* _massageArr;
@@ -34,6 +34,8 @@
     UITabBar* _menuBar;
 	CustomIOSAlertView *reconnectDialog;
 	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
+    NSUInteger _vcCount;
+
 }
 @end
 
@@ -50,18 +52,10 @@
     [super viewDidLoad];
 
 	self.isListenBluetoothStatus = YES;
-    
-    //
-//    MemberRequest* r = [MemberRequest new];
-//    [r requestMemberListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:100 success:^(NSArray *members) {
-//        NSLog(@"%@",members);
-//    } failure:^(id responseObject) {
-//        NSLog(@"%@",responseObject);
-//    }];
-    
-    //
-	self.navigationItem.backBarButtonItem.title = @"";
-    [self.navigationItem setBackBarButtonItem:[UIBarButtonItem goBackItemByTarget:nil Action:nil]];
+
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    _vcCount = self.navigationController.viewControllers.count;
+     NSLog(@"VC:%ld",_vcCount);
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -72,14 +66,18 @@
     menu.delegate = self;
     
     //天气预报
-    _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
-    self.navigationItem.rightBarButtonItem  = right;
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber* loadWeather = [defaults valueForKey:@"weather"];
+    if ([loadWeather boolValue]) {
+        _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+        UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
+        self.navigationItem.rightBarButtonItem  = right;
+    }
     
     //菜单按钮
     UIBarButtonItem* left = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
     UIButton* image = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
-    [image setImage:[UIImage imageNamed:@"userDefaultIcon.jpg"] forState:UIControlStateNormal];
+    [image setImage:[UIImage imageNamed:@"userIcon.jpg"] forState:UIControlStateNormal];
     [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
     image.layer.cornerRadius = 17;
     left.customView = image;
@@ -124,12 +122,10 @@
     UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:@"负离子" image:[UIImage imageNamed:@"icon_set"] tag:0];
     UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:@"手动" image:[UIImage imageNamed:@"icon_hand"] tag:1];
     UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:@"自定义" image:[UIImage imageNamed:@"icon_user"] tag:2];
-    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_set"] tag:3];
+    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_download"] tag:3];
     _menuBar.items = @[item1,item2,item3,item4];
     _menuBar.selectedItem = item1;
-    _menuBar.backgroundImage = [UIImage imageNamed:@"bottom"];
     _menuBar.delegate = self;
-    _menuBar.barStyle = UIBarStyleBlackOpaque;
     [self.view addSubview:_menuBar];
 	
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
@@ -155,9 +151,27 @@
     slideNav.enableSwipeGesture = NO;
 }
 
+#pragma mark - UIGestureRecognizer代理
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (self.navigationController.viewControllers.count == _vcCount) {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+}
+
 #pragma mark - menuController代理
 -(void)switchChange:(BOOL)isOn
 {
+    if (!_weatherView) {
+        _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
+        UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
+        self.navigationItem.rightBarButtonItem  = right;
+    }
+    
     if (isOn) {
         _weatherView.hidden = NO;
         [_weatherView updateWeather];
