@@ -47,21 +47,23 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
+      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
+//	[self scanAnimation];
 }
 
 -(void)timerScan:(NSTimer*)timer {
-    if (i > 4) {
-        [timer invalidate];
-        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-        autoVC.massage = self.massage;
-        [self.navigationController pushViewController:autoVC animated:YES];
-    } else {
-        _scanLight.frame = frame;
-        [self scanAnimation];
-        i++;
-    }
+	[self scanAnimation];
+//    if (i > 4) {
+//        [timer invalidate];
+//        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+//        autoVC.massage = self.massage;
+//        [self.navigationController pushViewController:autoVC animated:YES];
+//    } else {
+//        _scanLight.frame = frame;
+//        [self scanAnimation];
+//        i++;
+//    }
 }
 
 #pragma mark - 扫描动画
@@ -79,11 +81,20 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
-		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-		AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-		autoVC.massage = self.massage;
-		[self.navigationController pushViewController:autoVC animated:YES];
+	
+	NSLog(@"体型检测标记 : %zd", 	rtMassageChairStatus.figureCheckFlag);
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairMassaging) {
+//		[RTBleConnector shareManager].delegate = nil;  // 停止接收回调
+		
+		if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
+			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+			AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+			autoVC.massage = self.massage;
+			[self.navigationController pushViewController:autoVC animated:YES];
+		}
+	} else if (rtMassageChairStatus.deviceStatus == RtMassageChairStandby) {
+		
 	}
 }
 

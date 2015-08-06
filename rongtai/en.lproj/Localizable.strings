@@ -69,6 +69,8 @@
 "重新连接" = "reconnect";
 "未连接设备" = "Bluetooth disconnect, please reconnect!";
 "设备连接断开" = "Bluetooth disconnect, reconnecting...";
+"定时" = "Timing";
+"复位中" = "Resetting...";
 
 
 

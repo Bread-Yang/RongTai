@@ -7,8 +7,7 @@
 //
 
 #import "BasicViewController.h"
-
-#import "CustomIOSAlertView.h"
+#import "MainViewController.h"
 
 @interface BasicViewController () <CustomIOSAlertViewDelegate> {
 	
@@ -32,6 +31,9 @@
     [self.view addSubview:bg];
     [self.view sendSubviewToBack:bg];
 	
+	self.resettingDialog = [[CustomIOSAlertView alloc] init];
+	self.resettingDialog.isReconnectDialog = YES;
+	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"复位中", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -39,37 +41,18 @@
 		bleConnector = [RTBleConnector shareManager];
 		bleConnector.delegate = self;
 		
-		if (!bleConnector.currentConnectedPeripheral) {
-			reconnectDialog = [[CustomIOSAlertView alloc] init];
-			reconnectDialog.isReconnectDialog = YES;
-			
-			reconnectDialog.reconnectTipsString = NSLocalizedString(@"未连接设备", nil);
-			[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"重新连接", nil), nil]];
-			
-			__weak UIViewController *weakSelf = self;
-			[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-				UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
-    			UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
-    			[weakSelf.navigationController pushViewController:viewController animated:YES];
-				
-				[alertView close];
-			}];
-			
-			[reconnectDialog show];
-		} else {
-			reconnectDialog = [[CustomIOSAlertView alloc] init];
-			reconnectDialog.isReconnectDialog = YES;
-			reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
-			[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
-			
-			__weak RTBleConnector *weakPointer = bleConnector;
-			[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-				if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
-					[weakPointer.reconnectTimer invalidate];
-				}
-				[alertView close];
-			}];
-		}
+		reconnectDialog = [[CustomIOSAlertView alloc] init];
+		reconnectDialog.isReconnectDialog = YES;
+		reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
+		[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
+		
+		__weak RTBleConnector *weakPointer = bleConnector;
+		[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+			if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
+				[weakPointer.reconnectTimer invalidate];
+			}
+			[alertView close];
+		}];
 	}
 }
 
@@ -82,6 +65,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)backToMainViewController {
+	for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+		UIViewController *temp = self.navigationController.viewControllers[i];
+		if ([temp isKindOfClass:[MainViewController class]]) {
+//			NSLog(@"当前的index : %zd", i);
+			[self.navigationController popToViewController:temp animated:YES];
+		}
+	}
 }
 
 /*

@@ -8,7 +8,176 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, RTMassageChairDeviceStatus) {
+	
+	/** 
+	 *	待机状态, 第七位中 : workingStatus == 0
+	 */
+	RtMassageChairStandby,
+	
+	/** 
+	 *	按摩椅复位, 第七位中 : workingStatus == 1
+	 */
+	RtMassageChairResetting,
+	
+	/** 
+	 *	按摩椅复位,按摩椅点亮主屏，等待用户操作, 第七位 : workingStatus == 2
+	 */
+	RtMassageChairWaiting,
+	
+	/** 
+	 *	正常运行模式：此时手控器需要显示时间，按摩手法，或按摩程序等信息, 第七位 : workingStatus == 3
+	 */
+	RtMassageChairMassaging,
+	
+	/** 
+	 *	数据存储
+	 */
+	RtMassageChairDataStore,
+	
+	/** 
+	 *	严重的故障模式
+	 */
+	RtMassageChairError
+	
+};
+
+typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
+	
+	/**
+	 *	自动按摩程序, 地址13位 : massageProgram < 7
+	 */
+	RtMassageChairAutoProgram,
+	
+	/**
+	 *	手动按摩程序, 地址13位 : massageProgram == 7
+	 */
+	RtMassageChairManualProgram,
+	
+	/**
+	 *	网络按摩程序, 地址13位 : massageProgram > 7
+	 */
+	RtMassageChairNetworkProgram
+	
+};
+
+typedef NS_ENUM(NSInteger, RTMassageChairMassageTechnique) {
+	
+	/**
+	 *	按摩手法 : 停止(stop), 地址1位 : massageTechniqueFlag == 0
+	 */
+	RTMassageChairMassageTechniqueStop,
+	
+	/**
+	 *	按摩手法 : 揉捏(knead), 地址1位 : massageTechniqueFlag == 1
+	 */
+	RTMassageChairMassageTechniqueKnead,
+	
+	/**
+	 *	按摩手法 : 敲击(knock), 地址1位 : massageTechniqueFlag == 2
+	 */
+	RTMassageChairMassageTechniqueKnock,
+	
+	/**
+	 *	按摩手法 : 揉敲同步(sync), 地址1位 : massageTechniqueFlag == 3
+	 */
+	RTMassageChairMassageTechniqueSync,
+	
+	/**
+	 *	按摩手法 : 叩击(tapping), 地址1位 : massageTechniqueFlag == 4
+	 */
+	RTMassageChairMassageTechniqueTapping,
+	
+	/**
+	 *	按摩手法 : 指压(shiatsu), 地址1位 : massageTechniqueFlag == 5
+	 */
+	RTMassageChairMassageTechniqueShiatsu,
+	
+	/**
+	 *	按摩手法 : 韵律按摩(rhythm), 地址1位 : massageTechniqueFlag == 6
+	 */
+	RTMassageChairMassageTechniqueRhythm,
+	
+	/**
+	 *	按摩手法 : 搓背(back rub), 地址1位 : massageTechniqueFlag == 7
+	 */
+	RTMassageChairMassageTechniqueBackRub,
+	
+};
+
+typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
+	
+	/**
+	 *	气囊程序 : 无
+	 */
+	RTMassageChairAirBagProgramNone,
+	
+	/**
+	 *	气囊程序 : 全身, 地址12位 : FullBodyAirBagProgram == 1
+	 */
+	RTMassageChairAirBagProgramFullBody,
+	
+	/**
+	 *	气囊程序 : 臂肩, 地址12位 : armAndShoulderAirBagProgram == 1
+	 */
+	RTMassageChairAirBagProgramArmAndShoulder,
+	
+	/**
+	 *	气囊程序 : 背腰, 地址12位 : backAndWaistAirBagProgram == 1
+	 */
+	RTMassageChairAirBagProgramBackAndWaist,
+	
+	/**
+	 *	气囊程序 : 臀部, 地址12位 : buttockAirBagProgram == 1
+	 */
+	RTMassageChairAirBagProgramButtock,
+	
+	/**
+	 *	气囊程序 : 腿足, 地址12位 : legAndFootAirBagProgram == 1
+	 */
+	RTMassageChairAirBagProgramLegAndFeet,
+	
+};
+
 @interface RTMassageChairStatus : NSObject
+
+#pragma mark - 按摩界面状态显示用到的字段
+
+/**
+ *	按摩椅运行状态
+ */
+@property (nonatomic, assign) RTMassageChairDeviceStatus deviceStatus;
+
+/**
+ *	按摩椅按摩程序类型
+ */
+@property (nonatomic, assign) RTMassageChairProgramType programType;
+
+/**
+ *	按摩椅按摩手法
+ */
+@property (nonatomic, assign) RTMassageChairMassageTechnique massageTechnique;
+
+/**
+ *	按摩椅气囊程序
+ */
+@property (nonatomic, assign) RTMassageChairAirBagProgram airBagProgram;
+
+/**
+ *	按摩椅剩余运行时间, 地址 5 : remainingTimeLow7Bit + remainingTimeHigh5Bit * 128
+ */
+@property (nonatomic, assign) NSInteger remainingTime;
+
+/**
+ *	按摩椅是否正在加热, 地址 2 : heatingSwitchFlag == 1(正在加热)
+ */
+@property (nonatomic, assign) BOOL isHeating;
+
+/**
+ *	脚部滚轮是否打开, 地址 2 : rollerSwitchFlag == 1(打开)
+ */
+@property (nonatomic, assign) BOOL isRollerOn;
+
 
 #pragma mark - 地址 1 按摩椅程序运行状态和按摩手法
 
@@ -44,7 +213,7 @@
  06：韵律按摩
  07：搓背
  */
-@property (nonatomic, assign) NSInteger massageTechnique;
+@property (nonatomic, assign) NSInteger massageTechniqueFlag;
 
 /**
  按摩椅运行状态
@@ -325,31 +494,31 @@
  腿脚气囊程序
  当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
  */
-@property (nonatomic, assign) NSInteger feetAirBagProgram;
+@property (nonatomic, assign) NSInteger legAndFootAirBagProgram;
 
 /**
  背腰气囊程序
  当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
  */
-@property (nonatomic, assign) NSInteger waistAirBagProgram;
+@property (nonatomic, assign) NSInteger backAndWaistAirBagProgram;
 
 /**
  臂肩气囊程序
  当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
  */
-@property (nonatomic, assign) NSInteger shoulderAirBagProgram;
+@property (nonatomic, assign) NSInteger armAndShoulderAirBagProgram;
 
 /**
  坐垫气囊程序
  当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
  */
-@property (nonatomic, assign) NSInteger cushionAirBagProgram;
+@property (nonatomic, assign) NSInteger buttockAirBagProgram;
 
 /**
  全身气囊程序
  当选择全身气囊程序时，后面的部位气囊程序无效恒为0，当选择部位气囊程序时依据按摩椅主控制器的命令可以单选也可以多选。
  */
-@property (nonatomic, assign) NSInteger bodyAirBagProgram;
+@property (nonatomic, assign) NSInteger FullBodyAirBagProgram;
 
 #pragma mark - 地址13 滚轮方向和自动按摩程序
 
@@ -363,7 +532,7 @@
 @property (nonatomic, assign) NSInteger rollerDirection;
 
 /**
- bit 2, bit 3, bit 4, bit 5 : 自动按摩程序
+ bit 2, bit 3, bit 4, bit 5 : 按摩程序
  00：无
  01：疲劳恢复
  02：舒适按摩
@@ -377,7 +546,7 @@
  0A：全身气压
  0B：3D 按摩
  */
-@property (nonatomic, assign) NSInteger autoMassageProgram;
+@property (nonatomic, assign) NSInteger massageProgram;
 
 #pragma mark - 地址14 3D机芯状态（非3D机型无此字节）
 

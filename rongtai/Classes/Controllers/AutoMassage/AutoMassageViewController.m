@@ -17,7 +17,7 @@
 #import "RTCommand.h"
 #import "RTBleConnector.h"
 
-@interface AutoMassageViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate>
+@interface AutoMassageViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate, RTBleConnectorDelegate>
 {
     WLPanAlertView* _panAlertView;
     UIImageView* _arrow;
@@ -240,6 +240,7 @@
 -(void)rightItemClicked:(id)sender
 {
 	NSLog(@"rightItemClicked");
+	[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
 }
 
 
@@ -264,6 +265,7 @@
 }
 
 #pragma mark - panAlertView代理
+
 -(void)wlPanAlertViewDidPan:(WLPanAlertView *)panAlertView ByDirection:(BOOL)isDown
 {
     _bgCircle.image = [UIImage imageNamed:@"button_set_bg2"];
@@ -316,5 +318,23 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - RTBleConnectorDelegate
+
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairResetting) {
+		[self.resettingDialog show];
+	} else {
+		[self.resettingDialog close];
+	}
+	
+	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
+	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
+	_timeSet.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStandby) {
+		[self backToMainViewController];
+	}
+}
 
 @end

@@ -19,7 +19,7 @@
 //        self.itemSize = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
 		
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);  // 此处为上方和下方各缩进200个point。由于cell的size已经定义了为200×200，因此屏幕上在缩进后就只有一排item的空间了
+        self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
         self.minimumLineSpacing = 50.0;		// 这个定义了每个item在水平方向上的最小间距
     }
     return self;
