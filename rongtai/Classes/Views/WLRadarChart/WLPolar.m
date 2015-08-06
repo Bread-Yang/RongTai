@@ -144,22 +144,35 @@
     }
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-//    NSLog(@"触摸开始");
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+	NSLog(@"pointInside:");
+	for (int i = 0; i<_points.count; i++) {
+		NSValue* v = _points[i];
+		CGPoint p = [v CGPointValue];
+		BOOL xIn = ABS(p.x - point.x)<=30;
+		BOOL yIn = ABS(p.y - point.y)<=30;
+		if (xIn&&yIn) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"触摸开始");
 //    [super touchesBegan:touches withEvent:event];
 //    NSLog(@"Center Point:%@",NSStringFromCGPoint(_centerPoint));
     if ([self.delegate respondsToSelector:@selector(WLPolarWillStartTouch:)]) {
         [self.delegate WLPolarWillStartTouch:self];
     }
-    UITouch* touch = [touches anyObject];
+    UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
-    for (int i = 0; i<_points.count; i++) {
-        NSValue* v = _points[i];
+    for (int i = 0; i < _points.count; i++) {
+        NSValue *v = _points[i];
         CGPoint p = [v CGPointValue];
-        BOOL xIn = ABS(p.x - point.x)<=10;
-        BOOL yIn = ABS(p.y - point.y)<=10;
-        if (xIn&&yIn) {
+        BOOL xIn = ABS(p.x - point.x) <= 10;
+        BOOL yIn = ABS(p.y - point.y) <= 10;
+        if (xIn && yIn) {
             _isTouchInPoint = YES;
             _touchPointIndex = i;
             _startPoint = p;
@@ -171,13 +184,11 @@
             p2.y = y;
             _touchLine = lineFunction(_centerPoint, p2);
             
-            _Line2.x = -1/_touchLine.x;
-            if (_Line2.x>CGFLOAT_MAX||_Line2.x<-CGFLOAT_MAX) {
+            _Line2.x = -1 / _touchLine.x;
+            if (_Line2.x > CGFLOAT_MAX || _Line2.x < -CGFLOAT_MAX) {
                 _Line2.y = p2.x;
-            }
-            else
-            {
-                _Line2.y = p2.y - _Line2.x*p2.x;
+            } else {
+                _Line2.y = p2.y - _Line2.x * p2.x;
             }
             [self setNeedsDisplay];
             break;
@@ -185,39 +196,35 @@
     }
 }
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 //    NSLog(@"触摸移动");
 //    [super touchesMoved:touches withEvent:event];
     if (_isTouchInPoint) {
-        UITouch* touch = [touches anyObject];
+        UITouch *touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
         BOOL isIn  = YES;
         float angle = _touchPointIndex * _radPerV;
         float sinA = ABS(sin(angle));
         float range;
-        if (sinA<0.01) {
+		
+        if (sinA < 0.01) {
             range = 22;
-        }
-        else
-        {
-            range = 22/sinA;
+        } else {
+            range = 22 / sinA;
         }
         isIn = inLineRange(_endPoint, _touchLine, range);
         
         angle  = M_PI_2 - angle;
         sinA = ABS(sin(angle));
-        if (sinA<0.01) {
-            range = _r/2;
-        }
-        else
-        {
-            range = (_r/2)/sinA;
+        if (sinA < 0.01) {
+            range = _r / 2;
+        } else {
+            range = (_r / 2) / sinA;
         }
         isIn = isIn && inLineRange(_endPoint, _Line2, range);
        
         if (isIn) {
-            float newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2)+pow((_endPoint.y - _centerPoint.y), 2));
+            float newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2) + pow((_endPoint.y - _centerPoint.y), 2));
             NSValue* v = _points[_touchPointIndex];
             CGPoint p = [v CGPointValue];
             CGFloat angle = _touchPointIndex * _radPerV;
@@ -229,7 +236,7 @@
             p.y = y;
             [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
             newR = sqrt(pow((p.x - _centerPoint.x), 2)+pow((p.y - _centerPoint.y), 2));
-            float newNum = (newR/_r)*(_maxValue - _minValue)+_minValue;
+            float newNum = (newR/_r)*(_maxValue - _minValue) + _minValue;
             [_values setObject:[NSNumber numberWithFloat:newNum] atIndexedSubscript:_touchPointIndex];
             [self setNeedsDisplay];
         }
@@ -241,9 +248,10 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    NSLog(@"触摸结束");
+    NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
     NSLog(@"Points:%@",_points);
+	NSLog(@"_dataSeries : %@", _dataSeries);
     if (_isTouchInPoint) {
         _dataSeries = [NSArray arrayWithArray:_values];
     }
