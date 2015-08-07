@@ -187,10 +187,10 @@
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
 //    NSLog(@"tabBar:%ld",item.tag);
-	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-		[reconnectDialog show];
-		return;
-	}
+//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+//		[reconnectDialog show];
+//		return;
+//	}
 	if (item.tag == 0) {
 		[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
 	} else if (item.tag == 1) {
