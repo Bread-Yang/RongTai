@@ -20,13 +20,12 @@
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
 
-@interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate> {
+@interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate, MemberRequestDelegate> {
     UICollectionView* _collectView;
     CGFloat _matgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
     AFNetworkReachabilityManager* _reachability;
-    BOOL _isTimeOut;
     MBProgressHUD* _loading;
     MemberRequest* _mr;
 }
@@ -81,6 +80,8 @@
     
     //
     _mr = [MemberRequest new];
+    _mr.overTime = 30;
+    _mr.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -91,17 +92,13 @@
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
-        _isTimeOut = YES;
         _loading.labelText = @"读取中...";
         [_loading show:YES];
         
         NSLog(@"请求成员");
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSMutableArray* arr = [NSMutableArray new];
-        
-        [self performSelector:@selector(requestTimeout:) withObject:_mr afterDelay:30]; //30请求超时
         [_mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
-            _isTimeOut = NO;
             for (NSDictionary* dic in members) {
                 Member* m = [Member updateMemberDB:dic];
                 [arr addObject:m];
@@ -112,7 +109,6 @@
 
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
-            _isTimeOut = NO;
             _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
             [_collectView reloadData];
             [_loading hide:YES];
@@ -126,14 +122,11 @@
     }
 }
 
-#pragma mark - 请求超时
--(void)requestTimeout:(MemberRequest*)request
+#pragma mark - MemberRequest代理
+-(void)requestTimeOut:(MemberRequest *)request
 {
-    if (_isTimeOut) {
-        [_loading hide:YES];
-        [request cancelRequest];
-        [self showProgressHUDByString:@"请求超时，请检测网络"];
-    }
+    [_loading hide:YES];
+    [self showProgressHUDByString:@"请求超时，请检测网络"];
 }
 
 #pragma mark - 返回

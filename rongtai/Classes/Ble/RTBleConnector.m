@@ -14,6 +14,12 @@ static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
 
+//===== wl:Xmodem
+static Byte const BYTE_Download = 0X01;
+static Byte const BYTE_Delete = 0X02;
+//=====
+
+
 //FFF1  == read write
 #define kCharacterRW(periphralName) [NSString stringWithFormat:@"RW_%@",periphralName]
 
@@ -879,4 +885,60 @@ static Byte const BYTE_Tail = 0xf1;
 			break;
 	}
 }
+
+//=======  wl:Xmodem
+#pragma mark - WL:Xmodem
+
+#pragma mark  根据要下载或者删除的网络程序id来启动主板
+-(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way
+{
+    if (self.isConnectedDevice) {
+        
+        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairResetting) { // 复位状态下不发送指令
+            return;
+        }
+        
+        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStandby) {
+            // 先发开机指令,过一秒再发模式指令
+            
+            // 先开机
+            [self sendControlMode:H10_KEY_POWER_SWITCH];
+            
+            //延迟启动主板读写程序
+            
+        } else {
+            //启动主板读写程序
+            
+        }
+    }
+    
+}
+
+
+#pragma mark 根据nAppId和way生成data
+-(NSData*)dataWithID:(NSInteger)nAppId Way:(Byte)way
+{
+    NSMutableData* data;
+    return data;
+}
+
+
+
+#pragma mark - PUBLIC
+#pragma mark  开始下载
+-(void)startDownload:(NSInteger)nAppId
+{
+    [self startMainboardOI:nAppId Way:BYTE_Download];
+}
+
+#pragma mark  开始删除
+-(void)startDelete:(NSInteger)nAppId
+{
+    [self startMainboardOI:nAppId Way:BYTE_Delete];
+}
+
+
+
+//=======
+
 @end
