@@ -51,7 +51,6 @@
 		3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D5E901C1B26C43E00B03107 /* Localizable.strings */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
-		3D65E45D1B78AD100027A120 /* RTBleConnector+XModem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65E45C1B78AD100027A120 /* RTBleConnector+XModem.m */; };
 		3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */; };
 		3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */; };
 		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
@@ -300,8 +299,6 @@
 		3D65A4841B25792800B7B411 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		3D65A4861B25841800B7B411 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		3D65A4871B25841800B7B411 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		3D65E45B1B78AD100027A120 /* RTBleConnector+XModem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTBleConnector+XModem.h"; sourceTree = "<group>"; };
-		3D65E45C1B78AD100027A120 /* RTBleConnector+XModem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RTBleConnector+XModem.m"; sourceTree = "<group>"; };
 		3D76E2911B4BE4DD004B83E7 /* WLLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLLineChart.h; sourceTree = "<group>"; };
 		3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLLineChart.m; sourceTree = "<group>"; };
 		3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLXAxis.h; sourceTree = "<group>"; };
@@ -1442,8 +1439,6 @@
 				DF9C7CE61B147A36005617DA /* RongTai.h */,
 				DF9C7CE71B147A36005617DA /* RTBleConnector.h */,
 				DF9C7CE81B147A36005617DA /* RTBleConnector.m */,
-				3D65E45B1B78AD100027A120 /* RTBleConnector+XModem.h */,
-				3D65E45C1B78AD100027A120 /* RTBleConnector+XModem.m */,
 				DF9C7CE91B147A36005617DA /* RTCommand.h */,
 				DF9C7CEA1B147A36005617DA /* RTMassageChairStatus.h */,
 				DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */,
@@ -1781,7 +1776,6 @@
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
 				561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */,
 				3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */,
-				3D65E45D1B78AD100027A120 /* RTBleConnector+XModem.m in Sources */,
 				56E9E4E21B5907E600F01ECB /* NAPickerView.m in Sources */,
 				3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,

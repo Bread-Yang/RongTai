@@ -84,4 +84,14 @@ static BOOL isBleTurnOn;
 #pragma mark - Control Command
 
 - (void)sendControlMode:(NSInteger)mode;
+
+#pragma mark - WL:Xmodem
+-(void)startDownload:(NSInteger)nAppId;
+
+-(void)endCodeMode;
+
+
+
+
+
 @end

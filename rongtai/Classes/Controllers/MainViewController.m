@@ -274,8 +274,10 @@
 			break;
 		}
 		case 1:		// 工作减压
+            
 			break;
 		case 2: 	// 运动恢复
+            
 			break;
 		case 3:		// 消除疲劳
 			break;
