@@ -18,4 +18,12 @@
 
 - (void)backToMainViewController;
 
+- (void)jumpToAutoMassageViewConroller;
+
+- (void)jumpToScanViewConroller;
+
+- (void)jumpToManualMassageViewConroller;
+
+- (void)jumpToFinishMassageViewConroller;
+
 @end

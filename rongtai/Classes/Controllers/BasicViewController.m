@@ -8,6 +8,10 @@
 
 #import "BasicViewController.h"
 #import "MainViewController.h"
+#import "AutoMassageViewController.h"
+#import "ScanViewController.h"
+#import "ManualViewController.h"
+#import "FinishMassageViewController.h"
 
 @interface BasicViewController () <CustomIOSAlertViewDelegate> {
 	
@@ -68,13 +72,95 @@
 }
 
 - (void)backToMainViewController {
+	[RTBleConnector shareManager].delegate = nil;
+	
 	for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
 		UIViewController *temp = self.navigationController.viewControllers[i];
 		if ([temp isKindOfClass:[MainViewController class]]) {
-//			NSLog(@"当前的index : %zd", i);
 			[self.navigationController popToViewController:temp animated:YES];
+			return;
 		}
 	}
+}
+
+- (void)jumpToAutoMassageViewConroller {
+	// 按摩椅处在正在按摩的状态下才给跳转
+	if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		[RTBleConnector shareManager].delegate = nil;
+		
+		for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+			UIViewController *temp = self.navigationController.viewControllers[i];
+			if ([temp isKindOfClass:[AutoMassageViewController class]]) {
+				[self.navigationController popToViewController:temp animated:YES];
+				return;
+			}
+		}
+		
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+		[self.navigationController pushViewController:autoVC animated:YES];
+		
+	}
+}
+
+- (void)jumpToScanViewConroller {
+	// 按摩椅处在正在按摩的状态下才给跳转
+	if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		[RTBleConnector shareManager].delegate = nil;
+		
+		for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+			UIViewController *temp = self.navigationController.viewControllers[i];
+			if ([temp isKindOfClass:[ScanViewController class]]) {
+				[self.navigationController popToViewController:temp animated:YES];
+				return;
+			}
+		}
+		
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+		
+		[self.navigationController pushViewController:scan animated:YES];
+		
+	}
+}
+
+- (void)jumpToManualMassageViewConroller {
+	// 按摩椅处在正在按摩的状态下才给跳转
+	if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		[RTBleConnector shareManager].delegate = nil;
+		
+		for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+			UIViewController *temp = self.navigationController.viewControllers[i];
+			if ([temp isKindOfClass:[ManualViewController class]]) {
+				[self.navigationController popToViewController:temp animated:YES];
+				return;
+			}
+		}
+		
+		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
+		
+		[self.navigationController pushViewController:mVC animated:YES];
+	}
+}
+
+- (void)jumpToFinishMassageViewConroller {
+	[RTBleConnector shareManager].delegate = nil;
+	
+	for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+		UIViewController *temp = self.navigationController.viewControllers[i];
+		if ([temp isKindOfClass:[FinishMassageViewController class]]) {
+			[self.navigationController popToViewController:temp animated:YES];
+			return;
+		}
+	}
+	
+	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+	FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+	[self.navigationController pushViewController:finishViewController animated:YES];
 }
 
 /*
@@ -107,6 +193,7 @@
 - (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral {
 	// show reconnect dialog
 	
+	[_resettingDialog close];
 	[reconnectDialog show];
 }
 

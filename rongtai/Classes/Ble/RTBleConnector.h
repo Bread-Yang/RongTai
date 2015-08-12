@@ -10,6 +10,7 @@
 #import "JRBluetoothManager.h"
 #import "RongTai.h"
 #import "RTMassageChairStatus.h"
+#import "RTNetworkProgramStatus.h"
 
 static NSString *const RTBle_Periperal     = @"RTPeriperal";
 static NSString *const RTBle_BroadcastData = @"RTBroadcastData";
@@ -43,7 +44,21 @@ static BOOL isBleTurnOn;
 
 - (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral;
 
+/**
+ *	处于"按摩模式"下(返回的NSData.length == 17),按摩椅返回的状态(用于更新App按摩界面)
+ */
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus;
+
+/**
+ *	处于"按摩模式"下(返回的NSData.length == 11),返回按摩椅网络程序的状态(更新按摩程序列表)
+ */
+- (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus;
+
+/**
+ *	处于"编程模式"下,按摩椅返回的状态(用于App"程序下载"功能)
+ */
+- (void)didUpdateStatusInProgramMode:(NSData *)rawData;
+
 @end
 
 #pragma mark - RTBleConnector
@@ -61,6 +76,8 @@ static BOOL isBleTurnOn;
 @property (nonatomic, strong) NSTimer *reconnectTimer;
 
 @property (nonatomic, strong) RTMassageChairStatus *rtMassageChairStatus;
+
+@property (nonatomic, strong) RTNetworkProgramStatus *rtNetworkProgramStatus;
 
 @property (nonatomic, retain) CBPeripheral *currentConnectedPeripheral;
 
@@ -81,17 +98,22 @@ static BOOL isBleTurnOn;
 /*======================================================
  业务命令
  /======================================================*/
+
 #pragma mark - Control Command
 
 - (void)sendControlMode:(NSInteger)mode;
+
+- (void)sendControlByBytes:(NSData *)data;
+
+- (NSData *)controlInstallMassage:(NSInteger)massageId;
+
+- (NSData *)deleteMassage:(NSInteger)massageId;
+
+- (NSData *)exitEditMode;
 
 #pragma mark - WL:Xmodem
 -(void)startDownload:(NSInteger)nAppId;
 
 -(void)endCodeMode;
-
-
-
-
 
 @end

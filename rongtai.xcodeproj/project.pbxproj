@@ -175,6 +175,11 @@
 		568C3BB41B60D13D0092A431 /* AppIntrouceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C3BB31B60D13D0092A431 /* AppIntrouceView.m */; };
 		568C3BBA1B60D1C40092A431 /* LineCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 568C3BB91B60D1C40092A431 /* LineCollectionView.m */; };
 		56906AD31B560B3100E37FAB /* BaoSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */; };
+		569360201B799900001B9BF5 /* ReadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5693601F1B799900001B9BF5 /* ReadFile.m */; };
+		569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */; };
+		569360271B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */; };
+		569360291B79E910001B9BF5 /* 003.bin in Resources */ = {isa = PBXBuildFile; fileRef = 569360281B79E910001B9BF5 /* 003.bin */; };
+		5693602C1B7A049B001B9BF5 /* RTNetworkProgramStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
 		56C349471B15A927007C8B3F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349461B15A927007C8B3F /* CoreTelephony.framework */; };
@@ -188,7 +193,6 @@
 		56C349591B170D9E007C8B3F /* MusicPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C349581B170D9E007C8B3F /* MusicPickerViewController.m */; };
 		56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C3495E1B17199D007C8B3F /* MediaPlayer.framework */; };
 		56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */; };
-		56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688F1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m */; };
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
 		56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
@@ -200,6 +204,7 @@
 		56E9E4E01B5907E600F01ECB /* NALabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4DB1B5907E600F01ECB /* NALabelCell.m */; };
 		56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4DD1B5907E600F01ECB /* NAPickerCell.m */; };
 		56E9E4E21B5907E600F01ECB /* NAPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4DF1B5907E600F01ECB /* NAPickerView.m */; };
+		56F2DA3D1B7455B400C8086D /* UIView+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F2DA3C1B7455B400C8086D /* UIView+RT.m */; };
 		A2993692B75CBACAF5B83686 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6451AA21F7E52CA86CBED01E /* libPods.a */; };
 		B9753791FF9087817B7084C4 /* libPods-rongtai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EB319425DAD68EACB31C14B /* libPods-rongtai.a */; };
 		DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */; };
@@ -525,6 +530,15 @@
 		568EC5631B40EB960036AF9E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		56906AD11B560B3100E37FAB /* BaoSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaoSegmentedControl.h; path = BaoSegmentedControl/BaoSegmentedControl.h; sourceTree = "<group>"; };
 		56906AD21B560B3100E37FAB /* BaoSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaoSegmentedControl.m; path = BaoSegmentedControl/BaoSegmentedControl.m; sourceTree = "<group>"; };
+		5693601E1B799900001B9BF5 /* ReadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadFile.h; sourceTree = "<group>"; };
+		5693601F1B799900001B9BF5 /* ReadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadFile.m; sourceTree = "<group>"; };
+		569360221B79E30F001B9BF5 /* ProgramDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadViewController.h; sourceTree = "<group>"; };
+		569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadViewController.m; sourceTree = "<group>"; };
+		569360251B79E33C001B9BF5 /* ProgramDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadTableViewCell.h; sourceTree = "<group>"; };
+		569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadTableViewCell.m; sourceTree = "<group>"; };
+		569360281B79E910001B9BF5 /* 003.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 003.bin; sourceTree = "<group>"; };
+		5693602A1B7A049B001B9BF5 /* RTNetworkProgramStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNetworkProgramStatus.h; sourceTree = "<group>"; };
+		5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNetworkProgramStatus.m; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		56C349441B15A699007C8B3F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56C349461B15A927007C8B3F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -540,8 +554,6 @@
 		56C3495E1B17199D007C8B3F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		56C6688B1B2D590600CDC72B /* ProductInstructionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductInstructionViewController.h; path = ProductInstruction/ProductInstructionViewController.h; sourceTree = "<group>"; };
 		56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductInstructionViewController.m; path = ProductInstruction/ProductInstructionViewController.m; sourceTree = "<group>"; };
-		56C6688E1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadTableViewController.h; sourceTree = "<group>"; };
-		56C6688F1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadTableViewController.m; sourceTree = "<group>"; };
 		56C668951B2E848200CDC72B /* BuyRTProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyRTProductTableViewController.h; path = BuyRTProduct/BuyRTProductTableViewController.h; sourceTree = "<group>"; };
 		56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyRTProductTableViewController.m; path = BuyRTProduct/BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		56C668981B2EAC5700CDC72B /* ManualMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualMassageViewController.h; sourceTree = "<group>"; };
@@ -564,6 +576,8 @@
 		56E9E4DD1B5907E600F01ECB /* NAPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAPickerCell.m; sourceTree = "<group>"; };
 		56E9E4DE1B5907E600F01ECB /* NAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAPickerView.h; sourceTree = "<group>"; };
 		56E9E4DF1B5907E600F01ECB /* NAPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAPickerView.m; sourceTree = "<group>"; };
+		56F2DA3B1B7455B400C8086D /* UIView+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RT.h"; sourceTree = "<group>"; };
+		56F2DA3C1B7455B400C8086D /* UIView+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RT.m"; sourceTree = "<group>"; };
 		6451AA21F7E52CA86CBED01E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB319425DAD68EACB31C14B /* libPods-rongtai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rongtai.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D795F6A8BAE2B12ACCBD3F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -868,6 +882,7 @@
 		3D783D301B12FD0300A893D9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				569360281B79E910001B9BF5 /* 003.bin */,
 				3D783D3D1B12FD0300A893D9 /* Images.xcassets */,
 				3D783D311B12FD0300A893D9 /* Info.plist */,
 				3D783D321B12FD0300A893D9 /* main.m */,
@@ -932,6 +947,8 @@
 				3D92FDC81B5763BB0021E727 /* UIView+AddBorder.m */,
 				3DE5D6711B5F6E6600489C62 /* UIBarButtonItem+goBack.h */,
 				3DE5D6721B5F6E6600489C62 /* UIBarButtonItem+goBack.m */,
+				56F2DA3B1B7455B400C8086D /* UIView+RT.h */,
+				56F2DA3C1B7455B400C8086D /* UIView+RT.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1343,6 +1360,17 @@
 			name = BaoSegmentedControl;
 			sourceTree = "<group>";
 		};
+		569360211B79E30F001B9BF5 /* ProgramDownload */ = {
+			isa = PBXGroup;
+			children = (
+				569360221B79E30F001B9BF5 /* ProgramDownloadViewController.h */,
+				569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */,
+				569360251B79E33C001B9BF5 /* ProgramDownloadTableViewCell.h */,
+				569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */,
+			);
+			path = ProgramDownload;
+			sourceTree = "<group>";
+		};
 		56C6688A1B2D58B300CDC72B /* ProductInstruction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1432,6 +1460,8 @@
 		DF9C7CE11B147A36005617DA /* Ble */ = {
 			isa = PBXGroup;
 			children = (
+				5693601E1B799900001B9BF5 /* ReadFile.h */,
+				5693601F1B799900001B9BF5 /* ReadFile.m */,
 				DF9C7CE21B147A36005617DA /* JRBluetoothManager.h */,
 				DF9C7CE31B147A36005617DA /* JRBluetoothManager.m */,
 				DF9C7CE41B147A36005617DA /* JRCBPeripheral.h */,
@@ -1448,6 +1478,8 @@
 				3D783D381B12FD0300A893D9 /* RTBleListViewController.m */,
 				563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */,
 				563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */,
+				5693602A1B7A049B001B9BF5 /* RTNetworkProgramStatus.h */,
+				5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */,
 			);
 			path = Ble;
 			sourceTree = "<group>";
@@ -1455,6 +1487,7 @@
 		DF9C7CF01B147A36005617DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				569360211B79E30F001B9BF5 /* ProgramDownload */,
 				3D3E712C1B5F3D9700C47CD0 /* AutoMassage */,
 				3D92FE171B590A1D0021E727 /* ManualMassage */,
 				56C668941B2E845900CDC72B /* BuyRTProduct */,
@@ -1473,8 +1506,6 @@
 				56C349581B170D9E007C8B3F /* MusicPickerViewController.m */,
 				3D65A4861B25841800B7B411 /* MainViewController.h */,
 				3D65A4871B25841800B7B411 /* MainViewController.m */,
-				56C6688E1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.h */,
-				56C6688F1B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m */,
 				56C668981B2EAC5700CDC72B /* ManualMassageViewController.h */,
 				56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */,
 				3DE3FFAA1B4F7C79003F8AF7 /* BasicViewController.h */,
@@ -1692,6 +1723,7 @@
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				565E71951B5E547200E51C1C /* ShareSDKLocalizable.strings in Resources */,
 				565E71991B5E547200E51C1C /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				569360291B79E910001B9BF5 /* 003.bin in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
@@ -1748,6 +1780,7 @@
 				3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */,
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
+				569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */,
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
 				3DF3042E1B38FE2500DD51D3 /* NSManagedObject+MagicalFinders.m in Sources */,
@@ -1772,6 +1805,7 @@
 				3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */,
 				3DF304331B38FE2500DD51D3 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */,
+				569360271B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m in Sources */,
 				3D0258FC1B1D525E006C9179 /* UIWindow+Hierarchy.m in Sources */,
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
 				561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */,
@@ -1803,9 +1837,9 @@
 				3D0709A61B6B6A0E0010920D /* Member.m in Sources */,
 				563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
+				569360201B799900001B9BF5 /* ReadFile.m in Sources */,
 				56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */,
 				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
-				56C668901B2D5BFC00CDC72B /* ProgramDownloadTableViewController.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
@@ -1833,6 +1867,7 @@
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
+				56F2DA3D1B7455B400C8086D /* UIView+RT.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				568C3BBA1B60D1C40092A431 /* LineCollectionView.m in Sources */,
 				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,
@@ -1875,6 +1910,7 @@
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
 				56E9E4E01B5907E600F01ECB /* NALabelCell.m in Sources */,
 				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
+				5693602C1B7A049B001B9BF5 /* RTNetworkProgramStatus.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

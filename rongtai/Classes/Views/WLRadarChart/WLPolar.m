@@ -277,11 +277,11 @@
 {
     NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
-    NSLog(@"Points:%@",_points);
-	NSLog(@"_dataSeries : %@", _dataSeries);
     if (_isTouchInPoint) {
         _dataSeries = [NSArray arrayWithArray:_values];
     }
+	NSLog(@"Points:%@",_points);
+	NSLog(@"_dataSeries : %@", _dataSeries);
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
     if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:)]) {

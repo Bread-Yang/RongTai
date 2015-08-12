@@ -1010,6 +1010,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
+				"zh-Hans",
 			);
 			mainGroup = 4DD22D350B7876FA190F8B35;
 			productRefGroup = 1E1D1B1E91433794E50EF37C /* Products */;
@@ -1245,7 +1247,25 @@
 			baseConfigurationReference = 9E7DF2EB314AEF625DF117D3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Connection",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Core",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/GooglePlusSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/Pinterest.embeddedframework",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/QQConnectSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/RenRenSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/UI",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/SinaWeiboSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/TencentWeiboSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/WeChatSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/YiXinSDK",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1407,7 +1427,25 @@
 			baseConfigurationReference = C478A0E24D2DA00FDE4AC037 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Connection",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Core",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/GooglePlusSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/Pinterest.embeddedframework",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/QQConnectSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/RenRenSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/UI",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/SinaWeiboSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/TencentWeiboSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/WeChatSDK",
+					"$(PROJECT_DIR)/rongtai/ShareSDK/Extend/YiXinSDK",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";

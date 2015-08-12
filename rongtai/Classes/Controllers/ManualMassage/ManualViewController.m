@@ -231,11 +231,13 @@
     _footWheelOn = NO;
     UITapGestureRecognizer* fTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(footWheelTap)];
     [_footWheel addGestureRecognizer:fTap];
-    
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     //页面消失时，要把WLPanAlertView移除掉
@@ -643,11 +645,27 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairResetting) {
+	NSLog(@"didUpdateMassageChairStatus");
+	
+	// 以下是界面跳转
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//		if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+//			[self jumpToScanViewConroller];
+//		}
+		
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
+			[self jumpToAutoMassageViewConroller];
+		}
+	}
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
 		[self.resettingDialog show];
 	} else {
 		[self.resettingDialog close];
 	}
+	
+	// 以下是界面状态更新
 	
 	// 背部加热
 	if (rtMassageChairStatus.isHeating) {
@@ -669,15 +687,22 @@
 	
 	// 按摩模式
 	if (rtMassageChairStatus.massageTechniqueFlag != 0) {
-		_skillsPreferenceLabel.text = _skillsPreferenceArray[rtMassageChairStatus.massageTechniqueFlag - 1];
-//		[_skillsPreferencePickerView setIndex:rtMassageChairStatus.massageTechniqueFlag - 1];
+		if (rtMassageChairStatus.massageTechniqueFlag == 7) {
+			_skillsPreferenceLabel.text = @"搓背";
+		} else {
+			_skillsPreferenceLabel.text = _skillsPreferenceArray[rtMassageChairStatus.massageTechniqueFlag - 1];
+		}
 	}
 	
-	// 按摩时间
-	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
-	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
-	_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
-	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		// 按摩剩余工作时间
+		NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
+		NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
+		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
+	} else {
+		// 预设时间
+		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", rtMassageChairStatus.preprogrammedTime, 0];
+	}
 	// 气囊程序
 	[_humanView checkButtonByAirBagProgram:rtMassageChairStatus.airBagProgram];
 	
