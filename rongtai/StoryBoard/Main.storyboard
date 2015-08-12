@@ -218,9 +218,6 @@
                                 <state key="normal" title="更多程序下载">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="hot-A2-vuP" kind="show" id="QTB-st-xFS"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVQ-9d-xAT">
                                 <rect key="frame" x="191" y="518" width="60" height="30"/>
@@ -463,99 +460,126 @@
             </objects>
             <point key="canvasLocation" x="517" y="1898"/>
         </scene>
-        <!--程序下载-->
-        <scene sceneID="1Xi-up-x3Y">
+        <!--Program Download View Controller-->
+        <scene sceneID="cpC-7X-mRW">
             <objects>
-                <tableViewController storyboardIdentifier="ProgramDownloadVC" title="程序下载" id="hot-A2-vuP" userLabel="程序下载" customClass="ProgramDownloadTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="FsD-NX-5ev">
+                <viewController storyboardIdentifier="ProgramDownloadVC" id="z8I-0J-oSY" customClass="ProgramDownloadViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hVi-QF-BnD"/>
+                        <viewControllerLayoutGuide type="bottom" id="VjJ-G8-80o"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pIp-8f-SGG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramDownloadUItableViewCell" id="5ZE-Qn-36B">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ZE-Qn-36B" id="akK-1e-mcb">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQ6-ZP-Ahh">
-                                            <rect key="frame" x="0.0" y="8" width="600" height="58.5"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d9M-kN-pUJ">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProgramDownloadTableViewCell" id="N1I-K8-ogu" customClass="ProgramDownloadTableViewCell">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N1I-K8-ogu" id="XYc-jW-Swg">
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mode_1" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-G3-CIp">
-                                                    <rect key="frame" x="30" y="13" width="42" height="42"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GR6-3G-jAg">
+                                                    <rect key="frame" x="0.0" y="8" width="600" height="58.5"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mode_1" translatesAutoresizingMaskIntoConstraints="NO" id="6vE-bT-jxd" userLabel="programImageView">
+                                                            <rect key="frame" x="30" y="13" width="42" height="42"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="42" id="38c-wf-EJ2"/>
+                                                                <constraint firstAttribute="width" constant="50" id="6D4-qY-ffx"/>
+                                                                <constraint firstAttribute="height" constant="50" id="EcL-5o-LEo"/>
+                                                                <constraint firstAttribute="width" constant="42" id="klN-aE-zEY"/>
+                                                            </constraints>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="6D4-qY-ffx"/>
+                                                                    <exclude reference="EcL-5o-LEo"/>
+                                                                </mask>
+                                                            </variation>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2e-eh-dpu">
+                                                            <rect key="frame" x="87" y="13" width="76" height="23"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Va2-TA-yp2">
+                                                            <rect key="frame" x="87" y="35" width="295" height="12"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Cb-Lq-8dx">
+                                                            <rect key="frame" x="540" y="3.5" width="60" height="60"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="60" id="SF9-lh-T9x"/>
+                                                                <constraint firstAttribute="width" constant="60" id="qIw-qy-BAv"/>
+                                                            </constraints>
+                                                            <state key="normal" image="program_icon_download">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="Ivq-E6-87R"/>
-                                                        <constraint firstAttribute="width" constant="50" id="V2V-ZI-faw"/>
-                                                        <constraint firstAttribute="height" constant="42" id="m9J-Nz-rbq"/>
-                                                        <constraint firstAttribute="width" constant="42" id="ry8-pu-i1H"/>
+                                                        <constraint firstAttribute="trailing" secondItem="0Cb-Lq-8dx" secondAttribute="trailing" id="19p-oA-uHW"/>
+                                                        <constraint firstItem="Va2-TA-yp2" firstAttribute="leading" secondItem="z2e-eh-dpu" secondAttribute="leading" id="I0G-0k-VBP"/>
+                                                        <constraint firstItem="6vE-bT-jxd" firstAttribute="top" secondItem="z2e-eh-dpu" secondAttribute="top" id="M0l-Mg-dvJ"/>
+                                                        <constraint firstItem="6vE-bT-jxd" firstAttribute="leading" secondItem="GR6-3G-jAg" secondAttribute="leading" constant="30" id="NPC-8e-Kxa"/>
+                                                        <constraint firstItem="Va2-TA-yp2" firstAttribute="top" secondItem="z2e-eh-dpu" secondAttribute="bottom" id="cAj-3Q-JkT"/>
+                                                        <constraint firstAttribute="centerY" secondItem="6vE-bT-jxd" secondAttribute="centerY" id="cBK-by-KBP"/>
+                                                        <constraint firstItem="6vE-bT-jxd" firstAttribute="top" secondItem="GR6-3G-jAg" secondAttribute="top" constant="22" id="kEG-17-027"/>
+                                                        <constraint firstAttribute="centerY" secondItem="0Cb-Lq-8dx" secondAttribute="centerY" constant="-4.75" id="mhu-kC-46D"/>
+                                                        <constraint firstItem="0Cb-Lq-8dx" firstAttribute="leading" secondItem="Va2-TA-yp2" secondAttribute="trailing" constant="129" id="pTd-V5-V9B"/>
+                                                        <constraint firstItem="z2e-eh-dpu" firstAttribute="leading" secondItem="6vE-bT-jxd" secondAttribute="trailing" constant="15" id="uik-h0-Wnu"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="Ivq-E6-87R"/>
-                                                            <exclude reference="V2V-ZI-faw"/>
+                                                            <exclude reference="kEG-17-027"/>
+                                                            <exclude reference="pTd-V5-V9B"/>
                                                         </mask>
                                                     </variation>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="韩式按摩" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5L-eW-ygC">
-                                                    <rect key="frame" x="87" y="13" width="76" height="23"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pl-aq-XS5">
-                                                    <rect key="frame" x="87" y="35" width="295" height="12"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="program_icon_download" translatesAutoresizingMaskIntoConstraints="NO" id="hnB-zJ-qfQ">
-                                                    <rect key="frame" x="561" y="24" width="19" height="19"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="19" id="Ibb-IF-kot"/>
-                                                        <constraint firstAttribute="height" constant="19" id="pIC-YH-9aB"/>
-                                                    </constraints>
-                                                </imageView>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="hnB-zJ-qfQ" secondAttribute="centerY" id="3Ig-gr-Jaf"/>
-                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="c5L-eW-ygC" secondAttribute="top" id="8nO-WM-1XG"/>
-                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="top" secondItem="tQ6-ZP-Ahh" secondAttribute="top" constant="22" id="BrZ-OC-LMQ"/>
-                                                <constraint firstItem="c5L-eW-ygC" firstAttribute="leading" secondItem="s0A-G3-CIp" secondAttribute="trailing" constant="15" id="EtV-pJ-A3E"/>
-                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="leading" secondItem="c5L-eW-ygC" secondAttribute="leading" id="Idh-oA-0wH"/>
-                                                <constraint firstItem="hnB-zJ-qfQ" firstAttribute="leading" secondItem="1Pl-aq-XS5" secondAttribute="trailing" constant="25" id="OSz-93-KlG"/>
-                                                <constraint firstItem="1Pl-aq-XS5" firstAttribute="top" secondItem="c5L-eW-ygC" secondAttribute="bottom" id="RJ9-NO-CPf"/>
-                                                <constraint firstAttribute="trailing" secondItem="hnB-zJ-qfQ" secondAttribute="trailing" constant="20" id="U3t-VH-RYf"/>
-                                                <constraint firstItem="s0A-G3-CIp" firstAttribute="leading" secondItem="tQ6-ZP-Ahh" secondAttribute="leading" constant="30" id="ZEu-no-9XR"/>
-                                                <constraint firstAttribute="centerY" secondItem="s0A-G3-CIp" secondAttribute="centerY" id="oGC-QJ-XNc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="GR6-3G-jAg" secondAttribute="bottom" id="KeB-O4-eTa"/>
+                                                <constraint firstItem="GR6-3G-jAg" firstAttribute="top" secondItem="XYc-jW-Swg" secondAttribute="topMargin" id="hCW-Ry-kM2"/>
+                                                <constraint firstItem="GR6-3G-jAg" firstAttribute="leading" secondItem="XYc-jW-Swg" secondAttribute="leadingMargin" constant="-8" id="htq-E9-ueL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GR6-3G-jAg" secondAttribute="trailing" constant="-8" id="ohe-2V-OGH"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="BrZ-OC-LMQ"/>
-                                                </mask>
-                                            </variation>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="leading" secondItem="akK-1e-mcb" secondAttribute="leadingMargin" constant="-8" id="72A-Da-cbo"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="tQ6-ZP-Ahh" secondAttribute="bottom" id="Dah-xc-fMR"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="tQ6-ZP-Ahh" secondAttribute="trailing" constant="-8" id="kEd-LL-qIS"/>
-                                        <constraint firstItem="tQ6-ZP-Ahh" firstAttribute="top" secondItem="akK-1e-mcb" secondAttribute="topMargin" id="l3A-Rd-ldZ"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="hot-A2-vuP" id="c1T-Hg-EKG"/>
-                            <outlet property="delegate" destination="hot-A2-vuP" id="olr-oV-fTZ"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yKx-qE-0uz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="downloadOrDeleteButton" destination="0Cb-Lq-8dx" id="0bK-LL-Ykr"/>
+                                            <outlet property="programDescriptionLabel" destination="Va2-TA-yp2" id="41V-7a-jp2"/>
+                                            <outlet property="programImageView" destination="6vE-bT-jxd" id="Tlz-w5-gan"/>
+                                            <outlet property="programNameLabel" destination="z2e-eh-dpu" id="uvd-6N-5mB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="z8I-0J-oSY" id="pg5-mC-ReE"/>
+                                    <outlet property="delegate" destination="z8I-0J-oSY" id="ONs-kU-oVk"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VjJ-G8-80o" firstAttribute="top" secondItem="d9M-kN-pUJ" secondAttribute="bottom" id="8Gq-zc-lWa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="d9M-kN-pUJ" secondAttribute="trailing" constant="-16" id="H8H-Va-Pgt"/>
+                            <constraint firstItem="d9M-kN-pUJ" firstAttribute="leading" secondItem="pIp-8f-SGG" secondAttribute="leadingMargin" constant="-16" id="OyT-Eu-q6s"/>
+                            <constraint firstItem="d9M-kN-pUJ" firstAttribute="top" secondItem="hVi-QF-BnD" secondAttribute="bottom" id="Xr5-kZ-iUx"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dFr-Z6-lUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1172" y="1898"/>
+            <point key="canvasLocation" x="1924" y="1907"/>
         </scene>
         <!--Slide Navigation Controller-->
         <scene sceneID="BIT-1Q-SLy">

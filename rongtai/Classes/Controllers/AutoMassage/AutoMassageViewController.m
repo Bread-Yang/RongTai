@@ -1,4 +1,4 @@
-//
+//		[_skillsPreferencePickerView setIndex:rtMassageChairStatus.massageTechniqueFlag - 1];//
 //  AutoMassageViewController.m
 //  rongtai
 //
@@ -16,6 +16,8 @@
 #import "RongTaiConstant.h"
 #import "RTCommand.h"
 #import "RTBleConnector.h"
+#import "FinishMassageViewController.h"
+#import "ScanViewController.h"
 
 @interface AutoMassageViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate, RTBleConnectorDelegate>
 {
@@ -41,7 +43,6 @@
     [super viewDidLoad];
 	self.isListenBluetoothStatus = YES;
 	
-    self.title  = self.massage.name;
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem =item;
     
@@ -322,19 +323,38 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairResetting) {
-		[self.resettingDialog show];
-	} else {
-		[self.resettingDialog close];
+	
+	// 以下是界面跳转
+	
+	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+		[self jumpToScanViewConroller];
 	}
 	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
+		[self jumpToFinishMassageViewConroller];
+	}
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
+		[self backToMainViewController];
+	}
+	
+	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
+		[self jumpToManualMassageViewConroller];
+	}
+	
+	// 以下是界面状态更新
+	
+	// 标题
+	self.title  = self.massage.name;
+	
+	// 定时时间
 	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
 	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
 	_timeSet.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStandby) {
-		[self backToMainViewController];
-	}
+	// 用时时间
+	_usingTime.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
+	[_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
 }
 
 @end

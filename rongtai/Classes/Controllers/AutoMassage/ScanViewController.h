@@ -13,6 +13,6 @@
 
 @interface ScanViewController : BasicViewController
 
-@property(nonatomic, strong)Massage *massage;
+@property(nonatomic, strong) Massage *massage;
 
 @end

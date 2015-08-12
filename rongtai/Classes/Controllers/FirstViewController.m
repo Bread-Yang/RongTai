@@ -16,6 +16,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "Member.h"
 #import "LoginRequest.h"
+#import "UIView+RT.h"
 
 @interface FirstViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
@@ -32,8 +33,57 @@
 id segment[3];
 UISegmentedControl *segmentedControl;
 
+//获取Documents目录
+- (NSString *)dirDoc {
+	//[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSLog(@"app_home_doc: %@",documentsDirectory);
+	return documentsDirectory;
+}
+
+//获取Library目录
+- (void)dirLib {
+	//[NSHomeDirectory() stringByAppendingPathComponent:@"Library"];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+	NSString *libraryDirectory = [paths objectAtIndex:0];
+	NSLog(@"app_home_lib: %@",libraryDirectory);
+}
+
+//获取Cache目录
+- (void)dirCache {
+	NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *cachePath = [cacPath objectAtIndex:0];
+	NSLog(@"app_home_lib_cache: %@",cachePath);
+}
+
+//获取Tmp目录
+- (void)dirTmp {
+	//[NSHomeDirectory() stringByAppendingPathComponent:@"tmp"];
+	NSString *tmpDirectory = NSTemporaryDirectory();
+	NSLog(@"app_home_tmp: %@",tmpDirectory);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	NSLog(@"取模运算 : %i", (7 % 4));
+	
+	NSString *dirHome = NSHomeDirectory();
+	NSLog(@"app_home: %@", dirHome);
+	
+	NSString *documentsPath =[self dirDoc];
+	NSString *testDirectory = [documentsPath stringByAppendingPathComponent:@"test"];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSString *testPath = [testDirectory stringByAppendingPathComponent:@"test.txt"];
+	
+	NSString *content=@"hahahahahaha";
+//	BOOL res=[content writeToFile:testPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+	BOOL res=[fileManager createFileAtPath:testPath contents:nil attributes:nil];
+	if (res) {
+		NSLog(@"文件写入成功");
+	}else
+		NSLog(@"文件写入失败");
 	
 	self.loginRequest = [LoginRequest new];
 	self.loginRequest.delegate = self;
@@ -195,12 +245,13 @@ UISegmentedControl *segmentedControl;
 
 
 - (IBAction)shareSDKAction:(id)sender {
-     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"Intro_Screen_Four" ofType:@"png"];
-    
+	
+	 UIImage *shareimage =  [UIView getImageFromView:self.view];
+      
     //1、构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:@"可以连接蓝牙的太空按摩椅"
                                        defaultContent:@"在IOS上分享"
-                                                image:[ShareSDK imageWithPath:imagePath]
+                                                image:[ShareSDK pngImageWithImage:shareimage]
                                                 title:@"荣泰按摩椅分享"
                                                   url:@"http://www.rongtai-china.com/product"
                                           description:@"这是一条演示信息"

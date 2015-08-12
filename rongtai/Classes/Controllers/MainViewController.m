@@ -12,7 +12,7 @@
 #import "WLWeatherView.h"
 #import "MenuViewController.h"
 #import "CustomProcedureViewController.h"
-#import "ProgramDownloadTableViewController.h"
+#import "ProgramDownloadViewController.h"
 #import "ManualViewController.h"
 #import "BasicTableViewCell.h"
 #import "RongTaiConstant.h"
@@ -30,6 +30,7 @@
     UITableView* _table;
     NSMutableArray* _massageArr;
     MassageRequest* _massageRequest;
+	NSArray *_modeNameArray;
     WLWeatherView* _weatherView;
     UITabBar* _menuBar;
 	CustomIOSAlertView *reconnectDialog;
@@ -40,6 +41,8 @@
 @end
 
 @implementation MainViewController
+
+#pragma mark - Life Cycle
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -106,10 +109,15 @@
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 //    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
     _massageArr = [NSMutableArray new];
-	NSArray *modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
-    for (int i = 0; i < 8; i++) {
+	_modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
+					   NSLocalizedString(@"舒展活络", nil),
+					   NSLocalizedString(@"休憩促眠", nil),
+					   NSLocalizedString(@"工作减压", nil),
+					   NSLocalizedString(@"肩颈重点", nil),
+					   NSLocalizedString(@"腰椎舒缓", nil),];
+    for (int i = 0; i < [_modeNameArray count]; i++) {
         Massage* m = [Massage new];
-        m.name = modeNameArray[i];
+        m.name = _modeNameArray[i];
         m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
         m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
         [_massageArr addObject:m];
@@ -144,16 +152,21 @@
 	}];
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     slideNav.enableSwipeGesture = NO;
 }
 
+
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
+}
+
 #pragma mark - UIGestureRecognizer代理
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
+
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (self.navigationController.viewControllers.count == _vcCount) {
         return NO;
     }
@@ -164,8 +177,8 @@
 }
 
 #pragma mark - menuController代理
--(void)switchChange:(BOOL)isOn
-{
+
+-(void)switchChange:(BOOL)isOn {
     if (!_weatherView) {
         _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
         UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_weatherView];
@@ -184,8 +197,8 @@
 }
 
 #pragma mark - tabBar代理
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
+
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
 //    NSLog(@"tabBar:%ld",item.tag);
 	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
 		[reconnectDialog show];
@@ -206,20 +219,18 @@
     } else if (item.tag == 3) {
         //下载
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ProgramDownloadTableViewController* pVC = (ProgramDownloadTableViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
+        ProgramDownloadViewController* pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
         [self.navigationController pushViewController:pVC animated:YES];
     }
 }
 
 #pragma mark - tableView代理
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _massageArr.count;
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_modeNameArray count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BasicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
@@ -249,8 +260,7 @@
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
 }
 
@@ -261,30 +271,41 @@
 	}
 	
 	switch (indexPath.row) {
-			// 舒展活络
-		case 0: {
-//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH]; // first turn on the chair
+			
+		// 运动恢复
+		case 0:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
+			break;
 			
-//			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//			ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
-//			scan.massage = _massageArr[indexPath.row];
-//			[self.navigationController pushViewController:scan animated:YES];
+		// 舒展活络
+		case 1:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_1];
+			break;
 			
+		// 休憩促眠
+		case 2:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_2];
 			break;
-		}
-		case 1:		// 工作减压
+			
+		// 工作减压
+		case 3:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_3];
 			break;
-		case 2: 	// 运动恢复
+			
+		// 肩颈重点
+		case 4:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
 			break;
-		case 3:		// 消除疲劳
+			
+		// 腰椎舒缓
+		case 5:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
 			break;
 	}
 }
 
 #pragma mark - massageRequest代理
--(void)massageRequestMassageListFinish:(BOOL)success Result:(NSDictionary *)dic
-{
+-(void)massageRequestMassageListFinish:(BOOL)success Result:(NSDictionary *)dic {
     if (success) {
         NSArray* arr = [dic objectForKey:@"result"];
         NSLog(@"用户下载列表:%@",arr);
@@ -299,8 +320,7 @@
 }
 
 #pragma mark - 侧滑菜单代理
--(BOOL)slideNavigationControllerShouldDisplayLeftMenu
-{
+-(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
 }
 
@@ -311,8 +331,7 @@
 
 #pragma mark - NavigationController代理
 
--(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+-(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (viewController == self) {
         NSArray* items = _menuBar.items;
 //		 _menuBar.selectedItem = (UITabBarItem*)items[0];
@@ -332,34 +351,34 @@
 		 _menuBar.selectedItem = (UITabBarItem*)_menuBar.items[0];
 	}
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairMassaging) {
-		[RTBleConnector shareManager].delegate = nil;  // 停止接收回调
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
+		[self.resettingDialog show];
+	} else {
+		[self.resettingDialog close];
+	}
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 		
-			if (rtMassageChairStatus.programType == RtMassageChairAutoProgram) {  // 自动按摩
+			if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
 				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 					
-					UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-					ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
-					scan.massage = _massageArr[_table.indexPathForSelectedRow.row];
+					[self jumpToScanViewConroller];
 					
-					[self.navigationController pushViewController:scan animated:YES];
-				} else {
-					UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-					AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-					//		autoVC.massage = self.massage;
-					[self.navigationController pushViewController:autoVC animated:YES];
+				} else { // 自动按摩
+					
+					[self jumpToAutoMassageViewConroller];
+					
 				}
-			} else if (rtMassageChairStatus.programType == RtMassageChairManualProgram) {  // 手动按摩
-				UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-				ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
-				[self.navigationController pushViewController:mVC animated:YES];
+			} else if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 手动按摩
+				
+				[self jumpToManualMassageViewConroller];
+				
 			}
 	}
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didUpdateNetworkMassageStatus:(NSData *)rawData {
+	
 }
 
 /*

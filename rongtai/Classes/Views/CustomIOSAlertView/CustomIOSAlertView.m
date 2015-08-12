@@ -204,7 +204,7 @@ CGFloat buttonSpacerHeight = 0;
 }
 
 - (UIView *)createReconnectDialog {
-	if (containerView == NULL) {
+	if (containerView == nil) {
 		containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 150)];
 		if (self.reconnectTipsString) {
 			UILabel *reconnectTipsLabel = [[UILabel alloc] initWithFrame:containerView.frame];
@@ -220,7 +220,7 @@ CGFloat buttonSpacerHeight = 0;
 	// For the black background
 	[self setFrame:CGRectMake(0, 0, screenSize.width, screenSize.height)];
 	
-	if (buttonTitles != NULL && [buttonTitles count] > 0) {
+	if (buttonTitles && [buttonTitles count] > 0) {
 		buttonHeight       = kCustomIOSAlertViewDefaultButtonHeight;
 		buttonSpacerHeight = kCustomIOSAlertViewDefaultButtonSpacerHeight;
 		if (self.titleString) {

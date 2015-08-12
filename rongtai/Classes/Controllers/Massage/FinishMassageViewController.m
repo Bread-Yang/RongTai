@@ -5,15 +5,16 @@
 //  Created by William-zhang on 15/6/15.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
+#import <ShareSDK/ShareSDK.h>
 
 #import "FinishMassageViewController.h"
 #import "IQKeyboardManager.h"
 #import "RongTaiConstant.h"
 #import "CWStarRateView.h"
 #import "UILabel+WLAttributedString.h"
+#import "UIView+RT.h"
 
-@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate>
-{
+@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate> {
     __weak IBOutlet UILabel *_score;
     __weak IBOutlet UIView *_addStarView;
     __weak IBOutlet UILabel *_nameLabel;
@@ -98,15 +99,54 @@
 
 
 #pragma mark - 返回方法
--(void)goBack
-{
-    [self.navigationController popViewControllerAnimated:YES];
+-(void)goBack {
+	[self backToMainViewController];
 }
 
 #pragma mark - 分享
--(void)share
-{
-    
+-(void)share {
+	UIImage *shareimage =  [UIView getImageFromView:self.view];
+	
+	//1、构造分享内容
+	id<ISSContent> publishContent = [ShareSDK content:@"我刚刚使用荣泰按摩椅进行按摩,觉得很不错,推荐给你们"
+									   defaultContent:@"我刚刚使用荣泰按摩椅进行按摩,觉得很不错,推荐给你们"
+												image:[ShareSDK pngImageWithImage:shareimage]
+												title:@"荣泰按摩椅分享"
+												  url:@"http://www.rongtai-china.com/product"
+										  description:@"这是一条演示信息"
+											mediaType:SSPublishContentMediaTypeNews];
+	
+	id<ISSContainer> container = [ShareSDK container];
+	
+	//2、弹出分享菜单
+	[ShareSDK showShareActionSheet:container
+						 shareList:nil
+						   content:publishContent
+					 statusBarTips:YES
+					   authOptions:nil
+					  shareOptions:nil
+							result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+								
+								//可以根据回调提示用户。
+								if (state == SSResponseStateSuccess)
+								{
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功"
+																					message:nil
+																				   delegate:self
+																		  cancelButtonTitle:@"OK"
+																		  otherButtonTitles:nil, nil];
+									[alert show];
+								}
+								else if (state == SSResponseStateFail)
+								{
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+																					message:[NSString stringWithFormat:@"失败描述：%@",[error errorDescription]]
+																				   delegate:self
+																		  cancelButtonTitle:@"OK"
+																		  otherButtonTitles:nil, nil];
+									[alert show];
+								}
+							}];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface ProgramDownloadTableViewController : UITableViewController
+@interface ProgramDownloadViewController : BasicViewController
 
 @end

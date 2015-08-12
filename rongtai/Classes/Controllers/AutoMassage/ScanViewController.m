@@ -39,8 +39,7 @@
     // Do any additional setup after loading the view.
 }
 
--(void)goBack
-{
+-(void)goBack {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -48,10 +47,12 @@
 {
     [super viewDidAppear:animated];
       _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
+	[_t fire];
 //	[self scanAnimation];
 }
 
 -(void)timerScan:(NSTimer*)timer {
+	_scanLight.frame = frame;
 	[self scanAnimation];
 //    if (i > 4) {
 //        [timer invalidate];
@@ -82,19 +83,20 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	NSLog(@"体型检测标记 : %zd", 	rtMassageChairStatus.figureCheckFlag);
+	// 界面跳转
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairMassaging) {
-//		[RTBleConnector shareManager].delegate = nil;  // 停止接收回调
-		
-		if (rtMassageChairStatus.figureCheckFlag == 0 && rtMassageChairStatus.figureCheckResult == 1){	// 按摩程序(体型检测成功的前提下)
-			UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-			AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-			autoVC.massage = self.massage;
-			[self.navigationController pushViewController:autoVC animated:YES];
+	if (rtMassageChairStatus.figureCheckFlag == 0) {
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
+			[self jumpToAutoMassageViewConroller];
 		}
-	} else if (rtMassageChairStatus.deviceStatus == RtMassageChairStandby) {
 		
+		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
+			[self jumpToManualMassageViewConroller];
+		}
+	}
+	
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
+		[self backToMainViewController];
 	}
 }
 
