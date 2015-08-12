@@ -221,7 +221,7 @@ static Byte const BYTE_Tail = 0xf1;
 			NSInteger massageId_3 = networkStatusByte[4] * 16 + networkStatusByte[5];
 			NSInteger massageId_4 = networkStatusByte[6] * 16 + networkStatusByte[7];
 			
-			self.rtNetworkProgramStatus.networkProgramStatusArray = @{massageId_1, massageId_2, massageId_3, massageId_4};
+//			self.rtNetworkProgramStatus.networkProgramStatusArray = @{massageId_1, massageId_2, massageId_3, massageId_4};
 			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
 				
