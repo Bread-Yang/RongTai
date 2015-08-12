@@ -14,6 +14,14 @@ static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
 
+//===== wl:Xmodem
+static Byte const BYTE_Download = 0x01;
+static Byte const BYTE_Delete = 0x02;
+static Byte const BYTE_CodeMode = 0xA5;
+static Byte const BYTE_ExitCode = 0x82;
+//=====
+
+
 //FFF1  == read write
 #define kCharacterRW(periphralName) [NSString stringWithFormat:@"RW_%@",periphralName]
 
@@ -989,4 +997,90 @@ static Byte const BYTE_Tail = 0xf1;
 			break;
 	}
 }
+
+//=======  wl:Xmodem
+#pragma mark - WL:Xmodem
+
+#pragma mark  根据要下载或者删除的网络程序id来启动主板
+-(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way
+{
+    if (self.isConnectedDevice) {
+        
+        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) { // 复位状态下不发送指令
+            return;
+        }
+        
+        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {
+            // 先发开机指令,过一秒再发模式指令
+            
+            // 先开机
+            NSData *bodyData = [self dataWithFuc:H10_KEY_POWER_SWITCH];
+            NSData *sendData = [self fillDataHeadAndTail:bodyData];
+            [self sendDataToPeripheral:sendData];
+            
+            //延迟1.0秒后启动主板读写程序
+            NSData* data = [self dataWithState:BYTE_CodeMode ID:nAppId Way:way];
+            [self performSelector:@selector(sendDataToPeripheral:) withObject:data afterDelay:1.0f];
+            
+        } else {
+            //启动主板读写程序
+            NSData* data = [self dataWithState:BYTE_CodeMode ID:nAppId Way:way];
+            [self sendDataToPeripheral:data];
+        }
+    }
+    
+}
+
+
+#pragma mark 根据nAppId和way生成data
+-(NSData*)dataWithState:(Byte)state ID:(NSInteger)nAppId Way:(Byte)way
+{
+    Byte code = 0x10;
+    NSInteger idHigh7Bit;
+    NSInteger idLow7Bit;
+    
+    if (nAppId > 127) {
+        idHigh7Bit = nAppId - 127;
+        idLow7Bit = 127;
+    }
+    else
+    {
+        idHigh7Bit = 0;
+        idLow7Bit = nAppId;
+    }
+    NSInteger sumNum = (NSInteger)BYTE_Head+(NSInteger)state+(NSInteger)code+(NSInteger)way+idHigh7Bit+idLow7Bit;
+    NSInteger contraryNum = ~sumNum;
+    NSInteger checkNum = contraryNum & 0x7f;
+    Byte command[] = {BYTE_Head,state,code,way,idHigh7Bit,idLow7Bit,checkNum,BYTE_Tail};
+    NSData* data = [NSData dataWithBytes:&command length:8];
+    return data;
+}
+
+
+
+#pragma mark - PUBLIC
+#pragma mark  开始下载
+-(void)startDownload:(NSInteger)nAppId
+{
+    [self startMainboardOI:nAppId Way:BYTE_Download];
+}
+
+#pragma mark  开始删除
+-(void)startDelete:(NSInteger)nAppId
+{
+    [self startMainboardOI:nAppId Way:BYTE_Delete];
+}
+
+#pragma mark - 结束编程模式
+-(void)endCodeMode
+{
+    NSLog(@"结束编程模式");
+    NSData* data = [self dataWithState:BYTE_ExitCode ID:0 Way:BYTE_Download];
+    [self sendDataToPeripheral:data];
+}
+
+
+
+//=======
+
 @end

@@ -17,13 +17,14 @@
 #import "UIImage+ImageBlur.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface ChangeUserViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ChangeUserViewController ()<UITableViewDataSource, UITableViewDelegate, MemberRequestDelegate>
 {
     NSArray* _users;  //用户数据，数据从本地读取
     UITableView* _table;
     NSInteger _selectIndex;
     CGFloat _rowHeight;
     AFNetworkReachabilityManager* _reachability;
+    MBProgressHUD *_hud;
 }
 @end
 
@@ -44,6 +45,10 @@
     [self.view addSubview:_table];
 
     _selectIndex = 0;
+    
+    //
+    _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    _hud.labelText = @"读取中...";
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -53,14 +58,15 @@
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.labelText = @"读取中...";
-        [hud show:YES];
+       
+        [_hud show:YES];
         
         NSLog(@"请求成员");
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSMutableArray* arr = [NSMutableArray new];
         MemberRequest* mr = [MemberRequest new];
+        mr.overTime = 30;
+        mr.delegate = self;
         [mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
             for (NSDictionary* dic in members) {
                 Member* m = [Member updateMemberDB:dic];
@@ -68,13 +74,13 @@
             }
             _users = [NSArray arrayWithArray:arr];
             [_table reloadData];
-            [hud hide:YES];
+            [_hud hide:YES];
             
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
             _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
             [_table reloadData];
-            [hud hide:YES];
+            [_hud hide:YES];
         }];
     }
     else
@@ -83,6 +89,19 @@
         _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
         [_table reloadData];
     }
+}
+
+#pragma mark - MemberRequest
+-(void)requestTimeOut:(MemberRequest *)request
+{
+    [_hud hide:YES];
+    
+    MBProgressHUD *alert = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    alert.mode = MBProgressHUDModeText;
+    alert.labelText = @"请求超时";
+    alert.margin = 10.f;
+    alert.removeFromSuperViewOnHide = YES;
+    [alert hide:YES afterDelay:0.7];
 }
 
 #pragma mark - 返回

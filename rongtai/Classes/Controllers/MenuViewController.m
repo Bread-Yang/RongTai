@@ -96,7 +96,6 @@
     //菜单图标
     _menuIcons = @[@"menu_icon_user",@"menu_icon_member",@"menu_icon_data",@"menu_icon_plan",@"menu_icon_weather",@"menu_icon_message",@"menu_icon_help",@"menu_icon_shop"];
     
-    
     //菜单列表
     _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
     _menu.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

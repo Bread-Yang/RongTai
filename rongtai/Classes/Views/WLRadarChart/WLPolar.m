@@ -170,8 +170,8 @@
     for (int i = 0; i < _points.count; i++) {
         NSValue *v = _points[i];
         CGPoint p = [v CGPointValue];
-        BOOL xIn = ABS(p.x - point.x) <= 10;
-        BOOL yIn = ABS(p.y - point.y) <= 10;
+        BOOL xIn = ABS(p.x - point.x) <= 30;
+        BOOL yIn = ABS(p.y - point.y) <= 30;
         if (xIn && yIn) {
             _isTouchInPoint = YES;
             _touchPointIndex = i;
@@ -197,37 +197,57 @@
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-//    NSLog(@"触摸移动");
-//    [super touchesMoved:touches withEvent:event];
+    //    NSLog(@"触摸移动");
+    //    [super touchesMoved:touches withEvent:event];
     if (_isTouchInPoint) {
-        UITouch *touch = [touches anyObject];
+        UITouch* touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
         BOOL isIn  = YES;
+        BOOL isInRange = YES;
         float angle = _touchPointIndex * _radPerV;
         float sinA = ABS(sin(angle));
         float range;
-		
-        if (sinA < 0.01) {
-            range = 22;
-        } else {
-            range = 22 / sinA;
+        if (sinA<0.01) {
+            range = 30;
         }
+        else
+        {
+            range = 30/sinA;
+        }
+        
         isIn = inLineRange(_endPoint, _touchLine, range);
         
         angle  = M_PI_2 - angle;
         sinA = ABS(sin(angle));
-        if (sinA < 0.01) {
-            range = _r / 2;
-        } else {
-            range = (_r / 2) / sinA;
+        if (sinA<0.01) {
+            range = _r/2;
         }
-        isIn = isIn && inLineRange(_endPoint, _Line2, range);
-       
+        else
+        {
+            range = (_r/2)/sinA;
+        }
+        isInRange = isIn && inLineRange(_endPoint, _Line2, range);
+        
         if (isIn) {
-            float newR = sqrt(pow((_endPoint.x - _centerPoint.x), 2) + pow((_endPoint.y - _centerPoint.y), 2));
+            //            NSLog(@"在移动范围内");
+            float newR = distanceTwoPoint(_centerPoint, _endPoint);
+            CGFloat angle = _touchPointIndex * _radPerV;
+            if (!isInRange) {
+                //                NSLog(@"超出范围");
+                CGPoint p = CGPointMake(_centerPoint.x - _r * sin(angle), _centerPoint.x - _r * cos(angle));
+                float dist = distanceTwoPoint(_endPoint, p);
+                if (dist > newR) {
+                    newR = 0;
+                }
+                else
+                {
+                    newR = _r;
+                }
+                //                _isTouchInPoint = NO;
+            }
+            
             NSValue* v = _points[_touchPointIndex];
             CGPoint p = [v CGPointValue];
-            CGFloat angle = _touchPointIndex * _radPerV;
             int sinA = newR * sin(angle);
             int cosA = newR * cos(angle);
             float x = _centerPoint.x - sinA;
@@ -235,9 +255,14 @@
             p.x = x;
             p.y = y;
             [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
-            newR = sqrt(pow((p.x - _centerPoint.x), 2)+pow((p.y - _centerPoint.y), 2));
-            float newNum = (newR/_r)*(_maxValue - _minValue) + _minValue;
+            newR = distanceTwoPoint(p, _centerPoint);
+            float newNum = (newR/_r)*(_maxValue - _minValue)+_minValue;
             [_values setObject:[NSNumber numberWithFloat:newNum] atIndexedSubscript:_touchPointIndex];
+            [self setNeedsDisplay];
+        }
+        else
+        {
+            _isTouchInPoint = NO;
             [self setNeedsDisplay];
         }
     }
@@ -398,7 +423,7 @@
     }
 }
 
-#pragma mark - 计算函数
+#pragma mark - 点是否在给定的直线的给定范围内
 bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
 {
     CGFloat y;
@@ -411,11 +436,12 @@ bool inLineRange (CGPoint p,CGPoint line,CGFloat range)
         y = p.x*line.x+line.y;
         result = ABS(y - p.y) <= range;
     }
-//    printf("{\n line->k:%lf   b:%lf\n point->x:%lf   y:%lf\n",line.x,line.y,p.x,p.y);
-//    printf(" range:%lf\n InRange:%d\n}\n",range,result);
+    //    printf("{\n line->k:%lf   b:%lf\n point->x:%lf   y:%lf\n",line.x,line.y,p.x,p.y);
+    //    printf(" range:%lf\n InRange:%d\n}\n",range,result);
     return result;
 }
 
+#pragma mark - 根据两个点返回一条直线的函数
 CGPoint lineFunction(CGPoint p1,CGPoint p2)
 {
     CGPoint line = CGPointZero;
@@ -427,6 +453,12 @@ CGPoint lineFunction(CGPoint p1,CGPoint p2)
         line.y = p1.x;
     }
     return line;
+}
+
+#pragma mark - 两点间的距离
+float distanceTwoPoint(CGPoint p1,CGPoint p2)
+{
+    return sqrt(pow((p1.x - p2.x), 2)+pow((p1.y - p2.y), 2));
 }
 
 

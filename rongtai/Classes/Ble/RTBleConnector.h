@@ -111,4 +111,9 @@ static BOOL isBleTurnOn;
 
 - (NSData *)exitEditMode;
 
+#pragma mark - WL:Xmodem
+-(void)startDownload:(NSInteger)nAppId;
+
+-(void)endCodeMode;
+
 @end
