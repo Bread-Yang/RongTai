@@ -39,6 +39,7 @@
     CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
     CGPoint _Line2;
     NSMutableArray* _values;
+    NSArray* _canMove;
 }
 @end
 
@@ -96,6 +97,7 @@
     _touchLine = CGPointZero;
     _Line2 = CGPointZero;
     _FontColors = @[[UIColor colorWithRed:65/255.0 green:170/255.0 blue:196/255.0 alpha:1],[UIColor colorWithRed:128/255.0 green:199/255.0 blue:134/255.0 alpha:1],[UIColor colorWithRed:63/255.0 green:157/255.0 blue:244/255.0 alpha:1],[UIColor colorWithRed:245/255.0 green:122/255.0 blue:72/255.0 alpha:1],[UIColor colorWithRed:128/255.0 green:199/255.0 blue:134/255.0 alpha:1]];
+    //
 }
 
 #pragma mark - set方法

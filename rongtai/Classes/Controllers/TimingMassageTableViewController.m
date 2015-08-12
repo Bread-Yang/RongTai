@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    //添加背景
 	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
 	self.tableView.backgroundView = backgroundImageView;
@@ -31,6 +32,7 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 	
+    //导航栏右边的添加按钮
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -44,7 +46,7 @@
     //清空本地通知
     NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
 	
-    NSLog(@"本地通知数量:%d",number);
+    NSLog(@"本地通知数量:%ld",number);
     NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
 	
     [UIApplication sharedApplication].applicationIconBadgeNumber -= number;
@@ -55,7 +57,7 @@
     self.timingMassageArray = [[NSMutableArray alloc] init];
     NSArray *arr = [TimingPlan MR_findAll];
 	
-    NSLog(@"定时计划数量:%ud",arr.count);
+    NSLog(@"定时计划数量:%lud",arr.count);
 	
     for (int i = 0; i < arr.count; i++) {
         TimingPlan *item = arr[i];

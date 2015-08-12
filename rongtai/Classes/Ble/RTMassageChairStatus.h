@@ -576,4 +576,6 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
  */
 @property (nonatomic, assign) NSInteger _3dSkill;
 
+#pragma mark - 输出按摩椅状态
+-(void)printStatus;
 @end

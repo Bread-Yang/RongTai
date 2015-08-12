@@ -204,15 +204,11 @@ static Byte const BYTE_ExitCode = 0x82;
     
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
         if (data.length < 17) {
-            if (data.length == 8) {
-                NSLog(@"返回数据有8字节");
-            }
-            NSLog(@"主板返回数据有%d字节",data.length);
             return;
         }
         
         [self parseData:data];
-		
+        [self.rtMassageChairStatus printStatus];
 		if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
 			[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
 		}

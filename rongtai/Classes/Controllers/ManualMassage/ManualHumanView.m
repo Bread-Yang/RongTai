@@ -74,6 +74,9 @@
     _hipLabel = [self lineLabelByTag:2113 Name:_parts[3]];
     _hipLabel.labelType = LineRightLabel;
     _footLabel = [self lineLabelByTag:2114 Name:_parts[4]];
+    
+    //
+    _isSelected = NO;
 }
 
 #pragma mark - 调整UI位置
@@ -131,29 +134,30 @@
 #pragma mark - 按钮方法
 -(void)buttonClicked:(UIButton*)btn
 {
-//    for (int i = 0; i<_parts.count; i++) {
-//        UIButton* b = (UIButton*)[self viewWithTag:2100+i];
-//        LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
-//        if (b.tag == btn.tag) {
-//            [b setSelected:YES];
-//            l.isSelected = YES;
-//        }
-//        else
-//        {
-//            [b setSelected:NO];
-//            l.isSelected = NO;
-//        }
-//    }
-//    _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
-//    _partLabel.textColor = BLUE;
-//    NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
-//    
-//    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
-//    NSRange r = [string.string rangeOfString:@"："];
-//    r.location ++;
-//    r.length = string.string.length - r.location;
-//    [string setAttributes:dic range:r];
-//    _partLabel.attributedText = string;
+    _isSelected = YES;
+    for (int i = 0; i<_parts.count; i++) {
+        UIButton* b = (UIButton*)[self viewWithTag:2100+i];
+        LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
+        if (b.tag == btn.tag) {
+            [b setSelected:YES];
+            l.isSelected = YES;
+        }
+        else
+        {
+            [b setSelected:NO];
+            l.isSelected = NO;
+        }
+    }
+    _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+    _partLabel.textColor = BLUE;
+    NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
+    
+    NSDictionary* dic = [[NSDictionary alloc]initWithObjectsAndKeys:ORANGE,NSForegroundColorAttributeName, nil];
+    NSRange r = [string.string rangeOfString:@"："];
+    r.location ++;
+    r.length = string.string.length - r.location;
+    [string setAttributes:dic range:r];
+    _partLabel.attributedText = string;
 
 	switch (btn.tag) {
   		case 2100:

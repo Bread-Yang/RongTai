@@ -115,7 +115,7 @@
     _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
     _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
     _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
-    _polar.attributes = @[@"速度", @"宽度", @"气压", @"力度"];
+    _polar.attributes = @[@"机芯幅度", @"气囊强度",@"滚轮速度" , @"按摩力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
 	_scroll.delaysContentTouches = NO;
     [_scroll addSubview:_polar];
@@ -460,6 +460,7 @@
 {
     NSLog(@"滑动结束");
     _scroll.scrollEnabled = YES;
+    
 }
 
 
