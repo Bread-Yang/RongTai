@@ -215,6 +215,7 @@
 		}
 	}
 	if (btn) {
+        _isSelected = YES;
 		_partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
 		_partLabel.textColor = BLUE;
 		NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
@@ -226,6 +227,12 @@
 		[string setAttributes:dic range:r];
 		_partLabel.attributedText = string;
 	}
+    else
+    {
+        _isSelected = NO;
+        _partLabel.text = @"请选择需要的按摩部位";
+        _partLabel.textColor = ORANGE;
+    }
 }
 
 @end

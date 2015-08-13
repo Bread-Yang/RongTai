@@ -18,7 +18,7 @@
 
 -(void)WLPolarDidMove:(WLPolar*)polar;
 
--(void)WLPolarMoveFinished:(WLPolar*)polar;
+-(void)WLPolarMoveFinished:(WLPolar*)polar index:(NSUInteger)index;
 
 @end
 
@@ -123,5 +123,20 @@
  *  代理
  */
 @property(nonatomic, weak)id<WLPolarDelegate> delegate;
+
+/**
+ *  设置第n个点的值
+ */
+-(void)setValue:(float)value ByIndex:(NSUInteger)index;
+
+/**
+ *  设置第n个点是否可以拖动，若设置数据源，则所有点的拖动性都会被重置为可拖动
+ */
+-(void)setPoint:(NSUInteger)index ableMove:(BOOL)isAble;
+
+/**
+ *  获取第n个点是否可以移动，默认都是可以拖动的
+ */
+-(BOOL)pointAbleMove:(NSUInteger)index;
 
 @end

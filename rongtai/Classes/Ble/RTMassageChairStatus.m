@@ -15,7 +15,7 @@
     NSMutableDictionary* dic = [NSMutableDictionary new];
     [dic setValue:[NSNumber numberWithInteger:self.massageTechniqueFlag] forKey:@"按摩手法"];
     [dic setValue:[NSNumber numberWithInteger:self.airBagProgram] forKey:@"气囊部位"];
-    [dic setValue:[NSNumber numberWithInteger:self.kneadWidth] forKey:@"kneadWidth"];
+    [dic setValue:[NSNumber numberWithInteger:self.kneadWidthFlag] forKey:@"kneadWidth"];
     NSLog(@"按摩椅状态:%@",dic);
 }
 

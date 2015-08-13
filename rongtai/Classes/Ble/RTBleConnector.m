@@ -112,6 +112,9 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"蓝牙已经成功开启，稍后……";
 			isBleTurnOn = YES;
 			break;
+        case CBCentralManagerStateUnknown:
+            message = @"蓝牙发生未知错误，请重新打开……";
+            break;
 	}
 
 	NSLog(@"%@", message);
@@ -204,18 +207,44 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-	NSLog(@"data : %@", data);
+//	NSLog(@"data.length : %zd", data.length);
+//	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
-        if (data.length < 17) {
-            return;
-        }
-        
-        [self parseData:data];
-        [self.rtMassageChairStatus printStatus];
-		if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
-			[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
+		
+		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
+			[self parseData:data];
+//            [self.rtMassageChairStatus printStatus];
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
+				[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
+			}
+			
+		} else if (data.length == 11) {	// 等于11位 : 返回按摩椅网络程序状态
+//			
+//			NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
+//			
+//			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
+			
+//			Byte *networkStatusByte = (Byte *)[networkStatusData bytes];
+			
+//			NSInteger massageId_1 = networkStatusByte[0] * 16 + networkStatusByte[1];
+//			NSInteger massageId_2 = networkStatusByte[2] * 16 + networkStatusByte[3];
+//			NSInteger massageId_3 = networkStatusByte[4] * 16 + networkStatusByte[5];
+//			NSInteger massageId_4 = networkStatusByte[6] * 16 + networkStatusByte[7];
+			
+//			self.rtNetworkProgramStatus.networkProgramStatusArray = @{massageId_1, massageId_2, massageId_3, massageId_4};
+			
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
+				
+				[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
+			}
+			
+		} else {  // 不等于11位或者17位 : 编辑模式
+			
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateStatusInProgramMode:)]) {
+				[self.delegate didUpdateStatusInProgramMode:data];
+			}
+			
 		}
     }
 }
@@ -662,7 +691,7 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)parseByteOfAddress9:(Byte)addr {
 	
-	NSInteger i = addr;
+//	NSInteger i = addr;
 	
 //	NSLog(@"byte[9] : %zd", i);
 	
@@ -918,6 +947,13 @@ static Byte const BYTE_ExitCode = 0x82;
     _rtMassageChairStatus.nameFlag = (addr >> 2) & 1;
     
     /**
+     按摩椅运行状态
+     0：按摩椅处于待机,主电源关闭，省电模式
+     1：按摩椅处于非待机状态，此时手控器相应的图标点亮
+     */
+    _rtMassageChairStatus.runningStatusFlag = (addr >> 6) & 1;
+    
+    /**
      按摩手法
      00：停止
      01：揉捏
@@ -929,13 +965,6 @@ static Byte const BYTE_ExitCode = 0x82;
      07：搓背
      */
     _rtMassageChairStatus.massageTechniqueFlag = (addr >> 3) & 7;
-    
-    /**
-     按摩椅运行状态
-     0：按摩椅处于待机,主电源关闭，省电模式
-     1：按摩椅处于非待机状态，此时手控器相应的图标点亮
-     */
-    _rtMassageChairStatus.runningStatusFlag = (addr >> 6) & 1;
 	
 	switch (_rtMassageChairStatus.massageTechniqueFlag) {
   		case 0:
@@ -971,90 +1000,5 @@ static Byte const BYTE_ExitCode = 0x82;
 			break;
 	}
 }
-
-//=======  wl:Xmodem
-#pragma mark - WL:Xmodem
-
-#pragma mark  根据要下载或者删除的网络程序id来启动主板
--(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way
-{
-    if (self.isConnectedDevice) {
-        
-        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) { // 复位状态下不发送指令
-            return;
-        }
-        
-        if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {
-            // 先发开机指令,过一秒再发模式指令
-            
-            // 先开机
-            NSData *bodyData = [self dataWithFuc:H10_KEY_POWER_SWITCH];
-            NSData *sendData = [self fillDataHeadAndTail:bodyData];
-            [self sendDataToPeripheral:sendData];
-            
-            //延迟1.0秒后启动主板读写程序
-            NSData* data = [self dataWithState:BYTE_CodeMode ID:nAppId Way:way];
-            [self performSelector:@selector(sendDataToPeripheral:) withObject:data afterDelay:1.0f];
-            
-        } else {
-            //启动主板读写程序
-            NSData* data = [self dataWithState:BYTE_CodeMode ID:nAppId Way:way];
-            [self sendDataToPeripheral:data];
-        }
-    }
-    
-}
-
-
-#pragma mark 根据nAppId和way生成data
--(NSData*)dataWithState:(Byte)state ID:(NSInteger)nAppId Way:(Byte)way
-{
-    Byte code = 0x10;
-    NSInteger idHigh7Bit;
-    NSInteger idLow7Bit;
-    
-    if (nAppId > 127) {
-        idHigh7Bit = nAppId - 127;
-        idLow7Bit = 127;
-    }
-    else
-    {
-        idHigh7Bit = 0;
-        idLow7Bit = nAppId;
-    }
-    NSInteger sumNum = (NSInteger)BYTE_Head+(NSInteger)state+(NSInteger)code+(NSInteger)way+idHigh7Bit+idLow7Bit;
-    NSInteger contraryNum = ~sumNum;
-    NSInteger checkNum = contraryNum & 0x7f;
-    Byte command[] = {BYTE_Head,state,code,way,idHigh7Bit,idLow7Bit,checkNum,BYTE_Tail};
-    NSData* data = [NSData dataWithBytes:&command length:8];
-    return data;
-}
-
-
-
-#pragma mark - PUBLIC
-#pragma mark  开始下载
--(void)startDownload:(NSInteger)nAppId
-{
-    [self startMainboardOI:nAppId Way:BYTE_Download];
-}
-
-#pragma mark  开始删除
--(void)startDelete:(NSInteger)nAppId
-{
-    [self startMainboardOI:nAppId Way:BYTE_Delete];
-}
-
-#pragma mark - 结束编程模式
--(void)endCodeMode
-{
-    NSLog(@"结束编程模式");
-    NSData* data = [self dataWithState:BYTE_ExitCode ID:0 Way:BYTE_Download];
-    [self sendDataToPeripheral:data];
-}
-
-
-
-//=======
 
 @end

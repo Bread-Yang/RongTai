@@ -67,6 +67,9 @@
 	
     __weak IBOutlet UIView *_addScrollView;
     UIScrollView* _scroll;
+    
+    //
+    RTBleConnector* _bleConnector;
 
 }
 @end
@@ -76,7 +79,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-	self.isListenBluetoothStatus = NO;
+	self.isListenBluetoothStatus = YES;
 	
     self.title = NSLocalizedString(@"手动按摩", nil);
 	
@@ -104,11 +107,11 @@
     
     //创建 极线图
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(w, 0, w, h)];
-    _polar.dataSeries = @[@(120), @(87), @(60), @(78)];
+    _polar.dataSeries = @[@(6), @(6), @(6), @(6)];
     _polar.steps = 3;
     _polar.r = h*0.3;
-    _polar.minValue = 20;
-    _polar.maxValue = 120;
+    _polar.minValue = 0;
+    _polar.maxValue = 12;
     _polar.drawPoints = YES;
     _polar.fillArea = YES;
     _polar.delegate = self;
@@ -231,6 +234,10 @@
     _footWheelOn = NO;
     UITapGestureRecognizer* fTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(footWheelTap)];
     [_footWheel addGestureRecognizer:fTap];
+    
+    //
+    _bleConnector = [RTBleConnector shareManager];
+//    _bleConnector.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -239,7 +246,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+
     //页面消失时，要把WLPanAlertView移除掉
     [_panAlertView removeFromSuperview];
 }
@@ -247,7 +254,12 @@
 #pragma mark - 返回
 -(void)goBack
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    //退出手动按摩的时候，发送复位命令
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        NSLog(@"复位");
+        [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
+    }
+//    [self.navigationCo ntroller popViewControllerAnimated:YES];
 }
 
 #pragma mark - 技法偏好点击方法
@@ -266,22 +278,22 @@
 			
 			switch ([_skillsPreferencePickerView getHighlightIndex]) {
 				case 0:  // 揉捏
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_KNEAD];
+					[_bleConnector sendControlMode:H10_KEY_KNEAD];
 					break;
 				case 1:  // 敲击
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_KNOCK];
+					[_bleConnector sendControlMode:H10_KEY_KNOCK];
 					break;
 				case 2:  // 揉敲同步
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WAVELET];
+					[_bleConnector sendControlMode:H10_KEY_WAVELET];
 					break;
 				case 3:  // 叩击
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_SOFT_KNOCK];
+					[_bleConnector sendControlMode:H10_KEY_SOFT_KNOCK];
 					break;
 				case 4:  // 指压
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_PRESS];
+					[_bleConnector sendControlMode:H10_KEY_PRESS];
 					break;
 				case 5:  // 韵律按摩
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_MUSIC];
+					[_bleConnector sendControlMode:H10_KEY_MUSIC];
 					break;
 			}
         }
@@ -303,16 +315,15 @@
         } else if (buttonIndex == 1) {
 			switch ([_timePickerView getHighlightIndex]) {
 				case 0:  // 10分钟
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_10MIN];
+					[_bleConnector sendControlMode:H10_KEY_WORK_TIME_10MIN];
 					break;
 				case 1:  // 20分钟
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_20MIN];
+					[_bleConnector sendControlMode:H10_KEY_WORK_TIME_20MIN];
 					break;
 				case 2:  // 30分钟
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_30MIN];
+					[_bleConnector sendControlMode:H10_KEY_WORK_TIME_30MIN];
 					break;
 			}
-          
         }
     }];
     [skillPreferenceAlerView setUseMotionEffects:true];
@@ -322,43 +333,57 @@
 #pragma mark - 背部加热方法
 -(void)backWarmTap
 {
-	[[RTBleConnector shareManager] sendControlMode:H10_KEY_HEAT_ON];
+    [_bleConnector sendControlMode:H10_KEY_HEAT_ON];
+    _backWarmOn = !_backWarmOn;
+    [self updateBcakWarmView];
 }
 
 #pragma mark - 脚步滚轮点击方法
 -(void)footWheelTap {
-	CustomIOSAlertView *footWheelAlerView = [[CustomIOSAlertView alloc] init];
-	[footWheelAlerView setContainerView:_footWheelPickerView];
-	[footWheelAlerView setTitleString:@"脚部滚轮"];
-	[footWheelAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
-	[footWheelAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-		if (buttonIndex == 0) {
-			[alertView close];
-		} else if (buttonIndex == 1) {
-			
-			switch ([_skillsPreferencePickerView getHighlightIndex]) {
-				case 0:  // 滚轮速度慢
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
-					break;
-				case 1:  // 滚轮速度中
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WHEEL_SPEED_MED];
-					break;
-				case 2:  // 滚轮速度快
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WHEEL_SPEED_FAST];
-					break;
-				case 3:  // 滚轮关
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
-					break;
-			}
-		}
-	}];
-	[footWheelAlerView setUseMotionEffects:true];
-	[footWheelAlerView show];
-	
+//	CustomIOSAlertView *footWheelAlerView = [[CustomIOSAlertView alloc] init];
+//	[footWheelAlerView setContainerView:_footWheelPickerView];
+//	[footWheelAlerView setTitleString:@"脚部滚轮"];
+//	[footWheelAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
+//	[footWheelAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+//		if (buttonIndex == 0) {
+//			[alertView close];
+//		} else if (buttonIndex == 1) {
+//			
+//			switch ([_skillsPreferencePickerView getHighlightIndex]) {
+//				case 0:  // 滚轮速度慢
+//					[_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
+//					break;
+//				case 1:  // 滚轮速度中
+//					[_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
+//					break;
+//				case 2:  // 滚轮速度快
+//					[_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_FAST];
+//					break;
+//				case 3:  // 滚轮关
+//					[_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
+//					break;
+//			}
+//		}
+//	}];
+//	[footWheelAlerView setUseMotionEffects:true];
+//	[footWheelAlerView show];
+    
+    _footWheelOn = !_footWheelOn;
+    if (_footWheelOn) {
+        [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
+        [_polar setPoint:2 ableMove:YES];
+        [_polar setValue:6 ByIndex:2];
+    }
+    else
+    {
+        [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
+        [_polar setPoint:2 ableMove:NO];
+        [_polar setValue:0 ByIndex:2];
+    }
+    [self updateFootWheelView];
 }
 
 #pragma mark - 创建滚轮选择器
-
 - (NAPickerView *)createFootWheelPickerView {
 	NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:_footWheelArray andDelegate:self];
 	pickerView.overlayColor = [UIColor colorWithRed:223.0 / 255.0 green:1 blue:1 alpha:1];
@@ -378,7 +403,6 @@
 }
 
 #pragma mark - 创建技法偏好选择器
-
 - (NAPickerView *)createskillsPreferencePickerView
 {
     NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:_skillsPreferenceArray andDelegate:self];
@@ -421,7 +445,6 @@
         cell.textView.textColor = [UIColor colorWithRed:26/255.0 green:154/255.0 blue:222/255.0 alpha:0.6];
         cell.textView.font = [UIFont fontWithName:@"DS-Digital-Bold" size:18];
     };
-    
     return pickerView;
 }
 
@@ -432,7 +455,6 @@
 }
 
 #pragma mark - pageControl方法
-
 -(void)pageControlChange:(SMPageControl*)pageControl
 {
     CGFloat w = CGRectGetWidth(_scroll.frame);
@@ -451,6 +473,13 @@
 {
     NSLog(@"滑动开始");
     _scroll.scrollEnabled = NO;
+    if (_humanView.isSelected) {
+        [polar setPoint:1 ableMove:YES];
+    }
+    else
+    {
+        [polar setPoint:1 ableMove:NO];
+    }
 }
 
 -(void)WLPolarDidMove:(WLPolar *)polar
@@ -458,10 +487,97 @@
     
 }
 
--(void)WLPolarMoveFinished:(WLPolar *)polar
+-(void)WLPolarMoveFinished:(WLPolar *)polar index:(NSUInteger)index
 {
     NSLog(@"滑动结束");
     _scroll.scrollEnabled = YES;
+    NSNumber* n = polar.dataSeries[index];
+    float value = [n floatValue];
+    if (index == 0)
+    {
+        //机芯幅度：有三档，宽，中，窄
+        if (value<=4) {
+            [_bleConnector sendControlMode:H10_KEY_WIDTH_MIN];
+        }
+        else if (value>4 && value<=8)
+        {
+            [_bleConnector sendControlMode:H10_KEY_WIDTH_MED];
+        }
+        else
+        {
+            [_bleConnector sendControlMode:H10_KEY_WIDTH_MAX];
+        }
+        
+    }
+    else if (index == 1)
+    {
+        //气囊强度，有5档
+        if (value<=2.4) {
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_1];
+        }
+        else if (value>2.4 && value<=4.8)
+        {
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_2];
+        }
+        else if (value>4.8 && value<=7.2)
+        {
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_3];
+        }
+        else if (value>7.2 && value<=9.8)
+        {
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_4];
+        }
+        else
+        {
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_5];
+        }
+        
+    }
+    else if (index == 2)
+    {
+        //滚轮速度，有三档，可开关
+        if (value == 0) {
+            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
+        }
+        else if (value<=2) {
+            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
+        }
+        else if (value>2 && value<=4)
+        {
+            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
+        }
+        else
+        {
+            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_FAST];
+        }
+    }
+    else
+    {
+        //按摩力度，有6档
+        if (value<=2) {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_1];
+        }
+        else if (value>2 && value<=4)
+        {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_2];
+        }
+        else if (value>4 && value<=6)
+        {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_3];
+        }
+        else if (value>6 && value<=8)
+        {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_4];
+        }
+        else if (value>8 && value<=10)
+        {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_5];
+        }
+        else
+        {
+            [_bleConnector sendControlMode:H10_KEY_SPEED_6];
+        }
+    }
     
 }
 
@@ -488,6 +604,12 @@
         _pageControl.currentPage = 1;
     }
 }
+
+#pragma mark - 导航栏右边按钮方法
+-(void)rightItemClicked:(id)sender {
+    [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
+}
+
 
 #pragma mark - tableView代理
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -529,74 +651,68 @@
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
 					NSLog(@"肩部开始");
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_UP_START];
+					[_bleConnector sendControlMode:H10_KEY_WALK_UP_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_UP_STOP];
+					[_bleConnector sendControlMode:H10_KEY_WALK_UP_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_DOWN_START];
+					[_bleConnector sendControlMode:H10_KEY_WALK_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WALK_DOWN_STOP];
+					[_bleConnector sendControlMode:H10_KEY_WALK_DOWN_STOP];
 				}
 			}
 			break;
 		case 2:		// 背部升降
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_DOWN_START];
+					[_bleConnector sendControlMode:H10_KEY_BACKPAD_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_DOWN_STOP];
+					[_bleConnector sendControlMode:H10_KEY_BACKPAD_DOWN_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_UP_START];
+					[_bleConnector sendControlMode:H10_KEY_BACKPAD_UP_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_BACKPAD_UP_STOP];
+					[_bleConnector sendControlMode:H10_KEY_BACKPAD_UP_STOP];
 				}
 			}
 			break;
 		case 3:		// 小腿升降
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_DOWN_START];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_DOWN_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_DOWN_STOP];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_DOWN_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_UP_START];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_UP_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_UP_STOP];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_UP_STOP];
 				}
 			}
 			break;
 		case 4:		// 小腿伸缩
 			if (index == 0) {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_EXTEND_START];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_EXTEND_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_EXTEND_STOP];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_EXTEND_STOP];
 				}
 			} else {
 				if (controlEvent == UIControlEventTouchDown) {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_CONTRACT_START];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_CONTRACT_START];
 				} else {
-					[[RTBleConnector shareManager] sendControlMode:H10_KEY_LEGPAD_CONTRACT_STOP];
+					[_bleConnector sendControlMode:H10_KEY_LEGPAD_CONTRACT_STOP];
 				}
 			}
 			break;
 		case 5:		// 零重力
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_ZERO_START];
+			[_bleConnector sendControlMode:H10_KEY_ZERO_START];
 			break;
 	}
 }
-
-#pragma mark - 导航栏右边按钮方法
--(void)rightItemClicked:(id)sender {
-	[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
-}
-
 
 #pragma mark - 剪头向下旋转
 -(void)arrowTurnDown
@@ -641,11 +757,94 @@
     _bgCircle.image = [UIImage imageNamed:@"button_set_bg2"];
 }
 
+#pragma mark - 更新背部加热View
+-(void)updateBcakWarmView
+{
+    if (_backWarmOn) {
+        _backWarmImagaView.image = [UIImage imageNamed:@"function_1_select"];
+        _backWarmLabel.textColor = ORANGE;
+    }
+    else
+    {
+        _backWarmImagaView.image = [UIImage imageNamed:@"function_1"];
+        _backWarmLabel.textColor = [UIColor colorWithRed:202/255.0 green:202/255.0 blue:202/255.0 alpha:1.0];
+    }
+}
+
+#pragma mark - 更新脚步滚轮View
+-(void)updateFootWheelView
+{
+    if (_footWheelOn) {
+        [_footWheelImageView setImage:[UIImage imageNamed:@"function_2_select"]];
+        _footWheelLabel.textColor = ORANGE;
+    }
+    else
+    {
+        [_footWheelImageView setImage:[UIImage imageNamed:@"function_2"]];
+        _footWheelLabel.textColor = [UIColor colorWithRed:202/255.0 green:202/255.0 blue:202/255.0 alpha:1.0];
+    }
+}
+
+#pragma mark - 根据按摩状态更新极线图
+-(void)updateWLPolarView
+{
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
+            case RTMassageChairMassageTechniqueKnead:
+                //揉捏
+                [_polar setPoint:0 ableMove:NO];
+                [_polar setPoint:3 ableMove:YES];
+                break;
+            case RTMassageChairMassageTechniqueKnock:
+                //敲击
+                [_polar setPoint:0 ableMove:YES];
+                [_polar setPoint:3 ableMove:YES];
+                break;
+            case RTMassageChairMassageTechniqueSync:
+                //揉敲
+                [_polar setPoint:0 ableMove:NO];
+                [_polar setPoint:3 ableMove:YES];
+                break;
+            case RTMassageChairMassageTechniqueTapping:
+                //叩击
+                [_polar setPoint:0 ableMove:YES];
+                [_polar setPoint:3 ableMove:YES];
+                break;
+            case RTMassageChairMassageTechniqueShiatsu:
+                //指压
+                [_polar setPoint:0 ableMove:YES];
+                [_polar setPoint:3 ableMove:NO];
+                break;
+            case RTMassageChairMassageTechniqueRhythm:
+                //韵律
+                [_polar setPoint:0 ableMove:NO];
+                [_polar setPoint:3 ableMove:NO];
+                break;
+            case RTMassageChairMassageTechniqueStop:
+                //停止
+                [_polar setPoint:0 ableMove:NO];
+                [_polar setPoint:3 ableMove:NO];
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        [_polar setPoint:0 ableMove:NO];
+        [_polar setPoint:3 ableMove:NO];
+    }
+    
+    [_polar setValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag*4 ByIndex:0];
+    [_polar setValue:_bleConnector.rtMassageChairStatus.airPressureFlag*2.4 ByIndex:1];
+    [_polar setValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag*2 ByIndex:3];
+}
+
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	NSLog(@"didUpdateMassageChairStatus");
+//	NSLog(@"didUpdateMassageChairStatus");
 	
 	// 以下是界面跳转
 	
@@ -664,26 +863,26 @@
 	} else {
 		[self.resettingDialog close];
 	}
+    
 	
 	// 以下是界面状态更新
 	
 	// 背部加热
-	if (rtMassageChairStatus.isHeating) {
-		_backWarmImagaView.image = [UIImage imageNamed:@"function_1_select"];
-		_backWarmLabel.textColor = ORANGE;
-	} else {
-		_backWarmImagaView.image = [UIImage imageNamed:@"function_1"];
-		_backWarmLabel.textColor = [UIColor lightGrayColor];
-	}
+    _backWarmOn = rtMassageChairStatus.isHeating;
+    [self updateBcakWarmView];
 	
 	// 脚部滚轮
-	if (rtMassageChairStatus.isRollerOn) {
-		_footWheelImageView.image = [UIImage imageNamed:@"function_2_select"];
-		_footWheelLabel.textColor = ORANGE;
-	} else {
-		_footWheelImageView.image = [UIImage imageNamed:@"function_2"];
-		_footWheelLabel.textColor = [UIColor lightGrayColor];
-	}
+    _footWheelOn = rtMassageChairStatus.isRollerOn;
+    if (_footWheelOn) {
+        [_polar setValue:_bleConnector.rtMassageChairStatus.footAirBagFlag*4 ByIndex:2];
+        [_polar setPoint:2 ableMove:YES];
+    }
+    else
+    {
+        [_polar setPoint:2 ableMove:NO];
+        [_polar setValue:0 ByIndex:2];
+    }
+    [self updateFootWheelView];
 	
 	// 按摩模式
 	if (rtMassageChairStatus.massageTechniqueFlag != 0) {
@@ -699,6 +898,11 @@
 		NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
 		NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
 		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
+        
+        //极线图更新
+        [self updateWLPolarView];
+        
+    
 	} else {
 		// 预设时间
 		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", rtMassageChairStatus.preprogrammedTime, 0];
