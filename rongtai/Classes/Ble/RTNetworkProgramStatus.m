@@ -10,13 +10,32 @@
 
 @implementation RTNetworkProgramStatus
 
+- (NSInteger)getEmptyPositionIndex {
+	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+		NSInteger value = [((NSNumber *)[self.networkProgramStatusArray objectAtIndex:i]) intValue];
+		if (value == 0) {
+			return i + 1;
+		}
+	}
+	return 1;
+}
+
 - (NSInteger)getIndexByMassageId:(NSInteger)massageId {
 	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
-		if ((NSInteger)[self.networkProgramStatusArray objectAtIndex:i] == massageId) {
-			return i;
+		if ([(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue] == massageId) {
+			return i + 1;
 		}
 	}
 	return -1;
+}
+
+- (BOOL)isAlreadyIntall:(NSInteger)massageId {
+	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+		if ([(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue] == massageId) {
+			return true;
+		}
+	}
+	return false;
 }
 
 @end

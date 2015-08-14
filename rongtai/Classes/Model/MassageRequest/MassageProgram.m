@@ -6,15 +6,15 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
-#import "Massage.h"
+#import "MassageProgram.h"
 
-@implementation Massage
+@implementation MassageProgram
 
--(instancetype)initWithJSON:(NSDictionary *)json
-{
+- (instancetype)initWithJSON:(NSDictionary *)json {
     if (self = [super init]) {
         _mDescription = [json objectForKey:@"description"];
         _imageUrl = [json objectForKey:@"imageUrl"];
+		_binUrl = [json objectForKey:@"binUrl"];
         _massageId = [[json objectForKey:@"massageId"] unsignedIntegerValue];
         _name = [json objectForKey:@"name"];
         _power = [[json objectForKey:@"power"] unsignedIntegerValue];
@@ -24,7 +24,5 @@
     }
     return self;
 }
-
-
 
 @end

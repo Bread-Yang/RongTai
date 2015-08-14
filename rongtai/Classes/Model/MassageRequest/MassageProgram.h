@@ -8,17 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Massage : NSObject
+@interface MassageProgram : NSObject
 
 /**
  *  按摩描述
  */
-@property(nonatomic, strong)NSString* mDescription;
+@property (nonatomic, strong)NSString* mDescription;
 
 /**
  *  图标链接
  */
-@property(nonatomic, strong)NSString* imageUrl;
+@property (nonatomic, strong)NSString* imageUrl;
+
+/**
+ *	bin文件链接
+ */
+@property (nonatomic, retain) NSString *binUrl;
 
 /**
  *  id

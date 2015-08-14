@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MassageProgram.h"
 
 @interface ProgramDownloadTableViewCell : UITableViewCell
 
@@ -15,6 +16,14 @@
 @property (nonatomic, weak) IBOutlet UILabel *programDescriptionLabel;
 @property (nonatomic, weak) IBOutlet UIButton *downloadOrDeleteButton;
 
-@property (nonatomic, assign) NSInteger row;
+@property (nonatomic, retain) MassageProgram *massageProgram;
+
+@property (nonatomic, assign) BOOL isAlreadyDownload;
+
+@property (nonatomic, assign) CGFloat progress;
+@property (nonatomic, assign) BOOL isCompleted;
+@property (nonatomic, strong) NSString *bytesProgress;
+@property (nonatomic, strong) NSString *bytesTotal;
+@property (nonatomic, strong) NSString *error;
 
 @end

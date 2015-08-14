@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Massage.h"
+#import "MassageProgram.h"
 #import "CustomProgram.h"
 
 @class CustomProgram;

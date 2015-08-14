@@ -79,7 +79,7 @@
 		3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */; };
 		3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E89671B3968D8002E0962 /* CWStarRateView.m */; };
 		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
-		3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* Massage.m */; };
+		3D9EBAE51B3D3893000FD810 /* MassageProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* MassageProgram.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
@@ -357,8 +357,8 @@
 		3D9E89671B3968D8002E0962 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
 		3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRequest.h; sourceTree = "<group>"; };
 		3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRequest.m; sourceTree = "<group>"; };
-		3D9EBAE31B3D3893000FD810 /* Massage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Massage.h; sourceTree = "<group>"; };
-		3D9EBAE41B3D3893000FD810 /* Massage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Massage.m; sourceTree = "<group>"; };
+		3D9EBAE31B3D3893000FD810 /* MassageProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageProgram.h; sourceTree = "<group>"; };
+		3D9EBAE41B3D3893000FD810 /* MassageProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageProgram.m; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
 		3DA8D6101B21B226002328DF /* WLDoughnut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnut.m; sourceTree = "<group>"; };
 		3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingPlanTableViewCell.h; sourceTree = "<group>"; };
@@ -869,12 +869,12 @@
 			isa = PBXGroup;
 			children = (
 				3D908B011B68CCBB000F62A5 /* DS-DIGIB.TTF */,
-				3DCD122C1B4148A700890164 /* Image */,
 				568C0F941B3BE47D007F6305 /* RongTaiConstant.h */,
 				DF9C7D001B147B2D005617DA /* Application */,
 				DF9C7CE01B147A36005617DA /* Classes */,
 				DF9C7CFB1B147B07005617DA /* StoryBoard */,
 				3D783D301B12FD0300A893D9 /* Supporting Files */,
+				3DCD122C1B4148A700890164 /* Image */,
 			);
 			path = rongtai;
 			sourceTree = "<group>";
@@ -967,8 +967,8 @@
 		3D9EBADF1B3D2CC1000FD810 /* MassageRequest */ = {
 			isa = PBXGroup;
 			children = (
-				3D9EBAE31B3D3893000FD810 /* Massage.h */,
-				3D9EBAE41B3D3893000FD810 /* Massage.m */,
+				3D9EBAE31B3D3893000FD810 /* MassageProgram.h */,
+				3D9EBAE41B3D3893000FD810 /* MassageProgram.m */,
 				3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */,
 				3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */,
 			);
@@ -1853,7 +1853,7 @@
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,
-				3D9EBAE51B3D3893000FD810 /* Massage.m in Sources */,
+				3D9EBAE51B3D3893000FD810 /* MassageProgram.m in Sources */,
 				3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3DF304321B38FE2500DD51D3 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				3DF3042D1B38FE2500DD51D3 /* NSManagedObject+MagicalDataImport.m in Sources */,

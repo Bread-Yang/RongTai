@@ -25,4 +25,7 @@
 // 荣泰服务器域名
 #define RongTaiDefaultDomain	@"http://recipe.xtremeprog.com/RongTaiWeb/"
 
+// 荣泰服务器文件路径
+#define RongTaiFileDomain		@"http://recipe.xtremeprog.com/file/g/"
+
 #endif
