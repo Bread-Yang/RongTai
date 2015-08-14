@@ -7,7 +7,7 @@
 //
 
 #import "AutoMassageViewController.h"
-#import "Massage.h"
+#import "MassageProgram.h"
 #import "MainViewController.h"
 #import "WLPanAlertView.h"
 #import "ManualTableViewCell.h"

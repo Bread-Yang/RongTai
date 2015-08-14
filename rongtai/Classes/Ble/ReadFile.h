@@ -25,7 +25,7 @@
 @property (nonatomic, retain) NSMutableData *resultData;
 
 //开始读数据
-- (void)read;
+- (void)read:(NSString *)binName;
 //读出来的数据追加到resultData上
 - (void)appendData:(NSData*)_data;
 //

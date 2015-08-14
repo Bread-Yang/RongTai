@@ -9,6 +9,8 @@
 #import "RTBleConnector.h"
 #import "RTCommand.h"
 #import "CustomIOSAlertView.h"
+#import "ReadFile.h"
+#import "MainViewController.h"
 
 static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
@@ -36,11 +38,23 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @interface RTBleConnector ()<JRBluetoothManagerDelegate>
 
+@property (nonatomic, assign) int installCount;
+
+@property (nonatomic, assign) int installAllCount;
+
+@property (nonatomic, assign) BOOL isStartInstall;
+
+@property (nonatomic, retain) NSMutableArray *installEachDataMutableArray;
+
+@property (nonatomic, retain) ReadFile *readFile;
+
 @property (nonatomic, strong) NSMutableDictionary *characteristicDicionary;
 
 @property (readonly) NSTimeInterval reconnectInterval;
 
 @property (nonatomic, retain) NSTimer *turnOnTimer;
+
+@property (nonatomic, retain) CustomIOSAlertView *reconnectDialog;
 
 @end
 
@@ -218,18 +232,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			
 		} else if (data.length == 11) {	// 等于11位 : 返回按摩椅网络程序状态
 			
-			NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
-			
-			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
-			
-			Byte *networkStatusByte = (Byte *)[networkStatusData bytes];
-			
-			NSInteger massageId_1 = networkStatusByte[0] * 16 + networkStatusByte[1];
-			NSInteger massageId_2 = networkStatusByte[2] * 16 + networkStatusByte[3];
-			NSInteger massageId_3 = networkStatusByte[4] * 16 + networkStatusByte[5];
-			NSInteger massageId_4 = networkStatusByte[6] * 16 + networkStatusByte[7];
-			
-//			self.rtNetworkProgramStatus.networkProgramStatusArray = @{massageId_1, massageId_2, massageId_3, massageId_4};
+			[self parseNetworkStatus:data];
 			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
 				
@@ -238,10 +241,20 @@ static Byte const BYTE_ExitCode = 0x82;
 			
 		} else {  // 不等于11位或者17位 : 编辑模式
 			
+			if (data.length == 12) {
+				[self parseNetworkStatus:data];
+				
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
+					
+					[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
+				}
+			}
+			
+			[self parseInstallingStatus:data];
+			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateStatusInProgramMode:)]) {
 				[self.delegate didUpdateStatusInProgramMode:data];
 			}
-			
 		}
     }
 }
@@ -254,6 +267,12 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)sendControlMode:(NSInteger)mode {
     //	NSInteger commnad[] = {NORMAL_CTRL,ENGGER_CTRL,H10_KEY_CHAIR_AUTO_0};
+	
+	if (self.currentConnectedPeripheral == nil) {
+		[self showConnectDialog];
+		
+		return;
+	}
 	
 	if (self.isConnectedDevice) {
 		
@@ -283,6 +302,10 @@ static Byte const BYTE_ExitCode = 0x82;
 }
 
 - (void)sendControlByBytes:(NSData *)data {
+	if (self.currentConnectedPeripheral == nil) {
+		[self showConnectDialog];
+	}
+	
 	if (self.isConnectedDevice) {
 		
 		if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) { // 复位状态下不发送指令
@@ -304,25 +327,31 @@ static Byte const BYTE_ExitCode = 0x82;
 
 #pragma mark - get program mode command
 
-- (NSData *)controlInstallMassage:(NSInteger)massageId {
-	if (0 < massageId && massageId < 5) {
-		Byte byte[] = {0xf0, 0xa5, 0x10, 1, massageId, massageId, 0x4a, 0xf1};
-		//    byte[4] =(massageId&0xff00)>>8;
-		//    byte[5] =massageId&0xff;
-		NSInteger sumData = byte[1] + byte[2] + byte[3] + byte[4] + byte[5];
-		NSInteger contraryData =  ~sumData;
-		NSInteger checkSum = contraryData & 0x7f;
-		byte[6] = checkSum;
-		NSData *bodayData = [NSData dataWithBytes:&byte length:8];
-		return bodayData;
-	} else {
-		return nil;
+- (NSData *)InstallProgramMassage:(NSString *)binName {
+	
+	if (!self.readFile) {
+		self.readFile = [[ReadFile alloc] init];
+		_installEachDataMutableArray = [[NSMutableArray alloc]init];
 	}
+	
+	[self.readFile read:binName];
+	
+	NSInteger installIndex = [self.rtNetworkProgramStatus getEmptyPositionIndex];
+	
+	Byte byte[] = {0xf0, 0xa5, 0x10, 1, installIndex, installIndex, 0x4a, 0xf1};
+	NSInteger sumData = byte[1] + byte[2] + byte[3] + byte[4] + byte[5];
+	NSInteger contraryData =  ~sumData;
+	NSInteger checkSum = contraryData & 0x7f;
+	byte[6] = checkSum;
+	NSData *bodayData = [NSData dataWithBytes:&byte length:8];
+	
+	return bodayData;
 }
 
-- (NSData *)deleteMassage:(NSInteger)massageId{
-	if (0 < massageId && massageId < 5) {
-		Byte byte[] = {0xf0, 0xa5, 0x10, 2, massageId, massageId, 0x4a, 0xf1};
+- (NSData *)deleteProgramMassage:(NSInteger)massageId {
+	NSInteger deleteIndex = [self.rtNetworkProgramStatus getIndexByMassageId:massageId];
+	if (deleteIndex != -1) {
+		Byte byte[] = {0xf0, 0xa5, 0x10, 2, deleteIndex, deleteIndex, 0x4a, 0xf1};
 		NSInteger sumData = byte[1] + byte[2] + byte[3] + byte[4] + byte[5];
 		NSInteger contraryData =  ~sumData;
 		NSInteger checkSum = contraryData & 0x7f;
@@ -386,9 +415,7 @@ static Byte const BYTE_ExitCode = 0x82;
     
 }
 
-#pragma mark - Public
 #pragma mark - BLE
-
 
 - (void)startScanRTPeripheral:(NSArray *)serviceUUIDs {
     [[JRBluetoothManager shareManager] startScanPeripherals:serviceUUIDs];
@@ -417,10 +444,135 @@ static Byte const BYTE_ExitCode = 0x82;
 	}
 }
 
+#pragma mark - 开始发送安装程序
 
-#pragma mark - Misc
+- (void)startInstallMassage {
+	self.installCount = 1;
+	self.isStartInstall = YES;
+	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
+	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
+	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
+	for (int i = 0; i < self.installAllCount; i++) {
+		Byte data[128];
+		for (int j = 0; j < 128; j++) {
+			if((i * 128 + j) > self.readFile.resultData.length - 1) {
+				data[j] = 0x1a;
+			} else {
+				data[j] = fileData[i * 128 + j];
+			}
+		}
+		NSData *tempdata = [[NSData alloc] initWithBytes:data length:128];
+		[self.installEachDataMutableArray addObject:tempdata];
+		
+	}
+	[self installCommandSend];
+}
 
-#pragma mark - Read
+#pragma mark - 一个数据帧总长度为1+1+1+128+2=133字节，由于XOMDEM协议是通过蓝牙4.0发送给主板，故APP软件在发送数据时需将133字节分三次发送，第一次先发送50字节数据延时10-20ms后，开始第二次发送50字节数据后延时10-20ms 后，开始第三次发送33字节的数据同时再延时20ms后等待主板发送回应码 ACK/NAK/CAN后进行下一个数据包（133字节）的发送。
+
+- (void)installCommandSend {
+	Byte *testByte = (Byte *)[[self.installEachDataMutableArray objectAtIndex:self.installCount - 1] bytes];
+	
+	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(0, 50)]];
+	[NSThread sleepForTimeInterval:0.01f];
+	
+	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(50, 50)]];
+	[NSThread sleepForTimeInterval:0.01f];
+	
+	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(100, 33)]];
+}
+
+- (NSData *) makeInstallCommand:(Byte *) data {
+	Byte command[133];
+	command[0] = 1;
+	command[1] = self.installCount;
+	command[2] = 255 - self.installCount;
+	for (int i = 0; i < 128; i++) {
+		command[3+i] = data[i];
+	}
+	command[131] = (CRC_calc(&data[0], &data[127]) & 0xff00) >> 8; 	// CRC校验高位
+	command[132] = CRC_calc(&data[0], &data[127]) & 0xff;			// CRC校验低位
+	return  [[NSData alloc] initWithBytes:command length:133];
+}
+
+#pragma mark - 发送下一条指令
+
+- (void)installNext {
+	self.installCount++;
+	if(self.installCount <= self.installAllCount) {
+		[self installCommandSend];
+	} else {
+		Byte byte[] = {4};  // EOT 0X04 传输结束标志，所有数据包数据传输完成后，APP只发一个字节的EOT信息给主板，主板收到EOT后，发送ACK信息给APP 表示本次传输完毕
+		[self sendControlByBytes:[NSData dataWithBytes:byte length:1]];
+		self.isStartInstall = false;
+		[self.installEachDataMutableArray removeAllObjects];
+	}
+}
+
+#pragma mark - 128字节数据的CRC校验算法
+
+unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
+	unsigned short crc = 0x0;
+	unsigned char  *data;
+	
+	for (data = start; data <= end; data++) {
+		crc  = (crc >> 8) | (crc << 8);
+		crc ^= *data;
+		crc ^= (crc & 0xff) >> 4;
+		crc ^= crc << 12;
+		crc ^= (crc & 0xff) << 5;
+	}
+	return crc;
+}
+
+#pragma mark - 解析返回的状态
+
+- (void)parseInstallingStatus:(NSData *)data {
+	Byte *response = (Byte *)[data bytes];
+	switch (response[0]) {
+		case 0x43:		// NCG     0x43     主板上传给APP的请求发送数据包标志位
+			if(!_isStartInstall) {
+				[self startInstallMassage];
+				
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didStartInstallProgramMassage)]) {
+					[self.delegate didStartInstallProgramMassage];
+				}
+			}
+			break;
+		case 0x06:		// ACK     0X06     数据被正确接收标志
+			if (self.isStartInstall) {
+				[self installNext];
+			} else {
+//				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+				
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+					[self.delegate didEndInstallProgramMassage];
+				}
+			}
+			break;
+		case 0x15:		// NAK     0X15     数据包接收出错，请求重发当前数据包标志
+			[self installCommandSend];
+			break;
+	}
+
+}
+
+- (void)parseNetworkStatus:(NSData *)data  {
+	NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
+	
+	NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
+	
+	Byte *networkStatusByte = (Byte *)[networkStatusData bytes];
+	
+	NSInteger massageId_1 = networkStatusByte[0] * 16 + networkStatusByte[1];
+	NSInteger massageId_2 = networkStatusByte[2] * 16 + networkStatusByte[3];
+	NSInteger massageId_3 = networkStatusByte[4] * 16 + networkStatusByte[5];
+	NSInteger massageId_4 = networkStatusByte[6] * 16 + networkStatusByte[7];
+	
+	[NSNumber numberWithInteger:massageId_1];
+	
+	self.rtNetworkProgramStatus.networkProgramStatusArray = @[[NSNumber numberWithInteger:massageId_1], [NSNumber numberWithInteger:massageId_2], [NSNumber numberWithInteger:massageId_3], [NSNumber numberWithInteger:massageId_4]];
+}
 
 - (void)parseData:(NSData *)rawData {
     /*
@@ -448,10 +600,7 @@ static Byte const BYTE_ExitCode = 0x82;
 	[self parseByteOfAddress12:bodyData[11]];
 	[self parseByteOfAddress13:bodyData[12]];
 	[self parseByteOfAddress14:bodyData[13]];
-    
-//    NSDictionary *package;
-//	
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"name" object:package];
+
 }
 
 // 地址14 3D机芯状态（非3D机型无此字节）
@@ -1002,8 +1151,7 @@ static Byte const BYTE_ExitCode = 0x82;
 #pragma mark - WL:Xmodem
 
 #pragma mark  根据要下载或者删除的网络程序id来启动主板
--(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way
-{
+-(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way {
     if (self.isConnectedDevice) {
         
         if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) { // 复位状态下不发送指令
@@ -1033,8 +1181,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 
 #pragma mark 根据nAppId和way生成data
--(NSData*)dataWithState:(Byte)state ID:(NSInteger)nAppId Way:(Byte)way
-{
+
+- (NSData*)dataWithState:(Byte)state ID:(NSInteger)nAppId Way:(Byte)way {
     Byte code = 0x10;
     NSInteger idHigh7Bit;
     NSInteger idLow7Bit;
@@ -1056,31 +1204,58 @@ static Byte const BYTE_ExitCode = 0x82;
     return data;
 }
 
+#pragma mark - connect dialog
 
-
-#pragma mark - PUBLIC
-#pragma mark  开始下载
--(void)startDownload:(NSInteger)nAppId
-{
-    [self startMainboardOI:nAppId Way:BYTE_Download];
+- (void)showConnectDialog {
+	
+	if (!self.reconnectDialog) {
+		self.reconnectDialog = [[CustomIOSAlertView alloc] init];
+		self.reconnectDialog.isReconnectDialog = YES;
+		
+		self.reconnectDialog.reconnectTipsString = NSLocalizedString(@"未连接设备", nil);
+		[self.reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"重新连接", nil), nil]];
+	}
+	
+	if (self.delegate && [self.delegate isKindOfClass:[UIViewController class]]) {
+		__weak UIViewController *weakSelf = (UIViewController *)self.delegate;
+		[self.reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+			UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
+			UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
+			[weakSelf.navigationController pushViewController:viewController animated:YES];
+			
+			[alertView close];
+		}];
+		
+		[self.reconnectDialog show];
+	}
 }
 
-#pragma mark  开始删除
--(void)startDelete:(NSInteger)nAppId
-{
-    [self startMainboardOI:nAppId Way:BYTE_Delete];
+- (UIViewController *)getCurrentViewController {
+	UIViewController *result = nil;
+	
+	UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+	if (window.windowLevel != UIWindowLevelNormal)
+	{
+		NSArray *windows = [[UIApplication sharedApplication] windows];
+		for(UIWindow * tmpWin in windows)
+		{
+			if (tmpWin.windowLevel == UIWindowLevelNormal)
+			{
+				window = tmpWin;
+				break;
+			}
+		}
+	}
+	
+	UIView *frontView = [[window subviews] objectAtIndex:0];
+	id nextResponder = [frontView nextResponder];
+	
+	if ([nextResponder isKindOfClass:[UIViewController class]])
+		result = nextResponder;
+	else
+		result = window.rootViewController;
+	
+	return result;
 }
-
-#pragma mark - 结束编程模式
--(void)endCodeMode
-{
-    NSLog(@"结束编程模式");
-    NSData* data = [self dataWithState:BYTE_ExitCode ID:0 Way:BYTE_Download];
-    [self sendDataToPeripheral:data];
-}
-
-
-
-//=======
 
 @end

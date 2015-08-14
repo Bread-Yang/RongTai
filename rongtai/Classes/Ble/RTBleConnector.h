@@ -59,6 +59,16 @@ static BOOL isBleTurnOn;
  */
 - (void)didUpdateStatusInProgramMode:(NSData *)rawData;
 
+/**
+ *	开始安装网络程序
+ */
+- (void)didStartInstallProgramMassage;
+
+/**
+ *	结束安装网络程序
+ */
+- (void)didEndInstallProgramMassage;
+
 @end
 
 #pragma mark - RTBleConnector
@@ -105,15 +115,10 @@ static BOOL isBleTurnOn;
 
 - (void)sendControlByBytes:(NSData *)data;
 
-- (NSData *)controlInstallMassage:(NSInteger)massageId;
+- (NSData *)InstallProgramMassage:(NSString *)binName;
 
-- (NSData *)deleteMassage:(NSInteger)massageId;
+- (NSData *)deleteProgramMassage:(NSInteger)massageId;
 
 - (NSData *)exitEditMode;
-
-#pragma mark - WL:Xmodem
--(void)startDownload:(NSInteger)nAppId;
-
--(void)endCodeMode;
 
 @end

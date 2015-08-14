@@ -19,27 +19,18 @@
     return self;
 }
 
-- (void)read {
+- (void)read:(NSString *)binName {
     //沙盒路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     //文件名
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"003.bin"];
+    NSString *path = [[documentsDirectory stringByAppendingPathComponent:@"bin"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.bin", binName]];
 	
-	
-	// 测试用
-	path = [[NSBundle mainBundle] pathForResource:@"003" ofType:@"bin"];
-	
-    /*
-     if(![[NSFileManager defaultManager]fileExistsAtPath:path]){
-     //如果不存在，就新建
-     WriteFile *file=[[WriteFile alloc]init];
-     [file write];
-     [file release];
-     }else{
-     NSLog(@"有note.txt文件");
+	if(![[NSFileManager defaultManager]fileExistsAtPath:path]){
+     	//如果不存在
+		return;
      }
-     */
+	
 	parentDirectoryPath = path;
 	//异步输入流初始化，并把赋于地址
 	asyncInputStream =

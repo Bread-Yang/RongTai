@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
-@class Massage;
+@class MassageProgram;
 
 @interface ScanViewController : BasicViewController
 
-@property(nonatomic, strong) Massage *massage;
+@property(nonatomic, strong) MassageProgram *massage;
 
 @end

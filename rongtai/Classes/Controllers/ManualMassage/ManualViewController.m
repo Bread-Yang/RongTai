@@ -76,7 +76,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-	self.isListenBluetoothStatus = NO;
+	self.isListenBluetoothStatus = YES;
 	
     self.title = NSLocalizedString(@"手动按摩", nil);
 	

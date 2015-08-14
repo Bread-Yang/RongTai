@@ -116,7 +116,7 @@
 					   NSLocalizedString(@"肩颈重点", nil),
 					   NSLocalizedString(@"腰椎舒缓", nil),];
     for (int i = 0; i < [_modeNameArray count]; i++) {
-        Massage* m = [Massage new];
+        MassageProgram* m = [MassageProgram new];
         m.name = _modeNameArray[i];
         m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
         m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
@@ -244,7 +244,7 @@
         [cell sendSubviewToBack:bg];
     }
     cell.backgroundColor = [UIColor clearColor];
-    Massage* massage = _massageArr[indexPath.row];
+    MassageProgram* massage = _massageArr[indexPath.row];
     if (massage) {
         cell.textLabel.text = massage.name;
         cell.textLabel.textColor = BLACK;
@@ -265,10 +265,10 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-		[reconnectDialog show];
-		return;
-	}
+//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+//		[reconnectDialog show];
+//		return;
+//	}
 	
 	switch (indexPath.row) {
 			
@@ -311,7 +311,7 @@
         NSLog(@"用户下载列表:%@",arr);
         if (arr.count>0) {
             for (int i = 0; i<arr.count; i++) {
-                Massage* massage = [[Massage alloc]initWithJSON:arr[i]];
+                MassageProgram* massage = [[MassageProgram alloc]initWithJSON:arr[i]];
                 [_massageArr addObject:massage];
             }
             [_table reloadData];
