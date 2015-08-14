@@ -38,13 +38,14 @@
     UIImage* _touchImage;
     CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
     CGPoint _Line2;
-    NSMutableArray* _values;
-    NSMutableArray* _canMove;
+    NSMutableArray* _values;   //存储点的值
+    NSMutableArray* _canMove;  //存储点是否可移动
+    NSMutableArray* _maxLimit; //存储点的最大限制值
+    NSMutableArray* _minLimit; //存储点的最小限制值
 }
 @end
 
 @implementation WLPolar
-
 -(instancetype)init
 {
     if (self = [super init]) {
@@ -110,6 +111,19 @@
         NSNumber* n = [NSNumber numberWithBool:NO];
         [_canMove addObject:n];
     }
+    //默认最大限制值都是取值的最大值，属性maxValue
+    _maxLimit = [NSMutableArray arrayWithCapacity:_numOfV];
+    for (int i = 0; i<_numOfV; i++) {
+        NSNumber* n = [NSNumber numberWithFloat:_maxValue];
+        [_maxLimit addObject:n];
+    }
+    //默认最小限制值都是取值的最小值，属性minValue
+    _minLimit = [NSMutableArray arrayWithCapacity:_numOfV];
+    for (int i = 0; i<_numOfV; i++) {
+        NSNumber* n = [NSNumber numberWithFloat:_minValue];
+        [_minLimit addObject:n];
+    }
+    
     _radPerV = M_PI * 2 / _numOfV;
     [self countPointPosition];
     [self setNeedsDisplay]; 
@@ -124,14 +138,32 @@
 
 -(void)setMaxValue:(CGFloat)maxValue
 {
+    CGFloat tmp = _maxValue;
     _maxValue = maxValue;
+    for (int i = 0; i<_numOfV; i++) {
+        NSNumber* n = _maxLimit[i];
+        float old = [n floatValue];
+        if (old == tmp) {
+            NSNumber* new = [NSNumber numberWithDouble:_maxValue];
+            [_maxLimit setObject:new atIndexedSubscript:i];
+        }
+    }
     [self countPointPosition];
     [self setNeedsDisplay];
 }
 
 -(void)setMinValue:(CGFloat)minValue
 {
+    CGFloat tmp = _minValue;
     _minValue = minValue;
+    for (int i = 0; i<_numOfV; i++) {
+        NSNumber* n = _minLimit[i];
+        float old = [n floatValue];
+        if (old == tmp) {
+            NSNumber* new = [NSNumber numberWithDouble:_minValue];
+            [_minLimit setObject:new atIndexedSubscript:i];
+        }
+    }
     [self countPointPosition];
     [self setNeedsDisplay];
 }
@@ -167,6 +199,25 @@
     }
 }
 
+#pragma mark - 设置第n个点的拖拽范围
+-(void)setPoint:(NSUInteger)index MaxLimit:(float)max MinLimit:(float)min
+{
+    if (min>=max) {
+        return;
+    }
+    if (max>_maxValue) {
+        max = _maxValue;
+    }
+    NSNumber* nMax = [NSNumber numberWithFloat:max];
+    [_maxLimit setObject:nMax atIndexedSubscript:index];
+    
+    if (min<_minValue) {
+        min = _minValue;
+    }
+    NSNumber* nMin = [NSNumber numberWithFloat:min];
+    [_minLimit setObject:nMin atIndexedSubscript:index];
+}
+
 #pragma mark - 调节坐标
 -(void)countPointPosition
 {
@@ -194,6 +245,10 @@
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
 	NSLog(@"pointInside:");
 	for (int i = 0; i<_points.count; i++) {
+        NSNumber* n = _canMove[i];
+        if (![n boolValue]) {
+            continue;
+        }
 		NSValue* v = _points[i];
 		CGPoint p = [v CGPointValue];
 		BOOL xIn = ABS(p.x - point.x)<=30;
@@ -215,6 +270,10 @@
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     for (int i = 0; i < _points.count; i++) {
+        NSNumber* n = _canMove[i];
+        if (![n boolValue]) {
+            continue;
+        }
         NSValue *v = _points[i];
         CGPoint p = [v CGPointValue];
         BOOL xIn = ABS(p.x - point.x) <= 30;
@@ -225,6 +284,15 @@
             _startPoint = p;
 
             CGPoint p2 = CGPointZero;
+            NSNumber* nMin = _minLimit[_touchPointIndex];
+            float min = [nMin floatValue];
+            float dltMin = (min-_minValue)/(_maxValue - _minValue);
+            
+            NSNumber* nMax = _maxLimit[_touchPointIndex];
+            float max = [nMax floatValue];
+            float dltMax = (max - _minValue)/(_maxValue - _minValue);
+            
+            
             float x = _centerPoint.x - _r * sin(_touchPointIndex * _radPerV)/2;
             float y = _centerPoint.y - _r * cos(_touchPointIndex * _radPerV)/2;
             p2.x = x;
@@ -292,7 +360,6 @@
                 {
                     newR = _r;
                 }
-                //                _isTouchInPoint = NO;
             }
             
             NSValue* v = _points[_touchPointIndex];

@@ -70,6 +70,14 @@
     
     //
     RTBleConnector* _bleConnector;
+    
+    //
+    NSTimeInterval _delay; //延迟更新单位时间，默认200ms，即按摩椅主板信号更新一次的时间
+    BOOL _isDelayUpdate;  //是否延迟更新
+    BOOL _isTouch;  //记录PolarView是否被触摸
+    
+    //测试用
+    NSInteger _scan;
 
 }
 @end
@@ -237,7 +245,13 @@
     
     //
     _bleConnector = [RTBleConnector shareManager];
-//    _bleConnector.delegate = self;
+    
+    //
+    _scan = 0;
+    
+    //
+    _delay = 0.2;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -333,6 +347,7 @@
 #pragma mark - 背部加热方法
 -(void)backWarmTap
 {
+    _isDelayUpdate = YES;
     [_bleConnector sendControlMode:H10_KEY_HEAT_ON];
     _backWarmOn = !_backWarmOn;
     [self updateBcakWarmView];
@@ -368,11 +383,12 @@
 //	[footWheelAlerView setUseMotionEffects:true];
 //	[footWheelAlerView show];
     
+    _isDelayUpdate = YES;
     _footWheelOn = !_footWheelOn;
     if (_footWheelOn) {
         [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
         [_polar setPoint:2 ableMove:YES];
-        [_polar setValue:6 ByIndex:2];
+        [_polar setValue:2*4 ByIndex:2];
     }
     else
     {
@@ -381,6 +397,7 @@
         [_polar setValue:0 ByIndex:2];
     }
     [self updateFootWheelView];
+    
 }
 
 #pragma mark - 创建滚轮选择器
@@ -484,13 +501,14 @@
 
 -(void)WLPolarDidMove:(WLPolar *)polar
 {
-    
+    _isTouch = YES;
 }
 
 -(void)WLPolarMoveFinished:(WLPolar *)polar index:(NSUInteger)index
 {
     NSLog(@"滑动结束");
     _scroll.scrollEnabled = YES;
+    [self performSelector:@selector(touchNo) withObject:nil afterDelay:_delay];
     NSNumber* n = polar.dataSeries[index];
     float value = [n floatValue];
     if (index == 0)
@@ -531,7 +549,6 @@
         {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_5];
         }
-        
     }
     else if (index == 2)
     {
@@ -539,10 +556,10 @@
         if (value == 0) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
         }
-        else if (value<=2) {
+        else if (value<=4) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
         }
-        else if (value>2 && value<=4)
+        else if (value>4 && value<=8)
         {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
         }
@@ -826,6 +843,8 @@
                 [_polar setPoint:3 ableMove:NO];
                 break;
             default:
+                [_polar setPoint:0 ableMove:NO];
+                [_polar setPoint:3 ableMove:NO];
                 break;
         }
     }
@@ -834,10 +853,21 @@
         [_polar setPoint:0 ableMove:NO];
         [_polar setPoint:3 ableMove:NO];
     }
-    
-    [_polar setValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag*4 ByIndex:0];
-    [_polar setValue:_bleConnector.rtMassageChairStatus.airPressureFlag*2.4 ByIndex:1];
-    [_polar setValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag*2 ByIndex:3];
+    [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
+              stepValue:4 ByIndex:0];
+    [self setPolarValue:_bleConnector.rtMassageChairStatus.airPressureFlag stepValue:2.4 ByIndex:1];
+    [self setPolarValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag stepValue:2 ByIndex:3];
+}
+
+#pragma mark - 设置PolarView的值
+-(void)setPolarValue:(NSInteger)level stepValue:(float)stepValue ByIndex:(NSUInteger)index
+{
+    NSNumber* n = _polar.dataSeries[index];
+    float currentValue = [n floatValue];
+    if (currentValue>level*stepValue || currentValue<= (level-1)*stepValue) {
+        NSLog(@"😄调节值");
+        [_polar setValue:level*stepValue ByIndex:index];
+    }
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -845,6 +875,19 @@
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
 //	NSLog(@"didUpdateMassageChairStatus");
+    
+//    NSLog(@"负离子:%ld",rtMassageChairStatus.anionSwitchFlag);
+  
+    
+//    NSLog(@"体型检测：%ld",rtMassageChairStatus.figureCheckFlag);
+//    if (rtMassageChairStatus.figureCheckFlag == 0) {
+//        _scan++;
+//    }
+//    else
+//    {
+//        NSLog(@"出现1了：%ld",_scan);
+//        _scan=0;
+//    }
 	
 	// 以下是界面跳转
 	
@@ -864,18 +907,41 @@
 		[self.resettingDialog close];
 	}
     
-	
 	// 以下是界面状态更新
-	
-	// 背部加热
-    _backWarmOn = rtMassageChairStatus.isHeating;
+    if (_isDelayUpdate) {
+        //延迟更新
+        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*2];
+    }
+    else
+    {
+        //即时更新
+        [self updateUI];
+    }
+}
+
+-(void)dalayNO
+{
+    _isDelayUpdate = NO;
+}
+
+-(void)touchNo
+{
+    _isTouch = NO;
+}
+
+-(void)updateUI
+{
+    // 背部加热
+    _backWarmOn = _bleConnector.rtMassageChairStatus.isHeating;
     [self updateBcakWarmView];
-	
-	// 脚部滚轮
-    _footWheelOn = rtMassageChairStatus.isRollerOn;
+    
+    // 脚部滚轮
+    _footWheelOn = _bleConnector.rtMassageChairStatus.isRollerOn;
     if (_footWheelOn) {
-        [_polar setValue:_bleConnector.rtMassageChairStatus.footAirBagFlag*4 ByIndex:2];
-        [_polar setPoint:2 ableMove:YES];
+        if (!_isTouch) {
+            [self setPolarValue:_bleConnector.rtMassageChairStatus.rollerSpeedFlag stepValue:4 ByIndex:2];
+            [_polar setPoint:2 ableMove:YES];
+        }
     }
     else
     {
@@ -883,33 +949,36 @@
         [_polar setValue:0 ByIndex:2];
     }
     [self updateFootWheelView];
-	
-	// 按摩模式
-	if (rtMassageChairStatus.massageTechniqueFlag != 0) {
-		if (rtMassageChairStatus.massageTechniqueFlag == 7) {
-			_skillsPreferenceLabel.text = @"搓背";
-		} else {
-			_skillsPreferenceLabel.text = _skillsPreferenceArray[rtMassageChairStatus.massageTechniqueFlag - 1];
-		}
-	}
-	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-		// 按摩剩余工作时间
-		NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
-		NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
-		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
-        
-        //极线图更新
-        [self updateWLPolarView];
-        
     
-	} else {
-		// 预设时间
-		_timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", rtMassageChairStatus.preprogrammedTime, 0];
-	}
-	// 气囊程序
-	[_humanView checkButtonByAirBagProgram:rtMassageChairStatus.airBagProgram];
-	
+    // 按摩模式
+    if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag != 0) {
+        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
+        if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag == 7) {
+            _skillsPreferenceLabel.text = @"搓背";
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
+            [alert show];
+        } else {
+            _skillsPreferenceLabel.text = _skillsPreferenceArray[_bleConnector.rtMassageChairStatus.massageTechniqueFlag - 1];
+        }
+    }
+    
+    //极线图更新
+    if (!_isTouch) {
+        //极线图在触摸移动时不更新
+        [self updateWLPolarView];
+    }
+    
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        // 按摩剩余工作时间
+        NSInteger minutes = _bleConnector.rtMassageChairStatus.remainingTime / 60;
+        NSInteger seconds = _bleConnector.rtMassageChairStatus.remainingTime % 60;
+        _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
+    } else {
+        // 预设时间
+        _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", _bleConnector.rtMassageChairStatus.preprogrammedTime, 0];
+    }
+    // 气囊程序
+    [_humanView checkButtonByAirBagProgram:_bleConnector.rtMassageChairStatus.airBagProgram];
 }
 
 @end
