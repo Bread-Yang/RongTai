@@ -126,6 +126,9 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"蓝牙已经成功开启，稍后……";
 			isBleTurnOn = YES;
 			break;
+        case CBCentralManagerStateUnknown:
+            message = @"蓝牙发生未知错误，请重新打开……";
+            break;
 	}
 
 	NSLog(@"%@", message);
@@ -218,19 +221,23 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-	NSLog(@"data : %@", data);
+//	NSLog(@"data.length : %zd", data.length);
+//	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
 		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
 			[self parseData:data];
-			
+//            [self.rtMassageChairStatus printStatus];
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
 				[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
 			}
 			
 		} else if (data.length == 11) {	// 等于11位 : 返回按摩椅网络程序状态
+//			
+//			NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
+//			
+//			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 			
 			[self parseNetworkStatus:data];
 			
@@ -837,7 +844,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 
 - (void)parseByteOfAddress9:(Byte)addr {
 	
-	NSInteger i = addr;
+//	NSInteger i = addr;
 	
 //	NSLog(@"byte[9] : %zd", i);
 	
@@ -1093,6 +1100,13 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
     _rtMassageChairStatus.nameFlag = (addr >> 2) & 1;
     
     /**
+     按摩椅运行状态
+     0：按摩椅处于待机,主电源关闭，省电模式
+     1：按摩椅处于非待机状态，此时手控器相应的图标点亮
+     */
+    _rtMassageChairStatus.runningStatusFlag = (addr >> 6) & 1;
+    
+    /**
      按摩手法
      00：停止
      01：揉捏
@@ -1104,13 +1118,6 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
      07：搓背
      */
     _rtMassageChairStatus.massageTechniqueFlag = (addr >> 3) & 7;
-    
-    /**
-     按摩椅运行状态
-     0：按摩椅处于待机,主电源关闭，省电模式
-     1：按摩椅处于非待机状态，此时手控器相应的图标点亮
-     */
-    _rtMassageChairStatus.runningStatusFlag = (addr >> 6) & 1;
 	
 	switch (_rtMassageChairStatus.massageTechniqueFlag) {
   		case 0:
@@ -1146,9 +1153,6 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			break;
 	}
 }
-
-//=======  wl:Xmodem
-#pragma mark - WL:Xmodem
 
 #pragma mark  根据要下载或者删除的网络程序id来启动主板
 -(void)startMainboardOI:(NSInteger)nAppId Way:(Byte)way {
@@ -1257,5 +1261,4 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 	
 	return result;
 }
-
 @end

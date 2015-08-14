@@ -329,16 +329,6 @@
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
-#pragma mark - NavigationController代理
-
--(void)slideNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (viewController == self) {
-        NSArray* items = _menuBar.items;
-//		 _menuBar.selectedItem = (UITabBarItem*)items[0];
-        _menuBar.selectedItem = nil;
-    }
-}
-
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {

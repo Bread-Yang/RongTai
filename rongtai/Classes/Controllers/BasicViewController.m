@@ -41,6 +41,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 	if (self.isListenBluetoothStatus) {
 		bleConnector = [RTBleConnector shareManager];
 		bleConnector.delegate = self;
@@ -61,14 +62,10 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 	if (self.isListenBluetoothStatus) {
 		bleConnector.delegate = nil;
 	}
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)backToMainViewController {
@@ -157,7 +154,6 @@
 			return;
 		}
 	}
-	
 	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 	FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
 	[self.navigationController pushViewController:finishViewController animated:YES];
@@ -173,12 +169,15 @@
 }
 */
 
+
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
+    
 }
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
+    
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {

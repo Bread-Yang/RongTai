@@ -12,6 +12,8 @@
 
 @interface ManualHumanView : UIView
 
+@property(nonatomic)BOOL isSelected;
+
 - (void)checkButtonByAirBagProgram:(RTMassageChairAirBagProgram)airBagProgram;
 
 @end

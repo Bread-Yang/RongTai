@@ -7,8 +7,6 @@
 //
 
 #import "AddTimingMassageViewController.h"
-
-#import "AddTimingMassageViewController.h"
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
 #import "TimingPlan.h"

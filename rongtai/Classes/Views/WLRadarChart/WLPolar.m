@@ -39,6 +39,7 @@
     CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
     CGPoint _Line2;
     NSMutableArray* _values;
+    NSMutableArray* _canMove;
 }
 @end
 
@@ -103,9 +104,15 @@
     _dataSeries = dataSeries;
     _values = [NSMutableArray arrayWithArray:_dataSeries];
     _numOfV = [_dataSeries count];
+    //默认都是可拖动
+    _canMove = [NSMutableArray arrayWithCapacity:_numOfV];
+    for (int i = 0; i<_numOfV; i++) {
+        NSNumber* n = [NSNumber numberWithBool:NO];
+        [_canMove addObject:n];
+    }
     _radPerV = M_PI * 2 / _numOfV;
     [self countPointPosition];
-    [self setNeedsDisplay];
+    [self setNeedsDisplay]; 
 }
 
 -(void)setR:(CGFloat)r
@@ -129,13 +136,53 @@
     [self setNeedsDisplay];
 }
 
+#pragma mark - 设置第n个点可拖动
+-(void)setPoint:(NSUInteger)index ableMove:(BOOL)isAble
+{
+    if (index<_numOfV) {
+        NSNumber* n = [NSNumber numberWithBool:isAble];
+        [_canMove setObject:n atIndexedSubscript:index];
+    }
+}
+
+#pragma mark - 获取第n个点的可拖动性
+-(BOOL)pointAbleMove:(NSUInteger)index
+{
+    if (index<_numOfV) {
+        NSNumber* n = _canMove[index];
+        BOOL able = [n boolValue];
+        return able;
+    }
+    return NO;
+}
+
+#pragma mark - 设置第n个点的值
+-(void)setValue:(float)value ByIndex:(NSUInteger)index
+{
+    if (index<_numOfV) {
+        [_values setObject:[NSNumber numberWithFloat:value] atIndexedSubscript:index];
+        _dataSeries = [NSArray arrayWithArray:_values];
+        [self countPointPosition];
+        [self setNeedsDisplay];
+    }
+}
 
 #pragma mark - 调节坐标
 -(void)countPointPosition
 {
     for (int i = 0; i<_dataSeries.count; i++) {
         float value = [_dataSeries[i] floatValue];
-        value = (value - _minValue)/ (_maxValue - _minValue)*_r;
+        if (value<_minValue) {
+            value = _minValue;
+        }
+        else if (value>_maxValue)
+        {
+            value = _maxValue;
+        }
+        else
+        {
+            value = (value - _minValue)/ (_maxValue - _minValue)*_r;
+        }
         CGFloat angle = i * _radPerV;
         float x = _centerPoint.x - value * sin(angle);
         float y = _centerPoint.y - value * cos(angle);
@@ -199,7 +246,9 @@
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     //    NSLog(@"触摸移动");
     //    [super touchesMoved:touches withEvent:event];
-    if (_isTouchInPoint) {
+    NSNumber* n = _canMove[_touchPointIndex];
+    BOOL canMove = [n boolValue];
+    if (_isTouchInPoint&&canMove) {
         UITouch* touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
         BOOL isIn  = YES;
@@ -258,16 +307,16 @@
             newR = distanceTwoPoint(p, _centerPoint);
             float newNum = (newR/_r)*(_maxValue - _minValue)+_minValue;
             [_values setObject:[NSNumber numberWithFloat:newNum] atIndexedSubscript:_touchPointIndex];
-            [self setNeedsDisplay];
         }
         else
         {
             _isTouchInPoint = NO;
-            [self setNeedsDisplay];
+            
         }
-    }
-    if ([self.delegate respondsToSelector:@selector(WLPolarDidMove:)]) {
-        [self.delegate WLPolarDidMove:self];
+        [self setNeedsDisplay];
+        if ([self.delegate respondsToSelector:@selector(WLPolarDidMove:)]) {
+            [self.delegate WLPolarDidMove:self];
+        }
     }
 }
 
@@ -282,8 +331,8 @@
 	NSLog(@"_dataSeries : %@", _dataSeries);
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
-    if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:)]) {
-        [self.delegate WLPolarMoveFinished:self];
+    if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:index:)]) {
+        [self.delegate WLPolarMoveFinished:self index:_touchPointIndex];
     }
 }
 
