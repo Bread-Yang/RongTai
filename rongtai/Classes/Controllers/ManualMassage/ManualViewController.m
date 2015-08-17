@@ -20,7 +20,7 @@
 #import "RTCommand.h"
 
 
-@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,NAPickerViewDelegate,WLPolarDelegate, RTBleConnectorDelegate> {
+@interface ManualViewController ()<WLPanAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, ManualTableViewCellDelegate,NAPickerViewDelegate,WLPolarDelegate, RTBleConnectorDelegate, ManualHumanViewDelegate> {
     WLPanAlertView* _panAlertView;  //按摩调整
     UIImageView* _arrow;  //剪头
     UIImageView* _bgCircle;  //半圆
@@ -73,6 +73,7 @@
     
     //
     NSTimeInterval _delay; //延迟更新单位时间，默认200ms，即按摩椅主板信号更新一次的时间
+    NSUInteger _delayMul;
     BOOL _isDelayUpdate;  //是否延迟更新
     BOOL _isTouch;  //记录PolarView是否被触摸
     
@@ -111,6 +112,7 @@
     
     //创建 人体图
     _humanView = [[ManualHumanView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    _humanView.delegate = self;
     [_scroll addSubview:_humanView];
     
     //创建 极线图
@@ -130,6 +132,9 @@
     _polar.scaleFont = [UIFont systemFontOfSize:14];
 	_scroll.delaysContentTouches = NO;
     [_scroll addSubview:_polar];
+    
+    [_polar setPoint:3 MaxLimit:12 MinLimit:2];
+    [_polar setPoint:0 MaxLimit:12 MinLimit:4];
     
     
     //创建 自定义分页控制器
@@ -251,6 +256,7 @@
     
     //
     _delay = 0.2;
+    _delayMul = 2;
 
 }
 
@@ -348,6 +354,7 @@
 -(void)backWarmTap
 {
     _isDelayUpdate = YES;
+    _delayMul = 3;
     [_bleConnector sendControlMode:H10_KEY_HEAT_ON];
     _backWarmOn = !_backWarmOn;
     [self updateBcakWarmView];
@@ -384,6 +391,7 @@
 //	[footWheelAlerView show];
     
     _isDelayUpdate = YES;
+    _delayMul = 3;
     _footWheelOn = !_footWheelOn;
     if (_footWheelOn) {
         [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
@@ -490,25 +498,20 @@
 {
     NSLog(@"滑动开始");
     _scroll.scrollEnabled = NO;
-    if (_humanView.isSelected) {
-        [polar setPoint:1 ableMove:YES];
-    }
-    else
-    {
-        [polar setPoint:1 ableMove:NO];
-    }
+    _isTouch = YES;
+    _delayMul = 1;
 }
 
 -(void)WLPolarDidMove:(WLPolar *)polar
 {
-    _isTouch = YES;
+    
 }
 
 -(void)WLPolarMoveFinished:(WLPolar *)polar index:(NSUInteger)index
 {
     NSLog(@"滑动结束");
     _scroll.scrollEnabled = YES;
-    [self performSelector:@selector(touchNo) withObject:nil afterDelay:_delay];
+    [self performSelector:@selector(touchNo) withObject:nil afterDelay:0.2];
     NSNumber* n = polar.dataSeries[index];
     float value = [n floatValue];
     if (index == 0)
@@ -517,7 +520,7 @@
         if (value<=4) {
             [_bleConnector sendControlMode:H10_KEY_WIDTH_MIN];
         }
-        else if (value>4 && value<=8)
+        else if (value<=8)
         {
             [_bleConnector sendControlMode:H10_KEY_WIDTH_MED];
         }
@@ -525,23 +528,26 @@
         {
             [_bleConnector sendControlMode:H10_KEY_WIDTH_MAX];
         }
-        
     }
     else if (index == 1)
     {
         //气囊强度，有5档
-        if (value<=2.4) {
+        if (value <=0) {
+            //等于0就关闭
+            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_OFF];
+        }
+        else if (value<=2.4) {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_1];
         }
-        else if (value>2.4 && value<=4.8)
+        else if (value<=4.8)
         {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_2];
         }
-        else if (value>4.8 && value<=7.2)
+        else if (value<=7.2)
         {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_3];
         }
-        else if (value>7.2 && value<=9.8)
+        else if (value<=9.8)
         {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_4];
         }
@@ -553,13 +559,13 @@
     else if (index == 2)
     {
         //滚轮速度，有三档，可开关
-        if (value == 0) {
+        if (value <= 0) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
         }
         else if (value<=4) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
         }
-        else if (value>4 && value<=8)
+        else if (value<=8)
         {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
         }
@@ -595,9 +601,7 @@
             [_bleConnector sendControlMode:H10_KEY_SPEED_6];
         }
     }
-    
 }
-
 
 #pragma mark - scroll代理
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -805,6 +809,10 @@
 #pragma mark - 根据按摩状态更新极线图
 -(void)updateWLPolarView
 {
+    if (_delayMul == 20) {
+        NSLog(@"极限图更新了");
+        _delayMul = 2;
+    }
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
         switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
             case RTMassageChairMassageTechniqueKnead:
@@ -865,9 +873,17 @@
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
     if (currentValue>level*stepValue || currentValue<= (level-1)*stepValue) {
-        NSLog(@"😄调节值");
+        NSLog(@"😄%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
+}
+
+#pragma mark - ManualHumanViewDelegate
+-(void)maualHumanViewClicked:(ManualHumanView *)view
+{
+    NSLog(@"HumanView被点击");
+    _isDelayUpdate = YES;
+    _delayMul = 4;
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -910,7 +926,7 @@
 	// 以下是界面状态更新
     if (_isDelayUpdate) {
         //延迟更新
-        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*2];
+        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
     }
     else
     {
@@ -952,7 +968,7 @@
     
     // 按摩模式
     if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag != 0) {
-        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
+//        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
         if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag == 7) {
             _skillsPreferenceLabel.text = @"搓背";
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
@@ -979,6 +995,14 @@
     }
     // 气囊程序
     [_humanView checkButtonByAirBagProgram:_bleConnector.rtMassageChairStatus.airBagProgram];
+    
+    if (_humanView.isSelected) {
+        [_polar setPoint:1 ableMove:YES];
+    }
+    else
+    {
+        [_polar setPoint:1 ableMove:NO];
+    }
 }
 
 @end

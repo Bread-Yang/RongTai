@@ -457,6 +457,7 @@ static Byte const BYTE_ExitCode = 0x82;
 	self.installCount = 1;
 	self.isStartInstall = YES;
 	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
+
 	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
 	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
 	for (int i = 0; i < self.installAllCount; i++) {
@@ -465,6 +466,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			if((i * 128 + j) > self.readFile.resultData.length - 1) {
 				data[j] = 0x1a;
 			} else {
+#warning 曾经在这一句运行崩溃过，NSLog打印的数据长度为0
 				data[j] = fileData[i * 128 + j];
 			}
 		}
@@ -567,7 +569,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 - (void)parseNetworkStatus:(NSData *)data  {
 	NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
 	
-	NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
+//	NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 	
 	Byte *networkStatusByte = (Byte *)[networkStatusData bytes];
 	

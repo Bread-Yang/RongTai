@@ -10,9 +10,19 @@
 #import "RongTaiConstant.h"
 #import "RTMassageChairStatus.h"
 
+@class ManualHumanView;
+@protocol ManualHumanViewDelegate <NSObject>
+
+@optional
+-(void)maualHumanViewClicked:(ManualHumanView*)view;
+
+@end
+
 @interface ManualHumanView : UIView
 
 @property(nonatomic)BOOL isSelected;
+
+@property(nonatomic, weak)id<ManualHumanViewDelegate> delegate;
 
 - (void)checkButtonByAirBagProgram:(RTMassageChairAirBagProgram)airBagProgram;
 
