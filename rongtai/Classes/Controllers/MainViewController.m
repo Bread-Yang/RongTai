@@ -269,6 +269,13 @@
 //		[reconnectDialog show];
 //		return;
 //	}
+    
+    //测试用*
+//    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//    AutoMassageViewController* vc = [s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+//    [self.navigationController pushViewController:vc animated:YES];
+//    return;
+    //*
 	
 	switch (indexPath.row) {
 			

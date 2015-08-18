@@ -247,6 +247,7 @@
     }
 }
 
+#pragma mark - 重写这个方法是为了避免PolarView在ScrollView中拖拽移动的问题
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
 	NSLog(@"pointInside:");
 
@@ -267,7 +268,7 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"触摸开始");
+//    NSLog(@"触摸开始");
     if ([self.delegate respondsToSelector:@selector(WLPolarWillStartTouch:)]) {
         [self.delegate WLPolarWillStartTouch:self];
     }
@@ -403,11 +404,13 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"触摸结束");
+//    NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
-    _dataSeries = [NSArray arrayWithArray:_values];
-	NSLog(@"Points:%@",_points);
-	NSLog(@"_dataSeries : %@", _dataSeries);
+    if (_isTouchInPoint) {
+        _dataSeries = [NSArray arrayWithArray:_values];
+    }
+//	NSLog(@"Points:%@",_points);
+//	NSLog(@"_dataSeries : %@", _dataSeries);
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
     if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:index:)]) {
