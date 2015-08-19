@@ -48,6 +48,7 @@
 		3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */; };
 		3D4873601B622993003D2C24 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48735F1B622993003D2C24 /* SMPageControl.m */; };
 		3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */; };
+		3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4D1B591B8316DD00CFD151 /* AdjustView.m */; };
 		3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D5E901C1B26C43E00B03107 /* Localizable.strings */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
@@ -83,6 +84,7 @@
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
+		3DB8DF531B82DDD90009F480 /* stopButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DB8DF521B82DDD90009F480 /* stopButtonBg.png */; };
 		3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
 		3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05B11B280CDF0008EFCA /* UseTimeViewController.m */; };
@@ -298,6 +300,8 @@
 		3D48735F1B622993003D2C24 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		3D48BF1B1B53A72B004EE243 /* ChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeUserViewController.h; sourceTree = "<group>"; };
 		3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeUserViewController.m; sourceTree = "<group>"; };
+		3D4D1B581B8316DD00CFD151 /* AdjustView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustView.h; sourceTree = "<group>"; };
+		3D4D1B591B8316DD00CFD151 /* AdjustView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustView.m; sourceTree = "<group>"; };
 		3D5E901B1B26C43E00B03107 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D5E901D1B26C43F00B03107 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3D65A4831B25792800B7B411 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 		3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlanTableViewCell.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
+		3DB8DF521B82DDD90009F480 /* stopButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopButtonBg.png; sourceTree = "<group>"; };
 		3DBDCE9B1B549E270006EA18 /* BasicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTableViewCell.h; sourceTree = "<group>"; };
 		3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTableViewCell.m; sourceTree = "<group>"; };
 		3DBE05AD1B27F2A20008EFCA /* DataCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCenterViewController.h; sourceTree = "<group>"; };
@@ -818,6 +823,8 @@
 				3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */,
 				3DE5D66C1B5F470200489C62 /* AutoMassageViewController.h */,
 				3DE5D66D1B5F470200489C62 /* AutoMassageViewController.m */,
+				3D4D1B581B8316DD00CFD151 /* AdjustView.h */,
+				3D4D1B591B8316DD00CFD151 /* AdjustView.m */,
 			);
 			path = AutoMassage;
 			sourceTree = "<group>";
@@ -1026,6 +1033,7 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3DB8DF521B82DDD90009F480 /* stopButtonBg.png */,
 				3DE3FFA81B4F79CA003F8AF7 /* bg.png */,
 				3DC790931B4272B00034C3C1 /* navBar.png */,
 			);
@@ -1726,6 +1734,7 @@
 				569360291B79E910001B9BF5 /* 003.bin in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
+				3DB8DF531B82DDD90009F480 /* stopButtonBg.png in Resources */,
 				3DCDF36D1B1FEB7400BA491E /* menu-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1790,6 +1799,7 @@
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
+				3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */,
 				3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */,

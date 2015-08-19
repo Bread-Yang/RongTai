@@ -125,6 +125,12 @@
 @property(nonatomic, weak)id<WLPolarDelegate> delegate;
 
 /**
+ *  设置第n个点的拖拽范围
+ *  传两个值，一个最大限制值，一个最小限制值，若最大限制值不符合条件，则按可取值的最大值（属性maxValue），最小限制值亦然
+ */
+-(void)setPoint:(NSUInteger)index MaxLimit:(float)max MinLimit:(float)min;
+
+/**
  *  设置第n个点的值
  */
 -(void)setValue:(float)value ByIndex:(NSUInteger)index;

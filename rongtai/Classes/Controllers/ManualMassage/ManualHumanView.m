@@ -176,6 +176,9 @@
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_AIRBAG_LEG];
 			break;
 	}
+    if ([self.delegate respondsToSelector:@selector(maualHumanViewClicked:)]) {
+        [self.delegate maualHumanViewClicked:self];
+    }
 }
 
 - (void)checkButtonByAirBagProgram:(RTMassageChairAirBagProgram)airBagProgram {
@@ -201,19 +204,20 @@
 			break;
 	}
 	
-	for (int i = 0; i<_parts.count; i++) {
-		UIButton* b = (UIButton*)[self viewWithTag:2100+i];
-		LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
-		if (btn && b.tag == btn.tag) {
-			[b setSelected:YES];
-			l.isSelected = YES;
-		}
-		else
-		{
-			[b setSelected:NO];
-			l.isSelected = NO;
-		}
-	}
+    for (int i = 0; i<_parts.count; i++) {
+        UIButton* b = (UIButton*)[self viewWithTag:2100+i];
+        LineLabel* l = (LineLabel*)[self viewWithTag:2110+i];
+        if (btn && b.tag == btn.tag) {
+            [b setSelected:YES];
+            l.isSelected = YES;
+        }
+        else
+        {
+            [b setSelected:NO];
+            l.isSelected = NO;
+        }
+    }
+    
 	if (btn) {
         _isSelected = YES;
 		_partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];

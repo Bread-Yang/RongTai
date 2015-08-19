@@ -48,7 +48,7 @@
     self.navigationItem.rightBarButtonItem = share;
     
     //保存按钮圆角设置
-    _saveBtn.layer.cornerRadius = 5;
+    _saveBtn.layer.cornerRadius = SCREENHEIGHT*0.065*0.5;
     
     //按比例设置各个控件的字体
     _functionTextView.font = [UIFont systemFontOfSize:WSCALE*13];
