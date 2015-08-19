@@ -24,24 +24,26 @@
 {
     [super layoutSubviews];
     NSLog(@"titleF:%@",NSStringFromCGRect(self.textLabel.frame));
-    CGFloat h = CGRectGetHeight(self.frame);
-//    CGFloat w = CGRectGetWidth(self.frame);
-    CGRect f = self.imageView.frame;
-    f.size.height = self.imageViewScale*h;
-    f.size.width = self.imageViewScale*h;
-    f.origin.y = (1-self.imageViewScale)*h/2;
-    self.imageView.frame = f;
-    
-    //
-    f = self.textLabel.frame;
-    f.origin.x = self.imageView.frame.origin.x+self.imageView.frame.size.width+10;
-    self.textLabel.frame = f;
-    
-//    self.detailTextLabel.backgroundColor = [UIColor blueColor];
-    f = self.detailTextLabel.frame;
-    f.size.width *= 0.85;
-    f.size.height = h*0.3;
-    self.detailTextLabel.frame = f;
+	if (!self.hidden) {
+		CGFloat h = CGRectGetHeight(self.frame);
+		//    CGFloat w = CGRectGetWidth(self.frame);
+		CGRect f = self.imageView.frame;
+		f.size.height = self.imageViewScale*h;
+		f.size.width = self.imageViewScale*h;
+		f.origin.y = (1-self.imageViewScale)*h/2;
+		self.imageView.frame = f;
+		
+		//
+		f = self.textLabel.frame;
+		f.origin.x = self.imageView.frame.origin.x+self.imageView.frame.size.width+10;
+		self.textLabel.frame = f;
+		
+		//    self.detailTextLabel.backgroundColor = [UIColor blueColor];
+		f = self.detailTextLabel.frame;
+		f.size.width *= 0.85;
+		f.size.height = h*0.3;
+		self.detailTextLabel.frame = f;
+	}
 }
 
 @end

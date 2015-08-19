@@ -15,6 +15,7 @@
         _mDescription = [json objectForKey:@"description"];
         _imageUrl = [json objectForKey:@"imageUrl"];
 		_binUrl = [json objectForKey:@"binUrl"];
+        _commandId = [[json objectForKey:@"commandId"] unsignedIntegerValue];
         _massageId = [[json objectForKey:@"massageId"] unsignedIntegerValue];
         _name = [json objectForKey:@"name"];
         _power = [[json objectForKey:@"power"] unsignedIntegerValue];

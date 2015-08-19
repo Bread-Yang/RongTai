@@ -112,6 +112,8 @@
 
 - (void)goBack {
     [self.navigationController popViewControllerAnimated:YES];
+	
+	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -121,6 +123,7 @@
 }
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
+	NSLog(@"didUpdateNetworkMassageStatus");
 	[_tableView reloadData];
 }
 
@@ -148,7 +151,7 @@
     ProgramDownloadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProgramDownloadTableViewCell" forIndexPath:indexPath];
 	cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
 	
-	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:cell.massageProgram.massageId];
+	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:cell.massageProgram.commandId];
 	
 	if (isAlreadyInstall) {
 		cell.isAlreadyDownload = true;

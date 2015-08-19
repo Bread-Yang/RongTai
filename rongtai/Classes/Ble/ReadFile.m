@@ -20,6 +20,7 @@
 }
 
 - (void)read:(NSString *)binName {
+	[resultData setLength:0]; // 清空数据
     //沙盒路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -107,6 +108,9 @@
 	}
 }
 - (void) dataAtNoteDB {
+	if (resultData.length == 0) {
+		NSLog(@"读取文件的长度为零");
+	}
     NSLog(@"读取文件 : %@", resultData);
     
     //NSLog(@"%@",aNoteDb);

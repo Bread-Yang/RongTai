@@ -20,10 +20,4 @@
 
 @property (nonatomic, assign) BOOL isAlreadyDownload;
 
-@property (nonatomic, assign) CGFloat progress;
-@property (nonatomic, assign) BOOL isCompleted;
-@property (nonatomic, strong) NSString *bytesProgress;
-@property (nonatomic, strong) NSString *bytesTotal;
-@property (nonatomic, strong) NSString *error;
-
 @end

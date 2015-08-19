@@ -17,7 +17,19 @@
 			return i + 1;
 		}
 	}
-	return 1;
+	return -1;
+}
+
+- (NSInteger)getIntByIndex:(NSInteger)index {
+	if (index < 0 || index > [self.networkProgramStatusArray count] - 1) {
+		return 0;
+	}
+	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+		if (i == index) {
+			return [(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue];
+		}
+	}
+	return 0;
 }
 
 - (NSInteger)getIndexByMassageId:(NSInteger)massageId {
