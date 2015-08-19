@@ -8,9 +8,11 @@
 
 #import "RTBleConnector.h"
 #import "RTCommand.h"
-#import "CustomIOSAlertView.h"
 #import "ReadFile.h"
 #import "MainViewController.h"
+#import "RongTaiConstant.h"
+#import "AFNetworking.h"
+#import "CustomIOSAlertView.h"
 
 static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
@@ -56,13 +58,14 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @property (nonatomic, retain) CustomIOSAlertView *reconnectDialog;
 
+@property (nonatomic, retain) NSString *oldMassageChairStatus;
+
 @end
 
 @implementation RTBleConnector
 
 
 + (instancetype)shareManager {
-	NSLog(@"%@", @"shareManager()");
     static RTBleConnector *shareManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -221,8 +224,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-//	NSLog(@"data.length : %zd", data.length);
-//	NSLog(@"data : %@", data);
+	NSLog(@"data.length : %zd", data.length);
+	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
@@ -239,21 +242,36 @@ static Byte const BYTE_ExitCode = 0x82;
 //			
 //			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 			
-			[self parseNetworkStatus:data];
+			NSString *newStatusString = NSDataToHex(data);
 			
-			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
+			if (![newStatusString isEqualToString:_oldMassageChairStatus]) {
+				_oldMassageChairStatus = newStatusString;
 				
-				[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
-			}
-			
-		} else {  // 不等于11位或者17位 : 编辑模式
-			
-			if (data.length == 12) {
 				[self parseNetworkStatus:data];
 				
 				if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
 					
 					[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
+				}
+			}
+		} else {  // 不等于11位或者17位 : 编辑模式
+			
+			if (data.length == 12) {
+				
+				NSString *newStatusString = NSDataToHex(data);
+				
+				if (![newStatusString isEqualToString:_oldMassageChairStatus]) {
+					NSLog(@"newStatusString : %@", newStatusString);
+					NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairStatus);
+					
+					_oldMassageChairStatus = newStatusString;
+					
+					[self parseNetworkStatus:data];
+					
+					if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
+						
+						[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
+					}
 				}
 			}
 			
@@ -268,6 +286,30 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didWriteValueForCharacteristic:(CBCharacteristic *)characteristic inPeripheral:(CBPeripheral *)peripheral {
     
+}
+
+static inline char itoh(int i) {
+	if (i > 9) return 'A' + (i - 10);
+	return '0' + i;
+}
+
+NSString * NSDataToHex(NSData *data) {
+	NSUInteger i, len;
+	unsigned char *buf, *bytes;
+	
+	len = data.length;
+	bytes = (unsigned char*)data.bytes;
+	buf = malloc(len*2);
+	
+	for (i=0; i<len; i++) {
+		buf[i*2] = itoh((bytes[i] >> 4) & 0xF);
+		buf[i*2+1] = itoh(bytes[i] & 0xF);
+	}
+	
+	return [[NSString alloc] initWithBytesNoCopy:buf
+										  length:len*2
+										encoding:NSASCIIStringEncoding
+									freeWhenDone:YES];
 }
 
 #pragma mark - Send Command
@@ -319,7 +361,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			return;
 		}
 		
-		NSLog(@"发送的data : %@", data);
+//		NSLog(@"发送的data : %@", data);
 		
 		[self sendDataToPeripheral:data];
 	}
@@ -332,9 +374,72 @@ static Byte const BYTE_ExitCode = 0x82;
 	[self sendDataToPeripheral:sendData];
 }
 
-#pragma mark - get program mode command
+#pragma mark - install network program
 
-- (NSData *)InstallProgramMassage:(NSString *)binName {
+- (void)installProgramMassageByBinName:(NSString *)binName {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+	NSString *binDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"bin"];
+	NSString *binPath = [binDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.bin", binName]];
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	// 文件夹不存在则创建
+	[fileManager createDirectoryAtPath:binDir withIntermediateDirectories:YES attributes:nil error:nil];
+	
+	// 在本地查看是否存在
+	if ([fileManager fileExistsAtPath:binPath]) {
+		
+		[self sendControlByBytes:[self getInstallProgramMassageCommand:binName]];
+		
+	} else {
+		NSString *url = [RongTaiFileDomain stringByAppendingString:binName];
+		
+		NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
+		
+		AFHTTPRequestOperation *afOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+		afOperation.outputStream = [NSOutputStream outputStreamToFileAtPath:binPath append:NO];  // 保存文件
+		
+		__weak RTBleConnector *weakSelf = self;
+		
+		[afOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+			
+			weakSelf.progress = (double)totalBytesRead / totalBytesExpectedToRead;
+			weakSelf.bytesProgress = [NSString stringWithFormat:@"%@/%@", [weakSelf formatByteCount:totalBytesRead], [weakSelf formatByteCount:totalBytesExpectedToRead]];
+			
+			NSLog(@"下载了多少 : %zd", weakSelf.progress);
+		}];
+		
+		[afOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+			
+			weakSelf.bytesTotal = [weakSelf formatByteCount:operation.response.expectedContentLength];
+			weakSelf.isCompleted = YES;
+			
+			// 下载完后安装
+			[self sendControlByBytes:[[RTBleConnector shareManager] getInstallProgramMassageCommand:binName]];
+			
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			
+			if ([[NSFileManager defaultManager] fileExistsAtPath:binPath]) {
+				NSLog(@"网络下载bin文件失败,删除文件,目录是 : %@", binPath);
+				[[NSFileManager defaultManager] removeItemAtPath:binPath error:nil];
+			}
+			
+			weakSelf.error = error.localizedDescription;
+			weakSelf.isCompleted = YES;
+			
+		}];
+		
+		[afOperation start];
+	}
+}
+
+- (NSString*)formatByteCount:(long long)size {
+	return [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleFile];
+}
+
+#pragma mark - get network program operation command
+
+- (NSData *)getInstallProgramMassageCommand:(NSString *)binName {
 	
 	if (!self.readFile) {
 		self.readFile = [[ReadFile alloc] init];
@@ -506,9 +611,11 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)installNext {
 	self.installCount++;
+	NSLog(@"总数 : %zd , 当前数量 : %zd", self.installCount, self.installCount);
 	if(self.installCount <= self.installAllCount) {
 		[self installCommandSend];
 	} else {
+		NSLog(@"传输结束,发送04");
 		Byte byte[] = {4};  // EOT 0X04 传输结束标志，所有数据包数据传输完成后，APP只发一个字节的EOT信息给主板，主板收到EOT后，发送ACK信息给APP 表示本次传输完毕
 		[self sendControlByBytes:[NSData dataWithBytes:byte length:1]];
 		self.isStartInstall = false;
@@ -550,7 +657,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			if (self.isStartInstall) {
 				[self installNext];
 			} else {
-//				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
 				
 				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
 					[self.delegate didEndInstallProgramMassage];
@@ -567,7 +674,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 - (void)parseNetworkStatus:(NSData *)data  {
 	NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
 	
-	NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
+//	NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 	
 	Byte *networkStatusByte = (Byte *)[networkStatusData bytes];
 	

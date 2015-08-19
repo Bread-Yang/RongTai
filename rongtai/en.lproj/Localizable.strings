@@ -70,11 +70,17 @@
 "工作减压" = "Working Relieve";
 "肩颈重点" = "Neck & Shoulder";
 "腰椎舒缓" = "Waist & Spine";
+"云养程序一" = "NetCloud1";
+"云养程序二" = "NetCloud2";
+"云养程序三" = "NetCloud3";
+"云养程序四" = "NetCloud4";
 "消除疲劳" = "消除疲劳";
 "女性纤体按摩" = "女性纤体按摩";
 "韩式按摩" = "韩式按摩";
 "老年按摩" = "老年按摩";
 "安装中" = "Installing";
+"确定" = "confirm";
+"网络程序安装位已满" = "Network Program Slot Full,Please Delete";
 
 
 

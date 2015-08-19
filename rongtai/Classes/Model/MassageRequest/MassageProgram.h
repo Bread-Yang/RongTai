@@ -26,6 +26,11 @@
 @property (nonatomic, retain) NSString *binUrl;
 
 /**
+ *  commnadId
+ */
+@property(nonatomic)NSInteger commandId;
+
+/**
  *  id
  */
 @property(nonatomic)NSInteger massageId;

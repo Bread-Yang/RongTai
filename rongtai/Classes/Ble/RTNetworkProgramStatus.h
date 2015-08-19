@@ -13,9 +13,11 @@
 @property (nonatomic, retain) NSArray *networkProgramStatusArray;
 
 /**
- *	用于安装网络程序,四个位,如果是0,就返回该index,如果四个位都满了,就默认返回1
+ *	用于安装网络程序,四个位,如果是0,就返回该index,如果四个位都满了,就默认返回-1
  */
 - (NSInteger)getEmptyPositionIndex;
+
+- (NSInteger)getIntByIndex:(NSInteger)index;
 
 /**
  *	用于删除网络程序

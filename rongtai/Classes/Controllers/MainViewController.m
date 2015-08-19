@@ -114,9 +114,14 @@
 					   NSLocalizedString(@"休憩促眠", nil),
 					   NSLocalizedString(@"工作减压", nil),
 					   NSLocalizedString(@"肩颈重点", nil),
-					   NSLocalizedString(@"腰椎舒缓", nil),];
+					   NSLocalizedString(@"腰椎舒缓", nil),
+					   NSLocalizedString(@"云养程序一", nil),
+					   NSLocalizedString(@"云养程序二", nil),
+					   NSLocalizedString(@"云养程序三", nil),
+					   NSLocalizedString(@"云养程序四", nil),];
+	
     for (int i = 0; i < [_modeNameArray count]; i++) {
-        MassageProgram* m = [MassageProgram new];
+        MassageProgram *m = [MassageProgram new];
         m.name = _modeNameArray[i];
         m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
         m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
@@ -156,6 +161,7 @@
     [super viewWillDisappear:animated];
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     slideNav.enableSwipeGesture = NO;
+	[_table reloadData];
 }
 
 
@@ -231,7 +237,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BasicTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    BasicTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[BasicTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
         cell.imageViewScale = 0.55;
@@ -244,7 +250,7 @@
         [cell sendSubviewToBack:bg];
     }
     cell.backgroundColor = [UIColor clearColor];
-    MassageProgram* massage = _massageArr[indexPath.row];
+    MassageProgram *massage = _massageArr[indexPath.row];
     if (massage) {
         cell.textLabel.text = massage.name;
         cell.textLabel.textColor = BLACK;
@@ -261,7 +267,23 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
+	
+	if (indexPath.row >= 6) {
+		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+			cell.hidden = YES;
+			
+			if ([cell.contentView subviews]){
+				for (UIView *subview in [cell.contentView subviews]) {
+					[subview removeFromSuperview];
+				}
+			}
+			return 0;
+		}
+	}
+	
+	cell.hidden = NO;
+	return 80;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -297,9 +319,21 @@
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
 			break;
 			
-		// 腰椎舒缓
+		// 云养程序一
 		case 5:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
+			break;
+		// 云养程序二
+		case 6:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
+			break;
+		// 云养程序三
+		case 7:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
+			break;
+		// 云养程序四
+		case 8:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
 			break;
 	}
 }
@@ -367,8 +401,9 @@
 	}
 }
 
-- (void)didUpdateNetworkMassageStatus:(NSData *)rawData {
-	
+- (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
+	NSLog(@"didUpdateNetworkMassageStatus");
+	[_table reloadData];
 }
 
 /*

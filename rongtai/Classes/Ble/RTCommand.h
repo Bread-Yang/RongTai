@@ -9,18 +9,50 @@
 #ifndef BLETool_RTCommand_h
 #define BLETool_RTCommand_h
 
+//一级命令列表：
+#define LINGO_AIRBAG      0x01
+#define LINGO_RESET       0x02
+#define LINGO_ENG         0x03   //机器进入工程模式
+#define LINGO_MENU        0x04
+#define LINGO_PROGRAM     0x05  //机器进入编程模式
+#define LINGO_INPUT       0x06    // 测试输入电压
+#define LINGO_ROLLER_TEST 0x07
+#define LINGO_KNEAD_TEST  0x08
+#define LINGO_SLIDE_TEST  0x09
+#define LINGO_BACK_TEST   0x0A
+#define LINGO_LEG_TEST    0x0B
+#define LINGO_FLEX_TEST   0x0C
+#define LINGO_WALK_TEST   0x0D
+#define LINGO_KNOCK_TEST  0x0E
+#define LINGO_LED_TEST    0x0F
+#define LINGO_PROGRAM_BY_BLUETOOTH     0x10
+#define LINGO_BLUETOOTH_BR115200       0x11
+#define LINGO_MUSIC_TEST      0x12
+#define LINGO_HEAT_TEST       0x13
+#define LINGO_ONE_KEY_TEST    0x14  //一键测试
+#define LINGO_TOTAL_TIME      0x15   //累积时间查看
+
+//二级命令列表：
+#define  H10_KEY_MENU 	0x71  //菜单键
+#define  H10_KEY_UP   	0x72
+#define  H10_KEY_DOWN 	0x73
+#define  H10_KEY_LEFT 	0x74
+#define  H10_KEY_RIGHT 	0x75
+#define  H10_KEY_OK 	0x76
+#define  H10_KEY_RESET 	0x7E  //机器复位命令，此命令可以控制按摩椅主板和手控器进入开机//复位状态，相当于重新上电
+
+//按键定义参考：
 #define SOI                             0XF0
 #define EOI                             0XF1
-
 #define CONTROL_CODE                    0X82
-#define NORMAL_CTRL                     CONTROL_CODE
-#define ENGGER_CTRL                     0xBD
+
+#define NORMAL_CTRL                   CONTROL_CODE
+#define ENGGER_CTRL                   	0xBD
 
 #define H10_KEY_NONE			        0x7f
 //Power Switch Key
 #define H10_KEY_POWER_SWITCH			0x01
 #define H10_KEY_MENU                    0x02
-
 //ZONE1:自动程序键值
 #define H10_KEY_CHAIR_AUTO_0			0x10 //疲劳恢复 recovery
 #define H10_KEY_CHAIR_AUTO_1			0x11 //舒展按摩 extend
@@ -28,42 +60,43 @@
 #define H10_KEY_CHAIR_AUTO_3			0x13 //酸痛改善 refresh
 #define H10_KEY_CHAIR_AUTO_4            0x14
 #define H10_KEY_CHAIR_AUTO_5            0x15
+#define H10_KEY_CHAIR_UP_BACK         H10_KEY_CHAIR_AUTO_4
+#define H10_KEY_CHAIR_DOWN_BACK	      H10_KEY_CHAIR_AUTO_5
+#define H10_KEY_NECK_SHOULDER_AUTO    H10_KEY_CHAIR_UP_BACK
+#define H10_KEY_BACK_WAIST_AUTO       H10_KEY_CHAIR_DOWN_BACK
 
-#define H10_KEY_CHAIR_UP_BACK           H10_KEY_CHAIR_AUTO_4
-#define H10_KEY_CHAIR_DOWN_BACK         H10_KEY_CHAIR_AUTO_5
-#define H10_KEY_NECK_SHOULDER_AUTO      H10_KEY_CHAIR_UP_BACK
-#define H10_KEY_BACK_WAIST_AUTO         H10_KEY_CHAIR_DOWN_BACK
-
+#define H10_KEY_CHAIR_AUTO_NETCLOUD_1			        0x71  //20150721增加
+#define H10_KEY_CHAIR_AUTO_NETCLOUD_2			        0x72
+#define H10_KEY_CHAIR_AUTO_NETCLOUD_3			        0x73
+#define H10_KEY_CHAIR_AUTO_NETCLOUD_4			        0x74
 
 //ZONE2:手动程序键值
 /**********************************************************/
+#define H10_KEY_KNEAD				0x20	// 揉捏
+#define H10_KEY_KNOCK				0x21	// 敲击
+#define H10_KEY_PRESS				0x22 	// 指压
+#define H10_KEY_SOFT_KNOCK			0x23 	// 叩击
+#define H10_KEY_WAVELET				0x24 	// 揉敲同步
 
-#define H10_KEY_KNEAD					0x20 // 揉捏
-#define H10_KEY_KNOCK					0x21 // 敲击
-#define H10_KEY_PRESS					0x22 // 指压
-#define H10_KEY_SOFT_KNOCK				0x23 // 叩击
-#define H10_KEY_WAVELET					0x24 // 揉敲同步
+#define H10_KEY_MANUAL				0x25 	// 韵律按摩
+#define H10_KEY_MUSIC               0x26
+#define H10_KEY_HEAT_ON  			0x27 	//背部加热开
+#define H10_KEY_HEAT  				0x27 	//背部加热开
 
-#define H10_KEY_MANUAL					0x25
-#define H10_KEY_MUSIC                   0x26 // 韵律按摩
-#define H10_KEY_HEAT_ON  				0x27 //背部加热开
-#define H10_KEY_HEAT  				    0x27 //背部加热开
-
-#define H10_KEY_LOCATE_PART			    0x28 //按摩部位局部
-#define H10_KEY_LOCATE_POINT            0x29 //按摩部位定点
-#define H10_KEY_LOCATE_FULL				0x2A //按摩部位全程
+#define H10_KEY_LOCATE_PART			0x28 	//按摩部位局部
+#define H10_KEY_LOCATE_POINT		0x29 	//按摩部位定点
+#define H10_KEY_LOCATE_FULL			0x2A 	//按摩部位全程
 
 #define H10_KEY_WIDTH_MIN				0x2B
 #define H10_KEY_WIDTH_MED				0x2C
 #define H10_KEY_WIDTH_MAX				0x2D
 
-#define H10_KEY_SPEED_1                 0x2E //按摩速度1
-#define H10_KEY_SPEED_2                 0x2F //按摩速度2
-#define H10_KEY_SPEED_3                 0x30 //按摩速度3
-#define H10_KEY_SPEED_4                 0x31 //按摩速度4
-#define H10_KEY_SPEED_5                 0x32 //按摩速度5
-#define H10_KEY_SPEED_6                 0x33 //按摩速度6
-
+#define H10_KEY_SPEED_1                                 0x2E //按摩速度1
+#define H10_KEY_SPEED_2                                 0x2F //按摩速度2
+#define H10_KEY_SPEED_3                                 0x30 //按摩速度3
+#define H10_KEY_SPEED_4                                 0x31 //按摩速度4
+#define H10_KEY_SPEED_5                                 0x32 //按摩速度5
+#define H10_KEY_SPEED_6                                 0x33 //按摩速度6
 
 #define H10_KEY_WHEEL_SPEED_SLOW                        0x34 //滚轮速度慢
 #define H10_KEY_WHEEL_SPEED_MED                         0x35 //滚轮速度中
@@ -74,11 +107,11 @@
 #define H10_KEY_SPEED_DECREASE                          0x39
 
 //ZONE3:气囊设置程序键值
-#define H10_KEY_AIRBAG_LEG                              0x40  //小腿
-#define H10_KEY_AIRBAG_ARM                              0x41  //臂肩
-#define H10_KEY_AIRBAG_WAIST                            0x42  //背腰
-#define H10_KEY_AIRBAG_BUTTOCKS                         0x43  //臀部
-#define H10_KEY_AIRBAG_AUTO                             0x44  //全身自动
+#define H10_KEY_AIRBAG_LEG			        0x40  //小腿
+#define H10_KEY_AIRBAG_ARM			        0x41  //臂肩
+#define H10_KEY_AIRBAG_WAIST			    0x42  //背腰
+#define H10_KEY_AIRBAG_BUTTOCKS			    0x43  //臀部
+#define H10_KEY_AIRBAG_AUTO			        0x44  //全身自动
 
 #define H10_KEY_AIRBAG_STRENGTH_1                       0x45  //气囊力度1
 #define H10_KEY_AIRBAG_STRENGTH_WEAK                    0x45  //气囊力度弱
@@ -100,45 +133,45 @@
 #define H10_KEY_BACK_LIGHT_HIGH                         0x57  //背光强度强
 
 //ZONE5:机芯位置控制键值
-#define H10_KEY_WALK_UP_START                           0x60
-#define H10_KEY_WALK_UP_STOP                            0x61
-#define H10_KEY_WALK_DOWN_START                         0x62
-#define H10_KEY_WALK_DOWN_STOP                          0x63
+#define H10_KEY_WALK_UP_START				0x60
+#define H10_KEY_WALK_UP_STOP				0x61
+#define H10_KEY_WALK_DOWN_START				0x62
+#define H10_KEY_WALK_DOWN_STOP				0x63
 
 //ZONE6:靠背电动缸控制键值
-#define H10_KEY_BACKPAD_UP_START                        0x64
-#define H10_KEY_BACKPAD_UP_STOP                         0x65
-#define H10_KEY_BACKPAD_DOWN_START                      0x66
-#define H10_KEY_BACKPAD_DOWN_STOP                       0x67
+#define H10_KEY_BACKPAD_UP_START			0x64
+#define H10_KEY_BACKPAD_UP_STOP				0x65
+#define H10_KEY_BACKPAD_DOWN_START			0x66
+#define H10_KEY_BACKPAD_DOWN_STOP			0x67
 
 //ZONE7:小腿电动缸控制键值
-#define H10_KEY_LEGPAD_UP_START                         0x68
-#define H10_KEY_LEGPAD_UP_STOP                          0x69
-#define H10_KEY_LEGPAD_DOWN_START                       0x6A
-#define H10_KEY_LEGPAD_DOWN_STOP                        0x6B
+#define H10_KEY_LEGPAD_UP_START				0x68
+#define H10_KEY_LEGPAD_UP_STOP				0x69
+#define H10_KEY_LEGPAD_DOWN_START			0x6A
+#define H10_KEY_LEGPAD_DOWN_STOP			0x6B
 
 #define H10_KEY_LEGPAD_EXTEND_START                     0x6C
 #define H10_KEY_LEGPAD_EXTEND_STOP                      0x6D
 #define H10_KEY_LEGPAD_CONTRACT_START                   0x6E
 #define H10_KEY_LEGPAD_CONTRACT_STOP                    0x6F
 
-#define H10_KEY_3DMODE_1                                0x39 //3D手法1
-#define H10_KEY_3DMODE_2                                0x3A //3D手法2
-#define H10_KEY_3DMODE_3                                0x3B //3D手法3
-#define H10_KEY_3DMODE        \                          0x3D //3D手法切换
+#define H10_KEY_3DMODE_1                               	0x39 //3D手法1
+#define H10_KEY_3DMODE_2                               	0x3A //3D手法2
+#define H10_KEY_3DMODE_3                               	0x3B //3D手法3
+#define H10_KEY_3DMODE                                 	0x3D //3D手法切换
 #define H10_KEY_3DSPEED_1                               0x58 //3D手法1
 #define H10_KEY_3DSPEED_2                               0x59 //3D手法2
 #define H10_KEY_3DSPEED_3                               0x5A //3D手法3
 #define H10_KEY_3DSPEED_4                               0x5B //3D手法1
 #define H10_KEY_3DSPEED_5                               0x5C //3D手法2
-#define H10_KEY_3D_STRENGTH                             0x57 //3D手法2
-#define H10_KEY_RESET                                   0x7E
+#define H10_KEY_3D_STRENGTH                            	0x57 //3D手法2
+#define  H10_KEY_RESET 0x7E
 
 //ZONE8:零重力键值
-#define H10_KEY_ZERO_START                              0x70
+#define H10_KEY_ZERO_START                          0x70
 
-#define H10_KEY_WIDTH_INCREASE                          0x90
-#define H10_KEY_WIDTH_DECREASE                          0x91
-#define H10_KEY_BLUETOOTH_POWER_SWITCH                  0x53
+#define H10_KEY_WIDTH_INCREASE                      0x90
+#define H10_KEY_WIDTH_DECREASE                      0x91
+#define H10_KEY_BLUETOOTH_POWER_SWITCH  	        0x53
 
 #endif

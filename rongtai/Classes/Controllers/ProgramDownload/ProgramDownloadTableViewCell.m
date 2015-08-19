@@ -12,6 +12,7 @@
 #import "UIImage+ImageBlur.h"
 #import "RongTaiConstant.h"
 #import "AFNetworking.h"
+#import "CustomIOSAlertView.h"
 
 
 @implementation ProgramDownloadTableViewCell 
@@ -82,67 +83,30 @@
 - (void)downloadOrDeleteProgram:(UIButton *)button {
 	
 	if ([[button.currentImage accessibilityIdentifier] isEqualToString:@"download"]) {
-
-		[self downloadProgram:_massageProgram.binUrl];
 		
+		if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+			[[RTBleConnector shareManager] showConnectDialog];
+		} else {
+			// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
+			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptyPositionIndex] == -1) {
+				
+				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
+				tipsDialog.isReconnectDialog = YES;
+				tipsDialog.reconnectTipsString = NSLocalizedString(@"网络程序安装位已满", nil);
+				[tipsDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
+				
+				[tipsDialog show];
+			} else {
+				[[RTBleConnector shareManager] installProgramMassageByBinName:_massageProgram.binUrl];
+			}
+		}
 	} else {
-		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:self.massageProgram.massageId]];
+		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:self.massageProgram.commandId]];
+		
+		[NSThread sleepForTimeInterval:0.3f];
+		
+		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 	}
-}
-
-- (void)downloadProgram:(NSString *)binName {
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-	NSString *binDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"bin"];
-	NSString *binPath = [binDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.bin", binName]];
-	
-	// 文件夹不存在则创建
-	[[NSFileManager defaultManager] createDirectoryAtPath:binDir withIntermediateDirectories:YES attributes:nil error:nil];
-	
-	// 在本地查看是否存在
-	if ([[NSFileManager defaultManager] fileExistsAtPath:binPath]) {
-		
-		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] InstallProgramMassage:self.massageProgram.binUrl]];
-		
-	} else {
-		NSString *url = [RongTaiFileDomain stringByAppendingString:binName];
-		
-		NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
-		
-		AFHTTPRequestOperation *afOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-		afOperation.outputStream = [NSOutputStream outputStreamToFileAtPath:binPath append:NO];  // 保存文件
-		
-		__weak ProgramDownloadTableViewCell *weakSelf = self;
-		
-		[afOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-			
-			weakSelf.progress = (double)totalBytesRead / totalBytesExpectedToRead;
-			weakSelf.bytesProgress = [NSString stringWithFormat:@"%@/%@", [weakSelf formatByteCount:totalBytesRead], [weakSelf formatByteCount:totalBytesExpectedToRead]];
-			
-			NSLog(@"下载了多少 : %zd", weakSelf.progress);
-		}];
-		
-		[afOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-			
-			weakSelf.bytesTotal = [weakSelf formatByteCount:operation.response.expectedContentLength];
-			weakSelf.isCompleted = YES;
-			
-			// 下载完后安装
-			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] InstallProgramMassage:self.massageProgram.binUrl]];
-			
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			
-			weakSelf.error = error.localizedDescription;
-			weakSelf.isCompleted = YES;
-			
-		}];
-		
-		[afOperation start];
-	}
-}
-
-- (NSString*)formatByteCount:(long long)size {
-	return [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleFile];
 }
 
 @end

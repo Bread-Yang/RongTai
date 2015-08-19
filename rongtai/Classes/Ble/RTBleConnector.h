@@ -60,6 +60,26 @@ static BOOL isBleTurnOn;
 - (void)didUpdateStatusInProgramMode:(NSData *)rawData;
 
 /**
+ *	开始下载网络程序
+ */
+- (void)didStartDownloadProgramMassage;
+
+/**
+ *	网络程序下载中
+ */
+- (void)didDownloadingProgramMassage;
+
+/**
+ *	网络程序下载完成
+ */
+- (void)didSuccessDownloadProgramMassage;
+
+/**
+ *	网络程序下载失败
+ */
+- (void)didFailDownloadProgramMassage;
+
+/**
  *	开始安装网络程序
  */
 - (void)didStartInstallProgramMassage;
@@ -91,6 +111,14 @@ static BOOL isBleTurnOn;
 
 @property (nonatomic, retain) CBPeripheral *currentConnectedPeripheral;
 
+#pragma mark - download network program field
+
+@property (nonatomic, assign) CGFloat progress;
+@property (nonatomic, assign) BOOL isCompleted;
+@property (nonatomic, strong) NSString *bytesProgress;
+@property (nonatomic, strong) NSString *bytesTotal;
+@property (nonatomic, strong) NSString *error;
+
 + (instancetype)shareManager;
 
 + (BOOL)isBleTurnOn;
@@ -115,10 +143,14 @@ static BOOL isBleTurnOn;
 
 - (void)sendControlByBytes:(NSData *)data;
 
-- (NSData *)InstallProgramMassage:(NSString *)binName;
+- (void)installProgramMassageByBinName:(NSString *)binName;
 
 - (NSData *)deleteProgramMassage:(NSInteger)massageId;
 
 - (NSData *)exitEditMode;
+
+#pragma mark - reconnect dialog 
+
+- (void)showConnectDialog;
 
 @end
