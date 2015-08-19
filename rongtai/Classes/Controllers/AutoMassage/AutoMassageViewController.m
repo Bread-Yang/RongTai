@@ -68,7 +68,7 @@
 -(void)rightItemClicked:(id)sender
 {
 	NSLog(@"rightItemClicked");
-	[[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
+	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
 }
 
 #pragma mark - 返回按钮方法
