@@ -211,6 +211,7 @@ CGFloat buttonSpacerHeight = 0;
 			reconnectTipsLabel.textAlignment = NSTextAlignmentCenter;
 			reconnectTipsLabel.text = self.reconnectTipsString;
 			reconnectTipsLabel.textColor = [UIColor whiteColor];
+			reconnectTipsLabel.numberOfLines = 0;
 			
 			[containerView addSubview:reconnectTipsLabel];
 		}

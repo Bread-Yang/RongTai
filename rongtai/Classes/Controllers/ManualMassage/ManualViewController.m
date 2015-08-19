@@ -533,7 +533,7 @@
 
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender {
-    [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
+	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
 }
 
 

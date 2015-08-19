@@ -263,6 +263,13 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow"]];
+	
+	if (indexPath.row >= 6) {
+		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+			cell.hidden = YES;
+		}
+	}
+	
     return cell;
 }
 
@@ -271,13 +278,6 @@
 	
 	if (indexPath.row >= 6) {
 		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
-			cell.hidden = YES;
-			
-			if ([cell.contentView subviews]){
-				for (UIView *subview in [cell.contentView subviews]) {
-					[subview removeFromSuperview];
-				}
-			}
 			return 0;
 		}
 	}
