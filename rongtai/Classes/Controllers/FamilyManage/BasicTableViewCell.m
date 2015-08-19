@@ -23,7 +23,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    NSLog(@"titleF:%@",NSStringFromCGRect(self.textLabel.frame));
+//    NSLog(@"titleF:%@",NSStringFromCGRect(self.textLabel.frame));
 	if (!self.hidden) {
 		CGFloat h = CGRectGetHeight(self.frame);
 		//    CGFloat w = CGRectGetWidth(self.frame);

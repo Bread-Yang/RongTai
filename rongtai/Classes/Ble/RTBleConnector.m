@@ -224,8 +224,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-	NSLog(@"data : %@", data);
+//	NSLog(@"data.length : %zd", data.length);
+//	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
@@ -261,8 +261,8 @@ static Byte const BYTE_ExitCode = 0x82;
 				NSString *newStatusString = NSDataToHex(data);
 				
 				if (![newStatusString isEqualToString:_oldMassageChairStatus]) {
-					NSLog(@"newStatusString : %@", newStatusString);
-					NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairStatus);
+//					NSLog(@"newStatusString : %@", newStatusString);
+//					NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairStatus);
 					
 					_oldMassageChairStatus = newStatusString;
 					

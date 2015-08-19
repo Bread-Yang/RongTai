@@ -660,7 +660,7 @@
 //        _scan=0;
 //    }
     
-    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
+//    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
 	
 	// 以下是界面跳转
 	

@@ -135,7 +135,7 @@
 	
     if (peripheral.state == CBPeripheralStateConnected) {
 		if ([peripheral.name isEqualToString:RTLocalName]) {
-			[self performSegueWithIdentifier:@"rtSegue" sender:nil];
+			[self.navigationController popViewControllerAnimated:YES];
 		}
     } else {
 		[bleConnector cancelCurrentConnectedRTPeripheral];  // cancal current device connection, then connect another device
@@ -201,7 +201,7 @@
 	if ([peripheral.name isEqualToString:RTLocalName]) {
 //		[self performSegueWithIdentifier:@"rtSegue" sender:nil];
 		
-		[self.navigationController pushViewController:[MainViewController new] animated:YES];
+		[self.navigationController popViewControllerAnimated:YES];
 	}
 }
 
