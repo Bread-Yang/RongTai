@@ -1078,12 +1078,13 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		3DCDF3791B20401600BA491E /* WLRadarChart */ = {
+		3DCDF3791B20401600BA491E /* WLPolar */ = {
 			isa = PBXGroup;
 			children = (
 				3DCDF37A1B20401600BA491E /* WLPolar.h */,
 				3DCDF37B1B20401600BA491E /* WLPolar.m */,
 			);
+			name = WLPolar;
 			path = WLRadarChart;
 			sourceTree = "<group>";
 		};
@@ -1565,7 +1566,7 @@
 				3D1063A01B2D8E4A00266D9A /* WLCheckButton */,
 				5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */,
 				3DA8D60E1B21B226002328DF /* WLDoughnut */,
-				3DCDF3791B20401600BA491E /* WLRadarChart */,
+				3DCDF3791B20401600BA491E /* WLPolar */,
 			);
 			path = Views;
 			sourceTree = "<group>";

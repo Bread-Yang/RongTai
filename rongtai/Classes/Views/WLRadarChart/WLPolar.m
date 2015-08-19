@@ -30,19 +30,27 @@
     NSUInteger _numOfV;  //坐标轴数量，又赋值的数据源数据决定
     CGPoint _centerPoint;  //中心点
     NSMutableArray* _points;  //各点坐标
-    float _radPerV;
-    CGPoint _startPoint;
-    CGPoint _endPoint;
-    BOOL _isTouchInPoint;
-    NSUInteger _touchPointIndex;
-    UIImage* _touchImage;
-    CGPoint _touchLine;    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
-    CGPoint _Line2;
+    float _radPerV;      //单位弧度，如果有四个点，那它就等于90°
+//    CGPoint _startPoint; //触摸起始点
+    CGPoint _endPoint;   //触摸结束点
+    BOOL _isTouchInPoint;   //点击是否在交点范围内
+    NSUInteger _touchPointIndex;  //第几个点被触摸
+    UIImage* _touchImage;   //触摸点点击后样式图片
+    //特别说明：用CGPoint来表示一条直线，则x等于直线的k，y等于直线的b
+    CGPoint _touchLine;    //触摸点和中心点连成的直线
+    CGPoint _Line2;        //垂直与_touchLine的直线
     NSMutableArray* _values;   //存储点的值
     NSMutableArray* _canMove;  //存储点是否可移动
     NSMutableArray* _maxLimit; //存储点的最大限制值
     NSMutableArray* _minLimit; //存储点的最小限制值
     float _newR;
+    CGFloat _dif;   //最大最小值的差
+    float _currentAngle;  //当前触摸坐标轴和中心点的角度
+    float _sinCurrentAngle;  //_currentAngle的sin值
+    float _cosCurrentAngle;  //_currentAngle的cos值
+    float _currentMaxLimit;  //当前触摸点的最大限制值
+    float _currentMinLimit;  //当前触摸点的最小限制值
+    CGPoint _currentRangePoint;  //当前触摸点坐标轴的终点坐标
 }
 @end
 
@@ -76,7 +84,10 @@
     self.backgroundColor = [UIColor clearColor];
     _maxValue = 100.0;
     _minValue = 0;
+    _dif = _maxValue - _minValue;
+    //中心点为View的中心
     _centerPoint = CGPointMake((int)(self.bounds.size.width / 2), (int)(self.bounds.size.height / 2));
+    //半径为高或宽两者中的最小值
     _r = MIN(self.frame.size.width / 2 - PADDING, self.frame.size.height / 2 - PADDING);
     _steps = 1;
     _drawPoints = NO;
@@ -106,7 +117,8 @@
     _dataSeries = dataSeries;
     _values = [NSMutableArray arrayWithArray:_dataSeries];
     _numOfV = [_dataSeries count];
-    //默认都是可拖动
+    _radPerV = M_PI * 2 / _numOfV;
+    //默认都是不可拖动
     _canMove = [NSMutableArray arrayWithCapacity:_numOfV];
     for (int i = 0; i<_numOfV; i++) {
         NSNumber* n = [NSNumber numberWithBool:NO];
@@ -130,8 +142,6 @@
             [_minLimit addObject:n];
         }
     }
-
-    _radPerV = M_PI * 2 / _numOfV;
     [self countPointPosition];
     [self setNeedsDisplay]; 
 }
@@ -146,14 +156,15 @@
 -(void)setMaxValue:(CGFloat)maxValue
 {
     _maxValue = maxValue;
-    for (int i = 0; i<_numOfV; i++) {
-        NSNumber* n = _maxLimit[i];
-        float old = [n floatValue];
-        if (old > _maxValue) {
-            NSNumber* new = [NSNumber numberWithDouble:_maxValue];
-            [_maxLimit setObject:new atIndexedSubscript:i];
-        }
-    }
+    _dif = _maxValue - _minValue;
+//    for (int i = 0; i<_numOfV; i++) {
+//        NSNumber* n = _maxLimit[i];
+//        float old = [n floatValue];
+//        if (old > _maxValue) {
+//            NSNumber* new = [NSNumber numberWithDouble:_maxValue];
+//            [_maxLimit setObject:new atIndexedSubscript:i];
+//        }
+//    }
     [self countPointPosition];
     [self setNeedsDisplay];
 }
@@ -161,14 +172,15 @@
 -(void)setMinValue:(CGFloat)minValue
 {
     _minValue = minValue;
-    for (int i = 0; i<_numOfV; i++) {
-        NSNumber* n = _minLimit[i];
-        float old = [n floatValue];
-        if (old < _minValue) {
-            NSNumber* new = [NSNumber numberWithDouble:_minValue];
-            [_minLimit setObject:new atIndexedSubscript:i];
-        }
-    }
+    _dif = _maxValue - _minValue;
+//    for (int i = 0; i<_numOfV; i++) {
+//        NSNumber* n = _minLimit[i];
+//        float old = [n floatValue];
+//        if (old < _minValue) {
+//            NSNumber* new = [NSNumber numberWithDouble:_minValue];
+//            [_minLimit setObject:new atIndexedSubscript:i];
+//        }
+//    }
     [self countPointPosition];
     [self setNeedsDisplay];
 }
@@ -237,7 +249,7 @@
         }
         else
         {
-            value = (value - _minValue)/ (_maxValue - _minValue)*_r;
+            value = (value - _minValue)/ _dif*_r;
         }
         CGFloat angle = i * _radPerV;
         float x = _centerPoint.x - value * sin(angle);
@@ -286,26 +298,36 @@
         BOOL xIn = ABS(p.x - point.x) <= 30;
         BOOL yIn = ABS(p.y - point.y) <= 30;
         if (xIn && yIn) {
+            //确定触摸是在点的范围内，且该点是允许移动的，则计算一些相应的值
             _isTouchInPoint = YES;
             _touchPointIndex = i;
-            _startPoint = p;
-
-            CGPoint p2 = CGPointZero;
+            _currentAngle = _touchPointIndex*_radPerV;
+            _sinCurrentAngle = sin(_currentAngle);
+            _cosCurrentAngle = cos(_currentAngle);
+            
             NSNumber* nMin = _minLimit[_touchPointIndex];
             float min = [nMin floatValue];
-            float dltMin = (min-_minValue)/(_maxValue - _minValue);
+            if (min<_minValue) {
+                min = _minValue;
+            }
+            _currentMinLimit = (min-_minValue)/_dif;
+            
             
             NSNumber* nMax = _maxLimit[_touchPointIndex];
             float max = [nMax floatValue];
-            float dltMax = (max - _minValue)/(_maxValue - _minValue);
+            if (max>_maxValue) {
+                max = _maxValue;
+            }
+            _currentMaxLimit = (max - _minValue)/_dif;
             
-            _newR = (dltMax - dltMin)*_r;
-            float r = (_newR/2+dltMin*_r);
+            _currentRangePoint = CGPointMake(_centerPoint.x - _r * _sinCurrentAngle, _centerPoint.y - _r * _cosCurrentAngle);
             
-            float x = _centerPoint.x - r * sin(_touchPointIndex * _radPerV);
-            float y = _centerPoint.y - r * cos(_touchPointIndex * _radPerV);
-            p2.x = x;
-            p2.y = y;
+            _newR = (_currentMaxLimit - _currentMinLimit)*_r/2;
+            float r = (_newR+_currentMinLimit*_r);
+            
+            CGPoint p2 = CGPointZero;
+            p2.x = _centerPoint.x - r * _sinCurrentAngle;
+            p2.y = _centerPoint.y - r * _cosCurrentAngle;
             _touchLine = lineFunction(_centerPoint, p2);
             
             _Line2.x = -1 / _touchLine.x;
@@ -323,15 +345,14 @@
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     //    NSLog(@"触摸移动");
     //    [super touchesMoved:touches withEvent:event];
-    NSNumber* n = _canMove[_touchPointIndex];
-    BOOL canMove = [n boolValue];
-    if (_isTouchInPoint&&canMove) {
+//    NSNumber* n = _canMove[_touchPointIndex];
+//    BOOL canMove = [n boolValue];
+    if (_isTouchInPoint) {
         UITouch* touch = [touches anyObject];
         _endPoint = [touch locationInView:self];
         BOOL isIn  = YES;
         BOOL isInRange = YES;
-        float angle = _touchPointIndex * _radPerV;
-        float sinA = ABS(sin(angle));
+        float sinA = ABS(_sinCurrentAngle);
         float range;
         if (sinA<0.01) {
             range = 30;
@@ -340,54 +361,48 @@
         {
             range = 30/sinA;
         }
-        
+        //触摸点是否在_touchLine的范围内
         isIn = inLineRange(_endPoint, _touchLine, range);
         
-        angle  = M_PI_2 - angle;
+        float angle  = M_PI_2 - _currentAngle;
         sinA = ABS(sin(angle));
         if (sinA<0.01) {
-            range = _newR/2;
+            range = _newR;
         }
         else
         {
-            range = (_newR/2)/sinA;
+            range = _newR/sinA;
         }
+        //触摸点是否在_tocuhLine和_Line2的范围内
         isInRange = isIn && inLineRange(_endPoint, _Line2, range);
         
         if (isIn) {
             //            NSLog(@"在移动范围内");
             float dlt = distanceTwoPoint(_centerPoint, _endPoint);
-            CGFloat angle = _touchPointIndex * _radPerV;
             if (!isInRange) {
                 //                NSLog(@"超出范围");
-                CGPoint p = CGPointMake(_centerPoint.x - _r * sin(angle), _centerPoint.x - _r * cos(angle));
-                float dist = distanceTwoPoint(_endPoint, p);
+//                CGPoint p = CGPointMake(_centerPoint.x - _r * _sinCurrentAngle, _centerPoint.y - _r * _cosCurrentAngle);
+                float dist = distanceTwoPoint(_endPoint, _currentRangePoint);
                 if (dist > dlt) {
-                    NSNumber* minNum = _minLimit[_touchPointIndex];
-                    float min = [minNum floatValue];
-                    min = (min - _minValue)/(_maxValue - _minValue);
-                    dlt = _r*min;
+                    dlt = _r*_currentMinLimit;
                 }
                 else
                 {
-                    NSNumber* maxNum = _maxLimit[_touchPointIndex];
-                    float max = [maxNum floatValue];
-                    max = (max - _minValue)/(_maxValue - _minValue);
-                    dlt = _r*max;
+                    dlt = _r*_currentMaxLimit;
                 }
             }
             
             NSValue* v = _points[_touchPointIndex];
             CGPoint p = [v CGPointValue];
-            int sinA = dlt * sin(angle);
-            int cosA = dlt * cos(angle);
-            float x = _centerPoint.x - sinA;
-            float y = _centerPoint.y - cosA;
-            p.x = x;
-            p.y = y;
+            int sinA = dlt * _sinCurrentAngle;
+            int cosA = dlt * _cosCurrentAngle;
+//            float x = _centerPoint.x - sinA;
+//            float y = _centerPoint.y - cosA;
+            p.x = _centerPoint.x - sinA;
+            p.y = _centerPoint.y - cosA;
             [_points setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:_touchPointIndex];
             dlt = distanceTwoPoint(p, _centerPoint);
-            float newNum = (dlt/_r)*(_maxValue - _minValue)+_minValue;
+            float newNum = (dlt/_r)*_dif+_minValue;
             [_values setObject:[NSNumber numberWithFloat:newNum] atIndexedSubscript:_touchPointIndex];
         }
         else
@@ -491,31 +506,36 @@
             [_lineColor setFill];
             [_lineColor setStroke];
             CGContextSetLineWidth(context, _lineWidth);
+            xVal = xVal - _pointR/2;
+            yVal = yVal - _pointR/2;
             if (_isPointDashed) {
-                CGContextClearRect(context, CGRectMake(xVal - _pointR/2, yVal - _pointR/2, _pointR, _pointR));
-                 CGContextStrokeEllipseInRect(context, CGRectMake(xVal - _pointR/2, yVal - _pointR/2, _pointR, _pointR));
+                CGContextClearRect(context, CGRectMake(xVal, yVal, _pointR, _pointR));
+                 CGContextStrokeEllipseInRect(context, CGRectMake(xVal, yVal, _pointR, _pointR));
             }
             else
             {
-                 CGContextFillEllipseInRect(context, CGRectMake(xVal - _pointR/2, yVal - _pointR/2, _pointR, _pointR));
+                 CGContextFillEllipseInRect(context, CGRectMake(xVal, yVal, _pointR, _pointR));
             }
         }
     }
   
     //绘制触摸点图片
     if (_isTouchInPoint) {
-        NSValue* v = _points[_touchPointIndex];
-        CGPoint p = [v CGPointValue];
-        p.x -= 12;
-        p.y -= 12;
-        [_touchImage drawAtPoint:p blendMode:kCGBlendModeNormal alpha:1];
+        if (_touchImage) {
+            NSValue* v = _points[_touchPointIndex];
+            CGPoint p = [v CGPointValue];
+            NSLog(@"🎑Size:%@",NSStringFromCGSize(_touchImage.size));
+            p.x -= 12;
+            p.y -= 12;
+            [_touchImage drawAtPoint:p blendMode:kCGBlendModeNormal alpha:1];
+        }
     }
     
     //绘制最大最小值
     if (self.showStepText) {
         [[UIColor blackColor] setFill];
         for (int step = 0; step <= _steps; step++) {
-            CGFloat value = _minValue + (_maxValue - _minValue) * step / _steps;
+            CGFloat value = _minValue + _dif * step / _steps;
             NSString *currentLabel = [NSString stringWithFormat:@"%.0f", value];
             JY_DRAW_TEXT_IN_RECT(currentLabel,
                                  CGRectMake(_centerPoint.x + 3,
