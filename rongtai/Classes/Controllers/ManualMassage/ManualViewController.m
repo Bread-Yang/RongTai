@@ -178,6 +178,8 @@
     //
     _delay = 0.2;
     _delayMul = 2;
+    
+    
 
 }
 
@@ -627,7 +629,7 @@
 {
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
-    if (currentValue>level*stepValue || currentValue<= (level-1)*stepValue) {
+    if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
         NSLog(@"😄%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
@@ -660,7 +662,7 @@
 //        _scan=0;
 //    }
     
-    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
+//    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
 	
 	// 以下是界面跳转
 	
@@ -732,7 +734,7 @@
 //        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
         if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag == 7) {
             _skillsPreferenceLabel.text = @"搓背";
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"居然出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
             [alert show];
         } else {
             _skillsPreferenceLabel.text = _skillsPreferenceArray[_bleConnector.rtMassageChairStatus.massageTechniqueFlag - 1];

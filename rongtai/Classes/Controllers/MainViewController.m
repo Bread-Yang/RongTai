@@ -409,7 +409,7 @@
 }
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
-	NSLog(@"didUpdateNetworkMassageStatus");
+//	NSLog(@"didUpdateNetworkMassageStatus");
 	[_table reloadData];
 }
 
