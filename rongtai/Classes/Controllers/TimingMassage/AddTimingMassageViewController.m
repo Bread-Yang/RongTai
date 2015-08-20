@@ -53,7 +53,16 @@
 	self.weekDaySegmentControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[self.weekDaySegmentControl setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 	
-	self.modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
+	self.modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
+						   NSLocalizedString(@"舒展活络", nil),
+						   NSLocalizedString(@"休憩促眠", nil),
+						   NSLocalizedString(@"工作减压", nil),
+						   NSLocalizedString(@"肩颈重点", nil),
+						   NSLocalizedString(@"腰椎舒缓", nil),
+						   NSLocalizedString(@"云养程序一", nil),
+						   NSLocalizedString(@"云养程序二", nil),
+						   NSLocalizedString(@"云养程序三", nil),
+						   NSLocalizedString(@"云养程序四", nil),];
 	
 	self.hourArray = [NSMutableArray new];
 	for (int i = 0; i < 24; i++) {
@@ -174,7 +183,7 @@
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-	return 8;
+	return [self.modeNameArray count];
 }
 
 // Header和Footer的样式
