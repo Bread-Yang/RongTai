@@ -72,7 +72,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <inset key="titleEdgeInsets" minX="11" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="新用户注册" image="login_icon_register.png">
+                                <state key="normal" title="新用户注册" image="login_icon_register">
                                     <color key="titleColor" red="0.4549019608" green="0.60392156860000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
@@ -110,7 +110,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <inset key="titleEdgeInsets" minX="11" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="忘记密码" image="login_icon_forget.png">
+                                <state key="normal" title="忘记密码" image="login_icon_forget">
                                     <color key="titleColor" red="0.4549019608" green="0.60392156860000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2188,8 +2188,8 @@
         <image name="function_3_select" width="27" height="27"/>
         <image name="icon_confirm.png" width="24" height="24"/>
         <image name="login_button" width="171" height="46"/>
-        <image name="login_icon_forget.png" width="14" height="14"/>
-        <image name="login_icon_register.png" width="14" height="14"/>
+        <image name="login_icon_forget" width="14" height="14"/>
+        <image name="login_icon_register" width="14" height="14"/>
         <image name="login_input" width="267" height="46"/>
         <image name="login_qq" width="48" height="48"/>
         <image name="login_weibo" width="48" height="48"/>

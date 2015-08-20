@@ -39,22 +39,22 @@
 /**
  *  获取成员列表
  */
--(void)requestMemberListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray* members))success failure:(void (^)(id responseObject))failure;
+-(void)requestMemberListByIndex:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray* members))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  添加成员列表
  */
--(void)addMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(NSString* memberId))success failure:(void (^)(id responseObject))failure;
+-(void)addMember:(Member*)member success:(void (^)(NSString* memberId))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  编辑成员列表
  */
--(void)editMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
+-(void)editMember:(Member*)member success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  删除成员列表
  */
--(void)deleteMember:(Member*)member ByUid:(NSString*)uid success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
+-(void)deleteMember:(Member*)member success:(void (^)(id responseObject))success failure:(void (^)(id responseObject))failure;
 
 /**
  *  取消请求
