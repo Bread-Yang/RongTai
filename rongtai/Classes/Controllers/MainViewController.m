@@ -374,7 +374,7 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	NSLog(@"体型检测标记 : %zd", 	rtMassageChairStatus.figureCheckFlag);
+	NSLog(@"didUpdateMassageChairStatus");
 	
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
 		_menuBar.selectedItem = nil;

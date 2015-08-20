@@ -474,8 +474,9 @@ static SlideNavigationController *singletonInstance;
 
 - (void)openMenu:(Menu)menu withDuration:(float)duration andCompletion:(void (^)())completion
 {
+	NSLog(@"beforeOpen");
 	[self enableTapGestureToCloseMenu:YES];
-
+	NSLog(@"open");
 	[self prepareMenuForReveal:menu];
 	
 	[UIView animateWithDuration:duration
@@ -498,7 +499,7 @@ static SlideNavigationController *singletonInstance;
 - (void)closeMenuWithDuration:(float)duration andCompletion:(void (^)())completion
 {
 	[self enableTapGestureToCloseMenu:NO];
-    
+	NSLog(@"close");
      Menu menu = (self.horizontalLocation > 0) ? MenuLeft : MenuRight;
 	
 	[UIView animateWithDuration:duration
