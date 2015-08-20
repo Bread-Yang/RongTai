@@ -18,6 +18,7 @@
 #import "LoginRequest.h"
 #import "UIView+RT.h"
 #import "TimingPlanRequest.h"
+#import "DataRequest.h"
 
 @interface FirstViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
@@ -378,26 +379,34 @@ UISegmentedControl *segmentedControl;
 
 -(void)testBtnCilcked
 {
-    TimingPlanRequest* r = [TimingPlanRequest new];
-    [r deleteTimingPlanId:81 success:nil fail:nil];
+//    TimingPlanRequest* r = [TimingPlanRequest new];
+//    [r deleteTimingPlanId:81 success:nil fail:nil];
     
-    [r updateTimingPlan:nil success:^{
-        
-    } fail:^(NSDictionary *dic) {
-        
-    }];
+//    [r updateTimingPlan:nil success:^{
+//        
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
     
-    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-        
-    } fail:^(NSDictionary *dic) {
-        
-    }];
+//    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+//        
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
     
 //    [r addTimingPlan:nil success:^(NSUInteger timingPlanId) {
 //        NSLog(@"添加定时计划成功：%ld",timingPlanId);
 //    } fail:^(NSDictionary *dic) {
 //        NSLog(@"添加定时计划失败:%@",dic);
 //    }];
+    
+    DataRequest* dr = [DataRequest new];
+//    [dr addProgramUsingCount:nil Success:nil fail:nil];
+    [dr getFavoriteProgramCountSuccess:^(NSArray *programs) {
+        
+    } fail:^(NSDictionary *dic) {
+        
+    }];
 }
 
 
