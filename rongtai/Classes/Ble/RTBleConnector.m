@@ -58,7 +58,7 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @property (nonatomic, retain) CustomIOSAlertView *reconnectDialog;
 
-@property (nonatomic, retain) NSString *oldMassageChairStatus;
+@property (nonatomic, retain) NSString *oldMassageChairRunningStatusString, *oldMassageChairNetworkStatusString;
 
 @end
 
@@ -230,22 +230,36 @@ static Byte const BYTE_ExitCode = 0x82;
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
 		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
-			[self parseData:data];
-//            [self.rtMassageChairStatus printStatus];
-			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
-				[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
+			NSData *runningStatusData = [data subdataWithRange:NSMakeRange(1, 14)];   // 运行状态在1到14位
+			
+			NSString *newRunningStatusString = NSDataToHex(runningStatusData);
+			
+			if (![newRunningStatusString isEqualToString:_oldMassageChairRunningStatusString]) {
+				NSLog(@"newRunningStatusString : %@", newRunningStatusString);
+				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairRunningStatusString);
+				
+				_oldMassageChairRunningStatusString = newRunningStatusString;
+				
+				[self parseData:data];
+//                [self.rtMassageChairStatus printStatus];
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateMassageChairStatus:)]) {
+					[self.delegate didUpdateMassageChairStatus:self.rtMassageChairStatus];
+				}
 			}
 			
-		} else if (data.length == 11) {	// 等于11位 : 返回按摩椅网络程序状态
-//			
+		} else if (data.length == 11 || data.length == 12) {	// 等于11位或者12位 : 返回按摩椅网络程序状态
+//
 //			NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
 //			
 //			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 			
-			NSString *newStatusString = NSDataToHex(data);
+			NSString *newNetworkStatusString = NSDataToHex(data);
 			
-			if (![newStatusString isEqualToString:_oldMassageChairStatus]) {
-				_oldMassageChairStatus = newStatusString;
+			if (![newNetworkStatusString isEqualToString:_oldMassageChairNetworkStatusString]) {
+				NSLog(@"newNetworkStatusString : %@", newNetworkStatusString);
+				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairNetworkStatusString);
+				
+				_oldMassageChairNetworkStatusString = newNetworkStatusString;
 				
 				[self parseNetworkStatus:data];
 				
@@ -256,24 +270,20 @@ static Byte const BYTE_ExitCode = 0x82;
 			}
 		} else {  // 不等于11位或者17位 : 编辑模式
 			
-			if (data.length == 12) {
-				
-				NSString *newStatusString = NSDataToHex(data);
-				
-				if (![newStatusString isEqualToString:_oldMassageChairStatus]) {
-//					NSLog(@"newStatusString : %@", newStatusString);
-//					NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairStatus);
-					
-					_oldMassageChairStatus = newStatusString;
-					
-					[self parseNetworkStatus:data];
-					
-					if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
-						
-						[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
-					}
-				}
-			}
+//			if (data.length == 12) {
+//				
+//				if (![newStatusString isEqualToString:_oldMassageChairNetworkStatusString]) {
+//					
+//					_oldMassageChairNetworkStatusString = newStatusString;
+//					
+//					[self parseNetworkStatus:data];
+//					
+//					if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateNetworkMassageStatus:)]) {
+//						
+//						[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
+//					}
+//				}
+//			}
 			
 			[self parseInstallingStatus:data];
 			
