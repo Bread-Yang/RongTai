@@ -96,9 +96,8 @@
         [_loading show:YES];
         
         NSLog(@"请求成员");
-        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSMutableArray* arr = [NSMutableArray new];
-        [_mr requestMemberListByUid:uid Index:0 Size:20 success:^(NSArray *members) {
+        [_mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
             for (NSDictionary* dic in members) {
                 Member* m = [Member updateMemberDB:dic];
                 [arr addObject:m];

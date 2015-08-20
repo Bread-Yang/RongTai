@@ -56,7 +56,6 @@
     //网络
     AFNetworkReachabilityManager* _manager;
     MemberRequest* _memberRequest;
-    NSString* _uid;
     
     NSDictionary* _tmp;
 }
@@ -69,8 +68,6 @@
     //
     _manager = [AFNetworkReachabilityManager sharedManager];
     _memberRequest = [MemberRequest new];
-    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-
     
     //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
     [_middleView bringSubviewToFront:_birthday];
@@ -213,17 +210,18 @@
     
     if (_manager.reachable) {
         NSLog(@"联网成功");
+        __weak UserInformationViewController* uVC = self;
         if (_isEdit) {
             //编辑模式，执行删除
-            [_memberRequest deleteMember:_user ByUid:_uid success:^(id responseObject) {
+            [_memberRequest deleteMember:_user success:^(id responseObject) {
                 [_user MR_deleteEntity];
-                [self showProgressHUDByString:@"删除成员成功"];
-                [self performSelector:@selector(back) withObject:nil afterDelay:1];
+                [uVC showProgressHUDByString:@"删除成员成功"];
+                [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
             } failure:^(id responseObject) {
                 [_loadingHUD hide:YES];
                 NSString* str = [NSString stringWithFormat:@"删除成员失败：%@",responseObject];
                 NSLog(@"%@",str);
-                [self showProgressHUDByString:str];
+                [uVC showProgressHUDByString:str];
             }];
         }
         else
@@ -234,16 +232,17 @@
                 _user = [Member MR_createEntity];
                 //提交图片
                 if (_isNewImage) {
+                    
                     [_memberRequest uploadImage:_userImage success:^(NSString *urlKey) {
                         _imgUrl = urlKey;
                         _isNewImage = NO;
                         //照片保存到本地
-                        [self saveImage:_imgUrl];
+                        [uVC saveImage:_imgUrl];
 
-                        [self uploadMember];
+                        [uVC uploadMember];
                     } failure:^(id responseObject) {
                         [_loadingHUD hide:YES];
-                        [self showProgressHUDByString:@"头像上传失败，请检测网络"];
+                        [uVC showProgressHUDByString:@"头像上传失败，请检测网络"];
                         return ;
                     }];
                 }
@@ -266,19 +265,20 @@
 {
     //用户信息保存
     [self saveMember];
-    [_memberRequest addMember:_user ByUid:_uid success:^(NSString *memberId) {
+    __weak UserInformationViewController* uVC = self;
+    [_memberRequest addMember:_user success:^(NSString *memberId) {
         int mid = [memberId intValue];
         _user.memberId = [NSNumber numberWithInt:mid];
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
-        [self showProgressHUDByString:@"添加成功"];
-        [self performSelector:@selector(back) withObject:nil afterDelay:1];
+        [uVC showProgressHUDByString:@"添加成功"];
+        [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
         [_loadingHUD hide:YES];
         [_user MR_deleteEntity];
         NSString* str = [NSString stringWithFormat:@"添加成员请求错误:%@",responseObject];
-        [self showProgressHUDByString:str];
+        [uVC showProgressHUDByString:str];
     }];
 }
 
@@ -337,17 +337,18 @@
             
             //提交图片
             if (_isNewImage) {
+                __weak UserInformationViewController* uVC = self;
                 [_memberRequest uploadImage:_userImage success:^(NSString *urlKey) {
                     _imgUrl = urlKey;
                     _isNewImage = NO;
                     //照片保存到本地
-                    [self saveImage:_imgUrl];
+                    [uVC saveImage:_imgUrl];
                     
                     //编辑成员（服务器请求）
-                    [self editMember];
+                    [uVC editMember];
                 } failure:^(id responseObject) {
                     [_loadingHUD hide:YES];
-                    [self showProgressHUDByString:@"头像上传失败，请检测网络"];
+                    [uVC showProgressHUDByString:@"头像上传失败，请检测网络"];
                     return ;
                 }];
             }
@@ -383,17 +384,18 @@
 -(void)editMember
 {
     [self saveMember];
-    [_memberRequest editMember:_user ByUid:_uid success:^(id responseObject) {
+    __weak UserInformationViewController* uVC = self;
+    [_memberRequest editMember:_user success:^(id responseObject) {
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
-        [self showProgressHUDByString:@"保存成功"];
-        [self performSelector:@selector(back) withObject:nil afterDelay:1];
+        [uVC showProgressHUDByString:@"保存成功"];
+        [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
         [_user setValueBy:_tmp];
         NSLog(@"复原数据：%@",[_user memberToDictionary]);
         [_loadingHUD hide:YES];
         NSString* str = [NSString stringWithFormat:@"编辑成员请求错误:%@",responseObject];
-        [self showProgressHUDByString:str];
+        [uVC showProgressHUDByString:str];
     }];
 }
 
@@ -469,6 +471,7 @@
         img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",_user.imageURL]];
         if (!img) {
             NSLog(@"网络读取头像");
+            __weak UserInformationViewController* uVC = self;
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://recipe.xtremeprog.com/file/g/%@",_user.imageURL]];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
@@ -478,7 +481,7 @@
                 
             } failure:^(NSError *error) {
                 //网络读取失败
-                [self showProgressHUDByString:@"用户头像下载失败"];
+                [uVC showProgressHUDByString:@"用户头像下载失败"];
                 
             }];
             return;
@@ -500,8 +503,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 
 //- (void)setEditUserInformation:(NSDictionary *)infoDictionary {

@@ -17,6 +17,7 @@
 #import "Member.h"
 #import "LoginRequest.h"
 #import "UIView+RT.h"
+#import "TimingPlanRequest.h"
 
 @interface FirstViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
@@ -66,6 +67,13 @@ UISegmentedControl *segmentedControl;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIButton* testBtn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 130, 30)];
+    [testBtn setTitle:@"定时计划接口" forState:UIControlStateNormal];
+    testBtn.backgroundColor = [UIColor cyanColor];
+    [testBtn addTarget:self action:@selector(testBtnCilcked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:testBtn];
+    
 	
 	NSLog(@"取模运算 : %i", (7 % 4));
 	
@@ -366,6 +374,32 @@ UISegmentedControl *segmentedControl;
 //							   NSLog(@"%ld:%@",(long)[error errorCode], [error errorDescription]);
 //						   }];
 }
+     
+
+-(void)testBtnCilcked
+{
+    TimingPlanRequest* r = [TimingPlanRequest new];
+    [r deleteTimingPlanId:81 success:nil fail:nil];
+    
+    [r updateTimingPlan:nil success:^{
+        
+    } fail:^(NSDictionary *dic) {
+        
+    }];
+    
+    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+        
+    } fail:^(NSDictionary *dic) {
+        
+    }];
+    
+//    [r addTimingPlan:nil success:^(NSUInteger timingPlanId) {
+//        NSLog(@"添加定时计划成功：%ld",timingPlanId);
+//    } fail:^(NSDictionary *dic) {
+//        NSLog(@"添加定时计划失败:%@",dic);
+//    }];
+}
+
 
 - (IBAction)logoutAction:(id)sender {
     [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];

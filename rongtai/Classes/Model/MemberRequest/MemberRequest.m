@@ -43,26 +43,32 @@
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString* urlKey = [responseObject objectForKey:@"urlKey"];
         if (urlKey) {
-            success(urlKey);
+            if (success) {
+                success(urlKey);
+            }
         }
         else
         {
-            failure(responseObject);
+            if (failure) {
+                 failure(responseObject);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Image Failure:%@",error);
-        failure(nil);
+        if (failure) {
+            failure(nil);
+        }
     }];
     //11c6c6b0a1fc901859281520de0ead1a   a49d99fe0976978ca1474130267cdfae
 }
 
 #pragma mark - 获取成员列表
--(void)requestMemberListByUid:(NSString *)uid Index:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray *))success failure:(void (^)(id))failure
+-(void)requestMemberListByIndex:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray *))success failure:(void (^)(id))failure
 {
     _isTimeOut = YES;
     NSString* url = [REQUESTURL stringByAppendingString:@"loadMember"];
     NSMutableDictionary* parmeters = [NSMutableDictionary new];
-    [parmeters setObject:uid forKey:@"uid"];
+    [parmeters setObject:_uid forKey:@"uid"];
     [parmeters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
     [parmeters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
     if (_overTime > 0) {
@@ -74,24 +80,30 @@
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             NSArray* arr = [responseObject objectForKey:@"result"];
-            success(arr);
+            if (success) {
+                success(arr);
+            }
         }
         else
         {
-            failure(responseObject);
+            if (failure) {
+                failure(responseObject);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _isTimeOut = NO;
-        failure(nil);
+        if (failure) {
+            failure(nil);
+        }
     }];
 }
 
 #pragma mark - 添加成员
--(void)addMember:(Member *)member ByUid:(NSString *)uid success:(void (^)(NSString *))success failure:(void (^)(id))failure{
+-(void)addMember:(Member *)member success:(void (^)(NSString *))success failure:(void (^)(id))failure{
     _isTimeOut = YES;
     NSString* url = [REQUESTURL stringByAppendingString:@"addMember"];
     NSMutableDictionary* parmeters  = [NSMutableDictionary new];
-    [parmeters setObject:uid forKey:@"uid"];
+    [parmeters setObject:_uid forKey:@"uid"];
     [parmeters setObject:member.name forKey:@"name"];
     [parmeters setObject:member.sex forKey:@"sex"];
     [parmeters setObject:member.height forKey:@"height"];
@@ -108,26 +120,32 @@
         if ([code integerValue] == 200) {
             NSDictionary* reslut = [responseObject objectForKey:@"result"];
             NSString* memberId = [reslut objectForKey:@"memberId"];
-            success(memberId);
+            if (success) {
+                success(memberId);
+            }
         }
         else
         {
-            failure(responseObject);
+            if (failure) {
+                failure(responseObject);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"添加成员错误:%@",error);
         _isTimeOut = NO;
-        failure(nil);
+        if (failure) {
+            failure(nil);
+        }
     }];
 }
 
 #pragma mark - 编辑成员
--(void)editMember:(Member *)member ByUid:(NSString *)uid success:(void (^)(id))success failure:(void (^)(id))failure
+-(void)editMember:(Member *)member success:(void (^)(id))success failure:(void (^)(id))failure
 {
     _isTimeOut = YES;
     NSString* url = [REQUESTURL stringByAppendingString:@"updateMember"];
     NSMutableDictionary* parmeters  = [NSMutableDictionary new];
-    [parmeters setObject:uid forKey:@"uid"];
+    [parmeters setObject:_uid forKey:@"uid"];
     [parmeters setObject:member.name forKey:@"name"];
     [parmeters setObject:member.sex forKey:@"sex"];
     [parmeters setObject:member.height forKey:@"height"];
@@ -143,26 +161,32 @@
         NSLog(@"编辑成员:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
-            success(responseObject);
+            if (success) {
+                success(responseObject);
+            }
         }
         else
         {
-            failure(responseObject);
+            if (failure) {
+                failure(responseObject);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _isTimeOut = NO;
         NSLog(@"编辑成员错误:%@",error);
-        failure(nil);
+        if (failure) {
+            failure(nil);
+        }
     }];
 }
 
 #pragma mark - 删除成员
--(void)deleteMember:(Member *)member ByUid:(NSString *)uid success:(void (^)(id))success failure:(void (^)(id))failure
+-(void)deleteMember:(Member *)member success:(void (^)(id))success failure:(void (^)(id))failure
 {
     _isTimeOut = YES;
     NSString* url = [REQUESTURL stringByAppendingString:@"deleteMember"];
     NSMutableDictionary* parmeters  = [NSMutableDictionary new];
-    [parmeters setObject:uid forKey:@"uid"];
+    [parmeters setObject:_uid forKey:@"uid"];
     [parmeters setObject:member.memberId forKey:@"memberId"];
     if (_overTime > 0) {
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
@@ -172,16 +196,22 @@
         NSLog(@"删除成员:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
-            success(responseObject);
+            if (success) {
+                success(responseObject);
+            }
         }
         else
         {
-            failure(responseObject);
+            if (failure) {
+                failure(responseObject);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _isTimeOut = NO;
         NSLog(@"删除成员错误:%@",error);
-        failure(nil);
+        if (failure) {
+            failure(nil);
+        }
     }];
 }
 
@@ -195,7 +225,6 @@
             [self.delegate requestTimeOut:self];
         }
     }
-    
 }
 
 #pragma mark - 取消请求

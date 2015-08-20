@@ -25,7 +25,7 @@
 	
 	NSDate *todayDate = [NSDate date];
 	
-	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 	
 	if ([weekdays count] > 0) {    // 星期几可以循环
 		
@@ -116,7 +116,7 @@
 - (void)turnOnLocalNotification {
 	if (self.localNotifications) {
 		NSDate *todayDate = [NSDate date];
-		NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+		NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 		
 		NSMutableArray *localNotifications = self.localNotifications;
 		
