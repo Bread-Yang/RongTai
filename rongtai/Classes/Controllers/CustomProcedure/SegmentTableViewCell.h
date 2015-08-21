@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface SegmentTableViewCell : UITableViewCell
 
 @property(nonatomic, strong)NSString* title;
@@ -15,6 +16,5 @@
 @property(nonatomic, strong)NSArray* names;
 
 @property(nonatomic, strong)UILabel* titleLabel;
-
 
 @end

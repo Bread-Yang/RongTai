@@ -25,7 +25,7 @@
 /**
  *  上传程序使用次数
  */
--(void)uploadProgramUsingCountSuccess:(void (^)())success fail:(void (^)(NSDictionary* dic))fail;
+-(void)addProgramUsingCount:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary* dic))fail;
 
 
 @end

@@ -66,6 +66,7 @@
     BOOL _isDelayUpdate;  //是否延迟更新
     BOOL _isTouch;  //记录PolarView是否被触摸
     BOOL _isMoving; //记录PolarView是否在移动
+    NSInteger _delayCount;  //倒数延迟更新，对于“机芯幅度”调节才使用
 
     //测试用
     NSInteger _scan;
@@ -178,9 +179,7 @@
     //
     _delay = 0.2;
     _delayMul = 2;
-    
-    
-
+    _delayCount = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -433,6 +432,7 @@
         {
             [_bleConnector sendControlMode:H10_KEY_WIDTH_MAX];
         }
+        _delayCount = 8;  //当调节机芯幅度时，设置延迟更新次数，_delayCount会开始递减，直到小于1时才更新WLPolarView的“机芯幅度”轴
     }
     else if (index == 1)
     {
@@ -618,8 +618,11 @@
         [_polar setPoint:0 ableMove:NO];
         [_polar setPoint:3 ableMove:NO];
     }
-    [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
-              stepValue:4 ByIndex:0];
+    if (_delayCount <1) {
+        //_delayCount小于1更新
+        [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
+                  stepValue:4 ByIndex:0];
+    }
     [self setPolarValue:_bleConnector.rtMassageChairStatus.airPressureFlag stepValue:2.4 ByIndex:1];
     [self setPolarValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag stepValue:2 ByIndex:3];
 }
@@ -630,7 +633,7 @@
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
     if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
-        NSLog(@"😄%ld调节值",index);
+        NSLog(@"%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
 }
@@ -647,10 +650,9 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-//	NSLog(@"didUpdateMassageChairStatus");
+//    NSLog(@"didUpdateMassageChairStatus:%@",[NSDate date]);
     
 //    NSLog(@"负离子:%ld",rtMassageChairStatus.anionSwitchFlag);
-  
     
 //    NSLog(@"体型检测：%ld",rtMassageChairStatus.figureCheckFlag);
 //    if (rtMassageChairStatus.figureCheckFlag == 0) {
@@ -690,6 +692,9 @@
     }
     else
     {
+        if (_delayCount>0) {
+            _delayCount --;
+        }
         //即时更新
         [self updateUI];
     }

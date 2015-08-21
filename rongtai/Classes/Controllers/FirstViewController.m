@@ -18,6 +18,7 @@
 #import "LoginRequest.h"
 #import "UIView+RT.h"
 #import "TimingPlanRequest.h"
+#import "DataRequest.h"
 
 @interface FirstViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
@@ -378,20 +379,40 @@ UISegmentedControl *segmentedControl;
 
 -(void)testBtnCilcked
 {
-    TimingPlanRequest* r = [TimingPlanRequest new];
-    [r deleteTimingPlanId:81 success:nil fail:nil];
+//    TimingPlanRequest* r = [TimingPlanRequest new];
+//    [r deleteTimingPlanId:81 success:nil fail:nil];
+	
+//    [r updateTimingPlan:nil success:^{
+//        
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
     
-    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-        
-    } fail:^(NSDictionary *dic) {
-        
-    }];
+//    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+//
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
     
 //    [r addTimingPlan:nil success:^(NSUInteger timingPlanId) {
 //        NSLog(@"添加定时计划成功：%ld",timingPlanId);
 //    } fail:^(NSDictionary *dic) {
 //        NSLog(@"添加定时计划失败:%@",dic);
 //    }];
+    
+//    NSLog(@"tp");
+    DataRequest* dr = [DataRequest new];
+    [dr addProgramUsingCount:@[@{@"name":@"舒筋活络",@"count":@1,@"programId":@2312},@{@"name":@"舒筋活络",@"count":@18,@"programId":@2222}] Success:nil fail:nil];
+
+    
+    [dr getFavoriteProgramCountSuccess:^(NSArray *programs) {
+        NSLog(@"数组:%@",programs);
+        NSDictionary* dic = programs[0];
+        NSString* name = [dic objectForKey:@"name"];
+        NSLog(@"名字:%@",name);
+    } fail:^(NSDictionary *dic) {
+        
+    }];
 }
 
 

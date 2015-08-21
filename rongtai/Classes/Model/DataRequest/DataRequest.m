@@ -45,12 +45,52 @@
     }
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
-        NSLog(@"删除定时计划:%@",responseObject);
+        NSLog(@"获取爱用程序使用次数:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
+//        NSString* message = [responseObject objectForKey:@"responseMessage"];
+//        NSLog(@"请求结果:%@",message);
         if ([code integerValue] == 200) {
             NSArray* arr = [responseObject objectForKey:@"result"];
             if (success) {
                 success(arr);
+            }
+        }
+        else
+        {
+            if (fail) {
+                fail(responseObject);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
+        if (fail) {
+            fail(nil);
+        }
+    }];
+}
+
+#pragma mark - 上传程序使用次数
+-(void)addProgramUsingCount:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary *))fail
+{
+    _isTimeOut = YES;
+    NSString* url = [_requestURL stringByAppendingString:@"addUserData"];
+
+    //数组需要先转成json格式才能post（字典却不需要）
+    NSData* data = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"请求参数:%@",str);
+    
+    NSDictionary* parmeters = @{@"uid":_uid,@"result":str};
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
+    [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
+        NSLog(@"上传程序使用次数:%@",responseObject);
+        NSNumber* code = [responseObject objectForKey:@"responseCode"];
+        if ([code integerValue] == 200) {
+            if (success) {
+                success();
             }
         }
         else
@@ -73,7 +113,6 @@
     if (_isTimeOut) {
         NSLog(@"定时计划请求超时");
         [self cancelRequest];
-
     }
 }
 
