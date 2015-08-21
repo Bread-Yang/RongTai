@@ -387,9 +387,9 @@ float const THSegmentedControlAnimationDuration = 0.1f;
     
     NSMutableOrderedSet *mutableSelectedIndexes = [self.selectedIndexes mutableCopy];
     if (highlighted) {
-        [mutableSelectedIndexes addObject:@(index)];
+        [mutableSelectedIndexes addObject:@(index + 1)];
     } else {
-        [mutableSelectedIndexes removeObject:@(index)];
+        [mutableSelectedIndexes removeObject:@(index + 1)];
     }
     
     [mutableSelectedIndexes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {

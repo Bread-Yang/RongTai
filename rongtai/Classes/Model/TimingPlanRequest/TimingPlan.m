@@ -7,21 +7,64 @@
 //
 
 #import "TimingPlan.h"
+#import "CoreData+MagicalRecord.h"
 
 @implementation TimingPlan
 
-@dynamic date;
+@dynamic planId;
 @dynamic isOn;
 @dynamic localNotifications;
-@dynamic weekdays;
-@dynamic massageId;
+@dynamic days;
+@dynamic massageProgamId;
 @dynamic massageName;
+@dynamic ptime;
+
+- (void)setValueByJson:(NSDictionary *)json {
+	self.planId = [NSNumber numberWithInteger:[[json objectForKey:@"planId"] integerValue]];
+	self.massageName = [json objectForKey:@"massageName"];
+	self.ptime = [json objectForKey:@"ptime"];
+	self.days = [json objectForKey:@"days"];
+	self.isOn = [NSNumber numberWithBool:[[json objectForKey:@"isOpen"] unsignedIntegerValue] == 1];
+	self.massageProgamId = [NSNumber numberWithInteger:[[json objectForKey:@"massageProgameId"] unsignedIntegerValue]];
+}
+
+#pragma mark - 根据一条TimingPlan的Json数据更新数据库
+
++ (TimingPlan *)updateTimingPlanDB:(NSDictionary *)dic {
+	NSInteger planId = [[dic valueForKey:@"planId"] integerValue];
+	NSArray *arr = [TimingPlan MR_findByAttribute:@"planId" withValue:[NSNumber numberWithInteger:planId]];
+	TimingPlan *m;
+	if (arr.count == 0) {
+		m = [TimingPlan MR_createEntity];
+	} else {
+		m = arr[0];
+	}
+	[m setValueByJson:dic];
+	[[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+	return m;
+}
+
+#pragma mark - 把Member转成字典
+-(NSDictionary *)toDictionary {
+	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+	
+	NSDictionary *dic = @{
+						  @"uid" : [defaults objectForKey:@"uid"],
+						  @"planId" : self.planId,
+						  @"massageName" : self.massageName,
+						  @"ptime" : self.ptime,
+						  @"days" : self.days,
+						  @"isOpen" : self.isOn,
+						  @"massageProgameId" : self.massageProgamId
+						  };
+	return dic;
+}
 
 #pragma mark - 设置通知
 
 - (void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSOrderedSet *)weekdays Message:(NSString*)message {
-    self.isOn = [NSNumber numberWithBool:YES];
-    self.weekdays = weekdays;
+	self.isOn = [NSNumber numberWithBool:YES];
+	//    self.days = weekdays ;
 	
 	NSDate *todayDate = [NSDate date];
 	
@@ -34,7 +77,7 @@
 			NSDateComponents *setDateComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitHour |NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear fromDate:todayDate];
 			
 			[setDateComponents setWeekday:((NSInteger)weekdays[i] + 1)];  // 星期日: 1, 星期一 : 2, ..., 星期六 : 7
-
+			
 			[setDateComponents setHour:hour];
 			[setDateComponents setMinute:minute];
 			
@@ -89,17 +132,6 @@
 		[[UIApplication sharedApplication] scheduleLocalNotification:localNofication];
 		
 	}
-	
-	self.date = ((UILocalNotification *)((NSMutableArray *)self.localNotifications)[0]).fireDate;
-}
-
-#pragma mark - 计划时间字符串
-
-- (NSString *)planTime {
-    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDateComponents *dateComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:self.date];
-    NSString *time = [NSString stringWithFormat:@"%02d:%02d",dateComponents.hour,dateComponents.minute];
-    return time;
 }
 
 #pragma mark - 添加通知
@@ -146,14 +178,14 @@
 #pragma mark - 关闭通知
 
 - (void)cancelLocalNotification {
-    if (self.localNotifications) {
+	if (self.localNotifications) {
 		NSMutableArray *localNotifications = self.localNotifications;
 		for (UILocalNotification *item in localNotifications) {
 			[[UIApplication sharedApplication] cancelLocalNotification:item];
 		}
 	} else {
-        NSLog(@"通知对象是空的");
-    }
+		NSLog(@"通知对象是空的");
+	}
 }
 
 @end

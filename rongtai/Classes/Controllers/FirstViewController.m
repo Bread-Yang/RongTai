@@ -381,12 +381,6 @@ UISegmentedControl *segmentedControl;
     TimingPlanRequest* r = [TimingPlanRequest new];
     [r deleteTimingPlanId:81 success:nil fail:nil];
     
-    [r updateTimingPlan:nil success:^{
-        
-    } fail:^(NSDictionary *dic) {
-        
-    }];
-    
     [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
         
     } fail:^(NSDictionary *dic) {
