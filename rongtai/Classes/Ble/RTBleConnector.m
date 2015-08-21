@@ -235,8 +235,8 @@ static Byte const BYTE_ExitCode = 0x82;
 			NSString *newRunningStatusString = NSDataToHex(runningStatusData);
 			
 			if (![newRunningStatusString isEqualToString:_oldMassageChairRunningStatusString]) {
-				NSLog(@"newRunningStatusString : %@", newRunningStatusString);
-				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairRunningStatusString);
+//				NSLog(@"newRunningStatusString : %@", newRunningStatusString);
+//				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairRunningStatusString);
 				
 				_oldMassageChairRunningStatusString = newRunningStatusString;
 				

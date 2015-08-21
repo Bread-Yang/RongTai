@@ -389,7 +389,7 @@ UISegmentedControl *segmentedControl;
 //    }];
     
 //    [r getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-//        
+//
 //    } fail:^(NSDictionary *dic) {
 //        
 //    }];
@@ -400,10 +400,16 @@ UISegmentedControl *segmentedControl;
 //        NSLog(@"添加定时计划失败:%@",dic);
 //    }];
     
+//    NSLog(@"tp");
     DataRequest* dr = [DataRequest new];
-//    [dr addProgramUsingCount:nil Success:nil fail:nil];
+    [dr addProgramUsingCount:@[@{@"name":@"舒筋活络",@"count":@1,@"programId":@2312},@{@"name":@"舒筋活络",@"count":@18,@"programId":@2222}] Success:nil fail:nil];
+
+    
     [dr getFavoriteProgramCountSuccess:^(NSArray *programs) {
-        
+        NSLog(@"数组:%@",programs);
+        NSDictionary* dic = programs[0];
+        NSString* name = [dic objectForKey:@"name"];
+        NSLog(@"名字:%@",name);
     } fail:^(NSDictionary *dic) {
         
     }];

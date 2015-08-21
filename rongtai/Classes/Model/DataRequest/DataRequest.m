@@ -47,6 +47,8 @@
         _isTimeOut = NO;
         NSLog(@"获取爱用程序使用次数:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
+//        NSString* message = [responseObject objectForKey:@"responseMessage"];
+//        NSLog(@"请求结果:%@",message);
         if ([code integerValue] == 200) {
             NSArray* arr = [responseObject objectForKey:@"result"];
             if (success) {
@@ -72,19 +74,13 @@
 {
     _isTimeOut = YES;
     NSString* url = [_requestURL stringByAppendingString:@"addUserData"];
-    //测试用
-    NSDictionary* parmeters = @{@"uid":_uid,@"result":@[
-                                                       @{
-                                                           @"name":@"舒筋活络",
-                                                           @"count":@1,
-                                                           @"programId":@2312
-                                                       },
-                                                        @{
-                                                            @"name":@"舒筋活络",
-                                                            @"count":@20,
-                                                            @"programId":@2313
-                                                        }
-                                                       ]};
+
+    //数组需要先转成json格式才能post（字典却不需要）
+    NSData* data = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"请求参数:%@",str);
+    
+    NSDictionary* parmeters = @{@"uid":_uid,@"result":str};
     if (_overTime > 0) {
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
@@ -117,7 +113,6 @@
     if (_isTimeOut) {
         NSLog(@"定时计划请求超时");
         [self cancelRequest];
-
     }
 }
 
