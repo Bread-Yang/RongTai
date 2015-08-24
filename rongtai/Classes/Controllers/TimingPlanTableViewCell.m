@@ -9,6 +9,7 @@
 #import "TimingPlanTableViewCell.h"
 #import "TimingPlan.h"
 #import <MagicalRecord.h>
+#import "TimingPlanRequest.h"
 
 #define TIME_COLOR [UIColor colorWithRed:3 / 255.0 green:124 / 255.0 blue:230 / 255.0 alpha:1.0]
 
@@ -41,7 +42,7 @@
 - (void)setTimingPlan:(TimingPlan *)timingPlan {
     _timingPlan = timingPlan;
     _title.text = _timingPlan.massageName;
-    _time.text = [_timingPlan planTime];
+    _time.text = _timingPlan.ptime;
     BOOL isOn = [_timingPlan.isOn boolValue];
     [_switch setOn:isOn animated:YES];
     if (isOn) {
@@ -85,18 +86,26 @@
 
 #pragma mark - switch开关方法
 -(void)switchChange:(UISwitch*)aSwitch {
+	TimingPlanRequest *request = [TimingPlanRequest new];
+	
     if (aSwitch.isOn) {
         [self setOn];
-        [_timingPlan turnOnLocalNotification];
-    }
-    else
-    {
+//        [_timingPlan turnOnLocalNotification];
+    } else {
         [self setOff];
-        [_timingPlan cancelLocalNotification];
+//        [_timingPlan cancelLocalNotification];
     }
     
     _timingPlan.isOn = [NSNumber numberWithBool:aSwitch.isOn];
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+	
+	[request updateTimingPlan:_timingPlan success:^(NSDictionary *dic) {
+		[_timingPlan setValueByJson:dic];
+		
+		
+	} fail:^(NSDictionary *dic) {
+		
+	}];
 }
 
 #pragma mark - 设置开状态的UI

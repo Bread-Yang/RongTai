@@ -201,7 +201,7 @@
 		56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
 		56C668A41B3026A500CDC72B /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A31B3026A500CDC72B /* CircleButton.m */; };
-		56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */; };
+		56E6B3291B29295A000178BD /* AddOrEditTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */; };
 		56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */; };
 		56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32E1B2932FF000178BD /* TimingMassageModel.m */; };
 		56E9E4D81B579CBC00F01ECB /* THSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4D71B579CBC00F01ECB /* THSegmentedControl.m */; };
@@ -571,8 +571,8 @@
 		56C668A01B300F7800CDC72B /* VerticalSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerticalSlider.m; path = VerticalSlider/VerticalSlider.m; sourceTree = "<group>"; };
 		56C668A21B3026A500CDC72B /* CircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleButton.h; path = CircleButton/CircleButton.h; sourceTree = "<group>"; };
 		56C668A31B3026A500CDC72B /* CircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleButton.m; path = CircleButton/CircleButton.m; sourceTree = "<group>"; };
-		56E6B3271B29295A000178BD /* AddTimingMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddTimingMassageViewController.h; path = TimingMassage/AddTimingMassageViewController.h; sourceTree = "<group>"; };
-		56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddTimingMassageViewController.m; path = TimingMassage/AddTimingMassageViewController.m; sourceTree = "<group>"; };
+		56E6B3271B29295A000178BD /* AddOrEditTimingMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddOrEditTimingMassageViewController.h; path = TimingMassage/AddOrEditTimingMassageViewController.h; sourceTree = "<group>"; };
+		56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddOrEditTimingMassageViewController.m; path = TimingMassage/AddOrEditTimingMassageViewController.m; sourceTree = "<group>"; };
 		56E6B32A1B292997000178BD /* TimingMassageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingMassageTableViewController.h; sourceTree = "<group>"; };
 		56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingMassageTableViewController.m; sourceTree = "<group>"; };
 		56E6B32D1B2932FF000178BD /* TimingMassageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingMassageModel.h; sourceTree = "<group>"; };
@@ -1449,8 +1449,8 @@
 				56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */,
 				3DAC3C661B43D7FF0087F699 /* TimingPlanTableViewCell.h */,
 				3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */,
-				56E6B3271B29295A000178BD /* AddTimingMassageViewController.h */,
-				56E6B3281B29295A000178BD /* AddTimingMassageViewController.m */,
+				56E6B3271B29295A000178BD /* AddOrEditTimingMassageViewController.h */,
+				56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */,
 			);
 			name = TimingMassage;
 			sourceTree = "<group>";
@@ -1874,7 +1874,7 @@
 				563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
 				569360201B799900001B9BF5 /* ReadFile.m in Sources */,
-				56E6B3291B29295A000178BD /* AddTimingMassageViewController.m in Sources */,
+				56E6B3291B29295A000178BD /* AddOrEditTimingMassageViewController.m in Sources */,
 				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,

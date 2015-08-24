@@ -11,8 +11,8 @@
 #import <AFNetworking.h>
 
 @class TimingPlanRequest;
-@protocol TimingPlanDelegate <NSObject>
 
+@protocol TimingPlanDelegate <NSObject>
 
 @optional
 /**
@@ -47,7 +47,7 @@
 /**
  *  修改定时计划
  */
--(void)updateTimingPlan:(TimingPlan*)timingPlan success:(void (^)())success fail:(void (^)(NSDictionary* dic))fail;;
+-(void)updateTimingPlan:(TimingPlan*)timingPlan success:(void (^)(NSDictionary *dic))success fail:(void (^)(NSDictionary* dic))fail;;
 
 /**
  *  删除定时计划

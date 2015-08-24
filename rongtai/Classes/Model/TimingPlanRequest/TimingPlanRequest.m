@@ -39,9 +39,11 @@
     _isTimeOut = YES;
     NSString* url = [_requestURL stringByAppendingString:@"loadPlan"];
     NSDictionary* parmeters = [NSDictionary dictionaryWithObject:_uid forKey:@"uid"];
+	
     if (_overTime > 0) {
-        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+//        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
+	
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
         NSLog(@"获取定时计划列表:%@",responseObject);
@@ -67,18 +69,15 @@
 }
 
 #pragma mark - 添加定时计划
--(void)addTimingPlan:(TimingPlan *)timingPlan success:(void (^)(NSUInteger))success fail:(void (^)(NSDictionary *))fail
-{
+-(void)addTimingPlan:(TimingPlan *)timingPlan success:(void (^)(NSUInteger))success fail:(void (^)(NSDictionary *))fail {
     _isTimeOut = YES;
     NSString* url = [_requestURL stringByAppendingString:@"addPlan"];
 //    NSMutableDictionary* parmeters = [NSMutableDictionary dictionaryWithObject:_uid forKey:@"uid"];
-    
-    //测试用
-    NSDictionary* parmeters = @{@"uid":_uid,@"massageName":@"工作减压",@"ptime":@"10:46",@"days":@"1,3,4",@"isOpen":@1,@"massageProgramId":@"1235"};
+	
     if (_overTime > 0) {
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
-    [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_manager POST:url parameters:[timingPlan toDictionary] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
 //        NSLog(@"添加定时计划:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
@@ -106,28 +105,26 @@
 }
 
 #pragma mark - 修改定时计划
--(void)updateTimingPlan:(TimingPlan *)timingPlan success:(void (^)())success fail:(void (^)(NSDictionary *))fail
-{
+-(void)updateTimingPlan:(TimingPlan *)timingPlan success:(void (^)(NSDictionary *))success fail:(void (^)(NSDictionary *))fail {
     _isTimeOut = YES;
     NSString* url = [_requestURL stringByAppendingString:@"updatePlan"];
-    //    NSMutableDictionary* parmeters = [NSMutableDictionary dictionaryWithObject:_uid forKey:@"uid"];
-    
-    //测试用
-    NSDictionary* parmeters = @{@"uid":_uid,@"planId":@81,@"massageName":@"工作减压",@"ptime":@"11:40",@"days":@"1,3,4",@"isOpen":@1,@"massageProgramId":@"1235"};
+	
     if (_overTime > 0) {
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
-    [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	
+	NSLog(@"Dictionary : %@", [timingPlan toDictionary]);
+    [_manager POST:url parameters:[timingPlan toDictionary] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
         NSLog(@"修改定时计划:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             if (success) {
-                success();
+				
+                success([responseObject objectForKey:@"result"]);
             }
         }
-        else
-        {
+        else {
             if (fail) {
                 fail(responseObject);
             }

@@ -6,18 +6,21 @@
 //  Copyright (c) 2015 William-zhang. All rights reserved.
 //
 
-#import "AddTimingMassageViewController.h"
+#import "AddOrEditTimingMassageViewController.h"
 #import "LineUICollectionViewCell.h"
 #import <MagicalRecord.h>
-#import "TimingPlan.h"
 #import "UIBarButtonItem+goBack.h"
+#import "TimingPlanRequest.h"
+#import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
-@interface AddTimingMassageViewController () {
+@interface AddOrEditTimingMassageViewController () <TimingPlanDelegate>{
 	
 	id segment[7];
     __weak IBOutlet UISegmentedControl *_weekSC;
 	BOOL isNotFirstInvokeDidLayoutSubviews;
-	
+	TimingPlanRequest *_timingPlanRequest;
+	MBProgressHUD *_loadingHUD;
 }
 
 @property (nonatomic, retain) NSArray *modeNameArray;
@@ -32,7 +35,7 @@
 
 @end
 
-@implementation AddTimingMassageViewController
+@implementation AddOrEditTimingMassageViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,16 +56,27 @@
 	self.weekDaySegmentControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 	[self.weekDaySegmentControl setTintColor:[UIColor colorWithRed:82 / 255.0 green:203 / 255.0 blue:81 / 255.0 alpha:1]];
 	
-	self.modeNameArray = @[@"舒展活络", @"工作减压", @"运动恢复", @"消除疲劳", @"女性仟体按摩", @"韩式按摩", @"老年按摩", @"舒展活络"];
+	self.modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
+						   NSLocalizedString(@"舒展活络", nil),
+						   NSLocalizedString(@"休憩促眠", nil),
+						   NSLocalizedString(@"工作减压", nil),
+						   NSLocalizedString(@"肩颈重点", nil),
+						   NSLocalizedString(@"腰椎舒缓", nil),
+						   NSLocalizedString(@"云养程序一", nil),
+						   NSLocalizedString(@"云养程序二", nil),
+						   NSLocalizedString(@"云养程序三", nil),
+						   NSLocalizedString(@"云养程序四", nil),];
+	
+	self.modeLabel.text = [self.modeNameArray objectAtIndex:0];
 	
 	self.hourArray = [NSMutableArray new];
 	for (int i = 0; i < 24; i++) {
-		[self.hourArray addObject:[NSString stringWithFormat:@"%d", i]];
+		[self.hourArray addObject:[NSString stringWithFormat:@"%02zd", i]];
 	}
 	
 	self.minuteArray = [NSMutableArray new];
 	for (int i = 0; i < 60; i++) {
-		[self.minuteArray addObject:[NSString stringWithFormat:@"%d", i]];
+		[self.minuteArray addObject:[NSString stringWithFormat:@"%02zd", i]];
 	}
 	
 	self.collectionView.delegate = self;
@@ -82,6 +96,19 @@
 	}
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	if (self.timingPlan) {
+		NSArray *timeArray = [self.timingPlan.ptime componentsSeparatedByString:@":"];
+		NSInteger hour = [timeArray[0] integerValue];
+		NSInteger minute = [timeArray[1] integerValue];
+		
+		[_leftPickView setIndex:hour];
+		[_rightPickView setIndex:minute];
+	}
+}
+
 - (void)viewDidLayoutSubviews {
 	if (!isNotFirstInvokeDidLayoutSubviews) {
 		isNotFirstInvokeDidLayoutSubviews = true;
@@ -90,7 +117,7 @@
 		
 		self.leftItems = [[NSMutableArray alloc] init];
 		for (int i = 0; i < 24;  i++) {
-			[self.leftItems addObject:[NSString stringWithFormat:@"%d", i]];
+			[self.leftItems addObject:[NSString stringWithFormat:@"%02zd", i]];
 		}
 		
 		NSLog(@"width : %f, height : %f", [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
@@ -111,7 +138,7 @@
 		
 		self.rightItems = [[NSMutableArray alloc] init];
 		for (int i = 0; i < 60;  i++) {
-			[self.rightItems addObject:[NSString stringWithFormat:@"%d", i]];
+			[self.rightItems addObject:[NSString stringWithFormat:@"%02zd", i]];
 		}
 		
 		self.rightPickView = [[NAPickerView alloc] initWithFrame:CGRectMake(size.width / 2, 0, 100, self.containView.frame.size.height) andItems:self.rightItems andDelegate:self];
@@ -158,23 +185,62 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
-    TimingPlan *timePlan = [TimingPlan MR_createEntity];
+    TimingPlan *newTimePlan = [TimingPlan MR_createEntity];
 	NSInteger hour = [[self.leftPickView getHighlightItemString] intValue];
 	NSInteger minute = [[self.rightPickView getHighlightItemString] intValue];
-	timePlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
-	NSString *message = [NSString stringWithFormat:@"%@", timePlan.massageName];
+	newTimePlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
+	newTimePlan.ptime = [NSString stringWithFormat:@"%02zd:%02zd", hour, minute];
+	newTimePlan.isOn = [NSNumber numberWithBool:YES];
+	newTimePlan.massageProgamId = [NSNumber numberWithInteger:12345];
+
+	NSOrderedSet *selectDays = [self.weekDaySegmentControl selectedIndexes];
 	
-    [timePlan setLocalNotificationByHour:hour Minute:minute Week:[self.weekDaySegmentControl selectedIndexes] Message:message];
+	NSLog(@"selectedIndex : %@", [self.weekDaySegmentControl selectedIndexes]);
 	
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+	if ([selectDays count] == 0) {
+		newTimePlan.days = @"0";
+	} else {
+		NSString *days = @"";
+		for (int i = 0; i < [selectDays count]; i++) {
+			if (i != [selectDays count] - 1) {
+				days = [days stringByAppendingFormat:@"%zd,", [[selectDays objectAtIndex:i] integerValue]];
+			} else {
+				days = [days stringByAppendingFormat:@"%zd", [[selectDays objectAtIndex:i] integerValue]];
+			}
+		}
+		newTimePlan.days = days;
+	}
 	
-	[self.navigationController popViewControllerAnimated:YES];
+	__weak MBProgressHUD *weakHUB = _loadingHUD;
+	__weak AddOrEditTimingMassageViewController *weakSelf = self;
+	
+	if (self.timingPlan) {
+		newTimePlan.planId = self.timingPlan.planId;
+		[_timingPlanRequest updateTimingPlan:newTimePlan success:^(NSDictionary *dic) {
+			[weakHUB hide:YES];
+			[weakSelf.navigationController popViewControllerAnimated:YES];
+		} fail:^(NSDictionary *dic) {
+			[weakHUB hide:YES];
+		}];
+	} else {
+		[_timingPlanRequest addTimingPlan:newTimePlan success:^(NSUInteger timingPlanId) {
+			[weakHUB hide:YES];
+			[weakSelf.navigationController popViewControllerAnimated:YES];
+		} fail:^(NSDictionary *dic) {
+			[weakHUB hide:YES];
+		}];
+	}
+	
+//
+//    [timePlan setLocalNotificationByHour:hour Minute:minute Week:[self.weekDaySegmentControl selectedIndexes] Message:message];
+//	
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-	return 8;
+	return [self.modeNameArray count];
 }
 
 // Header和Footer的样式
@@ -286,6 +352,12 @@
 - (void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index {
 	NSLog(@"当前选择的index : %zd", index);
 	NSLog(@"highlightIndex : %zd", pickerView.getHighlightIndex);
+}
+
+#pragma mark - TimingPlanDelegate代理
+
+- (void)timingPlanRequestTimeOut:(TimingPlanRequest *)request {
+	
 }
 
 /*

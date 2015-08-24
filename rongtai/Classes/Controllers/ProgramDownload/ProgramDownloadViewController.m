@@ -44,7 +44,7 @@
 	
 	//MBProgressHUD
 	AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-	_loadingHUD = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
+	_loadingHUD = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
 	[appDelegate.window addSubview:_loadingHUD];
 	
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
@@ -113,7 +113,7 @@
 - (void)goBack {
     [self.navigationController popViewControllerAnimated:YES];
 	
-	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
+//	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 }
 
 #pragma mark - RTBleConnectorDelegate

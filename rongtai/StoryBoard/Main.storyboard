@@ -486,7 +486,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GR6-3G-jAg">
                                                     <rect key="frame" x="0.0" y="8" width="600" height="58.5"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="mode_1" translatesAutoresizingMaskIntoConstraints="NO" id="6vE-bT-jxd" userLabel="programImageView">
+                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mode_1" translatesAutoresizingMaskIntoConstraints="NO" id="6vE-bT-jxd" userLabel="programImageView">
                                                             <rect key="frame" x="30" y="13" width="42" height="42"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="42" id="38c-wf-EJ2"/>
@@ -629,7 +629,7 @@
         <!--添加定时计划-->
         <scene sceneID="dPg-h9-Qd6">
             <objects>
-                <viewController storyboardIdentifier="AddTimingMassage" title="添加定时计划" id="0k6-pQ-v5b" userLabel="添加定时计划" customClass="AddTimingMassageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddTimingMassage" title="添加定时计划" id="0k6-pQ-v5b" userLabel="添加定时计划" customClass="AddOrEditTimingMassageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tm3-N6-ZLP"/>
                         <viewControllerLayoutGuide type="bottom" id="lIk-Cy-0fT"/>
