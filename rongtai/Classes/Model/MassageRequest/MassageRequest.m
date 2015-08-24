@@ -135,7 +135,7 @@
 {
 //    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/loadCustomProgram",REQUESTURL];
-    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
+    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%d\n size:%d\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];

@@ -79,7 +79,7 @@
     if (_isEdit) {
         IQKeyboardManager* m = [IQKeyboardManager sharedManager];
         [m setEnable:NO];
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"保存", nil];
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"名称", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"保存", nil), nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.delegate = self;
         UITextField* textFeile = [alert textFieldAtIndex:0];

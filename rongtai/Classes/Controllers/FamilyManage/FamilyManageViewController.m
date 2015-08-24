@@ -92,7 +92,7 @@
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
-        _loading.labelText = @"读取中...";
+        _loading.labelText = NSLocalizedString(@"读取中...", nil);
         [_loading show:YES];
         
         NSLog(@"请求成员");
@@ -125,7 +125,7 @@
 -(void)requestTimeOut:(MemberRequest *)request
 {
     [_loading hide:YES];
-    [self showProgressHUDByString:@"请求超时，请检测网络"];
+    [self showProgressHUDByString:NSLocalizedString(@"请求超时，请检测网络", nil)];
 }
 
 #pragma mark - 返回

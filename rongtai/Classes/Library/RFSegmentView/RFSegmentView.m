@@ -56,6 +56,12 @@
     return self;
 }
 
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    _titleLabel.frame = CGRectMake(5, 2, frame.size.width-10, frame.size.height-4);
+}
+
 - (void)setIsSelected:(BOOL)isSelected
 {
     _isSelected = isSelected;
@@ -116,14 +122,6 @@
     return self;
 }
 
--(void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-    float viewWidth       = CGRectGetWidth(self.frame);
-    float viewHeight      = CGRectGetHeight(self.frame);
-    self.bgView.frame = CGRectMake(0, 0, viewWidth, viewHeight);
-}
-
 - (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
 {
     self = [super initWithFrame:frame];
@@ -132,6 +130,50 @@
         self.items = items;
     }
     return self;
+}
+
+-(void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    float viewWidth = CGRectGetWidth(self.frame);
+    float viewHeight = CGRectGetHeight(self.frame);
+    self.bgView.frame = CGRectMake(0, 0, viewWidth, viewHeight);
+    if (_items.count > 0) {
+        CGFloat init_x = 0;
+        float itemWidth = viewWidth/_items.count;
+        float itemHeight = viewHeight;
+        for (int i = 0 ; i < _items.count; i++) {
+            RFSegmentItem* item = (RFSegmentItem*)[self viewWithTag:1300+i];
+            if (!item) {
+                break;
+            }
+            item.frame = CGRectMake(init_x, 0, itemWidth, itemHeight);
+//            NSLog(@"Item frame:%@",NSStringFromCGRect(item.frame));
+            init_x += itemWidth;
+        }
+        
+        init_x = 0;
+        for (NSInteger i = 0; i<_items.count-1; i++) {
+            init_x += itemWidth;
+            UIView *lineView = [self viewWithTag:1310+i];
+            if (!lineView) {
+                break;
+            }
+            lineView.frame = CGRectMake(init_x, 0, self.lineWidth, itemHeight);
+        }
+    }
+}
+
+-(void)setFont:(UIFont *)font
+{
+    _font = font;
+    for (int i = 0 ; i < _items.count; i++) {
+        RFSegmentItem* item = (RFSegmentItem*)[self viewWithTag:1300+i];
+        if (!item) {
+            break;
+        }
+        item.titleLabel.font = font;
+    }
 }
 
 -(void)setUp
@@ -162,15 +204,17 @@
 
 -(void)setItems:(NSArray *)items
 {
+    _items = items;
     CGFloat init_x = 0;
     CGFloat init_y = 0;
-    float itemWidth = CGRectGetWidth(self.bgView.frame)/items.count;
-    float itemHeight = CGRectGetHeight(self.bgView.frame);
+    float itemWidth = CGRectGetWidth(self.frame)/items.count;
+    float itemHeight = CGRectGetHeight(self.frame);
     if (items.count >= 2) {
         for (NSInteger i =0; i<items.count; i++) {
             RFSegmentItem *item = [[RFSegmentItem alloc] initWithFrame:CGRectMake(init_x, init_y, itemWidth, itemHeight)
                                                                  index:i title:items[i]
                                                           norFontColor:self.norFontColor selFontColor:self.selFontColor norBgColor:self.norBgColor selBgColor:self.selBgColor isSelected:(i == 0)? YES: NO];
+            item.tag = 1300 + i;
             
             init_x += itemWidth;
             [self.bgView addSubview:item];
@@ -188,6 +232,7 @@
         for (NSInteger i = 0; i<items.count-1; i++) {
             init_x += itemWidth;
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(init_x, 0, self.lineWidth, itemHeight)];
+            lineView.tag = 1310 + i;
             lineView.backgroundColor = self.LineColor;
             [self.bgView addSubview:lineView];
             

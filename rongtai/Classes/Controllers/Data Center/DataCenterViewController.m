@@ -54,7 +54,7 @@
     
     //标题Label
     _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 64+16, w*0.6, 35)];
-    _titleLabel.text = @"总使用时长:30 h 25 m";
+    _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.font = [UIFont systemFontOfSize:15];
     [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
@@ -153,16 +153,16 @@
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
-        _titleLabel.text = @"总使用时长:30 h 25 m";
+        _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
     else if (_pageControl.currentPage == 1)
     {
-        _titleLabel.text = @"耗电量";
+        _titleLabel.text = NSLocalizedString(@"耗电量", nil);
     }
     else
     {
-        _titleLabel.text = @"爱用程序";
+        _titleLabel.text = NSLocalizedString(@"爱用程序", nil);
     }
 }
 
@@ -171,16 +171,16 @@
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
-        _titleLabel.text = @"总使用时长:30 h 25 m";
+        _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
     else if (_pageControl.currentPage == 1)
     {
-        _titleLabel.text = @"耗电量";
+        _titleLabel.text = NSLocalizedString(@"耗电量", nil);
     }
     else
     {
-        _titleLabel.text = @"爱用程序";
+        _titleLabel.text = NSLocalizedString(@"爱用程序", nil);
     }
 }
 #pragma mark - 分享方法

@@ -130,7 +130,7 @@
 								//可以根据回调提示用户。
 								if (state == SSResponseStateSuccess)
 								{
-									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功"
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"分享成功", nil)
 																					message:nil
 																				   delegate:self
 																		  cancelButtonTitle:@"OK"
@@ -139,8 +139,8 @@
 								}
 								else if (state == SSResponseStateFail)
 								{
-									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-																					message:[NSString stringWithFormat:@"失败描述：%@",[error errorDescription]]
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"分享失败", nil)
+																					message:[NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"失败描述", nil),[error errorDescription]]
 																				   delegate:self
 																		  cancelButtonTitle:@"OK"
 																		  otherButtonTitles:nil, nil];

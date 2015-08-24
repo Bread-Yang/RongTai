@@ -174,7 +174,7 @@
 	else
     {
         NSLog(@"访问相册失败");
-        [self showProgressHUDByString:@"访问相册失败"];
+        [self showProgressHUDByString:NSLocalizedString(@"访问相册失败", nil)];
     }
 }
 
@@ -190,7 +190,7 @@
     else
     {
         NSLog(@"访问相机失败");
-        [self showProgressHUDByString:@"访问相机失败"];
+        [self showProgressHUDByString:NSLocalizedString(@"访问相机失败", nil)];
     }
 }
 
@@ -215,11 +215,11 @@
             //编辑模式，执行删除
             [_memberRequest deleteMember:_user success:^(id responseObject) {
                 [_user MR_deleteEntity];
-                [uVC showProgressHUDByString:@"删除成员成功"];
+                [uVC showProgressHUDByString:NSLocalizedString(@"删除成员成功", nil)];
                 [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
             } failure:^(id responseObject) {
                 [_loadingHUD hide:YES];
-                NSString* str = [NSString stringWithFormat:@"删除成员失败：%@",responseObject];
+                NSString* str = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"删除成员失败", nil),responseObject];
                 NSLog(@"%@",str);
                 [uVC showProgressHUDByString:str];
             }];
@@ -242,7 +242,7 @@
                         [uVC uploadMember];
                     } failure:^(id responseObject) {
                         [_loadingHUD hide:YES];
-                        [uVC showProgressHUDByString:@"头像上传失败，请检测网络"];
+                        [uVC showProgressHUDByString:NSLocalizedString(@"头像上传失败，请检测网络", nil)];
                         return ;
                     }];
                 }
@@ -256,7 +256,7 @@
     else
     {
         NSLog(@"无法连接到互联网");
-        [self showProgressHUDByString:@"无法连接到互联网"];
+        [self showProgressHUDByString:NSLocalizedString(@"无法连接到互联网", nil)];
     }
 }
 
@@ -272,12 +272,12 @@
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
-        [uVC showProgressHUDByString:@"添加成功"];
+        [uVC showProgressHUDByString:NSLocalizedString(@"添加成员成功", nil)];
         [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
         [_loadingHUD hide:YES];
         [_user MR_deleteEntity];
-        NSString* str = [NSString stringWithFormat:@"添加成员请求错误:%@",responseObject];
+        NSString* str = [NSString stringWithFormat:@"%@:%@",NSLocalizedString(@"添加成员失败", nil),responseObject];
         [uVC showProgressHUDByString:str];
     }];
 }
@@ -313,7 +313,7 @@
     CGFloat w = h*2.8;
     UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, SCREENHEIGHT - h*1.05, w, h*0.8)];
     [saveBtn setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-    [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [saveBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveBtn];
     
@@ -332,7 +332,7 @@
 {
     if (_manager.reachable) {
         if ([self judgeMemberInformation]) {
-            _loadingHUD.labelText = @"保存中...";
+            _loadingHUD.labelText = NSLocalizedString(@"保存中...", nil);
             [_loadingHUD show:YES];
             
             //提交图片
@@ -348,7 +348,7 @@
                     [uVC editMember];
                 } failure:^(id responseObject) {
                     [_loadingHUD hide:YES];
-                    [uVC showProgressHUDByString:@"头像上传失败，请检测网络"];
+                    [uVC showProgressHUDByString:NSLocalizedString(@"头像上传失败，请检测网络", nil)];
                     return ;
                 }];
             }
@@ -362,7 +362,7 @@
     else
     {
         NSLog(@"无法连接到互联网");
-        [self showProgressHUDByString:@"无法连接到互联网"];
+        [self showProgressHUDByString:NSLocalizedString(@"无法连接到互联网", nil)];
     }
 }
 
@@ -388,13 +388,13 @@
     [_memberRequest editMember:_user success:^(id responseObject) {
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
-        [uVC showProgressHUDByString:@"保存成功"];
+        [uVC showProgressHUDByString:NSLocalizedString(@"保存成功", nil)];
         [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
         [_user setValueBy:_tmp];
         NSLog(@"复原数据：%@",[_user memberToDictionary]);
         [_loadingHUD hide:YES];
-        NSString* str = [NSString stringWithFormat:@"编辑成员请求错误:%@",responseObject];
+        NSString* str = [NSString stringWithFormat:@"%@:%@",NSLocalizedString(@"编辑成员失败", nil),responseObject];
         [uVC showProgressHUDByString:str];
     }];
 }
@@ -420,26 +420,26 @@
     //用户名不能为空
     NSString *userName = _name.text;
     if ([NSString isBlankString:userName]) {
-        [self showProgressHUDByString:@"昵称不能为空"];
+        [self showProgressHUDByString:NSLocalizedString(@"昵称不能为空", nil)];
         return NO;
     }
     
     //用户名不能重复
     NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
     if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
-        [self showProgressHUDByString:@"昵称已经存在"];
+        [self showProgressHUDByString:NSLocalizedString(@"昵称已经存在", nil)];
         return NO;
     }
 
     //身高必须选择
     if (_height.text.length < 1) {
-        [self showProgressHUDByString:@"请选择身高"];
+        [self showProgressHUDByString:NSLocalizedString(@"请选择身高", nil)];
         return NO;
     }
     
     //生日必须选择
     if (_birthday.text.length < 1 ) {
-        [self showProgressHUDByString:@"请选择生日"];
+        [self showProgressHUDByString:NSLocalizedString(@"请选择生日", nil)];
         return NO;
     }
     return YES;
@@ -481,7 +481,7 @@
                 
             } failure:^(NSError *error) {
                 //网络读取失败
-                [uVC showProgressHUDByString:@"用户头像下载失败"];
+                [uVC showProgressHUDByString:NSLocalizedString(@"用户头像下载失败", nil)];
                 
             }];
             return;
@@ -498,68 +498,9 @@
     }
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-//- (void)setEditUserInformation:(NSDictionary *)infoDictionary {
-//	self.title = NSLocalizedString(@"编辑", nil);
-//	CGFloat width = [UIScreen mainScreen].bounds.size.width;
-//	CGFloat height = [UIScreen mainScreen].bounds.size.height;
-//	UIButton *delete = [[UIButton alloc]initWithFrame:CGRectMake(width*0.325, height - height * 0.15, width * 0.35, height * 0.06)];
-//	delete.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.6];
-//	[delete setTitle:NSLocalizedString(@"删除", nil) forState:UIControlStateNormal];
-//	[delete addTarget:self action:@selector(deleteUser:) forControlEvents:UIControlEventTouchUpInside];
-//	[self.view addSubview:delete];
-//
-//	_name.text = infoDictionary[@"name"];
-//	_sexSegmentView.selectIndex = [infoDictionary[@"sex"] integerValue];
-//	_height.text = infoDictionary[@"height"];
-//	if ([infoDictionary[@"heightUnit"] isEqualToString:@"cm"]) {
-//		_heightUnitSegmentView.selectIndex = 0;
-//	} else {
-//		_heightUnitSegmentView.selectIndex = 1;
-//	}
-//	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init] ;
-//	[dateFormat setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
-//	NSDate *date = [dateFormat dateFromString:infoDictionary[@"birthday"]];
-//	_birthdayDatePicker.date = date;
-//
-//	[dateFormat setDateFormat:@"yyyy/MM/dd"];
-//	_birthday.text = [dateFormat stringFromDate:date];
-//
-//	//		_name.text = editMember.name;
-//	//		sexSegmentedControl.selectedSegmentIndex = [editMember.sex integerValue];
-//	//		_height.text = [editMember.height stringValue];
-//	//		if ([editMember.heightUnit isEqual:@"cm"]) {
-//	//			heightUnitSegmentedControl.selectedSegmentIndex = 0;
-//	//		} else {
-//	//			heightUnitSegmentedControl.selectedSegmentIndex = 1;
-//	//		}
-//	//		_birthdayDatePicker.date = editMember.birthday;
-//	//
-//	//		NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//	//		[dateFormat setDateStyle:NSDateFormatterShortStyle];
-//	//		NSString *dateString = [dateFormat stringFromDate:editMember.birthday];
-//	//	    _birthday.text = [NSString stringWithFormat:@"%@", dateString];
-//
-//}
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

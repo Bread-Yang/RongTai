@@ -132,10 +132,10 @@
     _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
     _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
     _menuBar.tintColor = [UIColor whiteColor];
-    UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:@"负离子" image:[UIImage imageNamed:@"icon_set"] tag:0];
-    UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:@"手动" image:[UIImage imageNamed:@"icon_hand"] tag:1];
-    UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:@"自定义" image:[UIImage imageNamed:@"icon_user"] tag:2];
-    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:@"下载" image:[UIImage imageNamed:@"icon_download"] tag:3];
+    UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"负离子", nil) image:[UIImage imageNamed:@"icon_set"] tag:0];
+    UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"手动", nil) image:[UIImage imageNamed:@"icon_hand"] tag:1];
+    UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"自定义", nil) image:[UIImage imageNamed:@"icon_user"] tag:2];
+    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"下载", nil) image:[UIImage imageNamed:@"icon_download"] tag:3];
     _menuBar.items = @[item1,item2,item3,item4];
     _menuBar.selectedItem = item1;
     _menuBar.delegate = self;
@@ -221,6 +221,7 @@
         //自定义
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
+//        [cVC editModeWithCustomProgram:nil Index:0];
         [self.navigationController pushViewController:cVC animated:YES];
     } else if (item.tag == 3) {
         //下载

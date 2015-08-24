@@ -84,10 +84,10 @@
     self.title = NSLocalizedString(@"手动按摩", nil);
 	
 	// 脚步滚轮数组
-	_footWheelArray = @[@"滚轮速度慢", @"滚轮速度中", @"滚轮速度快", @"滚轮关"];
+//	_footWheelArray = @[@"滚轮速度慢", @"滚轮速度中", @"滚轮速度快", @"滚轮关"];
 	
     //技法偏好类型数组
-    _skillsPreferenceArray = @[@"揉捏", @"敲击", @"揉敲同步", @"叩击", @"指压", @"韵律按摩"];
+    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲同步", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律按摩", nil)];
     
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.05*0.5;
@@ -122,7 +122,7 @@
     _polar.backgroundLineColorRadial = [UIColor colorWithRed:200/255.0 green:225/255.0 blue:233/255.0 alpha:1];
     _polar.fillColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.3];
     _polar.lineColor = [UIColor colorWithRed:0 green:230/255.0 blue:0 alpha:0.8];
-    _polar.attributes = @[@"机芯幅度", @"气囊强度",@"滚轮速度" , @"按摩力度"];
+    _polar.attributes = @[@"机芯幅度", @"气囊强度",@"滚轮速度",@"按摩力度"];
     _polar.scaleFont = [UIFont systemFontOfSize:14];
 	_scroll.delaysContentTouches = NO;
     [_scroll addSubview:_polar];
@@ -220,8 +220,8 @@
 -(void)skillsPreferenceTap {
     CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
     [skillPreferenceAlerView setContainerView:_skillsPreferencePickerView];
-    [skillPreferenceAlerView setTitleString:@"模式"];
-    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
+    [skillPreferenceAlerView setTitleString:NSLocalizedString(@"模式", nil)];
+    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"取消", nil), NSLocalizedString(@"保存", nil), nil]];
     [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         if (buttonIndex == 0) {
             [alertView close];
@@ -260,8 +260,8 @@
 -(void)timeViewTap {
     CustomIOSAlertView* skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
     [skillPreferenceAlerView setContainerView:_timePickerView];
-    [skillPreferenceAlerView setTitleString:@"定时"];
-    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"保存", nil]];
+    [skillPreferenceAlerView setTitleString:NSLocalizedString(@"定时", nil)];
+    [skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"取消", nil), NSLocalizedString(@"保存", nil), nil]];
     [skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         if (buttonIndex == 0) {
             [alertView close];
@@ -364,7 +364,7 @@
     
     pickerView.infiniteScrolling = YES;
     pickerView.overlayLeftImage = [UIImage imageNamed:@"icon_set_time"];
-    pickerView.overlayRightString = @"分钟";
+    pickerView.overlayRightString = NSLocalizedString(@"分钟", nil);
     pickerView.showOverlay = YES;
     
     pickerView.highlightBlock = ^(NALabelCell *cell) {
@@ -633,7 +633,7 @@
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
     if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
-        NSLog(@"%ld调节值",index);
+//        NSLog(@"%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
 }

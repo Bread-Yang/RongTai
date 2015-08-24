@@ -106,7 +106,6 @@
 		3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3661B1FEB7400BA491E /* SlideNavigationController.m */; };
 		3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF37B1B20401600BA491E /* WLPolar.m */; };
 		3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */; };
-		3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */; };
 		3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DE3FFA81B4F79CA003F8AF7 /* bg.png */; };
 		3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */; };
 		3DE5D66E1B5F470200489C62 /* AutoMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DE5D66D1B5F470200489C62 /* AutoMassageViewController.m */; };
@@ -142,6 +141,7 @@
 		3DF3043D1B38FE2500DD51D3 /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041C1B38FE2500DD51D3 /* MagicalRecord+Setup.m */; };
 		3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m */; };
 		3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF304201B38FE2500DD51D3 /* MagicalRecord.m */; };
+		3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD18FE1B8B033800BED437 /* CustomProgram.m */; };
 		561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */; };
 		563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */; };
 		565E718A1B5E547200E51C1C /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71641B5E547200E51C1C /* CopyConnection.framework */; };
@@ -319,8 +319,6 @@
 		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
 		3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localNotificationTransformer.h; path = Model/localNotificationTransformer.h; sourceTree = "<group>"; };
 		3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = localNotificationTransformer.m; path = Model/localNotificationTransformer.m; sourceTree = "<group>"; };
-		3D77C9EA1B4CD2D6005C9810 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
-		3D77C9EB1B4CD2D6005C9810 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
 		3D783D2D1B12FD0300A893D9 /* rongtai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rongtai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D783D311B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D321B12FD0300A893D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -411,8 +409,6 @@
 		3DCDF37B1B20401600BA491E /* WLPolar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLPolar.m; sourceTree = "<group>"; };
 		3DDEE1C01B4A6EAB005F8324 /* WLDoughnutStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnutStatsView.h; sourceTree = "<group>"; };
 		3DDEE1C11B4A6EAB005F8324 /* WLDoughnutStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLDoughnutStatsView.m; sourceTree = "<group>"; };
-		3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = ../Model/CustomProgram.h; sourceTree = "<group>"; };
-		3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = ../Model/CustomProgram.m; sourceTree = "<group>"; };
 		3DE3FFA81B4F79CA003F8AF7 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		3DE3FFAA1B4F7C79003F8AF7 /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
 		3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
@@ -486,6 +482,8 @@
 		3DF304221B38FE2500DD51D3 /* MagicalRecordLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordLogging.h; sourceTree = "<group>"; };
 		3DF304231B38FE2500DD51D3 /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		3DF304241B38FE2500DD51D3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
+		3DFD18FD1B8B033800BED437 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
+		3DFD18FE1B8B033800BED437 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
 		561BC3541B5CEEF200F2E63F /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleBaseBusinessViewController.h; sourceTree = "<group>"; };
@@ -1355,6 +1353,8 @@
 		5672800E1B31857E0059C18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3DFD18FD1B8B033800BED437 /* CustomProgram.h */,
+				3DFD18FE1B8B033800BED437 /* CustomProgram.m */,
 				3DF0FE131B85BF95001CAAFE /* DataRequest */,
 				3DF0FE0C1B8573F8001CAAFE /* TimingPlanRequest */,
 				3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */,
@@ -1362,8 +1362,6 @@
 				3D0709A01B6B66160010920D /* MemberRequest */,
 				3D9EBADF1B3D2CC1000FD810 /* MassageRequest */,
 				3DAE1A6C1B3C0B8700B0CA3C /* LoginRequest */,
-				3D77C9EA1B4CD2D6005C9810 /* CustomProgram.h */,
-				3D77C9EB1B4CD2D6005C9810 /* CustomProgram.m */,
 				3DCD12291B4140EE00890164 /* UserDownload.h */,
 				3DCD122A1B4140EE00890164 /* UserDownload.m */,
 			);
@@ -1554,8 +1552,6 @@
 		DF9C7CF11B147A36005617DA /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3DE3FF971B4F74F4003F8AF7 /* CustomProgram.h */,
-				3DE3FF981B4F74F4003F8AF7 /* CustomProgram.m */,
 				5661F6A41B281361006066A0 /* MusicModel.h */,
 				5661F6A51B281361006066A0 /* MusicModel.m */,
 				56E6B32D1B2932FF000178BD /* TimingMassageModel.h */,
@@ -1832,6 +1828,7 @@
 				3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */,
 				3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
+				3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */,
 				56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */,
 				3DCDF37C1B20401600BA491E /* WLPolar.m in Sources */,
 				3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */,
@@ -1929,7 +1926,6 @@
 				3D0258F91B1D525E006C9179 /* NSArray+Sort.m in Sources */,
 				3DF304301B38FE2500DD51D3 /* NSManagedObject+MagicalRequests.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
-				3DE3FF991B4F74F4003F8AF7 /* CustomProgram.m in Sources */,
 				3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */,

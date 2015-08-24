@@ -37,7 +37,7 @@
 "泰式" = "Thailand";
 "日式" = "Japanese";
 "中式" = "Chinese";
-"揉捏" = "Malaxation";
+"揉捏" = "Kneading";
 "推拿" = "Manipulation";
 "敲打" = "Strike";
 "组合" = "Mix";
@@ -82,16 +82,74 @@
 "确定" = "confirm";
 "网络程序安装位已满" = "Network Program Slot Full,Please Delete";
 
-
 "使用时机" = "Use Time";
 "使用目的" = "Use Purpose";
 "重点部位" = "Key Part";
 "按摩手法" = "Massage Way";
 "技术偏好" = "Skill Preference";
 "速度" = "Speed";
-"气压" = "Air Pressur";
+"气压" = "Air Pressure";
+"偏慢" = "Slow";
+"偏快" = "Fast";
+"偏大" = "Big";
+"偏小" = "Small";
+"负离子" = "Anion";
+"手动" = "Manual";
+"自定义" = "Custom";
+"下载" = "Download";
+"取消" = "Cancel";
+"访问相册失败" = "Access Album Failed";
+"访问相机失败" = "Access Camera Failed";
+"删除成员成功" = "Delete Family Successful";
+"删除成员失败" = "Delete Family Failed";
+"头像上传失败，请检测网络" = "Icon Upload Failed,Please Check Network";
+"无法连接到互联网" = "Can't Connect Internet";
+"添加成员成功" = "Add Family Successful";
+"添加成员失败" = "Add Family Failed";
+"保存" = "Save";
+"保存中..." = "Saving...";
+"保存成功" = "Save Successful";
+"编辑成员失败" = "Edit Family Failed";
+"昵称不能为空" = "Name Can't Be Null";
+"昵称已经存在" = "Name Has Existed";
+"请选择身高" = "Please Select Your Height";
+"请选择生日" = "Please Select Your Birthday";
+"用户头像下载失败" = "User Icon Download Failed";
+"总使用时长" = "Total Use Time";
+"耗电量" = "Power Consumption";
+"爱用程序" = "Favorite Program";
+"日" = "Sun";
+"一" = "Mon";
+"二" = "Tues";
+"三" = "Wed";
+"四" = "Thur";
+"五" = "Fri";
+"六" = "Sat";
+"读取中..." = "Loading...";
+"请求超时，请检测网络" = "Request OverTime,Please Check Network";
+"名称" = "Name";
+"分享成功" = "Share Successful";
+"分享失败" = "Share Failed";
+"失败描述" = "Failed Description";
+"敲击" = "Knocking";
+"揉敲同步" = "Sync";
+"叩击" = "Tapping";
+"指压" = "Shiatsu"
+"韵律按摩"  = "Rhythm"
+"机芯幅度" = "Width"
+"气囊强度" = "Airbag"
+"滚轮速度" = "Roller";
+"按摩力度" = "Speed";
+"模式" = "Mode";
+"分钟" = "minutes";
 
-
+"全身" = "";
+"臀肩" = "";
+"背腰" = "";
+"臀部" = "";
+"腿足" = "";
+"请选择需要的按摩部位" = "";
+"按摩部位" = "";
 
 
 

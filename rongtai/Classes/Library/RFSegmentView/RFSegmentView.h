@@ -26,6 +26,7 @@
 @property(nonatomic, strong)UIColor* LineColor;
 @property(nonatomic)CGFloat lineWidth;
 @property(nonatomic, strong)NSArray* items;
+@property(nonatomic, strong)UIFont* font;
 
 /**
  *  默认构造函数

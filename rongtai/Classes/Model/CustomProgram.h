@@ -25,4 +25,14 @@
 @property (nonatomic, retain) NSNumber * useTime;
 @property (nonatomic, retain) NSNumber * width;
 
+
+/**
+ *  根据索引返回属性值（按照自定义界面设计的顺序）
+ */
+-(NSUInteger)valueByIndex:(NSUInteger)index;
+
+/**
+ *  根据索引设置属性值，与valueByIndex:对应
+ */
+-(void)setValue:(NSUInteger)value ByIndex:(NSUInteger)index;
 @end

@@ -37,7 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"自定义程序";
+    self.title = NSLocalizedString(@"自定义程序", nil);
     
     UIBarButtonItem* stop = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"结束", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stop)];
     self.navigationItem.leftBarButtonItem = stop;

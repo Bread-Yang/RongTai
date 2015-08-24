@@ -48,7 +48,7 @@
     
     //
     _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    _hud.labelText = @"读取中...";
+    _hud.labelText = NSLocalizedString(@"读取中...", nil);
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -97,7 +97,7 @@
     
     MBProgressHUD *alert = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     alert.mode = MBProgressHUDModeText;
-    alert.labelText = @"请求超时";
+    alert.labelText = NSLocalizedString(@"请求超时，请检测网络", nil);
     alert.margin = 10.f;
     alert.removeFromSuperViewOnHide = YES;
     [alert hide:YES afterDelay:0.7];

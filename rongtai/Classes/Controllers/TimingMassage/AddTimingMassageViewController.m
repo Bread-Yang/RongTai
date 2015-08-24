@@ -45,7 +45,7 @@
 	backgroundImageView.image = [UIImage imageNamed:@"bg"];
 	[self.view insertSubview:backgroundImageView atIndex:0];
 	
-    NSArray *segments = @[ @"日", @"一", @"二", @"三", @"四", @"五", @"六"];
+    NSArray *segments = @[NSLocalizedString(@"日", nil), NSLocalizedString(@"一", nil), NSLocalizedString(@"二", nil), NSLocalizedString(@"三", nil), NSLocalizedString(@"四", nil), NSLocalizedString(@"五", nil), NSLocalizedString(@"六", nil)];
 	
 	for (int i = 0; i < [segments count]; i++) {
 		[self.weekDaySegmentControl insertSegmentWithTitle:[segments objectAtIndex:i] atIndex:i];

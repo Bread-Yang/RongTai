@@ -46,14 +46,14 @@
 #pragma mark - 初始化
 -(void)setUp
 {
-    _parts = @[@"全身",@"臀肩",@"背腰",@"臀部",@"腿足"];
+    _parts = @[NSLocalizedString(@"全身", nil),NSLocalizedString(@"臀肩", nil),NSLocalizedString(@"背腰", nil),NSLocalizedString(@"臀部", nil),NSLocalizedString(@"腿足", nil)];
     _humanImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"body"]];
 //    _humanImage.backgroundColor = [UIColor redColor];
     [self addSubview:_humanImage];
     
     _partLabel = [[UILabel alloc]init];
     _partLabel.font = [UIFont systemFontOfSize:15];
-    _partLabel.text = @"请选择需要的按摩部位";
+    _partLabel.text = NSLocalizedString(@"请选择需要的按摩部位", nil);
     _partLabel.textColor = ORANGE;
     _partLabel.textAlignment = NSTextAlignmentCenter;
 //    _partLabel.backgroundColor = [UIColor lightGrayColor];
@@ -148,7 +148,7 @@
             l.isSelected = NO;
         }
     }
-    _partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+    _partLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"按摩部位", nil),_parts[btn.tag-2100]];
     _partLabel.textColor = BLUE;
     NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
     
@@ -220,7 +220,7 @@
     
 	if (btn) {
         _isSelected = YES;
-		_partLabel.text = [NSString stringWithFormat:@"按摩部位：%@",_parts[btn.tag-2100]];
+		_partLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"按摩部位", nil),_parts[btn.tag-2100]];
 		_partLabel.textColor = BLUE;
 		NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
 		
@@ -234,7 +234,7 @@
     else
     {
         _isSelected = NO;
-        _partLabel.text = @"请选择需要的按摩部位";
+        _partLabel.text = NSLocalizedString(@"请选择需要的按摩部位", nil);
         _partLabel.textColor = ORANGE;
     }
 }

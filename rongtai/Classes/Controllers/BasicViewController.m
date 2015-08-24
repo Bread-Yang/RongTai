@@ -49,7 +49,7 @@
 		reconnectDialog = [[CustomIOSAlertView alloc] init];
 		reconnectDialog.isReconnectDialog = YES;
 		reconnectDialog.reconnectTipsString = NSLocalizedString(@"设备连接断开", nil);
-		[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", nil]];
+		[reconnectDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"取消", nil), nil]];
 		
 		__weak RTBleConnector *weakPointer = bleConnector;
 		[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {

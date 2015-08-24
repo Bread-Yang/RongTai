@@ -33,7 +33,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
 	
     //导航栏右边的添加按钮
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_set-07"] style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //导航栏返回按钮设置
