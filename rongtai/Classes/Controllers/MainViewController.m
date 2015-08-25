@@ -21,6 +21,8 @@
 #import "RTBleConnector.h"
 #import "AutoMassageViewController.h"
 #import "CustomIOSAlertView.h"
+#import "ProgramCount.h"
+#import "CoreData+MagicalRecord.h"
 
 //
 #import "MemberRequest.h"
@@ -36,7 +38,7 @@
 	CustomIOSAlertView *reconnectDialog;
 	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
     NSUInteger _vcCount;
-
+    ProgramCount* _programCount;
 }
 @end
 
@@ -49,6 +51,9 @@
     self.navigationController.navigationBarHidden = NO;
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     slideNav.enableSwipeGesture = YES;
+    if (_menuBar) {
+        _menuBar.selectedItem = nil;
+    }
 }
 
 - (void)viewDidLoad {
@@ -58,11 +63,10 @@
 
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     _vcCount = self.navigationController.viewControllers.count;
-     NSLog(@"VC:%ld",_vcCount);
+//     NSLog(@"VC:%ld",_vcCount);
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-//    self.navigationController.delegate = self;
     //
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     MenuViewController* menu = (MenuViewController*)slideNav.leftMenu;
@@ -164,7 +168,6 @@
 	[_table reloadData];
 }
 
-
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
@@ -183,7 +186,6 @@
 }
 
 #pragma mark - menuController代理
-
 -(void)switchChange:(BOOL)isOn {
     if (!_weatherView) {
         _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
@@ -221,7 +223,6 @@
         //自定义
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
-//        [cVC editModeWithCustomProgram:nil Index:0];
         [self.navigationController pushViewController:cVC animated:YES];
     } else if (item.tag == 3) {
         //下载
@@ -249,8 +250,9 @@
         bg.alpha = 0.5;
         [cell addSubview:bg];
         [cell sendSubviewToBack:bg];
+        cell.backgroundColor = [UIColor clearColor];
     }
-    cell.backgroundColor = [UIColor clearColor];
+    
     MassageProgram *massage = _massageArr[indexPath.row];
     if (massage) {
         cell.textLabel.text = massage.name;
@@ -299,7 +301,8 @@
 //    [self.navigationController pushViewController:vc animated:YES];
 //    return;
     //*
-	
+
+    
 	switch (indexPath.row) {
 			
 		// 运动恢复
@@ -392,6 +395,12 @@
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 		
 			if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+                
+                //自动按摩时，开始统计时间
+                NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+                NSDate* startTime = [NSDate date];
+                [defaults setObject:startTime forKey:@"MassageStartTime"];
+                
 				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 					
 					[self jumpToScanViewConroller];

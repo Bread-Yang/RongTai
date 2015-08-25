@@ -14,6 +14,13 @@
         <attribute name="useTime" optional="YES" attributeType="Integer 16" valueTransformerName="" defaultValueString="0" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="MassageRecord" representedClassName="MassageRecord" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="massageName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="useTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Member" representedClassName="Member" syncable="YES">
         <attribute name="birthday" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -24,6 +31,11 @@
         <attribute name="sex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="ProgramCount" representedClassName="ProgramCount" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="useCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="useTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="TimingPlan" representedClassName="TimingPlan" syncable="YES">
         <attribute name="days" optional="YES" attributeType="String" minValueString="0" maxValueString="6" syncable="YES"/>
@@ -51,5 +63,7 @@
         <element name="Member" positionX="0" positionY="0" width="128" height="180"/>
         <element name="TimingPlan" positionX="0" positionY="0" width="128" height="150"/>
         <element name="UserDownload" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="ProgramCount" positionX="0" positionY="90" width="128" height="90"/>
+        <element name="MassageRecord" positionX="9" positionY="99" width="128" height="120"/>
     </elements>
 </model>

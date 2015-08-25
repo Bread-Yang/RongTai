@@ -11,18 +11,22 @@
 #import "UIView+AddBorder.h"
 #import "UILabel+WLAttributedString.h"
 #import "RongTaiConstant.h"
+#import "ProgramCount.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface DoughnutViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     __weak IBOutlet UICollectionView *_collectView;
-    NSArray* _names;  //按摩种类
-    NSArray* _count;  //次数
-    NSArray* _percent; //比例
+//    NSArray* _names;  //按摩种类
+//    NSArray* _count;  //次数
+//    NSArray* _percent; //比例
     CGFloat _matgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
     UIFont* _font;
     NSArray* _colors;  //颜色数组
+    
+    NSArray* _progarmCounts;
 }
 @end
 
@@ -38,6 +42,7 @@
         _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
     }
     _colors = @[BLUE, LIGHTGREEN,ORANGE];
+    _progarmCounts = [ProgramCount MR_findAll];
     // Do any additional setup after loading the view.
 }
 
@@ -66,9 +71,9 @@
     
     _collectView.dataSource = self;
     _collectView.delegate = self;
-    _names = @[@"工作减压",@"工作减压",@"工作减压",@"工作减压",@"工作减压",@"工作减压"];
-    _percent = @[@0.5,@0.7,@0.3,@0.9,@0.1,@0.6];
-    _count = @[@21,@35,@78,@98,@129,@6];
+//    _names = @[@"工作减压",@"工作减压",@"工作减压",@"工作减压",@"工作减压",@"工作减压"];
+//    _percent = @[@0.5,@0.7,@0.3,@0.9,@0.1,@0.6];
+//    _count = @[@21,@35,@78,@98,@129,@6];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -77,17 +82,17 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _names.count;
+    return _progarmCounts.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DoughnutCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:_reuseIdentifier forIndexPath:indexPath];
-    cell.nameLabel.text = _names[indexPath.row];
-    NSNumber* c = _count[indexPath.row];
+    ProgramCount* program = _progarmCounts[indexPath.row];
+    cell.nameLabel.text = program.name;
+    NSNumber* c = program.useCount;
     cell.count = [c integerValue];
-    NSNumber* p = _percent[indexPath.row];
-    cell.doughnut.percent = [p floatValue];
+    cell.doughnut.percent = [c integerValue]/100.0;
     [cell addLineBorder];
     cell.countLabel.font = _font;
     cell.doughnut.finishColor = _colors[indexPath.row/2];

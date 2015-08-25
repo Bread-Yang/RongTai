@@ -16,6 +16,10 @@
 #import "FinishMassageViewController.h"
 #import "ScanViewController.h"
 #import "AdjustView.h"
+#import "ProgramCount.h"
+#import "CoreData+MagicalRecord.h"
+#import "RTBleConnector.h"
+#import "MassageRecord.h"
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
@@ -23,6 +27,7 @@
     __weak IBOutlet UILabel *_function;
     __weak IBOutlet UILabel *_usingTime;
     __weak IBOutlet UIButton *_stopBtn;
+    NSString* _programName;
 }
 @end
 
@@ -31,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = YES;
-	
+    
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem =item;
     
@@ -47,11 +52,68 @@
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
-    // Do any additional setup after loading the view.
-}
+    
+    }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    //获取按摩椅自动按摩名称
+    RTBleConnector* bleConnector = [RTBleConnector shareManager];
+    NSInteger autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
+    if (autoMassageFlag>1&&autoMassageFlag!=7) {
+        NSLog(@"自动按摩状态");
+        switch (autoMassageFlag) {
+            case 1:
+                _programName = NSLocalizedString(@"运动恢复", nil);
+                break;
+            case 2:
+                _programName = NSLocalizedString(@"舒展活络", nil);
+                break;
+            case 3:
+                _programName = NSLocalizedString(@"休憩促眠", nil);
+                break;
+            case 4:
+                _programName = NSLocalizedString(@"工作减压", nil);
+                break;
+            case 5:
+                _programName = NSLocalizedString(@"肩颈重点", nil);
+                break;
+            case 6:
+                _programName = NSLocalizedString(@"腰椎舒缓", nil);
+                break;
+            case 8:
+                _programName = NSLocalizedString(@"云养程序一", nil);
+                break;
+            case 9:
+                _programName = NSLocalizedString(@"云养程序二", nil);
+                break;
+            case 10:
+                _programName = NSLocalizedString(@"云养程序三", nil);
+                break;
+            case 11:
+                _programName = NSLocalizedString(@"云养程序四", nil);
+                break;
+            default:
+                _programName = nil;
+                break;
+        }
+    }
+    else
+    {
+        _programName = nil;
+    }
+    
+    NSLog(@"programName:%@",_programName);
+    if (_programName.length<1) {
+        self.title = @"自动按摩";
+    }
+    else
+    {
+        self.title = _programName;
+    }
+    
+
     
     //按摩调节View出现
     [[AdjustView shareView] show];
@@ -79,12 +141,18 @@
     for (UIViewController* vc in viewControllers) {
         if ([vc isKindOfClass:[MainViewController class]]) {
             main = (MainViewController*)vc;
+            break;
         }
     }
     if (main) {
         [self.navigationController popToViewController:main animated:YES];
     }
   
+}
+
+#pragma mark - 停止按摩
+- (IBAction)stopMassage:(id)sender {
+    [[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,6 +181,69 @@
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
+       
+        if (_programName.length > 0) {
+            //计算按摩时间
+            NSDate* end = [NSDate date];
+            NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
+            NSTimeInterval time = [end timeIntervalSinceDate:start];
+            NSLog(@"此次按摩了%f秒",time);
+            NSUInteger min = (int)round(time)/60;
+            
+            //将开始按摩的日期转成字符串
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+            NSString* date = [dateFormatter stringFromDate:start];
+
+            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName];
+            
+            //按摩次数统计
+            ProgramCount* programCount;
+            if (result.count >0) {
+                programCount = result[0];
+                NSUInteger count = [programCount.useCount integerValue];
+                count++;
+                programCount.useCount = [NSNumber numberWithUnsignedInteger:count];
+                NSUInteger oldTime = [programCount.useTime integerValue];
+                programCount.useTime = [NSNumber numberWithUnsignedInteger:oldTime+min];
+            }
+            else
+            {
+                programCount = [ProgramCount MR_createEntity];
+                programCount.name = _programName;
+                programCount.useCount = [NSNumber numberWithInt:1];
+                programCount.useTime = [NSNumber numberWithUnsignedInteger:min];
+            }
+            
+            //按摩记录
+            MassageRecord* massageRecord;
+            NSArray* records = [MassageRecord MR_findByAttribute:@"date" withValue:date];
+            for (int i = 0; i<records.count; i++) {
+                MassageRecord* r = records[i];
+                if ([r.date isEqualToString:date]) {
+                    massageRecord = r;
+                    break;
+                }
+            }
+            if (massageRecord) {
+                NSUInteger oldTime = [massageRecord.useTime integerValue];
+                oldTime += min;
+                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
+            }
+            else
+            {
+                //创建一条按摩记录
+                massageRecord = [MassageRecord MR_createEntity];
+                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
+                massageRecord.massageName = _programName;
+                massageRecord.startTime = start;
+                massageRecord.endTime = end;
+                massageRecord.date = date;
+            }
+            
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+        
 		[self jumpToFinishMassageViewConroller];
 	}
 	
@@ -125,9 +256,6 @@
 	}
 	
 	// 以下是界面状态更新
-	
-	// 标题
-	self.title  = self.massage.name;
 	
 	// 定时时间
 	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;

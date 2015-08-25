@@ -63,6 +63,8 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D797C6A1B8C1698007046CF /* ProgramCount.m */; };
+		3D797C6E1B8C61C3007046CF /* MassageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D797C6D1B8C61C3007046CF /* MassageRecord.m */; };
 		3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */; };
 		3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */; };
 		3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */; };
@@ -332,6 +334,12 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D797C691B8C1698007046CF /* ProgramCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgramCount.h; path = Model/ProgramCount.h; sourceTree = "<group>"; };
+		3D797C6A1B8C1698007046CF /* ProgramCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgramCount.m; path = Model/ProgramCount.m; sourceTree = "<group>"; };
+		3D797C6C1B8C61C2007046CF /* MassageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageRecord.h; path = rongtai/Classes/Model/MassageRecord.h; sourceTree = SOURCE_ROOT; };
+		3D797C6D1B8C61C3007046CF /* MassageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageRecord.m; path = rongtai/Classes/Model/MassageRecord.m; sourceTree = SOURCE_ROOT; };
+		3D797C6F1B8C6C47007046CF /* MassageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageRecord.h; path = Model/MassageRecord.h; sourceTree = "<group>"; };
+		3D797C701B8C6C47007046CF /* MassageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageRecord.m; path = Model/MassageRecord.m; sourceTree = "<group>"; };
 		3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualTableViewCell.h; sourceTree = "<group>"; };
 		3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewCell.m; sourceTree = "<group>"; };
 		3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualTableViewCell.xib; sourceTree = "<group>"; };
@@ -827,6 +835,8 @@
 				3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */,
 				3DE5D66C1B5F470200489C62 /* AutoMassageViewController.h */,
 				3DE5D66D1B5F470200489C62 /* AutoMassageViewController.m */,
+				3D797C6C1B8C61C2007046CF /* MassageRecord.h */,
+				3D797C6D1B8C61C3007046CF /* MassageRecord.m */,
 				3D4D1B581B8316DD00CFD151 /* AdjustView.h */,
 				3D4D1B591B8316DD00CFD151 /* AdjustView.m */,
 			);
@@ -1353,6 +1363,10 @@
 		5672800E1B31857E0059C18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D797C6F1B8C6C47007046CF /* MassageRecord.h */,
+				3D797C701B8C6C47007046CF /* MassageRecord.m */,
+				3D797C691B8C1698007046CF /* ProgramCount.h */,
+				3D797C6A1B8C1698007046CF /* ProgramCount.m */,
 				3DFD18FD1B8B033800BED437 /* CustomProgram.h */,
 				3DFD18FE1B8B033800BED437 /* CustomProgram.m */,
 				3DF0FE131B85BF95001CAAFE /* DataRequest */,
@@ -1885,6 +1899,7 @@
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
 				56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
+				3D797C6E1B8C61C3007046CF /* MassageRecord.m in Sources */,
 				56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */,
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
@@ -1939,6 +1954,7 @@
 				56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */,
 				3DF3043D1B38FE2500DD51D3 /* MagicalRecord+Setup.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
+				3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */,
 				3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,
