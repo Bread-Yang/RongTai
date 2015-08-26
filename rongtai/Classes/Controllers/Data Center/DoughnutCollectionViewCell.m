@@ -54,13 +54,15 @@
     [self addSubview:_countLabel];
     
     _detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0.6*h, w, 0.1*h-1)];
-    _detailLabel.text = @"次";
+    _detailLabel.text = NSLocalizedString(@"次", nil);
     _detailLabel.textAlignment = NSTextAlignmentCenter;
     _detailLabel.adjustsFontSizeToFitWidth = YES;
     _detailLabel.font = [UIFont systemFontOfSize:12];
     _detailLabel.textColor = [UIColor lightGrayColor];
     _detailLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     [self addSubview:_detailLabel];
+    
+    _isHiddenDougnut = NO;
 }
 
 #pragma mark - set方法
@@ -74,7 +76,25 @@
 -(void)setCount:(NSUInteger)count
 {
     _count = count;
-    _countLabel.text = [NSString stringWithFormat:@"%d",_count];
+    _countLabel.text = [NSString stringWithFormat:@"%ld",_count];
+}
+
+-(void)setIsHiddenDougnut:(BOOL)isHiddenDougnut
+{
+    _isHiddenDougnut = isHiddenDougnut;
+    if (_isHiddenDougnut) {
+        _nameLabel.hidden = YES;
+        _detailLabel.hidden = YES;
+        _countLabel.hidden = YES;
+        _doughnut.hidden = YES;
+    }
+    else
+    {
+        _nameLabel.hidden = NO;
+        _detailLabel.hidden = NO;
+        _countLabel.hidden = NO;
+        _doughnut.hidden = NO;
+    }
 }
 
 #pragma mark - 变换大小

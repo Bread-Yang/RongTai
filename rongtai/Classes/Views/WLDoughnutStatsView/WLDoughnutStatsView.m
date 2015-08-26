@@ -39,7 +39,7 @@
 -(void)setUp
 {
     self.backgroundColor = [UIColor clearColor];
-    _colors = @[[UIColor colorWithRed:1 green:0 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:0 blue:1 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:1 alpha:0.6]];
+    _colors = @[[UIColor colorWithRed:1 green:0 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:0 blue:1 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:1 alpha:0.6],[UIColor colorWithRed:1 green:0 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:0 blue:1 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:1 alpha:0.6]];
     _percents = @[@0.1,@0.2,@0.3,@0.4];
     _doughnutDistance = 20;
     _doughnutWidth = 20;

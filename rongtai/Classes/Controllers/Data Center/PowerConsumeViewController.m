@@ -23,6 +23,11 @@
     __weak IBOutlet UIView *_three;
     DoughnutCollectionViewCell* _leftCell;
     DoughnutCollectionViewCell* _rightCell;
+    CGFloat _kwh;  //按摩椅每小时用多少电
+    CGFloat _saveKwh;  //按摩椅每小时可以节省多少电
+    CGFloat _money;  //一度电的价格，单位元
+    NSUInteger _totalTime;
+    NSUInteger _todayTime;
 }
 @end
 
@@ -30,8 +35,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_todayPowerConsume setNumebrByFont:[UIFont fontWithName:@"Helvetica-Light" size:25] Color:LIGHTGREEN];
-    [_totalPowerConsum setNumebrByFont:[UIFont fontWithName:@"Helvetica-Light" size:25] Color:LIGHTGREEN];
+    _money = 0.6;
+    _kwh = 1.2;
+    _saveKwh = 0.4;
+    _totalTime = 60;
+    _todayTime = 60;
     // Do any additional setup after loading the view.
 }
 
@@ -41,29 +49,51 @@
     [_oneView addLineBorder];
     [_tow addLineBorder];
     [_three addLineBorder];
+    _moneyOfPower.text = [NSString stringWithFormat:@"%.1f%@",_money,NSLocalizedString(@"元/度", nil)];
     [_moneyOfPower setNumebrByFont:[UIFont fontWithName:@"Helvetica-Light" size:20] Color:LIGHTGREEN];
     //
     CGFloat w = CGRectGetWidth(_tow.frame);
     CGFloat h = CGRectGetHeight(_tow.frame);
     _leftCell = [[DoughnutCollectionViewCell alloc]initWithFrame:CGRectMake(0, 0, w/2, h)];
     [_leftCell changeUIFrame];
-    _leftCell.countLabel.text = @"1.44元";
-    [_leftCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:BLUE];
-    _leftCell.detailLabel.text = @"预估节省1元";
-    [_leftCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:BLUE];
-    _leftCell.name = @"今日预估电费";
+    _leftCell.name = NSLocalizedString(@"今日预估电费", nil);
     _leftCell.doughnut.finishColor = BLUE;
     [_tow addSubview:_leftCell];
     
     _rightCell = [[DoughnutCollectionViewCell alloc]initWithFrame:CGRectMake(w/2, 0, w/2, h)];
     [_rightCell changeUIFrame];
-    _rightCell.countLabel.text = @"74.4元";
-    [_rightCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:LIGHTGREEN];
-    _rightCell.detailLabel.text = @"预估节省24元";
-    [_rightCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:LIGHTGREEN];
-    _rightCell.name = @"总计预估电费";
+    _rightCell.name = NSLocalizedString(@"总计预估电费", nil);
     _rightCell.doughnut.finishColor = LIGHTGREEN;
     [_tow addSubview:_rightCell];
+    [self updateUI];
+}
+
+-(void)setTotalTime:(NSUInteger)totalTime AndTodayUseTime:(NSUInteger)todayUseTime
+{
+    _totalTime = totalTime;
+    _todayTime = todayUseTime;
+    [self updateUI];
+}
+
+-(void)updateUI
+{
+    CGFloat todayH = _todayTime/60.0;
+    CGFloat totalH = _totalTime/60.0;
+    _leftCell.countLabel.text = [NSString stringWithFormat:@"%.2f%@",todayH*_kwh*_money,NSLocalizedString(@"元", nil)];
+    [_leftCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:BLUE];
+    _leftCell.detailLabel.text = [NSString stringWithFormat:@"%@%d%@",NSLocalizedString(@"预估节省", nil),(int)(todayH*_saveKwh*_money),NSLocalizedString(@"元", nil)];
+    [_leftCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:BLUE];
+    
+    _rightCell.countLabel.text = [NSString stringWithFormat:@"%.2f%@",totalH*_kwh*_money,NSLocalizedString(@"元", nil)];;
+    [_rightCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:LIGHTGREEN];
+    _rightCell.detailLabel.text = [NSString stringWithFormat:@"%@%d%@",NSLocalizedString(@"预估节省", nil),(int)(totalH*_saveKwh*_money),NSLocalizedString(@"元", nil)];
+    [_rightCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:LIGHTGREEN];
+    
+    _todayPowerConsume.text = [NSString stringWithFormat:@"%.2fkwh",todayH*_kwh];
+    [_todayPowerConsume setNumebrByFont:[UIFont fontWithName:@"Helvetica-Light" size:25] Color:LIGHTGREEN];
+    
+    _totalPowerConsum.text = [NSString stringWithFormat:@"%.2fkwh",totalH*_kwh];
+    [_totalPowerConsum setNumebrByFont:[UIFont fontWithName:@"Helvetica-Light" size:25] Color:LIGHTGREEN];
 }
 
 - (void)didReceiveMemoryWarning {

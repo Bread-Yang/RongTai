@@ -10,4 +10,6 @@
 
 @interface UseTimeViewController : UIViewController
 
+-(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSUInteger)useTime;
+
 @end

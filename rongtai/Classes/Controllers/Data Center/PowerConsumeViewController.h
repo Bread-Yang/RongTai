@@ -10,4 +10,7 @@
 
 @interface PowerConsumeViewController : UIViewController
 
+
+-(void)setTotalTime:(NSUInteger)totalTime AndTodayUseTime:(NSUInteger)todayUseTime;
+
 @end

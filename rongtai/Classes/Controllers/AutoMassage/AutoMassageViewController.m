@@ -20,6 +20,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "RTBleConnector.h"
 #import "MassageRecord.h"
+#import "MassageTime.h"
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
@@ -46,14 +47,12 @@
     //
     _timeSet.textColor = BLUE;
     [_timeSet setNumebrByFont:[UIFont systemFontOfSize:28 weight:10] Color:BLUE];
-    
     [_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
     
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
-    
-    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -61,7 +60,8 @@
     //获取按摩椅自动按摩名称
     RTBleConnector* bleConnector = [RTBleConnector shareManager];
     NSInteger autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
-    if (autoMassageFlag>1&&autoMassageFlag!=7) {
+    NSLog(@"按摩状态数据:%ld",autoMassageFlag);
+    if (autoMassageFlag>=1&&autoMassageFlag!=7) {
         NSLog(@"自动按摩状态");
         switch (autoMassageFlag) {
             case 1:
@@ -214,16 +214,13 @@
                 programCount.useCount = [NSNumber numberWithInt:1];
                 programCount.useTime = [NSNumber numberWithUnsignedInteger:min];
             }
-            
+        
             //按摩记录
             MassageRecord* massageRecord;
-            NSArray* records = [MassageRecord MR_findByAttribute:@"date" withValue:date];
-            for (int i = 0; i<records.count; i++) {
-                MassageRecord* r = records[i];
-                if ([r.date isEqualToString:date]) {
-                    massageRecord = r;
-                    break;
-                }
+            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(massageName == %@) AND (date == %@)",_programName,date]];
+            if (records.count > 1) {
+                NSLog(@"查找数组:%@",records);
+                massageRecord = records[0];
             }
             if (massageRecord) {
                 NSUInteger oldTime = [massageRecord.useTime integerValue];
@@ -239,6 +236,20 @@
                 massageRecord.startTime = start;
                 massageRecord.endTime = end;
                 massageRecord.date = date;
+            }
+            
+            //按摩使用时长统计
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+            NSDateComponents *comps  = [calendar components:unitFlags fromDate:start];
+            NSArray* timeResult = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(year == %ld) AND (month == %ld) AND (day == %ld)",comps.year,comps.month,comps.day]];
+            if (timeResult.count > 0)
+            {
+                
+            }
+            else
+            {
+                
             }
             
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];

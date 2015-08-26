@@ -12,8 +12,19 @@
 
 @interface ProgramCount : NSManagedObject
 
+/**
+ *  按摩名称
+ */
 @property (nonatomic, retain) NSString * name;
+
+/**
+ *  使用时间
+ */
 @property (nonatomic, retain) NSNumber * useTime;
+
+/**
+ *  按摩次数
+ */
 @property (nonatomic, retain) NSNumber * useCount;
 
 @end

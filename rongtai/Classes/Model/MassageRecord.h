@@ -12,10 +12,29 @@
 
 @interface MassageRecord : NSManagedObject
 
+/**
+ *  按摩名称
+ */
 @property (nonatomic, retain) NSString * massageName;
+
+/**
+ *  使用时间
+ */
 @property (nonatomic, retain) NSNumber * useTime;
+
+/**
+ *  开始时间
+ */
 @property (nonatomic, retain) NSDate * startTime;
+
+/**
+ *  结束时间
+ */
 @property (nonatomic, retain) NSDate * endTime;
+
+/**
+ *  开始时间的字符串格式
+ */
 @property (nonatomic, retain) NSString * date;
 
 @end
