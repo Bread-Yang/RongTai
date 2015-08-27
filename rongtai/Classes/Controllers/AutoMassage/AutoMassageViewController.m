@@ -239,17 +239,25 @@
             }
             
             //按摩使用时长统计
+            MassageTime* massageTime;
             NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
             NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
             NSDateComponents *comps  = [calendar components:unitFlags fromDate:start];
             NSArray* timeResult = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(year == %ld) AND (month == %ld) AND (day == %ld)",comps.year,comps.month,comps.day]];
             if (timeResult.count > 0)
             {
-                
+                massageTime = timeResult[0];
+                NSUInteger old = [massageTime.useTime integerValue];
+                old += min;
+                massageTime.useTime = [NSNumber numberWithUnsignedInteger:old];
             }
             else
             {
-                
+                massageTime = [MassageTime MR_createEntity];
+                massageTime.useTime = [NSNumber numberWithUnsignedInteger:min];
+                massageTime.year = [NSNumber numberWithInteger:comps.year];
+                massageTime.month = [NSNumber numberWithInteger:comps.month];
+                massageTime.day = [NSNumber numberWithInteger:comps.day];
             }
             
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];

@@ -15,7 +15,6 @@
 #import "AppDelegate.h"
 
 @interface AddOrEditTimingMassageViewController () <TimingPlanDelegate>{
-	
 	id segment[7];
     __weak IBOutlet UISegmentedControl *_weekSC;
 	BOOL isNotFirstInvokeDidLayoutSubviews;
@@ -89,11 +88,14 @@
 	
 	[_weekSC addTarget:self
 				action:@selector(segmentedControl:)
-	  forControlEvents:UIControlEventAllEvents];
+	  forControlEvents:UIControlEventValueChanged];
 	
 	for (int i = 0; i < 7; i++) {
 		segment[i] = [[_weekSC subviews] objectAtIndex:i];
 	}
+    
+    //
+    _timingPlanRequest = [TimingPlanRequest new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -183,58 +185,111 @@
 }
 
 #pragma mark - Action
-
 - (IBAction)saveAction:(id)sender {
-    TimingPlan *newTimePlan = [TimingPlan MR_createEntity];
-	NSInteger hour = [[self.leftPickView getHighlightItemString] intValue];
-	NSInteger minute = [[self.rightPickView getHighlightItemString] intValue];
-	newTimePlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
-	newTimePlan.ptime = [NSString stringWithFormat:@"%02zd:%02zd", hour, minute];
-	newTimePlan.isOn = [NSNumber numberWithBool:YES];
-	newTimePlan.massageProgamId = [NSNumber numberWithInteger:12345];
-
-	NSOrderedSet *selectDays = [self.weekDaySegmentControl selectedIndexes];
-	
-	NSLog(@"selectedIndex : %@", [self.weekDaySegmentControl selectedIndexes]);
-	
-	if ([selectDays count] == 0) {
-		newTimePlan.days = @"0";
-	} else {
-		NSString *days = @"";
-		for (int i = 0; i < [selectDays count]; i++) {
-			if (i != [selectDays count] - 1) {
-				days = [days stringByAppendingFormat:@"%zd,", [[selectDays objectAtIndex:i] integerValue]];
-			} else {
-				days = [days stringByAppendingFormat:@"%zd", [[selectDays objectAtIndex:i] integerValue]];
-			}
-		}
-		newTimePlan.days = days;
-	}
-	
-	__weak MBProgressHUD *weakHUB = _loadingHUD;
-	__weak AddOrEditTimingMassageViewController *weakSelf = self;
-	
-	if (self.timingPlan) {
-		newTimePlan.planId = self.timingPlan.planId;
-		[_timingPlanRequest updateTimingPlan:newTimePlan success:^(NSDictionary *dic) {
-			[weakHUB hide:YES];
-			[weakSelf.navigationController popViewControllerAnimated:YES];
-		} fail:^(NSDictionary *dic) {
-			[weakHUB hide:YES];
-		}];
-	} else {
-		[_timingPlanRequest addTimingPlan:newTimePlan success:^(NSUInteger timingPlanId) {
-			[weakHUB hide:YES];
-			[weakSelf.navigationController popViewControllerAnimated:YES];
-		} fail:^(NSDictionary *dic) {
-			[weakHUB hide:YES];
-		}];
-	}
+    
+    if (self.timingPlan) {
+        //保存信息到对象中
+        [self saveSelectedToTimingPlan];
+        
+        //对象不为空即是 编辑 定时计划
+        NSInteger planId = [self.timingPlan.planId integerValue];
+        if (planId == 0) {
+            //id为0的话，即是未添加到服务器数据，使用 新增 方法
+            [self addTimingPlan];
+        }
+        else
+        {
+            //id不为0，直接调用 编辑 方法
+            [self updateTimingPlan];
+        }
+    }
+    else
+    {
+        //对象为空既是 新增 定时计划
+        self.timingPlan = [TimingPlan MR_createEntity];
+        [self saveSelectedToTimingPlan];
+        [self addTimingPlan];
+    }
 	
 //
 //    [timePlan setLocalNotificationByHour:hour Minute:minute Week:[self.weekDaySegmentControl selectedIndexes] Message:message];
 //	
 //    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
+#pragma mark - 添加定时计划
+-(void)addTimingPlan
+{
+    __weak MBProgressHUD *weakHUB = _loadingHUD;
+    __weak AddOrEditTimingMassageViewController *weakSelf = self;
+    [_timingPlanRequest addTimingPlan:self.timingPlan success:^(NSUInteger timingPlanId) {
+        NSLog(@"定时计划 添加成功");
+        //网络添加成功，要改变数据状态为0
+        weakSelf.timingPlan.state = [NSNumber numberWithInteger:0];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [weakHUB hide:YES];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"定时计划 添加失败，改变本地数据状态");
+        //网络添加失败，要改变数据状态为1
+        weakSelf.timingPlan.state = [NSNumber numberWithInteger:1];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [weakHUB hide:YES];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+#pragma mark - 编辑定时计划
+-(void)updateTimingPlan
+{
+    __weak MBProgressHUD *weakHUB = _loadingHUD;
+    __weak AddOrEditTimingMassageViewController *weakSelf = self;
+    [_timingPlanRequest updateTimingPlan:self.timingPlan success:^(NSDictionary *dic) {
+        NSLog(@"定时计划 编辑成功");
+        //网络编辑成功，要改变数据状态为0
+        weakSelf.timingPlan.state = [NSNumber numberWithInteger:0];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [weakHUB hide:YES];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+        
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"定时计划 编辑失败，改变本地数据状态");
+        //网络编辑失败，要改变数据状态为2
+        weakSelf.timingPlan.state = [NSNumber numberWithInteger:2];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        [weakHUB hide:YES];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+#pragma mark - 把界面选项保存到timingPlan对象中
+-(void)saveSelectedToTimingPlan
+{
+    NSInteger hour = [[self.leftPickView getHighlightItemString] intValue];
+    NSInteger minute = [[self.rightPickView getHighlightItemString] intValue];
+    self.timingPlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
+    self.timingPlan.ptime = [NSString stringWithFormat:@"%02zd:%02zd", hour, minute];
+    self.timingPlan.isOn = [NSNumber numberWithBool:YES];
+    self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
+    
+    NSOrderedSet *selectDays = [self.weekDaySegmentControl selectedIndexes];
+    
+    NSLog(@"selectedIndex : %@", [self.weekDaySegmentControl selectedIndexes]);
+    
+    if ([selectDays count] == 0) {
+        self.timingPlan.days = @"0";
+    } else {
+        NSString *days = @"";
+        for (int i = 0; i < [selectDays count]; i++) {
+            if (i != [selectDays count] - 1) {
+                days = [days stringByAppendingFormat:@"%zd,", [[selectDays objectAtIndex:i] integerValue]];
+            } else {
+                days = [days stringByAppendingFormat:@"%zd", [[selectDays objectAtIndex:i] integerValue]];
+            }
+        }
+        self.timingPlan.days = days;
+    }
 }
 
 #pragma mark - UICollectionViewDataSource

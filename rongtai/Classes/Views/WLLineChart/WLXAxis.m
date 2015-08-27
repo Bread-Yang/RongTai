@@ -106,7 +106,6 @@
     CGFloat h = self.frame.size.height;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    
     //x轴
     
     //  x轴线

@@ -22,8 +22,6 @@
     NSString* _reuseIdentifier;
     UIFont* _font;
     NSArray* _colors;  //颜色数组
-    
-//    NSArray* _progarmCounts;
 }
 @end
 
@@ -39,7 +37,6 @@
         _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
     }
     _colors = @[BLUE, LIGHTGREEN,ORANGE];
-//    _progarmCounts = [ProgramCount MR_findAll];
     // Do any additional setup after loading the view.
 }
 

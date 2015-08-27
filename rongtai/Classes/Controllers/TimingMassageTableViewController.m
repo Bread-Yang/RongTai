@@ -62,51 +62,119 @@
     [super viewWillAppear:animated];
 	
     //清空本地通知
-    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
+//    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
 	
-    NSLog(@"本地通知数量:%ld",number);
-    NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
-	
-    [UIApplication sharedApplication].applicationIconBadgeNumber -= number;
-	
-	self.timingMassageArray = [[NSMutableArray alloc] init];
+//    NSLog(@"本地通知数量:%ld",number);
+//    NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
     
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-//    NSLog(@"清空后本地通知数量:%ld",[[UIApplication sharedApplication]scheduledLocalNotifications].count);
-	
-//    NSArray *arr = [TimingPlan MR_findAll];
-	
-//    for (int i = 0; i < arr.count; i++) {
-//        TimingPlan *item = arr[i];
-//        [self.timingMassageArray addObject:item];
-//    }
-//    [self.tableView reloadData];
-	
 	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
 	if (reachability.reachable) {
-		_loadingHUD.labelText = @"读取中...";
+		_loadingHUD.labelText = NSLocalizedString( @"读取中...", nil);
 		[_loadingHUD show:YES];
-		
-		//网络请求
-		[_timingPlanRequest getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-			[_loadingHUD hide:YES];
-			
-			for (NSDictionary *dic in timingPlanList) {
-				TimingPlan *item = [TimingPlan updateTimingPlanDB:dic];
-				[self.timingMassageArray addObject:item];
-			}
-			
-			[self.tableView reloadData];
-			
-		} fail:^(NSDictionary *dic) {
-			NSLog(@"请求失败");
-			
-			[_loadingHUD hide:YES];
-		}];
+        
+        if ([self synchroLocalData]) {  //同步本地数据成功后才请求定时计划列表
+            NSLog(@"定时计划同步时成功");
+            //网络请求定时计划列表
+            [_timingPlanRequest getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+                NSLog(@"定时计划网络请求成功");
+                self.timingMassageArray = [[NSMutableArray alloc] init];
+                for (NSDictionary *dic in timingPlanList) {
+                    TimingPlan *item = [TimingPlan updateTimingPlanDB:dic];
+                    [self.timingMassageArray addObject:item];
+                }
+                [self.tableView reloadData];
+                [_loadingHUD hide:YES];
+                
+            } fail:^(NSDictionary *dic) {
+                NSLog(@"定时计划网络请求失败");
+                //失败时读取本地数据库
+                
+                //查询去状态不是 未同步的删除 的所有数据
+                [self loadLocalData];
+                [_loadingHUD hide:YES];
+            }];
+            
+        } else {
+           //同步失败的话，读取本地数据
+            NSLog(@"定时计划同步时失败");
+            [self loadLocalData];
+            [_loadingHUD hide:YES];
+        }
+    }
+    else
+    {
+        NSLog(@"定时计划网络请求 没网");
+        //没有网络读取本地数据库
+        [self loadLocalData];
+    }
+}
 
-	} else {
-		NSLog(@"没网");
-	}
+#pragma mark - 读取本地数据
+-(void)loadLocalData
+{
+    //查询去状态不是 未同步的删除 的所有数据
+    NSLog(@"定时计划 读取本地数据");
+    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state < 3"]];
+    self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
+    [self.tableView reloadData];
+}
+
+#pragma mark - 同步本地数据
+-(BOOL)synchroLocalData
+{
+    BOOL result = YES;
+    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+    if (plans.count>0) {
+        NSLog(@"未同步数据有%ld条🔁",plans.count);
+        __block BOOL success = YES;
+        for (int i = 0; i<plans.count; i++) {
+
+            if (!success) {
+                result = NO;
+                //只要其中有一个数据同步失败，即停止同步
+                break;
+            }
+            
+            TimingPlan* plan = plans[i];
+            NSInteger state = [plan.state integerValue];
+            if (state == 1)
+            {
+                //新增数据
+                [_timingPlanRequest addTimingPlan:plan success:^(NSUInteger timingPlanId) {
+                    NSLog(@"定时计划 同步新增成功");
+                    plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                } fail:^(NSDictionary *dic) {
+                    success = NO;
+                }];
+            }
+            else if (state == 2)
+            {
+                //编辑数据
+                [_timingPlanRequest updateTimingPlan:plan success:^(NSDictionary *dic) {
+                    NSLog(@"定时计划 同步编辑成功");
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                } fail:^(NSDictionary *dic) {
+                    success = NO;
+                }];
+            }
+            else if (state == 3)
+            {
+                //删除数据
+                NSUInteger planId = [plan.planId integerValue];
+                [_timingPlanRequest deleteTimingPlanId:planId success:^{
+                    NSLog(@"定时计划 同步删除成功");
+                    [plan MR_deleteEntity];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                } fail:^(NSDictionary *dic) {
+                    success = NO;
+                }];
+            }
+        }
+    }
+    return result;
 }
 
 #pragma mark - 返回
@@ -165,15 +233,42 @@
 //        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 		
 		[_loadingHUD show:YES];
-		
-		[_timingPlanRequest deleteTimingPlanId:[timingPlan.planId integerValue] success:^{
-			[_loadingHUD hide:YES];
-			
-			[self.timingMassageArray removeObjectAtIndex:indexPath.row];
-			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-		} fail:^(NSDictionary *dic) {
-			[_loadingHUD hide:YES];
-		}];
+        
+        NSUInteger planId = [timingPlan.planId integerValue];
+        if (planId == 0) {
+            //如果id等于0，即是未添加到服务器的数据，直接删除本地记录就行了
+            [self.timingMassageArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            
+            [timingPlan MR_deleteEntity];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+            
+            [_loadingHUD hide:YES];
+        }
+        else
+        {
+            [_timingPlanRequest deleteTimingPlanId:[timingPlan.planId integerValue] success:^{
+                //网络删除成功
+                [self.timingMassageArray removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                
+                [timingPlan MR_deleteEntity];
+                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                
+                [_loadingHUD hide:YES];
+            } fail:^(NSDictionary *dic) {
+                //网络删除失败
+                
+                //把数据状态变成3，表示 未同步的 删除 数据
+                timingPlan.state = [NSNumber numberWithInteger:3];
+                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                
+                [self.timingMassageArray removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                
+                [_loadingHUD hide:YES];
+            }];
+        }
 		
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

@@ -13,13 +13,50 @@
 
 @interface TimingPlan : NSManagedObject
 
+/**
+ *  id
+ */
 @property (nonatomic, assign) NSNumber *planId;
+
+/**
+ *  按摩名称
+ */
 @property (nonatomic, retain) NSString *massageName;
+
+/**
+ *  是否开启
+ */
 @property (nonatomic, retain) NSNumber *isOn;
+
+/**
+ *  本地通知对象数组
+ */
 @property (nonatomic, retain) id localNotifications;
+
+/**
+ *  重复日期，（比如周一和周三重复，就是“1,3”，不重复则为“0”）
+ */
 @property (nonatomic, retain) NSString *days;
+
+/**
+ *  按摩程序id
+ */
 @property (nonatomic, retain) NSNumber *massageProgamId;
+
+/**
+ *  重复时间，（格式为“09：05”）
+ */
 @property (nonatomic, retain) NSString *ptime;
+
+/**
+ *  数据状态
+ *  0代表是同步好的数据
+ *  1代表是 未同步的 新增 数据
+ *  2代表是 未同步的 编辑 数据
+ *  3代表是 未同步的 删除 数据
+ */
+@property (nonatomic, retain) NSNumber *state;
+
 
 + (TimingPlan *)updateTimingPlanDB:(NSDictionary *)dic;
 
