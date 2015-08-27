@@ -86,7 +86,6 @@ UISegmentedControl *segmentedControl;
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSString *testPath = [testDirectory stringByAppendingPathComponent:@"test.txt"];
 	
-	NSString *content=@"hahahahahaha";
 //	BOOL res=[content writeToFile:testPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 	BOOL res=[fileManager createFileAtPath:testPath contents:nil attributes:nil];
 	if (res) {
@@ -201,7 +200,7 @@ UISegmentedControl *segmentedControl;
 #pragma mark - AppIntroduceViewDelegate
 
 - (void)onDoneButtonPressed {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    [defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
 //    [defaults synchronize];
     [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
