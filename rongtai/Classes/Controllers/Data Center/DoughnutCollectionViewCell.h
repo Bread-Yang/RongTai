@@ -42,6 +42,11 @@
  */
 @property(nonatomic, strong)UILabel* detailLabel;
 
+/**
+ *  隐藏圆环图和标题
+ */
+@property(nonatomic) BOOL isHiddenDougnut;
+
 -(void)changeUIFrame;
 
 @end

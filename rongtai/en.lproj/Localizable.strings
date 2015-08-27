@@ -142,15 +142,19 @@
 "按摩力度" = "Speed";
 "模式" = "Mode";
 "分钟" = "minutes";
-
-//"全身" = "";
-//"臀肩" = "";
-//"背腰" = "";
-//"臀部" = "";
-//"腿足" = "";
-//"请选择需要的按摩部位" = "";
-//"按摩部位" = "";
-
+"全身" = "Full Body";
+"臀肩" = "Arm And Shoulder";
+"背腰" = "Back And Waist";
+"臀部" = "Buttock";
+"腿足" = "Leg And Feet";
+"请选择需要的按摩部位" = "Please Seclect Massage Part You Need";
+"按摩部位" = "Massage Part";
+"次" = "times";
+"元/度" = "￥/kwh";
+"元" = "￥";
+"预估节省"  = "Estimate Saving";
+"今日预估电费" = "Today Saving Electricity";
+"总计预估电费" = "Total Saving Electricity";
 
 
 

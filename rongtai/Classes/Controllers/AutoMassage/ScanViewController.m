@@ -9,6 +9,7 @@
 #import "ScanViewController.h"
 #import "AutoMassageViewController.h"
 #import "RongTaiConstant.h"
+#import "MassageProgram.h"
 
 @interface ScanViewController () {
     UIImageView* _scanLight;

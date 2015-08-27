@@ -283,7 +283,7 @@
              [self setDefaultCity:@"查询出错"];
          }
      }];
-    
+
     [manager stopUpdatingLocation];
 }
 

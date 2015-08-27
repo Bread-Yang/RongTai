@@ -13,6 +13,9 @@
 #import "DoughnutViewController.h"
 #import "RongTaiConstant.h"
 #import "UILabel+WLAttributedString.h"
+#import "CoreData+MagicalRecord.h"
+#import "ProgramCount.h"
+#import "MassageRecord.h"
 
 @interface DataCenterViewController ()<UIScrollViewDelegate>
 {
@@ -22,6 +25,8 @@
     DoughnutViewController* _doughnutVC;  //使用次数统计页面
     UIPageControl* _pageControl;
     UILabel* _titleLabel;  //标签
+    NSUInteger _totalTime;  //总使用时长
+    NSUInteger _todayUseTime;  //今日使用时长
 }
 
 @end
@@ -43,6 +48,27 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
+    //查询使用次数，并计算出总使用时间
+    NSArray* counts = [ProgramCount MR_findAll];
+    _totalTime = 0;
+    for (int i = 0; i<counts.count; i++) {
+        ProgramCount* c = counts[i];
+        _totalTime += [c.useTime integerValue];
+    }
+    
+    //查询今天的按摩记录，并计算出今日使用时间
+    NSDate* date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+    NSString* todayIndex = [dateFormatter stringFromDate:date];
+    NSArray* todayRecord = [MassageRecord MR_findByAttribute:@"date" withValue:todayIndex];
+    _todayUseTime = 0;
+    for (int i = 0; i<todayRecord.count;i++) {
+        MassageRecord* m = todayRecord[i];
+        _todayUseTime += [m.useTime integerValue];
+    }
+    
+    
     //分页控制器
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 64+5, 60, 10)];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:169/255.0 green:190/255.0 blue:205/255.0 alpha:1];
@@ -54,7 +80,16 @@
     
     //标题Label
     _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 64+16, w*0.6, 35)];
-    _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
+    if (_totalTime<60) {
+        _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+    }
+    else
+    {
+        NSUInteger h = _totalTime/60;
+        NSUInteger m = _totalTime%60;
+        _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+    }
+    
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.font = [UIFont systemFontOfSize:15];
     [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
@@ -90,17 +125,20 @@
     _useTimeVc.view.frame = CGRectMake(0, 0, w, sh);
     [_scroll addSubview:_useTimeVc.view];
     [self addChildViewController:_useTimeVc];
+    [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
     
     //耗电量
     _powerConsumeVC = (PowerConsumeViewController*)[s instantiateViewControllerWithIdentifier:@"PowerConsume"];
     _powerConsumeVC.view.frame = CGRectMake(w, 0, w, sh);
     [_scroll addSubview:_powerConsumeVC.view];
     [self addChildViewController:_powerConsumeVC];
+    [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
     
     //使用次数
     _doughnutVC = (DoughnutViewController*)[s instantiateViewControllerWithIdentifier:@"DoughnutVC"];
     _doughnutVC.view.frame = CGRectMake(w*2, 0, w, sh);
     [_scroll addSubview:_doughnutVC.view];
+    _doughnutVC.progarmCounts = counts;
     [self addChildViewController:_doughnutVC];
     // Do any additional setup after loading the view.
 }
@@ -153,7 +191,15 @@
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
-        _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
+        if (_totalTime<60) {
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+        }
+        else
+        {
+            NSUInteger h = _totalTime/60;
+            NSUInteger m = _totalTime%60;
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+        }
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
     else if (_pageControl.currentPage == 1)
@@ -171,7 +217,15 @@
     NSInteger page = scrollView.contentOffset.x/SCREENWIDTH;
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
-        _titleLabel.text = [NSString stringWithFormat:@"%@:30 h 25 m",NSLocalizedString(@"总使用时长", nil)];
+        if (_totalTime<60) {
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+        }
+        else
+        {
+            NSUInteger h = _totalTime/60;
+            NSUInteger m = _totalTime%60;
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+        }
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
     else if (_pageControl.currentPage == 1)

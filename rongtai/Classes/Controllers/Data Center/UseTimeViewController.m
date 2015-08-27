@@ -11,6 +11,8 @@
 #import "RongTaiConstant.h"
 #import "WLLineChart.h"
 #import "UILabel+WLAttributedString.h"
+#import "CoreData+MagicalRecord.h"
+#import "MassageRecord.h"
 
 @interface UseTimeViewController ()
 {
@@ -21,11 +23,10 @@
     __weak IBOutlet UIButton *_dayBtn;
     __weak IBOutlet UIButton *_monthBtn;
     __weak IBOutlet UIButton *_yeayBtn;
-    
     __weak IBOutlet UILabel *_usingTime;
-    
 
     WLLineChart* _lineChart;  //折线图
+    NSArray* _todayRecord;  //今天按摩记录
 }
 @end
 
@@ -37,7 +38,6 @@
     
     _doughnutView.r = h/2;
     _doughnutView.doughnutWidth = _doughnutView.r*0.25;
-    
     
     _lineChart = [[WLLineChart alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0.15*h, 0.9*SCREENWIDTH, 0.9*h)];
     _lineChart.showXRuler = NO;
@@ -56,10 +56,45 @@
     
     _usingTime.font = [UIFont fontWithName:@"Helvetica" size:10*HSCALE];
     [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
-    
-    // Do any additional setup after loading the view.
 }
 
+-(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSUInteger)useTime
+{
+    _todayRecord = todayRecord;
+    //比例数组
+    if (_todayRecord.count>0) {
+        NSMutableArray* percents = [NSMutableArray new];
+        
+        for (int i = 0; i<_todayRecord.count; i++) {
+            MassageRecord* r = _todayRecord[i];
+            float percent = [r.useTime integerValue]/(float)useTime;
+            NSNumber* num = [NSNumber numberWithFloat:percent];
+            [percents addObject:num];
+        }
+        _doughnutView.percents = [NSArray arrayWithArray:percents];
+        
+        //设置文字
+        if (useTime>=60) {
+            NSUInteger h = useTime/60;
+            NSUInteger m = useTime%60;
+            _usingTime.text = [NSString stringWithFormat:@"%ldh%ldm",h,m];
+        }
+        else
+        {
+            _usingTime.text = [NSString stringWithFormat:@"%ldm",useTime];
+        }
+        [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
+    }
+    else
+    {
+        //今天暂时没使用该app进行按摩
+        _doughnutView.percents = @[@1];
+        _usingTime.text= @"未使用该APP";
+    }
+
+}
+
+#pragma mark - 底部年月日按钮
 - (IBAction)dateSelected:(UIButton*)sender {
     if (sender.tag == 1110)
     {
@@ -85,6 +120,23 @@
     }
 }
 
+#pragma mark - 查询一周数据
+-(void)weekData
+{
+    
+}
+
+#pragma mark - 查询一个月数据
+-(void)monthData
+{
+    
+}
+
+#pragma mark - 查询一年的数据
+-(void)yearData
+{
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

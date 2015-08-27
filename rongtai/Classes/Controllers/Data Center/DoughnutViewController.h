@@ -10,4 +10,6 @@
 
 @interface DoughnutViewController : UIViewController
 
+@property(nonatomic, strong)NSArray* progarmCounts;
+
 @end

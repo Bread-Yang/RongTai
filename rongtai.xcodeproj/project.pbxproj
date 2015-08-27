@@ -63,6 +63,7 @@
 		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
+		3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D797C6A1B8C1698007046CF /* ProgramCount.m */; };
 		3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */; };
 		3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */; };
 		3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */; };
@@ -94,6 +95,8 @@
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
 		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
 		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
+		3DCCAC5C1B8DC07D006F7BBD /* MassageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */; };
+		3DCCAC5F1B8DC411006F7BBD /* MassageTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */; };
 		3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD12251B41346500890164 /* UIImage+ImageBlur.m */; };
 		3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD122A1B4140EE00890164 /* UserDownload.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
@@ -332,6 +335,8 @@
 		3D783D4B1B12FD0300A893D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rongtaiTests.m; sourceTree = "<group>"; };
 		3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		3D797C691B8C1698007046CF /* ProgramCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgramCount.h; path = Model/ProgramCount.h; sourceTree = "<group>"; };
+		3D797C6A1B8C1698007046CF /* ProgramCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgramCount.m; path = Model/ProgramCount.m; sourceTree = "<group>"; };
 		3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualTableViewCell.h; sourceTree = "<group>"; };
 		3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewCell.m; sourceTree = "<group>"; };
 		3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualTableViewCell.xib; sourceTree = "<group>"; };
@@ -386,6 +391,10 @@
 		3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMassageViewController.m; sourceTree = "<group>"; };
 		3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishMassageViewController.h; sourceTree = "<group>"; };
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
+		3DCCAC5A1B8DC07D006F7BBD /* MassageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageRecord.h; path = Model/MassageRecord.h; sourceTree = "<group>"; };
+		3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageRecord.m; path = Model/MassageRecord.m; sourceTree = "<group>"; };
+		3DCCAC5D1B8DC411006F7BBD /* MassageTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageTime.h; path = rongtai/Classes/Model/MassageTime.h; sourceTree = SOURCE_ROOT; };
+		3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageTime.m; path = rongtai/Classes/Model/MassageTime.m; sourceTree = SOURCE_ROOT; };
 		3DCD12241B41346500890164 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageBlur.h"; sourceTree = "<group>"; };
 		3DCD12251B41346500890164 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
 		3DCD12291B4140EE00890164 /* UserDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDownload.h; path = Model/UserDownload.h; sourceTree = "<group>"; };
@@ -1353,8 +1362,14 @@
 		5672800E1B31857E0059C18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3DCCAC5A1B8DC07D006F7BBD /* MassageRecord.h */,
+				3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */,
+				3D797C691B8C1698007046CF /* ProgramCount.h */,
+				3D797C6A1B8C1698007046CF /* ProgramCount.m */,
 				3DFD18FD1B8B033800BED437 /* CustomProgram.h */,
 				3DFD18FE1B8B033800BED437 /* CustomProgram.m */,
+				3DCCAC5D1B8DC411006F7BBD /* MassageTime.h */,
+				3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */,
 				3DF0FE131B85BF95001CAAFE /* DataRequest */,
 				3DF0FE0C1B8573F8001CAAFE /* TimingPlanRequest */,
 				3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */,
@@ -1811,6 +1826,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DCCAC5F1B8DC411006F7BBD /* MassageTime.m in Sources */,
 				3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */,
 				3D0258F41B1D525E006C9179 /* IQKeyboardManager.m in Sources */,
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
@@ -1902,6 +1918,7 @@
 				3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */,
+				3DCCAC5C1B8DC07D006F7BBD /* MassageRecord.m in Sources */,
 				3DF0FE121B85743A001CAAFE /* TimingPlan.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
 				56F2DA3D1B7455B400C8086D /* UIView+RT.m in Sources */,
@@ -1939,6 +1956,7 @@
 				56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */,
 				3DF3043D1B38FE2500DD51D3 /* MagicalRecord+Setup.m in Sources */,
 				DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */,
+				3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */,
 				3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */,
 				DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */,
 				3DCDF36A1B1FEB7400BA491E /* SlideNavigationContorllerAnimatorSlide.m in Sources */,

@@ -284,7 +284,7 @@ static Byte const BYTE_ExitCode = 0x82;
 //					}
 //				}
 //			}
-			
+            NSLog(@"进入安装状态，此时返回数据长度为:%ld",data.length);
 			[self parseInstallingStatus:data];
 			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateStatusInProgramMode:)]) {
@@ -573,6 +573,10 @@ NSString * NSDataToHex(NSData *data) {
 	self.isStartInstall = YES;
 	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
 
+    if (self.readFile.resultData.length<1) {
+        NSLog(@"读取文件长度为零😱");
+        return;
+    }
 	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
 	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
 	for (int i = 0; i < self.installAllCount; i++) {
@@ -1345,7 +1349,6 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			UIStoryboard *secondStoryBoard = [UIStoryboard storyboardWithName:@"Second" bundle:[NSBundle mainBundle]];
 			UIViewController *viewController = [secondStoryBoard instantiateViewControllerWithIdentifier:@"ScanVC"];
 			[weakSelf.navigationController pushViewController:viewController animated:YES];
-			
 			[alertView close];
 		}];
 		
