@@ -23,7 +23,6 @@
 #import "CoreData+MagicalRecord.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
-#import "TimingMassageTableViewController.h"
 #import <AFNetworkReachabilityManager.h>
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
@@ -50,9 +49,6 @@
 	
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    
-    
     //ios8 需要询问用户是否允许才能发送通知
     float sysVersion=[[UIDevice currentDevice]systemVersion].floatValue;
     if (sysVersion>=8.0) {
@@ -69,23 +65,7 @@
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
-	
-	
-	UIViewController *controller = [[TimingMassageTableViewController alloc] init];
-	
-//	UIImage * image = [UIImage imageNamed:@"bg"];
-//	CGSize sacleSize = self.window.frame.size;
-//	UIGraphicsBeginImageContextWithOptions(sacleSize, NO, 0.0);
-//	[image drawInRect:CGRectMake(0, 0, sacleSize.width, sacleSize.height)];
-//	UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-//	UIGraphicsEndImageContext();
-//	[self.window setBackgroundColor:[UIColor colorWithPatternImage:resizedImage]];
-	
-//	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//	self.window.backgroundColor = [UIColor whiteColor];
-//	self.window.rootViewController = controller;
-//	[self.window makeKeyAndVisible];
-	
+    
     return YES;
 }
 
@@ -117,7 +97,7 @@
 	if (application.applicationState == UIApplicationStateActive) {
     	NSDictionary *userInfo = notification.userInfo;
     	NSString *message = [userInfo objectForKey:@"time"];
-    	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"本地通知" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"定时计划" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     	[alert show];
 	}
 }

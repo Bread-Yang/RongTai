@@ -23,9 +23,8 @@
 #import "CustomIOSAlertView.h"
 #import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
-
-//
-#import "MemberRequest.h"
+#import "TimingPlan.h"
+#import "TimingPlanRequest.h"
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
@@ -159,13 +158,96 @@
 		
 		[alertView close];
 	}];
+    
+    //同步定时计划数据
+    //app启动时要开始进行 定时计划的数据同步
+    AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
+    if (reachability.reachable) {
+        //同步数据
+        [self synchroTimingPlanLocalData:YES];
+    }
+}
+
+#pragma mark - 同步本地定时计划数据
+-(void)synchroTimingPlanLocalData:(BOOL)isContinue
+{
+    if (isContinue) {
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+        if (plans.count>0) {
+            TimingPlan* plan = plans[0];
+            NSInteger state = [plan.state integerValue];
+            TimingPlanRequest* request = [TimingPlanRequest new];
+            __weak MainViewController* weakSelf = self;
+            if (state == 1)
+            {
+                //新增数据
+                [request addTimingPlan:plan success:^(NSUInteger timingPlanId) {
+                    NSLog(@"定时计划 同步新增成功");
+                    plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
+                } fail:^(NSDictionary *dic) {
+                    [weakSelf synchroTimingPlanLocalData:NO];
+                }];
+            }
+            else if (state == 2)
+            {
+                //编辑数据
+                [request updateTimingPlan:plan success:^(NSDictionary *dic) {
+                    NSLog(@"定时计划 同步编辑成功");
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
+                } fail:^(NSDictionary *dic) {
+                    [weakSelf synchroTimingPlanLocalData:NO];
+                }];
+            }
+            else if (state == 3)
+            {
+                //删除数据
+                NSUInteger planId = [plan.planId integerValue];
+                [request deleteTimingPlanId:planId success:^{
+                    NSLog(@"定时计划 同步删除成功");
+                    [plan MR_deleteEntity];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
+                } fail:^(NSDictionary *dic) {
+                    [weakSelf synchroTimingPlanLocalData:NO];
+                }];
+            }
+        }
+        else
+        {
+            //没有需要的同步数据才去请求列表
+            [self getTimingPlanList];
+        }
+    }
+}
+
+#pragma mark - 请求定时计划列表
+-(void)getTimingPlanList
+{
+    //网络请求定时计划列表
+    TimingPlanRequest* request = [TimingPlanRequest new];
+    [request getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+        NSLog(@"定时计划网络请求成功");
+        [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
+        
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"定时计划网络请求失败");
+        
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     slideNav.enableSwipeGesture = NO;
-	[_table reloadData];
+//	[_table reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

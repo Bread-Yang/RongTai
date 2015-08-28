@@ -20,8 +20,9 @@
 #import "AppDelegate.h"
 
 @interface TimingMassageTableViewController () <TimingPlanDelegate>{
-	MBProgressHUD *_loadingHUD;
+	__weak MBProgressHUD *_loadingHUD;
 	TimingPlanRequest *_timingPlanRequest;
+    
 }
 
 @property (nonatomic, retain) NSMutableArray *timingMassageArray;
@@ -60,6 +61,7 @@
                     
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
 	
     //清空本地通知
 //    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
@@ -72,34 +74,9 @@
 		_loadingHUD.labelText = NSLocalizedString( @"读取中...", nil);
 		[_loadingHUD show:YES];
         
-        if ([self synchroLocalData]) {  //同步本地数据成功后才请求定时计划列表
-            NSLog(@"定时计划同步时成功");
-            //网络请求定时计划列表
-            [_timingPlanRequest getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-                NSLog(@"定时计划网络请求成功");
-                self.timingMassageArray = [[NSMutableArray alloc] init];
-                for (NSDictionary *dic in timingPlanList) {
-                    TimingPlan *item = [TimingPlan updateTimingPlanDB:dic];
-                    [self.timingMassageArray addObject:item];
-                }
-                [self.tableView reloadData];
-                [_loadingHUD hide:YES];
-                
-            } fail:^(NSDictionary *dic) {
-                NSLog(@"定时计划网络请求失败");
-                //失败时读取本地数据库
-                
-                //查询去状态不是 未同步的删除 的所有数据
-                [self loadLocalData];
-                [_loadingHUD hide:YES];
-            }];
-            
-        } else {
-           //同步失败的话，读取本地数据
-            NSLog(@"定时计划同步时失败");
-            [self loadLocalData];
-            [_loadingHUD hide:YES];
-        }
+        //同步数据
+        NSLog(@"开始同步数据");
+        [self synchroTimingPlanLocalData:YES];
     }
     else
     {
@@ -107,6 +84,31 @@
         //没有网络读取本地数据库
         [self loadLocalData];
     }
+}
+
+#pragma mark - 请求定时计划列表
+-(void)getTimingPlanList
+{
+    //网络请求定时计划列表
+    [_timingPlanRequest getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+        NSLog(@"定时计划网络请求成功");
+        self.timingMassageArray = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in timingPlanList) {
+            TimingPlan *item = [TimingPlan updateTimingPlanDB:dic];
+            [self.timingMassageArray addObject:item];
+        }
+        [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
+        [self.tableView reloadData];
+        [_loadingHUD hide:YES];
+        
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"定时计划网络请求失败");
+        //失败时读取本地数据库
+        
+        //查询去状态不是 未同步的删除 的所有数据
+        [self loadLocalData];
+        [_loadingHUD hide:YES];
+    }];
 }
 
 #pragma mark - 读取本地数据
@@ -120,62 +122,89 @@
 }
 
 #pragma mark - 同步本地数据
--(BOOL)synchroLocalData
+-(void)synchroTimingPlanLocalData:(BOOL)isContinue
 {
-    BOOL result = YES;
-    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
-    if (plans.count>0) {
-        NSLog(@"未同步数据有%ld条🔁",plans.count);
-        __block BOOL success = YES;
-        for (int i = 0; i<plans.count; i++) {
-
-            if (!success) {
-                result = NO;
-                //只要其中有一个数据同步失败，即停止同步
-                break;
-            }
-            
-            TimingPlan* plan = plans[i];
+    if (isContinue) {
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+        __weak TimingMassageTableViewController* weakSelf;
+        if (plans.count>0) {
+            NSLog(@"同步中。。。");
+            TimingPlan* plan = plans[0];
             NSInteger state = [plan.state integerValue];
             if (state == 1)
             {
+                NSLog(@"定时计划 同步新增...");
                 //新增数据
                 [_timingPlanRequest addTimingPlan:plan success:^(NSUInteger timingPlanId) {
                     NSLog(@"定时计划 同步新增成功");
                     plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
                     plan.state = [NSNumber numberWithInteger:0];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
-                    success = NO;
+                    //同步失败的话，读取本地数据
+                    NSLog(@"定时计划同步时失败");
+                    [weakSelf loadLocalData];
+                    [_loadingHUD hide:YES];
                 }];
             }
             else if (state == 2)
             {
+                NSLog(@"定时计划 同步编辑...");
                 //编辑数据
                 [_timingPlanRequest updateTimingPlan:plan success:^(NSDictionary *dic) {
                     NSLog(@"定时计划 同步编辑成功");
                     plan.state = [NSNumber numberWithInteger:0];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
-                    success = NO;
+                    NSLog(@"定时计划 同步编辑失败");
+                    //同步失败的话，读取本地数据
+                    NSLog(@"定时计划同步时失败");
+                    [weakSelf loadLocalData];
+                    [_loadingHUD hide:YES];
                 }];
             }
             else if (state == 3)
             {
+                NSLog(@"定时计划 同步删除...");
                 //删除数据
                 NSUInteger planId = [plan.planId integerValue];
                 [_timingPlanRequest deleteTimingPlanId:planId success:^{
                     NSLog(@"定时计划 同步删除成功");
                     [plan MR_deleteEntity];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [weakSelf synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
-                    success = NO;
+                    //同步失败的话，读取本地数据
+                    NSLog(@"定时计划同步时失败");
+                    [weakSelf loadLocalData];
+                    [_loadingHUD hide:YES];
                 }];
             }
+            else
+            {
+                NSLog(@"未知状态");
+            }
+        }
+        else
+        {
+            //没有需要的同步数据才去请求列表
+            [self getTimingPlanList];
         }
     }
-    return result;
+    else
+    {
+        //同步失败的话，读取本地数据
+        NSLog(@"定时计划同步时失败");
+        [self loadLocalData];
+        [_loadingHUD hide:YES];
+    }
 }
+
 
 #pragma mark - 返回
 -(void)goBack
@@ -228,11 +257,10 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         TimingPlan *timingPlan = self.timingMassageArray[indexPath.row];
-//        [timingPlan cancelLocalNotification];
-//        [timingPlan MR_deleteEntity];
-//        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-		
+        
 		[_loadingHUD show:YES];
+        //取消本地通知
+        [timingPlan cancelLocalNotification];
         
         NSUInteger planId = [timingPlan.planId integerValue];
         if (planId == 0) {
