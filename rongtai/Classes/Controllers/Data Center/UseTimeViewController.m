@@ -13,6 +13,7 @@
 #import "UILabel+WLAttributedString.h"
 #import "CoreData+MagicalRecord.h"
 #import "MassageRecord.h"
+#import "MassageTime.h"
 
 @interface UseTimeViewController ()
 {
@@ -89,7 +90,7 @@
     {
         //今天暂时没使用该app进行按摩
         _doughnutView.percents = @[@1];
-        _usingTime.text= @"未使用该APP";
+        _usingTime.text= @"今天未使用该APP";
     }
 
 }
@@ -123,7 +124,7 @@
 #pragma mark - 查询一周数据
 -(void)weekData
 {
-    
+    NSArray* arr = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@""]];
 }
 
 #pragma mark - 查询一个月数据

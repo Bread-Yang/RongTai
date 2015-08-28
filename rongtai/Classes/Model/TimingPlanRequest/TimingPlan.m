@@ -18,6 +18,7 @@
 @dynamic massageProgamId;
 @dynamic massageName;
 @dynamic ptime;
+@dynamic state;
 
 - (void)setValueByJson:(NSDictionary *)json {
 	self.planId = [NSNumber numberWithInteger:[[json objectForKey:@"planId"] integerValue]];
@@ -44,7 +45,7 @@
 	return m;
 }
 
-#pragma mark - 把Member转成字典
+#pragma mark - 把TimingPlan转成字典
 -(NSDictionary *)toDictionary {
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	
@@ -61,7 +62,6 @@
 }
 
 #pragma mark - 设置通知
-
 - (void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSOrderedSet *)weekdays Message:(NSString*)message {
 	self.isOn = [NSNumber numberWithBool:YES];
 	//    self.days = weekdays ;
@@ -130,12 +130,10 @@
 		
 		[self addLocalNotification:localNofication];
 		[[UIApplication sharedApplication] scheduleLocalNotification:localNofication];
-		
 	}
 }
 
 #pragma mark - 添加通知
-
 - (void)addLocalNotification:(UILocalNotification *)addNotification {
 	if (!self.localNotifications) {
 		self.localNotifications = [NSMutableArray new];
@@ -143,8 +141,13 @@
 	[((NSMutableArray *)self.localNotifications) addObject:addNotification];
 }
 
-#pragma mark - 打开通知
+#pragma mark - 根据TimingPlan来更新本地通知
+-(void)updateLocalNotification
+{
+    
+}
 
+#pragma mark - 打开通知
 - (void)turnOnLocalNotification {
 	if (self.localNotifications) {
 		NSDate *todayDate = [NSDate date];
@@ -162,21 +165,17 @@
 					NSDateComponents *setDateComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitHour |NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear fromDate:todayDate];
 					[setDateComponents setHour:fireDateComponents.hour];
 					[setDateComponents setMinute:fireDateComponents.minute];
-					
 					[setDateComponents setWeekday:setDateComponents.weekday + 1];
 					
 					item.fireDate = [calendar dateFromComponents:setDateComponents];
 				}
 			}
-			
 			[[UIApplication sharedApplication] scheduleLocalNotification:item];
 		}
 	}
 }
 
-
 #pragma mark - 关闭通知
-
 - (void)cancelLocalNotification {
 	if (self.localNotifications) {
 		NSMutableArray *localNotifications = self.localNotifications;

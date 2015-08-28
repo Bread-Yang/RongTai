@@ -91,7 +91,22 @@
     CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     CGFloat disAngle = _doughnutDistance/(M_PI*2*_r);
     CGFloat start = M_PI*1.5;
-    for (int i = 0; i < _percents.count; i++) {
+    
+    //第一个单独画，避免只有一个数据的时候出现间隔的现象
+    UIColor* color = _colors[0];
+    [color setStroke];
+    CGContextSetLineWidth(context, _doughnutWidth);
+    CGFloat percent = [_percents[0] floatValue];
+    CGFloat angle = M_PI*2*percent;
+    NSInteger hasDistance = 0;
+    if (_percents.count>1) {
+        hasDistance = 1;
+    }
+    CGContextAddArc(context, center.x, center.y, _r-_doughnutWidth/2, start, start+angle-hasDistance*disAngle, 0) ;
+    CGContextStrokePath(context);
+    start = start+angle;
+    
+    for (int i = 1; i < _percents.count; i++) {
         UIColor* color = _colors[i];
         [color setStroke];
         CGContextSetLineWidth(context, _doughnutWidth);

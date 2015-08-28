@@ -7,6 +7,7 @@
 //
 
 #import "TimingPlanRequest.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface TimingPlanRequest ()
 {
