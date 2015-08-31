@@ -37,6 +37,17 @@
         _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
     }
     _colors = @[BLUE, LIGHTGREEN,ORANGE];
+    
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
+    BOOL b = counts.count>0;
+    [ProgramCount synchroUseCountDataFormServer:b Success:^{
+        _progarmCounts = [ProgramCount MR_findAll];
+        [_collectView reloadData];
+    } Fail:^(NSDictionary * dic) {
+        _progarmCounts = [ProgramCount MR_findAll];
+        [_collectView reloadData];
+    }];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -98,8 +109,10 @@
         ProgramCount* program = _progarmCounts[indexPath.row];
         cell.nameLabel.text = program.name;
         NSNumber* c = program.useCount;
-        cell.count = [c integerValue];
-        cell.doughnut.percent = [c integerValue]/100.0;
+        NSNumber* unC = program.unUpdateCount;
+        NSUInteger count = [c integerValue]+[unC integerValue];
+        cell.count = count;
+        cell.doughnut.percent = count/100.0;
         [cell addLineBorder];
         cell.isHiddenDougnut = NO;
         cell.countLabel.font = _font;

@@ -21,7 +21,6 @@
 #import "RTBleConnector.h"
 #import "MassageRecord.h"
 #import "MassageTime.h"
-#import "DataRequest.h"
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
@@ -31,6 +30,8 @@
     __weak IBOutlet UIButton *_stopBtn;
     NSString* _programName;
     NSInteger _autoMassageFlag;
+    
+    ProgramCount* _programCount;
 }
 @end
 
@@ -183,22 +184,23 @@
             NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName];
             
             //按摩次数统计
-            ProgramCount* programCount;
             if (result.count >0) {
-                programCount = result[0];
-                NSUInteger count = [programCount.useCount integerValue];
+                _programCount = result[0];
+                NSUInteger count = [_programCount.unUpdateCount integerValue];
                 count++;
-                programCount.useCount = [NSNumber numberWithUnsignedInteger:count];
-                programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+                _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
+                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
             else
             {
-                programCount = [ProgramCount MR_createEntity];
-                programCount.name = _programName;
-                programCount.useCount = [NSNumber numberWithInt:1];
-                programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-                
+                _programCount = [ProgramCount MR_createEntity];
+                _programCount.name = _programName;
+                _programCount.unUpdateCount = [NSNumber numberWithInt:1];
+                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
+            
+            //开始统计次数的网络数据同步
+            [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
         
             //按摩记录
             MassageRecord* massageRecord;
@@ -246,9 +248,7 @@
             }
             
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-            
-            //开始统计次数的网络数据同步
-            [self synchroUseCountLocalData];
+
         }
         
 		[self jumpToFinishMassageViewConroller];
@@ -272,30 +272,6 @@
 	// 用时时间
 	_usingTime.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
 	[_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
-}
-
-#pragma mark - 同步统计次数的网络数据
--(void)synchroUseCountLocalData
-{
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"ProgramCountNeedSynchro"];
-    NSLog(@"开始同步统计次数网络数据");
-    DataRequest* request = [DataRequest new];
-    NSArray* counts = [ProgramCount MR_findAll];
-    
-    NSMutableArray* jsons = [NSMutableArray new];
-    for (ProgramCount* p in counts) {
-        [jsons addObject:[p toDictionary]];
-    }
-    if (jsons.count>0) {
-        [request addProgramUsingCount:jsons Success:^{
-            NSLog(@"统计次数数据同步成功");
-            [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"ProgramCountNeedSynchro"];
-        } fail:^(NSDictionary *dic) {
-            NSLog(@"统计次数数据同步失败");
-
-        }];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
