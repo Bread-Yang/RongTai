@@ -11,4 +11,9 @@
 
 @interface ProgramDownloadViewController : BasicViewController
 
+/**
+ *	是否下载自定义程序
+ */
+@property (nonatomic, assign) BOOL isDownloadCustomProgram;
+
 @end

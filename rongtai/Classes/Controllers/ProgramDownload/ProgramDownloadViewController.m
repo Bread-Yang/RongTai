@@ -49,6 +49,13 @@
 	
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 	self.navigationItem.leftBarButtonItem = item;
+	
+	if (self.isDownloadCustomProgram) {
+		self.title = NSLocalizedString(@"已有程序", nil);
+	} else {
+		self.title = NSLocalizedString(@"程序下载", nil);
+	}
+	self.tableView.hidden = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -62,11 +69,14 @@
 		
 		NSLog(@"请求成员");
 		NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-		NSMutableArray *arr = [NSMutableArray new];
 		
 		self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
 		
 		NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMassage"];
+		
+		if (self.isDownloadCustomProgram) {
+//			requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadFavoriteMassage"];
+		}
 		
 		NSMutableDictionary *parmeters = [NSMutableDictionary new];
 		[parmeters setObject:uid forKey:@"uid"];
@@ -92,6 +102,8 @@
 				_programArray = [NSArray arrayWithArray:arr];
 				
 				[self.tableView reloadData];
+				
+				self.tableView.hidden = NO;
 			} else {
 				[_loadingHUD hide:YES];
 			}
@@ -111,7 +123,8 @@
 #pragma mark - 返回
 
 - (void)goBack {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+	[self backToMainViewController];
 	
 //	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 }
@@ -138,11 +151,53 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+	if (self.isDownloadCustomProgram) {
+		return 2;
+	} else {
+		return 1;
+	}
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	if (self.isDownloadCustomProgram) {
+		if (section == 0) {
+			return NSLocalizedString(@"可选择按摩程序", nil);
+		} else {
+			return NSLocalizedString(@"已有按摩程序", nil);
+		}
+	} else {
+		return nil;
+	}
+}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+// 	UITableViewHeaderFooterView *headerFoorterView = [[self tableView] dequeueReusableHeaderFooterViewWithIdentifier:@"headerFooterReuseIdentifier"];
+//	headerFoorterView.backgroundColor = [UIColor clearColor];
+//	headerFoorterView.contentView.backgroundColor = [UIColor clearColor];
+// 	return headerFoorterView;
+//}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+	if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
+		UITableViewHeaderFooterView *headerView = (UITableViewHeaderFooterView *)view;
+		headerView.contentView.backgroundColor = [UIColor clearColor];
+		headerView.backgroundView.backgroundColor = [UIColor clearColor];
+	}
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if (self.isDownloadCustomProgram) {
+		return 40;
+	}
+	return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_programArray count];
+	if (self.isDownloadCustomProgram) {
+		return [_programArray count];
+	} else {
+		return [_programArray count];
+	}
 }
 
 

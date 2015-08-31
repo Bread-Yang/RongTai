@@ -221,7 +221,7 @@
 		DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CED1B147A36005617DA /* RTViewController.m */; };
 		DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFC1B147B07005617DA /* Main.storyboard */; };
 		DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFD1B147B07005617DA /* Second.storyboard */; };
-		DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7D031B147D59005617DA /* FirstViewController.m */; };
+		DF9C7D041B147D59005617DA /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7D031B147D59005617DA /* WelcomeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -614,8 +614,8 @@
 		DF9C7CED1B147A36005617DA /* RTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTViewController.m; sourceTree = "<group>"; };
 		DF9C7CFC1B147B07005617DA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DF9C7CFD1B147B07005617DA /* Second.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
-		DF9C7D021B147D59005617DA /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		DF9C7D031B147D59005617DA /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		DF9C7D021B147D59005617DA /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		DF9C7D031B147D59005617DA /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1550,8 +1550,8 @@
 				3D0258D41B1D5173006C9179 /* Login */,
 				3D65A4831B25792800B7B411 /* MenuViewController.h */,
 				3D65A4841B25792800B7B411 /* MenuViewController.m */,
-				DF9C7D021B147D59005617DA /* FirstViewController.h */,
-				DF9C7D031B147D59005617DA /* FirstViewController.m */,
+				DF9C7D021B147D59005617DA /* WelcomeViewController.h */,
+				DF9C7D031B147D59005617DA /* WelcomeViewController.m */,
 				56C349571B170D9E007C8B3F /* MusicPickerViewController.h */,
 				56C349581B170D9E007C8B3F /* MusicPickerViewController.m */,
 				3D65A4861B25841800B7B411 /* MainViewController.h */,
@@ -1882,7 +1882,7 @@
 				3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */,
 				3D0258F61B1D525E006C9179 /* IQTextView.m in Sources */,
 				3DF304391B38FE2500DD51D3 /* MagicalRecord+Actions.m in Sources */,
-				DF9C7D041B147D59005617DA /* FirstViewController.m in Sources */,
+				DF9C7D041B147D59005617DA /* WelcomeViewController.m in Sources */,
 				3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */,
 				56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */,
 				3D0258F51B1D525E006C9179 /* IQSegmentedNextPrevious.m in Sources */,
