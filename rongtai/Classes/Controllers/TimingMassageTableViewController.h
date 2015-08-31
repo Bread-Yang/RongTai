@@ -10,4 +10,6 @@
 
 @interface TimingMassageTableViewController : UITableViewController
 
+-(void)synchroTimingPlanLocalData:(BOOL)isContinue;
+
 @end

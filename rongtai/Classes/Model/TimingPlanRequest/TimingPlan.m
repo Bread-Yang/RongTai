@@ -63,7 +63,7 @@
 
 #pragma mark - 设置通知
 - (void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSOrderedSet *)weekdays Message:(NSString*)message {
-	self.isOn = [NSNumber numberWithBool:YES];
+//	self.isOn = [NSNumber numberWithBool:YES];
 	//    self.days = weekdays ;
 	
 	NSDate *todayDate = [NSDate date];
@@ -117,7 +117,6 @@
 		
 		UILocalNotification *localNofication = [[UILocalNotification alloc] init];
 		localNofication.fireDate = fireDate;
-		
 		localNofication.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"时间:%@",fireDate] forKey:@"time"];
 		localNofication.soundName = UILocalNotificationDefaultSoundName;
 		localNofication.alertBody = message;
@@ -142,9 +141,77 @@
 }
 
 #pragma mark - 根据TimingPlan来更新本地通知
++(void)updateLocalNotificationByNetworkData:(NSArray*)arr
+{
+    NSMutableArray* networkData = [NSMutableArray arrayWithArray:arr];
+    NSArray* localData = [TimingPlan MR_findAll];
+    for (int i = 0; i < localData.count; i++) {
+        TimingPlan* t = localData[i];
+        BOOL isExist = NO;
+        NSDictionary* dic = [t toDictionary];
+        for (int j = 0; j < networkData.count; j++) {
+            NSDictionary* networkDic = networkData[j];
+            NSNumber* networkPlanId = [networkDic objectForKey:@"planId"];
+            if ([t.planId isEqualToNumber:networkPlanId]) {
+                isExist = YES;
+                if (![dic isEqualToDictionary:networkDic]) {
+                    //不一样就需要更新本地数据
+                    [t cancelLocalNotification];
+                    [t setValueByJson:networkDic];
+                    [t updateLocalNotification];
+                }
+                [networkData removeObjectAtIndex:j];
+                break;
+            }
+        }
+        if (!isExist) {
+            //本地数据在网络数据中遍历不到，则该本地数据不应存在，要删除
+            [t cancelLocalNotification];
+            [t MR_deleteEntity];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+    }
+    
+    if (networkData.count>0) {
+        //便利完成后，若网络数据还不为空，则需要新增数据
+        for (int i = 0; i<networkData.count; i++) {
+            TimingPlan* t = [TimingPlan MR_createEntity];
+            [t setValueByJson:networkData[i]];
+            [t updateLocalNotification];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+    }
+}
+
+#pragma mark - 根据对象的属性更新通知
 -(void)updateLocalNotification
 {
+    self.localNotifications = nil;
+    NSArray* weeks = [self.days componentsSeparatedByString:@","];
+    NSMutableOrderedSet* weekSet = [[NSMutableOrderedSet alloc]init];
+    for (int i = 0; i<weeks.count; i++) {
+        NSString* str = weeks[i];
+        NSInteger intWeek = [str integerValue];
+        NSNumber* week = [NSNumber numberWithInteger:intWeek];
+        [weekSet addObject:week];
+    }
     
+    NSArray* time = [self.ptime componentsSeparatedByString:@":"];
+    if (time.count >= 2) {
+        NSString* hourStr = time[0];
+        NSUInteger hour = [hourStr integerValue];
+        NSString* minStr = time[1];
+        NSUInteger min = [minStr integerValue];
+        [self setLocalNotificationByHour:hour Minute:min Week:weekSet Message:self.massageName];
+        BOOL isOn = [self.isOn boolValue];
+        if (!isOn) {
+            [self cancelLocalNotification];
+        }
+    }
+    else
+    {
+        NSLog(@"时间格式错误");
+    }
 }
 
 #pragma mark - 打开通知

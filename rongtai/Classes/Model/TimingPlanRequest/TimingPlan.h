@@ -65,6 +65,11 @@
 - (NSDictionary *)toDictionary;
 
 /**
+ *  根据TimingPlan来更新本地通知
+ */
++(void)updateLocalNotificationByNetworkData:(NSArray*)arr;
+
+/**
  *  设置通知
  */
 - (void)setLocalNotificationByHour:(NSUInteger)hour Minute:(NSUInteger)minute Week:(NSOrderedSet *)weekdays Message:(NSString*)message;

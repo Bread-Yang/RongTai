@@ -50,7 +50,6 @@
     } else {
         [self setOff];
     }
-    
 }
 
 #pragma mark - 初始化UI
@@ -90,22 +89,38 @@
 	
     if (aSwitch.isOn) {
         [self setOn];
-//        [_timingPlan turnOnLocalNotification];
+        [_timingPlan turnOnLocalNotification];
     } else {
         [self setOff];
-//        [_timingPlan cancelLocalNotification];
+        [_timingPlan cancelLocalNotification];
     }
     
     _timingPlan.isOn = [NSNumber numberWithBool:aSwitch.isOn];
-//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-	
-	[request updateTimingPlan:_timingPlan success:^(NSDictionary *dic) {
-		[_timingPlan setValueByJson:dic];
-		
-		
-	} fail:^(NSDictionary *dic) {
-		
-	}];
+    
+    NSUInteger planId = [_timingPlan.planId integerValue];
+    if (planId == 0)
+    {
+        //id=0，即是未上传到服务器的数据，要使用 新增 方法
+        [request addTimingPlan:_timingPlan success:^(NSUInteger timingPlanId) {
+            _timingPlan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
+            _timingPlan.state = [NSNumber numberWithInteger:0];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        } fail:^(NSDictionary *dic) {
+            _timingPlan.state = [NSNumber numberWithInteger:1];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }];
+    }
+    else
+    {
+        //id不为0，则使用 编辑 方法
+        [request updateTimingPlan:_timingPlan success:^(NSDictionary *dic) {
+            _timingPlan.state = [NSNumber numberWithInteger:0];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        } fail:^(NSDictionary *dic) {
+            _timingPlan.state = [NSNumber numberWithInteger:2];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }];
+    }
 }
 
 #pragma mark - 设置开状态的UI

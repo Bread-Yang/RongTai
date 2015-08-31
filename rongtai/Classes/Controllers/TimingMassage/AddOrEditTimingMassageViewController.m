@@ -186,9 +186,10 @@
 
 #pragma mark - Action
 - (IBAction)saveAction:(id)sender {
-    
     if (self.timingPlan) {
         //保存信息到对象中
+        [self.timingPlan cancelLocalNotification];
+        self.timingPlan.localNotifications = nil;
         [self saveSelectedToTimingPlan];
         
         //对象不为空即是 编辑 定时计划
@@ -210,11 +211,6 @@
         [self saveSelectedToTimingPlan];
         [self addTimingPlan];
     }
-	
-//
-//    [timePlan setLocalNotificationByHour:hour Minute:minute Week:[self.weekDaySegmentControl selectedIndexes] Message:message];
-//	
-//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - 添加定时计划
@@ -290,6 +286,9 @@
         }
         self.timingPlan.days = days;
     }
+    [self.timingPlan setLocalNotificationByHour:hour Minute:minute Week:selectDays Message:self.timingPlan.massageName];
+    self.timingPlan.isOn = [NSNumber numberWithBool:YES];
+    
 }
 
 #pragma mark - UICollectionViewDataSource
