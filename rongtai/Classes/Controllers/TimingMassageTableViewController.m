@@ -20,7 +20,7 @@
 #import "AppDelegate.h"
 
 @interface TimingMassageTableViewController () <TimingPlanDelegate>{
-	__weak MBProgressHUD *_loadingHUD;
+    MBProgressHUD *_loadingHUD;
 	TimingPlanRequest *_timingPlanRequest;
     
 }
@@ -126,7 +126,6 @@
 {
     if (isContinue) {
         NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
-        __weak TimingMassageTableViewController* weakSelf;
         if (plans.count>0) {
             NSLog(@"同步中。。。");
             TimingPlan* plan = plans[0];
@@ -141,11 +140,11 @@
                     plan.state = [NSNumber numberWithInteger:0];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                     
-                    [weakSelf synchroTimingPlanLocalData:YES];
+                    [self synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
-                    [weakSelf loadLocalData];
+                    [self loadLocalData];
                     [_loadingHUD hide:YES];
                 }];
             }
@@ -158,12 +157,12 @@
                     plan.state = [NSNumber numberWithInteger:0];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                     
-                    [weakSelf synchroTimingPlanLocalData:YES];
+                    [self synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
                     NSLog(@"定时计划 同步编辑失败");
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
-                    [weakSelf loadLocalData];
+                    [self loadLocalData];
                     [_loadingHUD hide:YES];
                 }];
             }
@@ -177,11 +176,11 @@
                     [plan MR_deleteEntity];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                     
-                    [weakSelf synchroTimingPlanLocalData:YES];
+                    [self synchroTimingPlanLocalData:YES];
                 } fail:^(NSDictionary *dic) {
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
-                    [weakSelf loadLocalData];
+                    [self loadLocalData];
                     [_loadingHUD hide:YES];
                 }];
             }

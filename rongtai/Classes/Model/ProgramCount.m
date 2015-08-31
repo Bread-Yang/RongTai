@@ -11,8 +11,19 @@
 
 @implementation ProgramCount
 
+@dynamic programId;
 @dynamic name;
-@dynamic useTime;
 @dynamic useCount;
+
+#pragma mark - 对象转换为字典
+-(NSDictionary*)toDictionary
+{
+    NSDictionary* dic = @{
+                          @"name":self.name,
+                          @"count":self.useCount,
+                          @"programId":self.programId
+                          };
+    return dic;
+}
 
 @end

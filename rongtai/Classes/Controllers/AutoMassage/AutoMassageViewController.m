@@ -21,6 +21,7 @@
 #import "RTBleConnector.h"
 #import "MassageRecord.h"
 #import "MassageTime.h"
+#import "DataRequest.h"
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
@@ -29,6 +30,7 @@
     __weak IBOutlet UILabel *_usingTime;
     __weak IBOutlet UIButton *_stopBtn;
     NSString* _programName;
+    NSInteger _autoMassageFlag;
 }
 @end
 
@@ -59,11 +61,11 @@
     
     //获取按摩椅自动按摩名称
     RTBleConnector* bleConnector = [RTBleConnector shareManager];
-    NSInteger autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
-    NSLog(@"按摩状态数据:%ld",autoMassageFlag);
-    if (autoMassageFlag>=1&&autoMassageFlag!=7) {
+    _autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
+    NSLog(@"按摩状态数据:%ld",_autoMassageFlag);
+    if (_autoMassageFlag>=1&&_autoMassageFlag!=7) {
         NSLog(@"自动按摩状态");
-        switch (autoMassageFlag) {
+        switch (_autoMassageFlag) {
             case 1:
                 _programName = NSLocalizedString(@"运动恢复", nil);
                 break;
@@ -112,9 +114,7 @@
     {
         self.title = _programName;
     }
-    
 
-    
     //按摩调节View出现
     [[AdjustView shareView] show];
 }
@@ -155,21 +155,6 @@
     [[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
@@ -182,7 +167,7 @@
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
        
-        if (_programName.length > 0) {
+        if (_programName.length > 0 && ![_programName isEqualToString:@"自动按摩"]) {
             //计算按摩时间
             NSDate* end = [NSDate date];
             NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
@@ -204,15 +189,15 @@
                 NSUInteger count = [programCount.useCount integerValue];
                 count++;
                 programCount.useCount = [NSNumber numberWithUnsignedInteger:count];
-                NSUInteger oldTime = [programCount.useTime integerValue];
-                programCount.useTime = [NSNumber numberWithUnsignedInteger:oldTime+min];
+                programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
             else
             {
                 programCount = [ProgramCount MR_createEntity];
                 programCount.name = _programName;
                 programCount.useCount = [NSNumber numberWithInt:1];
-                programCount.useTime = [NSNumber numberWithUnsignedInteger:min];
+                programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+                
             }
         
             //按摩记录
@@ -261,6 +246,9 @@
             }
             
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+            
+            //开始统计次数的网络数据同步
+            [self synchroUseCountLocalData];
         }
         
 		[self jumpToFinishMassageViewConroller];
@@ -285,5 +273,35 @@
 	_usingTime.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
 	[_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
 }
+
+#pragma mark - 同步统计次数的网络数据
+-(void)synchroUseCountLocalData
+{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"ProgramCountNeedSynchro"];
+    NSLog(@"开始同步统计次数网络数据");
+    DataRequest* request = [DataRequest new];
+    NSArray* counts = [ProgramCount MR_findAll];
+    
+    NSMutableArray* jsons = [NSMutableArray new];
+    for (ProgramCount* p in counts) {
+        [jsons addObject:[p toDictionary]];
+    }
+    if (jsons.count>0) {
+        [request addProgramUsingCount:jsons Success:^{
+            NSLog(@"统计次数数据同步成功");
+            [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"ProgramCountNeedSynchro"];
+        } fail:^(NSDictionary *dic) {
+            NSLog(@"统计次数数据同步失败");
+
+        }];
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 @end

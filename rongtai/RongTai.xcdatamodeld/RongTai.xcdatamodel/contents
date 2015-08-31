@@ -40,8 +40,8 @@
     </entity>
     <entity name="ProgramCount" representedClassName="ProgramCount" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="programId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="useCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="useTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="TimingPlan" representedClassName="TimingPlan" syncable="YES">
         <attribute name="days" optional="YES" attributeType="String" minValueString="0" maxValueString="6" syncable="YES"/>
