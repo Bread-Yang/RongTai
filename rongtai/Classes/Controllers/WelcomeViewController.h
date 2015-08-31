@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface WelcomeViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *currentPlaySongLabel;
 

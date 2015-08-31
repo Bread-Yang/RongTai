@@ -23,6 +23,9 @@
 #import "CustomIOSAlertView.h"
 #import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
+#import "UIImage+ImageBlur.h"
+#import "UIImageView+AFNetworking.h"
+#import "MemberRequest.h"
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
 #import "DataRequest.h"
@@ -31,7 +34,8 @@
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
-    NSMutableArray* _massageArr;
+    NSMutableArray *_massageArr;
+	NSMutableDictionary *_networkMassageDic;
     MassageRequest* _massageRequest;
 	NSArray *_modeNameArray;
     WLWeatherView* _weatherView;
@@ -55,6 +59,8 @@
     if (_menuBar) {
         _menuBar.selectedItem = nil;
     }
+	
+	[_table reloadData];
 }
 
 - (void)viewDidLoad {
@@ -98,7 +104,7 @@
     slideNav.view.layer.shadowOpacity  = 5;
     slideNav.view.layer.shadowRadius = 10;
     
-    //
+
     _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
@@ -107,13 +113,14 @@
     _table.showsHorizontalScrollIndicator = NO;
     _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
-    
-    //
+	
+    // 获取按摩程序列表
+	_networkMassageDic = [NSMutableDictionary new];
     _massageRequest = [[MassageRequest alloc]init];
     _massageRequest.delegate = self;
-    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-//    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
-    _massageArr = [NSMutableArray new];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
+	
 	_modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
 					   NSLocalizedString(@"舒展活络", nil),
 					   NSLocalizedString(@"休憩促眠", nil),
@@ -125,6 +132,7 @@
 					   NSLocalizedString(@"云养程序三", nil),
 					   NSLocalizedString(@"云养程序四", nil),];
 	
+	_massageArr = [NSMutableArray new];
     for (int i = 0; i < [_modeNameArray count]; i++) {
         MassageProgram *m = [MassageProgram new];
         m.name = _modeNameArray[i];
@@ -132,8 +140,7 @@
         m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
         [_massageArr addObject:m];
     }
-    
-    //
+
     _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
     _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
     _menuBar.tintColor = [UIColor whiteColor];
@@ -406,11 +413,41 @@
         cell.imageView.image = [UIImage imageNamed:massage.imageUrl];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow"]];
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
 	
 	if (indexPath.row >= 6) {
-		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6];
+		if (commandId == 0) {
 			cell.hidden = YES;
+		} else {
+			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
+			if (networkMassage) {
+				cell.textLabel.text = networkMassage.name;
+				cell.detailTextLabel.text = networkMassage.mDescription;
+				
+				// 图片
+				UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", networkMassage.imageUrl]];
+				if (img) {			// 本地图片
+					cell.imageView.image = img;
+				} else {			// 网络图片
+					NSURL *url = [NSURL URLWithString:[RongTaiFileDomain stringByAppendingString:networkMassage.imageUrl]];
+					
+					NSURLRequest *request = [NSURLRequest requestWithURL:url];
+					UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder"];
+					
+					__weak BasicTableViewCell *weakCell = self;
+					
+					[cell.imageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+						
+						weakCell.imageView.image = image;
+						[weakCell setNeedsLayout];
+						[image saveImageByName:[NSString stringWithFormat:@"%@.jpg", networkMassage.imageUrl]];
+						
+					} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+						NSLog(@"请求失败");
+					}];
+				}
+			}
 		}
 	}
 	
@@ -493,12 +530,12 @@
 #pragma mark - massageRequest代理
 -(void)massageRequestMassageListFinish:(BOOL)success Result:(NSDictionary *)dic {
     if (success) {
-        NSArray* arr = [dic objectForKey:@"result"];
+        NSArray *arr = [dic objectForKey:@"result"];
         NSLog(@"用户下载列表:%@",arr);
-        if (arr.count>0) {
-            for (int i = 0; i<arr.count; i++) {
-                MassageProgram* massage = [[MassageProgram alloc]initWithJSON:arr[i]];
-                [_massageArr addObject:massage];
+        if (arr.count > 0) {
+            for (int i = 0; i < arr.count; i++) {
+                MassageProgram *massage = [[MassageProgram alloc]initWithJSON:arr[i]];
+				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
             }
             [_table reloadData];
         }
