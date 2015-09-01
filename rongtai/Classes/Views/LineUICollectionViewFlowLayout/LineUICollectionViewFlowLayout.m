@@ -51,7 +51,6 @@
     return array;
 }
 
-
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity { 	// 自动对齐到网格
     CGFloat offsetAdjustment = MAXFLOAT;	// proposedContentOffset是没有对齐到网格时本来应该停下的位置
     CGFloat currentHorizontalSlideCenterOffset = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);  

@@ -204,8 +204,7 @@
             [self updateTimingPlan];
         }
     }
-    else
-    {
+    else {
         //对象为空既是 新增 定时计划
         self.timingPlan = [TimingPlan MR_createEntity];
         [self saveSelectedToTimingPlan];
@@ -322,9 +321,37 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	LineUICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
+	if (indexPath.row < 6) {
+		
+	} else {
+		
+	}
 	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%li", indexPath.row + 1]];
+
+	
+	if (indexPath.row == 8) {
+		cell.hidden = YES;
+	} else {
+		cell.hidden = NO;
+	}
 	return cell;
 }
+
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+//	return 50.0;
+//}
+//
+//#pragma mark --UICollectionViewDelegateFlowLayout  
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//	
+//	if (indexPath.row == 8) {
+//		return CGSizeZero;
+//	} else {
+//		return [((LineCollectionView *)collectionView) getCellSize];
+//	}
+//}
+
 
 #pragma mark - UIPickerViewDataSource
 

@@ -37,12 +37,16 @@
 
 - (void)initCollectionViewLayout {
 	LineUICollectionViewFlowLayout *lineLayout = [[LineUICollectionViewFlowLayout alloc] init];
-	[lineLayout setItemSize:CGSizeMake(self.bounds.size.height / 3 * 2, self.bounds.size.height / 3 * 2)];
+	[lineLayout setItemSize:[self getCellSize]];
 	lineLayout.headerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
 	lineLayout.footerReferenceSize = CGSizeMake([UIScreen mainScreen].bounds.size.width / 2 - lineLayout.itemSize.width / 2, lineLayout.itemSize.height);
 	lineLayout.delegate = self;
 	
 	self.collectionViewLayout = lineLayout;
+}
+
+- (CGSize)getCellSize {
+	return CGSizeMake(self.bounds.size.height / 3 * 2, self.bounds.size.height / 3 * 2);
 }
 
 #pragma mark - LineUICollectionViewFlowLayoutDelegate

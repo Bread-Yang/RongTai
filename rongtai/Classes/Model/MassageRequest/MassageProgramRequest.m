@@ -6,21 +6,23 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
-#import "MassageRequest.h"
 #import <AFNetworking.h>
+
+#import "MassageProgramRequest.h"
+#import "CoreData+MagicalRecord.h"
+#import "RongTaiConstant.h"
+
 #define REQUESTURL @"http://recipe.xtremeprog.com/RongTaiWeb/"
 
 
-@interface MassageRequest ()
-{
+@interface MassageProgramRequest () {
     AFHTTPRequestOperationManager* _manager;
 }
 @end
 
-@implementation MassageRequest
+@implementation MassageProgramRequest
 
--(instancetype)init
-{
+-(instancetype)init {
     if (self = [super init]) {
         _manager = [AFHTTPRequestOperationManager manager];
         //不加这句会导致请求失败
@@ -29,37 +31,71 @@
     return self;
 }
 
-#pragma mark - 获取按摩程序列表
--(void)requestMassageListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
-{
-//    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/loadMassage",REQUESTURL];
-    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
-    NSMutableDictionary* parameters = [NSMutableDictionary new];
-    [parameters setObject:uid forKey:@"uid"];
-    [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
-    [parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
-    NSLog(@"请求参数:%@",parameters);
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取按摩程序列表成功:%@",responseObject);
-        NSNumber* code = [responseObject objectForKey:@"responseCode"];
-        if ([code integerValue] == 200) {
-            if ([self.delegate respondsToSelector:@selector(massageRequestMassageListFinish:Result:)]) {
-                [self.delegate massageRequestMassageListFinish:YES Result:responseObject];
-            }
-        }
-        else
-        {
-            if ([self.delegate respondsToSelector:@selector(massageRequestMassageListFinish:Result:)]) {
-                [self.delegate massageRequestMassageListFinish:NO Result:responseObject];
-            }
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取按摩程序列表失败:%@",error);
-        if ([self.delegate respondsToSelector:@selector(massageRequestMassageListFinish:Result:)]) {
-            [self.delegate massageRequestMassageListFinish:NO Result:nil];
-        }
-    }];
+#pragma mark - 获取网络按摩程序列表
+
+- (void)requestNetworkMassageProgramListByIndex:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray *))success failure:(void (^)(NSArray *))failure {
+	
+	NSString *url = [RongTaiDefaultDomain stringByAppendingString:@"loadMassage"];
+	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+	
+	NSMutableDictionary* parameters = [NSMutableDictionary new];
+	[parameters setObject:uid forKey:@"uid"];
+	[parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
+	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
+	
+	[_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		NSLog(@"获取按摩程序列表成功:%@",responseObject);
+		
+		NSNumber *code = [responseObject objectForKey:@"responseCode"];
+		
+		if ([code integerValue] == 200) {
+			 // 删除之前从网络上获取到的所有按摩程序, 不包括按摩椅自带的6个模式
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLocalDummyData = %@", [NSNumber numberWithBool:NO]];
+			[MassageProgram MR_deleteAllMatchingPredicate:predicate];
+//			[MassageProgram MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
+			
+			NSArray *arr = [responseObject objectForKey:@"result"];
+			
+			NSLog(@"用户下载列表:%@",arr);
+			
+			NSMutableArray *networkMassageProgramArray = [[NSMutableArray alloc] init];
+			
+			if (arr.count > 0) {
+				for (int i = 0; i < arr.count; i++) {
+					MassageProgram *massage = [MassageProgram MR_createEntity];
+					[massage setValueByJSON:arr[i]];
+				 	[[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+					
+					[networkMassageProgramArray addObject:massage];
+				}
+			}
+			
+			if (success) {
+				success([networkMassageProgramArray copy]);
+			}
+			
+		} else {
+			NSLog(@"获取按摩程序列表失败:responseCode不等于200");
+			
+			if (failure) {
+				failure([self getAlreadySaveNetworkMassageProgramList]);
+			}
+		}
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		NSLog(@"获取按摩程序列表失败:%@",error);
+		
+		if (failure) {
+			failure([self getAlreadySaveNetworkMassageProgramList]);
+		}
+		
+	}];
+}
+
+- (NSArray *)getAlreadySaveNetworkMassageProgramList {
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLocalDummyData = %@", [NSNumber numberWithBool:NO]];
+	NSArray *localMassageProgram = [MassageProgram MR_findAllWithPredicate:predicate];
+	
+	return localMassageProgram;
 }
 
 #pragma mark - 获取用户下载的按摩程序列表

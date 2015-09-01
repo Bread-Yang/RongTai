@@ -122,11 +122,10 @@
 }
 
 #pragma mark - 同步本地数据
--(void)synchroTimingPlanLocalData:(BOOL)isContinue
-{
+-(void)synchroTimingPlanLocalData:(BOOL)isContinue {
     if (isContinue) {
         NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
-        if (plans.count>0) {
+        if (plans.count > 0) {
             NSLog(@"同步中。。。");
             TimingPlan* plan = plans[0];
             NSInteger state = [plan.state integerValue];

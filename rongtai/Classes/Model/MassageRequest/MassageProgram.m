@@ -10,20 +10,29 @@
 
 @implementation MassageProgram
 
-- (instancetype)initWithJSON:(NSDictionary *)json {
-    if (self = [super init]) {
-        _mDescription = [json objectForKey:@"description"];
-        _imageUrl = [json objectForKey:@"imageUrl"];
-		_binUrl = [json objectForKey:@"binUrl"];
-        _commandId = [[json objectForKey:@"commandId"] unsignedIntegerValue];
-        _massageId = [[json objectForKey:@"massageId"] unsignedIntegerValue];
-        _name = [json objectForKey:@"name"];
-        _power = [[json objectForKey:@"power"] unsignedIntegerValue];
-        _pressure = [[json objectForKey:@"pressure"] unsignedIntegerValue];
-        _speed = [[json objectForKey:@"speed"] unsignedIntegerValue];
-        _width = [[json objectForKey:@"width"] unsignedIntegerValue];
-    }
-    return self;
+@dynamic mDescription;
+@dynamic imageUrl;
+@dynamic binUrl;
+@dynamic commandId;
+@dynamic massageId;
+@dynamic name;
+@dynamic power;
+@dynamic pressure;
+@dynamic speed;
+@dynamic width;
+@dynamic isLocalDummyData;
+
+- (void)setValueByJSON:(NSDictionary*)json {
+	self.mDescription = [json objectForKey:@"description"];
+	self.imageUrl = [json objectForKey:@"imageUrl"];
+	self.binUrl = [json objectForKey:@"binUrl"];
+	self.commandId = [json objectForKey:@"commandId"];
+	self.massageId = [json objectForKey:@"massageId"];
+	self.name = [json objectForKey:@"name"];
+	self.power = [json objectForKey:@"power"];
+	self.pressure = [json objectForKey:@"pressure"];
+	self.speed = [json objectForKey:@"speed"];
+	self.width = [json objectForKey:@"width"];
 }
 
 @end

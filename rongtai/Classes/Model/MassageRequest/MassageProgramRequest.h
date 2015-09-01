@@ -18,7 +18,7 @@
 /**
  *  获取按摩程序列表结束后
  */
--(void)massageRequestMassageListFinish:(BOOL)success Result:(NSDictionary*)dic;
+-(void)massageRequestNetwrokMassageProgramListFinish:(BOOL)success Result:(NSDictionary*)dic;
 
 /**
  *  获取用户下载的按摩程序列表结束后
@@ -52,14 +52,19 @@
 
 @end
 
-@interface MassageRequest : NSObject
+@interface MassageProgramRequest : NSObject
 
 @property(nonatomic, weak)id<MassageRequestDelegate> delegate;
 
 /**
- *  获取按摩程序列表
+ *  获取网络按摩程序列表
  */
--(void)requestMassageListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size;
+- (void)requestNetworkMassageProgramListByIndex:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray *networkMassageProgramArray))success failure:(void (^)(NSArray *localMassageProgramArray))failure;
+
+/**
+ *	得到本地保存的程序列表
+ */
+- (NSArray *)getAlreadySaveNetworkMassageProgramList;
 
 /**
  *  获取用户下载的按摩程序列表

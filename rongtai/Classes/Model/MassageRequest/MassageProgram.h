@@ -7,18 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface MassageProgram : NSObject
+@interface MassageProgram : NSManagedObject
 
 /**
  *  按摩描述
  */
-@property (nonatomic, strong) NSString *mDescription;
+@property (nonatomic, retain) NSString *mDescription;
 
 /**
  *  图标链接
  */
-@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, retain) NSString *imageUrl;
 
 /**
  *	bin文件链接
@@ -28,42 +29,47 @@
 /**
  *  commnadId
  */
-@property(nonatomic) NSInteger commandId;
+@property (nonatomic, retain) NSNumber *commandId;
 
 /**
  *  id
  */
-@property(nonatomic) NSInteger massageId;
+@property (nonatomic, retain) NSNumber *massageId;
 
 /**
  *  名称
  */
-@property(nonatomic, strong) NSString *name;
+@property (nonatomic, retain) NSString *name;
 
 /**
  *  力度
  */
-@property(nonatomic) NSUInteger power;
+@property (nonatomic, retain) NSNumber *power;
 
 /**
  *  气压
  */
-@property(nonatomic) NSUInteger pressure;
+@property (nonatomic, retain) NSNumber *pressure;
 
 /**
  *  速度
  */
-@property(nonatomic) NSUInteger speed;
+@property (nonatomic, retain) NSNumber *speed;
 
 /**
  *  宽度
  */
-@property(nonatomic) NSUInteger width;
+@property (nonatomic, retain) NSNumber *width;
+
+/**
+ *	是否是本地写死的6个按摩椅自带的模式
+ */
+@property (nonatomic, retain) NSNumber *isLocalDummyData;
 
 
 /**
- *  请使用下列方法初始化
+ *  根据字典来设置MassageProgram
  */
--(instancetype)initWithJSON:(NSDictionary*)json;
+- (void)setValueByJSON:(NSDictionary*)json;
 
 @end

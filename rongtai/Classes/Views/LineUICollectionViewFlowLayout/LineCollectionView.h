@@ -22,4 +22,6 @@
 
 @property(assign, nonatomic) NSInteger currentSelectItemIndex;
 
+- (CGSize)getCellSize;
+
 @end
