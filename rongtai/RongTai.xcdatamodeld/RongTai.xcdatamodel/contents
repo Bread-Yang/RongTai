@@ -54,6 +54,7 @@
     <entity name="ProgramCount" representedClassName="ProgramCount" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="programId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="unUpdateCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="useCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="TimingPlan" representedClassName="TimingPlan" syncable="YES">
@@ -84,7 +85,7 @@
         <element name="MassageRecord" positionX="9" positionY="99" width="128" height="118"/>
         <element name="MassageTime" positionX="36" positionY="117" width="128" height="105"/>
         <element name="Member" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="ProgramCount" positionX="0" positionY="90" width="128" height="90"/>
+        <element name="ProgramCount" positionX="0" positionY="90" width="128" height="105"/>
         <element name="TimingPlan" positionX="0" positionY="0" width="128" height="165"/>
         <element name="UserDownload" positionX="0" positionY="0" width="128" height="195"/>
     </elements>

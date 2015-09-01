@@ -28,7 +28,7 @@
 #import "MemberRequest.h"
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
-#import "DataRequest.h"
+
 #import "ProgramCount.h"
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
@@ -43,7 +43,6 @@
 	CustomIOSAlertView *reconnectDialog;
 	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
     NSUInteger _vcCount;
-    ProgramCount* _programCount;
 }
 @end
 
@@ -168,16 +167,16 @@
     
     AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
     if (reachability.reachable) {
-        //同步定时计划数据
+        //同步 定时计划 数据
         //app启动时要开始进行 定时计划的数据同步
         [self synchroTimingPlanLocalData:YES];
-        
-        //对爱用程序的数据进行同步
-        [self synchroUseCountLocalData];
+		
+		//对 使用次数 数据进行同步
+		[self synchroUseTimeData];
     }
 }
 
-#pragma mark - 请求网络按摩程序 
+#pragma mark - 请求网络按摩程序
 
 - (void)requestNetworkMassageProgram {
 	// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
@@ -206,59 +205,12 @@
 	}];
 }
 
-#pragma mark - 同步统计次数的网络数据
-
--(void)synchroUseCountLocalData
+#pragma mark - 同步使用次数数据
+-(void)synchroUseTimeData
 {
-    
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber* boolNum = [defaults objectForKey:@"ProgramCountNeedSynchro"];
-    if (boolNum) {
-        if ([boolNum boolValue]) {
-            NSLog(@"开始同步统计次数网络数据");
-            DataRequest* request = [DataRequest new];
-            NSArray* counts = [ProgramCount MR_findAll];
-            
-            NSMutableArray* jsons = [NSMutableArray new];
-            for (ProgramCount* p in counts) {
-                [jsons addObject:[p toDictionary]];
-            }
-            if (jsons.count>0) {
-                [request addProgramUsingCount:jsons Success:^{
-                    NSLog(@"统计次数数据同步成功");
-                    [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"ProgramCountNeedSynchro"];
-                } fail:^(NSDictionary *dic) {
-                    NSLog(@"统计次数数据同步失败");
-                    
-                }];
-            }
-        }
-        else
-        {
-            //请求统计次数网络数据
-            [self getProgramCountByNetwork];
-        }
-    }
-    else
-    {
-        [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"ProgramCountNeedSynchro"];
-        [self synchroUseCountLocalData];
-    }
-    
-    
-    
-}
-
-#pragma mark - 从服务器获取统计次数数据
--(void)getProgramCountByNetwork
-{
-    NSLog(@"开始获取服务器统计次数的数据");
-    DataRequest* request = [DataRequest new];
-    [request getFavoriteProgramCountSuccess:^(NSArray *programs) {
-        
-    } fail:^(NSDictionary *dic) {
-        
-    }];
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
+    BOOL b = counts.count>0;
+    [ProgramCount synchroUseCountDataFormServer:b Success:nil Fail:nil];
 }
 
 #pragma mark - 同步本地定时计划数据

@@ -28,6 +28,21 @@
 @property (nonatomic, retain) NSNumber * useCount;
 
 
+/**
+ *  未更新的次数
+ */
+@property (nonatomic, retain) NSNumber * unUpdateCount;
+
+
+/**
+ *  统计次数数据同步
+ */
++(void)synchroUseCountDataFormServer:(BOOL)isUploadLoalData Success:(void(^)())success Fail:(void(^)(NSDictionary* dic)) fail;
+
+/**
+ *  本地数据同步至服务器
+ */
++(void)synchroLocalDataToServerSuccess:(void(^)())success Fail:(void(^)(NSDictionary* dic)) fail;
 
 /**
  *  对象转换为字典

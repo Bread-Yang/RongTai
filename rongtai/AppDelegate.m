@@ -58,7 +58,7 @@
     }
 
     SlideNavigationController *slide = [SlideNavigationController sharedInstance];
-	
+
     MenuViewController *menu = [[MenuViewController alloc] init];
     slide.leftMenu = menu;
     slide.enableSwipeGesture = NO;
