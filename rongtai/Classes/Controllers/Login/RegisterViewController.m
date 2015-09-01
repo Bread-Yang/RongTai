@@ -8,9 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "LoginRequest.h"
-
-//
-#import "WLWeatherView.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface RegisterViewController ()<LoginRequestDelegate>
 {
@@ -31,11 +29,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //返回按钮设置
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
 //    WLWeatherView* weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
 //    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:weatherView];
 //    self.navigationItem.rightBarButtonItem  = right;
     _loginRequest = [LoginRequest new];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 返回
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 返回按钮方法

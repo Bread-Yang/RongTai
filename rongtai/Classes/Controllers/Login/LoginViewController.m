@@ -46,13 +46,16 @@
     _password.text = @"123456";
     
     //
+     SlideNavigationController* silder = [SlideNavigationController sharedInstance];
+    
     MenuViewController* menu = [[MenuViewController alloc]init];
-    SlideNavigationController* silder = [SlideNavigationController sharedInstance];
     silder.leftMenu = menu;
     silder.enableSwipeGesture = YES;
     silder.enableShadow = NO;
     silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
-
+    [silder.navigationBar setTintColor:[UIColor whiteColor]];
+    [silder.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     // Do any additional setup after loading the view.
 }
 

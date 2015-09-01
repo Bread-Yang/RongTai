@@ -17,6 +17,7 @@
 #import "RongTaiConstant.h"
 #import "ChangeUserViewController.h"
 #import "RTBleConnector.h"
+#import "AppDelegate.h"
 
 //测试
 #import "FinishMassageViewController.h"
@@ -196,10 +197,10 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-        [fVC saveMode];
-        [sl pushViewController:fVC animated:YES];
+//        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+//        [fVC saveMode];
+//        [sl pushViewController:fVC animated:YES];
         
     }
     else if (indexPath.row == 6)
@@ -230,7 +231,12 @@
 #pragma mark - 注销
 -(void)Logout
 {
-    
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+    delegate.window.rootViewController = [s instantiateViewControllerWithIdentifier:@"SliderNavigationVC"];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"" forKey:@"uid"];
+    [defaults setObject:@"" forKey:@"token"];
 }
 
 #pragma mark - 切换按摩椅
