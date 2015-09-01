@@ -20,6 +20,8 @@
 #import "TimingPlanRequest.h"
 #import "DataRequest.h"
 
+#import "MassageRecord.h"
+
 @interface WelcomeViewController () <AppIntroduceViewDelegate, LoginRequestDelegate>
 
 @property AppIntrouceView *introduceView;
@@ -378,6 +380,7 @@ UISegmentedControl *segmentedControl;
 
 -(void)testBtnCilcked
 {
+    NSLog(@"Test");
 //    TimingPlanRequest* r = [TimingPlanRequest new];
 //    [r deleteTimingPlanId:81 success:nil fail:nil];
 	
@@ -400,18 +403,61 @@ UISegmentedControl *segmentedControl;
 //    }];
     
 //    NSLog(@"tp");
-    DataRequest* dr = [DataRequest new];
-    [dr addProgramUsingCount:@[@{@"name":@"舒筋活络",@"count":@1,@"programId":@2312},@{@"name":@"舒筋活络",@"count":@18,@"programId":@2222}] Success:nil fail:nil];
-
     
-    [dr getFavoriteProgramCountSuccess:^(NSArray *programs) {
-        NSLog(@"数组:%@",programs);
-        NSDictionary* dic = programs[0];
-        NSString* name = [dic objectForKey:@"name"];
-        NSLog(@"名字:%@",name);
-    } fail:^(NSDictionary *dic) {
-        
-    }];
+    
+//    DataRequest* dr = [DataRequest new];
+//    [dr addProgramUsingCount:@[@{@"name":@"舒筋活络",@"count":@1,@"programId":@2312},@{@"name":@"舒筋活络",@"count":@18,@"programId":@2222}] Success:nil fail:nil];
+//
+//    
+//    [dr getFavoriteProgramCountSuccess:^(NSArray *programs) {
+//        NSLog(@"数组:%@",programs);
+//        NSDictionary* dic = programs[0];
+//        NSString* name = [dic objectForKey:@"name"];
+//        NSLog(@"名字:%@",name);
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
+    
+    //添加几条按摩数据，测试用
+//    [MassageRecord MR_truncateAll];
+    
+//    MassageRecord* m = [MassageRecord MR_createEntity];
+//    m.date = @"2015-08-26";
+//    m.state = 0;
+//    m.useTime = [NSNumber numberWithInt:160];
+//    m.name = @"运动恢复";
+//    m.programId = @1;
+    
+    
+//    MassageRecord* m1 = [MassageRecord MR_createEntity];
+//    m1.date = @"2015-08-26";
+//    m1.state = 0;
+//    m1.useTime = [NSNumber numberWithInt:200];
+//    m1.name = @"运动恢复";
+//    m1.programId = @1;
+//    
+//    MassageRecord* m2 = [MassageRecord MR_createEntity];
+//    m2.date = @"2015-08-28";
+//    m2.state = 0;
+//    m2.useTime = [NSNumber numberWithInt:500];
+//    m2.name = @"工作减压";
+//    m2.programId = @4;
+//    
+//    MassageRecord* m3 = [MassageRecord MR_createEntity];
+//    m3.date = @"2015-08-30";
+//    m3.state = 0;
+//    m3.useTime = [NSNumber numberWithInt:100];
+//    m3.name = @"肩颈重点";
+//    m3.programId = @1;
+//    
+//    MassageRecord* m4 = [MassageRecord MR_createEntity];
+//    m4.date = @"2015-09-01";
+//    m4.state = 0;
+//    m4.useTime = [NSNumber numberWithInt:200];
+//    m4.name = @"腰椎舒缓";
+//    m4.programId = @6;
+//    
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 

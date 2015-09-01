@@ -56,7 +56,7 @@
     //查询今天的按摩记录，并计算出今日使用时间
     NSDate* date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
     NSString* todayIndex = [dateFormatter stringFromDate:date];
     NSArray* todayRecord = [MassageRecord MR_findByAttribute:@"date" withValue:todayIndex];
     _todayUseTime = 0;

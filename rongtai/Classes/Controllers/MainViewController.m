@@ -388,7 +388,7 @@
 					NSURLRequest *request = [NSURLRequest requestWithURL:url];
 					UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder"];
 					
-					__weak BasicTableViewCell *weakCell = self;
+					__weak BasicTableViewCell *weakCell = cell;
 					
 					[cell.imageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 						

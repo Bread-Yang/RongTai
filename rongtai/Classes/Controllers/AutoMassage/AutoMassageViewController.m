@@ -178,7 +178,7 @@
             
             //将开始按摩的日期转成字符串
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
             NSString* date = [dateFormatter stringFromDate:start];
 
             NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName];
@@ -219,10 +219,9 @@
                 //创建一条按摩记录
                 massageRecord = [MassageRecord MR_createEntity];
                 massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
-                massageRecord.massageName = _programName;
-                massageRecord.startTime = start;
-                massageRecord.endTime = end;
+                massageRecord.name = _programName;
                 massageRecord.date = date;
+                massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
             
             //按摩使用时长统计

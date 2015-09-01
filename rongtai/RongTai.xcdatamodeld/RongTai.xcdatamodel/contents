@@ -16,9 +16,9 @@
     </entity>
     <entity name="MassageRecord" representedClassName="MassageRecord" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="endTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="massageName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="programId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="useTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="MassageTime" representedClassName="MassageTime" syncable="YES">
@@ -68,7 +68,7 @@
     </entity>
     <elements>
         <element name="CustomProgram" positionX="0" positionY="0" width="128" height="223"/>
-        <element name="MassageRecord" positionX="9" positionY="99" width="128" height="118"/>
+        <element name="MassageRecord" positionX="9" positionY="99" width="128" height="120"/>
         <element name="MassageTime" positionX="36" positionY="117" width="128" height="105"/>
         <element name="Member" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ProgramCount" positionX="0" positionY="90" width="128" height="105"/>

@@ -66,7 +66,7 @@
     _xLineWidth = 1;
     _xUnitFont = [UIFont systemFontOfSize:14];
     _xValueFont = [UIFont systemFontOfSize:12];
-    _xValues = @[@"5.1",@"5.2",@"5.3",@"5.4",@"5.5",@"5.6"];
+    _xValues = @[@"5.1",@"5.2",@"5.3",@"5.4",@"5.5",@"5.6",@"5.7"];
     
     //-------- 对齐线
     _showXRuler = YES;
@@ -81,10 +81,11 @@
     NSValue* p1 = [NSValue valueWithCGPoint:CGPointMake(0, 30)];
     NSValue* p2 = [NSValue valueWithCGPoint:CGPointMake(20, 50)];
     NSValue* p3 = [NSValue valueWithCGPoint:CGPointMake(40, 100)];
-    NSValue* p4 = [NSValue valueWithCGPoint:CGPointMake(60, 10)];
+    NSValue* p4 = [NSValue valueWithCGPoint:CGPointMake(60, 0)];
     NSValue* p5 = [NSValue valueWithCGPoint:CGPointMake(80, 50)];
     NSValue* p6 = [NSValue valueWithCGPoint:CGPointMake(100, 30)];
-    _points = @[p1,p2,p3,p4,p5,p6];
+    NSValue* p7 = [NSValue valueWithCGPoint:CGPointMake(120, 60)];
+    _points = @[p1,p2,p3,p4,p5,p6,p7];
     _ySection = CGPointMake(0, 150);
     _xSection = CGPointMake(0, 120);
 }
@@ -118,17 +119,18 @@
     
     //  x轴数值
     if (_xValues.count > 0) {
-        CGFloat dit = (w-_lineLeftDit-_lineRightDit)/_xValues.count;
+
+        //x轴单位
+        if (_xUnit.length>0) {            
+            CGSize unitSize = JY_TEXT_SIZE(_xUnit, _xUnitFont);
+            JY_DRAW_TEXT_IN_RECT(_xUnit, CGRectMake(w-unitSize.width-1, _hScale*h+((1-_hScale)*h-unitSize.height)/2, unitSize.width, unitSize.height), _xUnitFont);
+        }
+        
+        CGFloat dit = (w-_lineRightDit-_lineLeftDit)/(_xValues.count-1);
         for (int i = 0; i<_xValues.count; i++) {
             NSString* value = _xValues[i];
             CGSize valueSize = JY_TEXT_SIZE(value, _xValueFont);
             JY_DRAW_TEXT_IN_RECT(value, CGRectMake(_lineLeftDit+dit*i-valueSize.width/2, _hScale*h+((1-_hScale)*h-valueSize.height)/2, valueSize.width, valueSize.height), _xValueFont);
-        }
-        
-        //x轴单位
-        if (_xUnit.length>0) {
-            CGSize unitSize = JY_TEXT_SIZE(_xUnit, _xUnitFont);
-            JY_DRAW_TEXT_IN_RECT(_xUnit, CGRectMake(w-unitSize.width-1, _hScale*h+((1-_hScale)*h-unitSize.height)/2, unitSize.width, unitSize.height), _xUnitFont);
         }
         
         //对齐线
