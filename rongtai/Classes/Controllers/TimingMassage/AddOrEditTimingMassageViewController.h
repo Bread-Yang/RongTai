@@ -16,7 +16,7 @@
 
 typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
-@interface AddOrEditTimingMassageViewController : UIViewController<UICollectionViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewDelegate, NAPickerViewDelegate>
+@interface AddOrEditTimingMassageViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewDelegate, NAPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *containView;
 

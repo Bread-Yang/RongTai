@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "RongTaiConstant.h"
 #import "MassageProgram.h"
+#import "MassageProgramRequest.h"
 
 @interface ProgramDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, RTBleConnectorDelegate> {
 	
@@ -67,49 +68,63 @@
 		_loadingHUD.labelText = @"读取中...";
 		[_loadingHUD show:YES];
 		
-		NSLog(@"请求成员");
-		NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+		MassageProgramRequest *request = [[MassageProgramRequest alloc] init];
 		
-		self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-		
-		NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMassage"];
-		
-		if (self.isDownloadCustomProgram) {
-//			requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadFavoriteMassage"];
-		}
-		
-		NSMutableDictionary *parmeters = [NSMutableDictionary new];
-		[parmeters setObject:uid forKey:@"uid"];
-		[parmeters setObject:[NSNumber numberWithInteger:0] forKey:@"index"];
-		[parmeters setObject:[NSNumber numberWithInteger:1000] forKey:@"size"];
-		
-		[self.httpRequestManager POST:requestURL parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		[request requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
 			
-			NSLog(@"获取程序下载列表 :%@",responseObject);
-			NSNumber *code = [responseObject objectForKey:@"responseCode"];
-			if ([code integerValue] == 200) {
-				[_loadingHUD hide:YES];
-				
-				NSMutableArray *arr = [NSMutableArray new];
-				
-				NSArray *result = [responseObject objectForKey:@"result"];
-				
-				for (NSDictionary *dic in result) {
-					MassageProgram *program = [[MassageProgram alloc] initWithJSON:dic];
-					[arr addObject:program];
-				}
-				
-				_programArray = [NSArray arrayWithArray:arr];
-				
-				[self.tableView reloadData];
-				
-				self.tableView.hidden = NO;
-			} else {
-				[_loadingHUD hide:YES];
-			}
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				[_loadingHUD hide:YES];
+			[_loadingHUD hide:YES];
+			
+			_programArray = [NSArray arrayWithArray:networkMassageProgramArray];
+			
+			[self.tableView reloadData];
+			
+			self.tableView.hidden = NO;
+			
+		} failure:^(NSArray *localMassageProgramArray) {
+			
+			[_loadingHUD hide:YES];
+			
 		}];
+		
+//		NSLog(@"请求成员");
+//		NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+//		
+//		self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//		
+//		NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMassage"];
+//		
+//		NSMutableDictionary *parmeters = [NSMutableDictionary new];
+//		[parmeters setObject:uid forKey:@"uid"];
+//		[parmeters setObject:[NSNumber numberWithInteger:0] forKey:@"index"];
+//		[parmeters setObject:[NSNumber numberWithInteger:1000] forKey:@"size"];
+//		
+//		[self.httpRequestManager POST:requestURL parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//			
+//			NSLog(@"获取程序下载列表 :%@",responseObject);
+//			NSNumber *code = [responseObject objectForKey:@"responseCode"];
+//			if ([code integerValue] == 200) {
+//				[_loadingHUD hide:YES];
+//				
+//				NSMutableArray *arr = [NSMutableArray new];
+//				
+//				NSArray *result = [responseObject objectForKey:@"result"];
+//				
+//				for (NSDictionary *dic in result) {
+//					MassageProgram *program = [[MassageProgram alloc] initWithJSON:dic];
+//					[arr addObject:program];
+//				}
+//				
+//				_programArray = [NSArray arrayWithArray:arr];
+//				
+//				[self.tableView reloadData];
+//				
+//				self.tableView.hidden = NO;
+//			} else {
+//				[_loadingHUD hide:YES];
+//			}
+//		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//				[_loadingHUD hide:YES];
+//		}];
 	} else {
 		NSLog(@"没网，本地记录读取成员");
 	}

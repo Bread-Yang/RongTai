@@ -12,7 +12,7 @@
 #import "ProcedureManageTableViewCell.h"
 #import "CoreData+MagicalRecord.h"
 #import "CustomProgram.h"
-#import "MassageRequest.h"
+#import "MassageProgramRequest.h"
 
 @interface ProcedureManageViewController ()<UITableViewDataSource, UITableViewDelegate, ProcedureManageTableViewCellDelegate,MassageRequestDelegate>
 {
@@ -65,7 +65,7 @@
     cp.programId = @27;
     cp.name = @"自定义程序1";
 
-    MassageRequest* m = [MassageRequest new];
+    MassageProgramRequest* m = [MassageProgramRequest new];
     m.delegate = self;
 //    [m addCustomProgram:cp Uid:@"1ee329f146104331852238be180a46b4"];
     [m requsetCustomProgramListByUid:@"1ee329f146104331852238be180a46b4" Index:0 Size:5];

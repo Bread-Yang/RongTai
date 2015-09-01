@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "SlideNavigationController.h"
-#import "MassageRequest.h"
+#import "MassageProgramRequest.h"
 #import "WLWeatherView.h"
 #import "MenuViewController.h"
 #import "CustomProcedureViewController.h"
@@ -31,12 +31,12 @@
 
 #import "ProgramCount.h"
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MassageRequestDelegate,UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
     NSMutableArray *_massageArr;
 	NSMutableDictionary *_networkMassageDic;
-    MassageRequest* _massageRequest;
+    MassageProgramRequest* _networkMassageProgramRequest;
 	NSArray *_modeNameArray;
     WLWeatherView* _weatherView;
     UITabBar* _menuBar;
@@ -113,13 +113,6 @@
     _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
 	
-    // 获取按摩程序列表
-	_networkMassageDic = [NSMutableDictionary new];
-    _massageRequest = [[MassageRequest alloc]init];
-    _massageRequest.delegate = self;
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    [_massageRequest requestMassageListByUid:uid Index:0 Size:100];
-	
 	_modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
 					   NSLocalizedString(@"舒展活络", nil),
 					   NSLocalizedString(@"休憩促眠", nil),
@@ -132,13 +125,17 @@
 					   NSLocalizedString(@"云养程序四", nil),];
 	
 	_massageArr = [NSMutableArray new];
-    for (int i = 0; i < [_modeNameArray count]; i++) {
-        MassageProgram *m = [MassageProgram new];
-        m.name = _modeNameArray[i];
-        m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
-        m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
-        [_massageArr addObject:m];
-    }
+	for (int i = 0; i < [_modeNameArray count]; i++) {
+		MassageProgram *m = [MassageProgram MR_createEntity];
+		m.name = _modeNameArray[i];
+		m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
+		m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
+		m.isLocalDummyData = @YES;
+		[_massageArr addObject:m];
+	}
+	
+    // 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
+	[self requestNetworkMassageProgram];
 
     _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
     _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
@@ -173,10 +170,39 @@
         //同步 定时计划 数据
         //app启动时要开始进行 定时计划的数据同步
         [self synchroTimingPlanLocalData:YES];
-        
-        //对 使用次数 数据进行同步
-        [self synchroUseTimeData];
+		
+		//对 使用次数 数据进行同步
+		[self synchroUseTimeData];
     }
+}
+
+#pragma mark - 请求网络按摩程序
+
+- (void)requestNetworkMassageProgram {
+	// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
+	_networkMassageDic = [NSMutableDictionary new];
+	_networkMassageProgramRequest = [[MassageProgramRequest alloc]init];
+	
+	[_networkMassageProgramRequest requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
+		
+		if (networkMassageProgramArray.count > 0) {
+			for (int i = 0; i < networkMassageProgramArray.count; i++) {
+				MassageProgram *massage = [networkMassageProgramArray objectAtIndex:i];
+				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
+			}
+			[_table reloadData];
+		}
+		
+	} failure:^(NSArray *localMassageProgramArray) {
+		
+		if (localMassageProgramArray.count > 0) {
+			for (int i = 0; i < localMassageProgramArray.count; i++) {
+				MassageProgram *massage = [localMassageProgramArray objectAtIndex:i];
+				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
+			}
+			[_table reloadData];
+		}
+	}];
 }
 
 #pragma mark - 同步使用次数数据
@@ -480,21 +506,6 @@
 	}
 }
 
-#pragma mark - massageRequest代理
--(void)massageRequestMassageListFinish:(BOOL)success Result:(NSDictionary *)dic {
-    if (success) {
-        NSArray *arr = [dic objectForKey:@"result"];
-        NSLog(@"用户下载列表:%@",arr);
-        if (arr.count > 0) {
-            for (int i = 0; i < arr.count; i++) {
-                MassageProgram *massage = [[MassageProgram alloc]initWithJSON:arr[i]];
-				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
-            }
-            [_table reloadData];
-        }
-    }
-}
-
 #pragma mark - 侧滑菜单代理
 -(BOOL)slideNavigationControllerShouldDisplayLeftMenu {
     return YES;
@@ -551,7 +562,7 @@
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
 //	NSLog(@"didUpdateNetworkMassageStatus");
-	[_table reloadData];
+	[self requestNetworkMassageProgram];
 }
 
 /*

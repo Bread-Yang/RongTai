@@ -79,7 +79,7 @@
 		3D9E89681B3968D8002E0962 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89641B3968D8002E0962 /* b27_icon_star_gray@2x.png */; };
 		3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */; };
 		3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9E89671B3968D8002E0962 /* CWStarRateView.m */; };
-		3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */; };
+		3D9EBAE21B3D2CC1000FD810 /* MassageProgramRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE11B3D2CC1000FD810 /* MassageProgramRequest.m */; };
 		3D9EBAE51B3D3893000FD810 /* MassageProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9EBAE41B3D3893000FD810 /* MassageProgram.m */; };
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
@@ -362,8 +362,8 @@
 		3D9E89651B3968D8002E0962 /* b27_icon_star_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b27_icon_star_yellow@2x.png"; sourceTree = "<group>"; };
 		3D9E89661B3968D8002E0962 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
 		3D9E89671B3968D8002E0962 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
-		3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageRequest.h; sourceTree = "<group>"; };
-		3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageRequest.m; sourceTree = "<group>"; };
+		3D9EBAE01B3D2CC1000FD810 /* MassageProgramRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageProgramRequest.h; sourceTree = "<group>"; };
+		3D9EBAE11B3D2CC1000FD810 /* MassageProgramRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageProgramRequest.m; sourceTree = "<group>"; };
 		3D9EBAE31B3D3893000FD810 /* MassageProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageProgram.h; sourceTree = "<group>"; };
 		3D9EBAE41B3D3893000FD810 /* MassageProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageProgram.m; sourceTree = "<group>"; };
 		3DA8D60F1B21B226002328DF /* WLDoughnut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLDoughnut.h; sourceTree = "<group>"; };
@@ -989,8 +989,8 @@
 			children = (
 				3D9EBAE31B3D3893000FD810 /* MassageProgram.h */,
 				3D9EBAE41B3D3893000FD810 /* MassageProgram.m */,
-				3D9EBAE01B3D2CC1000FD810 /* MassageRequest.h */,
-				3D9EBAE11B3D2CC1000FD810 /* MassageRequest.m */,
+				3D9EBAE01B3D2CC1000FD810 /* MassageProgramRequest.h */,
+				3D9EBAE11B3D2CC1000FD810 /* MassageProgramRequest.m */,
 			);
 			name = MassageRequest;
 			path = Model/MassageRequest;
@@ -1842,7 +1842,7 @@
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
 				3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */,
 				3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */,
-				3D9EBAE21B3D2CC1000FD810 /* MassageRequest.m in Sources */,
+				3D9EBAE21B3D2CC1000FD810 /* MassageProgramRequest.m in Sources */,
 				3D0258FA1B1D525E006C9179 /* UIView+Hierarchy.m in Sources */,
 				3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */,
 				56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */,

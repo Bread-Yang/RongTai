@@ -51,7 +51,6 @@
     //查询使用次数，并计算出总使用时间
     NSArray* counts = [ProgramCount MR_findAll];
     _totalTime = 0;
-
     
     //查询今天的按摩记录，并计算出今日使用时间
     NSDate* date = [NSDate date];
