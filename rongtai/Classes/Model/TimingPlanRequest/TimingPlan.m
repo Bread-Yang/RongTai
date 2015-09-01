@@ -174,9 +174,12 @@
     
     if (networkData.count>0) {
         //便利完成后，若网络数据还不为空，则需要新增数据
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        NSString* uid = [defaults objectForKey:@"uid"];
         for (int i = 0; i<networkData.count; i++) {
             TimingPlan* t = [TimingPlan MR_createEntity];
             [t setValueByJson:networkData[i]];
+            t.uid = uid;
             [t updateLocalNotification];
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         }

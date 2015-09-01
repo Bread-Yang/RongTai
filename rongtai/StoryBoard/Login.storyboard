@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1038,7 +1038,6 @@
                                 </state>
                                 <connections>
                                     <action selector="registerUser:" destination="bp3-x7-Kbp" eventType="touchUpInside" id="6Oa-AS-KM7"/>
-                                    <segue destination="50I-MR-sTY" kind="push" id="E6g-if-CkM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1059,8 +1058,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="注册" id="4KC-da-fhe"/>
                     <connections>
+                        <outlet property="_authCode" destination="PmG-7w-Wqh" id="nvP-dp-FXQ"/>
                         <outlet property="_password" destination="qDX-NN-t9d" id="ja2-jh-utr"/>
                         <outlet property="_phoneNum" destination="hnf-q5-gF0" id="UIN-n4-w8B"/>
+                        <outlet property="_registerBtn" destination="blZ-dO-yRU" id="UD5-Yg-w5h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SfY-oK-z6c" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1576,7 +1577,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lQ3-po-mxo">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQ3-po-mxo">
                                 <rect key="frame" x="0.0" y="64" width="600" height="266"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
@@ -1823,7 +1824,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekt-vL-LFR">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekt-vL-LFR">
                                 <rect key="frame" x="225" y="122" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

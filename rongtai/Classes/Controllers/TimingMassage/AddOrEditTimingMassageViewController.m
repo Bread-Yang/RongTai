@@ -20,6 +20,7 @@
 	BOOL isNotFirstInvokeDidLayoutSubviews;
 	TimingPlanRequest *_timingPlanRequest;
 	MBProgressHUD *_loadingHUD;
+    NSString* _uid;
 }
 
 @property (nonatomic, retain) NSArray *modeNameArray;
@@ -96,6 +97,9 @@
     
     //
     _timingPlanRequest = [TimingPlanRequest new];
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -217,6 +221,7 @@
 {
     __weak MBProgressHUD *weakHUB = _loadingHUD;
     __weak AddOrEditTimingMassageViewController *weakSelf = self;
+    self.timingPlan.uid = _uid;
     [_timingPlanRequest addTimingPlan:self.timingPlan success:^(NSUInteger timingPlanId) {
         NSLog(@"定时计划 添加成功");
         //网络添加成功，要改变数据状态为0

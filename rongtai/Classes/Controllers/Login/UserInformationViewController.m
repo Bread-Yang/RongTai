@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "MemberRequest.h"
 #import <UIButton+AFNetworking.h>
+#import "MainViewController.h"
 
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -296,7 +297,13 @@
 #pragma mark - 返回
 -(void)back
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_isRegister) {
+        [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - 编辑模式

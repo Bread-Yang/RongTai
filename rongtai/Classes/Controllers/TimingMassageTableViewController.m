@@ -22,7 +22,7 @@
 @interface TimingMassageTableViewController () <TimingPlanDelegate>{
     MBProgressHUD *_loadingHUD;
 	TimingPlanRequest *_timingPlanRequest;
-    
+    NSString* _uid;
 }
 
 @property (nonatomic, retain) NSMutableArray *timingMassageArray;
@@ -57,17 +57,14 @@
 	_timingPlanRequest = [TimingPlanRequest new];
 	_timingPlanRequest.overTime = 30;
 	_timingPlanRequest.delegate = self;
+    
+    //
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    _uid = [defaults objectForKey:@"uid"];
 }
                     
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-	
-    //清空本地通知
-//    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
-	
-//    NSLog(@"本地通知数量:%ld",number);
-//    NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
     
 	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
 	if (reachability.reachable) {
@@ -116,7 +113,7 @@
 {
     //查询去状态不是 未同步的删除 的所有数据
     NSLog(@"定时计划 读取本地数据");
-    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state < 3"]];
+    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
     self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
     [self.tableView reloadData];
 }
@@ -124,7 +121,7 @@
 #pragma mark - 同步本地数据
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue {
     if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
         if (plans.count > 0) {
             NSLog(@"同步中。。。");
             TimingPlan* plan = plans[0];

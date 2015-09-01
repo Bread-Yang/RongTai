@@ -58,6 +58,12 @@
 @property (nonatomic, retain) NSNumber *state;
 
 
+/**
+ *  用户uid
+ */
+@property (nonatomic, retain) NSString* uid;
+
+
 + (TimingPlan *)updateTimingPlanDB:(NSDictionary *)dic;
 
 - (void)setValueByJson:(NSDictionary *)json;
