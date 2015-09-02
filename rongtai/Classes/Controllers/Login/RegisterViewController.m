@@ -41,7 +41,7 @@
     _loginRequest.delegate = self;
 
     //验证码发送倒计时
-    _countTime = 30;
+    _countTime = 60;
     _canSend = YES;
 }
 
@@ -67,7 +67,7 @@
 {
     if (_countTime < 1) {
         [timer invalidate];
-        _countTime = 30;
+        _countTime = 60;
         _canSend = YES;
         _registerBtn.userInteractionEnabled = YES;
         [_registerBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
