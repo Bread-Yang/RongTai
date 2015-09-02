@@ -43,9 +43,9 @@
 		3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
-		3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */; };
 		3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FF1B2ACD2900F52352 /* MassageMode.m */; };
 		3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */; };
+		3D40EBE81B96AF3A000BCB2C /* userIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D40EBE71B96AF3A000BCB2C /* userIcon.png */; };
 		3D4873601B622993003D2C24 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48735F1B622993003D2C24 /* SMPageControl.m */; };
 		3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48BF1C1B53A72B004EE243 /* ChangeUserViewController.m */; };
 		3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4D1B591B8316DD00CFD151 /* AdjustView.m */; };
@@ -295,12 +295,12 @@
 		3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyCollectionViewCell.m; sourceTree = "<group>"; };
 		3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyManageViewController.h; sourceTree = "<group>"; };
 		3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FamilyManageViewController.m; sourceTree = "<group>"; };
-		3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = userIcon.jpg; sourceTree = "<group>"; };
 		3D2C82FE1B2ACD2900F52352 /* MassageMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageMode.h; sourceTree = "<group>"; };
 		3D2C82FF1B2ACD2900F52352 /* MassageMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageMode.m; sourceTree = "<group>"; };
 		3D2C83011B2AD90E00F52352 /* MassageModeENUM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MassageModeENUM.h; sourceTree = "<group>"; };
 		3D3E712D1B5F3DA900C47CD0 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		3D40EBE71B96AF3A000BCB2C /* userIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon.png; sourceTree = "<group>"; };
 		3D48735E1B622993003D2C24 /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
 		3D48735F1B622993003D2C24 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		3D48BF1B1B53A72B004EE243 /* ChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeUserViewController.h; sourceTree = "<group>"; };
@@ -816,7 +816,6 @@
 		3D2C82F21B2A93B400F52352 /* FamilyManage */ = {
 			isa = PBXGroup;
 			children = (
-				3D2C82FC1B2AB5BF00F52352 /* userIcon.jpg */,
 				3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */,
 				3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */,
 				3D2C82F61B2A946E00F52352 /* FamilyManageViewController.h */,
@@ -1046,6 +1045,7 @@
 		3DCD122C1B4148A700890164 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				3D40EBE71B96AF3A000BCB2C /* userIcon.png */,
 				3DB8DF521B82DDD90009F480 /* stopButtonBg.png */,
 				3DE3FFA81B4F79CA003F8AF7 /* bg.png */,
 				3DC790931B4272B00034C3C1 /* navBar.png */,
@@ -1755,6 +1755,7 @@
 				565E719F1B5E547200E51C1C /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				3DE3FFA91B4F79CA003F8AF7 /* bg.png in Resources */,
 				3DC790941B4272B00034C3C1 /* navBar.png in Resources */,
+				3D40EBE81B96AF3A000BCB2C /* userIcon.png in Resources */,
 				3D0B4C811B3ABBE100FF97C6 /* mini-snowrain@2x.png in Resources */,
 				3D908B021B68CCBB000F62A5 /* DS-DIGIB.TTF in Resources */,
 				3DCDF36C1B1FEB7400BA491E /* menu-button.png in Resources */,
@@ -1762,7 +1763,6 @@
 				3D0B4C7A1B3ABBE100FF97C6 /* mini-clouds@2x.png in Resources */,
 				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
-				3D2C82FD1B2AB5BF00F52352 /* userIcon.jpg in Resources */,
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				565E71961B5E547200E51C1C /* Resource.bundle in Resources */,
@@ -2109,6 +2109,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
@@ -2145,7 +2146,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William zhang (R285RFBPPH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xtreme Programming Group, Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",

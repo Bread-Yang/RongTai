@@ -27,11 +27,14 @@
 -(void)setValueBy:(NSDictionary *)dic
 {
     self.name = [dic objectForKey:@"name"];
-    self.sex = [dic objectForKey:@"sex"];
-    self.height = [dic objectForKey:@"height"];
+    NSString* str = [dic objectForKey:@"sex"];
+    self.sex = [NSNumber numberWithUnsignedInteger:[str integerValue]];
+    str = [dic objectForKey:@"height"];
+    self.height = [NSNumber numberWithUnsignedInteger:[str integerValue]];
     self.heightUnit = [dic objectForKey:@"heightUnit"];
     self.imageURL = [dic objectForKey:@"imageUrl"];
-    self.memberId = [dic objectForKey:@"memberId"];
+    str = [dic objectForKey:@"memberId"];
+    self.memberId = [NSNumber numberWithUnsignedInteger:[str integerValue]];
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString* d = [dic objectForKey:@"birthday"];
@@ -55,25 +58,45 @@
     return dic;
 }
 
-
-#pragma mark - 根据一条Member的Json数据更新数据库
-+(Member*)updateMemberDB:(NSDictionary*)dic
+#pragma mark - 根据网络数据来更新本地
++(void)updateLocalDataByNetworkData:(NSArray*)members
 {
-    NSString* mid = [dic valueForKey:@"memberId"];
-    NSNumber* memberId = [NSNumber numberWithInteger:[mid integerValue]];
-    NSArray* arr = [Member MR_findByAttribute:@"memberId" withValue:memberId];
-    Member* m;
-    if (arr.count == 0) {
-        m = [Member MR_createEntity];
+    NSMutableArray* mutMembers = [NSMutableArray arrayWithArray:members];
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    NSArray* localMembers = [Member MR_findByAttribute:@"uid" withValue:uid];
+    for (int i = 0; i<localMembers.count; i++) {
+        Member* m = localMembers[i];
+        NSNumber* mid = m.userId;
+        BOOL isExist = NO;
+        for (NSDictionary* dic in mutMembers) {
+            NSString* str = [dic objectForKey:@"memberId"];
+            if ([mid integerValue] == [str integerValue]) {
+                isExist = YES;
+                [m setValueBy:dic];
+                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                [mutMembers removeObjectAtIndex:i];
+                break;
+            }
+        }
+        
+        if (!isExist) {
+            //不存在这条记录则删除
+            [m MR_deleteEntity];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
     }
-    else
-    {
-        m = arr[0];
+    
+    if (mutMembers.count > 0) {
+        for (NSDictionary* dic in mutMembers) {
+            Member* m = [Member MR_createEntity];
+            [m setValueBy:dic];
+            m.uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        }
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
-    [m setValueBy:dic];
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-    return m;
 }
+
+
 
 
 @end

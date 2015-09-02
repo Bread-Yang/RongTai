@@ -18,9 +18,9 @@
 #import "MemberRequest.h"
 #import <UIButton+AFNetworking.h>
 #import "MainViewController.h"
+#import "UIBarButtonItem+goBack.h"
 
-
-@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
@@ -111,7 +111,7 @@
     _userIcon.layer.cornerRadius = 0.125*[UIScreen mainScreen].bounds.size.width;
     
     //默认头像
-    _userImage = [UIImage imageNamed:@"userIcon.jpg"];
+    _userImage = [UIImage imageNamed:@"userIcon"];
     [_userIcon setImage:_userImage forState:UIControlStateNormal];
     _userIcon.clipsToBounds = YES;
     _isNewImage = NO;
@@ -139,6 +139,9 @@
     
     //
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    
+    //
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -219,16 +222,10 @@
         __weak UserInformationViewController* uVC = self;
         if (_isEdit) {
             //编辑模式，执行删除
-            [_memberRequest deleteMember:_user success:^(id responseObject) {
-                [_user MR_deleteEntity];
-                [uVC showProgressHUDByString:NSLocalizedString(@"删除成员成功", nil)];
-                [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
-            } failure:^(id responseObject) {
-                [_loadingHUD hide:YES];
-                NSString* str = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"删除成员失败", nil),responseObject];
-                NSLog(@"%@",str);
-                [uVC showProgressHUDByString:str];
-            }];
+            
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"删除成员" message:@"确认删除该成员吗" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+            [alert show];
+            
         }
         else
         {
@@ -273,8 +270,14 @@
     [self saveMember];
     __weak UserInformationViewController* uVC = self;
     [_memberRequest addMember:_user success:^(NSString *memberId) {
-        int mid = [memberId intValue];
-        _user.memberId = [NSNumber numberWithInt:mid];
+        NSNumber* mid = [NSNumber numberWithInt:[memberId intValue]];
+        _user.memberId = mid;
+        
+        if (_isRegister) {
+            //是注册页面跳转过来的，在添加好用户信息后要设置当前用户的id
+            NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:mid forKey:@"currentMemberId"];
+        }
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
@@ -476,7 +479,7 @@
 
     UIImage* img;
     if ([_user.imageURL isEqualToString:@"default"] ) {
-        img = [UIImage imageNamed:@"userIcon.jpg"];
+        img = [UIImage imageNamed:@"userIcon"];
     }
     else
     {
@@ -508,6 +511,26 @@
 -(void)deleteUser:(id)sender {
     if([self.delegate respondsToSelector:@selector(deleteButtonClicked:WithIndex:)]) {
         [self.delegate deleteButtonClicked:_user WithIndex:_index];
+    }
+}
+
+#pragma mark - alertView代理
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString* btn = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([btn isEqualToString:@"是"]) {
+        __weak UserInformationViewController* uVC = self;
+        [_memberRequest deleteMember:_user success:^(id responseObject) {
+            [_user MR_deleteEntity];
+            [uVC showProgressHUDByString:NSLocalizedString(@"删除成员成功", nil)];
+            [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
+        } failure:^(id responseObject) {
+            [_loadingHUD hide:YES];
+            NSString* str = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"删除成员失败", nil),responseObject];
+            NSLog(@"%@",str);
+            [uVC showProgressHUDByString:str];
+        }];
+ 
     }
 }
 

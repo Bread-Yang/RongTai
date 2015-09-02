@@ -111,7 +111,7 @@
 -(void)requestTimeOut
 {
     if (_isTimeOut) {
-        NSLog(@"定时计划请求超时");
+        NSLog(@"数据中心请求超时");
         [self cancelRequest];
     }
 }

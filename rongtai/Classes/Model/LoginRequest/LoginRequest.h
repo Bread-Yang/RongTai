@@ -10,7 +10,6 @@
 
 @class LoginRequest;
 @protocol LoginRequestDelegate <NSObject>
-
 @optional
 
 /**
@@ -33,11 +32,21 @@
  */
 -(void)loginRequestThirdLoginFinished:(BOOL)success Result:(NSDictionary*)result;
 
+/**
+ *  超时调用
+ */
+-(void)requestTimeOut:(LoginRequest*)request;
+
 @end
 
 @interface LoginRequest : NSObject
 
 @property(nonatomic, weak)id<LoginRequestDelegate> delegate;
+
+/**
+ *  超时设置，若设置时间小于等于0，则不启用超时检测，默认为0
+ */
+@property(nonatomic)NSTimeInterval overTime;
 
 /**
  *  通过手机号码请求验证码

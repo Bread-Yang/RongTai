@@ -41,7 +41,8 @@
 {
     self.name = [dic objectForKey:@"name"];
     self.useCount = [dic objectForKey:@"count"];
-    self.programId = [dic objectForKey:@"programId"];
+    NSString* pId = [dic objectForKey:@"programId"];
+    self.programId = [NSNumber numberWithUnsignedInteger:[pId integerValue]];
 }
 
 #pragma mark - 统计次数数据同步

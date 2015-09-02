@@ -21,11 +21,11 @@
 {
     NSArray* _users;  //用户数据，数据从本地读取
     UITableView* _table;
-    NSInteger _selectIndex;
     CGFloat _rowHeight;
     AFNetworkReachabilityManager* _reachability;
-    MBProgressHUD *_hud;
     NSString* _uid;
+    MBProgressHUD* _loading;
+    NSNumber* _currentMemberId;
 }
 @end
 
@@ -44,15 +44,15 @@
     _table.delegate = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
-
-    _selectIndex = 0;
     
     //
-    _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    _hud.labelText = NSLocalizedString(@"读取中...", nil);
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loading];
     
     //
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    _currentMemberId = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentMemberId"];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -62,28 +62,24 @@
     _reachability = [AFNetworkReachabilityManager sharedManager];
     if (_reachability.reachable) {
         //网络请求
-       
-        [_hud show:YES];
+        [_loading show:YES];
         
         NSLog(@"请求成员");
-        NSMutableArray* arr = [NSMutableArray new];
         MemberRequest* mr = [MemberRequest new];
         mr.overTime = 30;
         mr.delegate = self;
         [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
-            for (NSDictionary* dic in members) {
-                Member* m = [Member updateMemberDB:dic];
-                [arr addObject:m];
-            }
-            _users = [NSArray arrayWithArray:arr];
+            [Member updateLocalDataByNetworkData:members];
+            
+            _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_table reloadData];
-            [_hud hide:YES];
+            [_loading hide:YES];
             
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
             _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_table reloadData];
-            [_hud hide:YES];
+            [_loading hide:YES];
         }];
     }
     else
@@ -97,7 +93,7 @@
 #pragma mark - MemberRequest
 -(void)requestTimeOut:(MemberRequest *)request
 {
-    [_hud hide:YES];
+    [_loading hide:YES];
     
     MBProgressHUD *alert = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     alert.mode = MBProgressHUDModeText;
@@ -134,9 +130,12 @@
     Member* m = _users[indexPath.row];
     cell.textLabel.text = m.name;
     cell.textLabel.textColor = BLACK;
+    if (m.memberId == _currentMemberId) {
+        cell.accessoryView = [self selectedView];
+    }
     if ([m.imageURL isEqualToString:@"default"]) {
         //空的用默认头像
-        cell.imageView.image = [UIImage imageNamed:@"userIcon.jpg"];
+        cell.imageView.image = [UIImage imageNamed:@"userIcon"];
     }
     else
     {
@@ -159,10 +158,6 @@
         }
         
     }
-    
-    if (indexPath.row == _selectIndex) {
-        cell.accessoryView = [self selectedView];
-    }
     return cell;
 }
 
@@ -173,9 +168,12 @@
     }
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryView = [self selectedView];
-    if ([self.delegate respondsToSelector:@selector(changeUser:)]) {
-        [self.delegate changeUser:cell.imageView.image];
-    }
+
+    //更改当前用户mid
+    Member* m = _users[indexPath.row];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:m.memberId forKey:@"currentMemberId"];
+    NSLog(@"切换用户:%@",m.name);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

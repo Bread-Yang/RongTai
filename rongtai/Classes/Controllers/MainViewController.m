@@ -29,6 +29,7 @@
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
 #import "ProgramCount.h"
+#import "MBProgressHUD.h"
 
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
@@ -44,6 +45,8 @@
 	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
     NSUInteger _vcCount;
     UIBarButtonItem* _leftBtn;
+    NSString* _userImageUrl; //导航栏左边按钮，即用户头像的链接
+    UIImageView* imView;
 }
 @end
 
@@ -61,13 +64,27 @@
     }
 	
 	[_table reloadData];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSString* mid = [defaults objectForKey:@"currentMemberId"];
+    NSString* uid = [defaults objectForKey:@"uid"];
+    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",uid, mid]];
+    if (arr.count > 0) {
+        Member* m = arr[0];
+        [self changeUser:m.imageURL];
+        NSLog(@"有用户:%@",m.name);
+    }
+    else
+    {
+        NSLog(@"找不到用户");
+        [self changeUser:nil];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
 	self.isListenBluetoothStatus = YES;
-
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     _vcCount = self.navigationController.viewControllers.count;
 //     NSLog(@"VC:%ld",_vcCount);
@@ -91,7 +108,7 @@
     //菜单按钮
     _leftBtn = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
     UIButton* image = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
-    [image setImage:[UIImage imageNamed:@"userIcon.jpg"] forState:UIControlStateNormal];
+    [image setImage:[UIImage imageNamed:@"userIcon"] forState:UIControlStateNormal];
     [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
     image.layer.cornerRadius = 17;
     _leftBtn.customView = image;
@@ -105,7 +122,7 @@
     slideNav.view.layer.shadowRadius = 10;
     
 
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
     _table.backgroundColor = [UIColor clearColor];
@@ -138,8 +155,10 @@
     // 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 	[self requestNetworkMassageProgram];
 
-    _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49, SCREENWIDTH, 49)];
+    _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-64-49, SCREENWIDTH, 49)];
     _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
+    _menuBar.translucent = NO;
+    [_menuBar setBackgroundColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
     _menuBar.tintColor = [UIColor whiteColor];
     UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"负离子", nil) image:[UIImage imageNamed:@"icon_set"] tag:0];
     UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"手动", nil) image:[UIImage imageNamed:@"icon_hand"] tag:1];
@@ -175,6 +194,8 @@
 		//对 使用次数 数据进行同步
 		[self synchroUseTimeData];
     }
+    
+    imView = [UIImageView new];
 }
 
 #pragma mark - 请求网络按摩程序
@@ -448,18 +469,17 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-//		[reconnectDialog show];
-//		return;
-//	}
     
-    //测试用*
-//    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//    AutoMassageViewController* vc = [s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-//    [self.navigationController pushViewController:vc animated:YES];
-//    return;
-    //*
-
+//    if (![RTBleConnector isBleTurnOn]) {
+//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"蓝牙未打开" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+//        [alert show];
+//    }
+    
+	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+        NSLog(@"连接设备为空");
+		[reconnectDialog show];
+		return;
+	}
     
 	switch (indexPath.row) {
 			
@@ -561,11 +581,60 @@
 	}
 }
 
+
 #pragma mark - 切换用户代理
--(void)changeUser:(UIImage *)image
+-(void)changeUser:(NSString *)imageUrl
 {
     UIButton* btn = (UIButton*)_leftBtn.customView;
-    [btn setImage:image forState:UIControlStateNormal];
+    if ([imageUrl isEqualToString:@"default"]||imageUrl.length < 1) {
+        NSLog(@"头像链接为默认");
+        //空的用默认头像
+        [btn setImage:[UIImage imageNamed:@"userIcon"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        NSLog(@"读取头像");
+        //先使用本地图片，若本地读不到图片则使用网络请求
+        UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",imageUrl]];
+        //网络请求
+        if (!img) {
+            NSLog(@"网络读取头像");
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://recipe.xtremeprog.com/file/g/%@",imageUrl]];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+//            UIImageView* imView = [UIImageView new];
+            [imView setImageWithURLRequest:request
+                                 placeholderImage:placeholderImage
+                                          success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                              NSLog(@"网络读取成功");
+                                              UIButton* btn = (UIButton*)_leftBtn.customView;
+                                              [image saveImageByName:[NSString stringWithFormat:@"%@.jpg",imageUrl]];
+                                              [btn setImage:image forState:UIControlStateNormal];
+                                              
+                                          } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error)
+             {
+                 NSLog(@"网络头像读取失败");
+                 //头像读取失败
+                 [btn setImage:[UIImage imageNamed:@"userIcon"] forState:UIControlStateNormal];
+                 [self showProgressHUDByString:@"头像下载失败，请检测网络"];
+             }];
+        }
+        else
+        {
+            [btn setImage:img forState:UIControlStateNormal];
+        }
+    }
+}
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {

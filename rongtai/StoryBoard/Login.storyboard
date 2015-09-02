@@ -50,7 +50,7 @@
                                     <constraint firstAttribute="width" secondItem="uy7-e7-eTh" secondAttribute="height" multiplier="267:46" id="UXT-9W-Ype"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
                                         <color key="value" red="0.61176470588235299" green="0.6588235294117647" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,7 +77,6 @@
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="registerUser:" destination="vVx-O2-RpR" eventType="touchUpInside" id="YOp-ri-Krs"/>
                                     <segue destination="bp3-x7-Kbp" kind="push" id="nQe-Rp-Wjc"/>
                                 </connections>
                             </button>
@@ -1610,7 +1609,7 @@
                                             <constraint firstAttribute="centerX" secondItem="ks1-S7-IHw" secondAttribute="centerX" id="X3K-bv-duk"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mOS-9x-cW7">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="黄晓明" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mOS-9x-cW7">
                                         <rect key="frame" x="104" y="11" width="480" height="32"/>
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>

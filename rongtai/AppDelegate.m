@@ -85,6 +85,9 @@
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setTintColor:[UIColor whiteColor]];
+//    [slide.navigationBar setBarTintColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
+    slide.navigationBar.translucent = NO;
+//    [slide.navigationBar setBackgroundColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
     
     return YES;

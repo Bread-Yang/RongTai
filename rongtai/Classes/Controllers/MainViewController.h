@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
-#import "ChangeUserViewController.h"
 
-@interface MainViewController : BasicViewController<ChangeUserViewControllerDelegate>
+@interface MainViewController : BasicViewController
 
 @end

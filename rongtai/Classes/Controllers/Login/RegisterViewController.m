@@ -69,11 +69,15 @@
         [timer invalidate];
         _countTime = 30;
         _canSend = YES;
+        _registerBtn.userInteractionEnabled = YES;
         [_registerBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_registerBtn setBackgroundImage:[UIImage imageNamed:@"register_button"] forState:UIControlStateNormal];
     }
     else
     {
+        _registerBtn.userInteractionEnabled = NO;
         [_registerBtn setTitle:[NSString stringWithFormat:@"%lds后可重发",_countTime] forState:UIControlStateNormal];
+        [_registerBtn setBackgroundImage:[UIImage imageNamed:@"register_button_gray"] forState:UIControlStateNormal];
         _countTime--;
     }
 }
@@ -88,7 +92,6 @@
 
         if ([self checkPhoneNum]) {
             _canSend = NO;
-            [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countTimeToSendAuthCode:) userInfo:nil repeats:YES];
             [_loginRequest requestAuthCodeByPhone:phone];
         }
         else
@@ -118,12 +121,16 @@
 {
     if (success) {
         //验证码发送成功
+        NSLog(@"验证码发送成功");
         [self showProgressHUDByString:@"验证码发送成功"];
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countTimeToSendAuthCode:) userInfo:nil repeats:YES];
     }
     else
     {
         //验证码发送失败
+        NSLog(@"验证码发送失败");
         [self showProgressHUDByString:@"验证码发送失败"];
+        _canSend = YES;
     }
 }
 
@@ -152,14 +159,14 @@
         NSString* code = _authCode.text;
         code = [code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (code.length > 0) {
-            if (_password.text.length > 0) {
+            if (_password.text.length > 5 && _password.text.length < 19) {
                 NSString* phone = _phoneNum.text;
                 phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
             }
             else
             {
-                [self showProgressHUDByString:@"密码长度必须大于0"];
+                [self showProgressHUDByString:@"请输入6-18位密码"];
             }
         }
         else

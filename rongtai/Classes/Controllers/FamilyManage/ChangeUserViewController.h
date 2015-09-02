@@ -9,15 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
-@protocol ChangeUserViewControllerDelegate <NSObject>
-
-@optional
--(void)changeUser:(UIImage*)image;
-
-@end
-
 @interface ChangeUserViewController : BasicViewController
-
-@property(nonatomic, weak) id<ChangeUserViewControllerDelegate> delegate;
 
 @end
