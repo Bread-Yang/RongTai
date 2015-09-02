@@ -33,6 +33,11 @@
  */
 @property (nonatomic, retain) NSNumber * unUpdateCount;
 
+/**
+ *  用户uid
+ */
+@property (nonatomic, retain) NSString* uid;
+
 
 /**
  *  统计次数数据同步

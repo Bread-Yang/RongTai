@@ -21,6 +21,7 @@
 @dynamic status;
 @dynamic userId;
 @dynamic memberId;
+@dynamic uid;
 
 #pragma mark - 根据字典来设置Member
 -(void)setValueBy:(NSDictionary *)dic

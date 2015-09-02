@@ -60,6 +60,11 @@
 @property (nonatomic, retain) NSNumber* memberId;
 
 /**
+ *  用户uid
+ */
+@property (nonatomic, retain) NSString* uid;
+
+/**
  *  根据字典来设置Member
  */
 -(void)setValueBy:(NSDictionary*)dic;

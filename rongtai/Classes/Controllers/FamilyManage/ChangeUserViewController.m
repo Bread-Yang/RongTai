@@ -25,6 +25,7 @@
     CGFloat _rowHeight;
     AFNetworkReachabilityManager* _reachability;
     MBProgressHUD *_hud;
+    NSString* _uid;
 }
 @end
 
@@ -49,6 +50,9 @@
     //
     _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     _hud.labelText = NSLocalizedString(@"读取中...", nil);
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -77,7 +81,7 @@
             
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
-            _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+            _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_table reloadData];
             [_hud hide:YES];
         }];
@@ -85,7 +89,7 @@
     else
     {
         NSLog(@"没网，本地记录读取成员");
-        _users = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+        _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
         [_table reloadData];
     }
 }
@@ -156,7 +160,6 @@
         
     }
     
-    
     if (indexPath.row == _selectIndex) {
         cell.accessoryView = [self selectedView];
     }
@@ -170,6 +173,9 @@
     }
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryView = [self selectedView];
+    if ([self.delegate respondsToSelector:@selector(changeUser:)]) {
+        [self.delegate changeUser:cell.imageView.image];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

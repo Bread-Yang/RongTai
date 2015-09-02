@@ -28,8 +28,8 @@
 #import "MemberRequest.h"
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
-
 #import "ProgramCount.h"
+
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
@@ -43,6 +43,7 @@
 	CustomIOSAlertView *reconnectDialog;
 	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
     NSUInteger _vcCount;
+    UIBarButtonItem* _leftBtn;
 }
 @end
 
@@ -88,14 +89,14 @@
     }
     
     //菜单按钮
-    UIBarButtonItem* left = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
+    _leftBtn = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(slideMenuAppear:)];
     UIButton* image = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 34, 34)];
     [image setImage:[UIImage imageNamed:@"userIcon.jpg"] forState:UIControlStateNormal];
     [image addTarget:self action:@selector(slideMenuAppear:) forControlEvents:UIControlEventTouchUpInside];
     image.layer.cornerRadius = 17;
-    left.customView = image;
+    _leftBtn.customView = image;
     image.clipsToBounds = YES;
-    slideNav.leftBarButtonItem = left;
+    slideNav.leftBarButtonItem = _leftBtn;
     
     //侧滑菜单
     slideNav.view.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.35].CGColor;
@@ -558,6 +559,13 @@
 				
 			}
 	}
+}
+
+#pragma mark - 切换用户代理
+-(void)changeUser:(UIImage *)image
+{
+    UIButton* btn = (UIButton*)_leftBtn.customView;
+    [btn setImage:image forState:UIControlStateNormal];
 }
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {

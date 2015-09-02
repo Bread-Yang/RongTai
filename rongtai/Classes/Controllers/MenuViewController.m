@@ -18,6 +18,7 @@
 #import "ChangeUserViewController.h"
 #import "RTBleConnector.h"
 #import "AppDelegate.h"
+#import "MainViewController.h"
 
 //测试
 #import "FinishMassageViewController.h"
@@ -172,6 +173,14 @@
     if (indexPath.row == 0) {
         //切换用户
         ChangeUserViewController* cVC = [ChangeUserViewController new];
+        
+        NSArray* vcs = self.navigationController.viewControllers;
+        for (UIViewController* vc in vcs) {
+            if ([vc isKindOfClass:[MainViewController class]]) {
+                MainViewController* main = (MainViewController*)vc;
+                cVC.delegate = main;
+            }
+        }
         [sl pushViewController:cVC animated:YES];
     }
     else if (indexPath.row == 1) {

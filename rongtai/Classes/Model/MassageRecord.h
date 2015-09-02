@@ -37,5 +37,10 @@
  */
 @property (nonatomic, retain) NSNumber* state;
 
+/**
+ *  用户id
+ */
+@property (nonatomic, retain) NSString* uid;
+
 
 @end

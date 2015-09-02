@@ -17,6 +17,7 @@
 @dynamic name;
 @dynamic useCount;
 @dynamic unUpdateCount;
+@dynamic uid;
 
 #pragma mark - 对象转换为字典
 -(NSDictionary*)toDictionary
@@ -68,6 +69,7 @@
             //本地不存在这样的数据记录，则需要生成一条新数据
             if (!isExist) {
                 ProgramCount* new = [ProgramCount MR_createEntity];
+                new.uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
                 [new setValueByDictionary:dic];
             }
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];

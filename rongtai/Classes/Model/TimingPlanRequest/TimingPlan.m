@@ -19,6 +19,7 @@
 @dynamic massageName;
 @dynamic ptime;
 @dynamic state;
+@dynamic uid;
 
 - (void)setValueByJson:(NSDictionary *)json {
 	self.planId = [NSNumber numberWithInteger:[[json objectForKey:@"planId"] integerValue]];

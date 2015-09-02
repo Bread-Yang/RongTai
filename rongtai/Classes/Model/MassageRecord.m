@@ -16,5 +16,6 @@
 @dynamic programId;
 @dynamic date;
 @dynamic state;
+@dynamic uid;
 
 @end

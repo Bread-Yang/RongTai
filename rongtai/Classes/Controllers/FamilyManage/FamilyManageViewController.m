@@ -28,6 +28,7 @@
     AFNetworkReachabilityManager* _reachability;
     MBProgressHUD* _loading;
     MemberRequest* _mr;
+    NSString* _uid;
 }
 
 @property(nonatomic, strong) NSArray *memberArray;
@@ -82,6 +83,9 @@
     _mr = [MemberRequest new];
     _mr.overTime = 30;
     _mr.delegate = self;
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     // Do any additional setup after loading the view.
 }
 
@@ -108,7 +112,7 @@
 
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
-            _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+            _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_collectView reloadData];
             [_loading hide:YES];
         }];
@@ -116,7 +120,7 @@
     else
     {
         NSLog(@"没网，本地记录读取成员");
-        _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+        _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
         [_collectView reloadData];
     }
 }

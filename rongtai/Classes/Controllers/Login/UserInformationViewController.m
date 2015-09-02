@@ -59,6 +59,8 @@
     MemberRequest* _memberRequest;
     
     NSDictionary* _tmp;
+    
+    NSString* _uid;
 }
 @end
 
@@ -134,6 +136,9 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     _loadingHUD = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
     [appDelegate.window addSubview:_loadingHUD];
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -409,6 +414,7 @@
 #pragma mark - 数据保存到对象中
 -(void)saveMember
 {
+    _user.uid = _uid;
     _user.name = [_name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     _user.sex = [NSNumber numberWithInteger:_sexSegmentView.selectIndex];
     _user.height = [NSNumber numberWithFloat:[_height.text floatValue]];

@@ -27,6 +27,7 @@
     UILabel* _titleLabel;  //标签
     NSUInteger _totalTime;  //总使用时长
     NSUInteger _todayUseTime;  //今日使用时长
+    NSString* _uid;
 }
 
 @end
@@ -47,9 +48,10 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     
     //查询使用次数，并计算出总使用时间
-    NSArray* counts = [ProgramCount MR_findAll];
+    NSArray* counts = [ProgramCount MR_findByAttribute:@"uid" withValue:_uid];
     _totalTime = 0;
     
     //查询今天的按摩记录，并计算出今日使用时间
@@ -57,7 +59,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY-MM-dd"];
     NSString* todayIndex = [dateFormatter stringFromDate:date];
-    NSArray* todayRecord = [MassageRecord MR_findByAttribute:@"date" withValue:todayIndex];
+    NSArray* todayRecord = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(date == %@) AND (uid == %@)",todayIndex,_uid]];
     _todayUseTime = 0;
     for (int i = 0; i<todayRecord.count;i++) {
         MassageRecord* m = todayRecord[i];
