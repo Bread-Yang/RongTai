@@ -326,7 +326,7 @@
     //保存按钮
     CGFloat h = MIN(SCREENHEIGHT*0.2*0.45, 44);
     CGFloat w = h*2.8;
-    UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, SCREENHEIGHT - h*1.05, w, h*0.8)];
+    UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, SCREENHEIGHT - h*1.05-64, w, h*0.8)];
     [saveBtn setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [saveBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonClicked) forControlEvents:UIControlEventTouchUpInside];

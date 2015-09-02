@@ -168,6 +168,8 @@
     _menuBar.selectedItem = item1;
     _menuBar.delegate = self;
     [self.view addSubview:_menuBar];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 	
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
 	reconnectDialog.isReconnectDialog = YES;

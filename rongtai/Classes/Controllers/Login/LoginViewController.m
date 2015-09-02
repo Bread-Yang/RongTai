@@ -59,6 +59,9 @@
     [silder.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     //MBProgressHUD
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"登录中...", nil);

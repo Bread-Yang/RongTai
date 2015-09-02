@@ -60,7 +60,7 @@
     flowLayout.minimumInteritemSpacing = _matgin;
     flowLayout.minimumLineSpacing = _matgin;
     
-    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30+64, width*0.8, height -64-30) collectionViewLayout:flowLayout];
+    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
     _collectView.backgroundColor = [UIColor clearColor];
     [_collectView registerClass:[FamilyCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     _collectView.dataSource = self;
