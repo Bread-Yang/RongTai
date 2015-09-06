@@ -128,9 +128,7 @@
 		[ud setObject:uid forKey:@"uid"];
 		//		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 		
-		[self.navigationController presentViewController:[MainViewController new] animated:YES completion:^{
-			
-		}];
+		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 	}
 }
 
