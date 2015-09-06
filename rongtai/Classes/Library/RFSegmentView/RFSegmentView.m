@@ -307,9 +307,9 @@
     }
     currentItem.isSelected = YES;
     
-    if (_delegate && [_delegate respondsToSelector:@selector(segmentViewSelectIndex:)])
+    if (_delegate && [_delegate respondsToSelector:@selector(segmentView:SelectIndex:)])
     {
-        [_delegate segmentViewSelectIndex:index];
+        [_delegate segmentView:self SelectIndex:index];
     }
 }
 

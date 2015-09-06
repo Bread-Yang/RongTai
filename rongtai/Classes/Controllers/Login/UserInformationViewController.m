@@ -20,7 +20,7 @@
 #import "MainViewController.h"
 #import "UIBarButtonItem+goBack.h"
 
-@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
+@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, RFSegmentViewDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
@@ -37,6 +37,8 @@
 	
 	UIDatePicker *_birthdayDatePicker;
     NSMutableArray* _heightArr;  //身高数组
+    
+    UIPickerView* _heightPicker;
     
     __weak IBOutlet UIView *_middleView;
     CGFloat _index; //记住编辑时传入的Index
@@ -61,6 +63,8 @@
     NSDictionary* _tmp;
     
     NSString* _uid;
+    
+    NSUInteger _heightUnitSelectedIndex;
 }
 @end
 
@@ -75,9 +79,9 @@
     //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
     [_middleView bringSubviewToFront:_birthday];
     
-    //身高数组：范围为100~250cm
+    //身高数组：范围为140~300cm
     _heightArr = [NSMutableArray new];
-    for (int i = 100; i < 250; i++) {
+    for (int i = 140; i < 301; i++) {
         [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
     }
     
@@ -86,20 +90,21 @@
     //改写_hegiht的键盘为身高选择器
     UIView* inputView = [[UIView alloc]initWithFrame:f];
     inputView.backgroundColor = [UIColor whiteColor];
-    UIPickerView* heightPicker = [[UIPickerView alloc]initWithFrame:f];
-    heightPicker.dataSource = self;
-    heightPicker.delegate = self;
-    [heightPicker selectRow:_heightArr.count/2 inComponent:0 animated:NO];
-    heightPicker.tag = 1001;
-    [inputView addSubview:heightPicker];
+    _heightPicker = [[UIPickerView alloc]initWithFrame:f];
+    _heightPicker.dataSource = self;
+    _heightPicker.delegate = self;
+    [_heightPicker selectRow:(174-140) inComponent:0 animated:NO];
+    _heightPicker.tag = 1001;
+    [inputView addSubview:_heightPicker];
     _height.inputView = inputView;
-    _height.text = _heightArr[_heightArr.count/2];
+    _height.text = _heightArr[174-140];
     
     //改写_birthday的键盘为年月选择器
     UIView* inputView2 = [[UIView alloc]initWithFrame:f];
     inputView2.backgroundColor = [UIColor whiteColor];
     _birthdayDatePicker = [[UIDatePicker alloc] initWithFrame:f];
 	_birthdayDatePicker.datePickerMode = UIDatePickerModeDate;
+    _birthdayDatePicker.date = [NSDate dateWithTimeIntervalSince1970:3652*24*3600];
 	[_birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[inputView2 addSubview:_birthdayDatePicker];
     _birthday.inputView = inputView2;
@@ -124,13 +129,20 @@
     
     //性别选择
     _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
+    _sexSegmentView.tag = 3201;
     [_sexSegmentView setItems:@[NSLocalizedString(@"男", nil),NSLocalizedString(@"女", nil)]];
+    _sexSegmentView.delegate = self;
     [_sexView addSubview:_sexSegmentView];
     
     //身高单位选择
     _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
-    [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"unit", nil)]];
+    _heightUnitSegmentView.tag = 3202;
+    [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"inch", nil)]];
+    _heightUnitSegmentView.delegate = self;
     [_heightUintView addSubview:_heightUnitSegmentView];
+    
+    //
+    _heightUnitSelectedIndex = 0;
     
     //
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
@@ -471,6 +483,7 @@
     } else {
         _heightUnitSegmentView.selectIndex = 1;
     }
+    _heightUnitSelectedIndex = _heightUnitSegmentView.selectIndex;
     _birthdayDatePicker.date = _user.birthday;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy/MM/dd"];
@@ -533,6 +546,84 @@
  
     }
 }
+
+#pragma mark - RFSegmentView代理
+-(void)segmentView:(RFSegmentView*)segmentView SelectIndex:(NSInteger)index
+{
+    if (segmentView.tag == 3201) {
+        //性别选项改变时，需要改变身高的默认值
+        if (index == 0) {
+            //男
+            if (_heightUnitSegmentView.selectIndex == 0) {
+                [_heightPicker selectRow:(174-140) inComponent:0 animated:NO];
+            }
+            else
+            {
+                [_heightPicker selectRow:(69-55) inComponent:0 animated:NO];
+            }
+        }
+        else
+        {
+            //女
+            if (_heightUnitSegmentView.selectIndex == 0) {
+                [_heightPicker selectRow:(160-140) inComponent:0 animated:NO];
+            }
+            else
+            {
+                [_heightPicker selectRow:(63-55) inComponent:0 animated:NO];
+            }
+        }
+         _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+    }
+    else if (segmentView.tag == 3202)
+    {
+        if (index != _heightUnitSelectedIndex) {
+            //单位改变时，身高数值要改变
+            _heightUnitSelectedIndex = index;
+            NSUInteger selectedInedx = [_heightPicker selectedRowInComponent:0];
+            if (index == 0) {
+                //cm
+                _heightArr = [NSMutableArray new];
+                for (int i = 140; i < 301; i++) {
+                    [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
+                }
+                [_heightPicker reloadAllComponents];
+                int index = (int)round((55+selectedInedx)*2.54);
+                if (index<140) {
+                    index = 140;
+                }
+                else if (index>300)
+                {
+                    index = 300;
+                }
+                [_heightPicker selectRow:(index-140) inComponent:0 animated:NO];
+                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+            }
+            else
+            {
+                //inch
+                _heightArr = [NSMutableArray new];
+                for (int i = 55; i < 119; i++) {
+                    [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
+                }
+                [_heightPicker reloadAllComponents];
+                int index = (int)round((140+selectedInedx)/2.54);
+                if (index<55) {
+                    index = 55;
+                }
+                else if (index>119)
+                {
+                    index = 119;
+                }
+                [_heightPicker selectRow:(index-55) inComponent:0 animated:NO];
+                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+            }
+        }
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

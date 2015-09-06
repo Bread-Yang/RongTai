@@ -116,8 +116,8 @@
         [cell addLineBorder];
         cell.isHiddenDougnut = NO;
         cell.countLabel.font = _font;
-        cell.doughnut.finishColor = _colors[indexPath.row/2];
-        [cell.countLabel setNumebrByFont:_font Color:_colors[indexPath.row/2]];
+        cell.doughnut.finishColor = _colors[(indexPath.row/2)%3];
+        [cell.countLabel setNumebrByFont:_font Color:_colors[(indexPath.row/2)%3]];
     }
     else
     {

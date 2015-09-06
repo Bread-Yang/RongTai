@@ -229,6 +229,7 @@
                 massageRecord.date = date;
                 massageRecord.uid = _uid;
                 massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+                
             }
             
             //按摩使用时长统计

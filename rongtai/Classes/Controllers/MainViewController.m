@@ -47,6 +47,7 @@
     UIBarButtonItem* _leftBtn;
     NSString* _userImageUrl; //导航栏左边按钮，即用户头像的链接
     UIImageView* imView;
+    NSString* _uid;
 }
 @end
 
@@ -67,8 +68,7 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSString* mid = [defaults objectForKey:@"currentMemberId"];
-    NSString* uid = [defaults objectForKey:@"uid"];
-    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",uid, mid]];
+    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",_uid, mid]];
     if (arr.count > 0) {
         Member* m = arr[0];
         [self changeUser:m.imageURL];
@@ -96,8 +96,11 @@
     MenuViewController* menu = (MenuViewController*)slideNav.leftMenu;
     menu.delegate = self;
     
-    //天气预报
+    //
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    _uid = [defaults objectForKey:@"uid"];
+    
+    //天气预报
     NSNumber* loadWeather = [defaults valueForKey:@"weather"];
     if ([loadWeather boolValue]) {
         _weatherView = [[WLWeatherView alloc]initWithFrame:CGRectMake(0, 0, 90, 44)];
@@ -241,7 +244,7 @@
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue
 {
     if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",_uid]];
         if (plans.count>0) {
             TimingPlan* plan = plans[0];
             NSInteger state = [plan.state integerValue];

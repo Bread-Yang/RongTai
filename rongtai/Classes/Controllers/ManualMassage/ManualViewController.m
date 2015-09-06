@@ -187,6 +187,9 @@
     
     //按摩调节View出现
     [[AdjustView shareView] show];
+    
+    //
+    [self updateUI];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {

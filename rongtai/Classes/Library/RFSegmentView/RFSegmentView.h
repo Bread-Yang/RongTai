@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RFSegmentView;
 @protocol RFSegmentViewDelegate <NSObject>
-- (void)segmentViewSelectIndex:(NSInteger)index;
+- (void)segmentView:(RFSegmentView*)segmentView SelectIndex:(NSInteger)index;
 @end
 
 @interface RFSegmentView : UIView

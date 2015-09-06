@@ -21,6 +21,7 @@
     NSUInteger _countTime;
     __weak IBOutlet UIButton *_registerBtn; //注册按钮
     BOOL _canSend;
+     MBProgressHUD* _loading;
 }
 @end
 
@@ -39,10 +40,16 @@
     
     _loginRequest = [LoginRequest new];
     _loginRequest.delegate = self;
+    _loginRequest.overTime = 30;
 
     //验证码发送倒计时
     _countTime = 60;
     _canSend = YES;
+    
+    //MBProgressHUD
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"注册中...", nil);
+    [self.view addSubview:_loading];
 }
 
 #pragma mark - 返回
@@ -136,6 +143,7 @@
 
 -(void)loginRequestRegisterAccountFinished:(BOOL)success Result:(NSDictionary *)result
 {
+    [_loading hide:YES];
     if (success&&result) {
         NSLog(@"注册成功");
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -153,6 +161,12 @@
     }
 }
 
+-(void)loginRequestrequestTimeOut:(LoginRequest *)request
+{
+    [_loading hide:YES];
+    [self showProgressHUDByString:@"请求超时"];
+}
+
 #pragma mark - 注册方法
 - (IBAction)registerUser:(id)sender {
     if ([self checkPhoneNum]) {
@@ -160,6 +174,7 @@
         code = [code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (code.length > 0) {
             if (_password.text.length > 5 && _password.text.length < 19) {
+                [_loading show:YES];
                 NSString* phone = _phoneNum.text;
                 phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];

@@ -25,7 +25,7 @@
     NSString* _uid;
 }
 
-@property (nonatomic, retain) NSMutableArray *timingMassageArray;
+@property (nonatomic, strong) NSMutableArray *timingMassageArray;
 
 @end
 
@@ -120,9 +120,9 @@
 #pragma mark - 同步本地数据
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue {
     if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",_uid]];
         if (plans.count > 0) {
-            NSLog(@"同步中。。。");
+            NSLog(@"同步中。。。:%ld",plans.count);
             TimingPlan* plan = plans[0];
             NSInteger state = [plan.state integerValue];
             if (state == 1)
@@ -182,6 +182,7 @@
             else
             {
                 NSLog(@"未知状态");
+                [self synchroTimingPlanLocalData:NO];
             }
         }
         else
@@ -321,7 +322,20 @@
 #pragma mark - TimingPlanDelegate代理
 
 - (void)timingPlanRequestTimeOut:(TimingPlanRequest *)request {
-	
+    [_loading hide:YES];
+    [self showProgressHUDByString:@"请求超时"];
+}
+
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 

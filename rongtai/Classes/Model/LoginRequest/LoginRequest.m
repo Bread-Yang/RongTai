@@ -53,6 +53,7 @@
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
         if (error) {
@@ -67,6 +68,7 @@
             [self.delegate loginRequestAuthCodeFinished:YES];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
         NSLog(@"验证码请求失败:%@",error);
         //失败后调用代理
         if ([self.delegate respondsToSelector:@selector(loginRequestAuthCodeFinished:)]) {
@@ -90,6 +92,7 @@
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
         if (error) {
@@ -106,6 +109,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
         NSLog(@"注册失败:%@",error);
         if ([self.delegate respondsToSelector:@selector(loginRequestRegisterAccountFinished:Result:)]) {
             [self.delegate loginRequestRegisterAccountFinished:NO Result:nil];
@@ -127,6 +131,7 @@
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
         if (error) {
@@ -143,6 +148,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
         NSLog(@"登录失败:%@",error);
         if ([self.delegate respondsToSelector:@selector(loginRequestLoginFinished:Result:)]) {
             [self.delegate loginRequestLoginFinished:NO Result:nil];
@@ -175,6 +181,7 @@
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
     }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
         if (error) {
@@ -191,6 +198,7 @@
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
         NSLog(@"第三方登录失败:%@",error);
         if ([self.delegate respondsToSelector:@selector(loginRequestThirdLoginFinished:Result:)]) {
             [self.delegate loginRequestThirdLoginFinished:NO Result:nil];
@@ -204,8 +212,8 @@
     if (_isTimeOut) {
         NSLog(@"登陆请求超时");
         [self cancelRequest];
-        if ([self.delegate respondsToSelector:@selector(requestTimeOut:)]) {
-            [self.delegate requestTimeOut:self];
+        if ([self.delegate respondsToSelector:@selector(loginRequestrequestTimeOut:)]) {
+            [self.delegate loginRequestrequestTimeOut:self];
         }
     }
 }

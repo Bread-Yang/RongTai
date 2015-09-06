@@ -10,6 +10,7 @@
 #import "JRBluetoothManager.h"
 #import "RTBleConnector.h"
 #import "MainViewController.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
@@ -41,8 +42,10 @@
 	
     segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
     
-    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshTableView)];
+    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_refresh"] style:UIBarButtonItemStylePlain target:self action:@selector(refreshTableView)];
     self.navigationItem.rightBarButtonItem = refreshItem;
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -75,6 +78,12 @@
     if ([segue.identifier isEqualToString:@"mpSegue"]) {
         
     }
+}
+
+#pragma mark - 返回按钮方法
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - TableView Data Source

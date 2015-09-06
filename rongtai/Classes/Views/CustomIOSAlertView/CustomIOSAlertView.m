@@ -11,6 +11,7 @@
 
 #import "CustomIOSAlertView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 #define BACKGROUND_COLOR 	[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0f]
 #define TITLE_COLOR 		[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0f]
@@ -133,7 +134,11 @@ CGFloat buttonSpacerHeight = 0;
 			
 		}
 		
-		[[[[UIApplication sharedApplication] windows] firstObject] addSubview:self];
+//		[[[[UIApplication sharedApplication] windows] firstObject] addSubview:self];
+//        NSLog(@"Windows:%@",[[UIApplication sharedApplication] windows]);
+        
+        AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
+        [appDelegate.window addSubview:self];
 	}
 	
 	dialogView.layer.opacity = 0.5f;

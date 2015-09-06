@@ -35,7 +35,7 @@
 /**
  *  超时调用
  */
--(void)requestTimeOut:(LoginRequest*)request;
+-(void)loginRequestrequestTimeOut:(LoginRequest*)request;
 
 @end
 

@@ -134,7 +134,7 @@
 	}
 }
 
--(void)requestTimeOut:(LoginRequest *)request
+-(void)loginRequestrequestTimeOut:(LoginRequest *)request
 {
     //登陆超时
     [_loading hide:YES];
