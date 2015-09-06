@@ -330,7 +330,6 @@
 }
 
 #pragma mark - UIGestureRecognizer代理
-
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (self.navigationController.viewControllers.count == _vcCount) {
         return NO;

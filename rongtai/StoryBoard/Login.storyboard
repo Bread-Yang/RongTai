@@ -113,6 +113,9 @@
                                     <color key="titleColor" red="0.4549019608" green="0.60392156860000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="forgetPassword:" destination="vVx-O2-RpR" eventType="touchUpInside" id="s1A-Gh-0cj"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyA-Zv-oCZ">
                                 <rect key="frame" x="210" y="480" width="180" height="90"/>
@@ -705,6 +708,7 @@
                         <outlet property="_footWheel" destination="3os-N8-Jac" id="mvY-Oz-a1o"/>
                         <outlet property="_footWheelImageView" destination="y8w-SV-gof" id="rHT-PG-gC1"/>
                         <outlet property="_footWheelLabel" destination="T2w-Hl-KXH" id="VtJ-L8-RFZ"/>
+                        <outlet property="_skillsPreferenceImageView" destination="CkK-lk-Uxt" id="U1R-ab-zWa"/>
                         <outlet property="_skillsPreferenceLabel" destination="sC2-B0-iUe" id="bbn-Na-ji0"/>
                         <outlet property="_skillsPreferenceView" destination="iKC-Li-K8P" id="8xK-2R-IO1"/>
                         <outlet property="_stopBtn" destination="CDm-UG-bAz" id="KjC-UO-qg5"/>
@@ -953,7 +957,7 @@
         <!--Register-->
         <scene sceneID="Vz9-yL-MAA">
             <objects>
-                <viewController id="bp3-x7-Kbp" userLabel="Register" customClass="RegisterViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterVC" id="bp3-x7-Kbp" userLabel="Register" customClass="RegisterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eqr-Vc-77N"/>
                         <viewControllerLayoutGuide type="bottom" id="mhf-Jf-Cis"/>
@@ -1061,6 +1065,7 @@
                         <outlet property="_password" destination="qDX-NN-t9d" id="ja2-jh-utr"/>
                         <outlet property="_phoneNum" destination="hnf-q5-gF0" id="UIN-n4-w8B"/>
                         <outlet property="_registerBtn" destination="blZ-dO-yRU" id="UD5-Yg-w5h"/>
+                        <outlet property="_registerButton" destination="Gtu-bz-Epc" id="Q4t-z2-Bd8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SfY-oK-z6c" userLabel="First Responder" sceneMemberID="firstResponder"/>

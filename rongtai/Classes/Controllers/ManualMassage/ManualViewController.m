@@ -45,6 +45,7 @@
     NAPickerView *_skillsPreferencePickerView;  //技法偏好选择器
     
     __weak IBOutlet UILabel *_skillsPreferenceLabel;
+    __weak IBOutlet UIImageView *_skillsPreferenceImageView;
     __weak IBOutlet UIView *_skillsPreferenceView;
     NSInteger _pickerSelectedItem;  //记录picker选项
     
@@ -190,6 +191,18 @@
     
     //
     [self updateUI];
+    
+    //
+    if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+        _stopBtn.hidden = NO;
+        [self updateSkillsPreferenceView:YES];
+    }
+    else
+    {
+        _stopBtn.hidden = YES;
+        [self updateSkillsPreferenceView:NO];
+    }
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -570,6 +583,21 @@
     }
 }
 
+#pragma mark - 更新手动按摩模式颜色
+-(void)updateSkillsPreferenceView:(BOOL)isManual
+{
+    if (isManual) {
+        [_skillsPreferenceImageView setImage:[UIImage imageNamed:@"function_3_select"]];
+        _skillsPreferenceLabel.textColor = ORANGE;
+    }
+    else
+    {
+        [_skillsPreferenceImageView setImage:[UIImage imageNamed:@"function_3"]];
+        _skillsPreferenceLabel.textColor = [UIColor colorWithRed:202/255.0 green:202/255.0 blue:202/255.0 alpha:1.0];
+        _skillsPreferenceLabel.text = NSLocalizedString(@"请选择", nil);
+    }
+}
+
 #pragma mark - 根据按摩状态更新极线图
 -(void)updateWLPolarView
 {
@@ -681,14 +709,24 @@
 			[self jumpToAutoMassageViewConroller];
 		}
 	}
+    
+    if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+        _stopBtn.hidden = NO;
+        [self updateSkillsPreferenceView:YES];
+    
+    }
+    else
+    {
+        _stopBtn.hidden = YES;
+        [self updateSkillsPreferenceView:NO];
+    }
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
 		[self.resettingDialog show];
 	} else {
 		[self.resettingDialog close];
 	}
-    
-	// 以下是界面状态更新
+    // 以下是界面状态更新
     if (_isDelayUpdate) {
         //延迟更新
         [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
@@ -701,6 +739,7 @@
         //即时更新
         [self updateUI];
     }
+
 }
 
 -(void)dalayNO

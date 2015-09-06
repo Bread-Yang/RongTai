@@ -19,6 +19,7 @@
 #import "CustomProcedureViewController.h"
 #import "MainViewController.h"
 #import "MBProgressHUD.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController ()<LoginRequestDelegate>
 {	
@@ -51,7 +52,7 @@
     
     MenuViewController* menu = [[MenuViewController alloc]init];
     silder.leftMenu = menu;
-    silder.enableSwipeGesture = YES;
+    silder.enableSwipeGesture = NO;
     silder.enableShadow = NO;
     silder.navigationBar.translucent = NO;
     silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
@@ -66,6 +67,7 @@
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"登录中...", nil);
     [self.view addSubview:_loading];
+
     // Do any additional setup after loading the view.
 }
 
@@ -97,6 +99,14 @@
     {
         [self showProgressHUDByString:@"手机格式不正确"];
     }
+}
+
+#pragma mark - 忘记密码方法
+- (IBAction)forgetPassword:(id)sender {
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    RegisterViewController* rVC = [s instantiateViewControllerWithIdentifier:@"RegisterVC"];
+    [rVC forgetPasswordMode];
+    [self.navigationController pushViewController:rVC animated:YES];
 }
 
 #pragma mark - LoginRequestDelegate
@@ -142,7 +152,6 @@
     //登陆超时
     [_loading hide:YES];
     [self showProgressHUDByString:@"登录超时，请检测网络"];
-    
 }
 
 #pragma mark - qq登陆按钮方法

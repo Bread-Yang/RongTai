@@ -22,6 +22,10 @@
     __weak IBOutlet UIButton *_registerBtn; //注册按钮
     BOOL _canSend;
      MBProgressHUD* _loading;
+    BOOL _isReset;
+    
+    __weak IBOutlet UIButton *_registerButton;
+    
 }
 @end
 
@@ -31,6 +35,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [_phoneNum becomeFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -50,12 +55,24 @@
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"注册中...", nil);
     [self.view addSubview:_loading];
+    _isReset = NO;
 }
 
 #pragma mark - 返回
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - 忘记密码模式
+-(void)forgetPasswordMode
+{
+    self.view.backgroundColor = [UIColor clearColor];
+    self.title = NSLocalizedString(@"忘记密码", nil);
+    _loading.labelText = NSLocalizedString(@"重置中...", nil);
+    [_registerButton setTitle:NSLocalizedString(@"重置密码", nil) forState:UIControlStateNormal];
+    _password.placeholder = NSLocalizedString(@"新密码", nil);
+    _isReset = YES;
 }
 
 #pragma mark - 快速提示
@@ -161,6 +178,20 @@
     }
 }
 
+-(void)loginRequestForgetPasswordFinished:(BOOL)success Result:(NSDictionary *)result
+{
+    [_loading hide:YES];
+    if (success&&result) {
+        NSLog(@"重置密码成功");
+        [self showProgressHUDByString:@"重置密码成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self showProgressHUDByString:@"重置密码失败"];
+    }
+}
+
 -(void)loginRequestrequestTimeOut:(LoginRequest *)request
 {
     [_loading hide:YES];
@@ -177,7 +208,14 @@
                 [_loading show:YES];
                 NSString* phone = _phoneNum.text;
                 phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
+                if (_isReset) {
+                    [_loginRequest resetPasswordByByPhone:phone Password:_password.text Code:code];
+                }
+                else
+                {
+                    [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
+                }
+                
             }
             else
             {

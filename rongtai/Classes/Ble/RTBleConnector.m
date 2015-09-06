@@ -585,7 +585,6 @@ NSString * NSDataToHex(NSData *data) {
 			if((i * 128 + j) > self.readFile.resultData.length - 1) {
 				data[j] = 0x1a;
 			} else {
-#warning 曾经在这一句运行崩溃过，NSLog打印的数据长度为0
 				data[j] = fileData[i * 128 + j];
 			}
 		}
@@ -615,6 +614,7 @@ NSString * NSDataToHex(NSData *data) {
 	command[0] = 1;
 	command[1] = self.installCount;
 	command[2] = 255 - self.installCount;
+#warning 这里曾经奔溃过，只是手动按摩，最后一次NSLog输出是“进入安装状态，此时返回数据长度为16”
 	for (int i = 0; i < 128; i++) {
 		command[3+i] = data[i];
 	}

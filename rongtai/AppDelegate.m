@@ -81,7 +81,7 @@
 
     MenuViewController *menu = [[MenuViewController alloc] init];
     slide.leftMenu = menu;
-    slide.enableSwipeGesture = NO;
+    slide.enableSwipeGesture = YES;
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
     [slide.navigationBar setTintColor:[UIColor whiteColor]];

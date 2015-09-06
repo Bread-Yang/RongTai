@@ -176,8 +176,22 @@
     
 }
 
-- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-    
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
+{
+    if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+        //手动按摩
+        NSLog(@"手动按摩");
+    }
+    else if (rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+    {
+        //自动按摩
+        NSLog(@"自动按摩");
+    }
+    else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
+    {
+        //网络按摩
+        NSLog(@"网络按摩");
+    }
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {

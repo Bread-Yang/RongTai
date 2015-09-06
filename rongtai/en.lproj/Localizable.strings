@@ -159,7 +159,11 @@
 "程序下载" = "Program Download";
 "可选择按摩程序" = "Optional Program";
 "已有按摩程序" = "Already Install Program";
-
+"重置中..." = "Reseting...";
+"重置密码" = "Reset Password";
+"新密码" = "New Password";
+"忘记密码" = "Forget Password";
+"请选择" = "Unselected";
 
 
 
