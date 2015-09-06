@@ -779,18 +779,19 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
     
     /**
      bit 2, bit 3, bit 4, bit 5 : 自动按摩程序
-     00：无
-     01：疲劳恢复
-     02：舒适按摩
-     03：轻松按摩
-     04：酸痛改善
-     05：颈肩自动（上半身）
-     06：背腰自动（下半身）
-     07：手动
-     08：睡眠1
-     09：睡眠2
-     0A：全身气压
-     0B：3D 按摩
+	 00：无
+	 01：疲劳恢复
+	 02：舒适按摩
+	 03：轻松按摩
+	 04：酸痛改善
+	 05：颈肩自动（上半身）
+	 06：背腰自动（下半身）
+	 07：手动
+	 08：网络程序 1  //20150721增加
+	 09：网络程序 2
+	 0A：网络程序3
+	 0B：网络程序4
+	 0C：3D按摩
      */
     _rtMassageChairStatus.massageProgramFlag = (addr >> 2) & 15;
 	
@@ -804,19 +805,19 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramSportRecover;
     			break;
 			case 2:
-				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramStretch;
+				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramExtension;
 				break;
 			case 3:
-				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramRestAndPromoteSleep;
+				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramRestAndSleep;
 				break;
 			case 4:
-				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramWorkDecompression;
+				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramWorkingRelieve;
 				break;
 			case 5:
 				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramShoulderAndNeck;
 				break;
 			case 6:
-				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramLumbarRelieve;
+				_rtMassageChairStatus.autoProgramType = RtMassageChairProgramWaistAndSpine;
 				break;
 		}
 		
@@ -824,6 +825,21 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 		_rtMassageChairStatus.programType = RtMassageChairProgramManual;
 	} else {
 		_rtMassageChairStatus.programType = RtMassageChairProgramNetwork;
+		
+		switch (_rtMassageChairStatus.massageProgramFlag) {
+			case 8:
+				_rtMassageChairStatus.networkProgramType = RTMassageChairProgramNetwork1;
+				break;
+			case 9:
+				_rtMassageChairStatus.networkProgramType = RTMassageChairProgramNetwork2;
+				break;
+			case 10:
+				_rtMassageChairStatus.networkProgramType = RTMassageChairProgramNetwork3;
+				break;
+			case 11:
+				_rtMassageChairStatus.networkProgramType = RTMassageChairProgramNetwork4;
+				break;
+		}
 	}
 }
 

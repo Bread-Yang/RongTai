@@ -41,6 +41,7 @@
 	NSMutableDictionary *_networkMassageDic;
     MassageProgramRequest* _networkMassageProgramRequest;
 	NSArray *_modeNameArray;
+	NSArray *_modeDescriptionArray;
     WLWeatherView* _weatherView;
     UITabBar* _menuBar;
 	CustomIOSAlertView *reconnectDialog;
@@ -147,11 +148,22 @@
 					   NSLocalizedString(@"云养程序三", nil),
 					   NSLocalizedString(@"云养程序四", nil),];
 	
+	_modeDescriptionArray = @[NSLocalizedString(@"运动恢复简介", nil),
+							  NSLocalizedString(@"舒展活络简介", nil),
+							  NSLocalizedString(@"休憩促眠简介", nil),
+							  NSLocalizedString(@"工作减压简介", nil),
+							  NSLocalizedString(@"肩颈重点简介", nil),
+							  NSLocalizedString(@"腰椎舒缓简介", nil),
+							  NSLocalizedString(@"腰椎舒缓简介", nil),
+							  NSLocalizedString(@"腰椎舒缓简介", nil),
+							  NSLocalizedString(@"腰椎舒缓简介", nil),
+							  NSLocalizedString(@"腰椎舒缓简介", nil),];
+	
 	_massageArr = [NSMutableArray new];
 	for (int i = 0; i < [_modeNameArray count]; i++) {
 		MassageProgram *m = [MassageProgram MR_createEntity];
 		m.name = _modeNameArray[i];
-		m.mDescription = @"以颈部、肩部、背部按摩为主，腰部、尾椎骨按摩为辅";
+		m.mDescription = _modeDescriptionArray[i];
 		m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
 		m.isLocalDummyData = @YES;
 		[_massageArr addObject:m];
@@ -493,20 +505,25 @@
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
 			break;
 			
-		// 云养程序一
+		// 腰椎舒缓
 		case 5:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
+			break;
+			
+		// 云养程序一
+		case 6:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
 			break;
 		// 云养程序二
-		case 6:
+		case 7:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
 			break;
 		// 云养程序三
-		case 7:
+		case 8:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
 			break;
 		// 云养程序四
-		case 8:
+		case 9:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
 			break;
 	}

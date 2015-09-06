@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -1162,8 +1162,8 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出差后，针对背部，以中式手法进行推拿，达到肌肉放松的效果" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dc8-9S-dPA">
-                                        <rect key="frame" x="51" y="0.0" width="384" height="60"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一项有助于提高午休质量和改善睡眠质量的关怀程序。以扭腰和压肩动作开始，此程序主要以温和按摩手法，轻柔地刺激上下半身身体。 随着时间，力道从重而轻，从轻到无，帮助紧绷疲劳的身体逐渐舒缓。" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dc8-9S-dPA">
+                                        <rect key="frame" x="51" y="15" width="384" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1172,7 +1172,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="width" secondItem="arZ-Bk-5RV" secondAttribute="width" id="4kI-j2-IPH"/>
-                                    <constraint firstItem="dc8-9S-dPA" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="top" id="Dw8-ZF-13P"/>
+                                    <constraint firstItem="dc8-9S-dPA" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="top" constant="15" id="Dw8-ZF-13P"/>
                                     <constraint firstItem="dc8-9S-dPA" firstAttribute="leading" secondItem="4BW-Qf-Lff" secondAttribute="trailing" id="FgG-PF-GxP"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="height" secondItem="arZ-Bk-5RV" secondAttribute="height" multiplier="0.75" id="LZ3-0M-SFo"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="leading" secondItem="arZ-Bk-5RV" secondAttribute="leading" id="Zjn-KL-upH"/>
@@ -1267,10 +1267,10 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="_function" destination="dc8-9S-dPA" id="LVJ-LL-ljY"/>
+                        <outlet property="_functionLabel" destination="dc8-9S-dPA" id="6S4-8r-pVf"/>
                         <outlet property="_stopBtn" destination="POp-0M-tlL" id="PJa-No-TKt"/>
-                        <outlet property="_timeSet" destination="05Z-yi-rOy" id="n4g-0G-lm7"/>
-                        <outlet property="_usingTime" destination="TYd-np-0Jd" id="gKg-N5-rZ6"/>
+                        <outlet property="_timeSetLabel" destination="05Z-yi-rOy" id="XHI-zx-ue7"/>
+                        <outlet property="_usingTimeLabel" destination="TYd-np-0Jd" id="ZXg-MY-xF5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHa-3e-JUS" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -24,9 +24,9 @@
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
-    __weak IBOutlet UILabel *_timeSet;
-    __weak IBOutlet UILabel *_function;
-    __weak IBOutlet UILabel *_usingTime;
+    __weak IBOutlet UILabel *_timeSetLabel;
+    __weak IBOutlet UILabel *_functionLabel;
+    __weak IBOutlet UILabel *_usingTimeLabel;
     __weak IBOutlet UIButton *_stopBtn;
     NSString* _programName;
     NSInteger _autoMassageFlag;
@@ -49,9 +49,9 @@
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.055*0.5;
     
     //
-    _timeSet.textColor = BLUE;
-    [_timeSet setNumebrByFont:[UIFont systemFontOfSize:28 weight:10] Color:BLUE];
-    [_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+    _timeSetLabel.textColor = BLUE;
+    [_timeSetLabel setNumebrByFont:[UIFont systemFontOfSize:28 weight:10] Color:BLUE];
+    [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
     
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
@@ -274,11 +274,43 @@
 	// 定时时间
 	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
 	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
-	_timeSet.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+	_timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+	
+	NSString *functionString = nil;
+	
+	// 按摩简介
+	switch (rtMassageChairStatus.autoProgramType) {
+			
+  		case RtMassageChairProgramSportRecover:
+			functionString = NSLocalizedString(@"运动恢复功能", nil);
+			break;
+			
+		case RtMassageChairProgramExtension:
+			functionString = NSLocalizedString(@"舒展活络功能", nil);
+			break;
+			
+		case RtMassageChairProgramRestAndSleep:
+			functionString = NSLocalizedString(@"休憩促眠功能", nil);
+			break;
+			
+		case RtMassageChairProgramWorkingRelieve:
+			functionString = NSLocalizedString(@"工作减压功能", nil);
+			break;
+			
+		case RtMassageChairProgramShoulderAndNeck:
+			functionString = NSLocalizedString(@"肩颈重点功能", nil);
+			break;
+			
+		case RtMassageChairProgramWaistAndSpine:
+			functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
+			break;
+	}
+	_functionLabel.text = functionString;
+	[_functionLabel sizeToFit];
 	
 	// 用时时间
-	_usingTime.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
-	[_usingTime setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+	_usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
+	[_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -19,9 +19,9 @@
 #import "CustomProcedureViewController.h"
 #import "MainViewController.h"
 #import "MBProgressHUD.h"
+#import "AppIntrouceView.h"
 
-@interface LoginViewController ()<LoginRequestDelegate>
-{	
+@interface LoginViewController ()<AppIntroduceViewDelegate, LoginRequestDelegate> {
 	__weak IBOutlet UIButton *_registerBtn;  //注册按钮
 	
 	__weak IBOutlet UITextField *_phoneNum;  //手机号码TextField
@@ -33,12 +33,24 @@
     MBProgressHUD* _loading;
 }
 
+@property AppIntrouceView *introduceView;
+
 @end
 
 @implementation LoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	// 品牌及产品特色界面
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if (![defaults objectForKey:@"intro_screen_viewed"]) {
+		self.introduceView = [[AppIntrouceView alloc] initWithFrame:self.view.frame];
+		self.introduceView.delegate = self;
+		self.introduceView.backgroundColor = [UIColor greenColor];
+		[self.view addSubview:self.introduceView];
+	}
+	
     _loginRequest = [LoginRequest new];
     _loginRequest.delegate = self;
     _loginRequest.overTime = 30;
@@ -236,6 +248,23 @@
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	[super didUpdateMassageChairStatus:rtMassageChairStatus];
 	NSLog(@"didUpdateMassageChairStatus:");
+}
+
+#pragma mark - AppIntroduceViewDelegate
+
+- (void)onDoneButtonPressed {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
+	[defaults synchronize];
+	
+	[UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+		self.introduceView.alpha = 0;
+		
+		// 清空所有本地的UILocalNotification
+		[[UIApplication sharedApplication] cancelAllLocalNotifications];
+	} completion:^(BOOL finished) {
+		[self.introduceView removeFromSuperview];
+	}];
 }
 
 @end
