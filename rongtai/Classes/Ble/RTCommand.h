@@ -59,7 +59,7 @@
 #define H10_KEY_CHAIR_AUTO_2			0x12 //轻松按摩 relax
 #define H10_KEY_CHAIR_AUTO_3			0x13 //酸痛改善 refresh
 #define H10_KEY_CHAIR_AUTO_4            0x14
-#define H10_KEY_CHAIR_AUTO_5            0x15
+#define H10_KEY_CHAIR_AUTO_5            0x15 // 腰椎舒缓
 #define H10_KEY_CHAIR_UP_BACK         H10_KEY_CHAIR_AUTO_4
 #define H10_KEY_CHAIR_DOWN_BACK	      H10_KEY_CHAIR_AUTO_5
 #define H10_KEY_NECK_SHOULDER_AUTO    H10_KEY_CHAIR_UP_BACK

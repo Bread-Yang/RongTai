@@ -52,17 +52,17 @@ typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
 	/**
 	 *	自动按摩程序 : 舒展活络, 地址13位 : massageProgramFlag == 2
 	 */
-	RtMassageChairProgramStretch,
+	RtMassageChairProgramExtension,
 	
 	/**
 	 *	自动按摩程序 : 休憩促眠, 地址13位 : massageProgramFlag == 3
 	 */
-	RtMassageChairProgramRestAndPromoteSleep,
+	RtMassageChairProgramRestAndSleep,
 	
 	/**
 	 *	自动按摩程序 : 工作减压, 地址13位 : massageProgramFlag == 4
 	 */
-	RtMassageChairProgramWorkDecompression,
+	RtMassageChairProgramWorkingRelieve,
 	
 	/**
 	 *	自动按摩程序 : 肩颈重点, 地址13位 : massageProgramFlag == 5
@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
 	/**
 	 *	自动按摩程序 : 腰椎舒缓, 地址13位 : massageProgramFlag == 6
 	 */
-	RtMassageChairProgramLumbarRelieve,
+	RtMassageChairProgramWaistAndSpine,
 	
 	/**
 	 *	自动按摩程序, 地址13位 : massageProgramFlag < 7
@@ -87,7 +87,32 @@ typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
 	/**
 	 *	网络按摩程序, 地址13位 : massageProgramFlag > 7
 	 */
-	RtMassageChairProgramNetwork
+	RtMassageChairProgramNetwork,
+	
+	/**
+	 *	网络按摩程序 : 网络程序1
+	 */
+	RTMassageChairProgramNetwork1,
+	
+	/**
+	 *	网络按摩程序 : 网络程序2
+	 */
+	RTMassageChairProgramNetwork2,
+	
+	/**
+	 *	网络按摩程序 : 网络程序3
+	 */
+	RTMassageChairProgramNetwork3,
+	
+	/**
+	 *	网络按摩程序 : 网络程序4
+	 */
+	RTMassageChairProgramNetwork4,
+	
+	/**
+	 *	3D按摩
+	 */
+	RTMassageChairAutoProgram3D,
 	
 };
 
@@ -169,6 +194,7 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
 	
 };
 
+
 @interface RTMassageChairStatus : NSObject
 
 #pragma mark - 按摩界面状态显示用到的字段
@@ -187,6 +213,11 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
  *	自动程序类型(运动恢复, 舒展活络, 休憩促眠, 工作减压, 肩颈重点, 腰椎舒缓)
  */
 @property (nonatomic, assign) RTMassageChairProgramType autoProgramType;
+
+/**
+ * 	网络程序类型(云养程序1, 云养程序2, 云养程序3, 云养程序4)
+ */
+@property (nonatomic, assign) RTMassageChairProgramType networkProgramType;
 
 /**
  *	按摩椅按摩手法
@@ -576,10 +607,11 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
  05：颈肩自动（上半身）
  06：背腰自动（下半身）
  07：手动
- 08：睡眠1
- 09：睡眠2
- 0A：全身气压
- 0B：3D 按摩
+ 08：网络程序 1 
+ 09：网络程序 2
+ 0A：网络程序3
+ 0B：网络程序4
+ 0C：3D按摩
  */
 @property (nonatomic, assign) NSInteger massageProgramFlag;
 
