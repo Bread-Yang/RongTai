@@ -74,7 +74,7 @@
     _userNameLabel.text = _member.name;
     if ([_member.imageURL isEqualToString:@"default"]) {
         //空的用默认头像
-        _userIconView.image = [UIImage imageNamed:@"userIcon.jpg"];
+        _userIconView.image = [UIImage imageNamed:@"userIcon"];
     }
     else
     {

@@ -11,10 +11,11 @@
 
 @implementation MassageRecord
 
-@dynamic massageName;
+@dynamic name;
 @dynamic useTime;
-@dynamic startTime;
-@dynamic endTime;
+@dynamic programId;
 @dynamic date;
+@dynamic state;
+@dynamic uid;
 
 @end

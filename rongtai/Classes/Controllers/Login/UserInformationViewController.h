@@ -27,6 +27,8 @@ typedef void (^EditUserInformationBlock)(NSDictionary *entity);
  */
 @property(nonatomic, weak)id<UserInformationDelegate> delegate;
 
+@property(nonatomic)BOOL isRegister;
+
 /**
  *  编辑模式
  */

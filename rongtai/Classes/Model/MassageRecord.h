@@ -15,7 +15,12 @@
 /**
  *  按摩名称
  */
-@property (nonatomic, retain) NSString * massageName;
+@property (nonatomic, retain) NSString * name;
+
+/**
+ *  按摩程序id
+ */
+@property (nonatomic, retain) NSNumber* programId;
 
 /**
  *  使用时间
@@ -23,18 +28,19 @@
 @property (nonatomic, retain) NSNumber * useTime;
 
 /**
- *  开始时间
- */
-@property (nonatomic, retain) NSDate * startTime;
-
-/**
- *  结束时间
- */
-@property (nonatomic, retain) NSDate * endTime;
-
-/**
  *  开始时间的字符串格式
  */
 @property (nonatomic, retain) NSString * date;
+
+/**
+ *  状态，未同步到服务器的，状态会变成1，默认值为0，代表是同步数据
+ */
+@property (nonatomic, retain) NSNumber* state;
+
+/**
+ *  用户id
+ */
+@property (nonatomic, retain) NSString* uid;
+
 
 @end

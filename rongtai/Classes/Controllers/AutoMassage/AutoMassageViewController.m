@@ -32,6 +32,7 @@
     NSInteger _autoMassageFlag;
     
     ProgramCount* _programCount;
+    NSString* _uid;
 }
 @end
 
@@ -55,6 +56,9 @@
     //
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -178,10 +182,11 @@
             
             //将开始按摩的日期转成字符串
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
             NSString* date = [dateFormatter stringFromDate:start];
 
-            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName];
+            NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,_uid]];
+//            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
             
             //按摩次数统计
             if (result.count >0) {
@@ -195,6 +200,7 @@
             {
                 _programCount = [ProgramCount MR_createEntity];
                 _programCount.name = _programName;
+                _programCount.uid = _uid;
                 _programCount.unUpdateCount = [NSNumber numberWithInt:1];
                 _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
@@ -204,7 +210,7 @@
         
             //按摩记录
             MassageRecord* massageRecord;
-            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(massageName == %@) AND (date == %@)",_programName,date]];
+            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(massageName == %@) AND (date == %@) AND (uid == %@)",_programName,date,_uid]];
             if (records.count > 1) {
                 NSLog(@"查找数组:%@",records);
                 massageRecord = records[0];
@@ -219,10 +225,10 @@
                 //创建一条按摩记录
                 massageRecord = [MassageRecord MR_createEntity];
                 massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
-                massageRecord.massageName = _programName;
-                massageRecord.startTime = start;
-                massageRecord.endTime = end;
+                massageRecord.name = _programName;
                 massageRecord.date = date;
+                massageRecord.uid = _uid;
+                massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
             
             //按摩使用时长统计

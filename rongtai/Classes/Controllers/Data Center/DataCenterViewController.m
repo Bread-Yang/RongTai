@@ -27,6 +27,7 @@
     UILabel* _titleLabel;  //标签
     NSUInteger _totalTime;  //总使用时长
     NSUInteger _todayUseTime;  //今日使用时长
+    NSString* _uid;
 }
 
 @end
@@ -47,17 +48,18 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     
     //查询使用次数，并计算出总使用时间
-    NSArray* counts = [ProgramCount MR_findAll];
+    NSArray* counts = [ProgramCount MR_findByAttribute:@"uid" withValue:_uid];
     _totalTime = 0;
     
     //查询今天的按摩记录，并计算出今日使用时间
     NSDate* date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY/MM/dd"];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
     NSString* todayIndex = [dateFormatter stringFromDate:date];
-    NSArray* todayRecord = [MassageRecord MR_findByAttribute:@"date" withValue:todayIndex];
+    NSArray* todayRecord = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(date == %@) AND (uid == %@)",todayIndex,_uid]];
     _todayUseTime = 0;
     for (int i = 0; i<todayRecord.count;i++) {
         MassageRecord* m = todayRecord[i];
@@ -66,7 +68,7 @@
     
     
     //分页控制器
-    _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 64+5, 60, 10)];
+    _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 5, 60, 10)];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:169/255.0 green:190/255.0 blue:205/255.0 alpha:1];
     _pageControl.currentPageIndicatorTintColor = BLUE;
     _pageControl.numberOfPages = 3;
@@ -75,7 +77,7 @@
     [self.view addSubview:_pageControl];
     
     //标题Label
-    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 64+16, w*0.6, 35)];
+    _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 16, w*0.6, 35)];
     if (_totalTime<60) {
         _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
     }
@@ -93,19 +95,19 @@
     
     
     //左右切换按钮
-    UIButton* left = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 64+16, w*0.1, 35)];
+    UIButton* left = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 16, w*0.1, 35)];
     [left setImage:[UIImage imageNamed:@"data_arrow_left"] forState:UIControlStateNormal];
     [left addTarget:self action:@selector(leftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:left];
     
-    UIButton* right = [[UIButton alloc]initWithFrame:CGRectMake(0.8*w, 64+16, w*0.1, 35)];
+    UIButton* right = [[UIButton alloc]initWithFrame:CGRectMake(0.8*w, 16, w*0.1, 35)];
     [right setImage:[UIImage imageNamed:@"data_arrow_right"] forState:UIControlStateNormal];
     [right addTarget:self action:@selector(rightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:right];
     
     //SrcollView
     CGFloat sh = h-64-50;
-    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64+50, w, sh)];
+    _scroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 50, w, sh)];
     _scroll.bounces = NO;
     _scroll.showsHorizontalScrollIndicator = NO;
     _scroll.showsVerticalScrollIndicator = NO;

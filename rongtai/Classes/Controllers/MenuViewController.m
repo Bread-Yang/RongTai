@@ -17,12 +17,14 @@
 #import "RongTaiConstant.h"
 #import "ChangeUserViewController.h"
 #import "RTBleConnector.h"
+#import "AppDelegate.h"
+#import "MainViewController.h"
 
 //测试
 #import "FinishMassageViewController.h"
 
 
-@interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     NSArray* _menuName;  //菜单名字
     UITableView* _menu;  //菜单列表
@@ -196,10 +198,10 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-        [fVC saveMode];
-        [sl pushViewController:fVC animated:YES];
+//        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+//        [fVC saveMode];
+//        [sl pushViewController:fVC animated:YES];
         
     }
     else if (indexPath.row == 6)
@@ -230,7 +232,8 @@
 #pragma mark - 注销
 -(void)Logout
 {
-    
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"退出登录" message:@"确定退出登录" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    [alert show];
 }
 
 #pragma mark - 切换按摩椅
@@ -250,6 +253,20 @@
 //    line.layer.shadowColor = [UIColor grayColor].CGColor;
 //    line.layer.shadowRadius = 1;
 //    
+}
+
+#pragma mark - alertView代理
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString* btn = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([btn isEqualToString:@"是"]) {
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+        delegate.window.rootViewController = [s instantiateViewControllerWithIdentifier:@"SliderNavigationVC"];
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"" forKey:@"uid"];
+        [defaults setObject:@"" forKey:@"token"];
+    }
 }
 
 

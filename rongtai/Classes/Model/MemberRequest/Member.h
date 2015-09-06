@@ -60,6 +60,16 @@
 @property (nonatomic, retain) NSNumber* memberId;
 
 /**
+ *  用户uid
+ */
+@property (nonatomic, retain) NSString* uid;
+
+/**
+ *  根据网络数据来更新本地
+ */
++(void)updateLocalDataByNetworkData:(NSArray*)members;
+
+/**
  *  根据字典来设置Member
  */
 -(void)setValueBy:(NSDictionary*)dic;
@@ -67,12 +77,7 @@
 /**
  *  把Member转成字典
  */
-
 -(NSDictionary*)memberToDictionary;
 
-/**
- *  根据一条Member的Json数据更新数据库
- */
-+(Member*)updateMemberDB:(NSDictionary*)dic;
 
 @end

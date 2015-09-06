@@ -28,6 +28,7 @@
     AFNetworkReachabilityManager* _reachability;
     MBProgressHUD* _loading;
     MemberRequest* _mr;
+    NSString* _uid;
 }
 
 @property(nonatomic, strong) NSArray *memberArray;
@@ -59,7 +60,7 @@
     flowLayout.minimumInteritemSpacing = _matgin;
     flowLayout.minimumLineSpacing = _matgin;
     
-    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30+64, width*0.8, height -64-30) collectionViewLayout:flowLayout];
+    _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
     _collectView.backgroundColor = [UIColor clearColor];
     [_collectView registerClass:[FamilyCollectionViewCell class] forCellWithReuseIdentifier:_reuseIdentifier];
     _collectView.dataSource = self;
@@ -72,16 +73,17 @@
     self.navigationItem.rightBarButtonItem = add;
     
     //MBProgressHUD
-    _loading = [[MBProgressHUD alloc]init];
-    //
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    _loading = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
-    [appDelegate.window addSubview:_loading];
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loading];
     
     //
     _mr = [MemberRequest new];
     _mr.overTime = 30;
     _mr.delegate = self;
+    
+    //
+    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     // Do any additional setup after loading the view.
 }
 
@@ -96,19 +98,16 @@
         [_loading show:YES];
         
         NSLog(@"请求成员");
-        NSMutableArray* arr = [NSMutableArray new];
         [_mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
-            for (NSDictionary* dic in members) {
-                Member* m = [Member updateMemberDB:dic];
-                [arr addObject:m];
-            }
-            _memberArray = [NSArray arrayWithArray:arr];
+            [Member updateLocalDataByNetworkData:members];
+            
+            _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_collectView reloadData];
             [_loading hide:YES];
 
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
-            _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+            _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
             [_collectView reloadData];
             [_loading hide:YES];
         }];
@@ -116,7 +115,7 @@
     else
     {
         NSLog(@"没网，本地记录读取成员");
-        _memberArray = [Member MR_findAllSortedBy:@"memberId" ascending:YES];
+        _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
         [_collectView reloadData];
     }
 }

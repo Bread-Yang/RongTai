@@ -18,6 +18,7 @@
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
 #import "MainViewController.h"
+#import "MBProgressHUD.h"
 
 @interface LoginViewController ()<LoginRequestDelegate>
 {	
@@ -28,6 +29,8 @@
 	__weak IBOutlet UITextField *_password;  //密码TextField
 	
 	LoginRequest* _loginRequest;
+    
+    MBProgressHUD* _loading;
 }
 
 @end
@@ -36,23 +39,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    _loginFeild.layer.cornerRadius = 5;
-//    _loginFeild.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    _loginFeild.layer.borderWidth = 1;
     _loginRequest = [LoginRequest new];
     _loginRequest.delegate = self;
+    _loginRequest.overTime = 30;
 
     _phoneNum.text = @"13435814424";
     _password.text = @"123456";
     
     //
+     SlideNavigationController* silder = [SlideNavigationController sharedInstance];
+    
     MenuViewController* menu = [[MenuViewController alloc]init];
-    SlideNavigationController* silder = [SlideNavigationController sharedInstance];
     silder.leftMenu = menu;
     silder.enableSwipeGesture = YES;
     silder.enableShadow = NO;
+    silder.navigationBar.translucent = NO;
     silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
-
+    [silder.navigationBar setTintColor:[UIColor whiteColor]];
+    [silder.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    //MBProgressHUD
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"登录中...", nil);
+    [self.view addSubview:_loading];
     // Do any additional setup after loading the view.
 }
 
@@ -69,13 +82,21 @@
     */
     [[IQKeyboardManager sharedManager] resignFirstResponder];
     
-//    [self.navigationController pushViewController:[MainViewController new] animated:YES];
-    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
-}
-
-#pragma mark - 注册按钮方法
-- (IBAction)registerUser:(id)sender {
     
+    if ([self checkPhoneNum]) {
+        if (_password.text.length >5&&_password.text.length < 19) {
+            [_loading show:YES];
+            [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+        }
+        else
+        {
+            [self showProgressHUDByString:@"请输入6-18位密码"];
+        }
+    }
+    else
+    {
+        [self showProgressHUDByString:@"手机格式不正确"];
+    }
 }
 
 #pragma mark - LoginRequestDelegate
@@ -83,6 +104,7 @@
 
 -(void)loginRequestLoginFinished:(BOOL)success Result:(NSDictionary *)result
 {
+    [_loading hide:YES];
 	if (success) {
 		NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 		NSString* token = [result objectForKey:@"token"];
@@ -91,6 +113,10 @@
 		[ud setObject:uid forKey:@"uid"];
 		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 	}
+    else
+    {
+        [self showProgressHUDByString:@"登录失败，请检查账号密码"];
+    }
 }
 
 - (void)loginRequestThirdLoginFinished:(BOOL)success Result:(NSDictionary *)result {
@@ -106,6 +132,14 @@
 			
 		}];
 	}
+}
+
+-(void)requestTimeOut:(LoginRequest *)request
+{
+    //登陆超时
+    [_loading hide:YES];
+    [self showProgressHUDByString:@"登录超时，请检测网络"];
+    
 }
 
 #pragma mark - qq登陆按钮方法
@@ -146,6 +180,30 @@
 						   }];
 }
 
+#pragma mark - 验证手机号码
+-(BOOL)checkPhoneNum
+{
+    BOOL result = NO;
+    NSString* phone = _phoneNum.text;
+    //去掉首尾空格
+    phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (phone.length > 10) {
+        NSPredicate* pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"];
+        result = [pre evaluateWithObject:phone];
+    }
+    return result;
+}
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
+}
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];

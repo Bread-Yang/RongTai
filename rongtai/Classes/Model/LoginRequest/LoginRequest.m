@@ -17,6 +17,7 @@
 @interface LoginRequest ()
 {
     AFHTTPRequestOperationManager* _manager;
+    BOOL _isTimeOut;
 }
 @end
 
@@ -32,6 +33,8 @@
         [_manager.requestSerializer setValue:APPID forHTTPHeaderField:@"X-Gizwits-Application-Id"];
          //不加这句会导致请求失败
          _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        _overTime = 0;
+        _isTimeOut = NO;
     }
     return self;
 }
@@ -40,11 +43,15 @@
 -(void)requestAuthCodeByPhone:(NSString*)phone
 {
     //请求前先清空请求队列，以防线程阻塞
-    [self cancelRequest];
+//    [self cancelRequest];
+    _isTimeOut = YES;
     NSString* url = [NSString stringWithFormat:@"%@/codes",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：phone：%@\n",url,phone);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:phone forKey:@"phone"];
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
@@ -71,13 +78,17 @@
 #pragma mark - 用户注册
 -(void)registerAccountByPhone:(NSString*)phone Password:(NSString*)password Code:(NSString*)code
 {
-    [self cancelRequest];
+    _isTimeOut = YES;
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/users",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：phone：%@\npassword：%@\ncode：%@\n",url,phone,password,code);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:phone forKey:@"phone"];
     [parameters setObject:password forKey:@"password"];
     [parameters setObject:code forKey:@"code"];
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
@@ -105,12 +116,16 @@
 #pragma mark - 用户登录
 -(void)loginByPhone:(NSString*)phone Password:(NSString*)password
 {
-    [self cancelRequest];
+    _isTimeOut = YES;
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/login",REQUESTURL];
     NSLog(@"请求链接：%@\n请求参数：phone：%@\npassword：%@\n",url,phone,password);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:phone forKey:@"username"];
     [parameters setObject:password forKey:@"password"];
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
@@ -138,7 +153,8 @@
 #pragma mark - 第三方登录
 -(void)thirdLoginBySrc:(NSString *)name Uid:(NSString *)uid Token:(NSString *)token
 {
-    [self cancelRequest];
+    _isTimeOut = YES;
+//    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/users",REQUESTURL];
 //    NSString* auth = [NSString stringWithFormat:@"{\"src\":\"%@\",\"uid\":\"%@\",\"token\":\"%@\"}",name,uid,token];
 	if ([NSString isBlankString:token]) {
@@ -155,6 +171,9 @@
 	
 //	NSDictionary *temp = @{@"authData" : @{@"src": @"qq", @"token": @"07F63CF53BF98A6556ABB57AD4E28DB3", @"uid": @"5CAF4D827B2DDAAE2AAF2BEFE945F1E1"}};
 
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSError* error;
         NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
@@ -179,10 +198,16 @@
     }];
 }
 
-#pragma mark - 上传图片
--(void)uploadImage
+#pragma mark - 超时方法
+-(void)requestTimeOut
 {
-    
+    if (_isTimeOut) {
+        NSLog(@"登陆请求超时");
+        [self cancelRequest];
+        if ([self.delegate respondsToSelector:@selector(requestTimeOut:)]) {
+            [self.delegate requestTimeOut:self];
+        }
+    }
 }
 
 #pragma mark - 取消请求

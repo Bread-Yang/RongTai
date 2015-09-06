@@ -121,7 +121,7 @@
     //默认都是可拖动
     _canMove = [NSMutableArray arrayWithCapacity:_numOfV];
     for (int i = 0; i<_numOfV; i++) {
-        NSNumber* n = [NSNumber numberWithBool:YES];
+        NSNumber* n = [NSNumber numberWithBool:NO];
         [_canMove addObject:n];
     }
     

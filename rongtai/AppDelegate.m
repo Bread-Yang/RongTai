@@ -56,6 +56,26 @@
         UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:setting];
     }
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSString* uid = [defaults objectForKey:@"uid"];
+    SlideNavigationController* rootVC;
+    if (uid.length < 1) {
+        //未登录
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        rootVC = (SlideNavigationController*)[s instantiateViewControllerWithIdentifier:@"SliderNavigationVC"];
+    }
+    else
+    {
+        //用户登录过
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        rootVC = (SlideNavigationController*)[s instantiateViewControllerWithIdentifier:@"SlideMenu"];
+    }
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    self.window.rootViewController = rootVC;
+    
 
     SlideNavigationController *slide = [SlideNavigationController sharedInstance];
 
@@ -64,8 +84,11 @@
     slide.enableSwipeGesture = NO;
     slide.enableShadow = NO;
     slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
+    [slide.navigationBar setTintColor:[UIColor whiteColor]];
+//    [slide.navigationBar setBarTintColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
+    slide.navigationBar.translucent = NO;
+//    [slide.navigationBar setBackgroundColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
-    
     return YES;
 }
 

@@ -20,9 +20,9 @@
 #import "AppDelegate.h"
 
 @interface TimingMassageTableViewController () <TimingPlanDelegate>{
-    MBProgressHUD *_loadingHUD;
+    MBProgressHUD *_loading;
 	TimingPlanRequest *_timingPlanRequest;
-    
+    NSString* _uid;
 }
 
 @property (nonatomic, retain) NSMutableArray *timingMassageArray;
@@ -50,29 +50,25 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
 	
 	//MBProgressHUD
-	AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-	_loadingHUD = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
-	[appDelegate.window addSubview:_loadingHUD];
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loading];
 	
 	_timingPlanRequest = [TimingPlanRequest new];
 	_timingPlanRequest.overTime = 30;
 	_timingPlanRequest.delegate = self;
+    
+    //
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    _uid = [defaults objectForKey:@"uid"];
 }
                     
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-	
-    //清空本地通知
-//    NSInteger number =[[UIApplication sharedApplication] scheduledLocalNotifications].count;
-	
-//    NSLog(@"本地通知数量:%ld",number);
-//    NSLog(@"本地通知:%@",[[UIApplication sharedApplication] scheduledLocalNotifications]);
-    
 	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
 	if (reachability.reachable) {
-		_loadingHUD.labelText = NSLocalizedString( @"读取中...", nil);
-		[_loadingHUD show:YES];
+		[_loading show:YES];
         
         //同步数据
         NSLog(@"开始同步数据");
@@ -99,7 +95,7 @@
         }
         [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
         [self.tableView reloadData];
-        [_loadingHUD hide:YES];
+        [_loading hide:YES];
         
     } fail:^(NSDictionary *dic) {
         NSLog(@"定时计划网络请求失败");
@@ -107,7 +103,7 @@
         
         //查询去状态不是 未同步的删除 的所有数据
         [self loadLocalData];
-        [_loadingHUD hide:YES];
+        [_loading hide:YES];
     }];
 }
 
@@ -116,7 +112,7 @@
 {
     //查询去状态不是 未同步的删除 的所有数据
     NSLog(@"定时计划 读取本地数据");
-    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state < 3"]];
+    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
     self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
     [self.tableView reloadData];
 }
@@ -124,7 +120,7 @@
 #pragma mark - 同步本地数据
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue {
     if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"state > 0"]];
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
         if (plans.count > 0) {
             NSLog(@"同步中。。。");
             TimingPlan* plan = plans[0];
@@ -144,7 +140,7 @@
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
                     [self loadLocalData];
-                    [_loadingHUD hide:YES];
+                    [_loading hide:YES];
                 }];
             }
             else if (state == 2)
@@ -162,7 +158,7 @@
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
                     [self loadLocalData];
-                    [_loadingHUD hide:YES];
+                    [_loading hide:YES];
                 }];
             }
             else if (state == 3)
@@ -180,7 +176,7 @@
                     //同步失败的话，读取本地数据
                     NSLog(@"定时计划同步时失败");
                     [self loadLocalData];
-                    [_loadingHUD hide:YES];
+                    [_loading hide:YES];
                 }];
             }
             else
@@ -199,7 +195,7 @@
         //同步失败的话，读取本地数据
         NSLog(@"定时计划同步时失败");
         [self loadLocalData];
-        [_loadingHUD hide:YES];
+        [_loading hide:YES];
     }
 }
 
@@ -256,7 +252,7 @@
         // Delete the row from the data source
         TimingPlan *timingPlan = self.timingMassageArray[indexPath.row];
         
-		[_loadingHUD show:YES];
+		[_loading show:YES];
         //取消本地通知
         [timingPlan cancelLocalNotification];
         
@@ -269,7 +265,7 @@
             [timingPlan MR_deleteEntity];
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
             
-            [_loadingHUD hide:YES];
+            [_loading hide:YES];
         }
         else
         {
@@ -281,7 +277,7 @@
                 [timingPlan MR_deleteEntity];
                 [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                 
-                [_loadingHUD hide:YES];
+                [_loading hide:YES];
             } fail:^(NSDictionary *dic) {
                 //网络删除失败
                 
@@ -292,7 +288,7 @@
                 [self.timingMassageArray removeObjectAtIndex:indexPath.row];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
                 
-                [_loadingHUD hide:YES];
+                [_loading hide:YES];
             }];
         }
 		
