@@ -155,7 +155,6 @@
     Member* user = _memberArray[indexPath.row];
     [uVC editMode:user WithIndex:indexPath.row];
     [self.navigationController pushViewController:uVC animated:YES];
-
 }
 
 #pragma mark - 添加成员方法
