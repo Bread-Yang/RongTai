@@ -36,7 +36,7 @@
     str = [dic objectForKey:@"memberId"];
     self.memberId = [NSNumber numberWithUnsignedInteger:[str integerValue]];
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString* d = [dic objectForKey:@"birthday"];
     self.birthday = [formatter dateFromString:d];
 }
@@ -45,7 +45,7 @@
 -(NSDictionary*)memberToDictionary
 {
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDictionary* dic = @{
       @"name" : self.name,
       @"sex" : self.sex,

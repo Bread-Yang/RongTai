@@ -35,7 +35,12 @@
 /**
  *  超时调用
  */
--(void)loginRequestrequestTimeOut:(LoginRequest*)request;
+-(void)loginRequestTimeOut:(LoginRequest*)request;
+
+/**
+ *  忘记密码
+ */
+-(void)loginRequestForgetPasswordFinished:(BOOL)success Result:(NSDictionary*)result;
 
 @end
 
@@ -67,6 +72,11 @@
  *  第三方登录
  */
 -(void)thirdLoginBySrc:(NSString*)name Uid:(NSString*)uid Token:(NSString*)token;
+
+/**
+ *  忘记密码
+ */
+-(void)resetPasswordByByPhone:(NSString*)phone Password:(NSString*)password Code:(NSString*)code;
 
 /**
  *  取消请求

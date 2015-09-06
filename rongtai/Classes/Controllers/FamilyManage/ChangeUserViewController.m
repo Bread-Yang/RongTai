@@ -130,7 +130,7 @@
     Member* m = _users[indexPath.row];
     cell.textLabel.text = m.name;
     cell.textLabel.textColor = BLACK;
-    if (m.memberId == _currentMemberId) {
+    if ([m.memberId integerValue] == [_currentMemberId integerValue]) {
         cell.accessoryView = [self selectedView];
     }
     if ([m.imageURL isEqualToString:@"default"]) {

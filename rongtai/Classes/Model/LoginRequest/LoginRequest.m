@@ -156,6 +156,46 @@
     }];
 }
 
+#pragma mark - 忘记密码
+-(void)resetPasswordByByPhone:(NSString*)phone Password:(NSString*)password Code:(NSString*)code
+{
+    _isTimeOut = YES;
+    //    [self cancelRequest];
+    NSString* url = [NSString stringWithFormat:@"%@/reset_password",REQUESTURL];
+    NSLog(@"请求链接：%@\n请求参数：phone：%@\npassword：%@\ncode：%@\n",url,phone,password,code);
+    NSMutableDictionary* parameters = [NSMutableDictionary new];
+    [parameters setObject:phone forKey:@"phone"];
+    [parameters setObject:password forKey:@"new_pwd"];
+    [parameters setObject:code forKey:@"code"];
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
+    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
+        NSError* error;
+        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingAllowFragments error:&error];
+        if (error) {
+            NSLog(@"忘记密码，解析数据出错:%@",error);
+            if ([self.delegate respondsToSelector:@selector(loginRequestForgetPasswordFinished:Result:)]) {
+                [self.delegate loginRequestForgetPasswordFinished:YES Result:nil];
+            }
+        }
+        else
+        {
+            NSLog(@"忘记密码修改成功:%@",dic);
+            if ([self.delegate respondsToSelector:@selector(loginRequestForgetPasswordFinished:Result:)]) {
+                [self.delegate loginRequestForgetPasswordFinished:YES Result:dic];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
+        NSLog(@"忘记密码修改失败:%@",error);
+        if ([self.delegate respondsToSelector:@selector(loginRequestForgetPasswordFinished:Result:)]) {
+            [self.delegate loginRequestForgetPasswordFinished:NO Result:nil];
+        }
+    }];
+}
+
 #pragma mark - 第三方登录
 -(void)thirdLoginBySrc:(NSString *)name Uid:(NSString *)uid Token:(NSString *)token
 {
@@ -212,8 +252,8 @@
     if (_isTimeOut) {
         NSLog(@"登陆请求超时");
         [self cancelRequest];
-        if ([self.delegate respondsToSelector:@selector(loginRequestrequestTimeOut:)]) {
-            [self.delegate loginRequestrequestTimeOut:self];
+        if ([self.delegate respondsToSelector:@selector(loginRequestTimeOut:)]) {
+            [self.delegate loginRequestTimeOut:self];
         }
     }
 }

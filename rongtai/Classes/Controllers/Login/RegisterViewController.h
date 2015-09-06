@@ -11,4 +11,6 @@
 
 @interface RegisterViewController : BasicViewController
 
+-(void)forgetPasswordMode;
+
 @end

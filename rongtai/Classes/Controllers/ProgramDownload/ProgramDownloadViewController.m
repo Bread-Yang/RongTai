@@ -44,9 +44,9 @@
 	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"安装中", nil);
 	
 	//MBProgressHUD
-	AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-	_loadingHUD = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
-	[appDelegate.window addSubview:_loadingHUD];
+    _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
+    _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loadingHUD];
 	
 	UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 	self.navigationItem.leftBarButtonItem = item;

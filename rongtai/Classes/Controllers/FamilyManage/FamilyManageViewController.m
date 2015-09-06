@@ -99,6 +99,7 @@
         
         NSLog(@"请求成员");
         [_mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+//            NSLog(@"成员:%@",members);
             [Member updateLocalDataByNetworkData:members];
             
             _memberArray = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
