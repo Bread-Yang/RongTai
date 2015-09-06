@@ -6,8 +6,13 @@
 //  Copyright (c) 2015 William-zhang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface UIImageView : NSObject
+@interface UIImageView (ImageBlur)
+
+/**
+ *	先在本地看有没有缓存,没有再从网上拉
+ */
++ (void)loadImageByURL:(NSString *)imageURL imageView:(UIImageView *)imageView;
 
 @end

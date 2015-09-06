@@ -80,7 +80,7 @@
  *
  *  @return Selected indexes
  */
-- (NSOrderedSet *)selectedIndexes;
+- (NSOrderedSet *)getAlreadySelectedIndexes;
 
 ///-------------------------------
 /// @name THSegmentedControl Delegate

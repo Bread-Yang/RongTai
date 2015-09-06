@@ -117,8 +117,9 @@
 
 - (void)setIndex:(NSInteger)index {
 	if (self.infiniteScrolling) {
-		if (index < self.items.count - 2) {
+		if (index < self.items.count) {
 			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
+			
 			//			NSLog(@"self.current : %i", self.currentIndex.row);
 		}
 	} else {

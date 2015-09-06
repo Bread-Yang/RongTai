@@ -28,6 +28,7 @@
 #import "MemberRequest.h"
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
+#import "UIImageView+RT.h"
 
 #import "ProgramCount.h"
 
@@ -404,28 +405,8 @@
 				cell.textLabel.text = networkMassage.name;
 				cell.detailTextLabel.text = networkMassage.mDescription;
 				
-				// 图片
-				UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", networkMassage.imageUrl]];
-				if (img) {			// 本地图片
-					cell.imageView.image = img;
-				} else {			// 网络图片
-					NSURL *url = [NSURL URLWithString:[RongTaiFileDomain stringByAppendingString:networkMassage.imageUrl]];
-					
-					NSURLRequest *request = [NSURLRequest requestWithURL:url];
-					UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder"];
-					
-					__weak BasicTableViewCell *weakCell = cell;
-					
-					[cell.imageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-						
-						weakCell.imageView.image = image;
-						[weakCell setNeedsLayout];
-						[image saveImageByName:[NSString stringWithFormat:@"%@.jpg", networkMassage.imageUrl]];
-						
-					} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-						NSLog(@"请求失败");
-					}];
-				}
+				[UIImageView loadImageByURL:networkMassage.imageUrl imageView:cell.imageView];
+				
 			}
 		}
 	}
@@ -441,8 +422,6 @@
 			return 0;
 		}
 	}
-	
-	cell.hidden = NO;
 	return 80;
 }
 

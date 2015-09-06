@@ -16,8 +16,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-//        self.itemSize = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
-		
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
         self.minimumLineSpacing = 50.0;		// 这个定义了每个item在水平方向上的最小间距

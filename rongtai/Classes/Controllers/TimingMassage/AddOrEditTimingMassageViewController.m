@@ -13,6 +13,7 @@
 #import "TimingPlanRequest.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
+#import "RTBleConnector.h"
 
 @interface AddOrEditTimingMassageViewController () <TimingPlanDelegate>{
 	id segment[7];
@@ -101,13 +102,38 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
+	// 编辑模式下
 	if (self.timingPlan) {
+		
+		// LineCollectionView的显示
+		for (int i = 0; i < _modeNameArray.count; i++) {
+			if ([self.timingPlan.massageName isEqualToString:[_modeNameArray objectAtIndex:i]]) {
+				[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+				self.modeLabel.text = [self.modeNameArray objectAtIndex:i];
+				break;
+			}
+		}
+		
+		
+		// NAPickerView的显示
 		NSArray *timeArray = [self.timingPlan.ptime componentsSeparatedByString:@":"];
 		NSInteger hour = [timeArray[0] integerValue];
 		NSInteger minute = [timeArray[1] integerValue];
 		
 		[_leftPickView setIndex:hour];
 		[_rightPickView setIndex:minute];
+		
+		
+		// THSegmentedControl的显示
+		NSArray *splitDayArray = [self.timingPlan.days componentsSeparatedByString:@","];
+		NSMutableOrderedSet *alreadySet = [[NSMutableOrderedSet alloc] init];
+		
+		if (splitDayArray) {
+			for (NSString *num in splitDayArray) {
+				[alreadySet addObject:@([num integerValue] - 1)];
+			}
+			[self.weekDaySegmentControl setSelectedIndexes:alreadySet];
+		}
 	}
 }
 
@@ -268,10 +294,10 @@
     self.timingPlan.isOn = [NSNumber numberWithBool:YES];
     self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
     
-    NSOrderedSet *selectDays = [self.weekDaySegmentControl selectedIndexes];
+    NSOrderedSet *selectDays = [self.weekDaySegmentControl getAlreadySelectedIndexes];
     
-    NSLog(@"selectedIndex : %@", [self.weekDaySegmentControl selectedIndexes]);
-    
+    NSLog(@"selectedIndex : %@", [self.weekDaySegmentControl getAlreadySelectedIndexes]);
+	
     if ([selectDays count] == 0) {
         self.timingPlan.days = @"0";
     } else {
@@ -324,33 +350,36 @@
 	if (indexPath.row < 6) {
 		
 	} else {
-		
+		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6];
+		if (commandId == 0) {
+			cell.hidden = YES;
+		} else {
+			cell.hidden = NO;
+		}
 	}
 	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%li", indexPath.row + 1]];
 
-	
-	if (indexPath.row == 8) {
-		cell.hidden = YES;
-	} else {
-		cell.hidden = NO;
-	}
 	return cell;
 }
 
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-//	return 50.0;
-//}
-//
-//#pragma mark --UICollectionViewDelegateFlowLayout  
-//
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//	
-//	if (indexPath.row == 8) {
-//		return CGSizeZero;
-//	} else {
-//		return [((LineCollectionView *)collectionView) getCellSize];
-//	}
-//}
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+	return 50.0;
+}
+
+#pragma mark --UICollectionViewDelegateFlowLayout  
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+	
+	if (indexPath.row >= 6) {
+		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+			return CGSizeZero;
+		} else {
+			return [((LineCollectionView *)collectionView) getCellSize];
+		}
+	} else {
+		return [((LineCollectionView *)collectionView) getCellSize];
+	}
+}
 
 
 #pragma mark - UIPickerViewDataSource
