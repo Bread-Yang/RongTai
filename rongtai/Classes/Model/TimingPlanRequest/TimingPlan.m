@@ -96,7 +96,7 @@
 			localNofication.alertAction = @"action";
 			localNofication.hasAction = YES;
 			
-			NSLog(@"localNofication.repeatInterval : %zd", localNofication.repeatInterval);
+//			NSLog(@"localNofication.repeatInterval : %zd", localNofication.repeatInterval);
 			
 			[self addLocalNotification:localNofication];
 			[[UIApplication sharedApplication] scheduleLocalNotification:localNofication];

@@ -13,6 +13,7 @@
 #import "RongTaiConstant.h"
 #import "AFNetworking.h"
 #import "CustomIOSAlertView.h"
+#import "UIImageView+RT.h"
 
 
 @implementation ProgramDownloadTableViewCell 
@@ -35,28 +36,7 @@
 - (void)setMassageProgram:(MassageProgram *)massageProgram {
 	_massageProgram = massageProgram;
 	
-	// 图片
-	UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", massageProgram.imageUrl]];
-	if (img) {			// 本地图片
-		self.programImageView.image = img;
-	} else {			// 网络图片
-		NSURL *url = [NSURL URLWithString:[RongTaiFileDomain stringByAppendingString:massageProgram.imageUrl]];
-		
-		NSURLRequest *request = [NSURLRequest requestWithURL:url];
-		UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder"];
-		
-		__weak ProgramDownloadTableViewCell *weakCell = self;
-		
-		[self.programImageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			
-			weakCell.programImageView.image = image;
-			[weakCell setNeedsLayout];
-			[image saveImageByName:[NSString stringWithFormat:@"%@.jpg", weakCell.massageProgram.imageUrl]];
-			
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			NSLog(@"请求失败");
-		}];
-	}
+	[UIImageView loadImageByURL:massageProgram.imageUrl imageView:self.programImageView];
 	
 	// 网络程序名
 	self.programNameLabel.text = massageProgram.name;

@@ -26,7 +26,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
 @property (nonatomic, strong) NSMutableArray      *segments;
 @property (nonatomic, strong) NSMutableArray      *segmentLabels;
 @property (nonatomic, strong) NSMutableArray      *segmentSeperators;
-@property (nonatomic, strong) NSMutableOrderedSet *selectedIndexSet;
+@property (nonatomic, strong) NSMutableOrderedSet *alreadySelectedIndexSet;
 
 @end
 
@@ -109,20 +109,20 @@ float const THSegmentedControlAnimationDuration = 0.1f;
 
 #pragma mark - Getter for selected indexes
 
-- (NSOrderedSet *)selectedIndexes
-{
-    if (_selectedIndexSet) {
-        return [_selectedIndexSet copy];
+- (NSOrderedSet *)getAlreadySelectedIndexes {
+    if (_alreadySelectedIndexSet) {
+        return [_alreadySelectedIndexSet copy];
     }
     return [[NSOrderedSet alloc] init];
 }
 
 - (void)setSelectedIndexes:(NSOrderedSet *)selectedIndexes {
     if (!selectedIndexes) {
-        _selectedIndexSet = [[NSMutableOrderedSet alloc] init];
-    } else if (_selectedIndexSet != selectedIndexes) {
-        _selectedIndexSet = [selectedIndexes mutableCopy];
+        _alreadySelectedIndexSet = [[NSMutableOrderedSet alloc] init];
+    } else if (_alreadySelectedIndexSet != selectedIndexes) {
+        _alreadySelectedIndexSet = [selectedIndexes mutableCopy];
     }
+	[self setNeedsDisplay];
 }
 
 #pragma mark - THSegmentedControl Public Instance Methods
@@ -187,7 +187,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
         }
         
         for (int i = 0; i < self.segments.count; i++) {
-            [self layoutSectionWithIndex:i rect:modifiedRect selected:[self.selectedIndexes containsObject:[NSNumber numberWithInt:i]]];
+            [self layoutSectionWithIndex:i rect:modifiedRect selected:[[self getAlreadySelectedIndexes] containsObject:[NSNumber numberWithInt:i]]];
         }
     }
     [self ensureProperSeperatorColor];
@@ -281,12 +281,12 @@ float const THSegmentedControlAnimationDuration = 0.1f;
 
 - (void)ensureProperSeperatorColor
 {
-    NSUInteger sentinelCount = [[self.selectedIndexes array] count]  - 1;
-    NSMutableSet *segmentSet = [[NSMutableSet alloc] initWithCapacity:self.selectedIndexes.count];
+    NSUInteger sentinelCount = [[[self getAlreadySelectedIndexes] array] count]  - 1;
+    NSMutableSet *segmentSet = [[NSMutableSet alloc] initWithCapacity:[self getAlreadySelectedIndexes].count];
     
-    [self.selectedIndexes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [[self getAlreadySelectedIndexes] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSInteger selectedIndex = [(NSNumber *)obj integerValue];
-        if (!(idx == sentinelCount) && (selectedIndex + 1) == [(NSNumber *)self.selectedIndexes[idx + 1] integerValue]) {
+        if (!(idx == sentinelCount) && (selectedIndex + 1) == [(NSNumber *)[self getAlreadySelectedIndexes][idx + 1] integerValue]) {
             [segmentSet addObject:[NSNumber numberWithInteger:selectedIndex]];
         }
     }];
@@ -385,7 +385,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
         return NO;
     }
     
-    NSMutableOrderedSet *mutableSelectedIndexes = [self.selectedIndexes mutableCopy];
+    NSMutableOrderedSet *mutableSelectedIndexes = [[self getAlreadySelectedIndexes] mutableCopy];
     if (highlighted) {
         [mutableSelectedIndexes addObject:@(index + 1)];
     } else {
@@ -397,7 +397,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
         NSNumber *pos2 = (NSNumber *)obj2;
         return (NSComparisonResult)[pos1 compare:pos2];
     }];
-    self.selectedIndexes = [mutableSelectedIndexes copy];
+    self.alreadySelectedIndexSet = [mutableSelectedIndexes copy];
     [self ensureProperSeperatorColor];
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     return YES;

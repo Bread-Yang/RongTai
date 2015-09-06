@@ -187,6 +187,7 @@
 		569360271B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */; };
 		569360291B79E910001B9BF5 /* 003.bin in Resources */ = {isa = PBXBuildFile; fileRef = 569360281B79E910001B9BF5 /* 003.bin */; };
 		5693602C1B7A049B001B9BF5 /* RTNetworkProgramStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */; };
+		56B0E26F1B96980B001C96FA /* UIImageView+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B0E26E1B96980B001C96FA /* UIImageView+RT.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
 		56C349471B15A927007C8B3F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349461B15A927007C8B3F /* CoreTelephony.framework */; };
@@ -557,6 +558,8 @@
 		569360281B79E910001B9BF5 /* 003.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 003.bin; sourceTree = "<group>"; };
 		5693602A1B7A049B001B9BF5 /* RTNetworkProgramStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNetworkProgramStatus.h; sourceTree = "<group>"; };
 		5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNetworkProgramStatus.m; sourceTree = "<group>"; };
+		56B0E26D1B96980B001C96FA /* UIImageView+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+RT.h"; sourceTree = "<group>"; };
+		56B0E26E1B96980B001C96FA /* UIImageView+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RT.m"; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		56C349441B15A699007C8B3F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		56C349461B15A927007C8B3F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -968,6 +971,8 @@
 				3DE5D6721B5F6E6600489C62 /* UIBarButtonItem+goBack.m */,
 				56F2DA3B1B7455B400C8086D /* UIView+RT.h */,
 				56F2DA3C1B7455B400C8086D /* UIView+RT.m */,
+				56B0E26D1B96980B001C96FA /* UIImageView+RT.h */,
+				56B0E26E1B96980B001C96FA /* UIImageView+RT.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1834,6 +1839,7 @@
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
 				3DF3042E1B38FE2500DD51D3 /* NSManagedObject+MagicalFinders.m in Sources */,
+				56B0E26F1B96980B001C96FA /* UIImageView+RT.m in Sources */,
 				3D0258FB1B1D525E006C9179 /* UIView+IQKeyboardToolbar.m in Sources */,
 				3DF0FE0F1B85741A001CAAFE /* TimingPlanRequest.m in Sources */,
 				567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */,

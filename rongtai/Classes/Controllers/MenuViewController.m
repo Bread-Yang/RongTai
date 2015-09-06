@@ -198,10 +198,10 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-//        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-//        [fVC saveMode];
-//        [sl pushViewController:fVC animated:YES];
+        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+        [fVC saveMode];
+        [sl pushViewController:fVC animated:YES];
         
     }
     else if (indexPath.row == 6)
