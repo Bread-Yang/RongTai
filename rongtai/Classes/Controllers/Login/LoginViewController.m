@@ -120,6 +120,7 @@
 }
 
 - (void)loginRequestThirdLoginFinished:(BOOL)success Result:(NSDictionary *)result {
+    [_loading hide:YES];
 	if (success) {
 		NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
 		NSString* token = [result objectForKey:@"token"];
@@ -130,6 +131,10 @@
 		
 		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 	}
+    else
+    {
+        [self showProgressHUDByString:@"第三方授权失败"];
+    }
 }
 
 -(void)loginRequestrequestTimeOut:(LoginRequest *)request
@@ -155,11 +160,15 @@
 							   NSString *token = [[userInfo credential] token];
 							   
 							   NSLog(@"QQ登录返回的uid : %@, token : %@", uid, token);
-							   
-							   [_loginRequest thirdLoginBySrc:@"qq" Uid:uid Token:token];
+                               if (uid.length>0&&token.length>0) {
+                                   [_loading show:YES];
+                                   [_loginRequest thirdLoginBySrc:@"qq" Uid:uid Token:token];
+                               }
+                               else
+                               {
+                                   [self showProgressHUDByString:@"第三方授权失败"];
+                               }
 						   }];
-	
-	
 }
 
 #pragma mark - 新浪登陆按钮方法
@@ -173,8 +182,14 @@
 							   NSString *token = [[userInfo credential] token];
 							   
 							   NSLog(@"SINA登录返回的uid : %@, token : %@", uid, token);
-							   
-							   [_loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
+                               if (uid.length>0&&token.length>0) {
+                                   [_loading show:YES];
+                                   [_loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
+                               }
+                               else
+                               {
+                                   [self showProgressHUDByString:@"第三方授权失败"];
+                               }
 						   }];
 }
 
