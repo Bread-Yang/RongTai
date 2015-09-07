@@ -117,10 +117,15 @@
 
 - (void)setIndex:(NSInteger)index {
 	if (self.infiniteScrolling) {
-		if (index < self.items.count) {
-			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
+//		if (index < self.items.count - 2) {
+//			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
+//		}
+		if (index > self.items.count - 3) {
+			self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
 			
 			//			NSLog(@"self.current : %i", self.currentIndex.row);
+		} else {
+			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
 		}
 	} else {
 		self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
@@ -257,7 +262,6 @@
 		CGFloat currentOffsetX = scrollView.contentOffset.x;
 		CGFloat currentOffSetY = scrollView.contentOffset.y;
 		CGFloat contentHeight = scrollView.contentSize.height;
-		
 		
 		if (currentOffSetY < ((CGFloat)contentHeight / self.items.count * 2)) {
 			scrollView.contentOffset = CGPointMake(currentOffsetX, (currentOffSetY + (contentHeight / 2)));

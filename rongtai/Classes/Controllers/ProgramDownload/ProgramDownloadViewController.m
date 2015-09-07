@@ -84,6 +84,12 @@
 			
 			[_loadingHUD hide:YES];
 			
+			_programArray = [NSArray arrayWithArray:localMassageProgramArray];
+			
+			[self.tableView reloadData];
+			
+			self.tableView.hidden = NO;
+			
 		}];
 		
 //		NSLog(@"请求成员");
@@ -219,9 +225,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     ProgramDownloadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProgramDownloadTableViewCell" forIndexPath:indexPath];
+	
+	UIImageView *bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_bg"]];
+	
+	cell.backgroundView = bgView;
+	
 	cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
 	
-	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:cell.massageProgram.commandId];
+	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
 	if (isAlreadyInstall) {
 		cell.isAlreadyDownload = true;

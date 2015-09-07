@@ -458,7 +458,7 @@ NSString * NSDataToHex(NSData *data) {
 	
 	[self.readFile read:binName];
 	
-	NSInteger installIndex = [self.rtNetworkProgramStatus getEmptyPositionIndex];
+	NSInteger installIndex = [self.rtNetworkProgramStatus getEmptySlotIndex];
 	
 	Byte byte[] = {0xf0, 0xa5, 0x10, 1, installIndex, installIndex, 0x4a, 0xf1};
 	NSInteger sumData = byte[1] + byte[2] + byte[3] + byte[4] + byte[5];
@@ -471,7 +471,7 @@ NSString * NSDataToHex(NSData *data) {
 }
 
 - (NSData *)deleteProgramMassage:(NSInteger)massageId {
-	NSInteger deleteIndex = [self.rtNetworkProgramStatus getIndexByMassageId:massageId];
+	NSInteger deleteIndex = [self.rtNetworkProgramStatus getSlotIndexByMassageId:massageId];
 	if (deleteIndex != -1) {
 		Byte byte[] = {0xf0, 0xa5, 0x10, 2, deleteIndex, deleteIndex, 0x4a, 0xf1};
 		NSInteger sumData = byte[1] + byte[2] + byte[3] + byte[4] + byte[5];

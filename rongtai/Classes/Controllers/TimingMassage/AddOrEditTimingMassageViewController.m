@@ -110,14 +110,19 @@
 	if (self.timingPlan) {
 		
 		// LineCollectionView的显示
-		for (int i = 0; i < _modeNameArray.count; i++) {
-			if ([self.timingPlan.massageName isEqualToString:[_modeNameArray objectAtIndex:i]]) {
-				[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-				self.modeLabel.text = [self.modeNameArray objectAtIndex:i];
-				break;
+		NSInteger selectIndex = [self.timingPlan.massageProgamId integerValue];
+		if (selectIndex < 6) {
+			[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+			self.modeLabel.text = [self.modeNameArray objectAtIndex:selectIndex];
+		} else {
+			for (int i = 6; i < _modeNameArray.count; i++) {
+				if ([self.timingPlan.massageName isEqualToString:[_modeNameArray objectAtIndex:i]]) {
+					[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+					self.modeLabel.text = [self.modeNameArray objectAtIndex:i];
+					break;
+				}
 			}
 		}
-		
 		
 		// NAPickerView的显示
 		NSArray *timeArray = [self.timingPlan.ptime componentsSeparatedByString:@":"];
@@ -126,7 +131,7 @@
 		
 		[_leftPickView setIndex:hour];
 		[_rightPickView setIndex:minute];
-		
+
 		
 		// THSegmentedControl的显示
 		NSArray *splitDayArray = [self.timingPlan.days componentsSeparatedByString:@","];
@@ -215,6 +220,7 @@
 }
 
 #pragma mark - Action
+
 - (IBAction)saveAction:(id)sender {
     if (self.timingPlan) {
         //保存信息到对象中
@@ -297,7 +303,13 @@
     self.timingPlan.massageName = self.modeNameArray[self.collectionView.currentSelectItemIndex];
     self.timingPlan.ptime = [NSString stringWithFormat:@"%02zd:%02zd", hour, minute];
     self.timingPlan.isOn = [NSNumber numberWithBool:YES];
-    self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
+	NSInteger selectIndex = self.collectionView.currentSelectItemIndex;
+	if (selectIndex < 6) {
+		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:selectIndex];
+	} else {
+		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
+	}
+	
     
     NSOrderedSet *selectDays = [self.weekDaySegmentControl getAlreadySelectedIndexes];
     
@@ -355,12 +367,14 @@
 	if (indexPath.row < 6) {
 		
 	} else {
-		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6];
-		if (commandId == 0) {
-			cell.hidden = YES;
-		} else {
-			cell.hidden = NO;
-		}
+		// 连不连接上设备都不显示云养程序
+		cell.hidden = YES;
+//		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6];
+//		if (commandId == 0) {
+//			cell.hidden = YES;
+//		} else {
+//			cell.hidden = NO;
+//		}
 	}
 	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%li", indexPath.row + 1]];
 
@@ -376,11 +390,13 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 	if (indexPath.row >= 6) {
-		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
-			return CGSizeZero;
-		} else {
-			return [((LineCollectionView *)collectionView) getCellSize];
-		}
+		// 连不连接上设备都不显示云养程序
+		return CGSizeZero;
+//		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+//			return CGSizeZero;
+//		} else {
+//			return [((LineCollectionView *)collectionView) getCellSize];
+//		}
 	} else {
 		return [((LineCollectionView *)collectionView) getCellSize];
 	}

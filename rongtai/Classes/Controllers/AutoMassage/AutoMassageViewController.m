@@ -68,7 +68,7 @@
     RTBleConnector* bleConnector = [RTBleConnector shareManager];
     _autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
     NSLog(@"按摩状态数据:%ld",_autoMassageFlag);
-    if (_autoMassageFlag>=1&&_autoMassageFlag!=7) {
+    if (_autoMassageFlag >= 1&&_autoMassageFlag!=7) {
         NSLog(@"自动按摩状态");
         switch (_autoMassageFlag) {
             case 1:
@@ -112,7 +112,7 @@
     }
     
     NSLog(@"programName:%@",_programName);
-    if (_programName.length<1) {
+    if (_programName.length < 1) {
         self.title = @"自动按摩";
     }
     else
@@ -210,7 +210,7 @@
         
             //按摩记录
             MassageRecord* massageRecord;
-            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(massageName == %@) AND (date == %@) AND (uid == %@)",_programName,date,_uid]];
+            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,_uid]];
             if (records.count > 1) {
                 NSLog(@"查找数组:%@",records);
                 massageRecord = records[0];
@@ -279,32 +279,72 @@
 	NSString *functionString = nil;
 	
 	// 按摩简介
-	switch (rtMassageChairStatus.autoProgramType) {
-			
-  		case RtMassageChairProgramSportRecover:
-			functionString = NSLocalizedString(@"运动恢复功能", nil);
-			break;
-			
-		case RtMassageChairProgramExtension:
-			functionString = NSLocalizedString(@"舒展活络功能", nil);
-			break;
-			
-		case RtMassageChairProgramRestAndSleep:
-			functionString = NSLocalizedString(@"休憩促眠功能", nil);
-			break;
-			
-		case RtMassageChairProgramWorkingRelieve:
-			functionString = NSLocalizedString(@"工作减压功能", nil);
-			break;
-			
-		case RtMassageChairProgramShoulderAndNeck:
-			functionString = NSLocalizedString(@"肩颈重点功能", nil);
-			break;
-			
-		case RtMassageChairProgramWaistAndSpine:
-			functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
-			break;
+	
+	// 当前为自动程序
+	if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+		
+		switch (rtMassageChairStatus.autoProgramType) {
+				
+			case RtMassageChairProgramSportRecover:
+				self.title = NSLocalizedString(@"运动恢复", nil);
+				functionString = NSLocalizedString(@"运动恢复功能", nil);
+				break;
+				
+			case RtMassageChairProgramExtension:
+				self.title = NSLocalizedString(@"舒展活络", nil);
+				functionString = NSLocalizedString(@"舒展活络功能", nil);
+				break;
+				
+			case RtMassageChairProgramRestAndSleep:
+				self.title = NSLocalizedString(@"休憩促眠", nil);
+				functionString = NSLocalizedString(@"休憩促眠功能", nil);
+				break;
+				
+			case RtMassageChairProgramWorkingRelieve:
+				self.title = NSLocalizedString(@"工作减压", nil);
+				functionString = NSLocalizedString(@"工作减压功能", nil);
+				break;
+				
+			case RtMassageChairProgramShoulderAndNeck:
+				self.title = NSLocalizedString(@"肩颈重点", nil);
+				functionString = NSLocalizedString(@"肩颈重点功能", nil);
+				break;
+				
+			case RtMassageChairProgramWaistAndSpine:
+				self.title = NSLocalizedString(@"腰椎舒缓", nil);
+				functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
+				break;
+		}
+		
+	} else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
+		
+		MassageProgram *networkProgram = nil;
+		
+		switch (rtMassageChairStatus.networkProgramType) {
+				
+			case RTMassageChairProgramNetwork1:
+				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
+				break;
+				
+			case RTMassageChairProgramNetwork2:
+				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
+				break;
+				
+			case RTMassageChairProgramNetwork3:
+				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
+				break;
+				
+			case RTMassageChairProgramNetwork4:
+				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
+				break;
+			}
+		
+		if (networkProgram) {
+			self.title = networkProgram.name;
+			functionString = networkProgram.mDescription;
+		}
 	}
+	
 	_functionLabel.text = functionString;
 	[_functionLabel sizeToFit];
 	
