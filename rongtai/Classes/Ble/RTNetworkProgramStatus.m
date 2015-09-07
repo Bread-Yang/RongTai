@@ -7,7 +7,6 @@
 //
 
 #import "RTNetworkProgramStatus.h"
-#import "MassageProgram.h"
 #import "CoreData+MagicalRecord.h"
 
 @implementation RTNetworkProgramStatus

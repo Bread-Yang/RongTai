@@ -435,7 +435,7 @@
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
 	
 	if (indexPath.row >= 6) {
-		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6];
+		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6];
 		if (commandId == 0) {
 			cell.hidden = YES;
 		} else {
@@ -457,7 +457,7 @@
 	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
 	
 	if (indexPath.row >= 6) {
-		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getIntByIndex:indexPath.row - 6] == 0) {
+		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6] == 0) {
 			return 0;
 		}
 	}

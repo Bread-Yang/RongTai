@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MassageProgram.h"
 
 @interface RTNetworkProgramStatus : NSObject
 

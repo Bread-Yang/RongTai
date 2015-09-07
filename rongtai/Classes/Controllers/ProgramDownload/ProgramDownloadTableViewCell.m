@@ -68,7 +68,7 @@
 			[[RTBleConnector shareManager] showConnectDialog];
 		} else {
 			// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
-			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptyPositionIndex] == -1) {
+			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptySlotIndex] == -1) {
 				
 				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
 				tipsDialog.isReconnectDialog = YES;
