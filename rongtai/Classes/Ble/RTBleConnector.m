@@ -573,7 +573,7 @@ NSString * NSDataToHex(NSData *data) {
 	self.isStartInstall = YES;
 	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
 
-    if (self.readFile.resultData.length<1) {
+    if (self.readFile.resultData.length < 1) {
         NSLog(@"读取文件长度为零😱");
         return;
     }
