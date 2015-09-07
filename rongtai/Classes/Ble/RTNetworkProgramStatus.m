@@ -7,10 +7,12 @@
 //
 
 #import "RTNetworkProgramStatus.h"
+#import "MassageProgram.h"
+#import "CoreData+MagicalRecord.h"
 
 @implementation RTNetworkProgramStatus
 
-- (NSInteger)getEmptyPositionIndex {
+- (NSInteger)getEmptySlotIndex {
 	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
 		NSInteger value = [((NSNumber *)[self.networkProgramStatusArray objectAtIndex:i]) intValue];
 		if (value == 0) {
@@ -20,7 +22,7 @@
 	return -1;
 }
 
-- (NSInteger)getIntByIndex:(NSInteger)index {
+- (NSInteger)getMassageIdBySlotIndex:(NSInteger)index {
 	if (index < 0 || index > [self.networkProgramStatusArray count] - 1) {
 		return 0;
 	}
@@ -32,7 +34,7 @@
 	return 0;
 }
 
-- (NSInteger)getIndexByMassageId:(NSInteger)massageId {
+- (NSInteger)getSlotIndexByMassageId:(NSInteger)massageId {
 	for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
 		if ([(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue] == massageId) {
 			return i + 1;
@@ -48,6 +50,15 @@
 		}
 	}
 	return false;
+}
+
+- (MassageProgram *)getNetworkProgramNameBySlotIndex:(NSInteger)slotIndex {
+	NSInteger massageId = [self getMassageIdBySlotIndex:slotIndex];
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"commandId = %@", [NSNumber numberWithInteger:massageId]];
+	MassageProgram *massageProgram = [MassageProgram MR_findAllWithPredicate:predicate][0];
+	
+	return massageProgram;
 }
 
 @end

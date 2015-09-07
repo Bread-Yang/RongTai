@@ -45,6 +45,23 @@ typedef NS_ENUM(NSInteger, RTMassageChairDeviceStatus) {
 typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
 	
 	/**
+	 *	自动按摩程序, 地址13位 : massageProgramFlag < 7
+	 */
+	RtMassageChairProgramAuto,
+	
+	/**
+	 *	手动按摩程序, 地址13位 : massageProgramFlag == 7
+	 */
+	RtMassageChairProgramManual,
+	
+	/**
+	 *	网络按摩程序, 地址13位 : massageProgramFlag > 7
+	 */
+	RtMassageChairProgramNetwork,
+	
+	// 以下是自动程序
+	
+	/**
 	 *	自动按摩程序 : 运动恢复, 地址13位 : massageProgramFlag == 1
 	 */
 	RtMassageChairProgramSportRecover,
@@ -74,20 +91,7 @@ typedef NS_ENUM(NSInteger, RTMassageChairProgramType) {
 	 */
 	RtMassageChairProgramWaistAndSpine,
 	
-	/**
-	 *	自动按摩程序, 地址13位 : massageProgramFlag < 7
-	 */
-	RtMassageChairProgramAuto,
-	
-	/**
-	 *	手动按摩程序, 地址13位 : massageProgramFlag == 7
-	 */
-	RtMassageChairProgramManual,
-	
-	/**
-	 *	网络按摩程序, 地址13位 : massageProgramFlag > 7
-	 */
-	RtMassageChairProgramNetwork,
+	// 以下是网络程序
 	
 	/**
 	 *	网络按摩程序 : 网络程序1

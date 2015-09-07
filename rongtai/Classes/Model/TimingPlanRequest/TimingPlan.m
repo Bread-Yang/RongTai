@@ -27,7 +27,7 @@
 	self.ptime = [json objectForKey:@"ptime"];
 	self.days = [json objectForKey:@"days"];
 	self.isOn = [NSNumber numberWithBool:[[json objectForKey:@"isOpen"] unsignedIntegerValue] == 1];
-	self.massageProgamId = [NSNumber numberWithInteger:[[json objectForKey:@"massageProgameId"] unsignedIntegerValue]];
+	self.massageProgamId = [NSNumber numberWithInteger:[[json objectForKey:@"massageProgramId"] unsignedIntegerValue]];
 }
 
 #pragma mark - 根据一条TimingPlan的Json数据更新数据库
@@ -57,7 +57,7 @@
 						  @"ptime" : self.ptime,
 						  @"days" : self.days,
 						  @"isOpen" : self.isOn,
-						  @"massageProgameId" : self.massageProgamId
+						  @"massageProgramId" : self.massageProgamId
 						  };
 	return dic;
 }

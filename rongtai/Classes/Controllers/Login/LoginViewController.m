@@ -181,12 +181,12 @@
 							   NSString *token = [[userInfo credential] token];
 							   
 							   NSLog(@"QQ登录返回的uid : %@, token : %@", uid, token);
-                               if (uid.length>0&&token.length>0) {
+                               if (uid.length > 0 && token.length > 0) {
+								   
                                    [_loading show:YES];
                                    [_loginRequest thirdLoginBySrc:@"qq" Uid:uid Token:token];
-                               }
-                               else
-                               {
+								   
+                               } else {
                                    [self showProgressHUDByString:@"第三方授权失败"];
                                }
 						   }];
