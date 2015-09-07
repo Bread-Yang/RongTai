@@ -35,7 +35,7 @@
 }
 
 #pragma mark - 获取爱用程序的使用次数
--(void)getFavoriteProgramCountSuccess:(void (^)(NSArray *))success fail:(void (^)(NSDictionary *))fail
+-(void)getFavoriteProgramCountSuccess:(void (^)(NSArray * arr))success fail:(void (^)(NSDictionary * dic))fail
 {
     _isTimeOut = YES;
     NSString* url = [_requestURL stringByAppendingString:@"loadUserData"];
@@ -78,6 +78,86 @@
     //数组需要先转成json格式才能post（字典却不需要）
     NSData* data = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
     NSString* str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//    NSLog(@"请求参数:%@",str);
+    
+    NSDictionary* parmeters = @{@"uid":_uid,@"result":str};
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
+    [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
+//        NSLog(@"上传程序使用次数:%@",responseObject);
+        NSNumber* code = [responseObject objectForKey:@"responseCode"];
+        if ([code integerValue] == 200) {
+            if (success) {
+                success();
+            }
+        }
+        else
+        {
+            if (fail) {
+                fail(responseObject);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
+        if (fail) {
+            fail(nil);
+        }
+    }];
+}
+
+#pragma mark - 获取按摩记录
+-(void)getMassageRecordFrom:(NSDate*)startDate To:(NSDate*)endDate Success:(void (^)(NSArray *))success fail:(void (^)(NSDictionary *))fail
+{
+    _isTimeOut = YES;
+    NSString* url = [_requestURL stringByAppendingString:@"useDuration"];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* startStr = [formatter stringFromDate:startDate];
+    NSString* endStr = [formatter stringFromDate:endDate];
+    NSDictionary* parmeters = @{@"uid":_uid,@"startDate":startStr,@"endDate":endStr};
+//    NSLog(@"请求参数:%@",parmeters);
+    
+    if (_overTime > 0) {
+        [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
+    }
+    [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _isTimeOut = NO;
+//        NSLog(@"获取按摩记录:%@",responseObject);
+        NSNumber* code = [responseObject objectForKey:@"responseCode"];
+        //        NSString* message = [responseObject objectForKey:@"responseMessage"];
+        //        NSLog(@"请求结果:%@",message);
+        if ([code integerValue] == 200) {
+            NSArray* arr = [responseObject objectForKey:@"result"];
+//            NSLog(@"按摩记录:%@",arr);
+            if (success) {
+                success(arr);
+            }
+        }
+        else
+        {
+            if (fail) {
+                fail(responseObject);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _isTimeOut = NO;
+        if (fail) {
+            fail(nil);
+        }
+    }];
+}
+
+#pragma mark - 上传按摩记录
+-(void)addMassageRecord:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary *))fail
+{
+    _isTimeOut = YES;
+    NSString* url = [_requestURL stringByAppendingString:@"addProgramUseDuration"];
+    
+    //数组需要先转成json格式才能post（字典却不需要）
+    NSData* data = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString* str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"请求参数:%@",str);
     
     NSDictionary* parmeters = @{@"uid":_uid,@"result":str};
@@ -86,7 +166,7 @@
     }
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
-        NSLog(@"上传程序使用次数:%@",responseObject);
+        NSLog(@"上传按摩记录:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             if (success) {

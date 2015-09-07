@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -874,12 +874,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdY-cq-adF">
-                                        <rect key="frame" x="557" y="48" width="13" height="22"/>
-                                        <state key="normal" image="menu_list_arrow">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="data_icon_cost" translatesAutoresizingMaskIntoConstraints="NO" id="ifu-AR-30v">
                                         <rect key="frame" x="30" y="30" width="60" height="60"/>
                                         <constraints>
@@ -896,14 +890,12 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="ifu-AR-30v" firstAttribute="height" secondItem="DjJ-t4-blw" secondAttribute="height" multiplier="0.5" id="2Do-qj-bfH"/>
-                                    <constraint firstAttribute="centerY" secondItem="pdY-cq-adF" secondAttribute="centerY" constant="0.75" id="9aJ-Rb-zV5"/>
-                                    <constraint firstItem="pdY-cq-adF" firstAttribute="leading" secondItem="lKk-AT-cku" secondAttribute="trailing" constant="10" id="BWi-Io-Mub"/>
                                     <constraint firstAttribute="centerY" secondItem="lKk-AT-cku" secondAttribute="centerY" constant="-0.25" id="Dtb-as-gPI"/>
                                     <constraint firstAttribute="centerY" secondItem="ifu-AR-30v" secondAttribute="centerY" id="J8T-Qj-ct7"/>
                                     <constraint firstItem="lKk-AT-cku" firstAttribute="height" secondItem="DjJ-t4-blw" secondAttribute="height" multiplier="0.4" id="gMB-jP-l8e"/>
                                     <constraint firstItem="lKk-AT-cku" firstAttribute="width" secondItem="DjJ-t4-blw" secondAttribute="width" multiplier="0.2" id="mlM-T3-iWn"/>
+                                    <constraint firstAttribute="trailing" secondItem="lKk-AT-cku" secondAttribute="trailing" constant="53" id="tdp-vx-1YV"/>
                                     <constraint firstItem="Jr1-le-2ZG" firstAttribute="leading" secondItem="ifu-AR-30v" secondAttribute="trailing" constant="10" id="uIv-Ta-pxd"/>
-                                    <constraint firstAttribute="trailing" secondItem="pdY-cq-adF" secondAttribute="trailing" constant="30" id="v5b-vH-1Yt"/>
                                     <constraint firstItem="ifu-AR-30v" firstAttribute="leading" secondItem="DjJ-t4-blw" secondAttribute="leading" constant="30" id="vfw-x6-olY"/>
                                     <constraint firstAttribute="centerY" secondItem="Jr1-le-2ZG" secondAttribute="centerY" constant="-1" id="zvc-v4-r3k"/>
                                 </constraints>
@@ -1932,7 +1924,6 @@
         <image name="login_qq" width="48" height="48"/>
         <image name="login_weibo" width="48" height="48"/>
         <image name="logo" width="260" height="60"/>
-        <image name="menu_list_arrow" width="13" height="13"/>
         <image name="register_button" width="70" height="35"/>
         <image name="sit" width="218" height="218"/>
         <image name="stopButtonBg.png" width="200" height="100"/>

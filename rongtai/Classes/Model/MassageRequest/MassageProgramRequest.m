@@ -44,7 +44,7 @@
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
 	[_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"获取按摩程序列表成功:%@",responseObject);
+//		NSLog(@"获取按摩程序列表成功:%@",responseObject);
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		
@@ -56,7 +56,7 @@
 			
 			NSArray *arr = [responseObject objectForKey:@"result"];
 			
-			NSLog(@"用户下载列表:%@",arr);
+//			NSLog(@"用户下载列表:%@",arr);
 			
 			NSMutableArray *networkMassageProgramArray = [[NSMutableArray alloc] init];
 			

@@ -76,7 +76,7 @@
     //注销
     UIButton* logout = [[UIButton alloc]initWithFrame:CGRectMake(unit+1, y, unit, unit*0.4)];
     logout.titleLabel.font =[UIFont systemFontOfSize:13];
-    [logout setTitle:NSLocalizedString(@"注销",nil) forState:UIControlStateNormal];
+    [logout setTitle:NSLocalizedString(@"退出登录",nil) forState:UIControlStateNormal];
     [logout setTitleColor:BLACK forState:UIControlStateNormal];
     [logout setImage:[UIImage imageNamed:@"menu_icon_logout"] forState:UIControlStateNormal];
     [logout setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];

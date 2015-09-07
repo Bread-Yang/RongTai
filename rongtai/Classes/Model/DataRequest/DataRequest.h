@@ -27,5 +27,14 @@
  */
 -(void)addProgramUsingCount:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary* dic))fail;
 
+/**
+ *  获取按摩记录
+ */
+-(void)getMassageRecordFrom:(NSDate*)startDate To:(NSDate*)endDate Success:(void (^)(NSArray * arr))success fail:(void (^)(NSDictionary * dic))fail;
+
+/**
+ *  上传按摩记录
+ */
+-(void)addMassageRecord:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary * dic))fail;
 
 @end
