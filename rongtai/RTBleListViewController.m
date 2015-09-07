@@ -18,6 +18,10 @@
     NSArray *segueIdentifiers;
     
     RTBleConnector *bleConnector;
+    UIBarButtonItem *refreshItem;
+    UIImageView* _cView;
+    BOOL _isRefresh; //是否正在刷新
+    NSUInteger _count;
 }
 
 @end
@@ -42,10 +46,20 @@
 	
     segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
     
-    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_refresh"] style:UIBarButtonItemStylePlain target:self action:@selector(refreshTableView)];
+    _cView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    _cView.userInteractionEnabled = YES;
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(refreshTableView)];
+    [_cView addGestureRecognizer:tap];
+    _cView.image = [UIImage imageNamed:@"icon_refresh"];
+    _cView.backgroundColor = [UIColor clearColor];
+    refreshItem = [[UIBarButtonItem alloc]initWithCustomView:_cView];
+    
     self.navigationItem.rightBarButtonItem = refreshItem;
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
+    
+    _isRefresh = NO;
+    _count = 6;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -177,6 +191,8 @@
 		case CBCentralManagerStatePoweredOff :
 			self.periphralTableView.hidden = true;
 			break;
+        default:
+            break;
 	}
 }
 
@@ -200,8 +216,9 @@
     }
 	
     [blePeriphrals addObject:periperalInfo];
-	
-    [self.periphralTableView reloadData];
+    
+	[self.periphralTableView reloadData];
+//    _isRefresh = NO;
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {
@@ -224,13 +241,43 @@
 	NSLog(@"didDisconnectRTBlePeripheral");
 }
 
-#pragma mark --Misc
+#pragma mark - 刷新按钮动画
+-(void)refreshAnimation:(NSTimeInterval)time
+{
+    [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _cView.transform = CGAffineTransformRotate(_cView.transform, -M_PI_2);
+    } completion:^(BOOL finished) {
+        _cView.frame = CGRectMake(0, 0, 22, 22);
+    }];
+}
 
+-(void)refreshTimer:(NSTimer*)timer
+{
+    if (_count<1) {
+        [timer invalidate];
+        _count = 6;
+        _isRefresh = NO;
+    }
+    else
+    {
+        [self refreshAnimation:0.25];
+        _count--;
+    }
+}
+
+#pragma mark --Misc
 - (void)refreshTableView {
-    [blePeriphrals removeAllObjects];
-    [self.periphralTableView reloadData];
-    [bleConnector stopScanRTPeripheral];
-    [bleConnector startScanRTPeripheral:nil];
+    if (!_isRefresh) {
+        _isRefresh = YES;
+        //刷新按钮 开始旋转动画
+        NSLog(@"刷新");
+        [NSTimer scheduledTimerWithTimeInterval:0.25 target:self
+                                       selector:@selector(refreshTimer:) userInfo:nil repeats:YES];
+        [blePeriphrals removeAllObjects];
+        [self.periphralTableView reloadData];
+        [bleConnector stopScanRTPeripheral];
+        [bleConnector startScanRTPeripheral:nil];
+    }
 }
 
 @end
