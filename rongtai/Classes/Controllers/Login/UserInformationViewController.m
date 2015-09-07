@@ -37,6 +37,9 @@
 	
 	UIDatePicker *_birthdayDatePicker;
     NSMutableArray* _heightArr;  //身高数组
+    NSArray* _decimals;  //单位为英寸时使用的小数部分的数组
+    
+    NSUInteger _component;  //选择器列数
     
     UIPickerView* _heightPicker;
     
@@ -84,6 +87,12 @@
     for (int i = 140; i < 301; i++) {
         [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
     }
+    
+    //
+    _decimals = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+    
+    //
+    _component = 1;
     
     CGRect f = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216);
     
@@ -145,9 +154,10 @@
     _heightUnitSelectedIndex = 0;
     
     //
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    _loadingHUD = [[MBProgressHUD alloc]initWithWindow:appDelegate.window];
-    [appDelegate.window addSubview:_loadingHUD];
+    _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
+    _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loadingHUD];
+    
     
     //
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
@@ -157,21 +167,42 @@
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    return _component;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return _heightArr.count;
+    if (component == 0) {
+        return _heightArr.count;
+    }
+    else
+    {
+        return _decimals.count;
+    }
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _heightArr[row];
+    if (component == 0) {
+        return _heightArr[row];
+    }
+    else
+    {
+        return _decimals[row];
+    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _height.text = _heightArr[row];
+    if (_heightUnitSelectedIndex == 0) {
+        _height.text = _heightArr[row];
+    }
+    else
+    {
+        NSString* integer = _heightArr[[pickerView selectedRowInComponent:0]];
+        NSString* decimal = _decimals[[pickerView selectedRowInComponent:1]];
+        NSString* height = [NSString stringWithFormat:@"%@.%@",integer,decimal];
+        _height.text = height;
+    }
 }
 
 #pragma mark - UIDatePicker
@@ -426,13 +457,44 @@
     }];
 }
 
+#pragma mark - 设置cm选择器
+-(void)setSelectedCMUnit
+{
+    _component = 1;
+    _heightArr = [NSMutableArray new];
+    for (int i = 140; i < 301; i++) {
+        [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
+    }
+    [_heightPicker reloadAllComponents];
+}
+
+#pragma mark - 设置inch选择器
+-(void)setSelectedInchUnit
+{
+    _component = 2;
+    _heightArr = [NSMutableArray new];
+    for (int i = 55; i < 119; i++) {
+        [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
+    }
+    [_heightPicker reloadAllComponents];
+}
+
 #pragma mark - 数据保存到对象中
 -(void)saveMember
 {
     _user.uid = _uid;
     _user.name = [_name.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     _user.sex = [NSNumber numberWithInteger:_sexSegmentView.selectIndex];
-    _user.height = [NSNumber numberWithFloat:[_height.text floatValue]];
+    if (_heightUnitSelectedIndex == 0) {
+        _user.height = [NSNumber numberWithFloat:[_height.text floatValue]];
+    }
+    else
+    {
+        NSUInteger integer = [_heightPicker selectedRowInComponent:0];
+        NSUInteger decimal = [_heightPicker selectedRowInComponent:1];
+        _user.height = [NSNumber numberWithFloat:(integer+55+0.1*decimal)];
+    }
+    
     if (_heightUnitSegmentView.selectIndex == 0) {
         _user.heightUnit = @"cm";
     } else {
@@ -480,8 +542,15 @@
     _height.text = [_user.height stringValue];
     if ([_user.heightUnit isEqual:@"cm"]) {
         _heightUnitSegmentView.selectIndex = 0;
+        NSUInteger height = [_user.height integerValue];
+        [_heightPicker selectRow:(height-140) inComponent:0 animated:NO];
     } else {
         _heightUnitSegmentView.selectIndex = 1;
+        float height = [_user.height floatValue];
+        NSUInteger integer = (int)height;
+        NSUInteger decimal = (int)((height - integer)*10); //取小数点后1位
+        [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];
+        [_heightPicker selectRow:(decimal-0) inComponent:1 animated:NO];
     }
     _heightUnitSelectedIndex = _heightUnitSegmentView.selectIndex;
     _birthdayDatePicker.date = _user.birthday;
@@ -511,7 +580,6 @@
             } failure:^(NSError *error) {
                 //网络读取失败
                 [uVC showProgressHUDByString:NSLocalizedString(@"用户头像下载失败", nil)];
-                
             }];
             return;
          }
@@ -543,7 +611,6 @@
             NSLog(@"%@",str);
             [uVC showProgressHUDByString:str];
         }];
- 
     }
 }
 
@@ -560,6 +627,7 @@
             else
             {
                 [_heightPicker selectRow:(69-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:0 inComponent:1 animated:NO];
             }
         }
         else
@@ -571,6 +639,7 @@
             else
             {
                 [_heightPicker selectRow:(63-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:0 inComponent:1 animated:NO];
             }
         }
          _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
@@ -583,12 +652,10 @@
             NSUInteger selectedInedx = [_heightPicker selectedRowInComponent:0];
             if (index == 0) {
                 //cm
-                _heightArr = [NSMutableArray new];
-                for (int i = 140; i < 301; i++) {
-                    [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
-                }
-                [_heightPicker reloadAllComponents];
-                int index = (int)round((55+selectedInedx)*2.54);
+                NSUInteger decimal = [_heightPicker selectedRowInComponent:1];
+                
+                [self setSelectedCMUnit];
+                int index = (int)round((55+selectedInedx+0.1*decimal)*2.54);
                 if (index<140) {
                     index = 140;
                 }
@@ -602,28 +669,25 @@
             else
             {
                 //inch
-                _heightArr = [NSMutableArray new];
-                for (int i = 55; i < 119; i++) {
-                    [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
+                [self setSelectedInchUnit];
+                float height = (float)((140+selectedInedx)/2.54);
+                int integer = (int)height;
+                int decimal = (int)((height-integer)*10);
+                if (integer<55) {
+                    integer = 55;
                 }
-                [_heightPicker reloadAllComponents];
-                int index = (int)round((140+selectedInedx)/2.54);
-                if (index<55) {
-                    index = 55;
-                }
-                else if (index>119)
+                else if (integer>119)
                 {
-                    index = 119;
+                    integer = 119;
                 }
-                [_heightPicker selectRow:(index-55) inComponent:0 animated:NO];
-                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
-                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+                
+                [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(decimal-0) inComponent:1 animated:NO];
+                _height.text = [NSString stringWithFormat:@"%d.%d",integer,decimal];
             }
         }
     }
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

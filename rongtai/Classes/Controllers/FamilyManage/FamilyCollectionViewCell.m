@@ -66,6 +66,9 @@
     _userNameLabel.textColor = [UIColor blackColor];
     [self.contentView addSubview:_userNameLabel];
     
+    //选中背景变灰色
+    self.selectedBackgroundView = [[UIView alloc]initWithFrame:self.frame];
+    self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1];
 }
 
 #pragma mark - set方法
