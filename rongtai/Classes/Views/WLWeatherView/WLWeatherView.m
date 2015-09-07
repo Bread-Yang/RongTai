@@ -75,7 +75,8 @@
     _temperature = [self newLabel];
     _o = [self newLabel];
     //    _o.backgroundColor = [UIColor cyanColor];
-    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
+//    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
+    _oColor = [UIColor whiteColor];
     _o.text = @"o";
     _o.font = [UIFont systemFontOfSize:10];
     _o.textColor = _oColor;
@@ -202,7 +203,7 @@
 #pragma mark - 更新天气
 -(void)updateWeather2
 {
-//    _city = @"海口";
+    _city = @"北京";
     NSString* str = [NSString stringWithFormat:@"http://api.map.baidu.com/telematics/v3/weather?location=%@&output=json&ak=UoG0srrPtrPLFempBHRRBhis",_city];
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -506,7 +507,8 @@
 #pragma mark - 根据天气情况改变图标
 -(void)updateWeatherIconByName:(NSString*)name
 {
-    _oColor = [UIColor colorWithRed:161/255.0 green:207/255.0 blue:245/255.0 alpha:1];
+//    _oColor = [UIColor colorWithRed:161/255.0 green:207/255.0 blue:245/255.0 alpha:1];
+//    _oColor = [UIColor whiteColor];
     if ([self subString:@"雹" InString:name]) {
         _imageName = @"mini-hail";
         return;
@@ -555,7 +557,7 @@
         _imageName = @"mini-clouds";
         return;
     }
-    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
+//    _oColor = [UIColor colorWithRed:249/255.0 green:215/255.0 blue:47/255.0 alpha:1];
     _imageName = @"mini-sun";
 }
 
