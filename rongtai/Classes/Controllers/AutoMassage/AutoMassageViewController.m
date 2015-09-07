@@ -21,6 +21,7 @@
 #import "RTBleConnector.h"
 #import "MassageRecord.h"
 #import "MassageTime.h"
+#import "NAPickerView.h"
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate>
 {
@@ -30,7 +31,9 @@
     __weak IBOutlet UIButton *_stopBtn;
     NSString* _programName;
     NSInteger _autoMassageFlag;
-    
+	//定时
+	NAPickerView* _timePickerView;   //时间选择器
+	
     ProgramCount* _programCount;
     NSString* _uid;
 }
@@ -44,6 +47,8 @@
     
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem =item;
+	
+	_timePickerView = [self createMinutePickerView];
     
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.055*0.5;
@@ -59,6 +64,10 @@
     
     //
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+	
+	// 时间view加入单击手势
+	UITapGestureRecognizer* tTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(setTiming)];
+	[_timeSetLabel addGestureRecognizer:tTap];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -139,6 +148,7 @@
 }
 
 #pragma mark - 返回按钮方法
+
 -(void)goBack
 {
     MainViewController* main;
@@ -156,8 +166,62 @@
 }
 
 #pragma mark - 停止按摩
+
 - (IBAction)stopMassage:(id)sender {
     [[RTBleConnector shareManager] sendControlMode:H10_KEY_POWER_SWITCH];
+}
+
+- (void)setTiming {
+	CustomIOSAlertView *skillPreferenceAlerView = [[CustomIOSAlertView alloc] init];
+	[skillPreferenceAlerView setContainerView:_timePickerView];
+	[skillPreferenceAlerView setTitleString:NSLocalizedString(@"定时", nil)];
+	[skillPreferenceAlerView setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"取消", nil), NSLocalizedString(@"保存", nil), nil]];
+	[skillPreferenceAlerView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+		if (buttonIndex == 0) {
+			[alertView close];
+		} else if (buttonIndex == 1) {
+			switch ([_timePickerView getHighlightIndex]) {
+				case 0:  // 10分钟
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_10MIN];
+					break;
+				case 1:  // 20分钟
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_20MIN];
+					break;
+				case 2:  // 30分钟
+					[[RTBleConnector shareManager] sendControlMode:H10_KEY_WORK_TIME_30MIN];
+					break;
+			}
+		}
+	}];
+	[skillPreferenceAlerView setUseMotionEffects:true];
+	[skillPreferenceAlerView show];
+}
+
+#pragma mark - 创建时间选择器
+
+- (NAPickerView *)createMinutePickerView
+{
+	NSMutableArray *leftItems = [[NSMutableArray alloc] init];
+	for (int i = 1; i < 4;  i++) {
+		[leftItems addObject:[NSString stringWithFormat:@"%d", i*10]];
+	}
+	NAPickerView *pickerView = [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, 270, 200) andItems:leftItems andDelegate:self];
+	pickerView.overlayColor = [UIColor colorWithRed:223.0 / 255.0 green:1 blue:1 alpha:1];
+	
+	pickerView.infiniteScrolling = YES;
+	pickerView.overlayLeftImage = [UIImage imageNamed:@"icon_set_time"];
+	pickerView.overlayRightString = NSLocalizedString(@"分钟", nil);
+	pickerView.showOverlay = YES;
+	
+	pickerView.highlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = BLUE;
+		cell.textView.font = [UIFont fontWithName:@"DS-Digital-Bold" size:30];
+	};
+	pickerView.unhighlightBlock = ^(NALabelCell *cell) {
+		cell.textView.textColor = [UIColor colorWithRed:26/255.0 green:154/255.0 blue:222/255.0 alpha:0.6];
+		cell.textView.font = [UIFont fontWithName:@"DS-Digital-Bold" size:18];
+	};
+	return pickerView;
 }
 
 #pragma mark - RTBleConnectorDelegate

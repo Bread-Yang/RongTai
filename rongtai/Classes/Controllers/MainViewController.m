@@ -334,6 +334,12 @@
     SlideNavigationController* slideNav = (SlideNavigationController*)self.navigationController;
     slideNav.enableSwipeGesture = NO;
 //	[_table reloadData];
+	
+	NSIndexPath *alreadySelectIndexPath = [_table indexPathForSelectedRow];
+	
+	if (!alreadySelectIndexPath) {
+		[_table deselectRowAtIndexPath:alreadySelectIndexPath animated:YES];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -431,7 +437,11 @@
         cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
         cell.imageView.image = [UIImage imageNamed:massage.imageUrl];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	UIView *bgColorView = [[UIView alloc] init];
+	bgColorView.backgroundColor = [UIColor colorWithRed:176.0 / 255.0 green:215.0 / 255.0 blue:233.0 / 255.0 alpha:1];
+	[cell setSelectedBackgroundView:bgColorView];
+	
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
 	
 	if (indexPath.row >= 6) {
@@ -465,12 +475,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if (![RTBleConnector isBleTurnOn]) {
-//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"蓝牙未打开" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-//        [alert show];
-//    }
-    
+	
+//	NSIndexPath *alreadySelectIndexPath = [_table indexPathForSelectedRow];
+//	
+//	if (!alreadySelectIndexPath && alreadySelectIndexPath.row != indexPath.row) {
+//		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+//	}
+	
+//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
 	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
         NSLog(@"连接设备为空");
 		[reconnectDialog show];
@@ -526,6 +539,40 @@
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
 			break;
 	}
+	
+	// 延迟0.5秒再进入按摩界面
+	
+	double delayInSeconds = 0.5;
+	
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+	
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		
+		RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
+		
+		if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+			
+			if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+				
+				//自动按摩时，开始统计时间
+				NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+				NSDate* startTime = [NSDate date];
+				[defaults setObject:startTime forKey:@"MassageStartTime"];
+				
+				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+					
+					[self jumpToScanViewConroller];
+					
+				} else { // 自动按摩
+					
+					[self jumpToAutoMassageViewConroller];
+					
+				}
+			}
+		}
+		
+	});
+	
 }
 
 #pragma mark - 侧滑菜单代理
@@ -547,7 +594,7 @@
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
 		_menuBar.selectedItem = nil;
 	} else {
-		 _menuBar.selectedItem = (UITabBarItem*)_menuBar.items[0];
+		 _menuBar.selectedItem = (UITabBarItem *)_menuBar.items[0];
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
@@ -558,27 +605,86 @@
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 		
-			if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-                
-                //自动按摩时，开始统计时间
-                NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-                NSDate* startTime = [NSDate date];
-                [defaults setObject:startTime forKey:@"MassageStartTime"];
-                
-				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-					
-					[self jumpToScanViewConroller];
-					
-				} else { // 自动按摩
-					
-					[self jumpToAutoMassageViewConroller];
-					
-				}
-			} else if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 手动按摩
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+			
+			//自动按摩时，开始统计时间
+			NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+			NSDate* startTime = [NSDate date];
+			[defaults setObject:startTime forKey:@"MassageStartTime"];
+			
+			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 				
-				[self jumpToManualMassageViewConroller];
+				//					[self jumpToScanViewConroller];
+				
+			} else { // 自动按摩
+				
+				//					[self jumpToAutoMassageViewConroller];
 				
 			}
+		} else if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 手动按摩
+			
+			//				[self jumpToManualMassageViewConroller];
+			
+		}
+		
+		// 高亮item
+		
+		int highlightIndex;
+		
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+			
+			switch (rtMassageChairStatus.autoProgramType) {
+					
+				case RtMassageChairProgramSportRecover:
+					highlightIndex = 0;
+					break;
+				
+				case RtMassageChairProgramExtension:
+					highlightIndex = 1;
+					break;
+					
+				case RtMassageChairProgramRestAndSleep:
+					highlightIndex = 2;
+					break;
+					
+				case RtMassageChairProgramWorkingRelieve:
+					highlightIndex = 3;
+					break;
+					
+				case RtMassageChairProgramShoulderAndNeck:
+					highlightIndex = 4;
+					break;
+					
+				case RtMassageChairProgramWaistAndSpine:
+					highlightIndex = 5;
+					break;
+			}
+		} else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
+			switch (rtMassageChairStatus.networkProgramType) {
+					
+				case RTMassageChairProgramNetwork1:
+					highlightIndex = 6;
+					break;
+					
+				case RTMassageChairProgramNetwork2:
+					highlightIndex = 7;
+					break;
+					
+				case RTMassageChairProgramNetwork3:
+					highlightIndex = 8;
+					break;
+					
+				case RTMassageChairProgramNetwork4:
+					highlightIndex = 9;
+					break;
+			}
+		}
+		
+		[_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
+							animated:YES
+					  scrollPosition:UITableViewScrollPositionNone];
+	} else {  // 没有在按摩
+		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
 	}
 }
 
