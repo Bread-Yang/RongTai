@@ -59,7 +59,7 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
     
     _isRefresh = NO;
-    _count = 6;
+    _count = 40;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -174,8 +174,6 @@
     //    }else if([peripheral.name isEqualToString:kDeviceScaleName]) {
     //        [self performSegueWithIdentifier:@"scaleViewController" sender:nil];
     //    }
-    
-	
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -217,7 +215,7 @@
 	
     [blePeriphrals addObject:periperalInfo];
     
-	[self.periphralTableView reloadData];
+	
 //    _isRefresh = NO;
 }
 
@@ -255,8 +253,9 @@
 {
     if (_count<1) {
         [timer invalidate];
-        _count = 6;
+        _count = 40;
         _isRefresh = NO;
+        [self.periphralTableView reloadData];
     }
     else
     {
