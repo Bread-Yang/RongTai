@@ -35,7 +35,7 @@
 		self.scrollView.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.scrollView];
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.8, self.frame.size.width, 10)];
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height * .8, self.frame.size.width, 10)];
 		self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
         self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
         [self addSubview:self.pageControl];
@@ -43,13 +43,13 @@
         [self createViewOne];
         [self createViewTwo];
         [self createViewThree];
-        [self createViewFour];
-        
+//        [self createViewFour];
+		
         
         //Done Button
         self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width / 4, self.frame.size.height * 0.9, self.frame.size.width * 0.5, 40)];
         [self.doneButton setTintColor:[UIColor whiteColor]];
-        [self.doneButton setTitle:@"Let's Go!" forState:UIControlStateNormal];
+        [self.doneButton setTitle:NSLocalizedString(@"立即体验", nil) forState:UIControlStateNormal];
         [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0]];
         self.doneButton.backgroundColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
         self.doneButton.layer.borderColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000].CGColor;
@@ -59,8 +59,8 @@
         [self addSubview:self.doneButton];
         
         
-        self.pageControl.numberOfPages = 4;
-        self.scrollView.contentSize = CGSizeMake(self.frame.size.width*4, self.scrollView.frame.size.height);
+        self.pageControl.numberOfPages = 3;
+        self.scrollView.contentSize = CGSizeMake(self.frame.size.width * 3, self.scrollView.frame.size.height);
         
         //This is the starting point of the ScrollView
         CGPoint scrollPoint = CGPointMake(0, 0);
@@ -102,7 +102,7 @@
 	
 	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	imageview.contentMode = UIViewContentModeScaleAspectFit;
-	imageview.image = [UIImage imageNamed:@"guide1"];
+	imageview.image = [UIImage imageNamed:@"guide2"];
 	imageview.contentMode = UIViewContentModeScaleToFill;
 	[view addSubview:imageview];
 	
@@ -142,7 +142,7 @@
 	
 	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	imageview.contentMode = UIViewContentModeScaleAspectFit;
-	imageview.image = [UIImage imageNamed:@"guide2"];
+	imageview.image = [UIImage imageNamed:@"guide3"];
 	imageview.contentMode = UIViewContentModeScaleToFill;
 	[view addSubview:imageview];
 	
@@ -181,7 +181,7 @@
 	
 	UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	imageview.contentMode = UIViewContentModeScaleAspectFit;
-	imageview.image = [UIImage imageNamed:@"guide3"];
+	imageview.image = [UIImage imageNamed:@"guide4"];
 	imageview.contentMode = UIViewContentModeScaleToFill;
 	[view addSubview:imageview];
 	

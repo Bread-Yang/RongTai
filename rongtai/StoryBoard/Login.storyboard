@@ -967,7 +967,7 @@
                                             <constraint firstAttribute="height" constant="40" id="SWq-t4-6Gx"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blZ-dO-yRU">
                                         <rect key="frame" x="383" y="90" width="89" height="40"/>
@@ -1212,10 +1212,17 @@
                                     <constraint firstItem="pTl-fH-1o3" firstAttribute="top" secondItem="vIM-t4-5bh" secondAttribute="top" id="vqE-Dc-5so"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sit" translatesAutoresizingMaskIntoConstraints="NO" id="jFS-YF-P3w">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sit_0" translatesAutoresizingMaskIntoConstraints="NO" id="jFS-YF-P3w">
                                 <rect key="frame" x="189" y="257" width="222" height="222"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jFS-YF-P3w" secondAttribute="height" multiplier="1:1" id="t8e-dC-IdX"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sit_food_piont" translatesAutoresizingMaskIntoConstraints="NO" id="kau-SN-xpB">
+                                <rect key="frame" x="199" y="453" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kau-SN-xpB" secondAttribute="height" multiplier="1:1" id="Vxa-XU-Z6m"/>
+                                    <constraint firstAttribute="width" constant="18" id="dfi-6a-zKY"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POp-0M-tlL">
@@ -1243,8 +1250,10 @@
                             <constraint firstItem="05Z-yi-rOy" firstAttribute="top" secondItem="tB1-NH-Cjs" secondAttribute="bottom" constant="20" id="Gqf-QK-14M"/>
                             <constraint firstAttribute="centerX" secondItem="arZ-Bk-5RV" secondAttribute="centerX" id="NOC-hT-YrR"/>
                             <constraint firstItem="arZ-Bk-5RV" firstAttribute="width" secondItem="vIM-t4-5bh" secondAttribute="width" id="PU5-Y9-RJf"/>
+                            <constraint firstItem="jFS-YF-P3w" firstAttribute="bottom" secondItem="kau-SN-xpB" secondAttribute="bottom" constant="8" id="YQ9-gm-oHZ"/>
                             <constraint firstItem="vIM-t4-5bh" firstAttribute="top" secondItem="05Z-yi-rOy" secondAttribute="bottom" id="Zem-dk-RLB"/>
                             <constraint firstAttribute="centerX" secondItem="POp-0M-tlL" secondAttribute="centerX" id="bx4-LH-RjM"/>
+                            <constraint firstItem="jFS-YF-P3w" firstAttribute="leading" secondItem="kau-SN-xpB" secondAttribute="leading" constant="-10" id="c5b-Af-Q4P"/>
                             <constraint firstAttribute="centerX" secondItem="05Z-yi-rOy" secondAttribute="centerX" id="eGb-na-aTa"/>
                             <constraint firstItem="arZ-Bk-5RV" firstAttribute="height" secondItem="NjX-SS-bBS" secondAttribute="height" multiplier="0.1" id="gmp-ft-yNO"/>
                             <constraint firstItem="05Z-yi-rOy" firstAttribute="height" secondItem="NjX-SS-bBS" secondAttribute="height" multiplier="0.08" id="itI-vT-JyZ"/>
@@ -1265,6 +1274,8 @@
                     </view>
                     <connections>
                         <outlet property="_functionLabel" destination="dc8-9S-dPA" id="6S4-8r-pVf"/>
+                        <outlet property="_movementPositionImageView" destination="jFS-YF-P3w" id="52o-Kf-hDT"/>
+                        <outlet property="_rollerStatusImageView" destination="kau-SN-xpB" id="wnQ-3i-6aR"/>
                         <outlet property="_stopBtn" destination="POp-0M-tlL" id="PJa-No-TKt"/>
                         <outlet property="_timeSetLabel" destination="05Z-yi-rOy" id="XHI-zx-ue7"/>
                         <outlet property="_usingTimeLabel" destination="TYd-np-0Jd" id="ZXg-MY-xF5"/>
@@ -1559,7 +1570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qxP-lv-qy8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2851" y="1680"/>
+            <point key="canvasLocation" x="2895" y="1750"/>
         </scene>
         <!--个人信息-->
         <scene sceneID="21V-4v-cjc">
@@ -1926,6 +1937,8 @@
         <image name="logo" width="260" height="60"/>
         <image name="register_button" width="70" height="35"/>
         <image name="sit" width="218" height="218"/>
+        <image name="sit_0" width="237" height="237"/>
+        <image name="sit_food_piont" width="15" height="15"/>
         <image name="stopButtonBg.png" width="200" height="100"/>
         <image name="user_edit_photo" width="24" height="21"/>
     </resources>

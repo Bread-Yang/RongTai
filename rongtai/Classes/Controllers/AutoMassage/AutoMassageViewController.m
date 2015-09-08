@@ -23,12 +23,14 @@
 #import "MassageTime.h"
 #import "NAPickerView.h"
 
-@interface AutoMassageViewController ()<RTBleConnectorDelegate>
-{
+@interface AutoMassageViewController ()<RTBleConnectorDelegate> {
     __weak IBOutlet UILabel *_timeSetLabel;
     __weak IBOutlet UILabel *_functionLabel;
     __weak IBOutlet UILabel *_usingTimeLabel;
     __weak IBOutlet UIButton *_stopBtn;
+	__weak IBOutlet UIImageView *_movementPositionImageView;
+	__weak IBOutlet UIImageView *_rollerStatusImageView;
+	
     NSString* _programName;
     NSInteger _autoMassageFlag;
 	//定时
@@ -74,7 +76,7 @@
     RTBleConnector* bleConnector = [RTBleConnector shareManager];
     _autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
     NSLog(@"按摩状态数据:%ld",_autoMassageFlag);
-    if (_autoMassageFlag >= 1&&_autoMassageFlag!=7) {
+    if (_autoMassageFlag >= 1 && _autoMassageFlag != 7) {
         NSLog(@"自动按摩状态");
         switch (_autoMassageFlag) {
             case 1:
@@ -412,6 +414,20 @@
 	// 用时时间
 	_usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
 	[_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+	
+	// 机芯位置和滚轮是否打开
+	
+	NSInteger movementPosition = rtMassageChairStatus.movementPositionFlag;
+	
+	if (movementPosition > -1 && movementPosition < 12) { // 目前按摩椅的机芯位置是0至12
+		_movementPositionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"sit_%zd", movementPosition]];
+	}
+	
+	if (rtMassageChairStatus.isRollerOn) {
+		_rollerStatusImageView.image = [UIImage imageNamed:@"piont_3"];
+	} else {
+		_rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
