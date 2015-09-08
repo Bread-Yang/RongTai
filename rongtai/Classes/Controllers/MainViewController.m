@@ -540,9 +540,9 @@
 			break;
 	}
 	
-	// 延迟0.5秒再进入按摩界面
+	// 延迟1.5秒再进入按摩界面
 	
-	double delayInSeconds = 0.5;
+	double delayInSeconds = 1.5;
 	
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	
@@ -603,7 +603,8 @@
 		[self.resettingDialog close];
 	}
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+	// 正在按摩而且不等于手动按摩
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging && rtMassageChairStatus.programType != RtMassageChairProgramManual) {
 		
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
 			
@@ -685,6 +686,11 @@
 					  scrollPosition:UITableViewScrollPositionNone];
 	} else {  // 没有在按摩
 		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
+		
+		// 手动按摩正在进行中
+		if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging && rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+			_menuBar.selectedItem = (UITabBarItem *)_menuBar.items[1];
+		}
 	}
 }
 
