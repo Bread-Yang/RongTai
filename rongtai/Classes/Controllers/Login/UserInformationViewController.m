@@ -473,7 +473,7 @@
 {
     _component = 2;
     _heightArr = [NSMutableArray new];
-    for (int i = 55; i < 119; i++) {
+    for (int i = 55; i < 118; i++) {
         [_heightArr addObject:[NSString stringWithFormat:@"%d",i]];
     }
     [_heightPicker reloadAllComponents];
@@ -673,12 +673,14 @@
                 float height = (float)((140+selectedInedx)/2.54);
                 int integer = (int)height;
                 int decimal = (int)((height-integer)*10);
-                if (integer<55) {
+                if (height<55.0) {
                     integer = 55;
+                    decimal = 0;
                 }
-                else if (integer>119)
+                else if (height>117.9)
                 {
-                    integer = 119;
+                    integer = 117;
+                    decimal = 9;
                 }
                 
                 [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];

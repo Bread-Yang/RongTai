@@ -96,21 +96,37 @@
     */
     [[IQKeyboardManager sharedManager] resignFirstResponder];
     
-    
-    if ([self checkPhoneNum]) {
-        if (_password.text.length >5&&_password.text.length < 19) {
-            [_loading show:YES];
-            [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+    NSString* phone = _phoneNum.text;
+    //去掉首尾空格
+    phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (phone.length > 0)
+    {
+        if (phone.length == 11) {
+            if (_password.text.length > 0) {
+                if (_password.text.length >5&&_password.text.length < 19) {
+                    [_loading show:YES];
+                    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+                }
+                else
+                {
+                    [self showProgressHUDByString:@"请输入6-18位密码"];
+                }
+            }
+            else
+            {
+                [self showProgressHUDByString:@"请输入密码"];
+            }
         }
         else
         {
-            [self showProgressHUDByString:@"请输入6-18位密码"];
+            [self showProgressHUDByString:@"请输入11位手机号码"];
         }
     }
     else
     {
-        [self showProgressHUDByString:@"手机格式不正确"];
+        [self showProgressHUDByString:@"请输入手机号码"];
     }
+    
 }
 
 #pragma mark - 忘记密码方法

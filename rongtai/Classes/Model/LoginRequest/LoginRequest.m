@@ -111,8 +111,9 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _isTimeOut = NO;
         NSLog(@"注册失败:%@",error);
+        NSDictionary* dic = @{@"error":error};
         if ([self.delegate respondsToSelector:@selector(loginRequestRegisterAccountFinished:Result:)]) {
-            [self.delegate loginRequestRegisterAccountFinished:NO Result:nil];
+            [self.delegate loginRequestRegisterAccountFinished:NO Result:dic];
         }
     }];
 }

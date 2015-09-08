@@ -23,7 +23,6 @@
     UITableView* _table;
     CGFloat _rowHeight;
     AFNetworkReachabilityManager* _reachability;
-    NSString* _uid;
     MBProgressHUD* _loading;
     NSNumber* _currentMemberId;
 }
@@ -51,7 +50,6 @@
     [self.view addSubview:_loading];
     
     //
-    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     _currentMemberId = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentMemberId"];
 }
 
@@ -71,13 +69,13 @@
         [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
             [Member updateLocalDataByNetworkData:members];
             
-            _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
+            _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
             [_table reloadData];
             [_loading hide:YES];
             
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
-            _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
+            _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
             [_table reloadData];
             [_loading hide:YES];
         }];
@@ -85,7 +83,7 @@
     else
     {
         NSLog(@"没网，本地记录读取成员");
-        _users = [Member MR_findByAttribute:@"uid" withValue:_uid andOrderBy:@"memberId" ascending:YES];
+        _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
         [_table reloadData];
     }
 }

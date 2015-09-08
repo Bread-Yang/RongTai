@@ -18,4 +18,10 @@
 @dynamic state;
 @dynamic uid;
 
+-(NSDictionary*)toDictionary
+{
+    NSDictionary* dic = @{@"name":self.name,@"useTime":self.useTime,@"massageId":self.programId,@"useDate":self.date};
+    return dic;
+}
+
 @end

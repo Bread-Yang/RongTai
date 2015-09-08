@@ -43,4 +43,7 @@
 @property (nonatomic, retain) NSString* uid;
 
 
+-(NSDictionary*)toDictionary;
+
+
 @end

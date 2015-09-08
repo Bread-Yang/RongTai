@@ -18,6 +18,11 @@
  */
 -(void)updateWeather;
 
+/**
+ *  更新天气 2.0
+ */
+-(void)updateWeather2;
+
 
 /**
  *  停止更新天气

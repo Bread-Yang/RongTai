@@ -203,7 +203,7 @@
 #pragma mark - 更新天气
 -(void)updateWeather2
 {
-    _city = @"北京";
+//    _city = @"北京";
     NSString* str = [NSString stringWithFormat:@"http://api.map.baidu.com/telematics/v3/weather?location=%@&output=json&ak=UoG0srrPtrPLFempBHRRBhis",_city];
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -426,7 +426,7 @@
                 NSDictionary* content = [dic objectForKey:@"content"];
                 if (content)
                 {
-                    NSLog(@"地址:%@",content);
+//                    NSLog(@"地址:%@",content);
                     NSDictionary* address = [content objectForKey:@"address_detail"];
                     if (address) {
                         NSString* city = [address objectForKey:@"city"];

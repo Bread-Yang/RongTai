@@ -29,9 +29,11 @@
 #import "TimingPlan.h"
 #import "TimingPlanRequest.h"
 #import "UIImageView+RT.h"
-
+#import "DataRequest.h"
 #import "ProgramCount.h"
+#import "MassageRecord.h"
 #import "MBProgressHUD.h"
+
 
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
@@ -203,7 +205,6 @@
 		[alertView close];
 	}];
     
-    
     AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
     if (reachability.reachable) {
         //同步 定时计划 数据
@@ -215,6 +216,8 @@
     }
     
     imView = [UIImageView new];
+    
+    [self synchroMassageRecord];
 }
 
 #pragma mark - 请求网络按摩程序
@@ -244,6 +247,29 @@
 			[_table reloadData];
 		}
 	}];
+}
+
+#pragma mark - 同步按摩记录
+-(void)synchroMassageRecord
+{
+    DataRequest* r = [DataRequest new];
+    MassageRecord* r1 = [MassageRecord MR_createEntity];
+    r1.name = @"运动恢复";
+    r1.useTime = @100;
+    r1.date = @"2015-09-07";
+    r1.programId = @1;
+//    r1.uid = _uid;
+//    [r addMassageRecord:@[[r1 toDictionary]] Success:^{
+//        
+//    } fail:^(NSDictionary *dic) {
+//        
+//    }];
+    
+    [r getMassageRecordFrom:[NSDate dateWithTimeIntervalSince1970:0] To:[NSDate dateWithTimeIntervalSinceNow:0] Success:^(NSArray * arr) {
+
+    } fail:^(NSDictionary * dic) {
+        
+    }];
 }
 
 #pragma mark - 同步使用次数数据
@@ -368,7 +394,7 @@
     
     if (isOn) {
         _weatherView.hidden = NO;
-        [_weatherView updateWeather];
+        [_weatherView updateWeather2];
     }
     else
     {
@@ -680,6 +706,11 @@
 					break;
 			}
 		}
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        {
+            //手动按摩的话，底部菜单栏的手动要高亮
+            
+        }
 		
 		[_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
 							animated:YES
