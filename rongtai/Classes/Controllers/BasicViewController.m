@@ -216,7 +216,6 @@
                 NSLog(@"切换到手动按摩");
                 //从自动按摩切换过来的话，需要进行按摩时间和次数统计
                 if (_type == RtMassageChairProgramAuto) {
-                    
                     [self countMassageTime];
                 }
                 _type = RtMassageChairProgramManual;
@@ -292,7 +291,7 @@
     if (start) {
         NSLog(@"统计一次");
         NSTimeInterval time = [end timeIntervalSinceDate:start];
-        NSLog(@"此次按摩了%f秒",time);
+//        NSLog(@"此次按摩了%f秒",time);
         if (time>30) {
             //时间大于30秒才开始统计
             NSUInteger min;
@@ -303,24 +302,23 @@
             {
                 min = (int)round(time/60);
             }
+            NSLog(@"此次按摩了%ld分钟",min);
+            //将开始按摩的日期转成字符串
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+            NSString* date = [dateFormatter stringFromDate:start];
+            
+            
+            
         }
         
         //统计完成要把开始时间置空，表示此次按摩已结束
         bleConnector.startTime = nil;
     }
     
-    
-    
-    
-    
-    
-//
-//    //将开始按摩的日期转成字符串
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-//    NSString* date = [dateFormatter stringFromDate:start];
-//    
+
 //    NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,_uid]];
+    
 //    //            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
 //    
 //    //按摩次数统计

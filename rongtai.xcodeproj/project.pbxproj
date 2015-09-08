@@ -185,7 +185,6 @@
 		569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */; };
 		569360271B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */; };
 		569360291B79E910001B9BF5 /* 003.bin in Resources */ = {isa = PBXBuildFile; fileRef = 569360281B79E910001B9BF5 /* 003.bin */; };
-		5693602C1B7A049B001B9BF5 /* RTNetworkProgramStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */; };
 		56B0E26F1B96980B001C96FA /* UIImageView+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B0E26E1B96980B001C96FA /* UIImageView+RT.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
@@ -555,8 +554,6 @@
 		569360251B79E33C001B9BF5 /* ProgramDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadTableViewCell.h; sourceTree = "<group>"; };
 		569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadTableViewCell.m; sourceTree = "<group>"; };
 		569360281B79E910001B9BF5 /* 003.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 003.bin; sourceTree = "<group>"; };
-		5693602A1B7A049B001B9BF5 /* RTNetworkProgramStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNetworkProgramStatus.h; sourceTree = "<group>"; };
-		5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNetworkProgramStatus.m; sourceTree = "<group>"; };
 		56B0E26D1B96980B001C96FA /* UIImageView+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+RT.h"; sourceTree = "<group>"; };
 		56B0E26E1B96980B001C96FA /* UIImageView+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RT.m"; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1533,8 +1530,6 @@
 				3D783D381B12FD0300A893D9 /* RTBleListViewController.m */,
 				563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */,
 				563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */,
-				5693602A1B7A049B001B9BF5 /* RTNetworkProgramStatus.h */,
-				5693602B1B7A049B001B9BF5 /* RTNetworkProgramStatus.m */,
 			);
 			path = Ble;
 			sourceTree = "<group>";
@@ -1971,7 +1966,6 @@
 				3DF3043A1B38FE2500DD51D3 /* MagicalRecord+ErrorHandling.m in Sources */,
 				56E9E4E01B5907E600F01ECB /* NALabelCell.m in Sources */,
 				3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */,
-				5693602C1B7A049B001B9BF5 /* RTNetworkProgramStatus.m in Sources */,
 				3D9E896A1B3968D8002E0962 /* CWStarRateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
