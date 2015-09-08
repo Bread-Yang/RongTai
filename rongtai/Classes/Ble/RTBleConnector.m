@@ -1023,9 +1023,11 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 - (void)parseByteOfAddress8:(Byte)addr {
     /**
      bit 0, bit 1, bit 2, bit 3, bit 4 : 机芯位置
-     数值范围0-31 ，0为机芯在最低点，31为机芯最高点
+     数值范围0-31 ，0为机芯在最低点，31为机芯最高点 (目前按摩椅实际数值范围是0 - 12)
      */
     _rtMassageChairStatus.movementPositionFlag = addr & 31;
+	
+	NSLog(@"机芯位置是 : %zd", _rtMassageChairStatus.movementPositionFlag);
 }
 
 // 地址7 气囊按摩部位和按摩椅工作状态

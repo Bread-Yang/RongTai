@@ -53,6 +53,12 @@
 	
 	if (self.isDownloadCustomProgram) {
 		self.title = NSLocalizedString(@"已有程序", nil);
+		
+		// 让UITableView滑动的时候, header不float
+		CGFloat dummyViewHeight = 40;
+		UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, dummyViewHeight)];
+		self.tableView.tableHeaderView = dummyView;
+		self.tableView.contentInset = UIEdgeInsetsMake(-dummyViewHeight, 0, 0, 0);
 	} else {
 		self.title = NSLocalizedString(@"程序下载", nil);
 	}
