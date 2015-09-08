@@ -705,6 +705,11 @@
 					break;
 			}
 		}
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        {
+            //手动按摩的话，底部菜单栏的手动要高亮
+            
+        }
 		
 		[_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
 							animated:YES

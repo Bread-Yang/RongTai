@@ -222,14 +222,14 @@
 #pragma mark - 返回
 -(void)goBack
 {
-    //退出手动按摩的时候，发送复位命令
-    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
-    }
-    else
-    {
+//    //退出手动按摩的时候，发送复位命令
+//    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//        [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
+//    }
+//    else
+//    {
         [self.navigationController popViewControllerAnimated:YES];
-    }
+//    }
 }
 
 #pragma mark - 技法偏好点击方法
@@ -704,10 +704,10 @@
 //			[self jumpToScanViewConroller];
 //		}
 		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-         // 跳到自动按摩界面
-			[self jumpToAutoMassageViewConroller];
-		}
+//		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+//         // 跳到自动按摩界面
+//			[self jumpToAutoMassageViewConroller];
+//		}
 	}
     
     if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
@@ -739,7 +739,6 @@
         //即时更新
         [self updateUI];
     }
-
 }
 
 -(void)dalayNO

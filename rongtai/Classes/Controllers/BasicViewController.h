@@ -12,9 +12,11 @@
 
 @interface BasicViewController : UIViewController <RTBleConnectorDelegate>
 
+@property (nonatomic, strong) NSString* uid;
+
 @property (nonatomic, assign) BOOL isListenBluetoothStatus;
 
-@property (nonatomic, retain) CustomIOSAlertView *resettingDialog;
+@property (nonatomic, strong) CustomIOSAlertView *resettingDialog;
 
 - (void)backToMainViewController;
 

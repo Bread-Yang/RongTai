@@ -179,7 +179,7 @@
 #pragma mark - RTBleConnectorDelegate
 
 - (void)didUpdateRTBleState:(CBCentralManagerState)state {
-	NSLog(@"didUpdateRTBleState:");
+//	NSLog(@"didUpdateRTBleState:");
 	
 	switch (state) {
 		case CBCentralManagerStatePoweredOn :
@@ -212,19 +212,20 @@
             return;
         }
     }
-	
     [blePeriphrals addObject:periperalInfo];
-    
-	
-//    _isRefresh = NO;
+    [self.periphralTableView reloadData];
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {
 	NSLog(@"didConnectRTBlePeripheral()");
 //    [SVProgressHUD dismiss];
 	if ([peripheral.name isEqualToString:RTLocalName]) {
-//		[self performSegueWithIdentifier:@"rtSegue" sender:nil];
-		
+		//连接设备成功
+        if (bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+            //连接后若是设备已经是处于自动按摩状态，则设置开始时间
+            NSLog(@"设置开始时间");
+            bleConnector.startTime = [NSDate date];
+        }
 		[self.navigationController popViewControllerAnimated:YES];
 	}
 }
@@ -266,16 +267,18 @@
 
 #pragma mark --Misc
 - (void)refreshTableView {
-    if (!_isRefresh) {
-        _isRefresh = YES;
-        //刷新按钮 开始旋转动画
-        NSLog(@"刷新");
-        [NSTimer scheduledTimerWithTimeInterval:0.25 target:self
-                                       selector:@selector(refreshTimer:) userInfo:nil repeats:YES];
-        [blePeriphrals removeAllObjects];
-        [self.periphralTableView reloadData];
-        [bleConnector stopScanRTPeripheral];
-        [bleConnector startScanRTPeripheral:nil];
+    if ([RTBleConnector isBleTurnOn]) {
+        if (!_isRefresh) {
+            _isRefresh = YES;
+            //刷新按钮 开始旋转动画
+            NSLog(@"刷新");
+            [NSTimer scheduledTimerWithTimeInterval:0.25 target:self
+                                           selector:@selector(refreshTimer:) userInfo:nil repeats:YES];
+            [blePeriphrals removeAllObjects];
+            [self.periphralTableView reloadData];
+            [bleConnector stopScanRTPeripheral];
+            [bleConnector startScanRTPeripheral:nil];
+        }
     }
 }
 

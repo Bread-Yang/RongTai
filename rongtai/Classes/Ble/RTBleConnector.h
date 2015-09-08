@@ -111,6 +111,11 @@ static BOOL isBleTurnOn;
 
 @property (nonatomic, retain) CBPeripheral *currentConnectedPeripheral;
 
+/**
+ *  开始按摩时间，只用于自动按摩的时间统计
+ */
+@property (nonatomic, strong) NSDate* startTime;
+
 #pragma mark - download network program field
 
 @property (nonatomic, assign) CGFloat progress;

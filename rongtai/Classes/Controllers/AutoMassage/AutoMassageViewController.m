@@ -35,7 +35,7 @@
 	NAPickerView* _timePickerView;   //时间选择器
 	
     ProgramCount* _programCount;
-    NSString* _uid;
+    
 }
 @end
 
@@ -62,9 +62,6 @@
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
     self.navigationItem.rightBarButtonItem = right;
     
-    //
-    _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-	
 	// 时间view加入单击手势
 	UITapGestureRecognizer* tTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(setTiming)];
 	[_timeSetLabel addGestureRecognizer:tTap];
@@ -249,7 +246,7 @@
             [dateFormatter setDateFormat:@"YYYY-MM-dd"];
             NSString* date = [dateFormatter stringFromDate:start];
 
-            NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,_uid]];
+            NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,self.uid]];
 //            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
             
             //按摩次数统计
@@ -264,7 +261,7 @@
             {
                 _programCount = [ProgramCount MR_createEntity];
                 _programCount.name = _programName;
-                _programCount.uid = _uid;
+                _programCount.uid = self.uid;
                 _programCount.unUpdateCount = [NSNumber numberWithInt:1];
                 _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
             }
@@ -274,7 +271,7 @@
         
             //按摩记录
             MassageRecord* massageRecord;
-            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,_uid]];
+            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,self.uid]];
             if (records.count > 1) {
                 NSLog(@"查找数组:%@",records);
                 massageRecord = records[0];
@@ -291,32 +288,32 @@
                 massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
                 massageRecord.name = _programName;
                 massageRecord.date = date;
-                massageRecord.uid = _uid;
+                massageRecord.uid = self.uid;
                 massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
                 
             }
             
             //按摩使用时长统计
-            MassageTime* massageTime;
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
-            NSDateComponents *comps  = [calendar components:unitFlags fromDate:start];
-            NSArray* timeResult = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(year == %ld) AND (month == %ld) AND (day == %ld)",comps.year,comps.month,comps.day]];
-            if (timeResult.count > 0)
-            {
-                massageTime = timeResult[0];
-                NSUInteger old = [massageTime.useTime integerValue];
-                old += min;
-                massageTime.useTime = [NSNumber numberWithUnsignedInteger:old];
-            }
-            else
-            {
-                massageTime = [MassageTime MR_createEntity];
-                massageTime.useTime = [NSNumber numberWithUnsignedInteger:min];
-                massageTime.year = [NSNumber numberWithInteger:comps.year];
-                massageTime.month = [NSNumber numberWithInteger:comps.month];
-                massageTime.day = [NSNumber numberWithInteger:comps.day];
-            }
+//            MassageTime* massageTime;
+//            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+//            NSDateComponents *comps  = [calendar components:unitFlags fromDate:start];
+//            NSArray* timeResult = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(year == %ld) AND (month == %ld) AND (day == %ld)",comps.year,comps.month,comps.day]];
+//            if (timeResult.count > 0)
+//            {
+//                massageTime = timeResult[0];
+//                NSUInteger old = [massageTime.useTime integerValue];
+//                old += min;
+//                massageTime.useTime = [NSNumber numberWithUnsignedInteger:old];
+//            }
+//            else
+//            {
+//                massageTime = [MassageTime MR_createEntity];
+//                massageTime.useTime = [NSNumber numberWithUnsignedInteger:min];
+//                massageTime.year = [NSNumber numberWithInteger:comps.year];
+//                massageTime.month = [NSNumber numberWithInteger:comps.month];
+//                massageTime.day = [NSNumber numberWithInteger:comps.day];
+//            }
             
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 

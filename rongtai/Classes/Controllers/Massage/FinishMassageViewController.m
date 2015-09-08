@@ -71,7 +71,7 @@
     _starRateView = [[CWStarRateView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.84*0.7, 0.1*SCREENHEIGHT*0.6) numberOfStars:5];
     _starRateView.scorePercent = 0.9;
     _starRateView.delegate = self;
-    _starRateView.starRateType = WLStarRateViewHalfType;
+    _starRateView.starRateType = WLStarRateViewCompleteType;
     [_addStarView addSubview:_starRateView];
     
     // Do any additional setup after loading the view.
