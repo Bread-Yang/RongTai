@@ -714,9 +714,7 @@
         _stopBtn.hidden = NO;
         [self updateSkillsPreferenceView:YES];
     
-    }
-    else
-    {
+	} else {
         _stopBtn.hidden = YES;
         [self updateSkillsPreferenceView:NO];
     }
@@ -729,15 +727,14 @@
     // 以下是界面状态更新
     if (_isDelayUpdate) {
         //延迟更新
-        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
-    }
-    else
-    {
+        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay * _delayMul];
+		
+    } else {
         if (_delayCount>0) {
             _delayCount --;
         }
         //即时更新
-        [self updateUI];
+		[self updateUI];
     }
 }
 
@@ -754,8 +751,10 @@
     }
 }
 
--(void)updateUI
-{
+-(void)updateUI {
+	if (_bleConnector.rtMassageChairStatus.programType != RtMassageChairProgramManual) {
+		return;
+	}
     // 背部加热
     _backWarmOn = _bleConnector.rtMassageChairStatus.isHeating;
     [self updateBcakWarmView];
