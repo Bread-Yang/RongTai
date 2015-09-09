@@ -472,7 +472,7 @@
 	
 	if (indexPath.row >= 6) {
 		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6];
-		if (commandId == 0) {
+		if (![RTBleConnector isBleTurnOn] || commandId == 0) {
 			cell.hidden = YES;
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
@@ -493,7 +493,7 @@
 	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
 	
 	if (indexPath.row >= 6) {
-		if ([[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6] == 0) {
+		if (![RTBleConnector isBleTurnOn] || [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6] == 0) {
 			return 0;
 		}
 	}
@@ -510,94 +510,108 @@
 	
 //	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-        NSLog(@"连接设备为空");
-		[reconnectDialog show];
-		return;
-	}
-    
+//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+//        NSLog(@"连接设备为空");
+//		[reconnectDialog show];
+//		return;
+//	}
+	
 	switch (indexPath.row) {
 			
-		// 运动恢复
+			// 运动恢复
 		case 0:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
 			break;
 			
-		// 舒展活络
+			// 舒展活络
 		case 1:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_1];
 			break;
 			
-		// 休憩促眠
+			// 休憩促眠
 		case 2:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_2];
 			break;
 			
-		// 工作减压
+			// 工作减压
 		case 3:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_3];
 			break;
 			
-		// 肩颈重点
+			// 肩颈重点
 		case 4:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
 			break;
 			
-		// 腰椎舒缓
+			// 腰椎舒缓
 		case 5:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
 			break;
 			
-		// 云养程序一
+			// 云养程序一
 		case 6:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
 			break;
-		// 云养程序二
+			// 云养程序二
 		case 7:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
 			break;
-		// 云养程序三
+			// 云养程序三
 		case 8:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
 			break;
-		// 云养程序四
+			// 云养程序四
 		case 9:
 			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
 			break;
 	}
 	
-	// 延迟1.5秒再进入按摩界面
+	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
 	
-	double delayInSeconds = 1.5;
-	
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-	
-	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		
-		RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
-		
-		if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+	if (rtMassageChairStatus != nil) {
+		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 			
-			if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+			[self jumpToCorrespondingControllerByMassageStatus];
+			
+		} else {
+			
+			// 延迟1.5秒再进入按摩界面
+			
+			double delayInSeconds = 1.5;
+			
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+			
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				
-				//自动按摩时，开始统计时间
-				NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-				NSDate* startTime = [NSDate date];
-				[defaults setObject:startTime forKey:@"MassageStartTime"];
+				[self jumpToCorrespondingControllerByMassageStatus];
 				
-				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-					
-					[self jumpToScanViewConroller];
-					
-				} else { // 自动按摩
-					
-					[self jumpToAutoMassageViewConroller];
-					
-				}
+			});
+			
+		}
+	}
+}
+
+#pragma mark - 根据当前自动按摩的状态,跳进对应的界面(自动按摩界面, 体型检测界面)
+
+- (void)jumpToCorrespondingControllerByMassageStatus {
+	
+	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
+	
+	if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
+			
+			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+				
+				[self jumpToScanViewConroller];
+				
+			} else { // 自动按摩
+				
+				[self jumpToAutoMassageViewConroller];
+				
 			}
 		}
-		
-	});
+	}
 	
 }
 
@@ -611,7 +625,53 @@
     [[SlideNavigationController sharedInstance] toggleLeftMenu];
 }
 
+#pragma mark - 清空主界面所有高亮状态
+
+- (void)clearHightlightView {
+	[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
+	 _menuBar.selectedItem = nil;
+	[_table reloadData];
+}
+
 #pragma mark - RTBleConnectorDelegate
+
+- (void)didUpdateRTBleState:(CBCentralManagerState)state {
+	
+	NSString *message;
+	
+	switch (state) {
+		case CBCentralManagerStateResetting:
+			message = @"初始化中，请稍后……";
+			break;
+			
+		case CBCentralManagerStateUnsupported:
+			message = @"设备不支持状态，过会请重试……";
+			break;
+			
+		case CBCentralManagerStateUnauthorized:
+			message = @"设备未授权状态，过会请重试……";
+			break;
+			
+		case CBCentralManagerStatePoweredOff:
+			message = @"尚未打开蓝牙，请在设置中打开……";
+			[self clearHightlightView];
+			break;
+			
+		case CBCentralManagerStatePoweredOn:
+			message = @"蓝牙已经成功开启，稍后……";
+			break;
+			
+		case CBCentralManagerStateUnknown:
+			message = @"蓝牙发生未知错误，请重新打开……";
+			[self clearHightlightView];
+			break;
+	}
+}
+
+- (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
+	//	NSLog(@"didUpdateNetworkMassageStatus");
+	[self requestNetworkMassageProgram];
+}
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
@@ -779,11 +839,6 @@
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.7];
-}
-
-- (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
-//	NSLog(@"didUpdateNetworkMassageStatus");
-	[self requestNetworkMassageProgram];
 }
 
 /*

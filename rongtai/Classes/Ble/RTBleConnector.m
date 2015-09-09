@@ -42,9 +42,19 @@ static Byte const BYTE_ExitCode = 0x82;
 
 
 
-
-
 @implementation RTNetworkProgramStatus
+
+//- (instancetype)init {
+//	
+//	self = [super init];
+//	
+//	if (self) {
+//		
+//		self.networkProgramStatusArray = @[@0, @0, @0, @0];
+//		
+//	}
+//	return self;
+//}
 
 - (NSInteger)getEmptySlotIndex {
     for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
@@ -121,6 +131,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @property (nonatomic, retain) NSString *oldMassageChairRunningStatusString, *oldMassageChairNetworkStatusString;
 
+@property (nonatomic, assign) NSInteger updateNetworkStatusCount;
+
 @end
 
 
@@ -186,6 +198,9 @@ static Byte const BYTE_ExitCode = 0x82;
 		case CBCentralManagerStatePoweredOff:
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
+			self.currentConnectedPeripheral = nil;
+			self.rtMassageChairStatus = nil;
+//			_rtNetworkProgramStatus = [[RTNetworkProgramStatus alloc] init];
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
@@ -193,6 +208,9 @@ static Byte const BYTE_ExitCode = 0x82;
 			break;
         case CBCentralManagerStateUnknown:
             message = @"蓝牙发生未知错误，请重新打开……";
+			self.currentConnectedPeripheral = nil;
+			self.rtMassageChairStatus = nil;
+//			_rtNetworkProgramStatus = [[RTNetworkProgramStatus alloc] init];
             break;
 	}
 
@@ -290,6 +308,8 @@ static Byte const BYTE_ExitCode = 0x82;
 //	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
+		
+		_rtMassageChairStatus = [[RTMassageChairStatus alloc] init];
 		
 		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
 			NSData *runningStatusData = [data subdataWithRange:NSMakeRange(1, 14)];   // 运行状态在1到14位
@@ -389,9 +409,10 @@ NSString * NSDataToHex(NSData *data) {
 - (void)sendControlMode:(NSInteger)mode {
     //	NSInteger commnad[] = {NORMAL_CTRL,ENGGER_CTRL,H10_KEY_CHAIR_AUTO_0};
 	
-	if (self.currentConnectedPeripheral == nil) {
-		[self showConnectDialog];
+	if (self.currentConnectedPeripheral == nil || !isBleTurnOn) {
 		
+		[self showConnectDialog];
+
 		return;
 	}
 	
