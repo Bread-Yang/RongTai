@@ -42,9 +42,19 @@ static Byte const BYTE_ExitCode = 0x82;
 
 
 
-
-
 @implementation RTNetworkProgramStatus
+
+//- (instancetype)init {
+//	
+//	self = [super init];
+//	
+//	if (self) {
+//		
+//		self.networkProgramStatusArray = @[@0, @0, @0, @0];
+//		
+//	}
+//	return self;
+//}
 
 - (NSInteger)getEmptySlotIndex {
     for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
@@ -62,7 +72,7 @@ static Byte const BYTE_ExitCode = 0x82;
     }
     for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
         if (i == index) {
-            return [(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue];
+            return [((NSNumber *)[self.networkProgramStatusArray objectAtIndex:i]) intValue];
         }
     }
     return 0;
@@ -120,6 +130,8 @@ static Byte const BYTE_ExitCode = 0x82;
 @property (nonatomic, retain) CustomIOSAlertView *reconnectDialog;
 
 @property (nonatomic, retain) NSString *oldMassageChairRunningStatusString, *oldMassageChairNetworkStatusString;
+
+@property (nonatomic, assign) NSInteger updateNetworkStatusCount;
 
 @end
 
@@ -186,6 +198,7 @@ static Byte const BYTE_ExitCode = 0x82;
 		case CBCentralManagerStatePoweredOff:
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
+			self.currentConnectedPeripheral = nil;
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
@@ -193,6 +206,8 @@ static Byte const BYTE_ExitCode = 0x82;
 			break;
         case CBCentralManagerStateUnknown:
             message = @"蓝牙发生未知错误，请重新打开……";
+			self.currentConnectedPeripheral = nil;
+//			_rtNetworkProgramStatus = [[RTNetworkProgramStatus alloc] init];
             break;
 	}
 
@@ -389,9 +404,10 @@ NSString * NSDataToHex(NSData *data) {
 - (void)sendControlMode:(NSInteger)mode {
     //	NSInteger commnad[] = {NORMAL_CTRL,ENGGER_CTRL,H10_KEY_CHAIR_AUTO_0};
 	
-	if (self.currentConnectedPeripheral == nil) {
-		[self showConnectDialog];
+	if (self.currentConnectedPeripheral == nil || !isBleTurnOn) {
 		
+		[self showConnectDialog];
+
 		return;
 	}
 	
@@ -763,6 +779,8 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 	[NSNumber numberWithInteger:massageId_1];
 	
 	self.rtNetworkProgramStatus.networkProgramStatusArray = @[[NSNumber numberWithInteger:massageId_1], [NSNumber numberWithInteger:massageId_2], [NSNumber numberWithInteger:massageId_3], [NSNumber numberWithInteger:massageId_4]];
+	
+//	NSLog(@"按摩椅云养程序数组是 : %@", self.rtNetworkProgramStatus.networkProgramStatusArray);
 }
 
 - (void)parseData:(NSData *)rawData {

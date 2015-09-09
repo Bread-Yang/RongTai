@@ -143,6 +143,26 @@
 			}
 			[self.weekDaySegmentControl setSelectedIndexes:alreadySet];
 		}
+	} else {
+		// 增加模式下,显示当前时分和星期
+		
+		NSDate *now = [NSDate date];
+		NSLog(@"now date is: %@", now);
+		
+		NSCalendar *calendar = [NSCalendar currentCalendar];
+		NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit;
+		NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+		
+		NSInteger hour = [dateComponent hour];
+		NSInteger minute = [dateComponent minute];
+		int week = [dateComponent weekday]; // 1 : 星期天, 7 : 星期六
+		
+		[_leftPickView setIndex:hour];
+		[_rightPickView setIndex:minute];
+		
+		NSMutableOrderedSet *alreadySet = [[NSMutableOrderedSet alloc] init];
+		[alreadySet addObject:@(week - 1)];
+		[self.weekDaySegmentControl setSelectedIndexes:alreadySet];
 	}
 }
 

@@ -62,11 +62,19 @@
 
 - (void)downloadOrDeleteProgram:(UIButton *)button {
 	
-	if ([[button.currentImage accessibilityIdentifier] isEqualToString:@"download"]) {
+	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
 		
-		if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-			[[RTBleConnector shareManager] showConnectDialog];
-		} else {
+		[[RTBleConnector shareManager] showConnectDialog];
+		
+	} else {
+		
+		if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus != RtMassageChairStatusStandby) {
+			[self showCannotInstallDialog];
+			return;
+		}
+		
+		if ([[button.currentImage accessibilityIdentifier] isEqualToString:@"download"]) {
+			
 			// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
 			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptySlotIndex] == -1) {
 				
@@ -79,14 +87,30 @@
 			} else {
 				[[RTBleConnector shareManager] installProgramMassageByBinName:_massageProgram.binUrl];
 			}
+			
+		} else {
+			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:[self.massageProgram.commandId integerValue]]];
+			
+			[NSThread sleepForTimeInterval:0.3f];
+			
+			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 		}
-	} else {
-		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:self.massageProgram.commandId]];
 		
-		[NSThread sleepForTimeInterval:0.3f];
-		
-		[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 	}
+}
+
+#pragma mark - 显示按摩椅正在运行,不能安装对话框
+
+- (void)showCannotInstallDialog {
+	
+	CustomIOSAlertView *dialog = [[CustomIOSAlertView alloc] init];
+	dialog.isReconnectDialog = YES;
+	
+	dialog.reconnectTipsString = NSLocalizedString(@"非待机状态,不能操作", nil);
+	[dialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
+	
+	[dialog show];
+	
 }
 
 @end

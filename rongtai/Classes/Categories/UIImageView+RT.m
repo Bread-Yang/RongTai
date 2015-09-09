@@ -27,11 +27,12 @@
 		__weak UIImageView *weakImage = imageView;
 		
 		[imageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+			NSLog(@"请求图片成功");
 			
 			weakImage.image = image;
 			
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			NSLog(@"请求失败");
+			NSLog(@"请求图片失败");
 		}];
 	}
 }
