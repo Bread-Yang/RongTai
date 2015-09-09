@@ -291,10 +291,10 @@ CGFloat buttonSpacerHeight = 0;
 			
 			[closeButton setTitleColor:[UIColor whiteColor]
 							  forState:UIControlStateHighlighted];
-			[closeButton setTitleColor:[UIColor colorWithRed:0.2f
-													   green:0.2f
-														blue:0.2f
-													   alpha:0.5f]
+			[closeButton setTitleColor:[UIColor colorWithRed:3.0 / 255.0
+													   green:150 / 255.0
+														blue:253 / 255.0
+													   alpha:1.0]
 							  forState:UIControlStateNormal];
 			
 			[closeButton.titleLabel

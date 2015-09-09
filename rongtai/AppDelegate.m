@@ -158,13 +158,18 @@
      http://mobile.qq.com/api/上注册应用，并将相关信息填写到以下字段
      **/
 	// 实现在QQ好友,Q群,讨论组,QQ空间分享消息
-    [ShareSDK connectQQWithQZoneAppKey:@"100371282"
+    [ShareSDK connectQQWithQZoneAppKey:@"1104775475"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
 	
-	// 实现QQ授权登录
-	[ShareSDK connectQZoneWithAppKey:@"100371282"
-						   appSecret:@"aed9b0303e3ed1e27bae87c33761161d"
+	// 实现QQ授权登录(demo中可用的)
+//	[ShareSDK connectQZoneWithAppKey:@"100371282"
+//						   appSecret:@"aed9b0303e3ed1e27bae87c33761161d"
+//				   qqApiInterfaceCls:[QQApiInterface class]
+//					 tencentOAuthCls:[TencentOAuth class]];
+	
+	[ShareSDK connectQZoneWithAppKey:@"1104775475"
+						   appSecret:@"vjlMk6zNNKyzZhHR"
 				   qqApiInterfaceCls:[QQApiInterface class]
 					 tencentOAuthCls:[TencentOAuth class]];
 	

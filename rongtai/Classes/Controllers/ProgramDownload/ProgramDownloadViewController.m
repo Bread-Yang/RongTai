@@ -21,7 +21,7 @@
 @interface ProgramDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, RTBleConnectorDelegate> {
 	
 	MBProgressHUD *_loadingHUD;
-	NSArray *_programArray;
+	NSMutableArray *_programArray, *_alreadyInstallArray;
 }
 
 @property(nonatomic, strong) AFHTTPRequestOperationManager *httpRequestManager;
@@ -78,68 +78,47 @@
 		
 		[request requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
 			
-			[_loadingHUD hide:YES];
-			
-			_programArray = [NSArray arrayWithArray:networkMassageProgramArray];
-			
-			[self.tableView reloadData];
-			
-			self.tableView.hidden = NO;
+			[self refreshTableViewAfterRequest:networkMassageProgramArray];
 			
 		} failure:^(NSArray *localMassageProgramArray) {
 			
-			[_loadingHUD hide:YES];
-			
-			_programArray = [NSArray arrayWithArray:localMassageProgramArray];
-			
-			[self.tableView reloadData];
-			
-			self.tableView.hidden = NO;
+			[self refreshTableViewAfterRequest:localMassageProgramArray];
 			
 		}];
-		
-//		NSLog(@"请求成员");
-//		NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-//		
-//		self.httpRequestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//		
-//		NSString *requestURL = [RongTaiDefaultDomain stringByAppendingString:@"loadMassage"];
-//		
-//		NSMutableDictionary *parmeters = [NSMutableDictionary new];
-//		[parmeters setObject:uid forKey:@"uid"];
-//		[parmeters setObject:[NSNumber numberWithInteger:0] forKey:@"index"];
-//		[parmeters setObject:[NSNumber numberWithInteger:1000] forKey:@"size"];
-//		
-//		[self.httpRequestManager POST:requestURL parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//			
-//			NSLog(@"获取程序下载列表 :%@",responseObject);
-//			NSNumber *code = [responseObject objectForKey:@"responseCode"];
-//			if ([code integerValue] == 200) {
-//				[_loadingHUD hide:YES];
-//				
-//				NSMutableArray *arr = [NSMutableArray new];
-//				
-//				NSArray *result = [responseObject objectForKey:@"result"];
-//				
-//				for (NSDictionary *dic in result) {
-//					MassageProgram *program = [[MassageProgram alloc] initWithJSON:dic];
-//					[arr addObject:program];
-//				}
-//				
-//				_programArray = [NSArray arrayWithArray:arr];
-//				
-//				[self.tableView reloadData];
-//				
-//				self.tableView.hidden = NO;
-//			} else {
-//				[_loadingHUD hide:YES];
-//			}
-//		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//				[_loadingHUD hide:YES];
-//		}];
 	} else {
 		NSLog(@"没网，本地记录读取成员");
 	}
+}
+
+- (void)refreshTableViewAfterRequest:(NSArray *) massageProgramArray {
+	[_loadingHUD hide:YES];
+	
+	_programArray = [[NSArray arrayWithArray:massageProgramArray] mutableCopy];
+	
+	if (self.isDownloadCustomProgram) {
+		_alreadyInstallArray = [[NSMutableArray alloc] init];
+		
+		for (NSNumber *item in [RTBleConnector shareManager].rtNetworkProgramStatus.networkProgramStatusArray) {
+			int networkMassageId = [item intValue];
+			
+			if (networkMassageId != 0) {
+				
+				NSArray *tempArray = [NSArray arrayWithArray:_programArray];
+				
+				for (MassageProgram *program in tempArray) {
+					if ([program.commandId intValue] == networkMassageId) {
+						[_alreadyInstallArray addObject:program];
+						[_programArray removeObject:program];
+						continue;
+					}
+				}
+			}
+		}
+	}
+	
+	[self.tableView reloadData];
+	
+	self.tableView.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -221,7 +200,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (self.isDownloadCustomProgram) {
-		return [_programArray count];
+		if (section == 0) {
+			return [_programArray count];
+		} else {
+			return [_alreadyInstallArray count];
+		}
 	} else {
 		return [_programArray count];
 	}
@@ -236,7 +219,18 @@
 	
 	cell.backgroundView = bgView;
 	
-	cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
+	
+	if (self.isDownloadCustomProgram) {
+		if (indexPath.section == 0) {
+			cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
+		} else {
+			cell.massageProgram = [_alreadyInstallArray objectAtIndex:indexPath.row];
+		}
+		
+	} else {
+		cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
+	}
+	
 	
 	NSLog(@"值是 : %zd", [cell.massageProgram.commandId integerValue]);
 	
