@@ -21,18 +21,14 @@
 	RTBleConnector *bleConnector;
 	
 	CustomIOSAlertView *reconnectDialog;
-	
-    RTMassageChairProgramType _type;  //按摩类型
-    
-    RTMassageChairProgramType _autoType;  //自动按摩类型
-    
-    NSString* _uid;
     
     NSUserDefaults* _defaults;
     
     ProgramCount* _programCount;
     
     NSString* _programName;
+    
+    NSUInteger _massageFlag;
 }
 
 @end 
@@ -55,6 +51,7 @@
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     
     _defaults = [NSUserDefaults standardUserDefaults];
+    _massageFlag = 0;
 	
 	self.resettingDialog = [[CustomIOSAlertView alloc] init];
 	self.resettingDialog.isReconnectDialog = YES;
@@ -82,10 +79,10 @@
         
         //页面出现就记录当前按摩椅按摩状态
         if (bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-            _type = bleConnector.rtMassageChairStatus.programType;
-            if (_type == RtMassageChairProgramAuto) {
-                //如果是自动按摩的话，要记录
-                _autoType = bleConnector.rtMassageChairStatus.autoProgramType;
+            if (bleConnector.rtMassageChairStatus.programType != RtMassageChairProgramManual) {
+               
+                _massageFlag = bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+                 NSLog(@"记录按摩状态:%ld",_massageFlag);
             }
         }
 	}
@@ -208,63 +205,128 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
 {
-    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+    {
+        //按摩中
         if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
-            //手动按摩
-//            NSLog(@"%@手动按摩",[self class]);
-            if (_type != RtMassageChairProgramManual) {
+            //手动按摩中
+            if (_massageFlag != rtMassageChairStatus.massageProgramFlag) {
                 NSLog(@"切换到手动按摩");
                 //从自动按摩切换过来的话，需要进行按摩时间和次数统计
-                if (_type == RtMassageChairProgramAuto) {
-                    [self countMassageTime];
-                }
-                _type = RtMassageChairProgramManual;
+                [self countMassageTime];
+                _massageFlag = rtMassageChairStatus.massageProgramFlag;
             }
         }
-        else if (rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork || rtMassageChairStatus.programType == RtMassageChairProgramAuto)
         {
             //自动按摩
-//            NSLog(@"%@自动按摩",[self class]);
-            if (_type != RtMassageChairProgramAuto) {
-                //每次切换到自动按摩程序的时候，就设置开始按摩时间
-                _type = RtMassageChairProgramAuto;
-                bleConnector.startTime = [NSDate date];
-                NSLog(@"切换到自动按摩");
-                NSLog(@"设置开始时间");
-            }
-            
-            if (_autoType != rtMassageChairStatus.autoProgramType) {
-                _autoType = rtMassageChairStatus.autoProgramType;
-                //一直处于自动按摩的时候，切换不同的按摩种类时，需要进行按摩时间和次数统计
-                NSLog(@"切换了自动按摩种类:%@",[rtMassageChairStatus autoMassageName]);
-                [self countMassageTime];
-                bleConnector.startTime = [NSDate date];
-            }
-        }
-        else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
-        {
-            //网络按摩
-//            NSLog(@"%@网络按摩",[self class]);
-            if (_type != RtMassageChairProgramNetwork) {
-                NSLog(@"切换到网络按摩");
-                //从自动按摩切换过来的话，需要进行按摩时间和次数统计
-                if (_type == RtMassageChairProgramAuto) {
-                    [self countMassageTime];
+            if (_massageFlag != rtMassageChairStatus.massageProgramFlag) {
+                if (_massageFlag == 7) {
+                    //每次切换到自动按摩程序的时候，就设置开始按摩时间
+                    _massageFlag = rtMassageChairStatus.massageProgramFlag;
+                    bleConnector.startTime = [NSDate date];
+                    NSLog(@"切换到自动按摩");
+                    NSLog(@"设置开始时间");
                 }
-                _type = RtMassageChairProgramNetwork;
+                else
+                {
+                    NSLog(@"更换自动按摩种类");
+                    //切换自动按摩程序种类，需要进行按摩时间和次数统计
+                    [self countMassageTime];
+                    //再次设置开始时间
+                    bleConnector.startTime = [NSDate date];
+                    _massageFlag = rtMassageChairStatus.massageProgramFlag;
+                }
             }
         }
     }
     else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
     {
-        if (_type == RtMassageChairProgramAuto) {
-            NSLog(@"复位前是自动按摩");
-            //复位前是自动按摩需要统计
-            [self countMassageTime];
-            _type = RtMassageChairProgramManual;
+        //复位中
+        if (_massageFlag != 0) {
+            if (_massageFlag>0&&_massageFlag<11&&_massageFlag!=7) {
+                NSLog(@"复位前是自动按摩");
+                //复位前是自动按摩需要统计
+                [self countMassageTime];
+                _massageFlag = 0;
+            }
+            bleConnector.startTime = nil;
         }
-        bleConnector.startTime = nil;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    
+//    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//        if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+//            //手动按摩
+////            NSLog(@"%@手动按摩",[self class]);
+//            if (_type != RtMassageChairProgramManual) {
+//                NSLog(@"切换到手动按摩");
+//                //从自动按摩切换过来的话，需要进行按摩时间和次数统计
+//                if (_type == RtMassageChairProgramAuto || _type == RtMassageChairProgramNetwork) {
+//                    [self countMassageTime];
+//                }
+//                _type = RtMassageChairProgramManual;
+//            }
+//        }
+//        else if (rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+//        {
+//            //自动按摩
+////            NSLog(@"%@自动按摩",[self class]);
+//            if (_type != RtMassageChairProgramAuto) {
+//                //每次切换到自动按摩程序的时候，就设置开始按摩时间
+//                _type = RtMassageChairProgramAuto;
+//                bleConnector.startTime = [NSDate date];
+//                NSLog(@"切换到自动按摩");
+//                NSLog(@"设置开始时间");
+//            }
+//            
+//            if (_autoType != rtMassageChairStatus.autoProgramType) {
+//                _autoType = rtMassageChairStatus.autoProgramType;
+//                //一直处于自动按摩的时候，切换不同的按摩种类时，需要进行按摩时间和次数统计
+//                NSLog(@"切换了自动按摩种类:%@",[rtMassageChairStatus autoMassageName]);
+//                [self countMassageTime];
+//                bleConnector.startTime = [NSDate date];
+//            }
+//        }
+//        else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
+//        {
+//            //网络按摩
+////            NSLog(@"%@网络按摩",[self class]);
+//            if (_type != RtMassageChairProgramNetwork) {
+//                NSLog(@"切换到网络按摩");
+//                //从自动按摩切换过来的话，需要进行按摩时间和次数统计
+//                if (_type == RtMassageChairProgramAuto) {
+//                    [self countMassageTime];
+//                }
+//                _type = RtMassageChairProgramNetwork;
+//            }
+//        }
+//    }
+//    else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+//    {
+//        if (_type == RtMassageChairProgramAuto) {
+//            NSLog(@"复位前是自动按摩");
+//            //复位前是自动按摩需要统计
+//            [self countMassageTime];
+//            _type = RtMassageChairProgramManual;
+//        }
+//        bleConnector.startTime = nil;
+//    }
 }
 
 - (void)didConnectRTBlePeripheral:(CBPeripheral *)peripheral {
@@ -289,7 +351,7 @@
     NSDate* end = [NSDate date];
     NSDate* start = bleConnector.startTime;
     if (start) {
-        NSLog(@"统计一次");
+        
         NSTimeInterval time = [end timeIntervalSinceDate:start];
 //        NSLog(@"此次按摩了%f秒",time);
         if (time>30) {
@@ -307,63 +369,79 @@
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"YYYY-MM-dd"];
             NSString* date = [dateFormatter stringFromDate:start];
+            NSInteger programId = -1;
+            if (_massageFlag<7&&_massageFlag>0) {
+                //属于自动按摩的统计
+                _programName = [bleConnector.rtMassageChairStatus autoMassageNameByIndex:_massageFlag];
+                programId = _massageFlag;
+            }
+            else if (_massageFlag<11&&_massageFlag>7)
+            {
+                //属于网络按摩的统计
+                MassageProgram* p = [bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
+                programId = [p.commandId integerValue];
+                _programName = p.name;
+            }
+            else
+            {
+                _programName = nil;
+                programId = 0;
+                NSLog(@"统计到的按摩程序名称为空");
+            }
             
-            
-            
+            if (programId>0) {
+                NSLog(@"统计一次");
+                NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %d) AND (uid == %@)",programId,_uid]];
+                
+                //按摩次数统计
+                if (result.count >0) {
+                    _programCount = result[0];
+                    NSUInteger count = [_programCount.unUpdateCount integerValue];
+                    count++;
+                    _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
+                    _programCount.programId = [NSNumber numberWithInteger:programId];
+                }
+                else
+                {
+                    _programCount = [ProgramCount MR_createEntity];
+                    _programCount.name = _programName;
+                    _programCount.uid = _uid;
+                    _programCount.unUpdateCount = [NSNumber numberWithInt:1];
+                    _programCount.programId = [NSNumber numberWithInteger:programId];
+                }
+                
+                //开始统计次数的网络数据同步
+                [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
+                
+                //按摩记录
+                MassageRecord* massageRecord;
+                NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %d) AND (date == %@) AND (uid == %@)",programId,date,_uid]];
+                if (records.count > 1) {
+                    NSLog(@"查找数组:%@",records);
+                    massageRecord = records[0];
+                }
+                if (massageRecord) {
+                    NSUInteger oldTime = [massageRecord.useTime integerValue];
+                    oldTime += min;
+                    massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
+                }
+                else
+                {
+                    //创建一条按摩记录
+                    massageRecord = [MassageRecord MR_createEntity];
+                    massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
+                    massageRecord.name = _programName;
+                    massageRecord.date = date;
+                    massageRecord.uid = _uid;
+                    massageRecord.programId = [NSNumber numberWithInteger:programId];
+                    
+                }
+            }
         }
         
         //统计完成要把开始时间置空，表示此次按摩已结束
         bleConnector.startTime = nil;
     }
-    
-
-//    NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,_uid]];
-    
-//    //            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
-//    
-//    //按摩次数统计
-//    if (result.count >0) {
-//        _programCount = result[0];
-//        NSUInteger count = [_programCount.unUpdateCount integerValue];
-//        count++;
-//        _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
-//        _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-//    }
-//    else
-//    {
-//        _programCount = [ProgramCount MR_createEntity];
-//        _programCount.name = _programName;
-//        _programCount.uid = _uid;
-//        _programCount.unUpdateCount = [NSNumber numberWithInt:1];
-//        _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-//    }
-//    
-//    //开始统计次数的网络数据同步
-//    [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
-//    
-//    //按摩记录
-//    MassageRecord* massageRecord;
-//    NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,_uid]];
-//    if (records.count > 1) {
-//        NSLog(@"查找数组:%@",records);
-//        massageRecord = records[0];
-//    }
-//    if (massageRecord) {
-//        NSUInteger oldTime = [massageRecord.useTime integerValue];
-//        oldTime += min;
-//        massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
-//    }
-//    else
-//    {
-//        //创建一条按摩记录
-//        massageRecord = [MassageRecord MR_createEntity];
-//        massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
-//        massageRecord.name = _programName;
-//        massageRecord.date = date;
-//        massageRecord.uid = _uid;
-//        massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-//        
-//    }
 }
 
 

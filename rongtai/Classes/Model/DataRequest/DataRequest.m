@@ -45,7 +45,7 @@
     }
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
-        NSLog(@"获取爱用程序使用次数:%@",responseObject);
+//        NSLog(@"获取爱用程序使用次数:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
 //        NSString* message = [responseObject objectForKey:@"responseMessage"];
 //        NSLog(@"请求结果:%@",message);

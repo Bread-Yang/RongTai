@@ -779,9 +779,10 @@
     if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag != 0) {
 //        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
         if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag == 7) {
-            _skillsPreferenceLabel.text = @"搓背";
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"居然出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
-            [alert show];
+//            _skillsPreferenceLabel.text = @"搓背";
+            NSLog(@"出现捶背");
+//            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"居然出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
+//            [alert show];
         } else {
             _skillsPreferenceLabel.text = _skillsPreferenceArray[_bleConnector.rtMassageChairStatus.massageTechniqueFlag - 1];
         }

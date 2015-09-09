@@ -1089,7 +1089,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
      */
     _rtMassageChairStatus.movementPositionFlag = addr & 31;
 	
-	NSLog(@"机芯位置是 : %zd", _rtMassageChairStatus.movementPositionFlag);
+//	NSLog(@"机芯位置是 : %zd", _rtMassageChairStatus.movementPositionFlag);
 }
 
 // 地址7 气囊按摩部位和按摩椅工作状态

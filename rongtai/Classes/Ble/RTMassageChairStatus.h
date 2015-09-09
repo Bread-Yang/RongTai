@@ -651,5 +651,5 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
 -(void)printStatus;
 
 #pragma mark - 输出自动按摩模式名称
--(NSString*)autoMassageName;
+-(NSString*)autoMassageNameByIndex:(NSUInteger)index;
 @end

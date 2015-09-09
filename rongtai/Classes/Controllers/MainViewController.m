@@ -35,7 +35,6 @@
 #import "MBProgressHUD.h"
 
 
-
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
@@ -52,7 +51,14 @@
     UIBarButtonItem* _leftBtn;
     NSString* _userImageUrl; //导航栏左边按钮，即用户头像的链接
     UIImageView* imView;
-    NSString* _uid;
+    
+    //由于该类覆盖了父类的
+    RTBleConnector *_bleConnector;
+    ProgramCount* _programCount;
+    
+    NSString* _programName;
+    
+    NSUInteger _massageFlag;
 }
 @end
 
@@ -73,7 +79,7 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSString* mid = [defaults objectForKey:@"currentMemberId"];
-    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",_uid, mid]];
+    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",self.uid, mid]];
     if (arr.count > 0) {
         Member* m = arr[0];
         [self changeUser:m.imageURL];
@@ -83,6 +89,14 @@
     {
         NSLog(@"找不到用户");
         [self changeUser:nil];
+    }
+    
+    
+    //页面出现就记录当前按摩椅按摩状态
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        if (_bleConnector.rtMassageChairStatus.programType != RtMassageChairProgramManual) {
+            _massageFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+        }
     }
 }
 
@@ -103,7 +117,6 @@
     
     //
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    _uid = [defaults objectForKey:@"uid"];
     
     //天气预报
     NSNumber* loadWeather = [defaults valueForKey:@"weather"];
@@ -217,6 +230,8 @@
     
     imView = [UIImageView new];
     
+    _massageFlag = 0;
+    
     [self synchroMassageRecord];
 }
 
@@ -284,7 +299,7 @@
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue
 {
     if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",_uid]];
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",self.uid]];
         if (plans.count>0) {
             TimingPlan* plan = plans[0];
             NSInteger state = [plan.state integerValue];
@@ -615,7 +630,7 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	NSLog(@"didUpdateMassageChairStatus");
+//	NSLog(@"didUpdateMassageChairStatus");
 	
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
 		_menuBar.selectedItem = nil;
@@ -634,9 +649,9 @@
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
 			
 			//自动按摩时，开始统计时间
-			NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-			NSDate* startTime = [NSDate date];
-			[defaults setObject:startTime forKey:@"MassageStartTime"];
+//			NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+//			NSDate* startTime = [NSDate date];
+//			[defaults setObject:startTime forKey:@"MassageStartTime"];
 			
 			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 				
@@ -717,6 +732,58 @@
 	} else {  // 没有在按摩
 		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
 	}
+    
+    
+    //统计数据
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+    {
+        //按摩中
+        if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+            //手动按摩中
+            if (_massageFlag != rtMassageChairStatus.massageProgramFlag) {
+                NSLog(@"切换到手动按摩");
+                //从自动按摩切换过来的话，需要进行按摩时间和次数统计
+                [self countMassageTime];
+                _massageFlag = rtMassageChairStatus.massageProgramFlag;
+            }
+        }
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork || rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+        {
+            //自动按摩
+            if (_massageFlag != rtMassageChairStatus.massageProgramFlag) {
+                if (_massageFlag == 7) {
+                    //每次切换到自动按摩程序的时候，就设置开始按摩时间
+                    _massageFlag = rtMassageChairStatus.massageProgramFlag;
+                    _bleConnector.startTime = [NSDate date];
+                    NSLog(@"切换到自动按摩");
+                    NSLog(@"设置开始时间");
+                }
+                else
+                {
+                    NSLog(@"更换自动按摩种类");
+                    //切换自动按摩程序种类，需要进行按摩时间和次数统计
+                    [self countMassageTime];
+                    //再次设置开始时间
+                    _bleConnector.startTime = [NSDate date];
+                    _massageFlag = rtMassageChairStatus.massageProgramFlag;
+                }
+            }
+        }
+    }
+    else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+    {
+        //复位中
+        if (_massageFlag != 0) {
+            if (_massageFlag>0&&_massageFlag<11&&_massageFlag!=7) {
+                NSLog(@"复位前是自动按摩");
+                //复位前是自动按摩需要统计
+                [self countMassageTime];
+                _massageFlag = 0;
+            }
+            _bleConnector.startTime = nil;
+        }
+    }
+    
 }
 
 
@@ -762,6 +829,108 @@
             [btn setImage:img forState:UIControlStateNormal];
         }
     }
+}
+
+#pragma mark - 计算按摩时间
+-(void)countMassageTime
+{
+    //计算按摩时间
+    NSDate* end = [NSDate date];
+    NSDate* start = _bleConnector.startTime;
+    if (start) {
+        
+        NSTimeInterval time = [end timeIntervalSinceDate:start];
+        //        NSLog(@"此次按摩了%f秒",time);
+        if (time>30) {
+            //时间大于30秒才开始统计
+            NSUInteger min;
+            if (time<=60) {
+                min = 1;
+            }
+            else
+            {
+                min = (int)round(time/60);
+            }
+            NSLog(@"此次按摩了%ld分钟",min);
+            //将开始按摩的日期转成字符串
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+            NSString* date = [dateFormatter stringFromDate:start];
+            NSInteger programId = -1;
+            if (_massageFlag<7&&_massageFlag>0) {
+                //属于自动按摩的统计
+                _programName = [_bleConnector.rtMassageChairStatus autoMassageNameByIndex:_massageFlag];
+                programId = _massageFlag;
+            }
+            else if (_massageFlag<11&&_massageFlag>7)
+            {
+                //属于网络按摩的统计
+                MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
+                programId = [p.commandId integerValue];
+                _programName = p.name;
+            }
+            else
+            {
+                _programName = nil;
+                programId = 0;
+                NSLog(@"统计到的按摩程序名称为空");
+            }
+            
+            if (programId>0) {
+                NSLog(@"统计一次");
+                NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %@) AND (uid == %@)",programId,self.uid]];
+                
+                //按摩次数统计
+                if (result.count >0) {
+                    _programCount = result[0];
+                    NSUInteger count = [_programCount.unUpdateCount integerValue];
+                    count++;
+                    _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
+                    _programCount.programId = [NSNumber numberWithInteger:programId];
+                }
+                else
+                {
+                    _programCount = [ProgramCount MR_createEntity];
+                    _programCount.name = _programName;
+                    _programCount.uid = self.uid;
+                    _programCount.unUpdateCount = [NSNumber numberWithInt:1];
+                    _programCount.programId = [NSNumber numberWithInteger:programId];
+                }
+                
+                //开始统计次数的网络数据同步
+                [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
+                
+                //按摩记录
+                MassageRecord* massageRecord;
+                NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %@) AND (date == %@) AND (uid == %@)",programId,date,self.uid]];
+                if (records.count > 1) {
+                    NSLog(@"查找数组:%@",records);
+                    massageRecord = records[0];
+                }
+                if (massageRecord) {
+                    NSUInteger oldTime = [massageRecord.useTime integerValue];
+                    oldTime += min;
+                    massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
+                }
+                else
+                {
+                    //创建一条按摩记录
+                    massageRecord = [MassageRecord MR_createEntity];
+                    massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
+                    massageRecord.name = _programName;
+                    massageRecord.date = date;
+                    massageRecord.uid = self.uid;
+                    massageRecord.programId = [NSNumber numberWithInteger:programId];
+                    
+                }
+            }
+        }
+        
+        //统计完成要把开始时间置空，表示此次按摩已结束
+        _bleConnector.startTime = nil;
+    }
+    
+    
 }
 
 #pragma mark - 快速提示
