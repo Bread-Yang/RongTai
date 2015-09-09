@@ -1159,22 +1159,32 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dc8-9S-dPA">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dc8-9S-dPA">
                                         <rect key="frame" x="51" y="15" width="384" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-Rb-ejG">
+                                        <rect key="frame" x="51" y="0.0" width="400" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" secondItem="xnJ-Rb-ejG" secondAttribute="width" multiplier="1.2" id="03k-bX-Vdi"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="width" secondItem="arZ-Bk-5RV" secondAttribute="width" id="4kI-j2-IPH"/>
                                     <constraint firstItem="dc8-9S-dPA" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="top" constant="15" id="Dw8-ZF-13P"/>
                                     <constraint firstItem="dc8-9S-dPA" firstAttribute="leading" secondItem="4BW-Qf-Lff" secondAttribute="trailing" id="FgG-PF-GxP"/>
+                                    <constraint firstItem="xnJ-Rb-ejG" firstAttribute="leading" secondItem="4BW-Qf-Lff" secondAttribute="trailing" id="Jnt-5I-eUW"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="height" secondItem="arZ-Bk-5RV" secondAttribute="height" multiplier="0.75" id="LZ3-0M-SFo"/>
+                                    <constraint firstItem="xnJ-Rb-ejG" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="top" id="Yw8-qJ-zcG"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="leading" secondItem="arZ-Bk-5RV" secondAttribute="leading" id="Zjn-KL-upH"/>
                                     <constraint firstItem="4BW-Qf-Lff" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="top" id="ktY-5F-Bkp"/>
                                     <constraint firstItem="dc8-9S-dPA" firstAttribute="height" secondItem="arZ-Bk-5RV" secondAttribute="height" id="nm5-Ad-wIG"/>
+                                    <constraint firstAttribute="height" secondItem="xnJ-Rb-ejG" secondAttribute="height" id="pXc-4L-HP9"/>
                                     <constraint firstItem="dc8-9S-dPA" firstAttribute="width" secondItem="arZ-Bk-5RV" secondAttribute="width" multiplier="0.8" id="r39-Ls-pPN"/>
                                 </constraints>
                                 <variation key="default">
@@ -1274,6 +1284,7 @@
                     </view>
                     <connections>
                         <outlet property="_functionLabel" destination="dc8-9S-dPA" id="6S4-8r-pVf"/>
+                        <outlet property="_functionTextView" destination="xnJ-Rb-ejG" id="4vv-GP-q7f"/>
                         <outlet property="_movementPositionImageView" destination="jFS-YF-P3w" id="52o-Kf-hDT"/>
                         <outlet property="_rollerStatusImageView" destination="kau-SN-xpB" id="wnQ-3i-6aR"/>
                         <outlet property="_stopBtn" destination="POp-0M-tlL" id="PJa-No-TKt"/>
