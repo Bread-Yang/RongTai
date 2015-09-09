@@ -651,17 +651,10 @@
 				
 				[self jumpToAutoMassageViewConroller];
 				
-				if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-					
-					[self jumpToScanViewConroller];
-					
-				} else { // 自动按摩
-					
-					[self jumpToAutoMassageViewConroller];
-				}
 			}
 		}
-	});
+	}
+	
 }
 
 #pragma mark - 侧滑菜单代理
@@ -675,11 +668,11 @@
 }
 
 #pragma mark - 清空主界面所有高亮状态
-
 - (void)clearHightlightView {
 	[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
-	 _menuBar.selectedItem = nil;
 	[_table reloadData];
+    [_anionButton setSelected:NO];
+    [_manualMassageButton setSelected:NO];
 }
 
 #pragma mark - RTBleConnectorDelegate
