@@ -20,7 +20,7 @@
 #import "MainViewController.h"
 #import "UIBarButtonItem+goBack.h"
 
-@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, RFSegmentViewDelegate> {
+@interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, RFSegmentViewDelegate, UITextFieldDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
     __weak IBOutlet UITextField *_height;  //身高TextField
     __weak IBOutlet UITextField *_birthday;  //生日年月TextFiled
@@ -79,9 +79,6 @@
     _manager = [AFNetworkReachabilityManager sharedManager];
     _memberRequest = [MemberRequest new];
     
-    //由于是storyboard创建，身高的TextField比生日TextField跟晚加进View里面，导致使用IQKeyBoardManager时跳转顺序被打乱了
-    [_middleView bringSubviewToFront:_birthday];
-    
     //身高数组：范围为140~300cm
     _heightArr = [NSMutableArray new];
     for (int i = 140; i < 301; i++) {
@@ -93,8 +90,11 @@
     
     //
     _component = 1;
-    
     CGRect f = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216);
+    
+    //
+    _name.returnKeyType = UIReturnKeyDone;
+    _name.delegate = self;
     
     //改写_hegiht的键盘为身高选择器
     UIView* inputView = [[UIView alloc]initWithFrame:f];
@@ -157,7 +157,6 @@
     _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
     _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
     [self.view addSubview:_loadingHUD];
-    
     
     //
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
@@ -255,6 +254,13 @@
     _bgImageView.image = [_userImage blurImage:15.0];
     _isNewImage = YES;
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - textField代理
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - 保存信息按钮方法

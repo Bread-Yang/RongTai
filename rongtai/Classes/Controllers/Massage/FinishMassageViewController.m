@@ -8,7 +8,6 @@
 #import <ShareSDK/ShareSDK.h>
 
 #import "FinishMassageViewController.h"
-#import "IQKeyboardManager.h"
 #import "RongTaiConstant.h"
 #import "CWStarRateView.h"
 #import "UILabel+WLAttributedString.h"

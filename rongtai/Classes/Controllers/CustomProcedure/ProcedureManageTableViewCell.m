@@ -8,7 +8,6 @@
 
 #import "ProcedureManageTableViewCell.h"
 #import "CustomProgram.h"
-#import "IQKeyboardManager.h"
 #import "CoreData+MagicalRecord.h"
 
 @interface ProcedureManageTableViewCell ()<UIAlertViewDelegate>
@@ -77,8 +76,6 @@
 -(void)clickName
 {
     if (_isEdit) {
-        IQKeyboardManager* m = [IQKeyboardManager sharedManager];
-        [m setEnable:NO];
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"名称", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"取消", nil) otherButtonTitles:NSLocalizedString(@"保存", nil), nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.delegate = self;
@@ -91,8 +88,6 @@
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    IQKeyboardManager* m = [IQKeyboardManager sharedManager];
-    [m setEnable:YES];
     if (buttonIndex == 1) {
         CustomProgram* c = [CustomProgram MR_findByAttribute:@"name" withValue:_customProgram.name][0];
         UITextField* textFeile = [alertView textFieldAtIndex:0];

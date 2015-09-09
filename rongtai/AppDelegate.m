@@ -179,7 +179,6 @@
     [ShareSDK connectSinaWeiboWithAppKey:@"2191044654"
                                appSecret:@"dc81714808d039ed932242ccb6a936b1"
                              redirectUri:@"http://www.sharesdk.cn"];
-    
 }
 
 @end

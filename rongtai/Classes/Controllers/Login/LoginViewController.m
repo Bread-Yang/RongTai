@@ -12,8 +12,6 @@
 #import "LoginRequest.h"
 #import "SlideNavigationController.h"
 #import "MenuViewController.h"
-#import "IQKeyboardManager.h"
-
 #import "DataCenterViewController.h"
 #import "FamilyManageViewController.h"
 #import "CustomProcedureViewController.h"
@@ -94,7 +92,7 @@
     /*
      在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
     */
-    [[IQKeyboardManager sharedManager] resignFirstResponder];
+//    [[IQKeyboardManager sharedManager] resignFirstResponder];
     
     NSString* phone = _phoneNum.text;
     //去掉首尾空格

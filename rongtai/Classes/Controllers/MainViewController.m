@@ -35,7 +35,7 @@
 #import "MBProgressHUD.h"
 
 
-@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
     NSMutableArray *_massageArr;
@@ -44,21 +44,24 @@
 	NSArray *_modeNameArray;
 	NSArray *_modeDescriptionArray;
     WLWeatherView* _weatherView;
-    UITabBar* _menuBar;
 	CustomIOSAlertView *reconnectDialog;
-	UIButton *anionButton, *manualMassageButton, *customProgramButton, *downloadButton;
     NSUInteger _vcCount;
     UIBarButtonItem* _leftBtn;
     NSString* _userImageUrl; //导航栏左边按钮，即用户头像的链接
     UIImageView* imView;
     
-    //由于该类覆盖了父类的
+    //由于该类覆盖了父类的RTBleConnector代理方法，所以需要自己实现统计次数
     RTBleConnector *_bleConnector;
     ProgramCount* _programCount;
-    
     NSString* _programName;
-    
     NSUInteger _massageFlag;
+    
+    //底部菜单
+    UIView* _menuView;  //菜单栏
+    UIButton *_anionButton; //负离子按钮
+    UIButton *_manualMassageButton; //手动按摩 按钮
+    UIButton *_customProgramButton; //自定义 按钮
+    UIButton *_downloadButton;  //下载按钮
 }
 @end
 
@@ -71,9 +74,6 @@
     self.navigationController.navigationBarHidden = NO;
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     slideNav.enableSwipeGesture = YES;
-    if (_menuBar) {
-        _menuBar.selectedItem = nil;
-    }
 	
 	[_table reloadData];
     
@@ -91,22 +91,31 @@
         [self changeUser:nil];
     }
     
-    
+    _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        if (_bleConnector.rtMassageChairStatus.programType != RtMassageChairProgramManual) {
-            _massageFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+        if (_bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
+            _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
+            NSLog(@"按摩记录：%ld",_massageFlag);
         }
+        else
+        {
+            NSLog(@"手动按摩中");
+            [_manualMassageButton setSelected:YES];
+        }
+    }
+    else
+    {
+        _massageFlag = 0;
+        NSLog(@"按摩记录，没有按摩");
     }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 	self.isListenBluetoothStatus = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     _vcCount = self.navigationController.viewControllers.count;
-//     NSLog(@"VC:%ld",_vcCount);
 	
     self.title = NSLocalizedString(@"荣泰", nil);
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
@@ -142,8 +151,10 @@
     slideNav.view.layer.shadowOpacity  = 5;
     slideNav.view.layer.shadowRadius = 10;
     
+    CGFloat sWidth = SCREENWIDTH;
+    CGFloat sHeight = SCREENHEIGHT;
 
-    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-49-64) style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, sWidth, sHeight-49-64) style:UITableViewStylePlain];
     _table.dataSource = self;
     _table.delegate = self;
     _table.backgroundColor = [UIColor clearColor];
@@ -186,23 +197,7 @@
 	
     // 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 	[self requestNetworkMassageProgram];
-
-    _menuBar = [[UITabBar alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-64-49, SCREENWIDTH, 49)];
-    _menuBar.barTintColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
-    _menuBar.translucent = NO;
-    [_menuBar setBackgroundColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
-    _menuBar.tintColor = [UIColor whiteColor];
-    UITabBarItem* item1 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"负离子", nil) image:[UIImage imageNamed:@"icon_set"] tag:0];
-    UITabBarItem* item2 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"手动", nil) image:[UIImage imageNamed:@"icon_hand"] tag:1];
-    UITabBarItem* item3 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"自定义", nil) image:[UIImage imageNamed:@"icon_user"] tag:2];
-    UITabBarItem* item4 = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"下载", nil) image:[UIImage imageNamed:@"icon_download"] tag:3];
-    _menuBar.items = @[item1,item2,item3,item4];
-    _menuBar.selectedItem = item1;
-    _menuBar.delegate = self;
-    [self.view addSubview:_menuBar];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-	
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
 	reconnectDialog.isReconnectDialog = YES;
 	
@@ -228,10 +223,69 @@
 		[self synchroUseTimeData];
     }
     
+    //底部菜单
+    _menuView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49-64, SCREENWIDTH, 49)];
+    _menuView.backgroundColor = [UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0];
+    [self.view addSubview:_menuView];
+    
+    //负离子按钮
+    CGFloat btnWidth = sWidth/4;
+    NSLog(@"按钮长度:%f",btnWidth);
+    _anionButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, btnWidth, 49)];
+    [_anionButton setTitle:NSLocalizedString(@"负离子", nil) forState:UIControlStateNormal];
+    [_anionButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateSelected];
+    _anionButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    _anionButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
+    _anionButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.35, 0, 0);
+    _anionButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.25, 0, 0);
+    [_anionButton setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
+    [_anionButton setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
+    [_anionButton addTarget:self action:@selector(anionButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_menuView addSubview:_anionButton];
+    
+    //手动 按钮
+    _manualMassageButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
+    [_manualMassageButton setTitle:NSLocalizedString(@"手动", nil) forState:UIControlStateNormal];
+    [_manualMassageButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
+    _manualMassageButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    _manualMassageButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
+    _manualMassageButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.3, 0, 0);;
+    _manualMassageButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.2, 0, 0);
+    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand"] forState:UIControlStateNormal];
+    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand2"] forState:UIControlStateHighlighted];
+    [_manualMassageButton addTarget:self action:@selector(manualButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_menuView addSubview:_manualMassageButton];
+    
+    //自定义按钮
+    _customProgramButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth*2, 0, btnWidth, 49)];
+    [_customProgramButton setTitle:NSLocalizedString(@"自定义", nil) forState:UIControlStateNormal];
+    [_customProgramButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
+    _customProgramButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    _customProgramButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
+    _customProgramButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.35, 0, 0);
+    _customProgramButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.25, 0, 0);
+    [_customProgramButton setImage:[UIImage imageNamed:@"icon_user"] forState:UIControlStateNormal];
+    [_customProgramButton setImage:[UIImage imageNamed:@"icon_user2"] forState:UIControlStateHighlighted];
+    [_customProgramButton addTarget:self action:@selector(customButtonCilcked) forControlEvents:UIControlEventTouchUpInside];
+    [_menuView addSubview:_customProgramButton];
+
+    //下载按钮
+    _downloadButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth*3, 0, btnWidth, 49)];
+    [_downloadButton setTitle:NSLocalizedString(@"下载", nil) forState:UIControlStateNormal];
+    [_downloadButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
+    _downloadButton.titleLabel.font = [UIFont systemFontOfSize:11];
+    _downloadButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
+    _downloadButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.3, 0, 0);;
+    _downloadButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.2, 0, 0);
+    [_downloadButton setImage:[UIImage imageNamed:@"icon_download"] forState:UIControlStateNormal];
+    [_downloadButton setImage:[UIImage imageNamed:@"icon_download2"] forState:UIControlStateHighlighted];
+    [_downloadButton addTarget:self action:@selector(downloadButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_menuView addSubview:_downloadButton];
+    
+    //
+
     imView = [UIImageView new];
-    
     _massageFlag = 0;
-    
     [self synchroMassageRecord];
 }
 
@@ -418,34 +472,6 @@
     }
 }
 
-#pragma mark - tabBar代理
-
--(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-//    NSLog(@"tabBar:%ld",item.tag);
-//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-//		[reconnectDialog show];
-//		return;
-//	}
-	if (item.tag == 0) {
-		[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
-	} else if (item.tag == 1) {
-        //手动按摩
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
-        [self.navigationController pushViewController:mVC animated:YES];
-    } else if (item.tag == 2) {
-        //自定义
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
-        [self.navigationController pushViewController:cVC animated:YES];
-    } else if (item.tag == 3) {
-        //下载
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ProgramDownloadViewController* pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
-        [self.navigationController pushViewController:pVC animated:YES];
-    }
-}
-
 #pragma mark - tableView代理
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -607,13 +633,10 @@
 				} else { // 自动按摩
 					
 					[self jumpToAutoMassageViewConroller];
-					
 				}
 			}
 		}
-		
 	});
-	
 }
 
 #pragma mark - 侧滑菜单代理
@@ -633,9 +656,9 @@
 //	NSLog(@"didUpdateMassageChairStatus");
 	
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
-		_menuBar.selectedItem = nil;
+        [_anionButton setSelected:NO];
 	} else {
-		 _menuBar.selectedItem = (UITabBarItem *)_menuBar.items[0];
+        [_anionButton setSelected:YES];
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
@@ -644,35 +667,16 @@
 		[self.resettingDialog close];
 	}
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-			
-			//自动按摩时，开始统计时间
-//			NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-//			NSDate* startTime = [NSDate date];
-//			[defaults setObject:startTime forKey:@"MassageStartTime"];
-			
-			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-				
-				//					[self jumpToScanViewConroller];
-				
-			} else { // 自动按摩
-				
-				//					[self jumpToAutoMassageViewConroller];
-				
-			}
-		} else if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 手动按摩
-			
-			//				[self jumpToManualMassageViewConroller];
-			
-		}
-		
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+    {  //按摩中
+        
 		// 高亮item
-		
 		int highlightIndex;
 		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+        {
+            //自动时设置手动按钮不为高亮
+            [_manualMassageButton setSelected:NO];
 			
 			switch (rtMassageChairStatus.autoProgramType) {
 					
@@ -701,6 +705,9 @@
 					break;
 			}
 		} else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
+            //自动时设置手动按钮不为高亮
+            [_manualMassageButton setSelected:NO];
+
 			switch (rtMassageChairStatus.networkProgramType) {
 					
 				case RTMassageChairProgramNetwork1:
@@ -723,16 +730,24 @@
         else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
         {
             //手动按摩的话，底部菜单栏的手动要高亮
-            
+            [_manualMassageButton setSelected:YES];
+        }
+        else
+        {
+            [_manualMassageButton setSelected:NO];
         }
 		
 		[_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
 							animated:YES
 					  scrollPosition:UITableViewScrollPositionNone];
-	} else {  // 没有在按摩
-		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
 	}
-    
+    else
+    {
+        // 没有在按摩
+		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
+        [_manualMassageButton setSelected:NO];
+        
+	}
     
     //统计数据
     if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
@@ -751,7 +766,7 @@
         {
             //自动按摩
             if (_massageFlag != rtMassageChairStatus.massageProgramFlag) {
-                if (_massageFlag == 7) {
+                if (_massageFlag == 7 || _massageFlag == 0) {
                     //每次切换到自动按摩程序的时候，就设置开始按摩时间
                     _massageFlag = rtMassageChairStatus.massageProgramFlag;
                     _bleConnector.startTime = [NSDate date];
@@ -760,7 +775,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类");
+                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -779,13 +794,12 @@
                 //复位前是自动按摩需要统计
                 [self countMassageTime];
                 _massageFlag = 0;
+                _bleConnector.startTime = nil;
+                NSLog(@"设置开始时间为空");
             }
-            _bleConnector.startTime = nil;
         }
     }
-    
 }
-
 
 #pragma mark - 切换用户代理
 -(void)changeUser:(NSString *)imageUrl
@@ -837,8 +851,9 @@
     //计算按摩时间
     NSDate* end = [NSDate date];
     NSDate* start = _bleConnector.startTime;
+    NSLog(@"开始时间:%@",start);
     if (start) {
-        
+        NSLog(@"进入统计");
         NSTimeInterval time = [end timeIntervalSinceDate:start];
         //        NSLog(@"此次按摩了%f秒",time);
         if (time>30) {
@@ -859,12 +874,14 @@
             NSInteger programId = -1;
             if (_massageFlag<7&&_massageFlag>0) {
                 //属于自动按摩的统计
+                NSLog(@"自动按摩统计");
                 _programName = [_bleConnector.rtMassageChairStatus autoMassageNameByIndex:_massageFlag];
                 programId = _massageFlag;
             }
             else if (_massageFlag<11&&_massageFlag>7)
             {
                 //属于网络按摩的统计
+                NSLog(@"网络按摩统计");
                 MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
                 programId = [p.commandId integerValue];
                 _programName = p.name;
@@ -878,7 +895,7 @@
             
             if (programId>0) {
                 NSLog(@"统计一次");
-                NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %@) AND (uid == %@)",programId,self.uid]];
+                NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (uid == %@)",programId,self.uid]];
                 
                 //按摩次数统计
                 if (result.count >0) {
@@ -902,7 +919,7 @@
                 
                 //按摩记录
                 MassageRecord* massageRecord;
-                NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %@) AND (date == %@) AND (uid == %@)",programId,date,self.uid]];
+                NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (date == %@) AND (uid == %@)",programId,date,self.uid]];
                 if (records.count > 1) {
                     NSLog(@"查找数组:%@",records);
                     massageRecord = records[0];
@@ -921,16 +938,57 @@
                     massageRecord.date = date;
                     massageRecord.uid = self.uid;
                     massageRecord.programId = [NSNumber numberWithInteger:programId];
-                    
                 }
             }
         }
         
         //统计完成要把开始时间置空，表示此次按摩已结束
         _bleConnector.startTime = nil;
+        NSLog(@"设置开始时间为空");
     }
+    else
+    {
+        NSLog(@"不统计");
+    }
+}
+
+#pragma mark - 负离子方法
+-(void)anionButtonClicked
+{
+    //发送负离子开关
+//    [[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
+    [_anionButton setSelected:!_anionButton.isSelected];
+}
+
+#pragma mark - 手动方法
+-(void)manualButtonClicked
+{
+    //先检测是否打开蓝牙
     
+    //再检测是否连接了按摩椅
     
+    //连接按摩椅之后才可以跳到手动按摩
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];
+    [self.navigationController pushViewController:mVC animated:YES];
+}
+
+#pragma mark - 自定义方法
+-(void)customButtonCilcked
+{
+    //跳到自定义页面
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
+    [self.navigationController pushViewController:cVC animated:YES];
+}
+
+#pragma mark - 下载方法
+-(void)downloadButtonClicked
+{
+    //跳到下载页面
+    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ProgramDownloadViewController* pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
+    [self.navigationController pushViewController:pVC animated:YES];
 }
 
 #pragma mark - 快速提示

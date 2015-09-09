@@ -686,7 +686,6 @@ NSString * NSDataToHex(NSData *data) {
 }
 
 #pragma mark - 发送下一条指令
-
 - (void)installNext {
 	self.installCount++;
 	NSLog(@"总数 : %zd , 当前数量 : %zd", self.installCount, self.installCount);

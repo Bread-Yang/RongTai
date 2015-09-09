@@ -36,7 +36,7 @@
     {
         _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
     }
-    _colors = @[BLUE, LIGHTGREEN,ORANGE];
+    _colors = @[BLUE, LIGHTGREEN, ORANGE];
     
     NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
     BOOL b = counts.count>0;

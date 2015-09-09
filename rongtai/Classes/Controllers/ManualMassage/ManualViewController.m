@@ -68,10 +68,12 @@
     BOOL _isTouch;  //记录PolarView是否被触摸
     BOOL _isMoving; //记录PolarView是否在移动
     NSInteger _delayCount;  //倒数延迟更新，对于“机芯幅度”调节才使用
+    
+    //
+    NSInteger _update;
 
     //测试用
     NSInteger _scan;
-
 }
 @end
 
@@ -173,6 +175,7 @@
     
     //
     _bleConnector = [RTBleConnector shareManager];
+    _update = 1;
     
     //
     _scan = 0;
@@ -202,7 +205,6 @@
         _stopBtn.hidden = YES;
         [self updateSkillsPreferenceView:NO];
     }
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -594,7 +596,7 @@
     {
         [_skillsPreferenceImageView setImage:[UIImage imageNamed:@"function_3"]];
         _skillsPreferenceLabel.textColor = [UIColor colorWithRed:202/255.0 green:202/255.0 blue:202/255.0 alpha:1.0];
-        _skillsPreferenceLabel.text = NSLocalizedString(@"请选择", nil);
+        _skillsPreferenceLabel.text = NSLocalizedString(@"揉捏", nil);
     }
 }
 
@@ -602,53 +604,56 @@
 -(void)updateWLPolarView
 {
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
-            case RTMassageChairMassageTechniqueKnead:
-                //揉捏
-                [_polar setPoint:0 ableMove:NO];
-                [_polar setPoint:3 ableMove:YES];
-                break;
-            case RTMassageChairMassageTechniqueKnock:
-                //敲击
-                [_polar setPoint:0 ableMove:YES];
-                [_polar setPoint:3 ableMove:YES];
-                break;
-            case RTMassageChairMassageTechniqueSync:
-                //揉敲
-                [_polar setPoint:0 ableMove:NO];
-                [_polar setPoint:3 ableMove:YES];
-                break;
-            case RTMassageChairMassageTechniqueTapping:
-                //叩击
-                [_polar setPoint:0 ableMove:YES];
-                [_polar setPoint:3 ableMove:YES];
-                break;
-            case RTMassageChairMassageTechniqueShiatsu:
-                //指压
-                [_polar setPoint:0 ableMove:YES];
-                [_polar setPoint:3 ableMove:NO];
-                break;
-            case RTMassageChairMassageTechniqueRhythm:
-                //韵律
-                [_polar setPoint:0 ableMove:NO];
-                [_polar setPoint:3 ableMove:NO];
-                break;
-            case RTMassageChairMassageTechniqueStop:
-                //停止
-                [_polar setPoint:0 ableMove:NO];
-                [_polar setPoint:3 ableMove:NO];
-                break;
-            default:
-                [_polar setPoint:0 ableMove:NO];
-                [_polar setPoint:3 ableMove:NO];
-                break;
+        if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+            switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
+                case RTMassageChairMassageTechniqueKnead:
+                    //揉捏
+                    [_polar setPoint:0 ableMove:NO];
+                    [_polar setPoint:3 ableMove:YES];
+                    break;
+                case RTMassageChairMassageTechniqueKnock:
+                    //敲击
+                    [_polar setPoint:0 ableMove:YES];
+                    [_polar setPoint:3 ableMove:YES];
+                    break;
+                case RTMassageChairMassageTechniqueSync:
+                    //揉敲
+                    [_polar setPoint:0 ableMove:NO];
+                    [_polar setPoint:3 ableMove:YES];
+                    break;
+                case RTMassageChairMassageTechniqueTapping:
+                    //叩击
+                    [_polar setPoint:0 ableMove:YES];
+                    [_polar setPoint:3 ableMove:YES];
+                    break;
+                case RTMassageChairMassageTechniqueShiatsu:
+                    //指压
+                    [_polar setPoint:0 ableMove:YES];
+                    [_polar setPoint:3 ableMove:NO];
+                    break;
+                case RTMassageChairMassageTechniqueRhythm:
+                    //韵律
+                    [_polar setPoint:0 ableMove:NO];
+                    [_polar setPoint:3 ableMove:NO];
+                    break;
+                case RTMassageChairMassageTechniqueStop:
+                    //停止
+                    [_polar setPoint:0 ableMove:NO];
+                    [_polar setPoint:3 ableMove:NO];
+                    break;
+                default:
+                    [_polar setPoint:0 ableMove:NO];
+                    [_polar setPoint:3 ableMove:NO];
+                    break;
+            }
+        }
+        else
+        {
+            [_polar setPoint:0 ableMove:NO];
+            [_polar setPoint:3 ableMove:NO];
         }
     }
-    else
-    {
-        [_polar setPoint:0 ableMove:NO];
-        [_polar setPoint:3 ableMove:NO];
-    }
+   
     if (_delayCount <1) {
         //_delayCount小于1更新
         [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
@@ -679,8 +684,8 @@
 
 #pragma mark - RTBleConnectorDelegate
 
-- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
+{
 //    NSLog(@"didUpdateMassageChairStatus:%@",[NSDate date]);
     
 //    NSLog(@"负离子:%ld",rtMassageChairStatus.anionSwitchFlag);
@@ -696,49 +701,82 @@
 //    }
     
 //    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
-	
-	// 以下是界面跳转
-	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-//		if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-//			[self jumpToScanViewConroller];
-//		}
-		
-//		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-//         // 跳到自动按摩界面
-//			[self jumpToAutoMassageViewConroller];
-//		}
-	}
-    
-    if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
-        _stopBtn.hidden = NO;
-        [self updateSkillsPreferenceView:YES];
-    
+
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+    {
+        //按摩中
+        if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        {
+            //手动按摩
+        }
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramAuto ||rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
+        {
+            //自动按摩 或 网络按摩
+            
+        }
+        else
+        {
+            //未知情况
+            NSLog(@"按摩中，但出现了按摩状态");
+        }
+        
+        //更新脚部滚轮
+        
+        //更新背部加热
+        
+    }
+    else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+    {
+        //复位中
+        
     }
     else
     {
-        _stopBtn.hidden = YES;
-        [self updateSkillsPreferenceView:NO];
+        //其他状态
+        
     }
-	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
+    
+    
+    
+    
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        _update = 1;
+        if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
+            NSLog(@"手动按摩：%ld",rtMassageChairStatus.massageTechniqueFlag);
+            _stopBtn.hidden = NO;
+        }
+        else
+        {
+            _stopBtn.hidden = YES;
+            [self updateSkillsPreferenceView:NO];
+        }
+        
+        // 以下是界面状态更新
+        if (_isDelayUpdate) {
+            //延迟更新
+            [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
+        }
+        else
+        {
+            if (_delayCount>0) {
+                _delayCount --;
+            }
+            //即时更新
+            [self updateUI];
+        }
+    }
+    
+	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+    {
 		[self.resettingDialog show];
+        if (_update == 1) {
+            _update = 0;
+            _stopBtn.hidden = YES;
+            [self updateUI];
+        }
 	} else {
 		[self.resettingDialog close];
 	}
-    // 以下是界面状态更新
-    if (_isDelayUpdate) {
-        //延迟更新
-        [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
-    }
-    else
-    {
-        if (_delayCount>0) {
-            _delayCount --;
-        }
-        //即时更新
-        [self updateUI];
-    }
 }
 
 -(void)dalayNO
@@ -774,11 +812,12 @@
         [_polar setValue:0 ByIndex:2];
     }
     [self updateFootWheelView];
-    
     // 按摩模式
-    if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag != 0) {
-//        NSLog(@"按摩手法:%ld",_bleConnector.rtMassageChairStatus.massageTechniqueFlag);
-        if (_bleConnector.rtMassageChairStatus.massageTechniqueFlag == 7) {
+    NSInteger massageTechniqueFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+    if (massageTechniqueFlag != 0)
+    {
+        [self updateSkillsPreferenceView:YES];
+        if (massageTechniqueFlag == 7) {
 //            _skillsPreferenceLabel.text = @"搓背";
             NSLog(@"出现捶背");
 //            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"居然出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
@@ -786,6 +825,10 @@
         } else {
             _skillsPreferenceLabel.text = _skillsPreferenceArray[_bleConnector.rtMassageChairStatus.massageTechniqueFlag - 1];
         }
+    }
+    else
+    {
+        [self updateSkillsPreferenceView:NO];
     }
     
     //极线图更新
@@ -799,7 +842,9 @@
         NSInteger minutes = _bleConnector.rtMassageChairStatus.remainingTime / 60;
         NSInteger seconds = _bleConnector.rtMassageChairStatus.remainingTime % 60;
         _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
-    } else {
+    }
+    else
+    {
         // 预设时间
         _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", _bleConnector.rtMassageChairStatus.preprogrammedTime, 0];
     }

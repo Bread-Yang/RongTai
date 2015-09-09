@@ -74,18 +74,16 @@
                 [new setValueByDictionary:dic];
             }
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-            
-            //再把本地数据同步至服务器
-            if (isUploadLoalData) {
-                [ProgramCount synchroLocalDataToServerSuccess:success Fail:fail];
+        }
+        //再把本地数据同步至服务器
+        if (isUploadLoalData) {
+            [ProgramCount synchroLocalDataToServerSuccess:success Fail:fail];
+        }
+        else
+        {
+            if (success) {
+                success();
             }
-            else
-            {
-                if (success) {
-                    success();
-                }
-            }
-            
         }
     } fail:^(NSDictionary *dic) {
         NSLog(@"读取统计次数服务器数据失败😢");
@@ -107,9 +105,9 @@
         [jsons addObject:[p toDictionary]];
     }
 
-    DataRequest* request = [DataRequest new];
     //有数据的话才进行服务器同步
     if (jsons.count>0) {
+        DataRequest* request = [DataRequest new];
         [request addProgramUsingCount:jsons Success:^{
             NSLog(@"统计次数数据同步至服务器成功");
             //请求成功要更新本地数据，把 未更新的统计次数（unUpdateCount）叠加进 使用次数 里面（useCount），再把 未更新的统计次数 置零。
