@@ -238,6 +238,8 @@
 	
 	cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
 	
+	NSLog(@"值是 : %zd", [cell.massageProgram.commandId integerValue]);
+	
 	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
 	if (isAlreadyInstall) {

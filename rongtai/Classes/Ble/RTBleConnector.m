@@ -72,7 +72,7 @@ static Byte const BYTE_ExitCode = 0x82;
     }
     for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
         if (i == index) {
-            return [(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue];
+            return [((NSNumber *)[self.networkProgramStatusArray objectAtIndex:i]) intValue];
         }
     }
     return 0;
@@ -199,8 +199,6 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
 			self.currentConnectedPeripheral = nil;
-			self.rtMassageChairStatus = nil;
-//			_rtNetworkProgramStatus = [[RTNetworkProgramStatus alloc] init];
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
@@ -209,7 +207,6 @@ static Byte const BYTE_ExitCode = 0x82;
         case CBCentralManagerStateUnknown:
             message = @"蓝牙发生未知错误，请重新打开……";
 			self.currentConnectedPeripheral = nil;
-			self.rtMassageChairStatus = nil;
 //			_rtNetworkProgramStatus = [[RTNetworkProgramStatus alloc] init];
             break;
 	}
@@ -308,8 +305,6 @@ static Byte const BYTE_ExitCode = 0x82;
 //	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
-		
-		_rtMassageChairStatus = [[RTMassageChairStatus alloc] init];
 		
 		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
 			NSData *runningStatusData = [data subdataWithRange:NSMakeRange(1, 14)];   // 运行状态在1到14位
@@ -785,6 +780,8 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 	[NSNumber numberWithInteger:massageId_1];
 	
 	self.rtNetworkProgramStatus.networkProgramStatusArray = @[[NSNumber numberWithInteger:massageId_1], [NSNumber numberWithInteger:massageId_2], [NSNumber numberWithInteger:massageId_3], [NSNumber numberWithInteger:massageId_4]];
+	
+//	NSLog(@"按摩椅云养程序数组是 : %@", self.rtNetworkProgramStatus.networkProgramStatusArray);
 }
 
 - (void)parseData:(NSData *)rawData {

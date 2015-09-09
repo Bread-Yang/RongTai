@@ -60,7 +60,7 @@
 
 #pragma mark - Life Cycle
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
@@ -218,6 +218,7 @@
     imView = [UIImageView new];
     
     [self synchroMassageRecord];
+
 }
 
 #pragma mark - 请求网络按摩程序
@@ -232,7 +233,7 @@
 		if (networkMassageProgramArray.count > 0) {
 			for (int i = 0; i < networkMassageProgramArray.count; i++) {
 				MassageProgram *massage = [networkMassageProgramArray objectAtIndex:i];
-				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
+				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", [massage.commandId integerValue]]];
 			}
 			[_table reloadData];
 		}

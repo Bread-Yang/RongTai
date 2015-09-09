@@ -44,7 +44,7 @@
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
 	[_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//		NSLog(@"获取按摩程序列表成功:%@",responseObject);
+		NSLog(@"获取按摩程序列表成功:%@",responseObject);
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		

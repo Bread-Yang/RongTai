@@ -119,9 +119,12 @@
 	
 	id<ISSContainer> container = [ShareSDK container];
 	
+	//要分享的列表
+	NSArray *shareList = [ShareSDK getShareListWithType:ShareTypeWeixiSession, ShareTypeWeixiTimeline, ShareTypeQQ, ShareTypeSinaWeibo, nil];
+	
 	//2、弹出分享菜单
 	[ShareSDK showShareActionSheet:container
-						 shareList:nil
+						 shareList:shareList
 						   content:publishContent
 					 statusBarTips:YES
 					   authOptions:nil
