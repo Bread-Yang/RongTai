@@ -13,6 +13,8 @@
 #import "RongTaiConstant.h"
 #import "AFNetworking.h"
 #import "CustomIOSAlertView.h"
+//#import "MassageProgram.h"
+#import "CoreData+MagicalRecord.h"
 
 static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
@@ -38,6 +40,65 @@ static Byte const BYTE_ExitCode = 0x82;
 // E06D5EFB-4F4A-45C0-9EB1-371AE5A14AD4 == Read notify
 #define kCharacterRN(periphralName) [NSString stringWithFormat:@"RN_%@",periphralName]
 
+
+
+
+
+@implementation RTNetworkProgramStatus
+
+- (NSInteger)getEmptySlotIndex {
+    for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+        NSInteger value = [((NSNumber *)[self.networkProgramStatusArray objectAtIndex:i]) intValue];
+        if (value == 0) {
+            return i + 1;
+        }
+    }
+    return -1;
+}
+
+- (NSInteger)getMassageIdBySlotIndex:(NSInteger)index {
+    if (index < 0 || index > [self.networkProgramStatusArray count] - 1) {
+        return 0;
+    }
+    for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+        if (i == index) {
+            return [(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue];
+        }
+    }
+    return 0;
+}
+
+- (NSInteger)getSlotIndexByMassageId:(NSInteger)massageId {
+    for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+        if ([(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue] == massageId) {
+            return i + 1;
+        }
+    }
+    return -1;
+}
+
+- (BOOL)isAlreadyIntall:(NSInteger)massageId {
+    for (int i = 0; i < [self.networkProgramStatusArray count]; i++) {
+        if ([(NSNumber *)[self.networkProgramStatusArray objectAtIndex:i] intValue] == massageId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+- (MassageProgram *)getNetworkProgramNameBySlotIndex:(NSInteger)slotIndex {
+    NSInteger massageId = [self getMassageIdBySlotIndex:slotIndex];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"commandId = %@", [NSNumber numberWithInteger:massageId]];
+    MassageProgram *massageProgram = [MassageProgram MR_findAllWithPredicate:predicate][0];
+    
+    return massageProgram;
+}
+
+@end
+
+
+
 @interface RTBleConnector ()<JRBluetoothManagerDelegate>
 
 @property (nonatomic, assign) int installCount;
@@ -61,6 +122,7 @@ static Byte const BYTE_ExitCode = 0x82;
 @property (nonatomic, retain) NSString *oldMassageChairRunningStatusString, *oldMassageChairNetworkStatusString;
 
 @end
+
 
 @implementation RTBleConnector
 
@@ -1402,3 +1464,8 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 	return result;
 }
 @end
+
+
+
+
+

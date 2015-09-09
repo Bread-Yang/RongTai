@@ -10,7 +10,7 @@
 #import "JRBluetoothManager.h"
 #import "RongTai.h"
 #import "RTMassageChairStatus.h"
-#import "RTNetworkProgramStatus.h"
+#import "MassageProgram.h"
 
 static NSString *const RTBle_Periperal     = @"RTPeriperal";
 static NSString *const RTBle_BroadcastData = @"RTBroadcastData";
@@ -28,6 +28,8 @@ static BOOL isBleTurnOn;
 #define RT_RN_ChracteristicUUID @"E06D5EFB-4F4A-45C0-9EB1-371AE5A14AD4"
 
 #pragma mark - RTBleConnectorDelegate
+
+@class RTNetworkProgramStatus;
 
 @protocol RTBleConnectorDelegate <NSObject>
 
@@ -159,3 +161,34 @@ static BOOL isBleTurnOn;
 - (void)showConnectDialog;
 
 @end
+
+
+#pragma mark - RTNetworkProgramStatus Class
+@interface RTNetworkProgramStatus : NSObject
+
+@property (nonatomic, retain) NSArray *networkProgramStatusArray;
+
+/**
+ *	用于安装网络程序,四个位,如果是0,就返回该index,如果四个位都满了,就默认返回-1
+ */
+- (NSInteger)getEmptySlotIndex;
+
+- (NSInteger)getMassageIdBySlotIndex:(NSInteger)index;
+
+/**
+ *	用于删除网络程序
+ */
+- (NSInteger)getSlotIndexByMassageId:(NSInteger)massageId;
+
+/**
+ *	网络程序是否已经安装过
+ */
+- (BOOL)isAlreadyIntall:(NSInteger)massageId;
+
+/**
+ *	根据参数是云养程序1, 云养程序2, 云养程序3, 云养程序4,返回该程序的实体
+ */
+- (MassageProgram *)getNetworkProgramNameBySlotIndex:(NSInteger)slotIndex;
+
+@end
+
