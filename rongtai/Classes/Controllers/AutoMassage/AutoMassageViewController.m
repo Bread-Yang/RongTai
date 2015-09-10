@@ -230,13 +230,9 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
-	if (rtMassageChairStatus.deviceStatus != RtMassageChairStatusMassaging) {
-		return;
-	}
-	
 	// 以下是界面跳转
 	
-	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)  {  // 执行体型检测程序
 		[self jumpToScanViewConroller];
 	}
 	
@@ -349,9 +345,9 @@
 //		[self backToMainViewController];
 //	}
 	
-//	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
-//		[self jumpToManualMassageViewConroller];
-//	}
+	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
+		[self jumpToManualMassageViewConroller];
+	}
 	
 	// 以下是界面状态更新
 	
