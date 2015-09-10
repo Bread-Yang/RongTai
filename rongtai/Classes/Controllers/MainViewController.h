@@ -11,4 +11,9 @@
 
 @interface MainViewController : BasicViewController
 
+/**
+ *	从登陆界面跳过来,则重新请求一次网络程序列表
+ */
+@property (nonatomic, assign) BOOL isFromLoginViewController;
+
 @end

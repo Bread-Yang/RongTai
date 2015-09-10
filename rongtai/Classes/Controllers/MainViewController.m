@@ -109,6 +109,12 @@
         _massageFlag = 0;
         NSLog(@"按摩记录，没有按摩");
     }
+	
+	if (self.isFromLoginViewController) {
+		self.isFromLoginViewController = false;
+		// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
+		[self requestNetworkMassageProgram];
+	}
 }
 
 - (void)viewDidLoad {
@@ -194,9 +200,7 @@
 		m.isLocalDummyData = @YES;
 		[_massageArr addObject:m];
 	}
-	
-    // 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
-	[self requestNetworkMassageProgram];
+
     
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
 	reconnectDialog.isReconnectDialog = YES;

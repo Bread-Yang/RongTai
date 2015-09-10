@@ -147,7 +147,9 @@
 		NSString* uid = [result objectForKey:@"uid"];
 		[ud setObject:token forKey:@"token"];
 		[ud setObject:uid forKey:@"uid"];
-		[self.navigationController pushViewController:[MainViewController new] animated:YES];
+		MainViewController *vc = [MainViewController new];
+		vc.isFromLoginViewController = true;
+		[self.navigationController pushViewController:vc animated:YES];
 	}
     else
     {
@@ -163,9 +165,11 @@
 		NSString* uid = [result objectForKey:@"uid"];
 		[ud setObject:token forKey:@"token"];
 		[ud setObject:uid forKey:@"uid"];
-		//		[self.navigationController pushViewController:[MainViewController new] animated:YES];
-		
-		[self.navigationController pushViewController:[MainViewController new] animated:YES];
+
+
+		MainViewController *vc = [MainViewController new];
+		vc.isFromLoginViewController = true;
+		[self.navigationController pushViewController:vc animated:YES];
 	}
     else
     {

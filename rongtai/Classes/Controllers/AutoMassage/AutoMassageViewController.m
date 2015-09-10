@@ -239,6 +239,8 @@
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
        
         if (_programName.length > 0 && ![_programName isEqualToString:@"自动按摩"]) {
+			[self.resettingDialog show];
+			
             //计算按摩时间
             NSDate* end = [NSDate date];
             NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
@@ -324,16 +326,24 @@
 
         }
         
-		[self jumpToFinishMassageViewConroller];
+		
+	} else {
+		if (self.resettingDialog.isShowing) {
+			
+			[self.resettingDialog close];
+			
+			[self jumpToFinishMassageViewConroller];
+		}
+		
 	}
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
-		[self backToMainViewController];
-	}
+//	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
+//		[self backToMainViewController];
+//	}
 	
-	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
-		[self jumpToManualMassageViewConroller];
-	}
+//	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
+//		[self jumpToManualMassageViewConroller];
+//	}
 	
 	// 以下是界面状态更新
 	
