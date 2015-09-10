@@ -230,6 +230,10 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
+	if (rtMassageChairStatus.deviceStatus != RtMassageChairStatusMassaging) {
+		return;
+	}
+	
 	// 以下是界面跳转
 	
 	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
@@ -333,6 +337,10 @@
 			[self.resettingDialog close];
 			
 			[self jumpToFinishMassageViewConroller];
+			
+			[self removeFromParentViewController];
+			
+//			[self.navigationController popViewControllerAnimated:false];
 		}
 		
 	}

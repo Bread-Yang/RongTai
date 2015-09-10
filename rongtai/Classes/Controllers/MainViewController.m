@@ -518,7 +518,7 @@
 	
 	if (indexPath.row >= 6) {
 		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6];
-		if (![RTBleConnector isBleTurnOn] || commandId == 0) {
+		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || commandId == 0) {
 			cell.hidden = YES;
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
