@@ -92,7 +92,7 @@
 //	_footWheelArray = @[@"滚轮速度慢", @"滚轮速度中", @"滚轮速度快", @"滚轮关"];
 	
     //技法偏好类型数组
-    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲同步", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律按摩", nil)];
+    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
     
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.05*0.5;
@@ -655,7 +655,7 @@
 {
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
-    if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
+    if (currentValue>=level*stepValue || currentValue<(level-1)*stepValue) {
 //        NSLog(@"%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }

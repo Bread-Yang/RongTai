@@ -528,7 +528,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="function_2" translatesAutoresizingMaskIntoConstraints="NO" id="y8w-SV-gof">
                                                 <rect key="frame" x="30" y="0.0" width="67" height="42"/>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="脚步滚轮" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2w-Hl-KXH">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="脚底滚轮" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2w-Hl-KXH">
                                                 <rect key="frame" x="7" y="42" width="111" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.79358552630000001" green="0.79363692429999999" blue="0.79014185859999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1628,7 +1628,7 @@
                                             <constraint firstAttribute="centerX" secondItem="ks1-S7-IHw" secondAttribute="centerX" id="X3K-bv-duk"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="黄晓明" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mOS-9x-cW7">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="黄晓明" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mOS-9x-cW7">
                                         <rect key="frame" x="104" y="11" width="480" height="32"/>
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1915,6 +1915,7 @@
                         <outlet property="_bgImageView" destination="lQ3-po-mxo" id="yyi-gx-ISk"/>
                         <outlet property="_birthday" destination="xvK-PD-Df2" id="YJU-jj-gPR"/>
                         <outlet property="_bottomConstraint" destination="ezV-y1-gdz" id="Y4Y-Cp-ZhX"/>
+                        <outlet property="_cameraBtn" destination="kAr-KF-paP" id="yPX-w6-DuO"/>
                         <outlet property="_height" destination="ZRm-fd-rA4" id="2gw-mI-DZ0"/>
                         <outlet property="_heightUintView" destination="bdk-RX-CQi" id="JD0-E4-5Cx"/>
                         <outlet property="_heightUnitSegmentView" destination="bdk-RX-CQi" id="ZIn-hy-H35"/>
@@ -1922,6 +1923,7 @@
                         <outlet property="_middleView" destination="9YU-tm-6q0" id="8s4-WV-sCL"/>
                         <outlet property="_name" destination="mOS-9x-cW7" id="dif-vG-MVQ"/>
                         <outlet property="_sexView" destination="LAq-dA-jpa" id="Ukr-dg-ceQ"/>
+                        <outlet property="_topConstraint" destination="ZvD-X6-63X" id="vi8-OO-1YS"/>
                         <outlet property="_userIcon" destination="Ekt-vL-LFR" id="D5L-xP-fNb"/>
                     </connections>
                 </viewController>

@@ -93,7 +93,7 @@
     _rowHeight = SCREENHEIGHT*0.085;
     
     //菜单数组
-    _menuName = @[NSLocalizedString(@"切换用户",nil),NSLocalizedString(@"家庭成员管理",nil), NSLocalizedString(@"数据中心",nil), NSLocalizedString(@"定时计划",nil), NSLocalizedString(@"首页天气预报",nil) ,NSLocalizedString(@"我要反馈",nil) ,NSLocalizedString(@"使用帮助",nil) ,NSLocalizedString(@"我要购买",nil)];
+    _menuName = @[NSLocalizedString(@"切换用户",nil),NSLocalizedString(@"家庭成员管理",nil), NSLocalizedString(@"数据中心",nil), NSLocalizedString(@"定时计划",nil), NSLocalizedString(@"首页天气提醒",nil) ,NSLocalizedString(@"我要反馈",nil) ,NSLocalizedString(@"使用帮助",nil) ,NSLocalizedString(@"我要购买",nil)];
     
     //菜单图标
     _menuIcons = @[@"menu_icon_user",@"menu_icon_member",@"menu_icon_data",@"menu_icon_plan",@"menu_icon_weather",@"menu_icon_message",@"menu_icon_help",@"menu_icon_shop"];
@@ -232,7 +232,7 @@
 #pragma mark - 注销
 -(void)Logout
 {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"退出登录" message:@"确定退出登录" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要退出登录？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     [alert show];
 }
 

@@ -34,6 +34,8 @@
 	
     __weak IBOutlet UIButton *_userIcon;
     __weak IBOutlet UIImageView *_bgImageView;
+    
+    __weak IBOutlet UIButton *_cameraBtn;
 	
 	UIDatePicker *_birthdayDatePicker;
     NSMutableArray* _heightArr;  //身高数组
@@ -62,12 +64,16 @@
     //网络
     AFNetworkReachabilityManager* _manager;
     MemberRequest* _memberRequest;
-    
     NSDictionary* _tmp;
-    
     NSString* _uid;
-    
     NSUInteger _heightUnitSelectedIndex;
+    
+    //
+    UIView* _tapView;
+    
+    __weak IBOutlet NSLayoutConstraint *_topConstraint;
+    CGFloat _y;
+    
 }
 @end
 
@@ -95,6 +101,7 @@
     //
     _name.returnKeyType = UIReturnKeyDone;
     _name.delegate = self;
+    _name.tag = 4301;
     
     //改写_hegiht的键盘为身高选择器
     UIView* inputView = [[UIView alloc]initWithFrame:f];
@@ -107,6 +114,8 @@
     [inputView addSubview:_heightPicker];
     _height.inputView = inputView;
     _height.text = _heightArr[174-140];
+    _height.tag = 4302;
+    _height.delegate = self;
     
     //改写_birthday的键盘为年月选择器
     UIView* inputView2 = [[UIView alloc]initWithFrame:f];
@@ -117,6 +126,8 @@
 	[_birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[inputView2 addSubview:_birthdayDatePicker];
     _birthday.inputView = inputView2;
+    _birthday.tag = 4303;
+    _birthday.delegate = self;
     [self onDatePickerValueChanged:_birthdayDatePicker];
     
     //头像按钮设置白色边框
@@ -163,6 +174,36 @@
     
     //
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
+    //
+    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
+    
+    //
+    _tapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    _tapView.backgroundColor = [UIColor clearColor];
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClicked)];
+    [_tapView addGestureRecognizer:tap];
+    _y = 0;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //注册监听
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    //移除监听
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification  object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification  object:self];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -201,6 +242,48 @@
         NSString* decimal = _decimals[[pickerView selectedRowInComponent:1]];
         NSString* height = [NSString stringWithFormat:@"%@.%@",integer,decimal];
         _height.text = height;
+    }
+}
+
+#pragma mark - 键盘出现方法
+-(void)keyboardWasShown:(NSNotification *)notification
+{
+    [self.view addSubview:_tapView];
+    NSDictionary *info = [notification userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    CGFloat keyBoardHeight = keyboardSize.height;
+    CGFloat imgH = _bgImageView.frame.size.height;
+    NSLog(@"键盘高度:%f",keyBoardHeight);
+    CGRect f;
+    if ([_height isFirstResponder]) {
+        f = _height.frame;
+    }
+    else if ([_birthday isFirstResponder])
+    {
+        f = _birthday.frame;
+    }
+    else if ([_name isFirstResponder])
+    {
+        f = _name.frame;
+    }
+    _y = SCREENHEIGHT - 70 - imgH - keyBoardHeight - f.size.height;
+    NSLog(@"文本框y值:%f",f.origin.y);
+    _y = _y - f.origin.y;
+    NSLog(@"偏移高度:%f",_y);
+    if (_y<0) {
+        _topConstraint.constant =  _topConstraint.constant + _y;
+        _bottomConstraint.constant = _bottomConstraint.constant - _y;
+
+    }
+}
+
+#pragma mark - 键盘消失方法
+-(void)keyboardWillBeHidden:(NSNotification *)notification
+{
+    if (_y<0) {
+        _topConstraint.constant = _topConstraint.constant - _y;
+        _bottomConstraint.constant = _bottomConstraint.constant +_y;
     }
 }
 
@@ -272,9 +355,8 @@
         if (_isEdit) {
             //编辑模式，执行删除
             
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"删除成员" message:@"确认删除该成员吗" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除该成员？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
             [alert show];
-            
         }
         else
         {
@@ -290,7 +372,6 @@
                         _isNewImage = NO;
                         //照片保存到本地
                         [uVC saveImage:_imgUrl];
-
                         [uVC uploadMember];
                     } failure:^(id responseObject) {
                         [_loadingHUD hide:YES];
@@ -368,7 +449,6 @@
 {
     self.title = NSLocalizedString(@"编辑", nil);
     self.view.backgroundColor = [UIColor clearColor];
-    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
     _isEdit = YES;
     _tmp = [user memberToDictionary];  //便于数据提交不成功时，进行数据恢复
     
@@ -617,6 +697,40 @@
             NSLog(@"%@",str);
             [uVC showProgressHUDByString:str];
         }];
+    }
+}
+
+#pragma mark - 控制器整体的view向上移动一个高度
+-(void)changeSelfViewY:(CGFloat)y
+{
+    [self view:_bgImageView ChangeY:y];
+    [self view:_middleView ChangeY:y];
+    [self view:_userIcon ChangeY:y];
+    [self view:_cameraBtn ChangeY:y];
+}
+
+#pragma mark - 根据高度偏移一个view
+-(void)view:(UIView*)view ChangeY:(CGFloat)y
+{
+    CGRect f = view.frame;
+    f.origin.y += y;
+    view.frame = f;
+}
+
+#pragma mark - tap方法
+-(void)tapClicked
+{
+    [_tapView removeFromSuperview];
+    if ([_name isFirstResponder]) {
+        [_name resignFirstResponder];
+    }
+    else if ([_height isFirstResponder])
+    {
+        [_height resignFirstResponder];
+    }
+    else
+    {
+        [_birthday resignFirstResponder];
     }
 }
 

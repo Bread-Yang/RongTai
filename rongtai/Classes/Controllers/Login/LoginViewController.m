@@ -54,8 +54,8 @@
     _loginRequest.delegate = self;
     _loginRequest.overTime = 30;
 
-    _phoneNum.text = @"13435814424";
-    _password.text = @"123456";
+//    _phoneNum.text = @"13435814424";
+//    _password.text = @"123456";
     
     //
      SlideNavigationController* silder = [SlideNavigationController sharedInstance];
@@ -78,6 +78,10 @@
     _loading.labelText = NSLocalizedString(@"登录中...", nil);
     [self.view addSubview:_loading];
 
+    NSString* phone = [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
+    if (phone) {
+        _phoneNum.text = phone;
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -100,19 +104,26 @@
     if (phone.length > 0)
     {
         if (phone.length == 11) {
-            if (_password.text.length > 0) {
-                if (_password.text.length >5&&_password.text.length < 19) {
-                    [_loading show:YES];
-                    [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+            if ([self checkPhoneNum]) {
+                if (_password.text.length > 0) {
+                    if (_password.text.length >5&&_password.text.length < 19) {
+                        [_loading show:YES];
+                        [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
+                    }
+                    else
+                    {
+                        [self showProgressHUDByString:@"请输入6-18位密码"];
+                    }
                 }
                 else
                 {
-                    [self showProgressHUDByString:@"请输入6-18位密码"];
+                    [self showProgressHUDByString:@"请输入密码"];
                 }
+
             }
             else
             {
-                [self showProgressHUDByString:@"请输入密码"];
+                [self showProgressHUDByString:@"请输入正确的手机号码"];
             }
         }
         else
@@ -147,6 +158,9 @@
 		NSString* uid = [result objectForKey:@"uid"];
 		[ud setObject:token forKey:@"token"];
 		[ud setObject:uid forKey:@"uid"];
+        NSString* phone = _phoneNum.text;
+        phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [ud setObject:phone forKey:@"phone"];
 		[self.navigationController pushViewController:[MainViewController new] animated:YES];
 	}
     else
@@ -235,10 +249,8 @@
     NSString* phone = _phoneNum.text;
     //去掉首尾空格
     phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    if (phone.length > 10) {
-        NSPredicate* pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"];
-        result = [pre evaluateWithObject:phone];
-    }
+    NSPredicate* pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"];
+    result = [pre evaluateWithObject:phone];
     return result;
 }
 
