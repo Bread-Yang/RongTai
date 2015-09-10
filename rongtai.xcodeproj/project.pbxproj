@@ -190,7 +190,6 @@
 		56C3495F1B17199D007C8B3F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C3495E1B17199D007C8B3F /* MediaPlayer.framework */; };
 		56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */; };
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
-		56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
 		56C668A41B3026A500CDC72B /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A31B3026A500CDC72B /* CircleButton.m */; };
 		56E6B3291B29295A000178BD /* AddOrEditTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */; };
@@ -541,8 +540,6 @@
 		56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductInstructionViewController.m; path = ProductInstruction/ProductInstructionViewController.m; sourceTree = "<group>"; };
 		56C668951B2E848200CDC72B /* BuyRTProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyRTProductTableViewController.h; path = BuyRTProduct/BuyRTProductTableViewController.h; sourceTree = "<group>"; };
 		56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyRTProductTableViewController.m; path = BuyRTProduct/BuyRTProductTableViewController.m; sourceTree = "<group>"; };
-		56C668981B2EAC5700CDC72B /* ManualMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualMassageViewController.h; sourceTree = "<group>"; };
-		56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualMassageViewController.m; sourceTree = "<group>"; };
 		56C6689F1B300F7800CDC72B /* VerticalSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VerticalSlider.h; path = VerticalSlider/VerticalSlider.h; sourceTree = "<group>"; };
 		56C668A01B300F7800CDC72B /* VerticalSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerticalSlider.m; path = VerticalSlider/VerticalSlider.m; sourceTree = "<group>"; };
 		56C668A21B3026A500CDC72B /* CircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleButton.h; path = CircleButton/CircleButton.h; sourceTree = "<group>"; };
@@ -1494,8 +1491,6 @@
 				56C349581B170D9E007C8B3F /* MusicPickerViewController.m */,
 				3D65A4861B25841800B7B411 /* MainViewController.h */,
 				3D65A4871B25841800B7B411 /* MainViewController.m */,
-				56C668981B2EAC5700CDC72B /* ManualMassageViewController.h */,
-				56C668991B2EAC5700CDC72B /* ManualMassageViewController.m */,
 				3DE3FFAA1B4F7C79003F8AF7 /* BasicViewController.h */,
 				3DE3FFAB1B4F7C79003F8AF7 /* BasicViewController.m */,
 			);
@@ -1833,7 +1828,6 @@
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
 				56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
-				56C6689A1B2EAC5700CDC72B /* ManualMassageViewController.m in Sources */,
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
 				DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */,
 				3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */,

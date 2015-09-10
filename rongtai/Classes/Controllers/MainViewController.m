@@ -246,13 +246,13 @@
     //手动 按钮
     _manualMassageButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
     [_manualMassageButton setTitle:NSLocalizedString(@"手动", nil) forState:UIControlStateNormal];
-    [_manualMassageButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [_manualMassageButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateSelected];
     _manualMassageButton.titleLabel.font = [UIFont systemFontOfSize:11];
     _manualMassageButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
     _manualMassageButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.3, 0, 0);;
     _manualMassageButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.2, 0, 0);
     [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand"] forState:UIControlStateNormal];
-    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand2"] forState:UIControlStateHighlighted];
+    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand2"] forState:UIControlStateSelected];
     [_manualMassageButton addTarget:self action:@selector(manualButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [_menuView addSubview:_manualMassageButton];
     
@@ -735,75 +735,82 @@
     {  //按摩中
         
 		// 高亮item
-		int highlightIndex;
+        int highlightIndex = -1;
 		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto)
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
         {
             //自动时设置手动按钮不为高亮
             [_manualMassageButton setSelected:NO];
 			
-			switch (rtMassageChairStatus.autoProgramType) {
-					
-				case RtMassageChairProgramSportRecover:
-					highlightIndex = 0;
-					break;
-				
-				case RtMassageChairProgramExtension:
-					highlightIndex = 1;
-					break;
-					
-				case RtMassageChairProgramRestAndSleep:
-					highlightIndex = 2;
-					break;
-					
-				case RtMassageChairProgramWorkingRelieve:
-					highlightIndex = 3;
-					break;
-					
-				case RtMassageChairProgramShoulderAndNeck:
-					highlightIndex = 4;
-					break;
-					
-				case RtMassageChairProgramWaistAndSpine:
-					highlightIndex = 5;
-					break;
-			}
-		} else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
-            //自动时设置手动按钮不为高亮
-            [_manualMassageButton setSelected:NO];
-
-			switch (rtMassageChairStatus.networkProgramType) {
-					
-				case RTMassageChairProgramNetwork1:
-					highlightIndex = 6;
-					break;
-					
-				case RTMassageChairProgramNetwork2:
-					highlightIndex = 7;
-					break;
-					
-				case RTMassageChairProgramNetwork3:
-					highlightIndex = 8;
-					break;
-					
-				case RTMassageChairProgramNetwork4:
-					highlightIndex = 9;
-					break;
-			}
+            if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+                switch (rtMassageChairStatus.autoProgramType) {
+                        
+                    case RtMassageChairProgramSportRecover:
+                        highlightIndex = 0;
+                        break;
+                        
+                    case RtMassageChairProgramExtension:
+                        highlightIndex = 1;
+                        break;
+                        
+                    case RtMassageChairProgramRestAndSleep:
+                        highlightIndex = 2;
+                        break;
+                        
+                    case RtMassageChairProgramWorkingRelieve:
+                        highlightIndex = 3;
+                        break;
+                        
+                    case RtMassageChairProgramShoulderAndNeck:
+                        highlightIndex = 4;
+                        break;
+                        
+                    case RtMassageChairProgramWaistAndSpine:
+                        highlightIndex = 5;
+                        break;
+               }
+            }else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
+            {
+                 switch (rtMassageChairStatus.networkProgramType) {
+                    case RTMassageChairProgramNetwork1:
+                        highlightIndex = 6;
+                        break;
+                        
+                    case RTMassageChairProgramNetwork2:
+                        highlightIndex = 7;
+                        break;
+                        
+                    case RTMassageChairProgramNetwork3:
+                        highlightIndex = 8;
+                        break;
+                
+                    case RTMassageChairProgramNetwork4:
+                        highlightIndex = 9;
+                        break;
+                }
+            }
+            if (highlightIndex>=0) {
+                [_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
+                                    animated:YES
+                              scrollPosition:UITableViewScrollPositionNone];
+            }
+            else
+            {
+                [_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
+            }
+            
 		}
         else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
         {
             //手动按摩的话，底部菜单栏的手动要高亮
             [_manualMassageButton setSelected:YES];
+            [_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
         }
         else
         {
             [_manualMassageButton setSelected:NO];
+            [_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
         }
-		
-		[_table selectRowAtIndexPath:[NSIndexPath indexPathForRow:highlightIndex inSection:0]
-							animated:YES
-					  scrollPosition:UITableViewScrollPositionNone];
 	}
     else
     {
@@ -1020,7 +1027,7 @@
 -(void)anionButtonClicked
 {
     //发送负离子开关
-//    [[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
+    [[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
     [_anionButton setSelected:!_anionButton.isSelected];
 }
 

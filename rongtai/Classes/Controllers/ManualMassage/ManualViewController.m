@@ -62,8 +62,10 @@
     RTBleConnector* _bleConnector;
     
     //
-    NSTimeInterval _delay; //延迟更新单位时间，默认200ms，即按摩椅主板信号更新一次的时间
-    NSUInteger _delayMul;
+    NSUInteger _delayOfBackWarm;  //背部加热延迟更新标识
+    NSUInteger _delayOfFootWheel; //脚部滚轮延迟更新标识
+    NSUInteger _delayOfHumanView; //气囊人体图延迟更新标识
+    
     BOOL _isDelayUpdate;  //是否延迟更新
     BOOL _isTouch;  //记录PolarView是否被触摸
     BOOL _isMoving; //记录PolarView是否在移动
@@ -144,6 +146,7 @@
     
     //导航栏右边按钮
     UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
+    
     self.navigationItem.rightBarButtonItem = right;
  
     //返回按钮设置
@@ -181,9 +184,11 @@
     _scan = 0;
     
     //
-    _delay = 0.2;
-    _delayMul = 2;
     _delayCount = 0;
+
+    _delayOfBackWarm = 0;
+    _delayOfFootWheel = 0;
+    _delayOfHumanView = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -224,14 +229,7 @@
 #pragma mark - 返回
 -(void)goBack
 {
-//    //退出手动按摩的时候，发送复位命令
-//    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-//        [_bleConnector sendControlMode:H10_KEY_POWER_SWITCH];
-//    }
-//    else
-//    {
-        [self.navigationController popViewControllerAnimated:YES];
-//    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 技法偏好点击方法
@@ -304,8 +302,7 @@
 #pragma mark - 背部加热方法
 -(void)backWarmTap
 {
-    _isDelayUpdate = YES;
-    _delayMul = 5;
+    _delayOfBackWarm = 5;
     [_bleConnector sendControlMode:H10_KEY_HEAT_ON];
     _backWarmOn = !_backWarmOn;
     [self updateBcakWarmView];
@@ -313,8 +310,7 @@
 
 #pragma mark - 脚步滚轮点击方法
 -(void)footWheelTap {
-    _isDelayUpdate = YES;
-    _delayMul = 3;
+    _delayOfFootWheel = 3;
     _footWheelOn = !_footWheelOn;
     if (_footWheelOn) {
         [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_MED];
@@ -328,7 +324,6 @@
         [_polar setValue:0 ByIndex:2];
     }
     [self updateFootWheelView];
-    
 }
 
 #pragma mark - 创建滚轮选择器
@@ -397,7 +392,8 @@
 }
 
 #pragma mark - NAPickerViewDelegate
--(void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index {
+-(void)didSelectedItemAtIndex:(NAPickerView *)pickerView andIndex:(NSInteger)index
+{
     _pickerSelectedItem = index;
 }
 
@@ -421,7 +417,6 @@
     NSLog(@"滑动开始");
     _scroll.scrollEnabled = NO;
     _isTouch = YES;
-    _delayMul = 1;
     _isMoving = YES;
 }
 
@@ -455,11 +450,12 @@
     else if (index == 1)
     {
         //气囊强度，有5档
-        if (value <=0) {
-            //等于0就关闭
-            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_OFF];
-        }
-        else if (value<=2.4) {
+//        if (value <=0) {
+//            //等于0就关闭
+//            [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_OFF];
+//        }
+//        else
+        if (value<=2.4) {
             [_bleConnector sendControlMode:H10_KEY_AIRBAG_STRENGTH_1];
         }
         else if (value<=4.8)
@@ -482,10 +478,11 @@
     else if (index == 2)
     {
         //滚轮速度，有三档，可开关
-        if (value <= 0) {
-            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
-        }
-        else if (value<=4) {
+//        if (value <= 0) {
+//            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
+//        }
+//        else
+        if (value<=4) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
         }
         else if (value<=8)
@@ -554,8 +551,8 @@
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender {
 	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
+    
 }
-
 
 #pragma mark - 更新背部加热View
 -(void)updateBcakWarmView
@@ -600,66 +597,56 @@
     }
 }
 
-#pragma mark - 根据按摩状态更新极线图
--(void)updateWLPolarView
+#pragma mark - 更新机芯幅度和按摩力度的极线图
+-(void)updateWidthAndPowerInPolarView
 {
-    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramManual) {
-            switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
-                case RTMassageChairMassageTechniqueKnead:
-                    //揉捏
-                    [_polar setPoint:0 ableMove:NO];
-                    [_polar setPoint:3 ableMove:YES];
-                    break;
-                case RTMassageChairMassageTechniqueKnock:
-                    //敲击
-                    [_polar setPoint:0 ableMove:YES];
-                    [_polar setPoint:3 ableMove:YES];
-                    break;
-                case RTMassageChairMassageTechniqueSync:
-                    //揉敲
-                    [_polar setPoint:0 ableMove:NO];
-                    [_polar setPoint:3 ableMove:YES];
-                    break;
-                case RTMassageChairMassageTechniqueTapping:
-                    //叩击
-                    [_polar setPoint:0 ableMove:YES];
-                    [_polar setPoint:3 ableMove:YES];
-                    break;
-                case RTMassageChairMassageTechniqueShiatsu:
-                    //指压
-                    [_polar setPoint:0 ableMove:YES];
-                    [_polar setPoint:3 ableMove:NO];
-                    break;
-                case RTMassageChairMassageTechniqueRhythm:
-                    //韵律
-                    [_polar setPoint:0 ableMove:NO];
-                    [_polar setPoint:3 ableMove:NO];
-                    break;
-                case RTMassageChairMassageTechniqueStop:
-                    //停止
-                    [_polar setPoint:0 ableMove:NO];
-                    [_polar setPoint:3 ableMove:NO];
-                    break;
-                default:
-                    [_polar setPoint:0 ableMove:NO];
-                    [_polar setPoint:3 ableMove:NO];
-                    break;
-            }
-        }
-        else
-        {
+    switch (_bleConnector.rtMassageChairStatus.massageTechnique) {
+        case RTMassageChairMassageTechniqueKnead:
+            //揉捏
+            [_polar setPoint:0 ableMove:NO];
+            [_polar setPoint:3 ableMove:YES];
+            break;
+        case RTMassageChairMassageTechniqueKnock:
+            //敲击
+            [_polar setPoint:0 ableMove:YES];
+            [_polar setPoint:3 ableMove:YES];
+            break;
+        case RTMassageChairMassageTechniqueSync:
+            //揉敲
+            [_polar setPoint:0 ableMove:NO];
+            [_polar setPoint:3 ableMove:YES];
+            break;
+        case RTMassageChairMassageTechniqueTapping:
+            //叩击
+            [_polar setPoint:0 ableMove:YES];
+            [_polar setPoint:3 ableMove:YES];
+            break;
+        case RTMassageChairMassageTechniqueShiatsu:
+            //指压
+            [_polar setPoint:0 ableMove:YES];
+            [_polar setPoint:3 ableMove:NO];
+            break;
+        case RTMassageChairMassageTechniqueRhythm:
+            //韵律
             [_polar setPoint:0 ableMove:NO];
             [_polar setPoint:3 ableMove:NO];
-        }
+            break;
+        case RTMassageChairMassageTechniqueStop:
+            //停止
+            [_polar setPoint:0 ableMove:NO];
+            [_polar setPoint:3 ableMove:NO];
+            break;
+        default:
+            [_polar setPoint:0 ableMove:NO];
+            [_polar setPoint:3 ableMove:NO];
+            break;
     }
-   
     if (_delayCount <1) {
         //_delayCount小于1更新
         [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
                   stepValue:4 ByIndex:0];
     }
-    [self setPolarValue:_bleConnector.rtMassageChairStatus.airPressureFlag stepValue:2.4 ByIndex:1];
+    
     [self setPolarValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag stepValue:2 ByIndex:3];
 }
 
@@ -678,8 +665,7 @@
 -(void)maualHumanViewClicked:(ManualHumanView *)view
 {
 //    NSLog(@"HumanView被点击");
-    _isDelayUpdate = YES;
-    _delayMul = 4;
+    _delayOfHumanView = 4;
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -701,82 +687,135 @@
 //    }
     
 //    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
+    
+    [self updateUI];
 
-    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+}
+
+#pragma mark - 更新界面
+-(void)updateUI
+{
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
         //按摩中
-        if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramManual)
         {
             //手动按摩
+            _stopBtn.hidden = NO;
+            if (!_isTouch) {
+                //极线图不被用户触摸才更新状态
+                //更新极线图中的机芯幅度和按摩力度
+                if (_delayCount>0) {
+                    _delayCount--;
+                }
+                [self updateWidthAndPowerInPolarView];
+            }
+            
+            //按摩模式
+            NSInteger flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+            if (flag>0&&flag<7) {
+                _skillsPreferenceLabel.text = _skillsPreferenceArray[flag-1];
+                [self updateSkillsPreferenceView:YES];
+            }
+            
+            //定时
+            NSInteger minutes = _bleConnector.rtMassageChairStatus.remainingTime / 60;
+            NSInteger seconds = _bleConnector.rtMassageChairStatus.remainingTime % 60;
+            _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
+            
+            //手动按摩中，滚轮可调节速度
+            [_polar setPoint:2 ableMove:NO];
+
         }
-        else if (rtMassageChairStatus.programType == RtMassageChairProgramAuto ||rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
+        else if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramAuto ||_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
         {
             //自动按摩 或 网络按摩
+            [self unManualMassageUI];
+            [self setPolarValue:_bleConnector.rtMassageChairStatus.kneadWidthFlag
+                      stepValue:4 ByIndex:0];
+            [self setPolarValue:_bleConnector.rtMassageChairStatus.movementSpeedFlag stepValue:2 ByIndex:3];
             
+            //自动按摩中，滚轮不可调节速度
+            [_polar setPoint:2 ableMove:NO];
         }
         else
         {
             //未知情况
             NSLog(@"按摩中，但出现了按摩状态");
+            [self unManualMassageUI];
         }
         
         //更新脚部滚轮
+        if (_delayOfFootWheel<1) {
+            _footWheelOn = _bleConnector.rtMassageChairStatus.isRollerOn;
+            [self updateFootWheelView];
+        }
+        else
+        {
+            _delayOfFootWheel--;
+        }
+        
+        if (_footWheelOn) {
+            if (!_isTouch) {
+                [self setPolarValue:_bleConnector.rtMassageChairStatus.rollerSpeedFlag stepValue:4 ByIndex:2];
+            }
+        }
+        else
+        {
+            [_polar setPoint:2 ableMove:NO];
+            [_polar setValue:0 ByIndex:2];
+        }
+        
         
         //更新背部加热
+        if (_delayOfBackWarm < 1) {
+            _backWarmOn = _bleConnector.rtMassageChairStatus.isHeating;
+            [self updateBcakWarmView];
+        }
+        else
+        {
+            _delayOfBackWarm--;
+        }
+        
+        //更新气囊状态
+        if (_delayOfHumanView<1) {
+            [_humanView checkButtonByAirBagProgram:_bleConnector.rtMassageChairStatus.airBagProgram];
+        }
+        else
+        {
+            _delayOfHumanView--;
+        }
+        
+        if (_humanView.isSelected) {
+            [_polar setPoint:1 ableMove:YES];
+            if (!_isTouch) {
+                [self setPolarValue:_bleConnector.rtMassageChairStatus.airPressureFlag stepValue:2.4 ByIndex:1];
+            }
+        }
+        else
+        {
+            [_polar setPoint:1 ableMove:NO];
+        }
+        
+        //
+        [self.resettingDialog close];
         
     }
-    else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+    else if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
     {
         //复位中
+        [self unManualMassageUI];
+        [self unAirBagProgram];
+        [self.resettingDialog show];
         
     }
     else
     {
         //其他状态
-        
+        [self unManualMassageUI];
+        [self unAirBagProgram];
+        [self.resettingDialog close];
     }
-    
-    
-    
-    
-    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        _update = 1;
-        if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {
-            NSLog(@"手动按摩：%ld",rtMassageChairStatus.massageTechniqueFlag);
-            _stopBtn.hidden = NO;
-        }
-        else
-        {
-            _stopBtn.hidden = YES;
-            [self updateSkillsPreferenceView:NO];
-        }
-        
-        // 以下是界面状态更新
-        if (_isDelayUpdate) {
-            //延迟更新
-            [self performSelector:@selector(dalayNO) withObject:nil afterDelay:_delay*_delayMul];
-        }
-        else
-        {
-            if (_delayCount>0) {
-                _delayCount --;
-            }
-            //即时更新
-            [self updateUI];
-        }
-    }
-    
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
-    {
-		[self.resettingDialog show];
-        if (_update == 1) {
-            _update = 0;
-            _stopBtn.hidden = YES;
-            [self updateUI];
-        }
-	} else {
-		[self.resettingDialog close];
-	}
 }
 
 -(void)dalayNO
@@ -792,72 +831,38 @@
     }
 }
 
--(void)updateUI
+#pragma mark - 非手动按摩UI固定设置
+-(void)unManualMassageUI
 {
-    // 背部加热
-    _backWarmOn = _bleConnector.rtMassageChairStatus.isHeating;
+    //停止按钮隐藏
+    _stopBtn.hidden = YES;
+    //把手动按摩模式改成灰色
+    [self updateSkillsPreferenceView:NO];
+    //手动时间设置为零
+    _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", _bleConnector.rtMassageChairStatus.preprogrammedTime, 0];
+    //极线图设置不能移动
+    [_polar setPoint:0 ableMove:NO];
+    [_polar setPoint:3 ableMove:NO];
+}
+
+#pragma mark - 没有脚部滚轮，没有背部加热， 没有打开气囊
+-(void)unAirBagProgram
+{
+    _footWheelOn = NO;
+    [self updateFootWheelView];
+    [_polar setPoint:2 ableMove:NO];
+    [self setPolarValue:0 stepValue:2 ByIndex:2];
+    
+    _backWarmOn = NO;
     [self updateBcakWarmView];
     
-    // 脚部滚轮
-    _footWheelOn = _bleConnector.rtMassageChairStatus.isRollerOn;
-    if (_footWheelOn) {
-        if (!_isTouch) {
-            [self setPolarValue:_bleConnector.rtMassageChairStatus.rollerSpeedFlag stepValue:4 ByIndex:2];
-            [_polar setPoint:2 ableMove:YES];
-        }
-    }
-    else
-    {
-        [_polar setPoint:2 ableMove:NO];
-        [_polar setValue:0 ByIndex:2];
-    }
-    [self updateFootWheelView];
-    // 按摩模式
-    NSInteger massageTechniqueFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
-    if (massageTechniqueFlag != 0)
-    {
-        [self updateSkillsPreferenceView:YES];
-        if (massageTechniqueFlag == 7) {
-//            _skillsPreferenceLabel.text = @"搓背";
-            NSLog(@"出现捶背");
-//            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"😱" message:@"居然出现搓背了" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles: nil];
-//            [alert show];
-        } else {
-            _skillsPreferenceLabel.text = _skillsPreferenceArray[_bleConnector.rtMassageChairStatus.massageTechniqueFlag - 1];
-        }
-    }
-    else
-    {
-        [self updateSkillsPreferenceView:NO];
-    }
+    [_humanView checkButtonByAirBagProgram:RTMassageChairAirBagProgramNone];
+    [_polar setPoint:1 ableMove:NO];
+    [self setPolarValue:0 stepValue:2 ByIndex:1];
     
-    //极线图更新
-    if (!_isTouch) {
-        //极线图在触摸移动时不更新
-        [self updateWLPolarView];
-    }
-    
-    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        // 按摩剩余工作时间
-        NSInteger minutes = _bleConnector.rtMassageChairStatus.remainingTime / 60;
-        NSInteger seconds = _bleConnector.rtMassageChairStatus.remainingTime % 60;
-        _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
-    }
-    else
-    {
-        // 预设时间
-        _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", _bleConnector.rtMassageChairStatus.preprogrammedTime, 0];
-    }
-    // 气囊程序
-    [_humanView checkButtonByAirBagProgram:_bleConnector.rtMassageChairStatus.airBagProgram];
-    
-    if (_humanView.isSelected) {
-        [_polar setPoint:1 ableMove:YES];
-    }
-    else
-    {
-        [_polar setPoint:1 ableMove:NO];
-    }
+    [self setPolarValue:0 stepValue:2 ByIndex:0];
+    [self setPolarValue:0 stepValue:2 ByIndex:3];
 }
+
 
 @end
