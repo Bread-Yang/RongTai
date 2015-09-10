@@ -610,7 +610,7 @@
 	
 	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
 	
-	if (rtMassageChairStatus != nil) {
+	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
 		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 			
 			[self jumpToCorrespondingControllerByMassageStatus];

@@ -26,6 +26,7 @@
 @interface AutoMassageViewController ()<RTBleConnectorDelegate> {
     __weak IBOutlet UILabel *_timeSetLabel;
     __weak IBOutlet UILabel *_functionLabel;
+	__weak IBOutlet UITextView *_functionTextView;
     __weak IBOutlet UILabel *_usingTimeLabel;
     __weak IBOutlet UIButton *_stopBtn;
 	__weak IBOutlet UIImageView *_movementPositionImageView;
@@ -46,6 +47,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = YES;
+	
+	[_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
     
     UIBarButtonItem* item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem =item;
@@ -410,6 +413,11 @@
 	
 	_functionLabel.text = functionString;
 	[_functionLabel sizeToFit];
+	
+	if (![_functionTextView.text isEqualToString:functionString]) {
+		_functionTextView.text = functionString;
+		[_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
+	}
 	
 	// 用时时间
 	_usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
