@@ -232,13 +232,15 @@
 	
 	// 以下是界面跳转
 	
-	if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)  {  // 执行体型检测程序
 		[self jumpToScanViewConroller];
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
        
         if (_programName.length > 0 && ![_programName isEqualToString:@"自动按摩"]) {
+			[self.resettingDialog show];
+			
             //计算按摩时间
             NSDate* end = [NSDate date];
             NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
@@ -324,12 +326,24 @@
 
         }
         
-		[self jumpToFinishMassageViewConroller];
+		
+	} else {
+		if (self.resettingDialog.isShowing) {
+			
+			[self.resettingDialog close];
+			
+			[self jumpToFinishMassageViewConroller];
+			
+			[self removeFromParentViewController];
+			
+//			[self.navigationController popViewControllerAnimated:false];
+		}
+		
 	}
 	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
-		[self backToMainViewController];
-	}
+//	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
+//		[self backToMainViewController];
+//	}
 	
 	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
 		[self jumpToManualMassageViewConroller];

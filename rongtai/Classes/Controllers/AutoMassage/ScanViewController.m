@@ -90,6 +90,7 @@
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
 			[self jumpToAutoMassageViewConroller];
+			[self removeFromParentViewController];
 		}
 		
 		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面

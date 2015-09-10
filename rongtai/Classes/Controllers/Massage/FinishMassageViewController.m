@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"按摩完毕", nil);
-    self.isListenBluetoothStatus = YES;
+    self.isListenBluetoothStatus = NO;
     
     //返回按钮设置
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];

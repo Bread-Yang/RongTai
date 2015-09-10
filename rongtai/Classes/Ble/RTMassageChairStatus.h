@@ -492,7 +492,7 @@ typedef NS_ENUM(NSInteger, RTMassageChairAirBagProgram) {
 
 /**
  靠背电动缸运行指示
- 00：停止
+ 00：停止 
  01：靠背上升
  02：靠背下降
  */
