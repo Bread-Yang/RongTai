@@ -161,7 +161,9 @@
         NSString* phone = _phoneNum.text;
         phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [ud setObject:phone forKey:@"phone"];
-		[self.navigationController pushViewController:[MainViewController new] animated:YES];
+        MainViewController *vc = [MainViewController new];
+        vc.isFromLoginViewController = true;
+        [self.navigationController pushViewController:vc animated:YES];
 	}
     else
     {
