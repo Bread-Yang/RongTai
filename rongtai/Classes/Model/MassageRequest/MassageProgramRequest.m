@@ -44,7 +44,7 @@
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
 	[_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"获取按摩程序列表成功:%@",responseObject);
+//		NSLog(@"获取按摩程序列表成功:%@",responseObject);
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		
@@ -109,7 +109,7 @@
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
     [parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取用户下载的按摩程序列表成功:%@",responseObject);
+//        NSLog(@"获取用户下载的按摩程序列表成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             if ([self.delegate respondsToSelector:@selector(massageRequestFavoriteMassageListFinish:Result:)]) {
@@ -140,7 +140,7 @@
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:masssageIds forKey:@"massageIds"];
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"添加用户按摩程序成功:%@",responseObject);
+//        NSLog(@"添加用户按摩程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
 //            NSLog(@"服务器添加成功");
@@ -177,7 +177,7 @@
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
     [parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取自定义程序列表成功:%@",responseObject);
+//        NSLog(@"获取自定义程序列表成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             if ([self.delegate respondsToSelector:@selector(massageRequestCustomProgramListFinish:Result:)]) {
@@ -265,7 +265,7 @@
     
     NSLog(@"请求链接：%@\n请求参数：customProgram:%@\n",url,parameters);
     [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"编辑自定义程序成功:%@",responseObject);
+//        NSLog(@"编辑自定义程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             NSLog(@"服务器编辑成功");

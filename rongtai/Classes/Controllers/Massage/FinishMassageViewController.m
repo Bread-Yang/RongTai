@@ -14,7 +14,7 @@
 #import "UIView+RT.h"
 #import "MassageRecord.h"
 
-@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate,UIGestureRecognizerDelegate> {
+@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate> {
     __weak IBOutlet UILabel *_score;
     __weak IBOutlet UIView *_addStarView;
     __weak IBOutlet UILabel *_nameLabel;  //按摩模式名称
@@ -31,6 +31,7 @@
     __weak IBOutlet UIButton *_saveBtn;
     
     __weak IBOutlet NSLayoutConstraint *_manImageTop;
+    RTBleConnector* _bleConnector;
 }
 @end
 
@@ -75,30 +76,45 @@
     _starRateView.starRateType = WLStarRateViewCompleteType;
     [_addStarView addSubview:_starRateView];
     
+    _bleConnector = [RTBleConnector shareManager];
+    self.massageRecord = _bleConnector.massageRecord;
     // Do any additional setup after loading the view.
 }
 
 #pragma mark - 按摩记录set方法
 -(void)setMassageRecord:(NSDictionary *)massageRecord
 {
-    //使用时间
-    NSString* useTime = [massageRecord objectForKey:@"useTime"];
-    _usingTime.text = [NSString stringWithFormat:@"共%@分钟",useTime];
-    [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
-    
-    //按摩日期
-    NSString* date = [massageRecord objectForKey:@"date"];
-    date = [date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
-    NSDateFormatter* formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"hh:mm"];
-//    NSString* startTime = 
-//    _date.text =
-}
-
-#pragma mark - UIGestureRecognizer代理
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    NSLog(@"滑动");
-    return YES;
+    if (massageRecord != nil) {
+        //使用时间
+        NSNumber* useTimeStr = [massageRecord objectForKey:@"useTime"];
+        NSInteger useTime = [useTimeStr integerValue];
+        if (useTime>60) {
+            _usingTime.text = [NSString stringWithFormat:@"共%ld分钟",useTime/60];
+        }
+        else
+        {
+            _usingTime.text = [NSString stringWithFormat:@"共%ld秒",useTime];
+        }
+        [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
+        
+        //按摩日期
+        NSString* date = [massageRecord objectForKey:@"useDate"];
+        date = [date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+        
+        NSDateFormatter* formatter = [NSDateFormatter new];
+        [formatter setDateFormat:@"hh:mm"];
+        NSDate* start = [massageRecord objectForKey:@"startTime"];
+        NSString* startTime = [formatter stringFromDate:start];
+        NSDate* end = [massageRecord objectForKey:@"endTime"];
+        NSString* endTime = [formatter stringFromDate:end];
+        
+        _date.text = [NSString stringWithFormat:@"%@  %@ -- %@",date,startTime,endTime];
+        
+        NSString* name = [massageRecord objectForKey:@"name"];
+        _nameLabel.text = name;
+        
+        _functionTextView.text = [massageRecord objectForKey:@"function"];
+    }
 }
 
 #pragma mark - 保存自定义程序
@@ -117,7 +133,7 @@
 #pragma mark - starRateView代理
 -(void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
 {
-    _score.text = [NSString stringWithFormat:@"%d分",(int)newScorePercent*5];
+    _score.text = [NSString stringWithFormat:@"%d分",(int)(newScorePercent*5)];
     UIFont* font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:38*WSCALE];
     [_score setNumebrByFont:font Color:ORANGE];
 }

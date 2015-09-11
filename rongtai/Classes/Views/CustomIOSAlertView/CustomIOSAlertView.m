@@ -152,7 +152,6 @@ CGFloat buttonSpacerHeight = 0;
 					 }
 					 completion:NULL
 	 ];
-	
 }
 
 // Button has been touched

@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = YES;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 	
     i = 0;
     self.title = NSLocalizedString(@"体型智能检测", nil);
@@ -41,7 +42,6 @@
 }
 
 -(void)goBack {
-//    [self.navigationController popViewControllerAnimated:YES];
 	[self backToMainViewController];
 }
 
@@ -49,8 +49,13 @@
 {
     [super viewDidAppear:animated];
       _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
-	[_t fire];
 //	[self scanAnimation];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_t invalidate];
 }
 
 -(void)timerScan:(NSTimer*)timer {

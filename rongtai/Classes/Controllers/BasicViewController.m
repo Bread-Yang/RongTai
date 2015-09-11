@@ -136,13 +136,13 @@
 	// 按摩椅处在正在按摩的状态下才给跳转
 	if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 		
-		[RTBleConnector shareManager].delegate = nil;
+//		[RTBleConnector shareManager].delegate = nil;
 		
 		for (int i = 0; i < [self.navigationController.viewControllers count]; i++)
         {
 			UIViewController *temp = self.navigationController.viewControllers[i];
 			if ([temp isKindOfClass:[ScanViewController class]]) {
-//				[self.navigationController popToViewController:temp animated:YES];
+				[self.navigationController popToViewController:temp animated:YES];
                 NSLog(@"在栈中找的到扫描的vc就不要跳转");
 				return;
 			}
