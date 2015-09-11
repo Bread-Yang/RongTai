@@ -615,22 +615,33 @@
 	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
 	
 	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
-		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 			
-			[self jumpToCorrespondingControllerByMassageStatus];
+			[self jumpToScanViewConroller];
 			
-		} else {
+		} else { // 自动按摩
 			
-			// 延迟1.5秒再进入按摩界面
+			[self jumpToAutoMassageViewConroller];
 			
-			double delayInSeconds = 1.5;
-			
-			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-			
-			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-				[self jumpToCorrespondingControllerByMassageStatus];
-			});
 		}
+		
+//		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//			
+//			[self jumpToCorrespondingControllerByMassageStatus];
+//			
+//		} else {
+//			
+//			// 延迟1.5秒再进入按摩界面
+//			
+//			double delayInSeconds = 1.5;
+//			
+//			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//			
+//			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//				[self jumpToCorrespondingControllerByMassageStatus];
+//			});
+//		}
 	}
 }
 

@@ -48,6 +48,9 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+	if (_t && [_t isValid]) {
+		[_t invalidate];
+	}
       _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
 	[_t fire];
 //	[self scanAnimation];
