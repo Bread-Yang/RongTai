@@ -355,7 +355,7 @@
         if (_isEdit) {
             //编辑模式，执行删除
             
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除该成员？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除该成员？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert show];
         }
         else

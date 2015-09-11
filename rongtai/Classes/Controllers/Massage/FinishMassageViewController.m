@@ -14,7 +14,7 @@
 #import "UIView+RT.h"
 #import "MassageRecord.h"
 
-@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate> {
+@interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate,UIGestureRecognizerDelegate> {
     __weak IBOutlet UILabel *_score;
     __weak IBOutlet UIView *_addStarView;
     __weak IBOutlet UILabel *_nameLabel;  //按摩模式名称
@@ -40,6 +40,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"按摩完毕", nil);
     self.isListenBluetoothStatus = NO;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
     //返回按钮设置
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
@@ -78,18 +79,26 @@
 }
 
 #pragma mark - 按摩记录set方法
--(void)setMassageRecord:(MassageRecord *)massageRecord
+-(void)setMassageRecord:(NSDictionary *)massageRecord
 {
     //使用时间
-    _usingTime.text = [NSString stringWithFormat:@"共%@分钟",massageRecord.useTime];
+    NSString* useTime = [massageRecord objectForKey:@"useTime"];
+    _usingTime.text = [NSString stringWithFormat:@"共%@分钟",useTime];
     [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
     
     //按摩日期
-    NSString* date = [massageRecord.date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    NSString* date = [massageRecord objectForKey:@"date"];
+    date = [date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
     NSDateFormatter* formatter = [NSDateFormatter new];
     [formatter setDateFormat:@"hh:mm"];
 //    NSString* startTime = 
 //    _date.text =
+}
+
+#pragma mark - UIGestureRecognizer代理
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"滑动");
+    return YES;
 }
 
 #pragma mark - 保存自定义程序

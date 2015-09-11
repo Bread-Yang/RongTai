@@ -873,7 +873,7 @@
     }
 }
 
-#pragma mark - 切换用户代理
+#pragma mark - 切换用户
 -(void)changeUser:(NSString *)imageUrl
 {
     UIButton* btn = (UIButton*)_leftBtn.customView;
@@ -1030,6 +1030,17 @@
     //发送负离子开关
     [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
     [_anionButton setSelected:!_anionButton.isSelected];
+    
+//    CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
+////    alert.isReconnectDialog = YES;
+//    [alert setTitleString:@"提示"];
+//    [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
+//    [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+//        NSLog(@"后退了");
+////        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+//    [alert setUseMotionEffects:true];
+//    [alert show];
 }
 
 #pragma mark - 手动方法
