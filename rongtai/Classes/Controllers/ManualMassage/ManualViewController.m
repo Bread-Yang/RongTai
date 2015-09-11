@@ -66,14 +66,14 @@
     NSUInteger _delayOfFootWheel; //脚部滚轮延迟更新标识
     NSUInteger _delayOfHumanView; //气囊人体图延迟更新标识
     
-    BOOL _isDelayUpdate;  //是否延迟更新
     BOOL _isTouch;  //记录PolarView是否被触摸
     BOOL _isMoving; //记录PolarView是否在移动
     NSInteger _delayCount;  //倒数延迟更新，对于“机芯幅度”调节才使用
     
     //
-    NSInteger _update;
-
+    NSInteger _massageWay;  //按摩方式
+    MassageRecord* _massageRecord;  //按摩记录信息
+    
     //测试用
     NSInteger _scan;
 }
@@ -92,7 +92,7 @@
 //	_footWheelArray = @[@"滚轮速度慢", @"滚轮速度中", @"滚轮速度快", @"滚轮关"];
 	
     //技法偏好类型数组
-    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲同步", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律按摩", nil)];
+    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
     
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.05*0.5;
@@ -178,14 +178,12 @@
     
     //
     _bleConnector = [RTBleConnector shareManager];
-    _update = 1;
     
     //
     _scan = 0;
     
     //
     _delayCount = 0;
-
     _delayOfBackWarm = 0;
     _delayOfFootWheel = 0;
     _delayOfHumanView = 0;
@@ -655,7 +653,7 @@
 {
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
-    if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
+    if (currentValue>=level*stepValue || currentValue<(level-1)*stepValue) {
 //        NSLog(@"%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
@@ -816,11 +814,6 @@
         [self unAirBagProgram];
         [self.resettingDialog close];
     }
-}
-
--(void)dalayNO
-{
-    _isDelayUpdate = NO;
 }
 
 -(void)touchNo

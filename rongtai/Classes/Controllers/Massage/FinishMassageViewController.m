@@ -12,16 +12,17 @@
 #import "CWStarRateView.h"
 #import "UILabel+WLAttributedString.h"
 #import "UIView+RT.h"
+#import "MassageRecord.h"
 
 @interface FinishMassageViewController ()<UIAlertViewDelegate,CWStarRateViewDelegate> {
     __weak IBOutlet UILabel *_score;
     __weak IBOutlet UIView *_addStarView;
-    __weak IBOutlet UILabel *_nameLabel;
-    __weak IBOutlet UILabel *_usingTime;
-    __weak IBOutlet UILabel *_date;
+    __weak IBOutlet UILabel *_nameLabel;  //按摩模式名称
+    __weak IBOutlet UILabel *_usingTime;   //用时
+    __weak IBOutlet UILabel *_date; //按摩日期
     CWStarRateView *_starRateView;
     
-    __weak IBOutlet UITextView *_functionTextView;
+    __weak IBOutlet UITextView *_functionTextView; //按摩功能
     
     __weak IBOutlet UILabel *_functionL;
     
@@ -68,12 +69,27 @@
     
     //创建星级评分控件
     _starRateView = [[CWStarRateView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.84*0.7, 0.1*SCREENHEIGHT*0.6) numberOfStars:5];
-    _starRateView.scorePercent = 0.9;
+    _starRateView.scorePercent = 1;
     _starRateView.delegate = self;
     _starRateView.starRateType = WLStarRateViewCompleteType;
     [_addStarView addSubview:_starRateView];
     
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 按摩记录set方法
+-(void)setMassageRecord:(MassageRecord *)massageRecord
+{
+    //使用时间
+    _usingTime.text = [NSString stringWithFormat:@"共%@分钟",massageRecord.useTime];
+    [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
+    
+    //按摩日期
+    NSString* date = [massageRecord.date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    NSDateFormatter* formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"hh:mm"];
+//    NSString* startTime = 
+//    _date.text =
 }
 
 #pragma mark - 保存自定义程序
@@ -92,11 +108,10 @@
 #pragma mark - starRateView代理
 -(void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent
 {
-    _score.text = [NSString stringWithFormat:@"%.1f分",newScorePercent*5];
+    _score.text = [NSString stringWithFormat:@"%d分",(int)newScorePercent*5];
     UIFont* font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:38*WSCALE];
     [_score setNumebrByFont:font Color:ORANGE];
 }
-
 
 #pragma mark - 返回方法
 -(void)goBack {

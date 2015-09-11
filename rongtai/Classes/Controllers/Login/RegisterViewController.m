@@ -117,7 +117,13 @@
         if (phone.length > 0) {
             if (phone.length == 11) {
 //                _canSend = NO;
-                [_loginRequest requestAuthCodeByPhone:phone];
+                if ([self checkPhoneNum]) {
+                    [_loginRequest requestAuthCodeByPhone:phone];
+                }
+                else
+                {
+                    [self showProgressHUDByString:@"请输入正确的手机号码"];
+                }
             }
             else
             {
@@ -138,10 +144,8 @@
     NSString* phone = _phoneNum.text;
     //去掉首尾空格
     phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    if (phone.length > 10) {
-        NSPredicate* pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"];
-        result = [pre evaluateWithObject:phone];
-    }
+    NSPredicate* pre = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",@"^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"];
+    result = [pre evaluateWithObject:phone];
     return result;
 }
 
@@ -171,6 +175,9 @@
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[result objectForKey:@"uid"] forKey:@"uid"];
         [defaults setObject:[result objectForKey:@"token"] forKey:@"token"];
+        NSString* phone = _phoneNum.text;
+        phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [defaults setObject:phone forKey:@"phone"];
         [self showProgressHUDByString:@"注册成功"];
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         UserInformationViewController* rVC = (UserInformationViewController*)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
@@ -186,12 +193,12 @@
             }
             else
             {
-                [self showProgressHUDByString:@"注册失败"];
+                [self showProgressHUDByString:@"请确认号码并重新获取验证码"];
             }
         }
         else
         {
-            [self showProgressHUDByString:@"注册失败"];
+            [self showProgressHUDByString:@"请确认号码并重新获取验证码"];
         }
     }
 }
@@ -227,36 +234,42 @@
         }
         else
         {
-            NSString* code = _authCode.text;
-            code = [code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            if (code.length > 0) {
-                if (_password.text.length < 1)
-                {
-                    [self showProgressHUDByString:@"请输入密码"];
-                }
-                else
-                {
-                    if (_password.text.length > 5 && _password.text.length < 19) {
-                        [_loading show:YES];
-                        NSString* phone = _phoneNum.text;
-                        phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                        if (_isReset) {
-                            [_loginRequest resetPasswordByByPhone:phone Password:_password.text Code:code];
-                        }
-                        else
-                        {
-                            [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
-                        }
+            if ([self checkPhoneNum]) {
+                NSString* code = _authCode.text;
+                code = [code stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                if (code.length > 0) {
+                    if (_password.text.length < 1)
+                    {
+                        [self showProgressHUDByString:@"请输入密码"];
                     }
                     else
                     {
-                        [self showProgressHUDByString:@"请输入6-18位密码"];
+                        if (_password.text.length > 5 && _password.text.length < 19) {
+                            [_loading show:YES];
+                            NSString* phone = _phoneNum.text;
+                            phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                            if (_isReset) {
+                                [_loginRequest resetPasswordByByPhone:phone Password:_password.text Code:code];
+                            }
+                            else
+                            {
+                                [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
+                            }
+                        }
+                        else
+                        {
+                            [self showProgressHUDByString:@"请输入6-18位密码"];
+                        }
                     }
+                }
+                else
+                {
+                    [self showProgressHUDByString:@"请输入验证码"];
                 }
             }
             else
             {
-                [self showProgressHUDByString:@"请输入验证码"];
+                [self showProgressHUDByString:@"请输入正确的手机号码"];
             }
         }
     }

@@ -45,14 +45,14 @@
 #pragma mark - 初始化
 -(void)setUp
 {
-    _parts = @[NSLocalizedString(@"全身", nil),NSLocalizedString(@"臀肩", nil),NSLocalizedString(@"背腰", nil),NSLocalizedString(@"臀部", nil),NSLocalizedString(@"腿足", nil)];
+    _parts = @[NSLocalizedString(@"全身", nil),NSLocalizedString(@"臂肩", nil),NSLocalizedString(@"背腰", nil),NSLocalizedString(@"臀部", nil),NSLocalizedString(@"腿足", nil)];
     _humanImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"body"]];
 //    _humanImage.backgroundColor = [UIColor redColor];
     [self addSubview:_humanImage];
     
     _partLabel = [[UILabel alloc]init];
     _partLabel.font = [UIFont systemFontOfSize:15];
-    _partLabel.text = NSLocalizedString(@"请选择需要的按摩部位", nil);
+    _partLabel.text = NSLocalizedString(@"请选择需要按摩的部位", nil);
     _partLabel.textColor = ORANGE;
     _partLabel.textAlignment = NSTextAlignmentCenter;
 //    _partLabel.backgroundColor = [UIColor lightGrayColor];
@@ -233,7 +233,7 @@
     else
     {
         _isSelected = NO;
-        _partLabel.text = NSLocalizedString(@"请选择需要的按摩部位", nil);
+        _partLabel.text = NSLocalizedString(@"请选择需要按摩的部位", nil);
         _partLabel.textColor = ORANGE;
     }
 }

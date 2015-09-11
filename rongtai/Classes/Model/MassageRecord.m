@@ -17,10 +17,18 @@
 @dynamic date;
 @dynamic state;
 @dynamic uid;
+@dynamic startTime;
+@dynamic endTime;
 
 -(NSDictionary*)toDictionary
 {
     NSDictionary* dic = @{@"name":self.name,@"useTime":self.useTime,@"massageId":self.programId,@"useDate":self.date};
+    return dic;
+}
+
+-(NSDictionary*)allProperty
+{
+    NSDictionary* dic = @{@"name":self.name,@"useTime":self.useTime,@"programId":self.programId,@"useDate":self.date,@"startTime":self.startTime,@"endTime":self.endTime};
     return dic;
 }
 
