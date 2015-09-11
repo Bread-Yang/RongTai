@@ -19,7 +19,6 @@
 #import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
 #import "RTBleConnector.h"
-#import "MassageRecord.h"
 #import "MassageTime.h"
 #import "NAPickerView.h"
 
@@ -39,6 +38,9 @@
 	
     ProgramCount* _programCount;
     
+    MassageRecord* _massageRecord;
+    NSInteger _massageWay;
+    RTBleConnector* _bleConnector;
 }
 @end
 
@@ -70,65 +72,124 @@
 	// 时间view加入单击手势
 	UITapGestureRecognizer* tTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(setTiming)];
 	[_timeSetLabel addGestureRecognizer:tTap];
+    
+    //
+    _bleConnector = [RTBleConnector shareManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     //获取按摩椅自动按摩名称
-    RTBleConnector* bleConnector = [RTBleConnector shareManager];
-    _autoMassageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
-    NSLog(@"按摩状态数据:%ld",_autoMassageFlag);
-    if (_autoMassageFlag >= 1 && _autoMassageFlag != 7) {
-        NSLog(@"自动按摩状态");
-        switch (_autoMassageFlag) {
-            case 1:
-                _programName = NSLocalizedString(@"运动恢复", nil);
-                break;
-            case 2:
-                _programName = NSLocalizedString(@"舒展活络", nil);
-                break;
-            case 3:
-                _programName = NSLocalizedString(@"休憩促眠", nil);
-                break;
-            case 4:
-                _programName = NSLocalizedString(@"工作减压", nil);
-                break;
-            case 5:
-                _programName = NSLocalizedString(@"肩颈重点", nil);
-                break;
-            case 6:
-                _programName = NSLocalizedString(@"腰椎舒缓", nil);
-                break;
-            case 8:
-                _programName = NSLocalizedString(@"云养程序一", nil);
-                break;
-            case 9:
-                _programName = NSLocalizedString(@"云养程序二", nil);
-                break;
-            case 10:
-                _programName = NSLocalizedString(@"云养程序三", nil);
-                break;
-            case 11:
-                _programName = NSLocalizedString(@"云养程序四", nil);
-                break;
-            default:
-                _programName = nil;
-                break;
+    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
+    {
+        //按摩中
+        RTMassageChairProgramType programType = _bleConnector.rtMassageChairStatus.programType;
+        if (programType == RtMassageChairProgramNetwork || programType == RtMassageChairProgramAuto) {
+            // 自动按摩
+            
+            // 定时时间
+            NSInteger minutes = _bleConnector.rtMassageChairStatus.remainingTime / 60;
+            NSInteger seconds = _bleConnector.rtMassageChairStatus.remainingTime % 60;
+            _timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+            
+            NSString *functionString = nil;
+            
+            // 按摩简介
+            
+            // 当前为自动程序
+            if (programType == RtMassageChairProgramAuto) {
+                
+                switch (_bleConnector.rtMassageChairStatus.autoProgramType) {
+                        
+                    case RtMassageChairProgramSportRecover:
+                        self.title = NSLocalizedString(@"运动恢复", nil);
+                        functionString = NSLocalizedString(@"运动恢复功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramExtension:
+                        self.title = NSLocalizedString(@"舒展活络", nil);
+                        functionString = NSLocalizedString(@"舒展活络功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramRestAndSleep:
+                        self.title = NSLocalizedString(@"休憩促眠", nil);
+                        functionString = NSLocalizedString(@"休憩促眠功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramWorkingRelieve:
+                        self.title = NSLocalizedString(@"工作减压", nil);
+                        functionString = NSLocalizedString(@"工作减压功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramShoulderAndNeck:
+                        self.title = NSLocalizedString(@"肩颈重点", nil);
+                        functionString = NSLocalizedString(@"肩颈重点功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramWaistAndSpine:
+                        self.title = NSLocalizedString(@"腰椎舒缓", nil);
+                        functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
+                        break;
+                }
+                
+            }
+            else if (programType == RtMassageChairProgramNetwork)
+            {  // 当前为网络程序
+                
+                MassageProgram *networkProgram = nil;
+                
+                switch (_bleConnector.rtMassageChairStatus.networkProgramType) {
+                        
+                    case RTMassageChairProgramNetwork1:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork2:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork3:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork4:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
+                        break;
+                }
+                
+                if (networkProgram) {
+                    self.title = networkProgram.name;
+                    functionString = networkProgram.mDescription;
+                }
+            }
+            
+            _functionLabel.text = functionString;
+            [_functionLabel sizeToFit];
+            
+            if (![_functionTextView.text isEqualToString:functionString]) {
+                _functionTextView.text = functionString;
+                [_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
+            }
+            
+            // 用时时间
+            _usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", _bleConnector.rtMassageChairStatus.preprogrammedTime];
+            [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+            
+            // 机芯位置和滚轮是否打开
+            
+            NSInteger movementPosition = _bleConnector.rtMassageChairStatus.movementPositionFlag;
+            
+            if (movementPosition > -1 && movementPosition < 12) { // 目前按摩椅的机芯位置是0至12
+                _movementPositionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"sit_%zd", movementPosition]];
+            }
+            
+            if (_bleConnector.rtMassageChairStatus.isRollerOn) {
+                _rollerStatusImageView.image = [UIImage imageNamed:@"piont_3"];
+            } else {
+                _rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
+            }
         }
-    }
-    else
-    {
-        _programName = nil;
-    }
-    
-    NSLog(@"programName:%@",_programName);
-    if (_programName.length < 1) {
-        self.title = @"自动按摩";
-    }
-    else
-    {
-        self.title = _programName;
     }
 
     //按摩调节View出现
@@ -228,79 +289,219 @@
 
 #pragma mark - RTBleConnectorDelegate
 
-- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	
+- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
+{
 	// 以下是界面跳转
 	
-	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)  {  // 执行体型检测程序
+	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
 		[self jumpToScanViewConroller];
 	}
-	
-	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {  // 按摩完毕
-       
-        if (_programName.length > 0 && ![_programName isEqualToString:@"自动按摩"]) {
-			[self.resettingDialog show];
-			
-            //计算按摩时间
-            NSDate* end = [NSDate date];
-            NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
-            NSTimeInterval time = [end timeIntervalSinceDate:start];
-            NSLog(@"此次按摩了%f秒",time);
-            NSUInteger min = (int)round(time)/60;
-            
-            //将开始按摩的日期转成字符串
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-            NSString* date = [dateFormatter stringFromDate:start];
-
-            NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,self.uid]];
-//            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
-            
-            //按摩次数统计
-            if (result.count >0) {
-                _programCount = result[0];
-                NSUInteger count = [_programCount.unUpdateCount integerValue];
-                count++;
-                _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
-                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-            }
-            else
-            {
-                _programCount = [ProgramCount MR_createEntity];
-                _programCount.name = _programName;
-                _programCount.uid = self.uid;
-                _programCount.unUpdateCount = [NSNumber numberWithInt:1];
-                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
-            }
-            
-            //开始统计次数的网络数据同步
-            [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
+    
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+        //按摩中
         
-            //按摩记录
-            MassageRecord* massageRecord;
-            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,self.uid]];
-            if (records.count > 1) {
-                NSLog(@"查找数组:%@",records);
-                massageRecord = records[0];
-            }
-            if (massageRecord) {
-                NSUInteger oldTime = [massageRecord.useTime integerValue];
-                oldTime += min;
-                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
-            }
-            else
-            {
-                //创建一条按摩记录
-                massageRecord = [MassageRecord MR_createEntity];
-                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
-                massageRecord.name = _programName;
-                massageRecord.date = date;
-                massageRecord.uid = self.uid;
-                massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+        if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork || rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+            // 自动按摩
+            if (_massageWay == 7) {
+                //从手动切换到自动，弹出提示框
                 
+                _massageWay = rtMassageChairStatus.massageProgramFlag;
             }
             
-            //按摩使用时长统计
+            // 定时时间
+            NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
+            NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
+            _timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+            
+            NSString *functionString = nil;
+            
+            // 按摩简介
+            
+            // 当前为自动程序
+            if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
+                
+                switch (rtMassageChairStatus.autoProgramType) {
+                        
+                    case RtMassageChairProgramSportRecover:
+                        self.title = NSLocalizedString(@"运动恢复", nil);
+                        functionString = NSLocalizedString(@"运动恢复功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramExtension:
+                        self.title = NSLocalizedString(@"舒展活络", nil);
+                        functionString = NSLocalizedString(@"舒展活络功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramRestAndSleep:
+                        self.title = NSLocalizedString(@"休憩促眠", nil);
+                        functionString = NSLocalizedString(@"休憩促眠功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramWorkingRelieve:
+                        self.title = NSLocalizedString(@"工作减压", nil);
+                        functionString = NSLocalizedString(@"工作减压功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramShoulderAndNeck:
+                        self.title = NSLocalizedString(@"肩颈重点", nil);
+                        functionString = NSLocalizedString(@"肩颈重点功能", nil);
+                        break;
+                        
+                    case RtMassageChairProgramWaistAndSpine:
+                        self.title = NSLocalizedString(@"腰椎舒缓", nil);
+                        functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
+                        break;
+                }
+                
+            } else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
+                
+                MassageProgram *networkProgram = nil;
+                
+                switch (rtMassageChairStatus.networkProgramType) {
+                        
+                    case RTMassageChairProgramNetwork1:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork2:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork3:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
+                        break;
+                        
+                    case RTMassageChairProgramNetwork4:
+                        networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
+                        break;
+                }
+                
+                if (networkProgram) {
+                    self.title = networkProgram.name;
+                    functionString = networkProgram.mDescription;
+                }
+            }
+            
+            _functionLabel.text = functionString;
+            [_functionLabel sizeToFit];
+            
+            if (![_functionTextView.text isEqualToString:functionString]) {
+                _functionTextView.text = functionString;
+                [_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
+            }
+            
+            // 用时时间
+            _usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
+            [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+            
+            // 机芯位置和滚轮是否打开
+            
+            NSInteger movementPosition = rtMassageChairStatus.movementPositionFlag;
+            
+            if (movementPosition > -1 && movementPosition < 12) { // 目前按摩椅的机芯位置是0至12
+                _movementPositionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"sit_%zd", movementPosition]];
+            }
+            
+            if (rtMassageChairStatus.isRollerOn) {
+                _rollerStatusImageView.image = [UIImage imageNamed:@"piont_3"];
+            } else {
+                _rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
+            }
+        }
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        {
+            if (_massageWay != 7) {
+                //自动
+                _massageWay = 7;
+            }
+        }
+    }else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
+    {  // 按摩完毕
+       if (_programName.length > 0 && ![_programName isEqualToString:@"自动按摩"])
+       {
+			[self.resettingDialog show];
+       }
+	} else {
+		if (self.resettingDialog.isShowing) {
+			
+			[self.resettingDialog close];
+			
+			[self jumpToFinishMassageViewConroller];
+		}
+		
+	}
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+//////
+
+
+//
+//            //计算按摩时间
+//            NSDate* end = [NSDate date];
+//            NSDate* start = [[NSUserDefaults standardUserDefaults] objectForKey:@"MassageStartTime"];
+//            NSTimeInterval time = [end timeIntervalSinceDate:start];
+//            NSLog(@"此次按摩了%f秒",time);
+//            NSUInteger min = (int)round(time)/60;
+//
+//            //将开始按摩的日期转成字符串
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+//            NSString* date = [dateFormatter stringFromDate:start];
+//
+//            NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (uid == %@)",_programName,self.uid]];
+////            NSArray* result = [ProgramCount MR_findByAttribute:@"name" withValue:_programName]
+//
+//            //按摩次数统计
+//            if (result.count >0) {
+//                _programCount = result[0];
+//                NSUInteger count = [_programCount.unUpdateCount integerValue];
+//                count++;
+//                _programCount.unUpdateCount = [NSNumber numberWithUnsignedInteger:count];
+//                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+//            }
+//            else
+//            {
+//                _programCount = [ProgramCount MR_createEntity];
+//                _programCount.name = _programName;
+//                _programCount.uid = self.uid;
+//                _programCount.unUpdateCount = [NSNumber numberWithInt:1];
+//                _programCount.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+//            }
+//
+//            //开始统计次数的网络数据同步
+//            [ProgramCount synchroUseCountDataFormServer:YES Success:nil Fail:nil];
+//
+//            //按摩记录
+//            MassageRecord* massageRecord;
+//            NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(name == %@) AND (date == %@) AND (uid == %@)",_programName,date,self.uid]];
+//            if (records.count > 1) {
+//                NSLog(@"查找数组:%@",records);
+//                massageRecord = records[0];
+//            }
+//            if (massageRecord) {
+//                NSUInteger oldTime = [massageRecord.useTime integerValue];
+//                oldTime += min;
+//                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:oldTime];
+//            }
+//            else
+//            {
+//                //创建一条按摩记录
+//                massageRecord = [MassageRecord MR_createEntity];
+//                massageRecord.useTime = [NSNumber numberWithUnsignedInteger:min];
+//                massageRecord.name = _programName;
+//                massageRecord.date = date;
+//                massageRecord.uid = self.uid;
+//                massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
+//
+//            }
+
+//按摩使用时长统计
 //            MassageTime* massageTime;
 //            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 //            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
@@ -321,141 +522,8 @@
 //                massageTime.month = [NSNumber numberWithInteger:comps.month];
 //                massageTime.day = [NSNumber numberWithInteger:comps.day];
 //            }
-            
-            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 
-        }
-        
-		
-	} else {
-		if (self.resettingDialog.isShowing) {
-			
-			[self.resettingDialog close];
-			
-			[self jumpToFinishMassageViewConroller];
-			
-			[self removeFromParentViewController];
-			
-//			[self.navigationController popViewControllerAnimated:false];
-		}
-		
-	}
-	
-//	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {    // 跳回主界面
-//		[self backToMainViewController];
-//	}
-	
-	if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
-		[self jumpToManualMassageViewConroller];
-	}
-	
-	// 以下是界面状态更新
-	
-	// 定时时间
-	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
-	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
-	_timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
-	
-	NSString *functionString = nil;
-	
-	// 按摩简介
-	
-	// 当前为自动程序
-	if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-		
-		switch (rtMassageChairStatus.autoProgramType) {
-				
-			case RtMassageChairProgramSportRecover:
-				self.title = NSLocalizedString(@"运动恢复", nil);
-				functionString = NSLocalizedString(@"运动恢复功能", nil);
-				break;
-				
-			case RtMassageChairProgramExtension:
-				self.title = NSLocalizedString(@"舒展活络", nil);
-				functionString = NSLocalizedString(@"舒展活络功能", nil);
-				break;
-				
-			case RtMassageChairProgramRestAndSleep:
-				self.title = NSLocalizedString(@"休憩促眠", nil);
-				functionString = NSLocalizedString(@"休憩促眠功能", nil);
-				break;
-				
-			case RtMassageChairProgramWorkingRelieve:
-				self.title = NSLocalizedString(@"工作减压", nil);
-				functionString = NSLocalizedString(@"工作减压功能", nil);
-				break;
-				
-			case RtMassageChairProgramShoulderAndNeck:
-				self.title = NSLocalizedString(@"肩颈重点", nil);
-				functionString = NSLocalizedString(@"肩颈重点功能", nil);
-				break;
-				
-			case RtMassageChairProgramWaistAndSpine:
-				self.title = NSLocalizedString(@"腰椎舒缓", nil);
-				functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
-				break;
-		}
-		
-	} else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
-		
-		MassageProgram *networkProgram = nil;
-		
-		switch (rtMassageChairStatus.networkProgramType) {
-				
-			case RTMassageChairProgramNetwork1:
-				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
-				break;
-				
-			case RTMassageChairProgramNetwork2:
-				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
-				break;
-				
-			case RTMassageChairProgramNetwork3:
-				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
-				break;
-				
-			case RTMassageChairProgramNetwork4:
-				networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
-				break;
-			}
-		
-		if (networkProgram) {
-			self.title = networkProgram.name;
-			functionString = networkProgram.mDescription;
-		}
-	}
-	
-	_functionLabel.text = functionString;
-	[_functionLabel sizeToFit];
-	
-	if (![_functionTextView.text isEqualToString:functionString]) {
-		_functionTextView.text = functionString;
-		[_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
-	}
-	
-	// 用时时间
-	_usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
-	[_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
-	
-	// 机芯位置和滚轮是否打开
-	
-	NSInteger movementPosition = rtMassageChairStatus.movementPositionFlag;
-	
-	if (movementPosition > -1 && movementPosition < 12) { // 目前按摩椅的机芯位置是0至12
-		_movementPositionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"sit_%zd", movementPosition]];
-	}
-	
-	if (rtMassageChairStatus.isRollerOn) {
-		_rollerStatusImageView.image = [UIImage imageNamed:@"piont_3"];
-	} else {
-		_rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
-	}
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+//            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 
 
 @end

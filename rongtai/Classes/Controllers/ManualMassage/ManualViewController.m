@@ -66,14 +66,14 @@
     NSUInteger _delayOfFootWheel; //脚部滚轮延迟更新标识
     NSUInteger _delayOfHumanView; //气囊人体图延迟更新标识
     
-    BOOL _isDelayUpdate;  //是否延迟更新
     BOOL _isTouch;  //记录PolarView是否被触摸
     BOOL _isMoving; //记录PolarView是否在移动
     NSInteger _delayCount;  //倒数延迟更新，对于“机芯幅度”调节才使用
     
     //
-    NSInteger _update;
-
+    NSInteger _massageWay;  //按摩方式
+    MassageRecord* _massageRecord;  //按摩记录信息
+    
     //测试用
     NSInteger _scan;
 }
@@ -178,14 +178,12 @@
     
     //
     _bleConnector = [RTBleConnector shareManager];
-    _update = 1;
     
     //
     _scan = 0;
     
     //
     _delayCount = 0;
-
     _delayOfBackWarm = 0;
     _delayOfFootWheel = 0;
     _delayOfHumanView = 0;
@@ -816,11 +814,6 @@
         [self unAirBagProgram];
         [self.resettingDialog close];
     }
-}
-
--(void)dalayNO
-{
-    _isDelayUpdate = NO;
 }
 
 -(void)touchNo

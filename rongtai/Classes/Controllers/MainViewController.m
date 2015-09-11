@@ -1028,16 +1028,17 @@
 -(void)anionButtonClicked
 {
     //发送负离子开关
-    [[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
+    [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
     [_anionButton setSelected:!_anionButton.isSelected];
 }
 
 #pragma mark - 手动方法
 -(void)manualButtonClicked
 {
-    //先检测是否打开蓝牙
-    
-    //再检测是否连接了按摩椅
+    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+        [_bleConnector showConnectDialog];
+        return;
+    }
     
     //连接按摩椅之后才可以跳到手动按摩
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];

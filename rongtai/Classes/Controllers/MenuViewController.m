@@ -153,7 +153,7 @@
     }
     menuCell.textLabel.textColor = BLACK;
     menuCell.textLabel.text = _menuName[indexPath.row];
-    if ([_menuName[indexPath.row] isEqualToString:NSLocalizedString(@"首页天气预报",nil)]) {
+    if ([_menuName[indexPath.row] isEqualToString:NSLocalizedString(@"首页天气提醒",nil)]) {
         menuCell.accessoryView = _weatherSwitch;
     }
     else
@@ -252,7 +252,6 @@
 //    line.layer.shadowOpacity = 0.4;
 //    line.layer.shadowColor = [UIColor grayColor].CGColor;
 //    line.layer.shadowRadius = 1;
-//    
 }
 
 #pragma mark - alertView代理

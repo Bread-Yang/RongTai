@@ -23,6 +23,16 @@
 @property (nonatomic, retain) NSNumber* programId;
 
 /**
+ *  开始时间
+ */
+@property (nonatomic, retain) NSDate* startTime;
+
+/**
+ *  结束时间
+ */
+@property (nonatomic, retain) NSDate* endTime;
+
+/**
  *  使用时间
  */
 @property (nonatomic, retain) NSNumber * useTime;
@@ -44,6 +54,8 @@
 
 
 -(NSDictionary*)toDictionary;
+
+-(NSDictionary*)allProperty;
 
 
 @end

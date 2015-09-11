@@ -138,13 +138,16 @@
 		
 		[RTBleConnector shareManager].delegate = nil;
 		
-		for (int i = 0; i < [self.navigationController.viewControllers count]; i++) {
+		for (int i = 0; i < [self.navigationController.viewControllers count]; i++)
+        {
 			UIViewController *temp = self.navigationController.viewControllers[i];
 			if ([temp isKindOfClass:[ScanViewController class]]) {
-				[self.navigationController popToViewController:temp animated:YES];
+//				[self.navigationController popToViewController:temp animated:YES];
+                NSLog(@"在栈中找的到扫描的vc就不要跳转");
 				return;
 			}
 		}
+        NSLog(@"找不到跳转:%@",self.navigationController.viewControllers);
 		
 		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 		ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
