@@ -140,7 +140,6 @@
                         functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
                         break;
                 }
-                
             }
             else if (programType == RtMassageChairProgramNetwork)
             {  // 当前为网络程序
@@ -440,8 +439,25 @@
                 _massageFlag = rtMassageChairStatus.massageProgramFlag;
                 
                 //自动切换到手动，弹出提示框
-                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前已切换到手动按摩" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                NSLog(@"切换到手动了");
+                _isJumpFinish = NO;
+                CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
+                [alert setTitleString:@"提示"];
+                UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
+                l.text = @"已切换到手动模式";
+                l.textAlignment = NSTextAlignmentCenter;
+                l.textColor = [UIColor lightGrayColor];
+                [alert setContainerView:l];
+               
+                [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
+                [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+                [alert setUseMotionEffects:true];
                 [alert show];
+                
+//                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前已切换到手动按摩" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//                [alert show];
             }
         }
     }else if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting)
@@ -449,6 +465,25 @@
         // 按摩完毕
         [self countMassageTime];
         [self.resettingDialog show];
+        
+        // 用时时间
+        _usingTimeLabel.text = [NSString stringWithFormat:@"共%02zd分", rtMassageChairStatus.preprogrammedTime];
+        [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
+        
+        // 机芯位置和滚轮是否打开
+        
+        NSInteger movementPosition = rtMassageChairStatus.movementPositionFlag;
+        
+        if (movementPosition > -1 && movementPosition < 12) { // 目前按摩椅的机芯位置是0至12
+            _movementPositionImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"sit_%zd", movementPosition]];
+        }
+        
+        if (rtMassageChairStatus.isRollerOn) {
+            _rollerStatusImageView.image = [UIImage imageNamed:@"piont_3"];
+        } else {
+            _rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
+        }
+
 	} else {
 		if (self.resettingDialog.isShowing) {
 			
@@ -523,8 +558,6 @@
                 }
                 NSLog(@"此次按摩了%ld分钟",min);
                
-                
-                
                 if (programId>0) {
                     NSLog(@"统计一次");
                     NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (uid == %@)",programId,self.uid]];
@@ -551,7 +584,7 @@
                     
                     //按摩记录
                     MassageRecord* massageRecord;
-                    NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (date == %@) AND (uid == %@)",programId,date,self.uid]];
+                    NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (date == %@) AND (uid == %@) AND (state == 1)",programId,date,self.uid]];
                     if (records.count > 1) {
                         NSLog(@"查找数组:%@",records);
                         massageRecord = records[0];
@@ -570,7 +603,11 @@
                         massageRecord.date = date;
                         massageRecord.uid = self.uid;
                         massageRecord.programId = [NSNumber numberWithInteger:programId];
+                        massageRecord.state = [NSNumber numberWithInt:1];
                     }
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    //把本地所有未同步到服务器的按摩记录都推到服务器
+                    [DataRequest synchroMassageRecord];
                 }
             }
             else
@@ -578,11 +615,9 @@
                 NSLog(@"不统计");
             }
         }
-        
         //统计完成要把开始时间置空，表示此次按摩已结束
         _bleConnector.startTime = nil;
         NSLog(@"设置开始时间为空");
-
     }
 }
 

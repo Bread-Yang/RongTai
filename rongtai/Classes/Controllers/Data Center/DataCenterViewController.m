@@ -16,6 +16,8 @@
 #import "CoreData+MagicalRecord.h"
 #import "ProgramCount.h"
 #import "MassageRecord.h"
+#import "MBProgressHUD.h"
+#import "DataRequest.h"
 
 @interface DataCenterViewController ()<UIScrollViewDelegate>
 {
@@ -28,6 +30,7 @@
     NSUInteger _totalTime;  //总使用时长
     NSUInteger _todayUseTime;  //今日使用时长
     NSString* _uid;
+    MBProgressHUD *_loading;
 }
 
 @end
@@ -50,23 +53,22 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     
-    //查询使用次数，并计算出总使用时间
-    NSArray* counts = [ProgramCount MR_findByAttribute:@"uid" withValue:_uid];
-    _totalTime = 0;
-    
-    //查询今天的按摩记录，并计算出今日使用时间
-    NSDate* date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-    NSString* todayIndex = [dateFormatter stringFromDate:date];
-    NSArray* todayRecord = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(date == %@) AND (uid == %@)",todayIndex,_uid]];
-    _todayUseTime = 0;
-    for (int i = 0; i<todayRecord.count;i++) {
-        MassageRecord* m = todayRecord[i];
-        _todayUseTime += [m.useTime integerValue];
-    }
-    
-    
+    //MBProgressHUD
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loading];
+
+//    NSDate* date = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+//    NSString* todayIndex = [dateFormatter stringFromDate:date];
+//    NSArray* todayRecord = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(date == %@) AND (uid == %@)",todayIndex,_uid]];
+//    _todayUseTime = 0;
+//    for (int i = 0; i<todayRecord.count;i++) {
+//        MassageRecord* m = todayRecord[i];
+//        _todayUseTime += [m.useTime integerValue];
+//    }
+
     //分页控制器
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 5, 60, 10)];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:169/255.0 green:190/255.0 blue:205/255.0 alpha:1];
@@ -78,15 +80,7 @@
     
     //标题Label
     _titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.2*w, 16, w*0.6, 35)];
-    if (_totalTime<60) {
-        _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
-    }
-    else
-    {
-        NSUInteger h = _totalTime/60;
-        NSUInteger m = _totalTime%60;
-        _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
-    }
+    _titleLabel.text = [NSString stringWithFormat:@"%@: %0m",NSLocalizedString(@"总使用时长", nil)];
     
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.font = [UIFont systemFontOfSize:15];
@@ -123,22 +117,72 @@
     _useTimeVc.view.frame = CGRectMake(0, 0, w, sh);
     [_scroll addSubview:_useTimeVc.view];
     [self addChildViewController:_useTimeVc];
-    [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
+//    [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
     
     //耗电量
     _powerConsumeVC = (PowerConsumeViewController*)[s instantiateViewControllerWithIdentifier:@"PowerConsume"];
     _powerConsumeVC.view.frame = CGRectMake(w, 0, w, sh);
     [_scroll addSubview:_powerConsumeVC.view];
     [self addChildViewController:_powerConsumeVC];
-    [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
+//    [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
     
     //使用次数
     _doughnutVC = (DoughnutViewController*)[s instantiateViewControllerWithIdentifier:@"DoughnutVC"];
     _doughnutVC.view.frame = CGRectMake(w*2, 0, w, sh);
     [_scroll addSubview:_doughnutVC.view];
-    _doughnutVC.progarmCounts = counts;
     [self addChildViewController:_doughnutVC];
+    
     // Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //查询按摩记录，计算今日使用时长和总使用时长
+    [_loading show:YES];
+    _totalTime = 0;
+    _todayUseTime = 0;
+    DataRequest* r = [DataRequest new];
+    [r getMassageRecordFrom:[NSDate dateWithTimeIntervalSince1970:0] To:[NSDate dateWithTimeIntervalSinceNow:0] Success:^(NSArray *arr) {
+        [_loading hide:YES];
+        //统计时间
+        NSDate* date = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+        NSString* todayIndex = [dateFormatter stringFromDate:date];
+        NSMutableArray* todayRecord = [NSMutableArray new];
+        for (NSDictionary* dic in arr) {
+            NSString* date = [dic objectForKey:@"date"];
+            NSUInteger useTime = [[dic objectForKey:@"useTime"] integerValue];
+            if ([date isEqualToString:todayIndex]) {
+                _todayUseTime += useTime;
+                [todayRecord addObject:dic];
+            }
+            _totalTime += useTime;
+        }
+
+        //数据传到耗电量页面
+        [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
+        
+        //数据传到使用时长页面
+        [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
+        
+        //设置该页面的总使用时长
+        if (_totalTime<60) {
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+        }
+        else
+        {
+            NSUInteger h = _totalTime/60;
+            NSUInteger m = _totalTime%60;
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+        }
+        [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
+        
+    } fail:^(NSDictionary *dic) {
+        [_loading hide:YES];
+        [self showProgressHUDByString:@"读取数据失败，请检测网络"];
+    }];
 }
 
 #pragma mark - 返回
@@ -190,13 +234,13 @@
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
         if (_totalTime<60) {
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil), (unsigned long)_totalTime];
         }
         else
         {
             NSUInteger h = _totalTime/60;
             NSUInteger m = _totalTime%60;
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),(unsigned long)h,m];
         }
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
@@ -239,6 +283,17 @@
 -(void)share
 {
     
+}
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 - (void)didReceiveMemoryWarning {

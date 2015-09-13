@@ -8,6 +8,8 @@
 
 #import "DataRequest.h"
 #import <AFNetworking.h>
+#import "MassageRecord.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface DataRequest ()
 {
@@ -185,6 +187,39 @@
             fail(nil);
         }
     }];
+}
+
+#pragma mark - 同步按摩记录
++(void)synchroMassageRecord
+{
+    DataRequest* r = [DataRequest new];
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    NSArray* arr = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (state == 1)",uid]];
+    if (arr.count>0) {
+        NSMutableArray* records = [NSMutableArray new];
+        for (int i = 0; i<arr.count; i++) {
+            MassageRecord* record = arr[i];
+            NSDictionary* dic = [record toDictionary];
+            [records addObject:dic];
+        }
+        [r addMassageRecord:records Success:^{
+            NSLog(@"按摩记录同步成功");
+            NSArray* arr = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (state == 1)",uid]];
+            for (MassageRecord* r in arr) {
+                r.state = [NSNumber numberWithInt:0];
+                
+                //同步数据成功就把本地的数据删了，以免按摩越多造成应用程序占用用户的存储量
+                [r MR_deleteEntity];
+            }
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        } fail:^(NSDictionary *dic) {
+            NSLog(@"按摩记录同步失败");
+        }];
+    }
+    else
+    {
+        NSLog(@"没有需要同步的按摩记录数据");
+    }
 }
 
 #pragma mark - 超时方法

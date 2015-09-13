@@ -225,6 +225,9 @@
 		
 		//对 使用次数 数据进行同步
 		[self synchroUseTimeData];
+        
+        //对 使用时间 数据进行同步
+        [DataRequest synchroMassageRecord];
     }
     
     //底部菜单
@@ -234,7 +237,6 @@
     
     //负离子按钮
     CGFloat btnWidth = sWidth/4;
-    NSLog(@"按钮长度:%f",btnWidth);
     _anionButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, btnWidth, 49)];
     [_anionButton setTitle:NSLocalizedString(@"负离子", nil) forState:UIControlStateNormal];
     [_anionButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateSelected];
@@ -290,8 +292,6 @@
 
     imView = [UIImageView new];
     _massageFlag = 0;
-    [self synchroMassageRecord];
-
 }
 
 #pragma mark - 请求网络按摩程序
@@ -321,29 +321,6 @@
 			[_table reloadData];
 		}
 	}];
-}
-
-#pragma mark - 同步按摩记录
--(void)synchroMassageRecord
-{
-    DataRequest* r = [DataRequest new];
-    MassageRecord* r1 = [MassageRecord MR_createEntity];
-    r1.name = @"运动恢复";
-    r1.useTime = @100;
-    r1.date = @"2015-09-07";
-    r1.programId = @1;
-//    r1.uid = _uid;
-//    [r addMassageRecord:@[[r1 toDictionary]] Success:^{
-//        
-//    } fail:^(NSDictionary *dic) {
-//        
-//    }];
-    
-    [r getMassageRecordFrom:[NSDate dateWithTimeIntervalSince1970:0] To:[NSDate dateWithTimeIntervalSinceNow:0] Success:^(NSArray * arr) {
-
-    } fail:^(NSDictionary * dic) {
-        
-    }];
 }
 
 #pragma mark - 同步使用次数数据
@@ -536,7 +513,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
+//	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
 	
 	if (indexPath.row >= 6) {
 		if (![RTBleConnector isBleTurnOn] || [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6] == 0) {
@@ -644,18 +621,17 @@
 		
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
 			
-			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+//			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+//				
+//				[self jumpToScanViewConroller];
+//				
+//			} else { // 自动按摩
 				
-				[self jumpToScanViewConroller];
+            [self jumpToAutoMassageViewConroller];
 				
-			} else { // 自动按摩
-				
-				[self jumpToAutoMassageViewConroller];
-				
-			}
+//			}
 		}
 	}
-	
 }
 
 #pragma mark - 侧滑菜单代理
@@ -1028,12 +1004,16 @@
 -(void)anionButtonClicked
 {
     //发送负离子开关
-    [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
-    [_anionButton setSelected:!_anionButton.isSelected];
+//    [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
+//    [_anionButton setSelected:!_anionButton.isSelected];
     
 //    CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
-////    alert.isReconnectDialog = YES;
 //    [alert setTitleString:@"提示"];
+//    UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
+//    l.text = @"已切换到手动模式";
+//    l.textAlignment = NSTextAlignmentCenter;
+//    l.textColor = [UIColor lightGrayColor];
+//    [alert setContainerView:l];
 //    [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
 //    [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
 //        NSLog(@"后退了");

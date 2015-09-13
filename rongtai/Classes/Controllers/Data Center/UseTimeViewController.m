@@ -14,6 +14,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "MassageRecord.h"
 #import "MassageTime.h"
+#import "DataRequest.h"
 
 @interface UseTimeViewController ()
 {
@@ -28,6 +29,7 @@
 
     WLLineChart* _lineChart;  //折线图
     NSArray* _todayRecord;  //今天按摩记录
+    DataRequest* _dataRequest;
 }
 @end
 
@@ -57,33 +59,40 @@
     
     _usingTime.font = [UIFont fontWithName:@"Helvetica" size:10*HSCALE];
     [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
+    _dataRequest = [DataRequest new];
     [self weekData];
 }
 
--(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSUInteger)useTime
+-(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSInteger)useTime
 {
     _todayRecord = todayRecord;
     //比例数组
     if (_todayRecord.count>0) {
         NSMutableArray* percents = [NSMutableArray new];
-        
         for (int i = 0; i<_todayRecord.count; i++) {
-            MassageRecord* r = _todayRecord[i];
-            float percent = [r.useTime integerValue]/(float)useTime;
+            NSDictionary* r = _todayRecord[i];
+            NSString* s = [r objectForKey:@"useTime"];
+            float percent = [s integerValue]/(float)useTime;
             NSNumber* num = [NSNumber numberWithFloat:percent];
             [percents addObject:num];
         }
         _doughnutView.percents = [NSArray arrayWithArray:percents];
         
         //设置文字
-        if (useTime>=60) {
+        if (useTime>60) {
             NSUInteger h = useTime/60;
             NSUInteger m = useTime%60;
-            _usingTime.text = [NSString stringWithFormat:@"%ldh%ldm",h,m];
+            _usingTime.text = [NSString stringWithFormat:@"%ldh%ldm",(unsigned long)h,(unsigned long)m];
         }
-        else
+        else if(useTime<=60 && useTime>0)
         {
-            _usingTime.text = [NSString stringWithFormat:@"%ldm",useTime];
+            if (useTime == 60) {
+                _usingTime.text = @"1h";
+            }
+            else if (useTime >0)
+            {
+                _usingTime.text = [NSString stringWithFormat:@"%ldm",(unsigned long)useTime];
+            }
         }
         [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
     }
@@ -93,7 +102,6 @@
         _doughnutView.percents = @[@1];
         _usingTime.text= @"今天未使用该APP";
     }
-
 }
 
 #pragma mark - 底部年月日按钮
@@ -135,63 +143,125 @@
     NSMutableArray* xValue = [NSMutableArray new];
     NSMutableArray* points = [NSMutableArray new];
     
-    NSUInteger max = 0;
-    NSUInteger min = INT64_MAX;
+   
     
-    for (int i = 0; i<7; i++) {
-        //今天起往前数7天的数据
-        NSDate* date = [NSDate dateWithTimeInterval:-24*60*60*i sinceDate:now];
-        NSString* dateStr = [formatter stringFromDate:date];
-        NSArray* arr = [MassageRecord MR_findByAttribute:@"date" withValue:dateStr];
-        NSUInteger useTime = 0;
-        //计算第i天的使用总时间
-        for (MassageRecord * r in arr) {
-            useTime += [r.useTime integerValue];
+    [_dataRequest getMassageRecordFrom:[NSDate date] To:[NSDate dateWithTimeIntervalSinceNow:-24*3600*7] Success:^(NSArray *arr) {
+        NSMutableArray* records = [NSMutableArray arrayWithArray:arr];
+        NSUInteger max = 0;
+        NSUInteger min = INT64_MAX;
+        for (int i = 0; i<7; i++) {
+            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:now];
+            NSString* dateStr = [formatter stringFromDate:date];
+            NSUInteger useTime = 0;
+            for (int i = 0; i<records.count; i++) {
+                NSDictionary* dic = records[i];
+                if ([dateStr isEqualToString:[dic objectForKey:@"useDate"]]) {
+                    NSUInteger time = [[dic objectForKey:@"useTime"] integerValue];
+                    useTime += time;
+                    [records removeObject:dic];
+                }
+            }
+            
+            //计算使用时间的最大值，最小值，以确定y轴数值的范围
+            if (useTime < min) {
+                min = useTime;
+            }
+            
+            if (useTime > max) {
+                max = useTime;
+            }
+
+            
+            //把日期作为x轴数据源
+            [xValue addObject:[shortFormatter stringFromDate:date]];
+            //计算各个点的坐标
+            [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
         }
         
-        //计算使用时间的最大值，最小值，以确定y轴数值的范围
-        if (useTime < min) {
-            min = useTime;
+        _lineChart.xValues = [[xValue reverseObjectEnumerator] allObjects];
+        _lineChart.points = [[points reverseObjectEnumerator] allObjects];
+        //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
+        _lineChart.xSection = CGPointMake(0, 120);
+        if (max == 0) {
+            //如果最大值是零，说明所有数据的使用时间都是0，即这7天都是没有使用才app进行按摩
+            _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+            _lineChart.ySection = CGPointMake(0, 8*60);
+        }
+        else
+        {
+            //max不小于0则需要计算出y的取值区间
+            NSMutableArray* yValues = [NSMutableArray new];
+            NSUInteger maxH = max/60;
+            NSUInteger minH = min/60;
+            NSUInteger step = maxH/4;
+            if (maxH%4 > 0) {
+                step++;
+            }
+            for (int i = 0; i<5; i++) {
+                [yValues addObject:[NSString stringWithFormat:@"%lu",minH+i*step]];
+            }
+            _lineChart.yValues = yValues;
+            _lineChart.ySection = CGPointMake(minH*60, (minH+5*step)*60);
         }
         
-        if (useTime > max) {
-            max = useTime;
-        }
         
-        //把日期作为x轴数据源
-        [xValue addObject:[shortFormatter stringFromDate:date]];
-        //计算各个点的坐标
-        [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
-    }
+    } fail:^(NSDictionary *dic) {
+        
+    }];
+    
+
+//    for (int i = 0; i<7; i++) {
+//        //今天起往前数7天的数据
+//        NSDate* date = [NSDate dateWithTimeInterval:-24*60*60*i sinceDate:now];
+//        NSString* dateStr = [formatter stringFromDate:date];
+//        NSArray* arr = [MassageRecord MR_findByAttribute:@"useDate" withValue:dateStr];
+//        NSUInteger useTime = 0;
+//        //计算第i天的使用总时间
+//        for (MassageRecord * r in arr) {
+//            useTime += [r.useTime integerValue];
+//        }
+//        
+//        //计算使用时间的最大值，最小值，以确定y轴数值的范围
+////        if (useTime < min) {
+////            min = useTime;
+////        }
+////        
+////        if (useTime > max) {
+////            max = useTime;
+////        }
+//        
+//        //把日期作为x轴数据源
+//        [xValue addObject:[shortFormatter stringFromDate:date]];
+//        //计算各个点的坐标
+//        [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*(6-i), useTime)]];
+//    }
 //    xValue = (NSMutableArray*)[[xValue reverseObjectEnumerator] allObjects];
 //    points = (NSMutableArray*)[[points reverseObjectEnumerator] allObjects];
-    _lineChart.xValues = [[xValue reverseObjectEnumerator] allObjects];
-    _lineChart.points = [[points reverseObjectEnumerator] allObjects];
-    
-    //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
-    _lineChart.xSection = CGPointMake(0, 120);
-    if (max == 0) {
-        //如果最大值是零，说明所有数据的使用时间都是0，即这7天都是没有使用才app进行按摩
-        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-        _lineChart.ySection = CGPointMake(0, 8*60);
-    }
-    else
-    {
-        //max不小于0则需要计算出y的取值区间
-        NSLog(@"计算y区间");
-        NSMutableArray* yValues = [NSMutableArray new];
-        NSUInteger maxH = max/60;
-        NSUInteger minH = min/60;
-        NSUInteger step = maxH/4;
-        if (maxH%4 > 0) {
-            step++;
-        }
-        for (int i = 0; i<5; i++) {
-            [yValues addObject:[NSString stringWithFormat:@"%ld",minH+i*step]];
-        }
-        _lineChart.yValues = yValues;
-        _lineChart.ySection = CGPointMake(minH*60, minH+5*step*60);
-    }
+//    _lineChart.xValues = [[xValue reverseObjectEnumerator] allObjects];
+//    _lineChart.points = [[points reverseObjectEnumerator] allObjects];
+//    //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
+//    _lineChart.xSection = CGPointMake(0, 120);
+//    if (max == 0) {
+//        //如果最大值是零，说明所有数据的使用时间都是0，即这7天都是没有使用才app进行按摩
+//        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+//        _lineChart.ySection = CGPointMake(0, 8*60);
+//    }
+//    else
+//    {
+//        //max不小于0则需要计算出y的取值区间
+//        NSMutableArray* yValues = [NSMutableArray new];
+//        NSUInteger maxH = max/60;
+//        NSUInteger minH = min/60;
+//        NSUInteger step = maxH/4;
+//        if (maxH%4 > 0) {
+//            step++;
+//        }
+//        for (int i = 0; i<5; i++) {
+//            [yValues addObject:[NSString stringWithFormat:@"%lu",minH+i*step]];
+//        }
+//        _lineChart.yValues = yValues;
+//        _lineChart.ySection = CGPointMake(minH*60, (minH+5*step)*60);
+//    }
 }
 
 #pragma mark - 查询一个月数据

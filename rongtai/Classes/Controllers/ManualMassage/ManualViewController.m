@@ -79,6 +79,8 @@
     
     ProgramCount* _programCount;
     
+    BOOL _isJumpFinish;
+    
     //测试用
     NSInteger _scan;
 }
@@ -192,6 +194,8 @@
     _delayOfBackWarm = 0;
     _delayOfFootWheel = 0;
     _delayOfHumanView = 0;
+    
+    _isJumpFinish = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -253,7 +257,7 @@
             //保存方法
 //            NSString* sp = _skillsPreferenceArray[_pickerSelectedItem];
 //            _skillsPreferenceLabel.text = sp;
-			
+            NSLog(@"发生按摩指令");
 			switch ([_skillsPreferencePickerView getHighlightIndex]) {
 				case 0:  // 揉捏
 					[_bleConnector sendControlMode:H10_KEY_KNEAD];
@@ -733,7 +737,6 @@
             
             //手动按摩中，滚轮可调节速度
             [_polar setPoint:2 ableMove:NO];
-            
         }
         else if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramAuto ||_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
         {
@@ -749,7 +752,21 @@
                     if (_massageFlag == 7) {
                         //手动切换要弹框
                         //自动切换到手动，弹出提示框
-                        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前已切换到自动按摩" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        NSLog(@"切换到自动了");
+                        _isJumpFinish = NO;
+                        CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
+                        [alert setTitleString:@"提示"];
+                        UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
+                        l.text = @"已切换到自动模式";
+                        l.textAlignment = NSTextAlignmentCenter;
+                        l.textColor = [UIColor lightGrayColor];
+                        [alert setContainerView:l];
+                        
+                        [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
+                        [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }];
+                        [alert setUseMotionEffects:true];
                         [alert show];
                     }
                 }
@@ -842,7 +859,6 @@
         [self unAirBagProgram];
         [self.resettingDialog show];
         [self countMassageTime];
-        
     }
     else
     {
@@ -851,10 +867,11 @@
         [self unAirBagProgram];
         if (self.resettingDialog.isShowing) {
             [self.resettingDialog close];
-            [self jumpToFinishMassageViewConroller];
+            if (_isJumpFinish&&_massageFlag!=7) {
+                [self jumpToFinishMassageViewConroller];
+            }
         }
     }
-
 }
 
 #pragma mark - 更新界面
@@ -1090,10 +1107,9 @@
                     min = (int)round(time/60);
                 }
                 NSLog(@"此次按摩了%ld分钟",min);
-                
-                
-                
-                if (programId>0) {
+            
+                if (programId>0)
+                {
                     NSLog(@"统计一次");
                     NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (uid == %@)",programId,self.uid]];
                     
@@ -1119,7 +1135,7 @@
                     
                     //按摩记录
                     MassageRecord* massageRecord;
-                    NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (date == %@) AND (uid == %@)",programId,date,self.uid]];
+                    NSArray* records = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (date == %@) AND (uid == %@) AND (state == 1)",programId,date,self.uid]];
                     if (records.count > 1) {
                         NSLog(@"查找数组:%@",records);
                         massageRecord = records[0];
@@ -1138,7 +1154,11 @@
                         massageRecord.date = date;
                         massageRecord.uid = self.uid;
                         massageRecord.programId = [NSNumber numberWithInteger:programId];
+                        massageRecord.state = [NSNumber numberWithInt:1];
                     }
+                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    //把本地所有未同步到服务器的按摩记录都推到服务器
+                    [DataRequest synchroMassageRecord];
                 }
             }
             else
@@ -1146,11 +1166,9 @@
                 NSLog(@"不统计");
             }
         }
-        
         //统计完成要把开始时间置空，表示此次按摩已结束
         _bleConnector.startTime = nil;
         NSLog(@"设置开始时间为空");
-        
     }
 }
 

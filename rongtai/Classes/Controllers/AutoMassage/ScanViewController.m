@@ -61,17 +61,6 @@
 -(void)timerScan:(NSTimer*)timer {
 	_scanLight.frame = frame;
 	[self scanAnimation];
-//    if (i > 4) {
-//        [timer invalidate];
-//        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//        AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-//        autoVC.massage = self.massage;
-//        [self.navigationController pushViewController:autoVC animated:YES];
-//    } else {
-//        _scanLight.frame = frame;
-//        [self scanAnimation];
-//        i++;
-//    }
 }
 
 #pragma mark - 扫描动画
@@ -95,7 +84,6 @@
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
 			[self jumpToAutoMassageViewConroller];
-			[self removeFromParentViewController];
 		}
 		
 		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面

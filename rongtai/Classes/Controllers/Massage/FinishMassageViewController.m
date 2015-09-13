@@ -93,7 +93,7 @@
         }
         else
         {
-            _usingTime.text = [NSString stringWithFormat:@"共%ld秒",useTime];
+            _usingTime.text = [NSString stringWithFormat:@"共%ld秒",(long)useTime];
         }
         [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
         
