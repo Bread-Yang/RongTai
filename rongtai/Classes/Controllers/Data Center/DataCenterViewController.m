@@ -145,7 +145,7 @@
         NSString* todayIndex = [dateFormatter stringFromDate:date];
         NSMutableArray* todayRecord = [NSMutableArray new];
         for (NSDictionary* dic in arr) {
-            NSString* date = [dic objectForKey:@"date"];
+            NSString* date = [dic objectForKey:@"useDate"];
             NSUInteger useTime = [[dic objectForKey:@"useTime"] integerValue];
             if ([date isEqualToString:todayIndex]) {
                 _todayUseTime += useTime;

@@ -232,7 +232,7 @@
 #pragma mark - 注销
 -(void)Logout
 {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要退出登录？" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要退出登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
 }
 
@@ -258,7 +258,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString* btn = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([btn isEqualToString:@"是"]) {
+    if ([btn isEqualToString:@"确定"]) {
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
         delegate.window.rootViewController = [s instantiateViewControllerWithIdentifier:@"SliderNavigationVC"];
@@ -267,7 +267,6 @@
         [defaults setObject:@"" forKey:@"token"];
     }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

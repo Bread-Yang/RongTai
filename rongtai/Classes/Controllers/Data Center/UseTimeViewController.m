@@ -66,14 +66,17 @@
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"读取中...", nil);
     [self.view addSubview:_loading];
-    [self weekData:[NSDate date] From:[NSDate dateWithTimeIntervalSinceNow:0]];
+//    [self weekData:[NSDate date] From:[NSDate dateWithTimeIntervalSinceNow:0]];
+    [self monthDataByYear:2015 AndMonth:9];
 }
 
 -(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSInteger)useTime
 {
     _todayRecord = todayRecord;
     //比例数组
+    NSLog(@"今天按摩数据:%@",_todayRecord);
     if (_todayRecord.count>0) {
+        NSLog(@"今天有按摩数据");
         NSMutableArray* percents = [NSMutableArray new];
         for (int i = 0; i<_todayRecord.count; i++) {
             NSDictionary* r = _todayRecord[i];
@@ -95,7 +98,7 @@
             if (useTime == 60) {
                 _usingTime.text = @"1h";
             }
-            else if (useTime >0)
+            else
             {
                 _usingTime.text = [NSString stringWithFormat:@"%ldm",(unsigned long)useTime];
             }
@@ -104,6 +107,7 @@
     }
     else
     {
+        NSLog(@"今天没有按摩数据");
         //今天暂时没使用该app进行按摩
         _doughnutView.percents = @[@1];
         _usingTime.text= @"今天未使用该APP";
@@ -139,7 +143,6 @@
 #pragma mark - 查询一周数据
 -(void)weekData:(NSDate*)date1 From:(NSDate*)date2
 {
-    NSDate* now = [NSDate date];
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"YYYY-MM-dd"];
     
@@ -156,7 +159,7 @@
         NSUInteger min = INT64_MAX;
         
         for (int i = 0; i<7; i++) {
-            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:now];
+            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:date1];
             NSString* dateStr = [formatter stringFromDate:date];
             NSUInteger useTime = 0;
             for (int i = 0; i<records.count; i++) {
@@ -203,8 +206,7 @@
 //        {
 //            
 //        }
-//        
-//        
+        
 //        NSLog(@"max:%ld",max);
 //        if (max <= 8 ) {
 //            //如果最大值是零，说明所有数据的使用时间都是0，即这7天都是没有使用才app进行按摩
@@ -234,9 +236,107 @@
 }
 
 #pragma mark - 查询一个月数据
--(void)monthData:(NSUInteger)month
+-(void)monthDataByYear:(NSUInteger)year AndMonth:(NSUInteger)month
 {
+    NSLog(@"年：%ld,月：%ld",year,month);
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
     
+    NSDate* date1 = [formatter dateFromString:[NSString stringWithFormat:@"%lu-%lu-01",(unsigned long)year,month]];
+    NSCalendar *c = [NSCalendar currentCalendar];
+    NSRange days = [c rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:date1];
+    
+    NSDate* date2 = [formatter dateFromString:[NSString stringWithFormat:@"%lu-%lu-%lu",year,month,days.length]];
+    
+//    date1 = [formatter dateFromString:[NSString stringWithFormat:@"%lu-%lu-02",(unsigned long)year,month]];
+    
+//    NSDateFormatter* shortFormatter = [[NSDateFormatter alloc]init];
+//    [shortFormatter setDateFormat:@"M.d"];
+    
+    NSMutableArray* xValue = [NSMutableArray new];
+    NSMutableArray* points = [NSMutableArray new];
+    
+    NSLog(@"date1:%@,date2:%@",date1,date2);
+    [_dataRequest getMassageRecordFrom:date1 To:date2 Success:^(NSArray *arr) {
+        NSLog(@"数据请求成功🆚");
+        NSMutableArray* records = [NSMutableArray arrayWithArray:arr];
+        NSUInteger max = 0;
+        NSUInteger min = INT64_MAX;
+        
+        for(int i = 0;i<7;i++)
+        {
+            //把日期作为x轴数据源
+            int day = 1+i*5;
+            if (day>=days.length) {
+                [xValue addObject:[NSString stringWithFormat:@"%lu.%lu",month,days.length]];
+                break;
+            }
+            [xValue addObject:[NSString stringWithFormat:@"%lu.%d",month,day]];
+        }
+        NSLog(@"月份xValues:%@",xValue);
+        
+        
+        for (int i = 0; i<26; i++) {
+            NSDate* date = [NSDate dateWithTimeInterval:24*3600*i sinceDate:date1];
+            NSString* dateStr = [formatter stringFromDate:date];
+            NSUInteger useTime = 0;
+            for (int i = 0; i<records.count; i++) {
+                NSDictionary* dic = records[i];
+                if ([dateStr isEqualToString:[dic objectForKey:@"useDate"]]) {
+                    NSUInteger time = [[dic objectForKey:@"useTime"] integerValue];
+                    useTime += time;
+                    [records removeObject:dic];
+                }
+            }
+            //计算使用时间的最大值，最小值，以确定y轴数值的范围
+            if (useTime < min) {
+                min = useTime;
+            }
+            if (useTime > max) {
+                max = useTime;
+            }
+            
+            //计算各个点的坐标
+            [points addObject:[NSValue valueWithCGPoint:CGPointMake(4*i, useTime)]];
+        }
+        
+        float dlt =  20.0/(days.length - 26);
+        
+        for (int i = 26; i<days.length; i++) {
+            NSDate* date = [NSDate dateWithTimeInterval:24*3600*i sinceDate:date1];
+            NSString* dateStr = [formatter stringFromDate:date];
+            NSUInteger useTime = 0;
+            for (int i = 0; i<records.count; i++) {
+                NSDictionary* dic = records[i];
+                if ([dateStr isEqualToString:[dic objectForKey:@"useDate"]]) {
+                    NSUInteger time = [[dic objectForKey:@"useTime"] integerValue];
+                    useTime += time;
+                    [records removeObject:dic];
+                }
+            }
+            //计算使用时间的最大值，最小值，以确定y轴数值的范围
+            if (useTime < min) {
+                min = useTime;
+            }
+            if (useTime > max) {
+                max = useTime;
+            }
+            
+            //计算各个点的坐标
+            [points addObject:[NSValue valueWithCGPoint:CGPointMake(100+dlt*(i-25), useTime)]];
+        }
+        
+        _lineChart.xValues = xValue;
+        _lineChart.points = points;
+        NSLog(@"Points:%@",points);
+        //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
+        _lineChart.xSection = CGPointMake(0, 120);
+        
+        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart.ySection = CGPointMake(0, 8*60);
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"数据请求失败🆚");
+    }];
 }
 
 #pragma mark - 查询一年的数据

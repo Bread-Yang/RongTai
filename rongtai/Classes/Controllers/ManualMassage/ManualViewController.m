@@ -674,9 +674,7 @@
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
 {
 //    NSLog(@"didUpdateMassageChairStatus:%@",[NSDate date]);
-    
 //    NSLog(@"负离子:%ld",rtMassageChairStatus.anionSwitchFlag);
-    
 //    NSLog(@"体型检测：%ld",rtMassageChairStatus.figureCheckFlag);
 //    if (rtMassageChairStatus.figureCheckFlag == 0) {
 //        _scan++;
@@ -686,7 +684,6 @@
 //        NSLog(@"出现1了：%ld",_scan);
 //        _scan=0;
 //    }
-    
 //    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
     
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
@@ -795,7 +792,6 @@
         {
             _delayOfFootWheel--;
         }
-        
         
         if (!_isTouch) {
 //            NSLog(@"脚步滚轮:%ld",_bleConnector.rtMassageChairStatus.rollerSpeedFlag);

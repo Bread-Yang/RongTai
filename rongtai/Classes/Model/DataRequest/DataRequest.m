@@ -119,7 +119,7 @@
     NSString* startStr = [formatter stringFromDate:startDate];
     NSString* endStr = [formatter stringFromDate:endDate];
     NSDictionary* parmeters = @{@"uid":_uid,@"startDate":startStr,@"endDate":endStr};
-//    NSLog(@"请求参数:%@",parmeters);
+    NSLog(@"请求参数:%@",parmeters);
     
     if (_overTime > 0) {
         [self performSelector:@selector(requestTimeOut) withObject:nil afterDelay:_overTime];
