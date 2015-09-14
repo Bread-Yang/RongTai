@@ -302,7 +302,12 @@
 	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
 		[self jumpToScanViewConroller];
 	}
-    
+	
+	// 定时时间
+	NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
+	NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
+	_timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
+	
     if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
         //按摩中
         
@@ -328,11 +333,6 @@
                     _massageFlag = rtMassageChairStatus.massageProgramFlag;
                 }
             }
-            
-            // 定时时间
-            NSInteger minutes = rtMassageChairStatus.remainingTime / 60;
-            NSInteger seconds = rtMassageChairStatus.remainingTime % 60;
-            _timeSetLabel.text = [NSString stringWithFormat:@"%@: %02zd:%02zd", NSLocalizedString(@"定时", nil), minutes, seconds];
             
             
             // 按摩简介

@@ -17,6 +17,7 @@
     UISwitch* _switch;
     UILabel* _title;
     UILabel* _time;
+	UILabel *_loopDaysLabel;
     UIView* _line;
 }
 @end
@@ -43,6 +44,52 @@
     _timingPlan = timingPlan;
     _title.text = _timingPlan.massageName;
     _time.text = _timingPlan.ptime;
+	
+	if (![timingPlan.days isEqualToString:@"0"]) {
+		NSArray *splitDayArray = [self.timingPlan.days componentsSeparatedByString:@","];
+		if (splitDayArray.count == 7) {
+			
+			_loopDaysLabel.text = NSLocalizedString(@"每天", nil);
+
+		} else {
+			
+			NSString *loopDaysString = @"";
+			
+			for (NSString *dayString in splitDayArray) {
+				
+				NSInteger day = [dayString intValue];
+				switch (day) {
+					case 1:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周日", nil)];
+						break;
+						
+					case 2:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周一", nil)];
+						break;
+						
+					case 3:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周二", nil)];
+						break;
+					case 4:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周三", nil)];
+						break;
+					case 5:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周四", nil)];
+						break;
+					case 6:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周五", nil)];
+						break;
+					case 7:
+						loopDaysString = [loopDaysString stringByAppendingFormat:@"%@ ", NSLocalizedString(@"周六", nil)];
+						break;
+						
+				}
+			}
+			
+			_loopDaysLabel.text = loopDaysString;
+		}
+	}
+
     BOOL isOn = [_timingPlan.isOn boolValue];
     [_switch setOn:isOn animated:YES];
     if (isOn) {
@@ -62,12 +109,19 @@
 	_time.textColor = TIME_COLOR;
     _time.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 	_time.font = [UIFont systemFontOfSize:35];
+	
+	_loopDaysLabel = [[UILabel alloc] init];
+	_loopDaysLabel.textColor = TIME_COLOR;
+	_loopDaysLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+	_loopDaysLabel.font = [UIFont systemFontOfSize:12];
+	
 //    _time.font = [UIFont fontWithName:@"HelveticaNeue" size:40];
     _line = [[UIView alloc] init];
     _line.backgroundColor = [UIColor grayColor];
     [self addSubview:_switch];
     [self addSubview:_title];
     [self addSubview:_time];
+	[self addSubview:_loopDaysLabel];
     [self addSubview:_line];
 	self.backgroundColor = [UIColor clearColor];
 }
@@ -77,8 +131,10 @@
 -(void)setUIFrame {
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
-    _title.frame = CGRectMake(10, 5, 0.5 * width, 0.2 * height);
-    _time.frame = CGRectMake(10, 5 + 0.2 * height, 0.6 * width, 0.7 * height);
+    _title.frame = CGRectMake(10, 5, 0.5 * width, 0.3 * height);
+    _time.frame = CGRectMake(10, 2 + 0.3 * height, 0.6 * width, 0.7 * height);
+	[_time sizeToFit];
+	_loopDaysLabel.frame = CGRectMake(12 + _time.frame.size.width, 5 + 0.4 * height, self.frame.size.width / 2, 0.4 * height);
     _line.frame = CGRectMake(0, height - 1, width, 1);
     _switch.frame = CGRectMake(width * 0.8, (height - 27) / 2, 79, 27);
 }
@@ -125,14 +181,18 @@
 
 #pragma mark - 设置开状态的UI
 -(void)setOn {
+	_title.textColor = [UIColor blackColor];
     _time.textColor = TIME_COLOR;
-    _title.alpha = 1;
+    _loopDaysLabel.textColor = TIME_COLOR;
+//    _title.alpha = 1;
 }
 
 #pragma mark - 设置关状态的UI
 -(void)setOff {
+	_title.textColor = [UIColor lightGrayColor];
     _time.textColor = [UIColor lightGrayColor];
-    _title.alpha = 0.6;
+	_loopDaysLabel.textColor = [UIColor lightGrayColor];
+//    _title.alpha = 0.6;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

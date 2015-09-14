@@ -34,7 +34,7 @@
 @property (nonatomic, retain) id localNotifications;
 
 /**
- *  重复日期，（比如周一和周三重复，就是“1,3”，不重复则为“0”）
+ *  重复日期，（比如周一和周三重复，就是“2,3”，不重复则为“0”, 星期日: 1, 星期一 : 2, ..., 星期六 : 7）
  */
 @property (nonatomic, retain) NSString *days;
 
