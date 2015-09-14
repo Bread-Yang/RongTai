@@ -143,8 +143,6 @@
     NSMutableArray* xValue = [NSMutableArray new];
     NSMutableArray* points = [NSMutableArray new];
     
-   
-    
     [_dataRequest getMassageRecordFrom:[NSDate date] To:[NSDate dateWithTimeIntervalSinceNow:-24*3600*7] Success:^(NSArray *arr) {
         NSMutableArray* records = [NSMutableArray arrayWithArray:arr];
         NSUInteger max = 0;
@@ -170,8 +168,6 @@
             if (useTime > max) {
                 max = useTime;
             }
-
-            
             //把日期作为x轴数据源
             [xValue addObject:[shortFormatter stringFromDate:date]];
             //计算各个点的坐标
@@ -203,8 +199,6 @@
             _lineChart.yValues = yValues;
             _lineChart.ySection = CGPointMake(minH*60, (minH+5*step)*60);
         }
-        
-        
     } fail:^(NSDictionary *dic) {
         
     }];

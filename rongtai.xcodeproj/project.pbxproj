@@ -49,7 +49,6 @@
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
 		3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D351B12FD0300A893D9 /* AppDelegate.m */; };
 		3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D381B12FD0300A893D9 /* RTBleListViewController.m */; };
-		3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */; };
 		3D783D4D1B12FD0300A893D9 /* rongtaiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D4C1B12FD0300A893D9 /* rongtaiTests.m */; };
 		3D783D571B12FF5500A893D9 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D783D561B12FF5500A893D9 /* CoreBluetooth.framework */; };
 		3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D797C6A1B8C1698007046CF /* ProgramCount.m */; };
@@ -1697,7 +1696,6 @@
 				3D0B4C7B1B3ABBE100FF97C6 /* mini-fog@2x.png in Resources */,
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
-				3D783D411B12FD0300A893D9 /* LaunchScreen.xib in Resources */,
 				565E71961B5E547200E51C1C /* Resource.bundle in Resources */,
 				565E719B1B5E547200E51C1C /* WeiboSDK.bundle in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
@@ -1979,9 +1977,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "荣泰按摩椅";
 				PROVISIONING_PROFILE = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -2018,7 +2019,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "荣泰按摩椅";
 				PROVISIONING_PROFILE = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2118,7 +2121,7 @@
 				INFOPLIST_FILE = rongtaiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rongtai.app/rongtai";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/荣泰按摩椅.app/荣泰按摩椅";
 			};
 			name = Debug;
 		};
@@ -2135,7 +2138,7 @@
 				INFOPLIST_FILE = rongtaiTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rongtai.app/rongtai";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/荣泰按摩椅.app/荣泰按摩椅";
 			};
 			name = Release;
 		};

@@ -24,6 +24,7 @@
     NSArray* _menu;  //调整选项名称数组
     NSString* _reuseIdentifier;   //cell重用标识符
     NSArray* _images;  //调整按钮的图片名称数组
+    NSArray* _selectImage; //调整按钮的被点击图片名称数组
     CGFloat _cH;
     RTBleConnector* _bleConnector;
 }
@@ -60,6 +61,8 @@ static AdjustView* share;
     
     //调节选项按钮图片名称
     _images = @[@"set_button_up",@"set_button_down",@"set_rear_down",@"set_rear_up",@"set_leg_down",@"set_leg_up",@"set_leg_long",@"set_leg_short",@"set_zero"];
+    
+    _selectImage = @[@"set_button_up2",@"set_button_down2",@"set_rear_down2",@"set_rear_up2",@"set_leg_down2",@"set_leg_up2",@"set_leg_long2",@"set_leg_short2",@"set_zero2"];
     
     //创建 WLPanAlertView，即调节菜单
     _panAlertView = [[WLPanAlertView alloc]init];
@@ -131,12 +134,15 @@ static AdjustView* share;
     cell.tag = indexPath.row+1;
     if (indexPath.row < _menu.count - 1) {
         NSInteger i = indexPath.row*2;
-        [cell.leftButton setImage:[UIImage imageNamed:_images[i]] forState:0];
-        [cell.rightButton setImage:[UIImage imageNamed:_images[i+1]] forState:0];
+        [cell.leftButton setImage:[UIImage imageNamed:_images[i]] forState:UIControlStateNormal];
+        [cell.leftButton setImage:[UIImage imageNamed:_selectImage[i]] forState:UIControlStateHighlighted];
+        [cell.rightButton setImage:[UIImage imageNamed:_images[i+1]] forState:UIControlStateNormal];
+        [cell.rightButton setImage:[UIImage imageNamed:_selectImage[i+1]] forState:UIControlStateHighlighted];
     }
     else
     {
         [cell.leftButton setImage:[UIImage imageNamed:_images[_images.count -1]] forState:0];
+        [cell.leftButton setImage:[UIImage imageNamed:_selectImage[_images.count-1]] forState:UIControlStateHighlighted];
         [cell.rightButton setHidden:YES];
     }
     return cell;

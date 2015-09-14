@@ -19,16 +19,16 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T81-7U-CIq">
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T81-7U-CIq">
                         <rect key="frame" x="130" y="0.0" width="64" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="64" id="3bP-M0-G3b"/>
                             <constraint firstAttribute="height" constant="44" id="xu8-ZV-JrB"/>
                         </constraints>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="leftButtonTouchDown:" destination="KGk-i7-Jjw" eventType="touchDown" id="OOA-Dp-Ukx"/>
@@ -36,16 +36,16 @@
                             <action selector="leftButtonTouchUpOutside:" destination="KGk-i7-Jjw" eventType="touchUpOutside" id="mmJ-dn-WB6"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pww-4H-FVX">
-                        <rect key="frame" x="210" y="-0.5" width="64" height="44.5"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pww-4H-FVX">
+                        <rect key="frame" x="210" y="-1" width="64" height="44.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="64" id="ZNQ-bc-teo"/>
                             <constraint firstAttribute="height" constant="44" id="uUW-3Y-A2V"/>
                         </constraints>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="rightButtonTouchDown:" destination="KGk-i7-Jjw" eventType="touchDown" id="nPN-Gc-cqk"/>

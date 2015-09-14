@@ -11,21 +11,7 @@
 
 @class Member;
 
-typedef void (^EditUserInformationBlock)(NSDictionary *entity);
-
-@protocol UserInformationDelegate <NSObject>
-
-@optional
-- (void)deleteButtonClicked:(Member*)user WithIndex:(NSUInteger)index;
-
-@end
-
 @interface UserInformationViewController : BasicViewController
-
-/**
- *  代理
- */
-@property(nonatomic, weak)id<UserInformationDelegate> delegate;
 
 @property(nonatomic)BOOL isRegister;
 

@@ -99,7 +99,7 @@
 //	_footWheelArray = @[@"滚轮速度慢", @"滚轮速度中", @"滚轮速度快", @"滚轮关"];
 	
     //技法偏好类型数组
-    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
+    _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"韵律", nil)];
     
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.05*0.5;
@@ -124,7 +124,7 @@
     //创建 极线图
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(w, 0, w, h)];
     _polar.dataSeries = @[@(6), @(6), @(6), @(6)];
-    _polar.steps = 3;
+    _polar.steps = 4;
     _polar.r = h*0.3;
     _polar.minValue = 0;
     _polar.maxValue = 12;
@@ -604,7 +604,7 @@
     {
         [_skillsPreferenceImageView setImage:[UIImage imageNamed:@"function_3"]];
         _skillsPreferenceLabel.textColor = [UIColor colorWithRed:202/255.0 green:202/255.0 blue:202/255.0 alpha:1.0];
-        _skillsPreferenceLabel.text = NSLocalizedString(@"揉捏", nil);
+        _skillsPreferenceLabel.text = NSLocalizedString(@"请选择", nil);
     }
 }
 

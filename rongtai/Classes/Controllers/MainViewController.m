@@ -77,20 +77,6 @@
 	
 	[_table reloadData];
     
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSString* mid = [defaults objectForKey:@"currentMemberId"];
-    NSArray* arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid = %@) AND (memberId == %@)",self.uid, mid]];
-    if (arr.count > 0) {
-        Member* m = arr[0];
-        [self changeUser:m.imageURL];
-        NSLog(@"有用户:%@",m.name);
-    }
-    else
-    {
-        NSLog(@"找不到用户");
-        [self changeUser:nil];
-    }
-    
     _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
@@ -115,10 +101,14 @@
 		// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 		[self requestNetworkMassageProgram];
 	}
+    
+    //同步家庭管理成员
+    [self synchroFamily];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"😳");
 	self.isListenBluetoothStatus = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     _vcCount = self.navigationController.viewControllers.count;
@@ -217,18 +207,15 @@
 		[alertView close];
 	}];
     
-    AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
-    if (reachability.reachable) {
-        //同步 定时计划 数据
-        //app启动时要开始进行 定时计划的数据同步
-        [self synchroTimingPlanLocalData:YES];
-		
-		//对 使用次数 数据进行同步
-		[self synchroUseTimeData];
-        
-        //对 使用时间 数据进行同步
-        [DataRequest synchroMassageRecord];
-    }
+    //同步 定时计划 数据
+    //app启动时要开始进行 定时计划的数据同步
+    [self synchroTimingPlanLocalData:YES];
+    
+    //对 使用次数 数据进行同步
+    [self synchroUseTimeData];
+    
+    //对 使用时间 数据进行同步
+    [DataRequest synchroMassageRecord];
     
     //底部菜单
     _menuView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49-64, SCREENWIDTH, 49)];
@@ -389,6 +376,56 @@
             [self getTimingPlanList];
         }
     }
+}
+
+#pragma mark - 更新用户头像
+-(void)updateUserIcon
+{
+    //设置用户头像
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSString* mid = [defaults objectForKey:@"currentMemberId"];
+    NSArray* arr;
+    if (mid == nil) {
+        NSLog(@"默认第一个成员");
+        arr = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+        if (arr.count>0) {
+            Member* r = arr[0];
+            [defaults setObject:r.memberId forKey:@"currentMemberId"];
+        }
+    }
+    else
+    {
+        NSLog(@"有默认成员");
+        arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (memberId == %@)",self.uid, mid]];
+    }
+    
+    if (arr.count > 0) {
+        Member* m = arr[0];
+        [self changeUser:m.imageURL];
+        NSLog(@"有用户:%@",m.name);
+    }
+    else
+    {
+        NSLog(@"找不到用户");
+        [self changeUser:nil];
+    }
+}
+
+#pragma mark - 同步家庭成员
+-(void)synchroFamily
+{
+    //读取家庭成员
+    //网络请求
+    NSLog(@"请求成员");
+    MemberRequest* mr = [MemberRequest new];
+    [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+        //            NSLog(@"成员:%@",members);
+        [Member updateLocalDataByNetworkData:members];
+        [self updateUserIcon];
+    } failure:^(id responseObject) {
+        NSLog(@"有网，本地记录读取成员");
+        [self updateUserIcon];
+    }];
 }
 
 #pragma mark - 请求定时计划列表
@@ -1004,8 +1041,7 @@
 -(void)anionButtonClicked
 {
     //发送负离子开关
-//    [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
-//    [_anionButton setSelected:!_anionButton.isSelected];
+    [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
     
 //    CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
 //    [alert setTitleString:@"提示"];
@@ -1030,7 +1066,6 @@
         [_bleConnector showConnectDialog];
         return;
     }
-    
     //连接按摩椅之后才可以跳到手动按摩
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     ManualViewController* mVC = (ManualViewController*)[s instantiateViewControllerWithIdentifier:@"ManualVC"];

@@ -259,7 +259,7 @@
                             NSString* aqi = [NSString stringWithFormat:@"%@  %@",_city,shortWind];
                             _aqi.text = aqi;
                             _o.textColor  = _oColor;
-                            NSLog(@"天气状况:%@",today);
+//                            NSLog(@"天气状况:%@",today);
                             //数据保存到本地
                             [self saveWeather];
                             _toRequest = YES;
