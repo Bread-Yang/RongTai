@@ -14,4 +14,6 @@
 
 @property(nonatomic, strong) TimingPlan *timingPlan;
 
+- (void)setFrame:(CGRect)frame;
+
 @end

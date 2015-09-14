@@ -279,8 +279,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
     self.segmentSeperators = [[NSMutableArray alloc] initWithCapacity:10];
 }
 
-- (void)ensureProperSeperatorColor
-{
+- (void)ensureProperSeperatorColor {
     NSUInteger sentinelCount = [[[self getAlreadySelectedIndexes] array] count]  - 1;
     NSMutableSet *segmentSet = [[NSMutableSet alloc] initWithCapacity:[self getAlreadySelectedIndexes].count];
     
@@ -387,9 +386,9 @@ float const THSegmentedControlAnimationDuration = 0.1f;
     
     NSMutableOrderedSet *mutableSelectedIndexes = [[self getAlreadySelectedIndexes] mutableCopy];
     if (highlighted) {
-        [mutableSelectedIndexes addObject:@(index + 1)];
+        [mutableSelectedIndexes addObject:@(index)];
     } else {
-        [mutableSelectedIndexes removeObject:@(index + 1)];
+        [mutableSelectedIndexes removeObject:@(index)];
     }
     
     [mutableSelectedIndexes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -493,8 +492,7 @@ float const THSegmentedControlAnimationDuration = 0.1f;
     }
 }
 
-- (void)setSegmentHighlightedBackgroundColor:(UIColor *)segmentHighlightedBackgroundColor
-{
+- (void)setSegmentHighlightedBackgroundColor:(UIColor *)segmentHighlightedBackgroundColor {
     if (_segmentHighlightedBackgroundColor != segmentHighlightedBackgroundColor) {
         _segmentHighlightedBackgroundColor = segmentHighlightedBackgroundColor;
         self.textField.tintColor = segmentHighlightedBackgroundColor;
@@ -569,28 +567,27 @@ float const THSegmentedControlAnimationDuration = 0.1f;
 
 #pragma mark - Appearance Animations and Appearance
 
-- (void)changeSelectorToPreSelectionColor
-{
-    if (self.preSelected) {
-        
-        
-        CGFloat fromAlpha = 0.0f;
-        CGFloat toAlpha = 0.0f;
-        CGFloat toRed = 0.0f;
-        CGFloat toBlue = 0.0f;
-        CGFloat toGreen = 0.0f;
-        
-        [self.segmentHighlightedBackgroundColor getRed:&toRed green:&toGreen blue:&toBlue alpha:&toAlpha];
-        self.backgroundColor = [UIColor colorWithRed:toRed
-                                               green:toGreen
-                                                blue:toBlue
-                                               alpha:(float)[self colorWithFromValue:fromAlpha toValue:toAlpha]];
-        self.textField.alpha = 0.5;
-    } else {
-        self.preSelected = NO;
-        self.textField.alpha = 1.0;
-        self.backgroundColor = [self segmentBackgroundColor];
-    }
+- (void)changeSelectorToPreSelectionColor {
+//    if (self.preSelected) {
+//        
+//        
+//        CGFloat fromAlpha = 0.0f;
+//        CGFloat toAlpha = 0.0f;
+//        CGFloat toRed = 0.0f;
+//        CGFloat toBlue = 0.0f;
+//        CGFloat toGreen = 0.0f;
+//        
+//        [self.segmentHighlightedBackgroundColor getRed:&toRed green:&toGreen blue:&toBlue alpha:&toAlpha];
+//        self.backgroundColor = [UIColor colorWithRed:toRed
+//                                               green:toGreen
+//                                                blue:toBlue
+//                                               alpha:(float)[self colorWithFromValue:fromAlpha toValue:toAlpha]];
+//        self.textField.alpha = 0.5;
+//    } else {
+//        self.preSelected = NO;
+//        self.textField.alpha = 1.0;
+//        self.backgroundColor = [self segmentBackgroundColor];
+//    }
 }
 
 - (CGFloat)colorWithFromValue:(CGFloat)fromValue toValue:(CGFloat)toValue

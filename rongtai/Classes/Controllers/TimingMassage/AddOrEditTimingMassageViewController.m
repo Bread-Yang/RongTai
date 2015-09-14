@@ -146,6 +146,9 @@
 			for (NSString *num in splitDayArray) {
 				[alreadySet addObject:@([num integerValue] - 1)];
 			}
+			
+			NSLog(@"alreadySet : %@", alreadySet);
+			
 			[self.weekDaySegmentControl setSelectedIndexes:alreadySet];
 		}
 	} else {
@@ -346,9 +349,9 @@
         NSString *days = @"";
         for (int i = 0; i < [selectDays count]; i++) {
             if (i != [selectDays count] - 1) {
-                days = [days stringByAppendingFormat:@"%zd,", [[selectDays objectAtIndex:i] integerValue]];
+                days = [days stringByAppendingFormat:@"%zd,", [[selectDays objectAtIndex:i] integerValue] + 1];
             } else {
-                days = [days stringByAppendingFormat:@"%zd", [[selectDays objectAtIndex:i] integerValue]];
+                days = [days stringByAppendingFormat:@"%zd", [[selectDays objectAtIndex:i] integerValue] + 1];
             }
         }
         self.timingPlan.days = days;
