@@ -32,15 +32,9 @@
     NSString* _uid;
     MBProgressHUD *_loading;
 }
-
 @end
 
 @implementation DataCenterViewController
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,7 +80,6 @@
     _titleLabel.font = [UIFont systemFontOfSize:15];
     [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     [self.view addSubview:_titleLabel];
-    
     
     //左右切换按钮
     UIButton* left = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 16, w*0.1, 35)];
@@ -301,14 +294,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

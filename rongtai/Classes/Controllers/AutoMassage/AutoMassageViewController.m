@@ -483,7 +483,6 @@
         } else {
             _rollerStatusImageView.image = [UIImage imageNamed:@"sit_food_piont"];
         }
-
 	} else {
 		if (self.resettingDialog.isShowing) {
 			

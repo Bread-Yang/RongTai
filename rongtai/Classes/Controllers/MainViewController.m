@@ -79,36 +79,47 @@
     
     _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
-    if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-        if (_bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
-            _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
-            NSLog(@"按摩记录：%ld",_massageFlag);
-        }
-        else
-        {
-            NSLog(@"手动按摩中");
-            [_manualMassageButton setSelected:YES];
-        }
+    NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
+    NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
+    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+        [_anionButton setSelected:NO];
+        [_manualMassageButton setSelected:NO];
     }
     else
     {
-        _massageFlag = 0;
-        NSLog(@"按摩记录，没有按摩");
+        if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+            if (_bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
+                _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
+                NSLog(@"按摩记录：%ld",_massageFlag);
+            }
+            else
+            {
+                NSLog(@"手动按摩中");
+                [_manualMassageButton setSelected:YES];
+            }
+        }
+        else
+        {
+            _massageFlag = 0;
+            NSLog(@"按摩记录，没有按摩");
+        }
     }
-	
+
 	if (self.isFromLoginViewController) {
 		self.isFromLoginViewController = false;
 		// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 		[self requestNetworkMassageProgram];
 	}
-    
-    //同步家庭管理成员
-    [self synchroFamily];
+    else
+    {
+        //同步家庭管理成员
+        [self synchroFamily];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"😳");
+//    NSLog(@"😳");
 	self.isListenBluetoothStatus = YES;
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
     _vcCount = self.navigationController.viewControllers.count;

@@ -18,7 +18,9 @@
 #import "MainViewController.h"
 #import "MBProgressHUD.h"
 #import "AppIntrouceView.h"
+#import "MemberRequest.h"
 #import "RegisterViewController.h"
+#import "UserInformationViewController.h"
 
 @interface LoginViewController ()<AppIntroduceViewDelegate, LoginRequestDelegate> {
 	__weak IBOutlet UIButton *_registerBtn;  //注册按钮
@@ -90,7 +92,7 @@
     if (phone) {
         _phoneNum.text = phone;
     }
-
+    _password.text = nil;
 }
 
 #pragma mark - 登陆按钮方法
@@ -153,22 +155,52 @@
 
 -(void)loginRequestLoginFinished:(BOOL)success Result:(NSDictionary *)result
 {
-    [_loading hide:YES];
 	if (success) {
-		NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+		
 		NSString* token = [result objectForKey:@"token"];
 		NSString* uid = [result objectForKey:@"uid"];
-		[ud setObject:token forKey:@"token"];
-		[ud setObject:uid forKey:@"uid"];
+        NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
         NSString* phone = _phoneNum.text;
         phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [ud setObject:phone forKey:@"phone"];
-        MainViewController *vc = [MainViewController new];
-        vc.isFromLoginViewController = true;
-        [self.navigationController pushViewController:vc animated:YES];
+        [ud setObject:uid forKey:@"uid"];
+        
+        MemberRequest* mr = [MemberRequest new];
+        [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+            NSLog(@"成员:%@",members);
+            if (members.count<1) {
+                //没有家庭成员，要跳到添加成员页面
+                [_loading hide:YES];
+                [ud setObject:nil forKey:@"uid"];
+                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                UserInformationViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+                vc.isRegister = YES;
+                [vc setUid:uid AndToken:token];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                [Member updateLocalDataByNetworkData:members];
+                
+                [ud setObject:token forKey:@"token"];
+                
+                
+                [_loading hide:YES];
+                MainViewController *vc = [MainViewController new];
+                vc.isFromLoginViewController = true;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        } failure:^(id responseObject) {
+            [_loading hide:YES];
+            [ud setObject:nil forKey:@"uid"];
+            [self showProgressHUDByString:@"登录失败，请检查账号密码"];
+            NSLog(@"有网，本地记录读取成员");
+        }];
 	}
     else
     {
+        [_loading hide:YES];
         [self showProgressHUDByString:@"登录失败，请检查账号密码"];
     }
 }

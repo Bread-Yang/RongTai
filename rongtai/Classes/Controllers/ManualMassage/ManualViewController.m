@@ -42,6 +42,7 @@
     
     //技法偏好
     NSArray* _skillsPreferenceArray;    //技法偏好选项数组
+    NSArray* _skillsPreferenceName;  //技法偏好数组
     NAPickerView *_skillsPreferencePickerView;  //技法偏好选择器
     
     __weak IBOutlet UILabel *_skillsPreferenceLabel;
@@ -101,6 +102,8 @@
     //技法偏好类型数组
     _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"韵律", nil)];
     
+    _skillsPreferenceName = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
+    
     //停止按摩圆角
     _stopBtn.layer.cornerRadius = SCREENHEIGHT*0.05*0.5;
     
@@ -141,7 +144,6 @@
     
     [_polar setPoint:3 MaxLimit:12 MinLimit:2];
     [_polar setPoint:0 MaxLimit:12 MinLimit:4];
-    
     
     //创建 自定义分页控制器
     _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
@@ -210,18 +212,6 @@
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
          _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
     }
-    
-    
-    //
-//    if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramManual) {
-//        _stopBtn.hidden = NO;
-//        [self updateSkillsPreferenceView:YES];
-//    }
-//    else
-//    {
-//        _stopBtn.hidden = YES;
-//        [self updateSkillsPreferenceView:NO];
-//    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -262,19 +252,19 @@
 				case 0:  // 揉捏
 					[_bleConnector sendControlMode:H10_KEY_KNEAD];
 					break;
-				case 1:  // 敲击
-					[_bleConnector sendControlMode:H10_KEY_KNOCK];
+                case 1:  // 叩击
+                    [_bleConnector sendControlMode:H10_KEY_SOFT_KNOCK];
 					break;
-				case 2:  // 揉敲同步
-					[_bleConnector sendControlMode:H10_KEY_WAVELET];
+				case 2:  //敲击
+					[_bleConnector sendControlMode: H10_KEY_KNOCK];
 					break;
-				case 3:  // 叩击
-					[_bleConnector sendControlMode:H10_KEY_SOFT_KNOCK];
+                case 3: // 指压
+                    [_bleConnector sendControlMode:H10_KEY_PRESS];
+                    break;
+                case 4:  //揉敲
+                    [_bleConnector sendControlMode:H10_KEY_WAVELET];
 					break;
-				case 4:  // 指压
-					[_bleConnector sendControlMode:H10_KEY_PRESS];
-					break;
-				case 5:  // 韵律按摩
+				case 5:  // 韵律
 					[_bleConnector sendControlMode:H10_KEY_MUSIC];
 					break;
 			}
@@ -488,11 +478,11 @@
     }
     else if (index == 2)
     {
-        //滚轮速度，有三档，可开关
-//        if (value <= 0) {
-//            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
-//        }
-//        else
+//        滚轮速度，有三档，可开关
+        if (value <= 0) {
+            [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_OFF];
+        }
+        else
         if (value<=4) {
             [_bleConnector sendControlMode:H10_KEY_WHEEL_SPEED_SLOW];
         }
@@ -666,7 +656,7 @@
 {
     NSNumber* n = _polar.dataSeries[index];
     float currentValue = [n floatValue];
-    if (currentValue>=level*stepValue || currentValue<(level-1)*stepValue) {
+    if (currentValue>level*stepValue || currentValue<=(level-1)*stepValue) {
 //        NSLog(@"%ld调节值",index);
         [_polar setValue:level*stepValue ByIndex:index];
     }
@@ -726,7 +716,7 @@
             //按摩模式
             flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (flag>0&&flag<7) {
-                _skillsPreferenceLabel.text = _skillsPreferenceArray[flag-1];
+                _skillsPreferenceLabel.text = _skillsPreferenceName[flag-1];
                 [self updateSkillsPreferenceView:YES];
             }
             
@@ -736,7 +726,7 @@
             _timeLabel.text = [NSString stringWithFormat:@"%02zd:%02zd", minutes, seconds];
             
             //手动按摩中，滚轮可调节速度
-            [_polar setPoint:2 ableMove:NO];
+            [_polar setPoint:2 ableMove:YES];
         }
         else if (_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramAuto ||_bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
         {
@@ -806,17 +796,11 @@
             _delayOfFootWheel--;
         }
         
-        if (_footWheelOn) {
-            if (!_isTouch) {
-                [self setPolarValue:_bleConnector.rtMassageChairStatus.rollerSpeedFlag stepValue:4 ByIndex:2];
-            }
-        }
-        else
-        {
-            [_polar setPoint:2 ableMove:NO];
-            [_polar setValue:0 ByIndex:2];
-        }
         
+        if (!_isTouch) {
+//            NSLog(@"脚步滚轮:%ld",_bleConnector.rtMassageChairStatus.rollerSpeedFlag);
+            [self setPolarValue:_bleConnector.rtMassageChairStatus.rollerSpeedFlag stepValue:4 ByIndex:2];
+        }
         
         //更新背部加热
         if (_delayOfBackWarm < 1) {
@@ -897,7 +881,7 @@
             //按摩模式
             NSInteger flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (flag>0&&flag<7) {
-                _skillsPreferenceLabel.text = _skillsPreferenceArray[flag-1];
+                _skillsPreferenceLabel.text = _skillsPreferenceName[flag-1];
                 [self updateSkillsPreferenceView:YES];
             }
             
@@ -1078,7 +1062,7 @@
         else
         {
             if (flag>0&&flag<7) {
-                _programName = _skillsPreferenceArray[flag-1];
+                _programName = _skillsPreferenceName[flag-1];
                 programId = -flag;
                 function = _programName;
             }

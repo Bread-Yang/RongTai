@@ -17,6 +17,7 @@
     int i;
     CGRect frame;
     NSTimer* _t;
+    NSInteger _massageFlag;
 }
 @end
 
@@ -83,12 +84,42 @@
 	
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
+            _massageFlag = rtMassageChairStatus.massageProgramFlag;
 			[self jumpToAutoMassageViewConroller];
 		}
-		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
-			[self jumpToManualMassageViewConroller];
-		}
+        else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
+        {
+            //
+            //自动按摩
+            if (_massageFlag != 7) {
+                NSLog(@"切换到手动按摩");
+               
+                
+                _massageFlag = rtMassageChairStatus.massageProgramFlag;
+                
+                //自动切换到手动，弹出提示框
+                CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
+                [alert setTitleString:@"提示"];
+                UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
+                l.text = @"已切换到手动模式";
+                l.textAlignment = NSTextAlignmentCenter;
+                l.textColor = [UIColor lightGrayColor];
+                [alert setContainerView:l];
+                [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
+                [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+                    [self backToMainViewController];
+                }];
+                [alert setUseMotionEffects:true];
+                [alert show];
+                }
+            
+        }
+        
+        
+//		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
+//			[self jumpToManualMassageViewConroller];
+//		}
+
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {

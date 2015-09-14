@@ -105,10 +105,11 @@
     
 //    [self locationCity];
     
-    //
     _hud = [[MBProgressHUD alloc]initWithWindow:[UIApplication sharedApplication].keyWindow];
     [[UIApplication sharedApplication].keyWindow addSubview:_hud];
     _hud.mode = MBProgressHUDModeText;
+    
+    self.hidden = YES;
     
     //
     [self queryCityName];
@@ -263,6 +264,9 @@
                             //数据保存到本地
                             [self saveWeather];
                             _toRequest = YES;
+                            if (self.hidden) {
+                                self.hidden = NO;
+                            }
                             if (!_timer) {
                                 _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
                             }

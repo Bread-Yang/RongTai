@@ -56,9 +56,7 @@
     MBProgressHUD* _loadingHUD;
     
     //约束
-    
     __weak IBOutlet NSLayoutConstraint *_inputViewConstraint;
-    
     __weak IBOutlet NSLayoutConstraint *_bottomConstraint;
     
     //网络
@@ -66,14 +64,13 @@
     MemberRequest* _memberRequest;
     NSDictionary* _tmp;
     NSString* _uid;
+    NSString* _token;
     NSUInteger _heightUnitSelectedIndex;
     
     //
     UIView* _tapView;
-    
     __weak IBOutlet NSLayoutConstraint *_topConstraint;
     CGFloat _y;
-    
 }
 @end
 
@@ -188,6 +185,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     //注册监听
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
@@ -414,6 +412,8 @@
             //是注册页面跳转过来的，在添加好用户信息后要设置当前用户的id
             NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:mid forKey:@"currentMemberId"];
+            [defaults setObject:_uid forKey:@"uid"];
+            [defaults setObject:_token forKey:@"token"];
         }
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -824,6 +824,15 @@
         }
     }
 }
+
+#pragma mark - 设置uid和token
+-(void)setUid:(NSString *)uid AndToken:(NSString*)token
+{
+    self.view.backgroundColor = [UIColor clearColor];
+    _uid = uid;
+    _token = token;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

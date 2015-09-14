@@ -20,5 +20,9 @@
  */
 - (void)editMode:(Member*)user WithIndex:(NSUInteger)index;
 
+/**
+ *  设置uid和token
+ */
+-(void)setUid:(NSString *)uid AndToken:(NSString*)token;
 
 @end

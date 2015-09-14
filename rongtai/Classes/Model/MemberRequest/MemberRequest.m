@@ -103,7 +103,7 @@
     _isTimeOut = YES;
     NSString* url = [REQUESTURL stringByAppendingString:@"addMember"];
     NSMutableDictionary* parmeters  = [NSMutableDictionary new];
-    [parmeters setObject:_uid forKey:@"uid"];
+    [parmeters setObject:member.uid forKey:@"uid"];
     [parmeters setObject:member.name forKey:@"name"];
     [parmeters setObject:member.sex forKey:@"sex"];
     [parmeters setObject:member.height forKey:@"height"];
