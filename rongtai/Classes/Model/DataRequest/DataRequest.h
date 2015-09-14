@@ -37,4 +37,9 @@
  */
 -(void)addMassageRecord:(NSArray*)arr Success:(void (^)())success fail:(void (^)(NSDictionary * dic))fail;
 
+/**
+ *  同步按摩记录
+ */
++(void)synchroMassageRecord;
+
 @end

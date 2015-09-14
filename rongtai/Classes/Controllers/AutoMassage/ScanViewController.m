@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.isListenBluetoothStatus = YES;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 	
     i = 0;
     self.title = NSLocalizedString(@"体型智能检测", nil);
@@ -41,7 +42,6 @@
 }
 
 -(void)goBack {
-//    [self.navigationController popViewControllerAnimated:YES];
 	[self backToMainViewController];
 }
 
@@ -52,24 +52,18 @@
 		[_t invalidate];
 	}
       _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
-	[_t fire];
 //	[self scanAnimation];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_t invalidate];
 }
 
 -(void)timerScan:(NSTimer*)timer {
 	_scanLight.frame = frame;
 	[self scanAnimation];
-//    if (i > 4) {
-//        [timer invalidate];
-//        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//        AutoMassageViewController* autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
-//        autoVC.massage = self.massage;
-//        [self.navigationController pushViewController:autoVC animated:YES];
-//    } else {
-//        _scanLight.frame = frame;
-//        [self scanAnimation];
-//        i++;
-//    }
 }
 
 #pragma mark - 扫描动画
@@ -93,7 +87,6 @@
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
 			[self jumpToAutoMassageViewConroller];
-			[self removeFromParentViewController];
 		}
 		
 		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面

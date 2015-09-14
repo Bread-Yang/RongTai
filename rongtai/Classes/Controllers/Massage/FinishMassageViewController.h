@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BasicViewController.h"
-@class MassageRecord;
 
 @interface FinishMassageViewController : BasicViewController
 
-@property (nonatomic, strong) MassageRecord* massageRecord;
+@property (nonatomic, strong) NSDictionary* massageRecord;
 
 /**
  *  保存模式

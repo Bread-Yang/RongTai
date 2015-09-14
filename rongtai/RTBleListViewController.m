@@ -221,8 +221,8 @@
 //    [SVProgressHUD dismiss];
 	if ([peripheral.name isEqualToString:RTLocalName]) {
 		//连接设备成功
-        if (bleConnector.rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
-            //连接后若是设备已经是处于自动按摩状态，则设置开始时间
+        if (bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+            //连接后若是设备已经是处于按摩状态，则设置开始时间
             NSLog(@"设置开始时间");
             bleConnector.startTime = [NSDate date];
         }

@@ -118,6 +118,11 @@ static BOOL isBleTurnOn;
  */
 @property (nonatomic, strong) NSDate* startTime;
 
+/**
+ *  最后一次按摩信息
+ */
+@property (nonatomic, strong) NSDictionary* massageRecord;
+
 #pragma mark - download network program field
 
 @property (nonatomic, assign) CGFloat progress;

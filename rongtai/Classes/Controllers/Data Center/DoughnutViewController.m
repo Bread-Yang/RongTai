@@ -8,7 +8,7 @@
 
 #import "DoughnutViewController.h"
 #import "DoughnutCollectionViewCell.h"
-#import "UIView+AddBorder.h"
+//#import "UIView+AddBorder.h"
 #import "UILabel+WLAttributedString.h"
 #import "RongTaiConstant.h"
 #import "ProgramCount.h"
@@ -41,10 +41,12 @@
     NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
     BOOL b = counts.count>0;
     [ProgramCount synchroUseCountDataFormServer:b Success:^{
-        _progarmCounts = [ProgramCount MR_findAll];
+        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid];
         [_collectView reloadData];
     } Fail:^(NSDictionary * dic) {
-        _progarmCounts = [ProgramCount MR_findAll];
+        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid];
         [_collectView reloadData];
     }];
     
@@ -113,7 +115,7 @@
         NSUInteger count = [c integerValue]+[unC integerValue];
         cell.count = count;
         cell.doughnut.percent = count/100.0;
-        [cell addLineBorder];
+//        [cell addLineBorder];
         cell.isHiddenDougnut = NO;
         cell.countLabel.font = _font;
         cell.doughnut.finishColor = _colors[(indexPath.row/2)%3];
@@ -122,7 +124,7 @@
     else
     {
         cell.isHiddenDougnut = YES;
-        [cell addLineBorder];
+//        [cell addLineBorder];
     }
     return cell;
 }

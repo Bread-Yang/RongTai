@@ -22,6 +22,8 @@
 @dynamic width;
 @dynamic isLocalDummyData;
 
+
+
 - (void)setValueByJSON:(NSDictionary*)json {
 	self.mDescription = [json objectForKey:@"description"];
 	self.imageUrl = [json objectForKey:@"imageUrl"];

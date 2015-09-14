@@ -48,4 +48,33 @@
     return name;
 }
 
+-(NSString *)autoMassageFunctionByIndex:(NSUInteger)index
+{
+    NSString* function = nil;
+    switch (index) {
+        case 1:
+            function = NSLocalizedString(@"运动恢复功能", nil);
+            break;
+        case 2:
+            function = NSLocalizedString(@"舒展活络功能", nil);
+            break;
+        case 3:
+            function = NSLocalizedString(@"休憩促眠功能", nil);
+            break;
+        case 4:
+            function = NSLocalizedString(@"工作减压功能", nil);
+            break;
+        case 5:
+            function = NSLocalizedString(@"肩颈重点功能", nil);
+            break;
+        case 6:
+            function = NSLocalizedString(@"腰椎舒缓功能", nil);
+            break;
+        default:
+            function = nil;
+            break;
+    }
+    return function;
+}
+
 @end

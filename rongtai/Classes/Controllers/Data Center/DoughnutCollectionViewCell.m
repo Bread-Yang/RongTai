@@ -7,6 +7,7 @@
 //
 
 #import "DoughnutCollectionViewCell.h"
+#import "UIView+AddBorder.h"
 
 
 @interface DoughnutCollectionViewCell ()
@@ -63,6 +64,7 @@
     [self addSubview:_detailLabel];
     
     _isHiddenDougnut = NO;
+    [self addLineBorder];
 }
 
 #pragma mark - set方法
