@@ -253,7 +253,14 @@
                             }
                             else
                             {
-                                [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
+                                NSString* phone = _phoneNum.text;
+                                phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                                [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"phone"];
+                                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                                UserInformationViewController* rVC = (UserInformationViewController*)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+                                rVC.isRegister = YES;
+                                [self.navigationController pushViewController:rVC animated:YES];
+//                                [_loginRequest registerAccountByPhone:phone Password:_password.text Code:code];
                             }
                         }
                         else

@@ -254,7 +254,7 @@
     CGSize keyboardSize = [value CGRectValue].size;
     CGFloat keyBoardHeight = keyboardSize.height;
     CGFloat imgH = _bgImageView.frame.size.height;
-    NSLog(@"键盘高度:%f",keyBoardHeight);
+//    NSLog(@"键盘高度:%f",keyBoardHeight);
     CGRect f;
     if ([_height isFirstResponder]) {
         f = _height.frame;
@@ -268,9 +268,9 @@
         f = _name.frame;
     }
     _y = SCREENHEIGHT - 70 - imgH - keyBoardHeight - f.size.height;
-    NSLog(@"文本框y值:%f",f.origin.y);
+//    NSLog(@"文本框y值:%f",f.origin.y);
     _y = _y - f.origin.y;
-    NSLog(@"偏移高度:%f",_y);
+//    NSLog(@"偏移高度:%f",_y);
     if (_y<0) {
         _topConstraint.constant =  _topConstraint.constant + _y;
         _bottomConstraint.constant = _bottomConstraint.constant - _y;
@@ -354,9 +354,16 @@
         __weak UserInformationViewController* uVC = self;
         if (_isEdit) {
             //编辑模式，执行删除
-            
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除该成员？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            [alert show];
+            NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+            NSString* mid = [defaults objectForKey:@"currentMemberId"];
+            if ([_user.memberId integerValue] == [mid integerValue]) {
+                [self showProgressHUDByString:@"当前用户不能删除"];
+            }
+            else
+            {
+                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除该成员？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                [alert show];
+            }
         }
         else
         {
@@ -412,13 +419,25 @@
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         [_loadingHUD hide:YES];
         [uVC showProgressHUDByString:NSLocalizedString(@"添加成员成功", nil)];
-        [uVC performSelector:@selector(back) withObject:nil afterDelay:1];
+        [uVC performSelector:@selector(autoBack) withObject:nil afterDelay:1];
     } failure:^(id responseObject) {
         [_loadingHUD hide:YES];
         [_user MR_deleteEntity];
         NSString* str = [NSString stringWithFormat:@"%@:%@",NSLocalizedString(@"添加成员失败", nil),responseObject];
         [uVC showProgressHUDByString:str];
     }];
+}
+
+#pragma mark - 添加用户后自己返回
+-(void)autoBack
+{
+    if (_isRegister) {
+        [self.navigationController pushViewController:[MainViewController new] animated:YES];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - 快速提示
@@ -436,7 +455,8 @@
 -(void)back
 {
     if (_isRegister) {
-        [self.navigationController pushViewController:[MainViewController new] animated:YES];
+        //从注册跳过来的话，直接返回到登陆界面
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {
@@ -674,18 +694,12 @@
    }
 }
 
-#pragma mark - 删除按钮方法
--(void)deleteUser:(id)sender {
-    if([self.delegate respondsToSelector:@selector(deleteButtonClicked:WithIndex:)]) {
-        [self.delegate deleteButtonClicked:_user WithIndex:_index];
-    }
-}
-
 #pragma mark - alertView代理
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString* btn = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([btn isEqualToString:@"是"]) {
+    if ([btn isEqualToString:@"确定"]) {
+        NSLog(@"删除成员");
         __weak UserInformationViewController* uVC = self;
         [_memberRequest deleteMember:_user success:^(id responseObject) {
             [_user MR_deleteEntity];

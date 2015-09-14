@@ -219,7 +219,7 @@
     
 	if (btn) {
         _isSelected = YES;
-		_partLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"按摩部位", nil),_parts[btn.tag-2100]];
+		_partLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"按摩的部位", nil),_parts[btn.tag-2100]];
 		_partLabel.textColor = BLUE;
 		NSMutableAttributedString* string = [[NSMutableAttributedString alloc]initWithAttributedString:_partLabel.attributedText];
 		

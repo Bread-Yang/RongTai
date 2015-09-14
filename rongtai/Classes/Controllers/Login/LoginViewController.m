@@ -78,10 +78,6 @@
     _loading.labelText = NSLocalizedString(@"登录中...", nil);
     [self.view addSubview:_loading];
 
-    NSString* phone = [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
-    if (phone) {
-        _phoneNum.text = phone;
-    }
     // Do any additional setup after loading the view.
 }
 
@@ -89,6 +85,12 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
+    NSString* phone = [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
+    if (phone) {
+        _phoneNum.text = phone;
+    }
+
 }
 
 #pragma mark - 登陆按钮方法
