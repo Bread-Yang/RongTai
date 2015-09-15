@@ -24,7 +24,7 @@
     CGFloat _rowHeight;
     AFNetworkReachabilityManager* _reachability;
     MBProgressHUD* _loading;
-    NSNumber* _currentMemberId;
+    NSString* _currentMemberId;
 }
 @end
 
@@ -170,7 +170,8 @@
     //更改当前用户mid
     Member* m = _users[indexPath.row];
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:m.memberId forKey:@"currentMemberId"];
+    NSString* mid = [NSString stringWithFormat:@"%ld",[m.memberId integerValue]];
+    [defaults setObject:mid forKey:@"currentMemberId"];
     NSLog(@"切换用户:%@",m.name);
 }
 

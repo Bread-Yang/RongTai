@@ -109,6 +109,7 @@
 		self.isFromLoginViewController = false;
 		// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 		[self requestNetworkMassageProgram];
+        [self updateUserIcon];
 	}
     else
     {
@@ -396,12 +397,13 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSString* mid = [defaults objectForKey:@"currentMemberId"];
     NSArray* arr;
-    if (mid == nil) {
+    if (mid.length<1) {
         NSLog(@"默认第一个成员");
         arr = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
         if (arr.count>0) {
             Member* r = arr[0];
-            [defaults setObject:r.memberId forKey:@"currentMemberId"];
+            NSString* mid = [NSString stringWithFormat:@"%d",[r.memberId intValue]];
+            [defaults setObject:mid forKey:@"currentMemberId"];
         }
     }
     else

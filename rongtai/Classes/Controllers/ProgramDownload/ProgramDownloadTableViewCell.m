@@ -14,6 +14,8 @@
 #import "AFNetworking.h"
 #import "CustomIOSAlertView.h"
 #import "UIImageView+RT.h"
+#import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
 
 @implementation ProgramDownloadTableViewCell 
@@ -78,12 +80,14 @@
 			// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
 			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptySlotIndex] == -1) {
 				
-				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
-				tipsDialog.isReconnectDialog = YES;
-				tipsDialog.reconnectTipsString = NSLocalizedString(@"网络程序安装位已满", nil);
-				[tipsDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
-				
-				[tipsDialog show];
+                [self showProgressHUDByString: @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载"];
+
+//				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
+//				tipsDialog.isReconnectDialog = YES;
+//				tipsDialog.reconnectTipsString = @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载";
+//				[tipsDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
+//				
+//				[tipsDialog show];
 			} else {
 				[[RTBleConnector shareManager] installProgramMassageByBinName:_massageProgram.binUrl];
 			}
@@ -111,6 +115,19 @@
 	
 	[dialog show];
 	
+}
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+    UIWindow* win = delegate.window;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:win animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 @end

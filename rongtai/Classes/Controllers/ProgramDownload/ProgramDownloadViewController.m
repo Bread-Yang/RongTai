@@ -141,6 +141,21 @@
 	
 }
 
+-(void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral
+{
+//    NSLog(@"设备断开了");
+//    [_tableView reloadData];
+}
+
+-(void)didUpdateRTBleState:(CBCentralManagerState)state
+{
+    NSLog(@"更新蓝牙状态");
+    if (state == CBCentralManagerStatePoweredOff) {
+        NSLog(@"设备断开了");
+        [_tableView reloadData];
+    }
+}
+
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
 	NSLog(@"didUpdateNetworkMassageStatus");
 	[_tableView reloadData];
@@ -236,12 +251,18 @@
 	
 	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
-	if (isAlreadyInstall) {
-		cell.isAlreadyDownload = true;
-	} else {
-		cell.isAlreadyDownload = false;
-	}
-	
+    RTBleConnector* bleconnector = [RTBleConnector shareManager];
+    if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+        cell.isAlreadyDownload = false;
+    }
+    else
+    {
+        if (isAlreadyInstall) {
+            cell.isAlreadyDownload = true;
+        } else {
+            cell.isAlreadyDownload = false;
+        }
+    }
     return cell;
 }
 

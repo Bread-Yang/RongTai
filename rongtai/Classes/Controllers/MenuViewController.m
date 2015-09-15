@@ -265,6 +265,7 @@
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:@"" forKey:@"uid"];
         [defaults setObject:@"" forKey:@"token"];
+        [defaults setObject:@"" forKey:@"currentMemberId"];
     }
 }
 
