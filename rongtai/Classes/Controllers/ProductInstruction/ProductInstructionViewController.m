@@ -7,6 +7,7 @@
 //
 
 #import "ProductInstructionViewController.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface ProductInstructionViewController ()
 
@@ -16,7 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - 返回按钮方法
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

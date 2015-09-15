@@ -36,8 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _money = 0.6;
-    _kwh = 1.2;
-    _saveKwh = 0.4;
+    _kwh = 0.26;
+//    _saveKwh = 0.4;
     _totalTime = 60;
     _todayTime = 60;
     // Do any additional setup after loading the view.

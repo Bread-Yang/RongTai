@@ -149,7 +149,6 @@
 
 -(void)didUpdateRTBleState:(CBCentralManagerState)state
 {
-    NSLog(@"更新蓝牙状态");
     if (state == CBCentralManagerStatePoweredOff) {
         NSLog(@"设备断开了");
         [_tableView reloadData];

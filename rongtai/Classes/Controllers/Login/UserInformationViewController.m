@@ -488,7 +488,7 @@
     //数据显示
     _user = user;
     _imgUrl = user.imageURL;
-    [self upDateUI];
+    [self updateUI];
 }
 
 #pragma mark - 保存按钮方法（编辑模式下）
@@ -642,15 +642,17 @@
 }
 
 #pragma mark - 用户数据绑定在控件上
--(void)upDateUI {
+-(void)updateUI {
     _name.text = _user.name;
     _sexSegmentView.selectIndex = [_user.sex integerValue];
     _height.text = [_user.height stringValue];
     if ([_user.heightUnit isEqual:@"cm"]) {
+        [self setSelectedCMUnit];
         _heightUnitSegmentView.selectIndex = 0;
         NSUInteger height = [_user.height integerValue];
         [_heightPicker selectRow:(height-140) inComponent:0 animated:NO];
     } else {
+        [self setSelectedInchUnit];
         _heightUnitSegmentView.selectIndex = 1;
         float height = [_user.height floatValue];
         NSUInteger integer = (int)height;

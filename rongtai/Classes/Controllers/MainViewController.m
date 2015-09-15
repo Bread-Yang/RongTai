@@ -408,10 +408,11 @@
     }
     else
     {
-        NSLog(@"有默认成员");
-        arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (memberId == %@)",self.uid, mid]];
+        NSLog(@"有默认成员:%@",mid);
+        arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (memberId == %d)",self.uid, [mid intValue]]];
+        NSLog(@"%@",arr);
     }
-    
+
     if (arr.count > 0) {
         Member* m = arr[0];
         [self changeUser:m.imageURL];
@@ -420,6 +421,15 @@
     else
     {
         NSLog(@"找不到用户");
+        NSArray* ms = [Member MR_findAll];
+        NSMutableArray* arr = [NSMutableArray new];
+        for (int i = 0; i < ms.count; i++) {
+            Member* m = ms[i];
+            NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[m memberToDictionary]];
+            [dic setObject:m.uid forKey:@"uid"];
+            [arr addObject:dic];
+        }
+        NSLog(@"成员数据:%@",arr);
         [self changeUser:nil];
     }
 }
@@ -436,7 +446,7 @@
         [Member updateLocalDataByNetworkData:members];
         [self updateUserIcon];
     } failure:^(id responseObject) {
-        NSLog(@"有网，本地记录读取成员");
+        NSLog(@"本地记录读取成员");
         [self updateUserIcon];
     }];
 }

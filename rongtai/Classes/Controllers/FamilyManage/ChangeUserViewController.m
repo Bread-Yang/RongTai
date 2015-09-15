@@ -70,12 +70,15 @@
             [Member updateLocalDataByNetworkData:members];
             
             _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+            [self setDefaultsUser:_users[0]];
             [_table reloadData];
             [_loading hide:YES];
             
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
             _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+            [self setDefaultsUser:_users[0]];
+
             [_table reloadData];
             [_loading hide:YES];
         }];
@@ -84,7 +87,19 @@
     {
         NSLog(@"没网，本地记录读取成员");
         _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+        [self setDefaultsUser:_users[0]];
         [_table reloadData];
+    }
+}
+
+#pragma mark - 设置默认用户
+-(void)setDefaultsUser:(Member*)user
+{
+    if (_currentMemberId.length <1) {
+        NSLog(@"设置默认用户");
+        NSString* mid = [NSString stringWithFormat:@"%d",[user.memberId intValue]];
+        _currentMemberId = mid;
+        [[NSUserDefaults standardUserDefaults] setObject:mid forKey:@"currentMemberId"];
     }
 }
 

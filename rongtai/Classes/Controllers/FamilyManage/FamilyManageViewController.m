@@ -28,6 +28,7 @@
     AFNetworkReachabilityManager* _reachability;
     MBProgressHUD* _loading;
     MemberRequest* _mr;
+    NSString* _currentMemberId;
 }
 
 @property(nonatomic, strong) NSArray *memberArray;
@@ -81,6 +82,10 @@
     _mr.overTime = 30;
     _mr.delegate = self;
     
+    _currentMemberId = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentMemberId"];
+    
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -100,12 +105,14 @@
             [Member updateLocalDataByNetworkData:members];
             
             _memberArray = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+            [self setDefaultsUser:_memberArray[0]];
             [_collectView reloadData];
             [_loading hide:YES];
 
         } failure:^(id responseObject) {
             NSLog(@"有网，本地记录读取成员");
             _memberArray = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+            [self setDefaultsUser:_memberArray[0]];
             [_collectView reloadData];
             [_loading hide:YES];
         }];
@@ -114,9 +121,21 @@
     {
         NSLog(@"没网，本地记录读取成员");
         _memberArray = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
+        [self setDefaultsUser:_memberArray[0]];
         [_collectView reloadData];
     }
 }
+
+#pragma mark - 设置默认用户
+-(void)setDefaultsUser:(Member*)user
+{
+    if (_currentMemberId.length <1) {
+        NSString* mid = [NSString stringWithFormat:@"%d",[user.memberId intValue]];
+        _currentMemberId = mid;
+        [[NSUserDefaults standardUserDefaults] setObject:mid forKey:@"currentMemberId"];
+    }
+}
+
 
 #pragma mark - MemberRequest代理
 -(void)requestTimeOut:(MemberRequest *)request

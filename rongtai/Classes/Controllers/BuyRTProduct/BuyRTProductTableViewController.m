@@ -7,6 +7,7 @@
 //
 
 #import "BuyRTProductTableViewController.h"
+#import "UIBarButtonItem+goBack.h"
 
 @interface BuyRTProductTableViewController ()
 
@@ -19,13 +20,21 @@
 	
 	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
 									 [UIImage imageNamed:@"bg"]];
-	
+	 self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+#pragma mark - 返回按钮方法
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -62,6 +71,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BuyUITableViewCell"
 									  forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	
 	UIImageView *productImageView = (UIImageView *)[cell viewWithTag:1];
 	UILabel *productModelLabel = (UILabel *)[cell viewWithTag:2];
