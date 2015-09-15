@@ -290,7 +290,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOA-tX-snV" customClass="WLDoughnutStatsView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOA-tX-snV">
                                 <rect key="frame" x="0.0" y="25" width="600" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDT-Me-yC4">
@@ -465,7 +465,7 @@
                     </view>
                     <connections>
                         <outlet property="_dayBtn" destination="Y3i-Bk-Od3" id="zFp-Q4-m0y"/>
-                        <outlet property="_doughnutView" destination="zOA-tX-snV" id="PAM-fx-lhc"/>
+                        <outlet property="_doughnutAddView" destination="zOA-tX-snV" id="uej-6b-0XJ"/>
                         <outlet property="_monthBtn" destination="BDe-zY-avi" id="Q4I-yX-YAm"/>
                         <outlet property="_storeLineChartView" destination="m5a-up-1Dv" id="5jM-Gq-c0P"/>
                         <outlet property="_usingTime" destination="FUC-XV-GUu" id="rE6-Kj-tpe"/>

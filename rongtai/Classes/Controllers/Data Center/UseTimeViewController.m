@@ -19,7 +19,9 @@
 
 @interface UseTimeViewController ()
 {
-    __weak IBOutlet WLDoughnutStatsView *_doughnutView;   //环形统计图
+    __weak IBOutlet UIView *_doughnutAddView;
+    
+    WLDoughnutStatsView *_doughnutView;  //环形统计图
     
     __weak IBOutlet UIView *_storeLineChartView;  //用来存放折线图的View
 
@@ -41,8 +43,11 @@
     [super viewDidLoad];
     CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
     
+    _doughnutView = [[WLDoughnutStatsView alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0, SCREENWIDTH*0.9, SCREENHEIGHT*0.3)];
     _doughnutView.r = h/2;
     _doughnutView.doughnutWidth = _doughnutView.r*0.25;
+    
+    [_doughnutAddView addSubview:_doughnutView];
     
     _lineChart = [[WLLineChart alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0.15*h, 0.9*SCREENWIDTH, 0.9*h)];
     _lineChart.showXRuler = NO;
@@ -78,14 +83,34 @@
     if (_todayRecord.count>0) {
         NSLog(@"今天有按摩数据");
         NSMutableArray* percents = [NSMutableArray new];
+        NSMutableArray* names = [NSMutableArray new];
+        NSMutableArray* useTimes = [NSMutableArray new];
         for (int i = 0; i<_todayRecord.count; i++) {
             NSDictionary* r = _todayRecord[i];
             NSString* s = [r objectForKey:@"useTime"];
-            float percent = [s integerValue]/(float)useTime;
+            NSInteger time = [s integerValue];
+            float percent = time/(float)useTime;
             NSNumber* num = [NSNumber numberWithFloat:percent];
             [percents addObject:num];
+            
+            NSString* ut;
+            if (time>60) {
+                int h = time/60;
+                int m = time%60;
+                ut = [NSString stringWithFormat:@"%dh%dm",h,m];
+            }
+            else
+            {
+                ut = [NSString stringWithFormat:@"%lum",time];
+            }
+            [useTimes addObject:ut];
+            
+            NSString* name = [r objectForKey:@"name"];
+            [names addObject:name];
         }
         _doughnutView.percents = [NSArray arrayWithArray:percents];
+        _doughnutView.makersName = [NSArray arrayWithArray:names];
+        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
         
         //设置文字
         if (useTime>60) {
