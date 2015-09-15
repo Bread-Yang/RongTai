@@ -86,7 +86,7 @@
 	// 界面跳转
 	
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {  // 跳到自动按摩界面
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 跳到自动按摩界面
             _massageFlag = rtMassageChairStatus.massageProgramFlag;
 			[self jumpToAutoMassageViewConroller];
 		}
