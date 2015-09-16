@@ -19,10 +19,11 @@
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
 
-@interface TimingMassageTableViewController () <TimingPlanDelegate>{
+@interface TimingMassageTableViewController () <TimingPlanDelegate,UITableViewDataSource,UITableViewDelegate>{
     MBProgressHUD *_loading;
 	TimingPlanRequest *_timingPlanRequest;
     NSString* _uid;
+    UITableView* _tableView;
 }
 
 @property (nonatomic, strong) NSMutableArray *timingMassageArray;
@@ -33,18 +34,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = NSLocalizedString(@"定时计划", nil);
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64) style:UITableViewStylePlain];
+    _tableView.backgroundColor = [UIColor clearColor];
 	
     //添加背景
-	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
-	backgroundImageView.image = [UIImage imageNamed:@"bg"];
-	self.tableView.backgroundView = backgroundImageView;
+//	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
+//	backgroundImageView.image = [UIImage imageNamed:@"bg"];
+//	self.tableView.backgroundView = backgroundImageView;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 	
     //导航栏右边的添加按钮
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_set-07"] style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
     
     //导航栏返回按钮设置
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
@@ -94,7 +103,7 @@
             [self.timingMassageArray addObject:item];
         }
         [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
-        [self.tableView reloadData];
+        [_tableView reloadData];
         [_loading hide:YES];
         
     } fail:^(NSDictionary *dic) {
@@ -114,7 +123,7 @@
     NSLog(@"定时计划 读取本地数据");
     NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
     self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
-    [self.tableView reloadData];
+    [_tableView reloadData];
 }
 
 #pragma mark - 同步本地数据
@@ -314,7 +323,7 @@
 	
 	[viewController setReturnTimingMassageBlock:^(TimingMassageModel *entity) {
 		[weakSelf.timingMassageArray addObject:entity];
-		[weakSelf.tableView reloadData];
+		[_tableView reloadData];
 	}];
 
 	[self.navigationController pushViewController:viewController animated:YES];

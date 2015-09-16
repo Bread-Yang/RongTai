@@ -30,11 +30,20 @@
 		3D10638C1B2D18C500266D9A /* RFSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638B1B2D18C500266D9A /* RFSegmentView.m */; };
 		3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */; };
 		3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */; };
-		3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */; };
 		3D1063A31B2D8E4A00266D9A /* WLCheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */; };
 		3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F41B2A93DB00F52352 /* FamilyCollectionViewCell.m */; };
 		3D2C82F81B2A946E00F52352 /* FamilyManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82F71B2A946E00F52352 /* FamilyManageViewController.m */; };
 		3D2C83001B2ACD2900F52352 /* MassageMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2C82FF1B2ACD2900F52352 /* MassageMode.m */; };
+		3D30B59B1BA966A200BD2C41 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3D30B5851BA966A200BD2C41 /* IQKeyboardManager.bundle */; };
+		3D30B59C1BA966A200BD2C41 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B5871BA966A200BD2C41 /* IQKeyboardManager.m */; };
+		3D30B59D1BA966A200BD2C41 /* IQSegmentedNextPrevious.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B58B1BA966A200BD2C41 /* IQSegmentedNextPrevious.m */; };
+		3D30B59E1BA966A200BD2C41 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B58D1BA966A200BD2C41 /* IQTextView.m */; };
+		3D30B59F1BA966A200BD2C41 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B58F1BA966A200BD2C41 /* IQTitleBarButtonItem.m */; };
+		3D30B5A01BA966A200BD2C41 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B5911BA966A200BD2C41 /* IQToolbar.m */; };
+		3D30B5A11BA966A200BD2C41 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B5941BA966A200BD2C41 /* NSArray+Sort.m */; };
+		3D30B5A21BA966A200BD2C41 /* UIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B5961BA966A200BD2C41 /* UIView+Hierarchy.m */; };
+		3D30B5A31BA966A200BD2C41 /* UIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B5981BA966A200BD2C41 /* UIView+IQKeyboardToolbar.m */; };
+		3D30B5A41BA966A200BD2C41 /* UIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B59A1BA966A200BD2C41 /* UIWindow+Hierarchy.m */; };
 		3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */; };
 		3D40EBE81B96AF3A000BCB2C /* userIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D40EBE71B96AF3A000BCB2C /* userIcon.png */; };
 		3D4873601B622993003D2C24 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D48735F1B622993003D2C24 /* SMPageControl.m */; };
@@ -82,7 +91,6 @@
 		3DC790941B4272B00034C3C1 /* navBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DC790931B4272B00034C3C1 /* navBar.png */; };
 		3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */; };
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
-		3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */; };
 		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
 		3DCCAC5C1B8DC07D006F7BBD /* MassageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */; };
 		3DCCAC5F1B8DC411006F7BBD /* MassageTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */; };
@@ -254,8 +262,6 @@
 		3D10638F1B2D559000266D9A /* CustomProcedureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomProcedureViewController.m; sourceTree = "<group>"; };
 		3D1063971B2D5D6A00266D9A /* ProcedureManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageViewController.h; sourceTree = "<group>"; };
 		3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageViewController.m; sourceTree = "<group>"; };
-		3D10639A1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureManageCollectionViewCell.h; sourceTree = "<group>"; };
-		3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureManageCollectionViewCell.m; sourceTree = "<group>"; };
 		3D1063A11B2D8E4A00266D9A /* WLCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLCheckButton.h; sourceTree = "<group>"; };
 		3D1063A21B2D8E4A00266D9A /* WLCheckButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLCheckButton.m; sourceTree = "<group>"; };
 		3D2C82F31B2A93DB00F52352 /* FamilyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FamilyCollectionViewCell.h; sourceTree = "<group>"; };
@@ -265,6 +271,28 @@
 		3D2C82FE1B2ACD2900F52352 /* MassageMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MassageMode.h; sourceTree = "<group>"; };
 		3D2C82FF1B2ACD2900F52352 /* MassageMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MassageMode.m; sourceTree = "<group>"; };
 		3D2C83011B2AD90E00F52352 /* MassageModeENUM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MassageModeENUM.h; sourceTree = "<group>"; };
+		3D30B5851BA966A200BD2C41 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		3D30B5861BA966A200BD2C41 /* IQKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManager.h; sourceTree = "<group>"; };
+		3D30B5871BA966A200BD2C41 /* IQKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardManager.m; sourceTree = "<group>"; };
+		3D30B5881BA966A200BD2C41 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
+		3D30B5891BA966A200BD2C41 /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
+		3D30B58A1BA966A200BD2C41 /* IQSegmentedNextPrevious.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQSegmentedNextPrevious.h; sourceTree = "<group>"; };
+		3D30B58B1BA966A200BD2C41 /* IQSegmentedNextPrevious.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQSegmentedNextPrevious.m; sourceTree = "<group>"; };
+		3D30B58C1BA966A200BD2C41 /* IQTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTextView.h; sourceTree = "<group>"; };
+		3D30B58D1BA966A200BD2C41 /* IQTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTextView.m; sourceTree = "<group>"; };
+		3D30B58E1BA966A200BD2C41 /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTitleBarButtonItem.h; sourceTree = "<group>"; };
+		3D30B58F1BA966A200BD2C41 /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTitleBarButtonItem.m; sourceTree = "<group>"; };
+		3D30B5901BA966A200BD2C41 /* IQToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQToolbar.h; sourceTree = "<group>"; };
+		3D30B5911BA966A200BD2C41 /* IQToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQToolbar.m; sourceTree = "<group>"; };
+		3D30B5921BA966A200BD2C41 /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardManager.h; sourceTree = "<group>"; };
+		3D30B5931BA966A200BD2C41 /* NSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Sort.h"; sourceTree = "<group>"; };
+		3D30B5941BA966A200BD2C41 /* NSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Sort.m"; sourceTree = "<group>"; };
+		3D30B5951BA966A200BD2C41 /* UIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Hierarchy.h"; sourceTree = "<group>"; };
+		3D30B5961BA966A200BD2C41 /* UIView+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Hierarchy.m"; sourceTree = "<group>"; };
+		3D30B5971BA966A200BD2C41 /* UIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
+		3D30B5981BA966A200BD2C41 /* UIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
+		3D30B5991BA966A200BD2C41 /* UIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Hierarchy.h"; sourceTree = "<group>"; };
+		3D30B59A1BA966A200BD2C41 /* UIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Hierarchy.m"; sourceTree = "<group>"; };
 		3D3E712D1B5F3DA900C47CD0 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		3D3E712E1B5F3DA900C47CD0 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		3D40EBE71B96AF3A000BCB2C /* userIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon.png; sourceTree = "<group>"; };
@@ -353,8 +381,6 @@
 		3DCA815D1B296EF30064ECDF /* DoughnutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutViewController.m; sourceTree = "<group>"; };
 		3DCA81621B2A7B6F0064ECDF /* DoughnutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoughnutCollectionViewCell.h; sourceTree = "<group>"; };
 		3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoughnutCollectionViewCell.m; sourceTree = "<group>"; };
-		3DCB46551B2EA8F700DFB1CF /* CustomMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomMassageViewController.h; sourceTree = "<group>"; };
-		3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomMassageViewController.m; sourceTree = "<group>"; };
 		3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishMassageViewController.h; sourceTree = "<group>"; };
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
 		3DCCAC5A1B8DC07D006F7BBD /* MassageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageRecord.h; path = Model/MassageRecord.h; sourceTree = "<group>"; };
@@ -663,6 +689,7 @@
 		3D0258DB1B1D525E006C9179 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				3D30B5841BA966A200BD2C41 /* IQKeyBoardManager */,
 				3D9E89631B3968D8002E0962 /* CWStarRateView */,
 				3DF303E51B38FE2500DD51D3 /* MagicalRecord */,
 				3D1063891B2D18C500266D9A /* RFSegmentView */,
@@ -733,8 +760,6 @@
 				3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */,
 				3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */,
 				3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */,
-				3D10639A1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.h */,
-				3D10639B1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m */,
 			);
 			path = CustomProcedure;
 			sourceTree = "<group>";
@@ -761,6 +786,35 @@
 				3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */,
 			);
 			path = FamilyManage;
+			sourceTree = "<group>";
+		};
+		3D30B5841BA966A200BD2C41 /* IQKeyBoardManager */ = {
+			isa = PBXGroup;
+			children = (
+				3D30B5851BA966A200BD2C41 /* IQKeyboardManager.bundle */,
+				3D30B5861BA966A200BD2C41 /* IQKeyboardManager.h */,
+				3D30B5871BA966A200BD2C41 /* IQKeyboardManager.m */,
+				3D30B5881BA966A200BD2C41 /* IQKeyboardManagerConstants.h */,
+				3D30B5891BA966A200BD2C41 /* IQKeyboardManagerConstantsInternal.h */,
+				3D30B58A1BA966A200BD2C41 /* IQSegmentedNextPrevious.h */,
+				3D30B58B1BA966A200BD2C41 /* IQSegmentedNextPrevious.m */,
+				3D30B58C1BA966A200BD2C41 /* IQTextView.h */,
+				3D30B58D1BA966A200BD2C41 /* IQTextView.m */,
+				3D30B58E1BA966A200BD2C41 /* IQTitleBarButtonItem.h */,
+				3D30B58F1BA966A200BD2C41 /* IQTitleBarButtonItem.m */,
+				3D30B5901BA966A200BD2C41 /* IQToolbar.h */,
+				3D30B5911BA966A200BD2C41 /* IQToolbar.m */,
+				3D30B5921BA966A200BD2C41 /* KeyboardManager.h */,
+				3D30B5931BA966A200BD2C41 /* NSArray+Sort.h */,
+				3D30B5941BA966A200BD2C41 /* NSArray+Sort.m */,
+				3D30B5951BA966A200BD2C41 /* UIView+Hierarchy.h */,
+				3D30B5961BA966A200BD2C41 /* UIView+Hierarchy.m */,
+				3D30B5971BA966A200BD2C41 /* UIView+IQKeyboardToolbar.h */,
+				3D30B5981BA966A200BD2C41 /* UIView+IQKeyboardToolbar.m */,
+				3D30B5991BA966A200BD2C41 /* UIWindow+Hierarchy.h */,
+				3D30B59A1BA966A200BD2C41 /* UIWindow+Hierarchy.m */,
+			);
+			path = IQKeyBoardManager;
 			sourceTree = "<group>";
 		};
 		3D3E712C1B5F3D9700C47CD0 /* AutoMassage */ = {
@@ -971,8 +1025,6 @@
 		3DCB46541B2EA8C200DFB1CF /* Massage */ = {
 			isa = PBXGroup;
 			children = (
-				3DCB46551B2EA8F700DFB1CF /* CustomMassageViewController.h */,
-				3DCB46561B2EA8F700DFB1CF /* CustomMassageViewController.m */,
 				3DCB46581B2EBF3900DFB1CF /* FinishMassageViewController.h */,
 				3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */,
 			);
@@ -1700,6 +1752,7 @@
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				565E71961B5E547200E51C1C /* Resource.bundle in Resources */,
+				3D30B59B1BA966A200BD2C41 /* IQKeyboardManager.bundle in Resources */,
 				565E719B1B5E547200E51C1C /* WeiboSDK.bundle in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
 				565E71951B5E547200E51C1C /* ShareSDKLocalizable.strings in Resources */,
@@ -1769,6 +1822,7 @@
 				56B0E26F1B96980B001C96FA /* UIImageView+RT.m in Sources */,
 				3DF0FE0F1B85741A001CAAFE /* TimingPlanRequest.m in Sources */,
 				567281561B32A0E20059C18E /* MBProgressHUD.m in Sources */,
+				3D30B59C1BA966A200BD2C41 /* IQKeyboardManager.m in Sources */,
 				56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */,
 				3DCDF36E1B1FEB7400BA491E /* SlideNavigationController.m in Sources */,
 				3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */,
@@ -1793,6 +1847,8 @@
 				3DF3042C1B38FE2500DD51D3 /* NSManagedObject+MagicalAggregation.m in Sources */,
 				561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */,
 				3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */,
+				3D30B5A01BA966A200BD2C41 /* IQToolbar.m in Sources */,
+				3D30B5A11BA966A200BD2C41 /* NSArray+Sort.m in Sources */,
 				56E9E4E21B5907E600F01ECB /* NAPickerView.m in Sources */,
 				3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */,
 				DF9C7CF61B147A36005617DA /* JRCBPeripheral.m in Sources */,
@@ -1814,6 +1870,8 @@
 				DF9C7D041B147D59005617DA /* WelcomeViewController.m in Sources */,
 				3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */,
 				56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */,
+				3D30B59D1BA966A200BD2C41 /* IQSegmentedNextPrevious.m in Sources */,
+				3D30B5A31BA966A200BD2C41 /* UIView+IQKeyboardToolbar.m in Sources */,
 				3D0709A61B6B6A0E0010920D /* Member.m in Sources */,
 				563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */,
 				DF9C7CF51B147A36005617DA /* JRBluetoothManager.m in Sources */,
@@ -1827,6 +1885,7 @@
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,
 				3DCDF3681B1FEB7400BA491E /* SlideNavigationContorllerAnimatorScale.m in Sources */,
 				3D1063991B2D5D6A00266D9A /* ProcedureManageViewController.m in Sources */,
+				3D30B5A21BA966A200BD2C41 /* UIView+Hierarchy.m in Sources */,
 				56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */,
 				3DF304341B38FE2500DD51D3 /* NSManagedObjectContext+MagicalSaves.m in Sources */,
 				3D9E892E1B39503D002E0962 /* NSString+RT.m in Sources */,
@@ -1835,6 +1894,7 @@
 				3D9EBAE51B3D3893000FD810 /* MassageProgram.m in Sources */,
 				3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3DF304321B38FE2500DD51D3 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
+				3D30B59F1BA966A200BD2C41 /* IQTitleBarButtonItem.m in Sources */,
 				3DF3042D1B38FE2500DD51D3 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */,
 				3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */,
@@ -1842,12 +1902,12 @@
 				3D92FDC91B5763BB0021E727 /* UIView+AddBorder.m in Sources */,
 				3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */,
 				3DF304281B38FE2500DD51D3 /* NSNumber+MagicalDataImport.m in Sources */,
-				3DCB46571B2EA8F700DFB1CF /* CustomMassageViewController.m in Sources */,
 				3D783D391B12FD0300A893D9 /* RTBleListViewController.m in Sources */,
 				3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */,
 				3DCCAC5C1B8DC07D006F7BBD /* MassageRecord.m in Sources */,
 				3DF0FE121B85743A001CAAFE /* TimingPlan.m in Sources */,
 				3DBE05B21B280CDF0008EFCA /* UseTimeViewController.m in Sources */,
+				3D30B5A41BA966A200BD2C41 /* UIWindow+Hierarchy.m in Sources */,
 				56F2DA3D1B7455B400C8086D /* UIView+RT.m in Sources */,
 				3DF304271B38FE2500DD51D3 /* NSEntityDescription+MagicalDataImport.m in Sources */,
 				568C3BBA1B60D1C40092A431 /* LineCollectionView.m in Sources */,
@@ -1855,6 +1915,7 @@
 				3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */,
 				3DF304351B38FE2500DD51D3 /* NSManagedObjectContext+MagicalThreading.m in Sources */,
 				3DBE05B81B282BA10008EFCA /* PowerConsumeViewController.m in Sources */,
+				3D30B59E1BA966A200BD2C41 /* IQTextView.m in Sources */,
 				3DF2256D1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m in Sources */,
 				3DE3FFAC1B4F7C79003F8AF7 /* BasicViewController.m in Sources */,
 				3D783D361B12FD0300A893D9 /* AppDelegate.m in Sources */,
@@ -1867,7 +1928,6 @@
 				3D8EEBCB1B5E43EF00626EB2 /* WLYAxis.m in Sources */,
 				3DF304301B38FE2500DD51D3 /* NSManagedObject+MagicalRequests.m in Sources */,
 				3DCA815E1B296EF30064ECDF /* DoughnutViewController.m in Sources */,
-				3D10639C1B2D6FF200266D9A /* ProcedureManageCollectionViewCell.m in Sources */,
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */,
 				3DF304261B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -2053,7 +2113,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/rongtai/PrefixHeader.pch";
 				INFOPLIST_FILE = rongtai/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2091,7 +2151,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/rongtai/PrefixHeader.pch";
 				INFOPLIST_FILE = rongtai/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

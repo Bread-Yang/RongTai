@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface TimingMassageTableViewController : UITableViewController
+@interface TimingMassageTableViewController : BasicViewController
 
 -(void)synchroTimingPlanLocalData:(BOOL)isContinue;
 

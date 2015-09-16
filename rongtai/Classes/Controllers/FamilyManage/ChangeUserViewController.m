@@ -66,7 +66,7 @@
         MemberRequest* mr = [MemberRequest new];
         mr.overTime = 30;
         mr.delegate = self;
-        [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+        [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
             [Member updateLocalDataByNetworkData:members];
             
             _users = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];

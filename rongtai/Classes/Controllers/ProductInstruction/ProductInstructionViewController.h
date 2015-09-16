@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasicViewController.h"
 
-@interface ProductInstructionViewController : UIViewController
+@interface ProductInstructionViewController :BasicViewController
 
 @end

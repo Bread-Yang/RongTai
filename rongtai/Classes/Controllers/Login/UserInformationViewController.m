@@ -19,6 +19,7 @@
 #import <UIButton+AFNetworking.h>
 #import "MainViewController.h"
 #import "UIBarButtonItem+goBack.h"
+#import "IQKeyboardManager.h"
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, RFSegmentViewDelegate, UITextFieldDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
@@ -185,6 +186,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+   
     self.navigationController.navigationBarHidden = NO;
     //注册监听
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -194,7 +196,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+ 
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    IQKeyboardManager* key = [IQKeyboardManager sharedManager];
+    key.enableAutoToolbar = NO;
+    key.enable = NO;
+}
+
 
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -202,6 +214,9 @@
     //移除监听
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification  object:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification  object:self];
+    IQKeyboardManager* key = [IQKeyboardManager sharedManager];
+    key.enableAutoToolbar = YES;
+    key.enable = YES;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

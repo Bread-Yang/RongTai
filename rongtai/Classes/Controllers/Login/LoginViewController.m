@@ -112,6 +112,8 @@
                 if (_password.text.length > 0) {
                     if (_password.text.length >5&&_password.text.length < 19) {
                         [_loading show:YES];
+                        [_password resignFirstResponder];
+                        [_phoneNum resignFirstResponder];
                         [_loginRequest loginByPhone:_phoneNum.text Password:_password.text];
                     }
                     else
@@ -156,7 +158,6 @@
 -(void)loginRequestLoginFinished:(BOOL)success Result:(NSDictionary *)result
 {
 	if (success) {
-		
 		NSString* token = [result objectForKey:@"token"];
 		NSString* uid = [result objectForKey:@"uid"];
         NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
@@ -166,7 +167,7 @@
         [ud setObject:uid forKey:@"uid"];
         
         MemberRequest* mr = [MemberRequest new];
-        [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+        [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
             NSLog(@"成员:%@",members);
             if (members.count<1) {
                 //没有家庭成员，要跳到添加成员页面
@@ -194,7 +195,7 @@
         } failure:^(id responseObject) {
             [_loading hide:YES];
             [ud setObject:nil forKey:@"uid"];
-            [self showProgressHUDByString:@"登录失败，请检查账号密码"];
+            [self showProgressHUDByString:@"用户数据加载失败，请重新登录"];
             NSLog(@"有网，本地记录读取成员");
         }];
 	}
@@ -208,16 +209,47 @@
 - (void)loginRequestThirdLoginFinished:(BOOL)success Result:(NSDictionary *)result {
     [_loading hide:YES];
 	if (success) {
-		NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-		NSString* token = [result objectForKey:@"token"];
-		NSString* uid = [result objectForKey:@"uid"];
-		[ud setObject:token forKey:@"token"];
-		[ud setObject:uid forKey:@"uid"];
+        NSString* token = [result objectForKey:@"token"];
+        NSString* uid = [result objectForKey:@"uid"];
+        NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:uid forKey:@"uid"];
+        
+        MemberRequest* mr = [MemberRequest new];
+        [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
+            NSLog(@"成员:%@",members);
+            if (members.count<1) {
+                //没有家庭成员，要跳到添加成员页面
+                [_loading hide:YES];
+                [ud setObject:nil forKey:@"uid"];
+                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                UserInformationViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+                vc.isRegister = YES;
+                [vc setUid:uid AndToken:token];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            else
+            {
+                [Member updateLocalDataByNetworkData:members];
+                
+                [ud setObject:token forKey:@"token"];
+                
+                
+                [_loading hide:YES];
+                MainViewController *vc = [MainViewController new];
+                vc.isFromLoginViewController = true;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        } failure:^(id responseObject) {
+            [_loading hide:YES];
+            [ud setObject:nil forKey:@"uid"];
+            [self showProgressHUDByString:@"用户数据加载失败，请重新登录"];
+            NSLog(@"有网，本地记录读取成员");
+        }];
 
-
-		MainViewController *vc = [MainViewController new];
-		vc.isFromLoginViewController = true;
-		[self.navigationController pushViewController:vc animated:YES];
+//		MainViewController *vc = [MainViewController new];
+//		vc.isFromLoginViewController = true;
+//		[self.navigationController pushViewController:vc animated:YES];
 	}
     else
     {

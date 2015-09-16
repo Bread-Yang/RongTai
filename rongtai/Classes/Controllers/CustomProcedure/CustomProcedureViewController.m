@@ -13,7 +13,6 @@
 #import "ProcedureManageViewController.h"
 #import "RFSegmentView.h"
 #import "WLCheckButton.h"
-#import "CustomMassageViewController.h"
 #import "CustomProgram.h"
 #import "CoreData+MagicalRecord.h"
 #import "UIBarButtonItem+goBack.h"
@@ -289,9 +288,7 @@
 
 #pragma mark - 开始按摩按钮
 - (IBAction)startMassage:(UIButton *)sender {
-//    UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//    CustomMassageViewController* c = (CustomMassageViewController*)[s instantiateViewControllerWithIdentifier:@"CustomMassageVC"];
-//    [self.navigationController pushViewController:c animated:YES];
+
 	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	ProgramDownloadViewController *pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
 	pVC.isDownloadCustomProgram = YES;

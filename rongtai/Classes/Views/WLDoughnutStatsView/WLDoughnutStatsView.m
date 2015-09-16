@@ -8,6 +8,15 @@
 
 #import "WLDoughnutStatsView.h"
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#define JY_TEXT_SIZE(text, font) [text length] > 0 ? [text sizeWithAttributes : @{ NSFontAttributeName : font }] : CGSizeZero;
+#define JY_DRAW_TEXT_IN_RECT(text, rect, font) [text drawInRect : rect withAttributes : @{ NSFontAttributeName:font }];
+#else
+#define JY_TEXT_SIZE(text, font) [text length] > 0 ? [text sizeWithFont : font] : CGSizeZero;
+#define JY_DRAW_TEXT_IN_RECT(text, rect, font) [text drawInRect : rect withFont : font];
+
+#endif
+
 @interface WLDoughnutStatsView ()
 {
     NSMutableArray* _centerPoints;
@@ -217,200 +226,171 @@
     //画百分比
     if(_isShowPercent)
     {
-        //右边开始画
-        if (_makersName.count == _makersDescription.count&& _makersDescription.count == _percents.count) {
-        CGFloat s = 0.8;
-        CGFloat dltY = 5;
-        CGFloat dlt = 2; //文字间的距离
-        CGFloat mWidth = (w - _r*2)*s/2;  //view宽度减去圆环半径两倍（即圆环大小），再乘以比例，除以2，得到标注文字宽度
-        NSUInteger maxCount = MIN(rightCount, leftCount);  //获取一边标注的最大值
-        CGFloat mHeight = (h-dltY*2)/maxCount;  //算出标注的宽度
-        
-        //画右边标注
-        CGFloat makerY = dltY;
-        CGFloat makerX = w;
-        for (int i = 0; i<rightCount; i++) {
-            //画百分比数
-            CGFloat y = makerY;
-            NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            NSMutableDictionary* attributes = [NSMutableDictionary new];
-            [attributes setObject:self.percentFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            if (_percentColor[i%4]) {
-                [attributes setObject:_percentColor[i%4] forKey:NSForegroundColorAttributeName];
+        if (_makersDescription.count == _makersName.count && _makersName.count == _percents.count) {
+            //右边开始画
+            CGFloat s = 0.8;
+            CGFloat dltY = 5;
+            CGFloat dlt = 2; //文字间的距离
+            CGFloat mWidth = (w - _r*2)*s/2;  //view宽度减去圆环半径两倍（即圆环大小），再乘以比例，除以2，得到标注文字宽度
+            NSUInteger maxCount = MAX(rightCount, leftCount);  //获取一边标注的最大值
+            CGFloat mHeight = (h-dltY*2)/maxCount;  //算出标注的宽度
+            
+            //画右边标注
+            CGFloat makerY = dltY;
+            CGFloat makerX = w;
+            for (int i = 0; i<rightCount; i++) {
+                //百分比的AttributedString和Size
+                NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[i] floatValue]*100)];
+                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[i%4] String:percentStr Font:self.percentFont]];
+                [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
+                [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
+                CGSize attributeTextSize = [attributeName size];
+                
+                //标注名的AttributedString和Size
+                NSAttributedString* makersName = [self attributedStringByColor:self.makersNameColor String:_makersName[i] Font:self.markersNameFont];
+                CGSize makersNameTextSize = [makersName size];
+                
+                //标注描述的AttributedString和Size
+                NSAttributedString* makersDes = [self attributedStringByColor:self.makersDesColor String:_makersDescription[i] Font:self.markersDesFont];
+                CGSize makersDesTextSize = [makersDes size];
+                
+                //画百分比数
+                //计算出百分比文字要画的区域
+                CGFloat y = makerY+(mHeight-attributeTextSize.height-makersNameTextSize.height-makersDesTextSize.height)/2;
+                CGRect f = CGRectZero;
+                f.size = attributeTextSize;
+                CGFloat pH = attributeTextSize.height;
+                f.origin = CGPointMake(makerX-attributeTextSize.width , y+pH/2);
+                [attributeName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                //画分割线
+                [_lineColor setStroke];
+                y += (pH/2+dlt);
+                CGPoint startPoint = CGPointMake(makerX-mWidth, y);
+                
+                //把点存到数组，最后连线需要用到
+                [_makersPoints setObject:[NSValue valueWithCGPoint:startPoint] atIndexedSubscript:i];
+                CGPoint endPoint = CGPointMake(makerX, y);
+                CGContextSetLineWidth(context, _lineWidth);
+                CGContextMoveToPoint(context,startPoint.x,startPoint.y);
+                CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
+                CGContextStrokePath(context);
+                
+                //画标注名称
+                
+                //计算出百分比文字要画的区域
+                f = CGRectZero;
+                f.size = makersNameTextSize;
+                pH = makersNameTextSize.height;
+                y += (pH/2+dlt*2+_lineWidth);
+                f.origin = CGPointMake(makerX-makersNameTextSize.width , y);
+                [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                //画标注描述
+                
+                //计算出百分比文字要画的区域
+                f = CGRectZero;
+                f.size = makersDesTextSize;
+                pH = makersDesTextSize.height;
+                y += (pH/2+dlt*2);
+                f.origin = CGPointMake(makerX-makersDesTextSize.width , y);
+                [makersDes drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                makerY += mHeight;
             }
-            NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[i] floatValue]*100)];
-            NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithString:percentStr attributes:attributes];
-            [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
-            [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
             
-            CGSize attributeTextSize = [attributeName size];
-            //计算出百分比文字要画的区域
-            CGRect f = CGRectZero;
-            f.size = attributeTextSize;
-            CGFloat pH = attributeTextSize.height;
-            f.origin = CGPointMake(makerX-attributeTextSize.width , y+pH/2);
-            [attributeName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            //画分割线
-            [_lineColor setStroke];
-            y += (pH/2+dlt);
-            CGPoint startPoint = CGPointMake(makerX-mWidth, y);
-            
-            //把点存到数组，最后连线需要用到
-            [_makersPoints setObject:[NSValue valueWithCGPoint:startPoint] atIndexedSubscript:i];
-            CGPoint endPoint = CGPointMake(makerX, y);
-            CGContextSetLineWidth(context, _lineWidth);
-            CGContextMoveToPoint(context,startPoint.x,startPoint.y);
-            CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
-            CGContextStrokePath(context);
-            
-            //画标注名称
-            paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            attributes = [NSMutableDictionary new];
-            [attributes setObject:self.markersNameFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            
-            [attributes setObject:self.makersNameColor forKey:NSForegroundColorAttributeName];
-            
-            NSAttributedString* makersName = [[NSAttributedString alloc]initWithString:_makersName[i] attributes:attributes];
-            CGSize makersTextSize = [makersName size];
-            //计算出百分比文字要画的区域
-            f = CGRectZero;
-            f.size = makersTextSize;
-            pH = makersTextSize.height;
-            y += (pH/2+dlt*2+_lineWidth);
-            f.origin = CGPointMake(makerX-makersTextSize.width , y);
-            [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            //画标注描述
-            paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            attributes = [NSMutableDictionary new];
-            [attributes setObject:self.markersDesFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            
-            [attributes setObject:self.makersDesColor forKey:NSForegroundColorAttributeName];
-            
-            makersName = [[NSAttributedString alloc]initWithString:_makersDescription[i] attributes:attributes];
-            makersTextSize = [makersName size];
-            //计算出百分比文字要画的区域
-            f = CGRectZero;
-            f.size = makersTextSize;
-            pH = makersTextSize.height;
-            y += (pH/2+dlt*2);
-            f.origin = CGPointMake(makerX-makersTextSize.width , y);
-            [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            makerY += mHeight;
-        }
-        
-        //画左边标注
-        int j = 0;
-        makerY = dltY+(leftCount-1)*mHeight;
-        makerX = 0;
-        for (int i = 0; i<leftCount; i++) {
-            j = i+(int)rightCount;
-            //画百分比数
-            CGFloat y = makerY;
-            NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            NSMutableDictionary* attributes = [NSMutableDictionary new];
-            [attributes setObject:self.percentFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            if (_percentColor[j%4]) {
-                [attributes setObject:_percentColor[j%4] forKey:NSForegroundColorAttributeName];
+            //画左边标注
+            int j = 0;
+            makerY = dltY+(leftCount-1)*mHeight;
+            makerX = 0;
+            for (int i = 0; i<leftCount; i++) {
+                j = i+(int)rightCount;
+                
+                //百分比的AttributedString和Size
+                NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[j] floatValue]*100)];
+                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[j%4] String:percentStr Font:self.percentFont]];
+                [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
+                [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
+                CGSize attributeTextSize = [attributeName size];
+                
+                //标注名的AttributedString和Size
+                NSAttributedString* makersName = [self attributedStringByColor:self.makersNameColor String:_makersName[j] Font:self.markersNameFont];
+                CGSize makersNameTextSize = [makersName size];
+                
+                //标注描述的AttributedString和Size
+                NSAttributedString* makersDes = [self attributedStringByColor:self.makersDesColor String:_makersDescription[j] Font:self.markersDesFont];
+                CGSize makersDesTextSize = [makersDes size];
+                
+                //画百分比数
+                //计算出百分比文字要画的区域
+                CGFloat y = makerY+(mHeight-attributeTextSize.height-makersNameTextSize.height-makersDesTextSize.height)/2;
+                CGRect f = CGRectZero;
+                f.size = attributeTextSize;
+                CGFloat pH = attributeTextSize.height;
+                f.origin = CGPointMake(makerX, y+pH/2);
+                [attributeName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                //画分割线
+                [_lineColor setStroke];
+                y += (pH/2+dlt);
+                CGPoint startPoint = CGPointMake(makerX+mWidth, y);
+                //把点存到数组，最后连线需要用到
+                [_makersPoints setObject:[NSValue valueWithCGPoint:startPoint] atIndexedSubscript:j];
+                CGPoint endPoint = CGPointMake(makerX, y);
+                CGContextSetLineWidth(context, _lineWidth);
+                CGContextMoveToPoint(context,startPoint.x,startPoint.y);
+                CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
+                CGContextStrokePath(context);
+                
+                //画标注名称
+                
+                //计算出百分比文字要画的区域
+                f = CGRectZero;
+                f.size = makersNameTextSize;
+                pH = makersNameTextSize.height;
+                y += (pH/2+dlt*2+_lineWidth);
+                f.origin = CGPointMake(makerX , y);
+                [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                //画标注描述
+                
+                //计算出百分比文字要画的区域
+                f = CGRectZero;
+                f.size = makersDesTextSize;
+                pH = makersDesTextSize.height;
+                y += (pH/2+dlt*2);
+                f.origin = CGPointMake(makerX , y);
+                [makersDes drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
+                
+                makerY -= mHeight;
             }
-            NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[j] floatValue]*100)];
-            NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithString:percentStr attributes:attributes];
-            [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
-            [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
             
-            CGSize attributeTextSize = [attributeName size];
-            //计算出百分比文字要画的区域
-            CGRect f = CGRectZero;
-            f.size = attributeTextSize;
-            CGFloat pH = attributeTextSize.height;
-            f.origin = CGPointMake(makerX, y+pH/2);
-            [attributeName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            //画分割线
+            //连线
             [_lineColor setStroke];
-            y += (pH/2+dlt);
-            CGPoint startPoint = CGPointMake(makerX+mWidth, y);
-            
-            //把点存到数组，最后连线需要用到
-            [_makersPoints setObject:[NSValue valueWithCGPoint:startPoint] atIndexedSubscript:j];
-            CGPoint endPoint = CGPointMake(makerX, y);
             CGContextSetLineWidth(context, _lineWidth);
-            CGContextMoveToPoint(context,startPoint.x,startPoint.y);
-            CGContextAddLineToPoint(context, endPoint.x, endPoint.y);
+            for (int i = 0; i<_makersPoints.count; i++) {
+                CGPoint start = [_makersPoints[i] CGPointValue];
+                CGPoint end = [_centerPoints[i] CGPointValue];
+                CGContextMoveToPoint(context, start.x, start.y);
+                CGContextAddLineToPoint(context, end.x, end.y);
+            }
             CGContextStrokePath(context);
-            
-            //画标注名称
-            paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            attributes = [NSMutableDictionary new];
-            [attributes setObject:self.markersNameFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            
-            [attributes setObject:self.makersNameColor forKey:NSForegroundColorAttributeName];
-            
-            NSAttributedString* makersName = [[NSAttributedString alloc]initWithString:_makersName[j] attributes:attributes];
-            CGSize makersTextSize = [makersName size];
-            //计算出百分比文字要画的区域
-            f = CGRectZero;
-            f.size = makersTextSize;
-            pH = makersTextSize.height;
-            y += (pH/2+dlt*2+_lineWidth);
-            f.origin = CGPointMake(makerX , y);
-            [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            //画标注描述
-            paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-            [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
-            [paragraphStyle setAlignment:NSTextAlignmentCenter];
-            attributes = [NSMutableDictionary new];
-            [attributes setObject:self.markersDesFont forKey:NSFontAttributeName];
-            [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-            
-            [attributes setObject:self.makersDesColor forKey:NSForegroundColorAttributeName];
-            
-            makersName = [[NSAttributedString alloc]initWithString:_makersDescription[j] attributes:attributes];
-            makersTextSize = [makersName size];
-            //计算出百分比文字要画的区域
-            f = CGRectZero;
-            f.size = makersTextSize;
-            pH = makersTextSize.height;
-            y += (pH/2+dlt*2);
-            f.origin = CGPointMake(makerX , y);
-            [makersName drawWithRect:f options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesDeviceMetrics context:nil];
-            
-            makerY -= mHeight;
         }
-        
-        //连线
-        [_lineColor setStroke];
-        CGContextSetLineWidth(context, _lineWidth);
-        for (int i = 0; i<_makersPoints.count; i++) {
-            CGPoint start = [_makersPoints[i] CGPointValue];
-            CGPoint end = [_centerPoints[i] CGPointValue];
-            CGContextMoveToPoint(context, start.x, start.y);
-            CGContextAddLineToPoint(context, end.x, end.y);
-        }
-        CGContextStrokePath(context);
-        }
-        
     }
 }
 
+-(NSAttributedString*)attributedStringByColor:(UIColor*)color String:(NSString*)string Font:(UIFont*)font
+{
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
+    [paragraphStyle setAlignment:NSTextAlignmentCenter];
+    NSMutableDictionary* attributes = [NSMutableDictionary new];
+    [attributes setObject:font forKey:NSFontAttributeName];
+    [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [attributes setObject:color forKey:NSForegroundColorAttributeName];
+    NSAttributedString* attributeName = [[NSAttributedString alloc]initWithString:string attributes:attributes];
+    return attributeName;
+}
 
 
 

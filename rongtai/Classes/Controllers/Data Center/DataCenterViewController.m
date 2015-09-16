@@ -31,6 +31,7 @@
     NSUInteger _todayUseTime;  //今日使用时长
     NSString* _uid;
     MBProgressHUD *_loading;
+    UIView* _clearView;  //再显示菊花图的生活盖住最上层View
 }
 @end
 
@@ -47,22 +48,8 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     
-    //MBProgressHUD
-    _loading = [[MBProgressHUD alloc]initWithView:self.view];
-    _loading.labelText = NSLocalizedString(@"读取中...", nil);
-    [self.view addSubview:_loading];
 
-//    NSDate* date = [NSDate date];
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-//    NSString* todayIndex = [dateFormatter stringFromDate:date];
-//    NSArray* todayRecord = [MassageRecord MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(date == %@) AND (uid == %@)",todayIndex,_uid]];
-//    _todayUseTime = 0;
-//    for (int i = 0; i<todayRecord.count;i++) {
-//        MassageRecord* m = todayRecord[i];
-//        _todayUseTime += [m.useTime integerValue];
-//    }
-
+    
     //分页控制器
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 5, 60, 10)];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:169/255.0 green:190/255.0 blue:205/255.0 alpha:1];
@@ -125,6 +112,13 @@
     [_scroll addSubview:_doughnutVC.view];
     [self addChildViewController:_doughnutVC];
     
+    //MBProgressHUD
+    _clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    _clearView.backgroundColor = [UIColor clearColor];
+    _loading = [[MBProgressHUD alloc]initWithView:self.view];
+    _loading.labelText = NSLocalizedString(@"读取中...", nil);
+    [self.view addSubview:_loading];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -159,6 +153,7 @@
         
         //数据传到使用时长页面
         [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
+        [_useTimeVc setWeekData:arr ByDataCenterVC:self];
         
         //设置该页面的总使用时长
         if (_totalTime<60) {
@@ -276,6 +271,18 @@
 -(void)share
 {
     
+}
+
+#pragma mark - 显示HUD
+-(void)showHUD
+{
+    [_loading show:YES];
+}
+
+#pragma mark - 关闭HUD
+-(void)hideHUD
+{
+    [_loading hide:NO];
 }
 
 #pragma mark - 快速提示

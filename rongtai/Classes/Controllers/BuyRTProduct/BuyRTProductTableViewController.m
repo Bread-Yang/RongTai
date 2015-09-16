@@ -8,18 +8,23 @@
 
 #import "BuyRTProductTableViewController.h"
 #import "UIBarButtonItem+goBack.h"
+#import "RongTaiConstant.h"
 
-@interface BuyRTProductTableViewController ()
-
+@interface BuyRTProductTableViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    __weak IBOutlet UITableView *_tableView;
+}
 @end
 
 @implementation BuyRTProductTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.tableView.backgroundView = [[UIImageView alloc] initWithImage:
-									 [UIImage imageNamed:@"bg"]];
+    self.title = NSLocalizedString(@"我要购买", nil);
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
 	 self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -35,7 +40,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -44,13 +48,13 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
     return 4;
 }
@@ -108,6 +112,11 @@
 	}
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 126;
 }
 
 /*

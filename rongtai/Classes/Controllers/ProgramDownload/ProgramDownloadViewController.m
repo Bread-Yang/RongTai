@@ -87,6 +87,7 @@
 		}];
 	} else {
 		NSLog(@"没网，本地记录读取成员");
+        [self showProgressHUDByString:@"无法访问网络"];
 	}
 }
 
@@ -263,6 +264,18 @@
         }
     }
     return cell;
+}
+
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 @end

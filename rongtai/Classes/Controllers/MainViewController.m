@@ -441,7 +441,7 @@
     //网络请求
     NSLog(@"请求成员");
     MemberRequest* mr = [MemberRequest new];
-    [mr requestMemberListByIndex:0 Size:20 success:^(NSArray *members) {
+    [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
         //            NSLog(@"成员:%@",members);
         [Member updateLocalDataByNetworkData:members];
         [self updateUserIcon];

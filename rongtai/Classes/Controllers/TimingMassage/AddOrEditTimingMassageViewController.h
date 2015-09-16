@@ -13,10 +13,11 @@
 #import "NAPickerView.h"
 #import "LineCollectionView.h"
 #import "TimingPlan.h"
+#import "BasicViewController.h"
 
 typedef void (^ReturnTimingMassageBlock)(TimingMassageModel *entity);
 
-@interface AddOrEditTimingMassageViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewDelegate, NAPickerViewDelegate>
+@interface AddOrEditTimingMassageViewController : BasicViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDataSource, UIPickerViewDelegate, LineUICollectionViewDelegate, NAPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *containView;
 

@@ -11,4 +11,13 @@
 
 @interface DataCenterViewController : BasicViewController
 
+#pragma mark - 显示HUD
+-(void)showHUD;
+
+#pragma mark - 关闭HUD
+-(void)hideHUD;
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message;
+
 @end

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class DataCenterViewController;
+
 @interface UseTimeViewController : UIViewController
 
 -(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSInteger)useTime;
 
+
+-(void)setWeekData:(NSArray*)weekRecords ByDataCenterVC:(DataCenterViewController*)dataCenterVC;
 @end
