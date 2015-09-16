@@ -42,11 +42,11 @@
     BOOL b = counts.count>0;
     [ProgramCount synchroUseCountDataFormServer:b Success:^{
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
         [_collectView reloadData];
     } Fail:^(NSDictionary * dic) {
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
         [_collectView reloadData];
     }];
     

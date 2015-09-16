@@ -25,6 +25,7 @@
     WLDoughnutStatsView *_doughnutView;  //环形统计图
     
     __weak IBOutlet UIView *_storeLineChartView;  //用来存放折线图的View
+    UIScrollView* _scrollView;
 
     __weak IBOutlet UIButton *_dayBtn;
     __weak IBOutlet UIButton *_monthBtn;
@@ -63,7 +64,13 @@
     _lineChart.yUnitFont = [UIFont systemFontOfSize:11];
     _lineChart.xValueFont = [UIFont systemFontOfSize:11];
     _lineChart.xUnitFont = [UIFont systemFontOfSize:11];
-    [_storeLineChartView addSubview:_lineChart];
+    
+    
+    //
+//    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH,0, SCREENWIDTH*0.9, SCREENHEIGHT*0.3)];
+//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*0.9, <#CGFloat height#>)
+//    
+////    [_storeLineChartView addSubview:_lineChart];
     
     _usingTime.font = [UIFont fontWithName:@"Helvetica" size:10*HSCALE];
     [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
@@ -89,13 +96,13 @@
         for (int i = 0; i<td.count; i++) {
             NSDictionary* r = td[i];
             NSNumber* rID = [r objectForKey:@"massageId"];
-            NSString* s = [r objectForKey:@"useTime"];
+            NSNumber* s = [r objectForKey:@"useTime"];
             NSInteger time = [s integerValue];
             for (int j = i+1; j<td.count; j++) {
                 NSDictionary* restRecord = td[j];
                 NSNumber* restID = [restRecord objectForKey:@"massageId"];
                 if ([rID integerValue]==[restID integerValue]) {
-                    NSString* useTime = [r objectForKey:@"useTime"];
+                    NSNumber* useTime = [restRecord objectForKey:@"useTime"];
                     time += [useTime integerValue];
                     [td removeObject:restRecord];
                     j--;

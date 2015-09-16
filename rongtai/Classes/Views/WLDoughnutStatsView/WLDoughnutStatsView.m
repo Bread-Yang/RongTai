@@ -179,7 +179,7 @@
     ///////计算圆弧中心点
     [[UIColor blackColor] setStroke];
     CGFloat _currentAngle = -angle/2 ;
-    NSLog(@"弧度：%f",_currentAngle);
+//    NSLog(@"弧度：%f",_currentAngle);
     CGPoint p = CGPointMake(_center.x - (_r+3) * sin(_currentAngle), _center.y - (_r+3) * cos(_currentAngle));
     //    CGContextFillEllipseInRect(context, CGRectMake(p.x-1.5, p.y-1.5, 3, 3));
     [_centerPoints setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:0];
@@ -208,7 +208,7 @@
         //计算圆弧中心，方便标注布局
         [[UIColor blackColor] setStroke];
         CGFloat _currentAngle = -angle/2+pointStart;
-        NSLog(@"弧度：%f",_currentAngle);
+//        NSLog(@"弧度：%f",_currentAngle);
         CGPoint p = CGPointMake(_center.x - (_r+3) * sin(_currentAngle), _center.y - (_r+3) * cos(_currentAngle));
         //        CGContextFillEllipseInRect(context, CGRectMake(p.x-1.5, p.y-1.5, 3, 3));
         [_centerPoints setObject:[NSValue valueWithCGPoint:p] atIndexedSubscript:i];

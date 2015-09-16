@@ -28,6 +28,7 @@
     //
     RTBleConnector* _bleConnector;
     NSArray* _skillsPreferenceName;    //技法偏好选项数组
+    CustomIOSAlertView* _alert;
 }
 @end
 
@@ -54,6 +55,20 @@
     
     //技法偏好类型数组
     _skillsPreferenceName = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
+    
+    _alert = [[CustomIOSAlertView alloc]init];
+    [_alert setTitleString:@"提示"];
+    UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
+    l.text = @"已切换到手动模式";
+    l.textAlignment = NSTextAlignmentCenter;
+    l.textColor = [UIColor lightGrayColor];
+    [_alert setContainerView:l];
+    [_alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
+    __weak ScanViewController* svc = self;
+    [_alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+        [svc backToMainViewController];
+    }];
+    [_alert setUseMotionEffects:true];
     
     // Do any additional setup after loading the view.
 }
@@ -111,45 +126,29 @@
 	
 	if (rtMassageChairStatus.figureCheckFlag == 0) {
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 跳到自动按摩界面
-            _massageFlag = rtMassageChairStatus.massageProgramFlag;
+            if (_massageFlag!= rtMassageChairStatus.massageProgramFlag) {
+                _massageFlag = rtMassageChairStatus.massageProgramFlag;
+            }
 			[self jumpToAutoMassageViewConroller];
 		}
         else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
         {
-            //
             //自动按摩
             if (_massageFlag != 7) {
                 NSLog(@"切换到手动按摩");
-               
-                
+                [self countMassageTime];
                 _massageFlag = rtMassageChairStatus.massageProgramFlag;
                 
                 //自动切换到手动，弹出提示框
-                CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
-                [alert setTitleString:@"提示"];
-                UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
-                l.text = @"已切换到手动模式";
-                l.textAlignment = NSTextAlignmentCenter;
-                l.textColor = [UIColor lightGrayColor];
-                [alert setContainerView:l];
-                [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
-                [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-                    [self backToMainViewController];
-                }];
-                [alert setUseMotionEffects:true];
-                [alert show];
+                if (!_alert.isShowing) {
+                    [_alert show];
                 }
-            
+            }
         }
-        
-        
-//		if (rtMassageChairStatus.programType == RtMassageChairProgramManual) {  // 跳到手动按摩界面
-//			[self jumpToManualMassageViewConroller];
-//		}
-
 	}
-	
+
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
+        [self countMassageTime];
 		[self backToMainViewController];
 	}
 }

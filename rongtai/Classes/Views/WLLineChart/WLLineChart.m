@@ -68,9 +68,9 @@
     CGFloat h = self.frame.size.height;
     _yAxis.frame = CGRectMake(0, 0, w, h);
     _yAxis.xHeight = 0.1*h;
-    _xAxis.frame = CGRectMake(0, 0, _xWidth, h);
+    _xAxis.frame = CGRectMake(0, 0, 0.9*w, h);
     _scroll.frame = CGRectMake(0.1*w, 0, 0.9*w, h);
-    _scroll.contentSize = CGSizeMake(_xWidth, h);
+    _scroll.contentSize = CGSizeMake(0.9*w, h);
     [self setNeedsDisplay];
 }
 

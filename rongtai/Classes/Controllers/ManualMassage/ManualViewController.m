@@ -826,6 +826,7 @@
         else
         {
             [_polar setPoint:1 ableMove:NO];
+            [self setPolarValue:_bleConnector.rtMassageChairStatus.airPressureFlag stepValue:2.4 ByIndex:1];
         }
         
         //
