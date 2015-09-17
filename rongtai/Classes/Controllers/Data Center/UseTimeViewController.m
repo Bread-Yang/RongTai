@@ -13,7 +13,6 @@
 #import "UILabel+WLAttributedString.h"
 #import "CoreData+MagicalRecord.h"
 #import "MassageRecord.h"
-#import "MassageTime.h"
 #import "DataRequest.h"
 #import "MBProgressHUD.h"
 #import "DataCenterViewController.h"

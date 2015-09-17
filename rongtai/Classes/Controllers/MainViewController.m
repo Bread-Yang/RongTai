@@ -58,6 +58,7 @@
     
     //底部菜单
     UIView* _menuView;  //菜单栏
+
     UIButton *_anionButton; //负离子按钮
     UIButton *_manualMassageButton; //手动按摩 按钮
     UIButton *_customProgramButton; //自定义 按钮
@@ -1077,21 +1078,6 @@
 {
     //发送负离子开关
     [_bleConnector sendControlMode:H10_KEY_OZON_SWITCH];
-    
-//    CustomIOSAlertView* alert = [[CustomIOSAlertView alloc]init];
-//    [alert setTitleString:@"提示"];
-//    UILabel* l = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.8, SCREENHEIGHT*0.15)];
-//    l.text = @"已切换到手动模式";
-//    l.textAlignment = NSTextAlignmentCenter;
-//    l.textColor = [UIColor lightGrayColor];
-//    [alert setContainerView:l];
-//    [alert setButtonTitles:@[NSLocalizedString(@"确定", nil)]];
-//    [alert setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-//        NSLog(@"后退了");
-////        [self.navigationController popViewControllerAnimated:YES];
-//    }];
-//    [alert setUseMotionEffects:true];
-//    [alert show];
 }
 
 #pragma mark - 手动方法
@@ -1135,6 +1121,7 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.7];
 }
+
 
 /*
 #pragma mark - Navigation

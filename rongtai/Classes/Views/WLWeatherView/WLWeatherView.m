@@ -582,6 +582,7 @@
     l.adjustsFontSizeToFitWidth = YES;
     l.textColor = [UIColor whiteColor];
     l.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+//    l.minimumScaleFactor = 0.1;
     return l;
 }
 

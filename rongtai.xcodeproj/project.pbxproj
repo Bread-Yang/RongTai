@@ -93,7 +93,6 @@
 		3DCA81641B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCA81631B2A7B6F0064ECDF /* DoughnutCollectionViewCell.m */; };
 		3DCB465A1B2EBF3900DFB1CF /* FinishMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */; };
 		3DCCAC5C1B8DC07D006F7BBD /* MassageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */; };
-		3DCCAC5F1B8DC411006F7BBD /* MassageTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */; };
 		3DCD12261B41346500890164 /* UIImage+ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD12251B41346500890164 /* UIImage+ImageBlur.m */; };
 		3DCD122B1B4140EE00890164 /* UserDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD122A1B4140EE00890164 /* UserDownload.m */; };
 		3DCDF3671B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCDF3591B1FEB7400BA491E /* SlideNavigationContorllerAnimatorFade.m */; };
@@ -385,8 +384,6 @@
 		3DCB46591B2EBF3900DFB1CF /* FinishMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishMassageViewController.m; sourceTree = "<group>"; };
 		3DCCAC5A1B8DC07D006F7BBD /* MassageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageRecord.h; path = Model/MassageRecord.h; sourceTree = "<group>"; };
 		3DCCAC5B1B8DC07D006F7BBD /* MassageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageRecord.m; path = Model/MassageRecord.m; sourceTree = "<group>"; };
-		3DCCAC5D1B8DC411006F7BBD /* MassageTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MassageTime.h; path = rongtai/Classes/Model/MassageTime.h; sourceTree = SOURCE_ROOT; };
-		3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MassageTime.m; path = rongtai/Classes/Model/MassageTime.m; sourceTree = SOURCE_ROOT; };
 		3DCD12241B41346500890164 /* UIImage+ImageBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageBlur.h"; sourceTree = "<group>"; };
 		3DCD12251B41346500890164 /* UIImage+ImageBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageBlur.m"; sourceTree = "<group>"; };
 		3DCD12291B4140EE00890164 /* UserDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDownload.h; path = Model/UserDownload.h; sourceTree = "<group>"; };
@@ -1357,8 +1354,6 @@
 				3D797C6A1B8C1698007046CF /* ProgramCount.m */,
 				3DFD18FD1B8B033800BED437 /* CustomProgram.h */,
 				3DFD18FE1B8B033800BED437 /* CustomProgram.m */,
-				3DCCAC5D1B8DC411006F7BBD /* MassageTime.h */,
-				3DCCAC5E1B8DC411006F7BBD /* MassageTime.m */,
 				3DF0FE131B85BF95001CAAFE /* DataRequest */,
 				3DF0FE0C1B8573F8001CAAFE /* TimingPlanRequest */,
 				3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */,
@@ -1812,7 +1807,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DCCAC5F1B8DC411006F7BBD /* MassageTime.m in Sources */,
 				3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */,
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
 				569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */,
@@ -2096,6 +2090,7 @@
 			baseConfigurationReference = 85D795F6A8BAE2B12ACCBD3F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2134,6 +2129,7 @@
 			baseConfigurationReference = D8E66C336656A2042B2041FF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

@@ -19,7 +19,6 @@
 #import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
 #import "RTBleConnector.h"
-#import "MassageTime.h"
 #import "NAPickerView.h"
 #import "CustomIOSAlertView.h"
 
@@ -139,6 +138,8 @@
                         self.title = NSLocalizedString(@"腰椎舒缓", nil);
                         functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
                         break;
+                    default:
+                        break;
                 }
             }
             else if (programType == RtMassageChairProgramNetwork)
@@ -162,6 +163,8 @@
                         
                     case RTMassageChairProgramNetwork4:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
+                        break;
+                    default:
                         break;
                 }
                 
@@ -701,30 +704,6 @@
 //                massageRecord.programId = [NSNumber numberWithInteger:_autoMassageFlag];
 //
 //            }
-
-//按摩使用时长统计
-//            MassageTime* massageTime;
-//            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-//            NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
-//            NSDateComponents *comps  = [calendar components:unitFlags fromDate:start];
-//            NSArray* timeResult = [MassageTime MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(year == %ld) AND (month == %ld) AND (day == %ld)",comps.year,comps.month,comps.day]];
-//            if (timeResult.count > 0)
-//            {
-//                massageTime = timeResult[0];
-//                NSUInteger old = [massageTime.useTime integerValue];
-//                old += min;
-//                massageTime.useTime = [NSNumber numberWithUnsignedInteger:old];
-//            }
-//            else
-//            {
-//                massageTime = [MassageTime MR_createEntity];
-//                massageTime.useTime = [NSNumber numberWithUnsignedInteger:min];
-//                massageTime.year = [NSNumber numberWithInteger:comps.year];
-//                massageTime.month = [NSNumber numberWithInteger:comps.month];
-//                massageTime.day = [NSNumber numberWithInteger:comps.day];
-//            }
-
-//            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 
 
 @end
