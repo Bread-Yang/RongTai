@@ -438,7 +438,7 @@
     } failure:^(id responseObject) {
         [_loadingHUD hide:YES];
         [_user MR_deleteEntity];
-        NSString* str = [NSString stringWithFormat:@"%@:%@",NSLocalizedString(@"添加成员失败", nil),responseObject];
+        NSString* str = [NSString stringWithFormat:@"%@",NSLocalizedString(@"添加成员失败", nil)];
         [uVC showProgressHUDByString:str];
     }];
 }

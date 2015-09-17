@@ -232,6 +232,7 @@
 
 -(void)didUpdateRTBleState:(CBCentralManagerState)state
 {
+    NSLog(@"设备状态更新");
     if (state == CBCentralManagerStatePoweredOff) {
         NSLog(@"设备断开了");
         [_tableView reloadData];

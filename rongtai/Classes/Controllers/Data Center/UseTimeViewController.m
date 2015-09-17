@@ -18,7 +18,7 @@
 #import "MBProgressHUD.h"
 #import "DataCenterViewController.h"
 
-@interface UseTimeViewController ()
+@interface UseTimeViewController ()<UIScrollViewDelegate>
 {
     __weak IBOutlet UIView *_doughnutAddView;
     
@@ -32,10 +32,21 @@
     __weak IBOutlet UIButton *_yeayBtn;
     __weak IBOutlet UILabel *_usingTime;
 
-    WLLineChart* _lineChart;  //折线图
+    //三个折线图实现数据切换
+    WLLineChart* _lineChart_Front; //前 折线图
+    WLLineChart* _lineChart_Back;  //后 折线图
+    WLLineChart* _lineChart_Middle;   //中 折线图
+    int _selectItem;  //当前选中按钮，0为日，1为月，2为年
+    int _backCount;   //可以后退滑动的次数
+    CGFloat _contentX;  //记住scrollView的偏移量，计算出它是向前滑还是向后滑
+    NSUInteger _year;
+    NSUInteger _month;
+    NSDate* _day;
+    
     NSArray* _todayRecord;  //今天按摩记录
     DataRequest* _dataRequest;
     __weak DataCenterViewController* _dateCenterVC;
+    
 }
 @end
 
@@ -51,26 +62,32 @@
     
     [_doughnutAddView addSubview:_doughnutView];
     
-    _lineChart = [[WLLineChart alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0.15*h, 0.9*SCREENWIDTH, 0.9*h)];
-    _lineChart.showXRuler = NO;
-    _lineChart.isPointDashed = NO;
-    _lineChart.lineColor = BLUE;
-    _lineChart.rulerColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.5];
-    _lineChart.xAxisHidden = YES;
-    _lineChart.yAxisHidden = YES;
-    _lineChart.yUnit = @"(h)";
-//    _lineChart.xUnit = @"(Day)";
-    _lineChart.yValueFont = [UIFont systemFontOfSize:11];
-    _lineChart.yUnitFont = [UIFont systemFontOfSize:11];
-    _lineChart.xValueFont = [UIFont systemFontOfSize:11];
-    _lineChart.xUnitFont = [UIFont systemFontOfSize:11];
+    _lineChart_Back = [[WLLineChart alloc]initWithFrame:CGRectMake(SCREENWIDTH*0.9*2, 0, 0.9*SCREENWIDTH, 0.9*h)];
+    _lineChart_Back.showXRuler = NO;
+    _lineChart_Back.isPointDashed = NO;
+    _lineChart_Back.lineColor = BLUE;
+    _lineChart_Back.rulerColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.5];
+    _lineChart_Back.xAxisHidden = YES;
+    _lineChart_Back.yAxisHidden = YES;
+    _lineChart_Back.yUnit = @"(h)";
+    _lineChart_Back.yValueFont = [UIFont systemFontOfSize:11];
+    _lineChart_Back.yUnitFont = [UIFont systemFontOfSize:11];
+    _lineChart_Back.xValueFont = [UIFont systemFontOfSize:11];
+    _lineChart_Back.xUnitFont = [UIFont systemFontOfSize:11];
     
+    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH,0.15*h, SCREENWIDTH*0.9, 0.9*h)];
+    _scrollView.pagingEnabled = YES;
+    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*0.9*3, 0.9*h);
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.delegate = self;
+    [_scrollView addSubview:_lineChart_Back];
+    [_storeLineChartView addSubview:_scrollView];
+    _scrollView.contentOffset = CGPointMake(SCREENWIDTH*0.9*2, 0);
+    _contentX = SCREENWIDTH*0.9*2;
     
-    //
-//    _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH,0, SCREENWIDTH*0.9, SCREENHEIGHT*0.3)];
-//    _scrollView.contentSize = CGSizeMake(SCREENWIDTH*0.9, <#CGFloat height#>)
-//    
-////    [_storeLineChartView addSubview:_lineChart];
+    _backCount = 0;
+    _selectItem = 0;
     
     _usingTime.font = [UIFont fontWithName:@"Helvetica" size:10*HSCALE];
     [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
@@ -84,6 +101,11 @@
 
 -(void)setTodayRecord:(NSArray *)todayRecord AndTodayUseTime:(NSInteger)useTime
 {
+    _day = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComponent = [calendar components:NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitMonth fromDate:_day];
+    _year = [dateComponent year];
+    _month = [dateComponent month];
     _todayRecord = todayRecord;
     NSMutableArray* td = [[NSMutableArray alloc]initWithArray:todayRecord];
     //比例数组
@@ -115,7 +137,7 @@
             
             NSString* ut;
             if (time>60) {
-                int h = time/60;
+                int h = (int)time/60;
                 int m = time%60;
                 ut = [NSString stringWithFormat:@"%dh%dm",h,m];
             }
@@ -188,15 +210,93 @@
         [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
     }
     
-    _lineChart.xValues = xValue;
-    _lineChart.points = points;
+    _lineChart_Back.xValues = xValue;
+    _lineChart_Back.points = points;
     //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
-    _lineChart.xSection = CGPointMake(0, 120);
+    _lineChart_Back.xSection = CGPointMake(0, 120);
     
-    _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-    _lineChart.ySection = CGPointMake(0, 8*60);
+    _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+    _lineChart_Back.ySection = CGPointMake(0, 8*60);
     
     _dateCenterVC = dataCenterVC;
+}
+
+#pragma mark - ScrollView代理
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+//    NSLog(@"Dragging");
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"Decelerating");
+    NSLog(@"contentOffest:%@",NSStringFromCGPoint(scrollView.contentOffset));
+    CGFloat contentX = scrollView.contentOffset.x;
+    if (contentX>=_contentX) {
+        _backCount --;
+        if (_selectItem == 0) {
+            NSLog(@"查询下一周");
+            _day = [NSDate dateWithTimeInterval:7*24*3600 sinceDate:_day];
+            NSDate* next = [NSDate dateWithTimeInterval:7*24*3600 sinceDate:_day];
+            [self weekData:_day From:next];
+        }
+        else if (_selectItem == 1)
+        {
+            NSLog(@"查询下一个月");
+            _month++;
+            if (_month>12) {
+                _month = 1;
+                _year++;
+            }
+            [self monthDataByYear:_year AndMonth:_month];
+        }
+        else
+        {
+            NSLog(@"查询下一年");
+            _year++;
+            [self yearData:_year];
+        }
+    }
+    else
+    {
+        _backCount++;
+        if (_selectItem == 0) {
+            NSLog(@"查询上一周");
+            _day = [NSDate dateWithTimeInterval:-7*24*3600 sinceDate:_day];
+            NSDate* last = [NSDate dateWithTimeInterval:-7*24*3600 sinceDate:_day];
+            [self weekData:_day From:last];
+            
+        }
+        else if (_selectItem == 1)
+        {
+            NSLog(@"查询上一个月");
+            _month--;
+            if (_month<1) {
+                _month = 12;
+                _year--;
+            }
+            [self monthDataByYear:_year AndMonth:_month];
+        }
+        else
+        {
+            NSLog(@"查询上一年");
+            _year--;
+            [self yearData:_year];
+            
+        }
+    }
+    _contentX = contentX;
+    CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
+    if (_backCount <= 0) {  //等于证明已经不能再后退了
+        NSLog(@"不能后退");
+        _lineChart_Back.frame = CGRectMake(SCREENWIDTH*0.9*2, 0,  0.9*SCREENWIDTH, 0.9*h);
+    }
+    else  //可以后退则在加载完数据后，把_lineChart_Back放在scrollView的中间
+    {
+        _scrollView.contentOffset = CGPointMake(SCREENWIDTH*0.9, 0);
+        _lineChart_Back.frame = CGRectMake(SCREENWIDTH*0.9, 0,  0.9*SCREENWIDTH, 0.9*h);
+        _contentX = SCREENWIDTH*0.9;
+    }
 }
 
 #pragma mark - 底部年月日按钮
@@ -210,7 +310,8 @@
         _yeayBtn.backgroundColor = [UIColor clearColor];
         NSDate* weekAgo = [NSDate dateWithTimeIntervalSinceNow:-24*2600*6];
         [self weekData:now From:weekAgo];
-        
+        _day = now;
+        _selectItem = 0;
     }
     else if (sender.tag == 1111)
     {
@@ -220,7 +321,10 @@
         _yeayBtn.backgroundColor = [UIColor clearColor];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *dateComponent = [calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:now];
-        [self monthDataByYear:[dateComponent year] AndMonth:[dateComponent month]];
+        _month = [dateComponent month];
+        _year = [dateComponent year];
+        [self monthDataByYear:_year AndMonth:_month];
+        _selectItem = 1;
     }
     else if (sender.tag == 1112)
     {
@@ -230,7 +334,9 @@
         _monthBtn.backgroundColor = [UIColor clearColor];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *dateComponent = [calendar components:NSCalendarUnitYear fromDate:now];
-        [self yearData:[dateComponent year]];
+        _year = [dateComponent year];
+        [self yearData:_year];
+        _selectItem = 2;
     }
 }
 
@@ -280,13 +386,13 @@
             [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
         }
         
-        _lineChart.xValues = xValue;
-        _lineChart.points = points;
+        _lineChart_Back.xValues = xValue;
+        _lineChart_Back.points = points;
         //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
-        _lineChart.xSection = CGPointMake(0, 120);
+        _lineChart_Back.xSection = CGPointMake(0, 120);
        
-        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-        _lineChart.ySection = CGPointMake(0, 8*60);
+        _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart_Back.ySection = CGPointMake(0, 8*60);
         [_dateCenterVC hideHUD];
         
     } fail:^(NSDictionary *dic) {
@@ -368,14 +474,14 @@
             [points addObject:[NSValue valueWithCGPoint:CGPointMake(100+dlt*(i-25), useTime)]];
         }
         
-        _lineChart.xValues = xValue;
-        _lineChart.points = points;
+        _lineChart_Back.xValues = xValue;
+        _lineChart_Back.points = points;
         NSLog(@"Points:%@",points);
         //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
-        _lineChart.xSection = CGPointMake(0, 120);
+        _lineChart_Back.xSection = CGPointMake(0, 120);
         
-        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-        _lineChart.ySection = CGPointMake(0, 8*60);
+        _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart_Back.ySection = CGPointMake(0, 8*60);
         [_dateCenterVC hideHUD];
     } fail:^(NSDictionary *dic) {
         NSLog(@"数据请求失败🆚");
@@ -430,14 +536,14 @@
         }
         NSLog(@"月份xValues:%@",xValue);
         
-        _lineChart.xValues = xValue;
-        _lineChart.points = points;
+        _lineChart_Back.xValues = xValue;
+        _lineChart_Back.points = points;
         NSLog(@"Points:%@",points);
         //由于x轴是月份，需要数值来代表各个点的x坐标，固以10为间距，有12个点，最大值为110
-        _lineChart.xSection = CGPointMake(0, 110);
+        _lineChart_Back.xSection = CGPointMake(0, 110);
     
-        _lineChart.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-        _lineChart.ySection = CGPointMake(0, 8*60);
+        _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart_Back.ySection = CGPointMake(0, 8*60);
         [_dateCenterVC hideHUD];
     } fail:^(NSDictionary *dic) {
         NSLog(@"数据请求失败🆚");
