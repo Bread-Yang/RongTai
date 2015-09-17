@@ -64,7 +64,8 @@
 				for (int i = 0; i < arr.count; i++) {
 					MassageProgram *massage = [MassageProgram MR_createEntity];
 					[massage setValueByJSON:arr[i]];
-				 	[[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    massage.isLocalDummyData = [NSNumber numberWithBool:NO];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 					
 					[networkMassageProgramArray addObject:massage];
 				}

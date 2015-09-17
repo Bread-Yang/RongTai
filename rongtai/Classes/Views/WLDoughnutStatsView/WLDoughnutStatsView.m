@@ -58,7 +58,7 @@
 -(void)setUp
 {
     self.backgroundColor = [UIColor clearColor];
-    _colors = @[[UIColor colorWithRed:1 green:0 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:0 blue:1 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:1 alpha:0.6]];
+    _colors = @[[UIColor colorWithRed:143/255.0 green:82/255.0 blue:235/255.0 alpha:1],[UIColor colorWithRed:51/255.0 green:148/255.0 blue:215/255.0 alpha:1],[UIColor colorWithRed:233/255.0 green:152/255.0 blue:38/255.0 alpha:1],[UIColor colorWithRed:75/255.0 green:204/255.0 blue:73/255.0 alpha:1],[UIColor colorWithRed:235/255.0 green:112/255.0 blue:86/255.0 alpha:1],[UIColor colorWithRed:242/255.0 green:113/255.0 blue:111/255.0 alpha:1],[UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1]];
     _percents = @[@0.1,@0.2,@0.3,@0.4];
     _doughnutDistance = 20;
     _doughnutWidth = 20;
@@ -165,16 +165,48 @@
     //第一个单独画，避免只有一个数据的时候出现间隔的现象
     UIColor* color = _colors[0];
     [color setStroke];
+    
     CGContextSetLineWidth(context, _doughnutWidth);
     CGFloat percent = [_percents[0] floatValue];
     CGFloat angle = M_PI*2*percent;
-    
+//
     NSInteger hasDistance = 0;
     if (_percents.count>1) {
         hasDistance = 1;
     }
     CGContextAddArc(context, _center.x, _center.y, _r-_doughnutWidth/2, start, start+angle-hasDistance*disAngle, 0) ;
     CGContextStrokePath(context);
+    /////////====================
+//    
+//    CGMutablePathRef path = CGPathCreateMutable();
+//    CGPathAddArc(path, NULL, _center.x, _center.y, _r-_doughnutWidth/2, start, start+angle-hasDistance*disAngle, 0);
+//    CGPathCloseSubpath(path);
+//    
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGFloat locations[] = { 0.0,0.5,1.0 };
+//    UIColor* startColor = [UIColor colorWithRed:0.4 green:0 blue:0 alpha:0.8];
+//    UIColor* endColor = [UIColor colorWithRed:1 green:0 blue:0.02 alpha:1];
+//    NSArray *colors = @[(__bridge id) [startColor CGColor], (__bridge id)[endColor CGColor]];
+//    
+//    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef) colors, locations);
+//    
+//    CGRect pathRect = CGPathGetBoundingBox(path);
+//    
+//    //具体方向可根据需求修改
+//    CGPoint startPoint = CGPointMake(CGRectGetMidX(pathRect), CGRectGetMinY(pathRect));
+//    CGPoint endPoint = CGPointMake(CGRectGetMidX(pathRect), CGRectGetMaxY(pathRect));
+//    
+//    CGContextSaveGState(context);
+//    CGContextAddPath(context, path);
+//    CGContextClip(context);
+//    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+//    CGContextRestoreGState(context);
+//    
+//    CGGradientRelease(gradient);
+//    CGColorSpaceRelease(colorSpace);
+//    CGPathRelease(path);
+    /////=====================
+
     
     ///////计算圆弧中心点
     [[UIColor blackColor] setStroke];
@@ -191,13 +223,12 @@
         leftCount++;
     }
     
-    //
-    
     start = start+angle;
     pointStart -= angle;
     
+    //画剩下的圆弧
     for (int i = 1; i < _percents.count; i++) {
-        UIColor* color = _colors[i%4];
+        UIColor* color = _colors[i%_colors.count];
         [color setStroke];
         CGContextSetLineWidth(context, _doughnutWidth);
         CGFloat percent = [_percents[i] floatValue];
@@ -241,7 +272,7 @@
             for (int i = 0; i<rightCount; i++) {
                 //百分比的AttributedString和Size
                 NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[i] floatValue]*100)];
-                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[i%4] String:percentStr Font:self.percentFont]];
+                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[i%_percentColor.count] String:percentStr Font:self.percentFont]];
                 [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
                 [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
                 CGSize attributeTextSize = [attributeName size];
@@ -308,7 +339,7 @@
                 
                 //百分比的AttributedString和Size
                 NSString* percentStr = [NSString stringWithFormat:@"%d%%",(int)([_percents[j] floatValue]*100)];
-                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[j%4] String:percentStr Font:self.percentFont]];
+                NSMutableAttributedString* attributeName = [[NSMutableAttributedString alloc]initWithAttributedString:[self attributedStringByColor:_percentColor[j%_percentColor.count] String:percentStr Font:self.percentFont]];
                 [attributeName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(percentStr.length-1, 1)];
                 [attributeName addAttribute:NSFontAttributeName value:_percentCharFont range:NSMakeRange(percentStr.length-1, 1)];
                 CGSize attributeTextSize = [attributeName size];

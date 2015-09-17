@@ -81,7 +81,7 @@
 	[super viewDidAppear:animated];
 	
 	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
-	if (reachability.reachable) {
+//	if (reachability.reachable) {
 		//网络请求
 		_loadingHUD.labelText = @"读取中...";
 		[_loadingHUD show:YES];
@@ -93,14 +93,14 @@
 			[self refreshTableViewAfterRequest:networkMassageProgramArray];
 			
 		} failure:^(NSArray *localMassageProgramArray) {
-			
+            NSLog(@"下载程序：读取本地记录：%@",localMassageProgramArray);
 			[self refreshTableViewAfterRequest:localMassageProgramArray];
 			
 		}];
-	} else {
-		NSLog(@"没网，本地记录读取成员");
-        [self showProgressHUDByString:@"无法访问网络"];
-	}
+//	} else {
+//		NSLog(@"没网，本地记录读取成员");
+//        [self showProgressHUDByString:@"无法访问网络"];
+//	}
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -150,8 +150,8 @@
 #pragma mark - 返回
 
 - (void)goBack {
-//    [self.navigationController popViewControllerAnimated:YES];
-	[self backToMainViewController];
+    [self.navigationController popViewControllerAnimated:YES];
+//	[self backToMainViewController];
 	
 //	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 }

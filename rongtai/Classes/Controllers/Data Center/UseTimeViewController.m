@@ -31,10 +31,8 @@
     __weak IBOutlet UIButton *_yeayBtn;
     __weak IBOutlet UILabel *_usingTime;
 
-    //三个折线图实现数据切换
-    WLLineChart* _lineChart_Front; //前 折线图
-    WLLineChart* _lineChart_Back;  //后 折线图
-    WLLineChart* _lineChart_Middle;   //中 折线图
+    WLLineChart* _lineChart_Back;  //折线图
+   
     int _selectItem;  //当前选中按钮，0为日，1为月，2为年
     int _backCount;   //可以后退滑动的次数
     CGFloat _contentX;  //记住scrollView的偏移量，计算出它是向前滑还是向后滑
@@ -46,6 +44,9 @@
     DataRequest* _dataRequest;
     __weak DataCenterViewController* _dateCenterVC;
     
+    __weak IBOutlet UIScrollView *_makerScrollView;
+    
+    __weak IBOutlet UILabel *_lineChartTitle;
 }
 @end
 
@@ -55,7 +56,8 @@
     [super viewDidLoad];
     CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
     
-    _doughnutView = [[WLDoughnutStatsView alloc]initWithFrame:CGRectMake(0.05*SCREENWIDTH, 0, SCREENWIDTH*0.9, SCREENHEIGHT*0.3)];
+    _doughnutView = [[WLDoughnutStatsView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.7, SCREENHEIGHT*0.3)];
+//    _doughnutView.layer.borderWidth = 1;
     _doughnutView.r = h/2;
     _doughnutView.doughnutWidth = _doughnutView.r*0.25;
     
@@ -111,6 +113,7 @@
     NSLog(@"今天按摩数据:%@",_todayRecord);
     if (_todayRecord.count>0) {
         NSLog(@"今天有按摩数据");
+        NSUInteger otherTime = 0;
         NSMutableArray* percents = [NSMutableArray new];
         NSMutableArray* names = [NSMutableArray new];
         NSMutableArray* useTimes = [NSMutableArray new];
@@ -119,17 +122,25 @@
             NSNumber* rID = [r objectForKey:@"massageId"];
             NSNumber* s = [r objectForKey:@"useTime"];
             NSInteger time = [s integerValue];
-            for (int j = i+1; j<td.count; j++) {
-                NSDictionary* restRecord = td[j];
-                NSNumber* restID = [restRecord objectForKey:@"massageId"];
-                if ([rID integerValue]==[restID integerValue]) {
-                    NSNumber* useTime = [restRecord objectForKey:@"useTime"];
-                    time += [useTime integerValue];
-                    [td removeObject:restRecord];
-                    j--;
+            if ([rID integerValue]>6) {
+                //云养程序
+                otherTime += time;
+                continue;
+            }
+            else
+            {
+                for (int j = i+1; j<td.count; j++) {
+                    NSDictionary* restRecord = td[j];
+                    NSNumber* restID = [restRecord objectForKey:@"massageId"];
+                    if ([rID integerValue]==[restID integerValue]) {
+                        NSNumber* useTime = [restRecord objectForKey:@"useTime"];
+                        time += [useTime integerValue];
+                        [td removeObjectAtIndex:j];
+                        j--;
+                    }
                 }
             }
-            
+           
             float percent = time/(float)useTime;
             NSNumber* num = [NSNumber numberWithFloat:percent];
             [percents addObject:num];
@@ -149,9 +160,35 @@
             NSString* name = [r objectForKey:@"name"];
             [names addObject:name];
         }
+        if (otherTime > 0) {
+            [percents addObject:[NSNumber numberWithFloat:otherTime/(float)useTime]];
+            [names addObject:@"其他"];
+            NSString* ut;
+            if (otherTime>60) {
+                int h = (int)otherTime/60;
+                int m = otherTime%60;
+                ut = [NSString stringWithFormat:@"%dh%dm",h,m];
+            }
+            else
+            {
+                ut = [NSString stringWithFormat:@"%lum",otherTime];
+            }
+            [useTimes addObject:ut];
+        }
+        
+    
+        
         _doughnutView.percents = [NSArray arrayWithArray:percents];
-        _doughnutView.makersName = [NSArray arrayWithArray:names];
-        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
+        NSArray* colors = _doughnutView.colors;
+        for (int i = 0; i<names.count; i++) {
+            NSNumber* p = percents[i];
+            [_makerScrollView addSubview:[self makerViewByColor:colors[i] String:[NSString stringWithFormat:@"%@  %@",names[i],useTimes[i]] Percent:[p floatValue] Index:i]];
+        }
+        _makerScrollView.contentSize = CGSizeMake(SCREENWIDTH*0.3, (SCREENHEIGHT-64-50)*0.4*0.9*0.3*names.count);
+//        [_makerScrollView addSubview:[self makerViewByColor:[UIColor redColor] String:@"工作减压  1h" Percent:0.5 Index:0]];
+//        [_makerScrollView addSubview:[self makerViewByColor:[UIColor greenColor] String:@"工作减压  1h" Percent:0.5 Index:1]];
+//        _doughnutView.makersName = [NSArray arrayWithArray:names];
+//        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
         
         //设置文字
         if (useTime>60) {
@@ -182,6 +219,7 @@
 
 -(void)setWeekData:(NSArray*)weekRecords ByDataCenterVC:(DataCenterViewController*)dataCenterVC
 {
+//    NSLog(@"weekRecord:%@",weekRecords);
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"YYYY-MM-dd"];
     
@@ -221,23 +259,24 @@
 }
 
 #pragma mark - ScrollView代理
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-//    NSLog(@"Dragging");
-}
-
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSLog(@"Decelerating");
     NSLog(@"contentOffest:%@",NSStringFromCGPoint(scrollView.contentOffset));
     CGFloat contentX = scrollView.contentOffset.x;
-    if (contentX>=_contentX) {
-        _backCount --;
+    if (contentX == _contentX) {
+        return;
+    }
+    if (contentX>_contentX) {
+        
         if (_selectItem == 0) {
             NSLog(@"查询下一周");
             _day = [NSDate dateWithTimeInterval:7*24*3600 sinceDate:_day];
-            NSDate* next = [NSDate dateWithTimeInterval:7*24*3600 sinceDate:_day];
-            [self weekData:_day From:next];
+            NSDate* next = [NSDate dateWithTimeInterval:-6*24*3600 sinceDate:_day];
+            [self weekData:next From:_day];
+//            if (_backCount != 0) {
+//                _day = [NSDate dateWithTimeInterval:7*24*3600 sinceDate:_day];
+//            }
         }
         else if (_selectItem == 1)
         {
@@ -255,16 +294,17 @@
             _year++;
             [self yearData:_year];
         }
+        _backCount --;
     }
-    else
+    else if(contentX <_contentX)
     {
-        _backCount++;
+        
         if (_selectItem == 0) {
             NSLog(@"查询上一周");
             _day = [NSDate dateWithTimeInterval:-7*24*3600 sinceDate:_day];
-            NSDate* last = [NSDate dateWithTimeInterval:-7*24*3600 sinceDate:_day];
-            [self weekData:_day From:last];
-            
+            NSDate* last = [NSDate dateWithTimeInterval:-6*24*3600 sinceDate:_day];
+            [self weekData:last From:_day];
+//            _day = [NSDate dateWithTimeInterval:-7*24*3600 sinceDate:_day];
         }
         else if (_selectItem == 1)
         {
@@ -283,12 +323,14 @@
             [self yearData:_year];
             
         }
+        _backCount++;
     }
     _contentX = contentX;
     CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
     if (_backCount <= 0) {  //等于证明已经不能再后退了
         NSLog(@"不能后退");
         _lineChart_Back.frame = CGRectMake(SCREENWIDTH*0.9*2, 0,  0.9*SCREENWIDTH, 0.9*h);
+        _day = [NSDate date];
     }
     else  //可以后退则在加载完数据后，把_lineChart_Back放在scrollView的中间
     {
@@ -301,6 +343,11 @@
 #pragma mark - 底部年月日按钮
 - (IBAction)dateSelected:(UIButton*)sender {
     NSDate* now = [NSDate date];
+    _backCount = 0;
+     _contentX = SCREENWIDTH*0.9*2;
+    CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
+    _lineChart_Back.frame = CGRectMake(SCREENWIDTH*0.9*2, 0,  0.9*SCREENWIDTH, 0.9*h);
+    _scrollView.contentOffset = CGPointMake(SCREENWIDTH*0.9*2, 0);
     if (sender.tag == 1110)
     {
         //日
@@ -308,9 +355,10 @@
         _monthBtn.backgroundColor = [UIColor clearColor];
         _yeayBtn.backgroundColor = [UIColor clearColor];
         NSDate* weekAgo = [NSDate dateWithTimeIntervalSinceNow:-24*2600*6];
-        [self weekData:now From:weekAgo];
+        [self weekData:weekAgo From:now];
         _day = now;
         _selectItem = 0;
+        _lineChartTitle.text = @"每日使用时长";
     }
     else if (sender.tag == 1111)
     {
@@ -324,6 +372,7 @@
         _year = [dateComponent year];
         [self monthDataByYear:_year AndMonth:_month];
         _selectItem = 1;
+        _lineChartTitle.text = @"每月使用时长";
     }
     else if (sender.tag == 1112)
     {
@@ -336,6 +385,7 @@
         _year = [dateComponent year];
         [self yearData:_year];
         _selectItem = 2;
+        _lineChartTitle.text = @"每年使用时长";
     }
 }
 
@@ -353,13 +403,13 @@
     NSMutableArray* points = [NSMutableArray new];
     
     [_dataRequest getMassageRecordFrom:date1 To:date2 Success:^(NSArray *arr) {
-        NSLog(@"数据请求成功🆚");
+        NSLog(@"数据请求成功🆚：%@",arr);
         NSMutableArray* records = [NSMutableArray arrayWithArray:arr];
 //        NSUInteger max = 0;
 //        NSUInteger min = INT64_MAX;
         
         for (int i = 0; i<7; i++) {
-            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:date1];
+            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:date2];
             NSString* dateStr = [formatter stringFromDate:date];
             NSUInteger useTime = 0;
             for (int j = 0; j<records.count; j++) {
@@ -549,6 +599,32 @@
         [_dateCenterVC hideHUD];
         [_dateCenterVC showProgressHUDByString:@"读取数据失败，请检测网络"];
     }];
+}
+
+#pragma mark - 生成一个标注的View
+-(UIView*)makerViewByColor:(UIColor*)color String:(NSString*)string Percent:(CGFloat)percent Index:(NSUInteger)index
+{
+    CGFloat w = SCREENWIDTH*0.3;
+    CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9*0.3;
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 15+h*index, w, h)];
+    view.backgroundColor = [UIColor clearColor];
+    //颜色小方块
+    UIView* rectangle = [[UIView alloc]initWithFrame:CGRectMake(0, 0, h*0.25, h*0.25)];
+    rectangle.backgroundColor = color;
+    [view addSubview:rectangle];
+    //标注描述
+    UILabel* des = [[UILabel alloc]initWithFrame:CGRectMake(h*0.35, 0, w-h*0.35, h*0.25)];
+    des.text = string;
+    des.font = [UIFont systemFontOfSize:12*WSCALE];
+    [view addSubview:des];
+    //百分比
+    UILabel* pL = [[UILabel alloc]initWithFrame:CGRectMake(h*0.35, h*0.3, w-h*0.35, h*0.5)];
+    pL.text = [NSString stringWithFormat:@"%d%%",(int)(percent*100)];
+    pL.font = [UIFont systemFontOfSize:14*WSCALE];
+    [pL setNumebrByFont:[UIFont systemFontOfSize:17*WSCALE] Color:color];
+    [view addSubview:pL];
+    
+    return view;
 }
 
 - (void)didReceiveMemoryWarning {

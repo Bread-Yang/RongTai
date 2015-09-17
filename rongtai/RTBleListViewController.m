@@ -68,6 +68,7 @@
 	
 	if (![RTBleConnector isBleTurnOn]) {
 		self.periphralTableView.hidden = true;
+        _cView.hidden = YES;
 	}
 }
 
@@ -184,10 +185,12 @@
 	switch (state) {
 		case CBCentralManagerStatePoweredOn :
 			self.periphralTableView.hidden = false;
+            _cView.hidden = NO;
 			[bleConnector startScanRTPeripheral:nil];
 			break;
 		case CBCentralManagerStatePoweredOff :
 			self.periphralTableView.hidden = true;
+            _cView.hidden = YES;
 			break;
         default:
             break;
@@ -265,7 +268,7 @@
     }
 }
 
-#pragma mark --Misc
+#pragma mark -- 刷新按钮方法
 - (void)refreshTableView {
     if ([RTBleConnector isBleTurnOn]) {
         if (!_isRefresh) {

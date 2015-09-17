@@ -90,7 +90,7 @@
 //    [slide.navigationBar setBackgroundColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
     [slide.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
 
-    NSLog(@"SCREEN:%f,%f",SCREENWIDTH,SCREENHEIGHT);
+//    NSLog(@"SCREEN:%f,%f",SCREENWIDTH,SCREENHEIGHT);
     return YES;
 }
 

@@ -30,7 +30,7 @@
     NSString* str = [dic objectForKey:@"sex"];
     self.sex = [NSNumber numberWithUnsignedInteger:[str integerValue]];
     str = [dic objectForKey:@"height"];
-    self.height = [NSNumber numberWithUnsignedInteger:[str integerValue]];
+    self.height = [NSNumber numberWithDouble:[str doubleValue]];
     self.heightUnit = [dic objectForKey:@"heightUnit"];
     self.imageURL = [dic objectForKey:@"imageUrl"];
     str = [dic objectForKey:@"memberId"];

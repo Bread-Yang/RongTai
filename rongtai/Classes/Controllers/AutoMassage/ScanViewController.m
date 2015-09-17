@@ -18,7 +18,7 @@
     __weak IBOutlet UIImageView *_body;
     int i;
     CGRect frame;
-    NSTimer* _t;
+//    NSTimer* _t;
     NSInteger _massageFlag;
     NSString* _programName;
     
@@ -80,17 +80,17 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-	if (_t && [_t isValid]) {
-		[_t invalidate];
-	}
-      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
+//	if (_t && [_t isValid]) {
+//		[_t invalidate];
+//	}
+//      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
 //	[self scanAnimation];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_t invalidate];
+//    [_t invalidate];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -99,12 +99,13 @@
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
         _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
     }
+    [self scanAnimation];
 }
 
--(void)timerScan:(NSTimer*)timer {
-	_scanLight.frame = frame;
-	[self scanAnimation];
-}
+//-(void)timerScan:(NSTimer*)timer {
+//	_scanLight.frame = frame;
+//	[self scanAnimation];
+//}
 
 #pragma mark - 扫描动画
 -(void)scanAnimation
@@ -114,12 +115,12 @@
         f.origin.y = CGRectGetHeight(_body.frame) - f.size.height;
         _scanLight.frame = f;
     } completion:^(BOOL finished) {
-        
+        _scanLight.frame = frame;
+        [self scanAnimation];
     }];
 }
 
 #pragma mark - RTBleConnectorDelegate
-
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
 	// 界面跳转

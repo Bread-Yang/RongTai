@@ -426,7 +426,7 @@
         if (_isRegister) {
             //是注册页面跳转过来的，在添加好用户信息后要设置当前用户的id
             NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:mid forKey:@"currentMemberId"];
+            [defaults setObject:[NSString stringWithFormat:@"%d",[mid intValue]] forKey:@"currentMemberId"];
             [defaults setObject:_uid forKey:@"uid"];
             [defaults setObject:_token forKey:@"token"];
         }
@@ -635,12 +635,12 @@
         return NO;
     }
     
-    //用户名不能重复
-    NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
-    if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
-        [self showProgressHUDByString:NSLocalizedString(@"昵称已经存在", nil)];
-        return NO;
-    }
+//    //用户名不能重复
+//    NSArray *existArray = [Member MR_findByAttribute:@"name" withValue:userName];
+//    if ([existArray count] != 0 && ![userName isEqual:_user.name]) {
+//        [self showProgressHUDByString:NSLocalizedString(@"昵称已经存在", nil)];
+//        return NO;
+//    }
 
     //身高必须选择
     if (_height.text.length < 1) {
@@ -660,18 +660,21 @@
 -(void)updateUI {
     _name.text = _user.name;
     _sexSegmentView.selectIndex = [_user.sex integerValue];
-    _height.text = [_user.height stringValue];
+//    _height.text = [_user.height stringValue];
     if ([_user.heightUnit isEqual:@"cm"]) {
         [self setSelectedCMUnit];
         _heightUnitSegmentView.selectIndex = 0;
         NSUInteger height = [_user.height integerValue];
+        _height.text = [NSString stringWithFormat:@"%ld",height];
         [_heightPicker selectRow:(height-140) inComponent:0 animated:NO];
     } else {
         [self setSelectedInchUnit];
         _heightUnitSegmentView.selectIndex = 1;
-        float height = [_user.height floatValue];
+        double height = [_user.height doubleValue];
         NSUInteger integer = (int)height;
-        NSUInteger decimal = (int)((height - integer)*10); //取小数点后1位
+        int decimal = (int)(round((height - integer)*10)); //取小数点后1位
+    
+        _height.text =[NSString stringWithFormat:@"%ld.%d",(unsigned long)integer,decimal];
         [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];
         [_heightPicker selectRow:(decimal-0) inComponent:1 animated:NO];
     }

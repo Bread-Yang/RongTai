@@ -76,7 +76,7 @@
     }
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
-//        NSLog(@"获取成员列表:%@",responseObject);
+        NSLog(@"获取成员列表:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
             NSArray* arr = [responseObject objectForKey:@"result"];

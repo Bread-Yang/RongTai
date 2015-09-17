@@ -288,7 +288,10 @@
 
 #pragma mark - 开始按摩按钮
 - (IBAction)startMassage:(UIButton *)sender {
-
+    if ([RTBleConnector shareManager].currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+        [[RTBleConnector shareManager] showConnectDialog];
+        return;
+    }
 	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	ProgramDownloadViewController *pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
 	pVC.isDownloadCustomProgram = YES;
