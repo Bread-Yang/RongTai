@@ -250,6 +250,13 @@
 #pragma mark - Action
 
 - (IBAction)saveAction:(id)sender {
+    //先检测是否选中日期
+     NSOrderedSet *selectDays = [self.weekDaySegmentControl getAlreadySelectedIndexes];
+    if (selectDays.count == 0) {
+        [self showProgressHUDByString:@"请选择循环日期"];
+        return;
+    }
+    
     if (self.timingPlan) {
         //保存信息到对象中
         [self.timingPlan cancelLocalNotification];
@@ -333,7 +340,7 @@
     self.timingPlan.isOn = [NSNumber numberWithBool:YES];
 	NSInteger selectIndex = self.collectionView.currentSelectItemIndex;
 	if (selectIndex < 6) {
-		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:selectIndex];
+		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:selectIndex+1];
 	} else {
 		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
 	}
@@ -516,6 +523,17 @@
 
 - (void)timingPlanRequestTimeOut:(TimingPlanRequest *)request {
 	
+}
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 /*

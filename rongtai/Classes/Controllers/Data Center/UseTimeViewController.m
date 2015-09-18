@@ -179,8 +179,6 @@
             [useTimes addObject:ut];
         }
         
-    
-        
         _doughnutView.percents = [NSArray arrayWithArray:percents];
         _doughnutView.colors = colors;
         for (int i = 0; i<names.count; i++) {

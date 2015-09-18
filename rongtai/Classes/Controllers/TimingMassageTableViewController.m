@@ -97,7 +97,8 @@
 {
     //查询去状态不是 未同步的删除 的所有数据
     NSLog(@"定时计划 读取本地数据");
-    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
+//    NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
+    NSArray* plans = [TimingPlan MR_findAllSortedBy:@"planId" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"(state < 3) AND uid == %@",_uid]];
     self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
     [_tableView reloadData];
 }

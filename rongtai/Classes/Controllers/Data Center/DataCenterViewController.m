@@ -69,15 +69,15 @@
     [self.view addSubview:_titleLabel];
     
     //左右切换按钮
-    UIButton* left = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 16, w*0.1, 35)];
-    [left setImage:[UIImage imageNamed:@"data_arrow_left"] forState:UIControlStateNormal];
-    [left addTarget:self action:@selector(leftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:left];
-    
-    UIButton* right = [[UIButton alloc]initWithFrame:CGRectMake(0.8*w, 16, w*0.1, 35)];
-    [right setImage:[UIImage imageNamed:@"data_arrow_right"] forState:UIControlStateNormal];
-    [right addTarget:self action:@selector(rightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:right];
+//    UIButton* left = [[UIButton alloc]initWithFrame:CGRectMake(0.1*w, 16, w*0.1, 35)];
+//    [left setImage:[UIImage imageNamed:@"data_arrow_left"] forState:UIControlStateNormal];
+//    [left addTarget:self action:@selector(leftButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:left];
+//    
+//    UIButton* right = [[UIButton alloc]initWithFrame:CGRectMake(0.8*w, 16, w*0.1, 35)];
+//    [right setImage:[UIImage imageNamed:@"data_arrow_right"] forState:UIControlStateNormal];
+//    [right addTarget:self action:@selector(rightButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:right];
     
     //SrcollView
     CGFloat sh = h-64-50;
