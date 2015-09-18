@@ -378,9 +378,9 @@
         else if (_massageFlag<11&&_massageFlag>7)
         {
             //属于网络按摩的统计
-            NSLog(@"网络按摩统计");
+            NSLog(@"网络按摩统计：%ld",programId);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
-            programId = [p.commandId integerValue];
+            programId = [p.massageId integerValue];
             _programName = p.name;
             function = p.mDescription;
         }

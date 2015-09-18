@@ -563,9 +563,7 @@
 			if (networkMassage) {
 				cell.textLabel.text = networkMassage.name;
 				cell.detailTextLabel.text = networkMassage.mDescription;
-				
 				[UIImageView loadImageByURL:networkMassage.imageUrl imageView:cell.imageView];
-				
 			}
 		}
 	}
@@ -818,6 +816,8 @@
                     case RtMassageChairProgramWaistAndSpine:
                         highlightIndex = 5;
                         break;
+                    default:
+                        break;
                }
             }else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
             {
@@ -837,6 +837,8 @@
                     case RTMassageChairProgramNetwork4:
                         highlightIndex = 9;
                         break;
+                    default:
+                         break;
                 }
             }
             if (highlightIndex>=0) {
@@ -1004,7 +1006,7 @@
                 //属于网络按摩的统计
                 NSLog(@"网络按摩统计");
                 MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
-                programId = [p.commandId integerValue];
+                programId = [p.massageId integerValue];
                 _programName = p.name;
             }
             else

@@ -19,6 +19,7 @@
 	if (img) {			// 本地图片
 		imageView.image = img;
 	} else {			// 网络图片
+        NSLog(@"图片🐰:%@",imageURL);
 		NSURL *url = [NSURL URLWithString:[RongTaiFileDomain stringByAppendingString:imageURL]];
 		
 		NSURLRequest *request = [NSURLRequest requestWithURL:url];

@@ -92,21 +92,27 @@
         //使用时间
         NSNumber* useTimeStr = [massageRecord objectForKey:@"useTime"];
         NSInteger useTime = [useTimeStr integerValue];
-        if (useTime>60) {
-            _usingTime.text = [NSString stringWithFormat:@"共%ld分钟",useTime/60];
+        if (useTime>=60) {
+//            if (useTime>=3600) {
+                _usingTime.text = [NSString stringWithFormat:@"共%d分钟",(int)round(useTime/60.0)];
+//            }
+//            else
+//            {
+//                 _usingTime.text = [NSString stringWithFormat:@"共%d小时",(int)round(useTime/3600.0)];
+//            }
         }
         else
         {
             _usingTime.text = [NSString stringWithFormat:@"共%ld秒",(long)useTime];
         }
-        [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
+        [_usingTime setNumebrByFont:[UIFont systemFontOfSize:12*WSCALE] Color:BLUE];
         
         //按摩日期
         NSString* date = [massageRecord objectForKey:@"useDate"];
         date = [date stringByReplacingOccurrencesOfString:@"-" withString:@"."];
         
         NSDateFormatter* formatter = [NSDateFormatter new];
-        [formatter setDateFormat:@"hh:mm"];
+        [formatter setDateFormat:@"hh:mm:ss"];
         NSDate* start = [massageRecord objectForKey:@"startTime"];
         NSString* startTime = [formatter stringFromDate:start];
         NSDate* end = [massageRecord objectForKey:@"endTime"];
@@ -116,7 +122,6 @@
         
         NSString* name = [massageRecord objectForKey:@"name"];
         _nameLabel.text = name;
-        
         _functionTextView.text = [massageRecord objectForKey:@"function"];
     }
 }

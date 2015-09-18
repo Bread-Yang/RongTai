@@ -117,6 +117,7 @@
         NSMutableArray* percents = [NSMutableArray new];
         NSMutableArray* names = [NSMutableArray new];
         NSMutableArray* useTimes = [NSMutableArray new];
+        NSMutableArray* colors = [NSMutableArray new];
         for (int i = 0; i<td.count; i++) {
             NSDictionary* r = td[i];
             NSNumber* rID = [r objectForKey:@"massageId"];
@@ -129,6 +130,7 @@
             }
             else
             {
+                [colors addObject:_doughnutView.colors[[rID intValue]-1]];
                 for (int j = i+1; j<td.count; j++) {
                     NSDictionary* restRecord = td[j];
                     NSNumber* restID = [restRecord objectForKey:@"massageId"];
@@ -161,6 +163,7 @@
             [names addObject:name];
         }
         if (otherTime > 0) {
+            [colors addObject:_doughnutView.colors[6]];
             [percents addObject:[NSNumber numberWithFloat:otherTime/(float)useTime]];
             [names addObject:@"其他"];
             NSString* ut;
@@ -179,7 +182,7 @@
     
         
         _doughnutView.percents = [NSArray arrayWithArray:percents];
-        NSArray* colors = _doughnutView.colors;
+        _doughnutView.colors = colors;
         for (int i = 0; i<names.count; i++) {
             NSNumber* p = percents[i];
             [_makerScrollView addSubview:[self makerViewByColor:colors[i] String:[NSString stringWithFormat:@"%@  %@",names[i],useTimes[i]] Percent:[p floatValue] Index:i]];
