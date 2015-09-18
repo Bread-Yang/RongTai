@@ -8,6 +8,7 @@
 
 #import "TimingPlan.h"
 #import "CoreData+MagicalRecord.h"
+#import "TimingPlanRequest.h"
 
 @implementation TimingPlan
 
@@ -76,14 +77,14 @@
 		for (int i = 0; i < [weekdays count]; i++) {
 			
 			NSDateComponents *setDateComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitHour |NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear fromDate:todayDate];
-			
-			[setDateComponents setWeekday:((NSInteger)weekdays[i] + 1)];  // 星期日: 1, 星期一 : 2, ..., 星期六 : 7
-			
+            NSNumber* n = [weekdays objectAtIndex:i];
+            NSLog(@"星期：%ld❤️",[n integerValue]);
+			[setDateComponents setWeekday:[n integerValue]];  // 星期日: 1, 星期一 : 2, ..., 星期六 : 7
 			[setDateComponents setHour:hour];
 			[setDateComponents setMinute:minute];
 			
 			NSDate *fireDate = [calendar dateFromComponents:setDateComponents]; // 0时区开始计算
-			
+            NSLog(@"通知时间：%@",fireDate);
 			UILocalNotification *localNofication = [[UILocalNotification alloc] init];
 			localNofication.fireDate = fireDate;
 			
@@ -91,7 +92,7 @@
 			localNofication.soundName = UILocalNotificationDefaultSoundName;
 			localNofication.alertBody = message;
 			localNofication.repeatInterval = NSCalendarUnitWeekOfYear;
-			
+            localNofication.timeZone = [NSTimeZone defaultTimeZone];
 			localNofication.alertLaunchImage = @"image";
 			localNofication.alertAction = @"action";
 			localNofication.hasAction = YES;
@@ -101,6 +102,7 @@
 			[self addLocalNotification:localNofication];
 			[[UIApplication sharedApplication] scheduleLocalNotification:localNofication];
 		}
+        NSLog(@"加入通知:%@",self.localNotifications);
 		
 	} else {	// 不循环
 		
@@ -121,7 +123,7 @@
 		localNofication.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"时间:%@",fireDate] forKey:@"time"];
 		localNofication.soundName = UILocalNotificationDefaultSoundName;
 		localNofication.alertBody = message;
-		
+		localNofication.timeZone = [NSTimeZone defaultTimeZone];
 		localNofication.alertLaunchImage = @"image";
 		localNofication.alertAction = @"action";
 		localNofication.hasAction = YES;
@@ -141,8 +143,85 @@
 	[((NSMutableArray *)self.localNotifications) addObject:addNotification];
 }
 
+
+#pragma mark - 同步本地定时计划数据
++(void)synchroTimingPlanLocalData:(BOOL)isContinue ByCount:(NSUInteger)count Uid:(NSString*)uid Success:(void (^)())success Fail:(void (^)())fail
+{
+    if (isContinue) {
+        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",uid]];
+        if (plans.count>count) {
+            TimingPlan* plan = plans[count];
+            NSInteger state = [plan.state integerValue];
+            TimingPlanRequest* request = [TimingPlanRequest new];
+            if (state == 1)
+            {
+                //新增数据
+                [request addTimingPlan:plan success:^(NSUInteger timingPlanId) {
+                    NSLog(@"定时计划 同步新增成功");
+                    plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                    [TimingPlan synchroTimingPlanLocalData:YES ByCount:count Uid:uid Success:success Fail:fail];
+                } fail:^(NSDictionary *dic) {
+                    [TimingPlan synchroTimingPlanLocalData:YES ByCount:count+1 Uid:uid Success:success Fail:fail];
+                }];
+            }
+            else if (state == 2)
+            {
+                //编辑数据
+                [request updateTimingPlan:plan success:^(NSDictionary *dic) {
+                    NSLog(@"定时计划 同步编辑成功");
+                    plan.state = [NSNumber numberWithInteger:0];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                     [TimingPlan synchroTimingPlanLocalData:YES ByCount:count Uid:uid Success:success Fail:fail];
+                } fail:^(NSDictionary *dic) {
+                     [TimingPlan synchroTimingPlanLocalData:YES ByCount:count+1 Uid:uid Success:success Fail:fail];
+                }];
+            }
+            else if (state == 3)
+            {
+                //删除数据
+                NSUInteger planId = [plan.planId integerValue];
+                [request deleteTimingPlanId:planId success:^{
+                    NSLog(@"定时计划 同步删除成功");
+                    [plan MR_deleteEntity];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    
+                   [TimingPlan synchroTimingPlanLocalData:YES ByCount:count Uid:uid Success:success Fail:fail];
+                } fail:^(NSDictionary *dic) {
+                     [TimingPlan synchroTimingPlanLocalData:YES ByCount:count+1 Uid:uid Success:success Fail:fail];
+                }];
+            }
+        }
+        else
+        {
+            //没有需要的同步数据才去请求列表
+            [self getTimingPlanListSuccess:success Fail:fail];
+        }
+    }
+}
+
+#pragma mark - 请求定时计划列表
++(void)getTimingPlanListSuccess:(void(^)())success Fail:(void(^)())fail
+{
+    //网络请求定时计划列表
+    TimingPlanRequest* request = [TimingPlanRequest new];
+    [request getTimingPlanListSuccess:^(NSArray *timingPlanList) {
+        NSLog(@"定时计划网络请求成功");
+        [TimingPlan updateLocalNotificationByNetworkData:timingPlanList Finish:success];
+        
+    } fail:^(NSDictionary *dic) {
+        NSLog(@"定时计划网络请求失败");
+        if (fail) {
+            fail();
+        }
+    }];
+}
+
 #pragma mark - 根据TimingPlan来更新本地通知
-+(void)updateLocalNotificationByNetworkData:(NSArray*)arr
++(void)updateLocalNotificationByNetworkData:(NSArray*)arr Finish:(void(^)())finish
 {
     NSMutableArray* networkData = [NSMutableArray arrayWithArray:arr];
     NSArray* localData = [TimingPlan MR_findAll];
@@ -155,11 +234,48 @@
             NSNumber* networkPlanId = [networkDic objectForKey:@"planId"];
             if ([t.planId isEqualToNumber:networkPlanId]) {
                 isExist = YES;
-                if (![dic isEqualToDictionary:networkDic]) {
-                    //不一样就需要更新本地数据
-                    [t cancelLocalNotification];
-                    [t setValueByJson:networkDic];
-                    [t updateLocalNotification];
+                NSUInteger state = [t.state integerValue];
+                if (state == 0) {
+                    if (![dic isEqualToDictionary:networkDic]) {
+                        //不一样就需要更新本地数据
+                        [t cancelLocalNotification];
+                        [t setValueByJson:networkDic];
+                        [t updateLocalNotification];
+                    }
+                }
+                else
+                {
+                    TimingPlanRequest* r = [TimingPlanRequest new];
+                    if (state == 1)
+                    {
+                        //添加
+                        [r addTimingPlan:t success:^(NSUInteger timingPlanId) {
+                            t.state = [NSNumber numberWithInt:0];
+                            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                        } fail:^(NSDictionary *dic) {
+                            NSLog(@"有定时计划 同步添加失败：%@",[t toDictionary]);
+                        }];
+                    }
+                    else if (state == 2)
+                    {
+                        //编辑
+                        [r updateTimingPlan:t success:^(NSDictionary *dic) {
+                            t.state = [NSNumber numberWithInt:0];
+                            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                        } fail:^(NSDictionary *dic) {
+                             NSLog(@"有定时计划 同步编辑失败：%@",[t toDictionary]);
+                        }];
+                    }
+                    else if (state == 3)
+                    {
+                        //删除
+                        [r deleteTimingPlanId:[t.planId integerValue] success:^{
+                            t.state = [NSNumber numberWithInt:0];
+                            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                        } fail:^(NSDictionary *dic) {
+                             NSLog(@"有定时计划 同步删除失败：%@",[t toDictionary]);
+                        }];
+                    }
                 }
                 [networkData removeObjectAtIndex:j];
                 break;
@@ -184,6 +300,10 @@
             [t updateLocalNotification];
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         }
+    }
+    
+    if (finish) {
+        finish();
     }
 }
 

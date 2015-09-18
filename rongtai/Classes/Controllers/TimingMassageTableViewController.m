@@ -40,14 +40,6 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor clearColor];
 	
-    //添加背景
-//	UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:self.view.frame];
-//	backgroundImageView.image = [UIImage imageNamed:@"bg"];
-//	self.tableView.backgroundView = backgroundImageView;
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-	
     //导航栏右边的添加按钮
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_set-07"] style:UIBarButtonItemStylePlain target:self action:@selector(addTimingMassage)];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -81,39 +73,23 @@
         
         //同步数据
         NSLog(@"开始同步数据");
-        [self synchroTimingPlanLocalData:YES];
+        [TimingPlan synchroTimingPlanLocalData:YES ByCount:0 Uid:_uid Success:^{
+            [self loadLocalData];
+            [_loading hide:YES];
+            NSLog(@"定时计划:%@",[UIApplication sharedApplication].scheduledLocalNotifications);
+        } Fail:^{
+            [self loadLocalData];
+            [_loading hide:YES];
+            NSLog(@"定时计划:%@",[UIApplication sharedApplication].scheduledLocalNotifications);
+        }];
     }
     else
     {
         NSLog(@"定时计划网络请求 没网");
         //没有网络读取本地数据库
         [self loadLocalData];
+        NSLog(@"定时计划:%@",[UIApplication sharedApplication].scheduledLocalNotifications);
     }
-}
-
-#pragma mark - 请求定时计划列表
--(void)getTimingPlanList
-{
-    //网络请求定时计划列表
-    [_timingPlanRequest getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-        NSLog(@"定时计划网络请求成功");
-        self.timingMassageArray = [[NSMutableArray alloc] init];
-        for (NSDictionary *dic in timingPlanList) {
-            TimingPlan *item = [TimingPlan updateTimingPlanDB:dic];
-            [self.timingMassageArray addObject:item];
-        }
-        [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
-        [_tableView reloadData];
-        [_loading hide:YES];
-        
-    } fail:^(NSDictionary *dic) {
-        NSLog(@"定时计划网络请求失败");
-        //失败时读取本地数据库
-        
-        //查询去状态不是 未同步的删除 的所有数据
-        [self loadLocalData];
-        [_loading hide:YES];
-    }];
 }
 
 #pragma mark - 读取本地数据
@@ -125,90 +101,6 @@
     self.timingMassageArray = [NSMutableArray arrayWithArray:plans];
     [_tableView reloadData];
 }
-
-#pragma mark - 同步本地数据
--(void)synchroTimingPlanLocalData:(BOOL)isContinue {
-    if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",_uid]];
-        if (plans.count > 0) {
-            NSLog(@"同步中。。。:%ld",plans.count);
-            TimingPlan* plan = plans[0];
-            NSInteger state = [plan.state integerValue];
-            if (state == 1)
-            {
-                NSLog(@"定时计划 同步新增...");
-                //新增数据
-                [_timingPlanRequest addTimingPlan:plan success:^(NSUInteger timingPlanId) {
-                    NSLog(@"定时计划 同步新增成功");
-                    plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
-                    plan.state = [NSNumber numberWithInteger:0];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [self synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    //同步失败的话，读取本地数据
-                    NSLog(@"定时计划同步时失败");
-                    [self loadLocalData];
-                    [_loading hide:YES];
-                }];
-            }
-            else if (state == 2)
-            {
-                NSLog(@"定时计划 同步编辑...");
-                //编辑数据
-                [_timingPlanRequest updateTimingPlan:plan success:^(NSDictionary *dic) {
-                    NSLog(@"定时计划 同步编辑成功");
-                    plan.state = [NSNumber numberWithInteger:0];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [self synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    NSLog(@"定时计划 同步编辑失败");
-                    //同步失败的话，读取本地数据
-                    NSLog(@"定时计划同步时失败");
-                    [self loadLocalData];
-                    [_loading hide:YES];
-                }];
-            }
-            else if (state == 3)
-            {
-                NSLog(@"定时计划 同步删除...");
-                //删除数据
-                NSUInteger planId = [plan.planId integerValue];
-                [_timingPlanRequest deleteTimingPlanId:planId success:^{
-                    NSLog(@"定时计划 同步删除成功");
-                    [plan MR_deleteEntity];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [self synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    //同步失败的话，读取本地数据
-                    NSLog(@"定时计划同步时失败");
-                    [self loadLocalData];
-                    [_loading hide:YES];
-                }];
-            }
-            else
-            {
-                NSLog(@"未知状态");
-                [self synchroTimingPlanLocalData:NO];
-            }
-        }
-        else
-        {
-            //没有需要的同步数据才去请求列表
-            [self getTimingPlanList];
-        }
-    }
-    else
-    {
-        //同步失败的话，读取本地数据
-        NSLog(@"定时计划同步时失败");
-        [self loadLocalData];
-        [_loading hide:YES];
-    }
-}
-
 
 #pragma mark - 返回
 -(void)goBack
@@ -313,7 +205,6 @@
 }
 
 #pragma mark - Action
-
 - (void)addTimingMassage {
 	
 	UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -325,7 +216,6 @@
 		[weakSelf.timingMassageArray addObject:entity];
 		[_tableView reloadData];
 	}];
-
 	[self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -335,7 +225,6 @@
     [_loading hide:YES];
     [self showProgressHUDByString:@"请求超时"];
 }
-
 
 #pragma mark - 快速提示
 -(void)showProgressHUDByString:(NSString*)message

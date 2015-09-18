@@ -63,6 +63,8 @@
     UIButton *_manualMassageButton; //手动按摩 按钮
     UIButton *_customProgramButton; //自定义 按钮
     UIButton *_downloadButton;  //下载按钮
+    
+    NSUInteger _timingPlanCount; //记录未同步的定时计划
 }
 @end
 
@@ -222,7 +224,7 @@
     
     //同步 定时计划 数据
     //app启动时要开始进行 定时计划的数据同步
-    [self synchroTimingPlanLocalData:YES];
+    [TimingPlan synchroTimingPlanLocalData:YES ByCount:0 Uid:self.uid Success:nil Fail:nil];
     
     //对 使用次数 数据进行同步
     [self synchroUseTimeData];
@@ -331,65 +333,6 @@
     [ProgramCount synchroUseCountDataFormServer:b Success:nil Fail:nil];
 }
 
-#pragma mark - 同步本地定时计划数据
--(void)synchroTimingPlanLocalData:(BOOL)isContinue
-{
-    if (isContinue) {
-        NSArray* plans = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(state < 4) AND (state > 0) AND uid == %@",self.uid]];
-        if (plans.count>0) {
-            TimingPlan* plan = plans[0];
-            NSInteger state = [plan.state integerValue];
-            TimingPlanRequest* request = [TimingPlanRequest new];
-            __weak MainViewController* weakSelf = self;
-            if (state == 1)
-            {
-                //新增数据
-                [request addTimingPlan:plan success:^(NSUInteger timingPlanId) {
-                    NSLog(@"定时计划 同步新增成功");
-                    plan.planId = [NSNumber numberWithUnsignedInteger:timingPlanId];
-                    plan.state = [NSNumber numberWithInteger:0];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [weakSelf synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    [weakSelf synchroTimingPlanLocalData:NO];
-                }];
-            }
-            else if (state == 2)
-            {
-                //编辑数据
-                [request updateTimingPlan:plan success:^(NSDictionary *dic) {
-                    NSLog(@"定时计划 同步编辑成功");
-                    plan.state = [NSNumber numberWithInteger:0];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [weakSelf synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    [weakSelf synchroTimingPlanLocalData:NO];
-                }];
-            }
-            else if (state == 3)
-            {
-                //删除数据
-                NSUInteger planId = [plan.planId integerValue];
-                [request deleteTimingPlanId:planId success:^{
-                    NSLog(@"定时计划 同步删除成功");
-                    [plan MR_deleteEntity];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-                    
-                    [weakSelf synchroTimingPlanLocalData:YES];
-                } fail:^(NSDictionary *dic) {
-                    [weakSelf synchroTimingPlanLocalData:NO];
-                }];
-            }
-        }
-        else
-        {
-            //没有需要的同步数据才去请求列表
-            [self getTimingPlanList];
-        }
-    }
-}
 
 #pragma mark - 更新用户头像
 -(void)updateUserIcon
@@ -449,21 +392,6 @@
     } failure:^(id responseObject) {
         NSLog(@"本地记录读取成员");
         [self updateUserIcon];
-    }];
-}
-
-#pragma mark - 请求定时计划列表
--(void)getTimingPlanList
-{
-    //网络请求定时计划列表
-    TimingPlanRequest* request = [TimingPlanRequest new];
-    [request getTimingPlanListSuccess:^(NSArray *timingPlanList) {
-        NSLog(@"定时计划网络请求成功");
-        [TimingPlan updateLocalNotificationByNetworkData:timingPlanList];
-        
-    } fail:^(NSDictionary *dic) {
-        NSLog(@"定时计划网络请求失败");
-        
     }];
 }
 

@@ -66,7 +66,7 @@
     
     //
     _timeSetLabel.textColor = BLUE;
-    [_timeSetLabel setNumebrByFont:[UIFont systemFontOfSize:28 weight:10] Color:BLUE];
+    [_timeSetLabel setNumebrByFont:[UIFont systemFontOfSize:28] Color:BLUE];
     [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
     
     //
@@ -234,7 +234,6 @@
     if (main) {
         [self.navigationController popToViewController:main animated:YES];
     }
-  
 }
 
 #pragma mark - 停止按摩

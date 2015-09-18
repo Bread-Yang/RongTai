@@ -337,7 +337,6 @@
 	} else {
 		self.timingPlan.massageProgamId = [NSNumber numberWithInteger:12345];
 	}
-	
     
     NSOrderedSet *selectDays = [self.weekDaySegmentControl getAlreadySelectedIndexes];
     
@@ -358,7 +357,7 @@
     }
     [self.timingPlan setLocalNotificationByHour:hour Minute:minute Week:selectDays Message:self.timingPlan.massageName];
     self.timingPlan.isOn = [NSNumber numberWithBool:YES];
-    
+    NSLog(@"⏰：%@",[self.timingPlan toDictionary]);
 }
 
 #pragma mark - UICollectionViewDataSource

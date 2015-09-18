@@ -56,14 +56,14 @@
 			
 			NSArray *arr = [responseObject objectForKey:@"result"];
 			
-			NSLog(@"用户下载列表:%@",arr);
+//			NSLog(@"用户下载列表:%@",arr);
 			
 			NSMutableArray *networkMassageProgramArray = [[NSMutableArray alloc] init];
 			
 			if (arr.count > 0) {
 				for (int i = 0; i < arr.count; i++) {
 					MassageProgram *massage = [MassageProgram MR_createEntity];
-                    NSLog(@"😄%d：%@",i,arr[i]);
+//                    NSLog(@"😄%d：%@",i,arr[i]);
 					[massage setValueByJSON:arr[i]];
                     massage.isLocalDummyData = [NSNumber numberWithBool:NO];
                     [networkMassageProgramArray addObject:massage];
