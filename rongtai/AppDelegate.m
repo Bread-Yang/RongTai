@@ -120,8 +120,9 @@
 	
 	// 判断应用程序当前的运行状态，如果是激活状态，则进行提醒，否则不提醒
 	if (application.applicationState == UIApplicationStateActive) {
-    	NSDictionary *userInfo = notification.userInfo;
-    	NSString *message = [userInfo objectForKey:@"time"];
+//    	NSDictionary *userInfo = notification.userInfo;
+//    	NSString *message = [userInfo objectForKey:@"time"];
+        NSString* message = notification.alertBody;
     	UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"定时计划" message:message delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     	[alert show];
 	}

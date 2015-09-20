@@ -1407,14 +1407,14 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共30分钟" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgx-eq-5HI">
-                                        <rect key="frame" x="78" y="0.0" width="116" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <rect key="frame" x="78" y="0.0" width="111" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" red="0.37647058820000001" green="0.38823529410000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015.05.12  12:00 -- 12:30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THm-1L-uYl">
-                                        <rect key="frame" x="194" y="0.0" width="322.5" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015.05.12  12:00 -- 12:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THm-1L-uYl">
+                                        <rect key="frame" x="189" y="0.0" width="322.5" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" red="0.37647058820000001" green="0.38823529410000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1428,7 +1428,7 @@
                                     <constraint firstAttribute="height" secondItem="pgx-eq-5HI" secondAttribute="height" id="FHy-FQ-gMX"/>
                                     <constraint firstItem="THm-1L-uYl" firstAttribute="width" secondItem="pep-47-rhv" secondAttribute="width" multiplier="0.64" id="QbK-Ia-kaw"/>
                                     <constraint firstAttribute="height" secondItem="THm-1L-uYl" secondAttribute="height" id="Tbd-y3-nfx"/>
-                                    <constraint firstItem="pgx-eq-5HI" firstAttribute="width" secondItem="pep-47-rhv" secondAttribute="width" multiplier="0.23" id="X5G-No-Xme"/>
+                                    <constraint firstItem="pgx-eq-5HI" firstAttribute="width" secondItem="pep-47-rhv" secondAttribute="width" multiplier="0.22" id="X5G-No-Xme"/>
                                     <constraint firstItem="pgx-eq-5HI" firstAttribute="leading" secondItem="pep-47-rhv" secondAttribute="leading" id="cMC-68-hpV"/>
                                     <constraint firstItem="sfJ-Ug-fOX" firstAttribute="top" secondItem="pep-47-rhv" secondAttribute="top" id="dtk-3Y-8bk"/>
                                     <constraint firstAttribute="height" secondItem="THm-1L-uYl" secondAttribute="height" id="fC5-u6-5mb"/>

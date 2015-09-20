@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class DataCenterViewController;
+
 @interface DoughnutViewController : UIViewController
 
 @property(nonatomic, strong)NSArray* progarmCounts;
+
+-(void)requestData:(DataCenterViewController*)vc;
 
 @end
