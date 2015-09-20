@@ -35,6 +35,12 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [_phoneNum becomeFirstResponder];
 }
 
@@ -100,7 +106,7 @@
     else
     {
         _registerBtn.userInteractionEnabled = NO;
-        [_registerBtn setTitle:[NSString stringWithFormat:@"重新获取(%ld)",_countTime] forState:UIControlStateNormal];
+        [_registerBtn setTitle:[NSString stringWithFormat:@"重新获取(%ld)",(unsigned long)_countTime] forState:UIControlStateNormal];
         [_registerBtn setBackgroundImage:[UIImage imageNamed:@"register_button_gray"] forState:UIControlStateNormal];
         _countTime--;
     }
@@ -116,8 +122,8 @@
 
         if (phone.length > 0) {
             if (phone.length == 11) {
-//                _canSend = NO;
                 if ([self checkPhoneNum]) {
+                    _canSend = NO;
                     [_loginRequest requestAuthCodeByPhone:phone];
                 }
                 else
@@ -156,7 +162,7 @@
         //验证码发送成功
         NSLog(@"验证码发送成功");
         [self showProgressHUDByString:@"验证码发送成功"];
-//        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countTimeToSendAuthCode:) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countTimeToSendAuthCode:) userInfo:nil repeats:YES];
     }
     else
     {
