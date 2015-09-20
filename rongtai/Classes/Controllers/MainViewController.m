@@ -33,6 +33,7 @@
 #import "ProgramCount.h"
 #import "MassageRecord.h"
 #import "MBProgressHUD.h"
+#import "WLButtonItem.h"
 
 
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
@@ -57,10 +58,14 @@
     //底部菜单
     UIView* _menuView;  //菜单栏
 
-    UIButton *_anionButton; //负离子按钮
-    UIButton *_manualMassageButton; //手动按摩 按钮
-    UIButton *_customProgramButton; //自定义 按钮
-    UIButton *_downloadButton;  //下载按钮
+//    UIButton *_anionButton;
+    WLButtonItem* _anionButtonItem; //负离子按钮
+//    UIButton *_manualMassageButton;
+    WLButtonItem* _manualMassageButtonItem;  //手动按摩 按钮
+//    UIButton *_customProgramButton;
+    WLButtonItem* _customProgramButtonItem; //自定义 按钮
+//    UIButton *_downloadButton;
+    WLButtonItem* _downloadButtonItem;  //下载按钮
     
     NSUInteger _timingPlanCount; //记录未同步的定时计划
 }
@@ -73,6 +78,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [_customProgramButtonItem setSelected:NO];
+    [_downloadButtonItem setSelected:NO];
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     slideNav.enableSwipeGesture = YES;
 	
@@ -83,8 +90,8 @@
     NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
     NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
     if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
-        [_anionButton setSelected:NO];
-        [_manualMassageButton setSelected:NO];
+        [_anionButtonItem setSelected:NO];
+        [_manualMassageButtonItem setSelected:NO];
     }
     else
     {
@@ -96,7 +103,7 @@
             else
             {
                 NSLog(@"手动按摩中");
-                [_manualMassageButton setSelected:YES];
+                [_manualMassageButtonItem setSelected:YES];
             }
         }
         else
@@ -207,56 +214,44 @@
     
     //负离子按钮
     CGFloat btnWidth = sWidth/4;
-    _anionButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, btnWidth, 49)];
-    [_anionButton setTitle:NSLocalizedString(@"负离子", nil) forState:UIControlStateNormal];
-    [_anionButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateSelected];
-    _anionButton.titleLabel.font = [UIFont systemFontOfSize:11];
-    _anionButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
-    _anionButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.35, 0, 0);
-    _anionButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.25, 0, 0);
-    [_anionButton setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
-    [_anionButton setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
-    [_anionButton addTarget:self action:@selector(anionButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_menuView addSubview:_anionButton];
+    _anionButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(0, 0, btnWidth, 49)];
+    _anionButtonItem.title = NSLocalizedString(@"负离子", nil);
+    [_anionButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
+    [_anionButtonItem setImage:[UIImage imageNamed:@"icon_set"]];
+    [_anionButtonItem setSelectedImage:[UIImage imageNamed:@"icon_set2"]];
+    UITapGestureRecognizer* anionTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(anionButtonClicked)];
+    [_anionButtonItem addGestureRecognizer:anionTap];
+    [_menuView addSubview:_anionButtonItem];
     
     //手动 按钮
-    _manualMassageButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
-    [_manualMassageButton setTitle:NSLocalizedString(@"手动", nil) forState:UIControlStateNormal];
-    [_manualMassageButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateSelected];
-    _manualMassageButton.titleLabel.font = [UIFont systemFontOfSize:11];
-    _manualMassageButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
-    _manualMassageButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.3, 0, 0);;
-    _manualMassageButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.2, 0, 0);
-    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand"] forState:UIControlStateNormal];
-    [_manualMassageButton setImage:[UIImage imageNamed:@"icon_hand2"] forState:UIControlStateSelected];
-    [_manualMassageButton addTarget:self action:@selector(manualButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_menuView addSubview:_manualMassageButton];
+    _manualMassageButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
+    _manualMassageButtonItem.title = NSLocalizedString(@"手动", nil);
+    [_manualMassageButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
+    [_manualMassageButtonItem setImage:[UIImage imageNamed:@"icon_hand"]];
+    [_manualMassageButtonItem setSelectedImage:[UIImage imageNamed:@"icon_hand2"]];
+    UITapGestureRecognizer* manualTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(manualButtonClicked)];
+    [_manualMassageButtonItem addGestureRecognizer:manualTap];
+    [_menuView addSubview:_manualMassageButtonItem];
     
     //自定义按钮
-    _customProgramButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth*2, 0, btnWidth, 49)];
-    [_customProgramButton setTitle:NSLocalizedString(@"自定义", nil) forState:UIControlStateNormal];
-    [_customProgramButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
-    _customProgramButton.titleLabel.font = [UIFont systemFontOfSize:11];
-    _customProgramButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
-    _customProgramButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.35, 0, 0);
-    _customProgramButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.25, 0, 0);
-    [_customProgramButton setImage:[UIImage imageNamed:@"icon_user"] forState:UIControlStateNormal];
-    [_customProgramButton setImage:[UIImage imageNamed:@"icon_user2"] forState:UIControlStateHighlighted];
-    [_customProgramButton addTarget:self action:@selector(customButtonCilcked) forControlEvents:UIControlEventTouchUpInside];
-    [_menuView addSubview:_customProgramButton];
+    _customProgramButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*2, 0, btnWidth, 49)];
+    _customProgramButtonItem.title = NSLocalizedString(@"自定义", nil);
+    [_customProgramButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
+    [_customProgramButtonItem setImage:[UIImage imageNamed:@"icon_user"]];
+    [_customProgramButtonItem setSelectedImage:[UIImage imageNamed:@"icon_user2"]];
+    UITapGestureRecognizer* customTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(customButtonCilcked)];
+    [_customProgramButtonItem addGestureRecognizer:customTap];
+    [_menuView addSubview:_customProgramButtonItem];
 
     //下载按钮
-    _downloadButton = [[UIButton alloc]initWithFrame:CGRectMake(btnWidth*3, 0, btnWidth, 49)];
-    [_downloadButton setTitle:NSLocalizedString(@"下载", nil) forState:UIControlStateNormal];
-    [_downloadButton setTitleColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1] forState:UIControlStateHighlighted];
-    _downloadButton.titleLabel.font = [UIFont systemFontOfSize:11];
-    _downloadButton.contentEdgeInsets = UIEdgeInsetsMake(-15, 0, 0, 0);
-    _downloadButton.imageEdgeInsets = UIEdgeInsetsMake(0, btnWidth*0.3, 0, 0);;
-    _downloadButton.titleEdgeInsets = UIEdgeInsetsMake(40, -btnWidth*0.2, 0, 0);
-    [_downloadButton setImage:[UIImage imageNamed:@"icon_download"] forState:UIControlStateNormal];
-    [_downloadButton setImage:[UIImage imageNamed:@"icon_download2"] forState:UIControlStateHighlighted];
-    [_downloadButton addTarget:self action:@selector(downloadButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_menuView addSubview:_downloadButton];
+    _downloadButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*3, 0, btnWidth, 49)];
+    _downloadButtonItem.title = NSLocalizedString(@"下载", nil);
+    [_downloadButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
+    [_downloadButtonItem setImage:[UIImage imageNamed:@"icon_download"]];
+    [_downloadButtonItem setSelectedImage:[UIImage imageNamed:@"icon_download2"]];
+    UITapGestureRecognizer* downloadTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(downloadButtonClicked)];
+    [_downloadButtonItem addGestureRecognizer:downloadTap];
+    [_menuView addSubview:_downloadButtonItem];
     
     //
 
@@ -613,8 +608,8 @@
 - (void)clearHightlightView {
 	[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
 	[_table reloadData];
-    [_anionButton setSelected:NO];
-    [_manualMassageButton setSelected:NO];
+    [_anionButtonItem setSelected:NO];
+    [_manualMassageButtonItem setSelected:NO];
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -662,9 +657,9 @@
 //	NSLog(@"didUpdateMassageChairStatus");
 	
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
-        [_anionButton setSelected:NO];
+        [_anionButtonItem setSelected:NO];
 	} else {
-        [_anionButton setSelected:YES];
+        [_anionButtonItem setSelected:YES];
 	}
 	
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
@@ -682,7 +677,7 @@
 		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork)
         {
             //自动时设置手动按钮不为高亮
-            [_manualMassageButton setSelected:NO];
+            [_manualMassageButtonItem setSelected:NO];
 			
             if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
                 switch (rtMassageChairStatus.autoProgramType) {
@@ -749,12 +744,12 @@
         else if (rtMassageChairStatus.programType == RtMassageChairProgramManual)
         {
             //手动按摩的话，底部菜单栏的手动要高亮
-            [_manualMassageButton setSelected:YES];
+            [_manualMassageButtonItem setSelected:YES];
             [_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
         }
         else
         {
-            [_manualMassageButton setSelected:NO];
+            [_manualMassageButtonItem setSelected:NO];
             [_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
         }
 	}
@@ -762,7 +757,7 @@
     {
         // 没有在按摩
 		[_table deselectRowAtIndexPath:[_table indexPathForSelectedRow] animated:YES];
-        [_manualMassageButton setSelected:NO];
+        [_manualMassageButtonItem setSelected:NO];
         
 	}
     
@@ -992,6 +987,7 @@
 #pragma mark - 自定义方法
 -(void)customButtonCilcked
 {
+    [_customProgramButtonItem setSelected:YES];
     //跳到自定义页面
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     CustomProcedureViewController* cVC= (CustomProcedureViewController*)[s instantiateViewControllerWithIdentifier:@"CustomProcedure"];
@@ -1001,6 +997,7 @@
 #pragma mark - 下载方法
 -(void)downloadButtonClicked
 {
+    [_downloadButtonItem setSelected:YES];
     //跳到下载页面
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ProgramDownloadViewController* pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];

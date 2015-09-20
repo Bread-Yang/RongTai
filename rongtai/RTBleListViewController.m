@@ -249,7 +249,9 @@
     [UIView animateWithDuration:time delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         _cView.transform = CGAffineTransformRotate(_cView.transform, -M_PI_2);
     } completion:^(BOOL finished) {
-        _cView.frame = CGRectMake(0, 0, 22, 22);
+        CGRect f = _cView.frame;
+        f.size = CGSizeMake(22, 22);
+        _cView.frame = f;
     }];
 }
 

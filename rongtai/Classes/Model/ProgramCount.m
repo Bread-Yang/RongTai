@@ -96,8 +96,9 @@
 #pragma mark - 本地数据同步至服务器
 +(void)synchroLocalDataToServerSuccess:(void(^)())success Fail:(void(^)(NSDictionary* dic)) fail
 {
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     NSLog(@"开始同步统计次数到服务器");
-    NSArray* counts = [ProgramCount MR_findAll];
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (unUpdateCount > 0)",uid]];
     
     //生成请求参数数组
     NSMutableArray* jsons = [NSMutableArray new];
@@ -126,6 +127,12 @@
                 fail(dic);
             }
         }];
+    }
+    else
+    {
+        if (success) {
+            success();
+        }
     }
 }
 

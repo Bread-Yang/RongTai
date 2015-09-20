@@ -8,11 +8,11 @@
 
 #import "DoughnutViewController.h"
 #import "DoughnutCollectionViewCell.h"
-//#import "UIView+AddBorder.h"
 #import "UILabel+WLAttributedString.h"
 #import "RongTaiConstant.h"
-#import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
+#import "DataCenterViewController.h"
+#import "MBProgressHUD.h"
 
 @interface DoughnutViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -22,6 +22,8 @@
     NSString* _reuseIdentifier;
     UIFont* _font;
     NSArray* _colors;  //颜色数组
+    NSUInteger _totalCount;
+    __weak DataCenterViewController* _dataCenterVC;
 }
 @end
 
@@ -38,19 +40,43 @@
     }
     _colors = @[BLUE, LIGHTGREEN, ORANGE];
     
-    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
+    // Do any additional setup after loading the view.
+}
+
+#pragma mark - 请求数据
+-(void)requestData:(DataCenterViewController*)vc
+{
+    _dataCenterVC = vc;
+    [vc showHUD];
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(unUpdateCount > 0) AND (uid == %@)",uid]];
     BOOL b = counts.count>0;
     [ProgramCount synchroUseCountDataFormServer:b Success:^{
-        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
+        
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"useCount" ascending:NO];
+        [self totalUseCount];
         [_collectView reloadData];
+        [vc hideHUD];
     } Fail:^(NSDictionary * dic) {
-        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"useCount" ascending:NO];
+        //因为未同步成功，所以需要重新排序
+        NSMutableArray* arr = [NSMutableArray arrayWithArray:_progarmCounts];
+        for (int i = 0; i<arr.count; i++) {
+            ProgramCount* c = arr[i];
+            NSUInteger count1 = [c.useCount integerValue]+[c.unUpdateCount integerValue];
+            for (int j = i+1; j<arr.count; j++) {
+                ProgramCount* pc = arr[j];
+                NSUInteger count2 = [pc.useCount integerValue]+[pc.unUpdateCount integerValue];
+                if (count1<count2) {
+                    [arr exchangeObjectAtIndex:i withObjectAtIndex:j];
+                }
+            }
+        }
+        [self totalUseCount];
         [_collectView reloadData];
+        [vc showHUD];
+        [self showProgressHUDByString:@"读取数据失败，请检测网络"];
     }];
-    
-    // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -64,6 +90,16 @@
     _progarmCounts = progarmCounts;
     if (_collectView.delegate) {
         [_collectView reloadData];
+    }
+}
+
+#pragma mark - 计算总使用次数
+-(void)totalUseCount
+{
+    _totalCount = 0;
+    for (int i = 0; i<_progarmCounts.count; i++) {
+        ProgramCount* p = _progarmCounts[i];
+        _totalCount += [p.useCount integerValue]+[p.unUpdateCount integerValue];
     }
 }
 
@@ -114,7 +150,7 @@
         NSNumber* unC = program.unUpdateCount;
         NSUInteger count = [c integerValue]+[unC integerValue];
         cell.count = count;
-        cell.doughnut.percent = count/100.0;
+        cell.doughnut.percent = count/(float)_totalCount;
 //        [cell addLineBorder];
         cell.isHiddenDougnut = NO;
         cell.countLabel.font = _font;
@@ -129,19 +165,16 @@
     return cell;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
-*/
 
 @end

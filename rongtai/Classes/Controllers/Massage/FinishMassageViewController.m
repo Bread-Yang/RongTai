@@ -57,8 +57,8 @@
     _functionTextView.font = [UIFont systemFontOfSize:WSCALE*13];
     _functionL.font = [UIFont systemFontOfSize:WSCALE*14];
     _usingTimeL.font = [UIFont systemFontOfSize:WSCALE*14];
-    _usingTime.font = [UIFont systemFontOfSize:WSCALE*13];
-    _date.font = [UIFont systemFontOfSize:WSCALE*13];
+    _usingTime.font = [UIFont systemFontOfSize:WSCALE*11];
+    _date.font = [UIFont systemFontOfSize:WSCALE*11];
     _nameLabel.font = [UIFont systemFontOfSize:WSCALE*20];
     _saveBtn.titleLabel.font = [UIFont systemFontOfSize:HSCALE*13];
     
@@ -67,7 +67,7 @@
     [_score setNumebrByFont:font Color:ORANGE];
     
     //使用时间数字字体设置
-    [_usingTime setNumebrByFont:[UIFont systemFontOfSize:14*WSCALE] Color:BLUE];
+    [_usingTime setNumebrByFont:[UIFont systemFontOfSize:13*WSCALE] Color:BLUE];
     
     //创建星级评分控件
     _starRateView = [[CWStarRateView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.84*0.7, 0.1*SCREENHEIGHT*0.6) numberOfStars:5];
@@ -105,7 +105,7 @@
         {
             _usingTime.text = [NSString stringWithFormat:@"共%ld秒",(long)useTime];
         }
-        [_usingTime setNumebrByFont:[UIFont systemFontOfSize:12*WSCALE] Color:BLUE];
+        [_usingTime setNumebrByFont:[UIFont systemFontOfSize:13*WSCALE] Color:BLUE];
         
         //按摩日期
         NSString* date = [massageRecord objectForKey:@"useDate"];

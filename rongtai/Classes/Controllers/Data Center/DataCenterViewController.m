@@ -15,7 +15,6 @@
 #import "RongTaiConstant.h"
 #import "UILabel+WLAttributedString.h"
 #import "CoreData+MagicalRecord.h"
-#import "ProgramCount.h"
 #import "MassageRecord.h"
 #import "MBProgressHUD.h"
 #import "DataRequest.h"
@@ -240,6 +239,7 @@
     else
     {
         _titleLabel.text = NSLocalizedString(@"爱用程序", nil);
+        [_doughnutVC requestData:self];
     }
 }
 
@@ -266,6 +266,7 @@
     else
     {
         _titleLabel.text = NSLocalizedString(@"爱用程序", nil);
+        [_doughnutVC requestData:self];
     }
 }
 

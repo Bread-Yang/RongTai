@@ -54,6 +54,7 @@
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
 		3D76E2971B4BE4DD004B83E7 /* WLLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2921B4BE4DD004B83E7 /* WLLineChart.m */; };
 		3D76E2981B4BE4DD004B83E7 /* WLXAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */; };
+		3D7754E01BAE60F100E47C8C /* WLButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7754DF1BAE60F100E47C8C /* WLButtonItem.m */; };
 		3D775A3D1B1DA45A00BAFF04 /* UserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */; };
 		3D77C9E81B4CCC37005C9810 /* localNotificationTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D77C9E51B4CCC37005C9810 /* localNotificationTransformer.m */; };
 		3D783D331B12FD0300A893D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D783D321B12FD0300A893D9 /* main.m */; };
@@ -313,6 +314,8 @@
 		3D76E2931B4BE4DD004B83E7 /* WLXAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLXAxis.h; sourceTree = "<group>"; };
 		3D76E2941B4BE4DD004B83E7 /* WLXAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLXAxis.m; sourceTree = "<group>"; };
 		3D76E2951B4BE4DD004B83E7 /* WLYAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLYAxis.h; sourceTree = "<group>"; };
+		3D7754DE1BAE60F100E47C8C /* WLButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLButtonItem.h; sourceTree = "<group>"; };
+		3D7754DF1BAE60F100E47C8C /* WLButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLButtonItem.m; sourceTree = "<group>"; };
 		3D775A3B1B1DA45A00BAFF04 /* UserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInformationViewController.h; sourceTree = "<group>"; };
 		3D775A3C1B1DA45A00BAFF04 /* UserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInformationViewController.m; sourceTree = "<group>"; };
 		3D77C9E41B4CCC37005C9810 /* localNotificationTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localNotificationTransformer.h; path = Model/localNotificationTransformer.h; sourceTree = "<group>"; };
@@ -850,6 +853,15 @@
 				3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */,
 			);
 			path = WLLineChart;
+			sourceTree = "<group>";
+		};
+		3D7754DD1BAE60A900E47C8C /* WLButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				3D7754DE1BAE60F100E47C8C /* WLButtonItem.h */,
+				3D7754DF1BAE60F100E47C8C /* WLButtonItem.m */,
+			);
+			path = WLButtonItem;
 			sourceTree = "<group>";
 		};
 		3D783D241B12FD0300A893D9 = {
@@ -1573,6 +1585,7 @@
 		DF9C7CF41B147A36005617DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D7754DD1BAE60A900E47C8C /* WLButtonItem */,
 				568C3BB11B60D13D0092A431 /* AppIntrouceView */,
 				3D48735D1B622993003D2C24 /* SMPageControl */,
 				561BC3531B5CEEF200F2E63F /* CustomIOSAlertView */,
@@ -1815,6 +1828,7 @@
 				3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */,
 				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
 				569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */,
+				3D7754E01BAE60F100E47C8C /* WLButtonItem.m in Sources */,
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */,
 				3DF3042E1B38FE2500DD51D3 /* NSManagedObject+MagicalFinders.m in Sources */,
