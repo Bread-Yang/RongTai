@@ -22,6 +22,7 @@
     NSString* _reuseIdentifier;
     UIFont* _font;
     NSArray* _colors;  //颜色数组
+    NSUInteger _totalCount;
 }
 @end
 
@@ -37,16 +38,15 @@
         _font = [UIFont fontWithName:@"Helvetica-Light" size:30];
     }
     _colors = @[BLUE, LIGHTGREEN, ORANGE];
-    
-    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"unUpdateCount > 0"]];
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(unUpdateCount > 0) AND (uid == %@)",uid]];
     BOOL b = counts.count>0;
     [ProgramCount synchroUseCountDataFormServer:b Success:^{
-        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
+        
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"useCount" ascending:NO];
         [_collectView reloadData];
     } Fail:^(NSDictionary * dic) {
-        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"programId" ascending:YES];
+        _progarmCounts = [ProgramCount MR_findByAttribute:@"uid" withValue:uid andOrderBy:@"useCount" ascending:NO];
         [_collectView reloadData];
     }];
     
@@ -64,6 +64,16 @@
     _progarmCounts = progarmCounts;
     if (_collectView.delegate) {
         [_collectView reloadData];
+    }
+}
+
+#pragma mark - 计算总使用次数
+-(void)totalUseCount
+{
+    _totalCount = 0;
+    for (int i = 0; i<_progarmCounts.count; i++) {
+        ProgramCount* p = _progarmCounts[i];
+        _totalCount += [p.useCount integerValue]+[p.unUpdateCount integerValue];
     }
 }
 
@@ -114,7 +124,7 @@
         NSNumber* unC = program.unUpdateCount;
         NSUInteger count = [c integerValue]+[unC integerValue];
         cell.count = count;
-        cell.doughnut.percent = count/100.0;
+        cell.doughnut.percent = count/_totalCount;
 //        [cell addLineBorder];
         cell.isHiddenDougnut = NO;
         cell.countLabel.font = _font;

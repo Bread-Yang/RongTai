@@ -81,12 +81,14 @@
     CGFloat totalH = _totalTime/60.0;
     _leftCell.countLabel.text = [NSString stringWithFormat:@"%.2f%@",todayH*_kwh*_money,NSLocalizedString(@"元", nil)];
     [_leftCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:BLUE];
+    _leftCell.doughnut.percent = _todayTime/(float)_totalTime;
     _leftCell.detailLabel.hidden = YES;
 //    _leftCell.detailLabel.text = [NSString stringWithFormat:@"%@%d%@",NSLocalizedString(@"预估节省", nil),(int)(todayH*_saveKwh*_money),NSLocalizedString(@"元", nil)];
 //    [_leftCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:BLUE];
     
     _rightCell.countLabel.text = [NSString stringWithFormat:@"%.2f%@",totalH*_kwh*_money,NSLocalizedString(@"元", nil)];;
     [_rightCell.countLabel setNumebrByFont:[UIFont systemFontOfSize:20] Color:LIGHTGREEN];
+    _rightCell.doughnut.percent = 1;
     _rightCell.detailLabel.hidden = YES;
 //    _rightCell.detailLabel.text = [NSString stringWithFormat:@"%@%d%@",NSLocalizedString(@"预估节省", nil),(int)(totalH*_saveKwh*_money),NSLocalizedString(@"元", nil)];
 //    [_rightCell.detailLabel setNumebrByFont:[UIFont systemFontOfSize:12] Color:LIGHTGREEN];
