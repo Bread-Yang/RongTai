@@ -266,6 +266,8 @@
         [defaults setObject:@"" forKey:@"uid"];
         [defaults setObject:@"" forKey:@"token"];
         [defaults setObject:@"" forKey:@"currentMemberId"];
+        //退出登录，清除所有通知
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
 }
 

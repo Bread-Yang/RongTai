@@ -65,6 +65,8 @@
         //This is the starting point of the ScrollView
         CGPoint scrollPoint = CGPointMake(0, 0);
         [self.scrollView setContentOffset:scrollPoint animated:YES];
+        //第一次启动先清除通知
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
     return self;
 }

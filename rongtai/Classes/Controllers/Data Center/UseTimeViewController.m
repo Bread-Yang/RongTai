@@ -179,8 +179,6 @@
             [useTimes addObject:ut];
         }
         
-    
-        
         _doughnutView.percents = [NSArray arrayWithArray:percents];
         _doughnutView.colors = colors;
         for (int i = 0; i<names.count; i++) {
@@ -188,8 +186,6 @@
             [_makerScrollView addSubview:[self makerViewByColor:colors[i] String:[NSString stringWithFormat:@"%@  %@",names[i],useTimes[i]] Percent:[p floatValue] Index:i]];
         }
         _makerScrollView.contentSize = CGSizeMake(SCREENWIDTH*0.3, (SCREENHEIGHT-64-50)*0.4*0.9*0.3*names.count);
-//        [_makerScrollView addSubview:[self makerViewByColor:[UIColor redColor] String:@"工作减压  1h" Percent:0.5 Index:0]];
-//        [_makerScrollView addSubview:[self makerViewByColor:[UIColor greenColor] String:@"工作减压  1h" Percent:0.5 Index:1]];
 //        _doughnutView.makersName = [NSArray arrayWithArray:names];
 //        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
         
@@ -216,6 +212,7 @@
         NSLog(@"今天没有按摩数据");
         //今天暂时没使用该app进行按摩
         _doughnutView.percents = @[@1];
+        _doughnutView.colors  = @[[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]];
         _usingTime.text= @"今天未使用该APP";
     }
 }

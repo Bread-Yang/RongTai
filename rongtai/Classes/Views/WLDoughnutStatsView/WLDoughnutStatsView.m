@@ -70,7 +70,7 @@
     _percentColor = @[[UIColor colorWithRed:1 green:0 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:0 alpha:0.6],[UIColor colorWithRed:0 green:0 blue:1 alpha:0.6],[UIColor colorWithRed:0 green:1 blue:1 alpha:0.6]];
     _percentFont = [UIFont fontWithName:@"Helvetica" size:20];
     _markersDesFont = [UIFont fontWithName:@"Helvetica" size:10];
-    _markersNameFont = [UIFont systemFontOfSize:10 weight:2];
+    _markersNameFont = [UIFont systemFontOfSize:10];
     _percentCharFont = [UIFont systemFontOfSize:14];
     _lineColor = [UIColor grayColor];
     _lineWidth = 0.5;

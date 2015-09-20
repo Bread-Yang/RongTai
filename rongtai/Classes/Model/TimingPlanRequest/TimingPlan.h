@@ -57,7 +57,6 @@
  */
 @property (nonatomic, retain) NSNumber *state;
 
-
 /**
  *  用户uid
  */
@@ -74,6 +73,11 @@
  *  根据TimingPlan来更新本地通知
  */
 +(void)updateLocalNotificationByNetworkData:(NSArray*)arr;
+
+/**
+ * 同步定时计划
+ */
++(void)synchroTimingPlanLocalData:(BOOL)isContinue ByCount:(NSUInteger)count Uid:(NSString*)uid Success:(void (^)())success Fail:(void (^)())fail;
 
 /**
  *  设置通知
