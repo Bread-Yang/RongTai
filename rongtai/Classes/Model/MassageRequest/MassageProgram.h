@@ -62,12 +62,6 @@
 @property (nonatomic, retain) NSNumber *width;
 
 /**
- *	是否是本地写死的6个按摩椅自带的模式
- */
-@property (nonatomic, retain) NSNumber *isLocalDummyData;
-
-
-/**
  *  根据字典来设置MassageProgram
  */
 - (void)setValueByJSON:(NSDictionary*)json;

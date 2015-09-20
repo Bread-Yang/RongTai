@@ -20,9 +20,6 @@
 @dynamic pressure;
 @dynamic speed;
 @dynamic width;
-@dynamic isLocalDummyData;
-
-
 
 - (void)setValueByJSON:(NSDictionary*)json {
 	self.mDescription = [json objectForKey:@"description"];
