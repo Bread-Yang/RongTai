@@ -12,7 +12,7 @@
 @interface ProgramDownloadViewController : BasicViewController
 
 /**
- *	是否下载自定义程序
+ *	true : 自定义程序下载界面.  false : 程序下载界面
  */
 @property (nonatomic, assign) BOOL isDownloadCustomProgram;
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
+#import <ShareSDK/ShareSDK.h>
 
 #import "DataCenterViewController.h"
 #import "UseTimeViewController.h"
@@ -18,6 +19,7 @@
 #import "MassageRecord.h"
 #import "MBProgressHUD.h"
 #import "DataRequest.h"
+#import "UIView+RT.h"
 
 @interface DataCenterViewController ()<UIScrollViewDelegate>
 {
@@ -47,8 +49,7 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     _uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
-    
-
+	
     
     //分页控制器
     _pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake((w - 60)/2, 5, 60, 10)];
@@ -267,10 +268,55 @@
         _titleLabel.text = NSLocalizedString(@"爱用程序", nil);
     }
 }
+
 #pragma mark - 分享方法
--(void)share
-{
-    
+
+-(void)share {
+	UIImage *shareimage =  [UIView getImageFromView:self.view];
+	
+	//1、构造分享内容
+	id<ISSContent> publishContent = [ShareSDK content:@"我刚刚使用荣泰按摩椅进行按摩,觉得很不错,推荐给你们"
+									   defaultContent:@"我刚刚使用荣泰按摩椅进行按摩,觉得很不错,推荐给你们"
+												image:[ShareSDK pngImageWithImage:shareimage]
+												title:@"荣泰按摩椅分享"
+												  url:@"http://www.rongtai-china.com/product"
+										  description:@"这是一条演示信息"
+											mediaType:SSPublishContentMediaTypeNews];
+	
+	id<ISSContainer> container = [ShareSDK container];
+	
+	//要分享的列表
+	NSArray *shareList = [ShareSDK getShareListWithType:ShareTypeWeixiSession, ShareTypeWeixiTimeline, ShareTypeQQ, ShareTypeSinaWeibo, nil];
+	
+	//2、弹出分享菜单
+	[ShareSDK showShareActionSheet:container
+						 shareList:shareList
+						   content:publishContent
+					 statusBarTips:YES
+					   authOptions:nil
+					  shareOptions:nil
+							result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+								
+								//可以根据回调提示用户。
+								if (state == SSResponseStateSuccess)
+								{
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"分享成功", nil)
+																					message:nil
+																				   delegate:self
+																		  cancelButtonTitle:@"OK"
+																		  otherButtonTitles:nil, nil];
+									[alert show];
+								}
+								else if (state == SSResponseStateFail)
+								{
+									UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"分享失败", nil)
+																					message:[NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"失败描述", nil),[error errorDescription]]
+																				   delegate:self
+																		  cancelButtonTitle:@"OK"
+																		  otherButtonTitles:nil, nil];
+									[alert show];
+								}
+							}];
 }
 
 #pragma mark - 显示HUD

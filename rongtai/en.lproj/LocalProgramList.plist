@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+		<dict>
+			<key>programName</key>
+			<string>Sports Recover</string>
+			<key>programDescription</key>
+			<string>针对体育、健身运动后肌肉的恢复。手法关键词：肩部 大腿 臀部足底重点按摩，全身敲打放松</string>
+			<key>programFunction</key>
+			<string>一项专为体育活动和锻炼后周身肌肉群的运动按摩程序。理论依据是运动按摩恢复原理。有针对性地放松剧烈运动后的主要紧绷肌肉，如双臂、大腿、小腿和足部，更能有效促进身体的循环系统，提高运动后的肌肉恢复速度。</string>
+			<key>programImageUrl</key>
+			<string>mode_1</string>
+		</dict>
+		<dict>
+			<key>programName</key>
+			<string>Extension</string>
+			<key>programDescription</key>
+			<string>和缓心情，松弛身体，有效提高精神注意力。手法关键词：轻柔，气压，舒展辅助</string>
+			<key>programFunction</key>
+			<string>灵感来自泰式按摩，该程序提供一系列强劲有力的抓捏和躯体伸展的动作。有效伸展腿部腰部等部位。是放松疲劳肌肉，增强活动力及身体灵活度的最佳选择。</string>
+			<key>programImageUrl</key>
+			<string>mode_2</string>
+		</dict>
+		<dict>
+			<key>programName</key>
+			<string>Rest &amp; Sleep</string>
+			<key>programDescription</key>
+			<string>平缓身心，逐渐舒缓紧绷的身体。平缓身心，逐渐舒缓紧绷的身体。手法关键词：柔和揉捏手法 扭腰运动 气压辅助 少指压 推拿，轻敲打，力道渐轻到无。</string>
+			<key>programFunction</key>
+			<string>一项有助于提高午休质量和改善睡眠质量的关怀程序。以扭腰和压肩动作开始，此程序主要以温和按摩手法，轻柔地刺激上下半身身体。 随着时间，力道从重而轻，从轻到无，帮助紧绷疲劳的身体逐渐舒缓。</string>
+			<key>programImageUrl</key>
+			<string>mode_3</string>
+		</dict>
+		<dict>
+			<key>programName</key>
+			<string>Working Relieve</string>
+			<key>programDescription</key>
+			<string>帮助高级管理人员以及白领放松身心，缓解职业病。手法关键词：肩颈改善  腰椎重点 臀部放松  针对职业病的生理和心理状态。</string>
+			<key>programFunction</key>
+			<string>一项有助于提高午休质量和改善睡眠质量的关怀程序。以扭腰和压肩动作开始，此程序主要以温和按摩手法，轻柔地刺激上下半身身体。 随着时间，力道从重而轻，从轻到无，帮助紧绷疲劳的身体逐渐舒缓。</string>
+			<key>programImageUrl</key>
+			<string>mode_4</string>
+		</dict>
+		<dict>
+			<key>programName</key>
+			<string>Neck &amp; Shoulder</string>
+			<key>programDescription</key>
+			<string>重点舒缓肩部颈部的疲劳和僵硬。手法关键词：肩部颈部重点，足底辅助，气压辅助。</string>
+			<key>programFunction</key>
+			<string>为您匠心定制，享誉业内的肩颈重点按摩程序，80%时间集中肩部和颈部，缓解用户最为关心的肩颈酸痛症状。椅身靠背的曲线设计使得按摩滚轮完全触及颈部部位，结合荣泰独有的颈部“揉捏和摁压”技法，此程序有效缓解用户该部位的疲劳和僵硬。</string>
+			<key>programImageUrl</key>
+			<string>mode_5</string>
+		</dict>
+		<dict>
+			<key>programName</key>
+			<string>Waist &amp; Spine</string>
+			<key>programDescription</key>
+			<string>腰椎部位特色程序，缓解腰背紧绷感。手法关键词：腰部重点揉捏，尾椎重点，指压重点，敲打辅助</string>
+			<key>programFunction</key>
+			<string>针对常见的下背部僵硬问题区域集中按摩。以一系列独家、创新的「推压」及「推压与捶打」按摩技法，「腰部舒缓按摩程序」约有80%的时间针对此问题区域进行按摩。经常性的按摩下背部可减轻紧绷感并保持该部位强健。</string>
+			<key>programImageUrl</key>
+			<string>mode_6</string>
+		</dict>
+	</array>
+</plist>

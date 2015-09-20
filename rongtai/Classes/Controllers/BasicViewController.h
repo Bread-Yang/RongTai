@@ -28,4 +28,6 @@
 
 - (void)jumpToFinishMassageViewConroller;
 
+- (void)jumpToCorrespondingControllerByMassageStatus;
+
 @end
