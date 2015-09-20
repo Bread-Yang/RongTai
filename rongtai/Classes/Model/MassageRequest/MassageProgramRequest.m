@@ -49,10 +49,8 @@
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		
 		if ([code integerValue] == 200) {
-			 // 删除之前从网络上获取到的所有按摩程序, 不包括按摩椅自带的6个模式
-			NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLocalDummyData = %@", [NSNumber numberWithBool:NO]];
-			[MassageProgram MR_deleteAllMatchingPredicate:predicate];
-//			[MassageProgram MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
+			
+			[MassageProgram MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
 			
 			NSArray *arr = [responseObject objectForKey:@"result"];
 			
@@ -65,7 +63,6 @@
 					MassageProgram *massage = [MassageProgram MR_createEntity];
 //                    NSLog(@"😄%d：%@",i,arr[i]);
 					[massage setValueByJSON:arr[i]];
-//                    massage.isLocalDummyData = [NSNumber numberWithBool:NO];
                     [networkMassageProgramArray addObject:massage];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 				}
@@ -93,8 +90,7 @@
 }
 
 - (NSArray *)getAlreadySaveNetworkMassageProgramList {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isLocalDummyData = %@", [NSNumber numberWithBool:NO]];
-	NSArray *localMassageProgram = [MassageProgram MR_findAllWithPredicate:predicate];
+	NSArray *localMassageProgram = [MassageProgram MR_findAll];
 	
 	return localMassageProgram;
 }

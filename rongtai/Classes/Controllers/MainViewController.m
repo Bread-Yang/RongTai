@@ -453,6 +453,7 @@
 			cell.hidden = YES;
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
+			cell.detailTextLabel.text = @"";
 			if (networkMassage) {
 				cell.textLabel.text = networkMassage.name;
 				cell.detailTextLabel.text = networkMassage.mDescription;

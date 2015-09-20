@@ -1269,6 +1269,11 @@
                                     <constraint firstAttribute="width" secondItem="kau-SN-xpB" secondAttribute="height" multiplier="1:1" id="Vxa-XU-Z6m"/>
                                     <constraint firstAttribute="width" constant="18" id="dfi-6a-zKY"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dfi-6a-zKY"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="POp-0M-tlL">
                                 <rect key="frame" x="234" y="204" width="132" height="33"/>
@@ -1297,11 +1302,13 @@
                             <constraint firstItem="arZ-Bk-5RV" firstAttribute="width" secondItem="vIM-t4-5bh" secondAttribute="width" id="PU5-Y9-RJf"/>
                             <constraint firstItem="jFS-YF-P3w" firstAttribute="bottom" secondItem="kau-SN-xpB" secondAttribute="bottom" constant="8" id="YQ9-gm-oHZ"/>
                             <constraint firstItem="vIM-t4-5bh" firstAttribute="top" secondItem="05Z-yi-rOy" secondAttribute="bottom" id="Zem-dk-RLB"/>
+                            <constraint firstItem="kau-SN-xpB" firstAttribute="width" secondItem="NjX-SS-bBS" secondAttribute="width" multiplier="0.03" id="bm1-ej-Wpi"/>
                             <constraint firstAttribute="centerX" secondItem="POp-0M-tlL" secondAttribute="centerX" id="bx4-LH-RjM"/>
                             <constraint firstItem="jFS-YF-P3w" firstAttribute="leading" secondItem="kau-SN-xpB" secondAttribute="leading" constant="-10" id="c5b-Af-Q4P"/>
                             <constraint firstAttribute="centerX" secondItem="05Z-yi-rOy" secondAttribute="centerX" id="eGb-na-aTa"/>
                             <constraint firstItem="arZ-Bk-5RV" firstAttribute="height" secondItem="NjX-SS-bBS" secondAttribute="height" multiplier="0.1" id="gmp-ft-yNO"/>
                             <constraint firstItem="05Z-yi-rOy" firstAttribute="height" secondItem="NjX-SS-bBS" secondAttribute="height" multiplier="0.08" id="itI-vT-JyZ"/>
+                            <constraint firstItem="kau-SN-xpB" firstAttribute="width" secondItem="jFS-YF-P3w" secondAttribute="width" multiplier="0.08" id="jiK-SN-vF4"/>
                             <constraint firstItem="POp-0M-tlL" firstAttribute="height" secondItem="NjX-SS-bBS" secondAttribute="height" multiplier="0.055" id="kF8-ig-7gO"/>
                             <constraint firstItem="vIM-t4-5bh" firstAttribute="top" secondItem="arZ-Bk-5RV" secondAttribute="bottom" id="nTz-sW-fw4"/>
                             <constraint firstItem="vIM-t4-5bh" firstAttribute="height" secondItem="arZ-Bk-5RV" secondAttribute="height" multiplier="0.8" id="pBZ-WQ-8m0"/>
@@ -1314,6 +1321,7 @@
                             <mask key="constraints">
                                 <exclude reference="Zem-dk-RLB"/>
                                 <exclude reference="BEo-9k-gcj"/>
+                                <exclude reference="bm1-ej-Wpi"/>
                             </mask>
                         </variation>
                     </view>

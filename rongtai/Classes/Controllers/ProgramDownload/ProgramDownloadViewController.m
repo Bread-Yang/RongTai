@@ -161,10 +161,9 @@
 #pragma mark - 返回
 
 - (void)goBack {
+	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
     [self.navigationController popViewControllerAnimated:YES];
 //	[self backToMainViewController];
-	
-//	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -411,7 +410,11 @@
 	//		return;
 	//	}
 	
-	if (indexPath.section == 1) {   //已有程序点击没有效果
+	if (!self.isDownloadCustomProgram) { // 程序下载没有点击事件
+		return;
+	}
+	
+	if (indexPath.section == 1) {   //已有程序点击没有点击事件
 		return;
 	}
 	

@@ -199,6 +199,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
 			self.currentConnectedPeripheral = nil;
+			[self showConnectDialog];
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
@@ -301,8 +302,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-//	NSLog(@"data.length : %zd", data.length);
-//	NSLog(@"data : %@", data);
+	NSLog(@"data.length : %zd", data.length);
+	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
@@ -678,13 +679,17 @@ NSString * NSDataToHex(NSData *data) {
 - (void)installCommandSend {
 	Byte *testByte = (Byte *)[[self.installEachDataMutableArray objectAtIndex:self.installCount - 1] bytes];
 	
-	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(0, 50)]];
-	[NSThread sleepForTimeInterval:0.01f];
-	
-	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(50, 50)]];
-	[NSThread sleepForTimeInterval:0.01f];
-	
-	[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(100, 33)]];
+	if (testByte) {
+		[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(0, 50)]];
+		[NSThread sleepForTimeInterval:0.01f];
+		
+		[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(50, 50)]];
+		[NSThread sleepForTimeInterval:0.01f];
+		
+		[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(100, 33)]];
+	} else {
+		[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+	}
 }
 
 - (NSData *) makeInstallCommand:(Byte *) data {
