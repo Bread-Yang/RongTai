@@ -19,11 +19,13 @@
 #import "MassageProgramRequest.h"
 #import "ProgramCount.h"
 #import "CoreData+MagicalRecord.h"
+#import "RTCommand.h"
 
 @interface ProgramDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, RTBleConnectorDelegate> {
 	
 	MBProgressHUD *_loadingHUD;
-	NSMutableArray *_programArray, *_alreadyInstallArray;
+	NSArray *_localProgramArray, *_allNetworkProgramArray;
+	NSMutableArray *_notYetInstallProgramArray, *_alreadyInstallProgramArray;
     NSInteger _massageFlag;
     RTBleConnector* _bleConnector;
     NSArray* _skillsPreferenceName;
@@ -31,6 +33,7 @@
     NSString* _programName;
     
     NSInteger flag;
+
 }
 
 @property(nonatomic, strong) AFHTTPRequestOperationManager *httpRequestManager;
@@ -61,7 +64,7 @@
 	self.navigationItem.leftBarButtonItem = item;
 	
 	if (self.isDownloadCustomProgram) {
-		self.title = NSLocalizedString(@"已有程序", nil);
+		self.title = NSLocalizedString(@"筛选结果", nil);
 		
 		// 让UITableView滑动的时候, header不float
 		CGFloat dummyViewHeight = 40;
@@ -75,6 +78,10 @@
     _bleConnector = [RTBleConnector shareManager];
     
     _skillsPreferenceName = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
+	
+	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
+	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,32 +121,36 @@
 - (void)refreshTableViewAfterRequest:(NSArray *) massageProgramArray {
 	[_loadingHUD hide:YES];
 	
-	_programArray = [[NSArray arrayWithArray:massageProgramArray] mutableCopy];
+	_allNetworkProgramArray = [NSArray arrayWithArray:massageProgramArray];
 	
+	[self resortData];
+	
+	[self.tableView reloadData];
+	
+	self.tableView.hidden = NO;
+}
+
+- (void)resortData {
 	if (self.isDownloadCustomProgram) {
-		_alreadyInstallArray = [[NSMutableArray alloc] init];
+		_alreadyInstallProgramArray = [[NSMutableArray alloc] init];
+		
+		_notYetInstallProgramArray = [_allNetworkProgramArray mutableCopy];
 		
 		for (NSNumber *item in [RTBleConnector shareManager].rtNetworkProgramStatus.networkProgramStatusArray) {
 			int networkMassageId = [item intValue];
 			
 			if (networkMassageId != 0) {
 				
-				NSArray *tempArray = [NSArray arrayWithArray:_programArray];
-				
-				for (MassageProgram *program in tempArray) {
+				for (MassageProgram *program in _allNetworkProgramArray) {
 					if ([program.commandId intValue] == networkMassageId) {
-						[_alreadyInstallArray addObject:program];
-						[_programArray removeObject:program];
+						[_alreadyInstallProgramArray addObject:program];
+						[_notYetInstallProgramArray removeObject:program];
 						continue;
 					}
 				}
 			}
 		}
 	}
-	
-	[self.tableView reloadData];
-	
-	self.tableView.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -241,6 +252,7 @@
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
 	NSLog(@"didUpdateNetworkMassageStatus");
+	[self resortData];
 	[_tableView reloadData];
 }
 
@@ -301,12 +313,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (self.isDownloadCustomProgram) {
 		if (section == 0) {
-			return [_programArray count];
+			// 显示自带程序 + 已经安装的云养程序 + 未安装的云养程序
+			return [_localProgramArray count] + [_alreadyInstallProgramArray count] + [_notYetInstallProgramArray count];
 		} else {
-			return [_alreadyInstallArray count];
+			// 只显示已经安装的云养程序
+			return [_alreadyInstallProgramArray count];
 		}
 	} else {
-		return [_programArray count];
+		return [_allNetworkProgramArray count];
 	}
 }
 
@@ -319,29 +333,59 @@
 	
 	cell.backgroundView = bgView;
 	
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
+	cell.isLocalProgram = NO;
+	
 	
 	if (self.isDownloadCustomProgram) {
 		if (indexPath.section == 0) {
-			cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
+			if (indexPath.row < [_localProgramArray count]) {
+				NSDictionary *localProgramDic = _localProgramArray[indexPath.row];
+				
+//				[UIImageView loadImageByURL:massageProgramDic[@"imageUrl"] imageView:cell.programImageView];
+				
+				cell.isLocalProgram = YES;
+				
+				cell.programImageView.image = [UIImage imageNamed:localProgramDic[@"programImageUrl"]];
+				
+				// 程序名
+				cell.programNameLabel.text = localProgramDic[@"programName"];
+				
+				// 网络程序描述
+				cell.programDescriptionLabel.text = localProgramDic[@"programDescription"];
+				
+				cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+				
+			} else if (indexPath.row >= [_localProgramArray count] && indexPath.row < ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
+				cell.isLocalProgram = YES;
+				
+ 				cell.massageProgram = [_alreadyInstallProgramArray objectAtIndex:indexPath.row - [_localProgramArray count]];
+				
+				cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+			} else {
+				
+				cell.massageProgram = [_notYetInstallProgramArray objectAtIndex:indexPath.row - ([_localProgramArray count] + [_alreadyInstallProgramArray count])];
+			}
+			
 		} else {
-			cell.massageProgram = [_alreadyInstallArray objectAtIndex:indexPath.row];
+			
+			cell.massageProgram = [_alreadyInstallProgramArray objectAtIndex:indexPath.row];
 		}
 		
 	} else {
-		cell.massageProgram = [_programArray objectAtIndex:indexPath.row];
+		cell.massageProgram = [_allNetworkProgramArray objectAtIndex:indexPath.row];
 	}
 	
-	
-	NSLog(@"值是 : %zd", [cell.massageProgram.commandId integerValue]);
 	
 	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
     RTBleConnector* bleconnector = [RTBleConnector shareManager];
     if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+		
         cell.isAlreadyDownload = false;
-    }
-    else
-    {
+		
+    } else {
         if (isAlreadyInstall) {
             cell.isAlreadyDownload = true;
         } else {
@@ -349,6 +393,103 @@
         }
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	//	NSIndexPath *alreadySelectIndexPath = [_table indexPathForSelectedRow];
+	//
+	//	if (!alreadySelectIndexPath && alreadySelectIndexPath.row != indexPath.row) {
+	//		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	//	}
+	
+	//	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+	//        NSLog(@"连接设备为空");
+	//		[reconnectDialog show];
+	//		return;
+	//	}
+	
+	if (indexPath.section == 1) {   //已有程序点击没有效果
+		return;
+	}
+	
+	if (indexPath.row >= ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
+		return;
+	}
+	
+	switch (indexPath.row) {
+			
+			// 运动恢复
+		case 0:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
+			break;
+			
+			// 舒展活络
+		case 1:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_1];
+			break;
+			
+			// 休憩促眠
+		case 2:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_2];
+			break;
+			
+			// 工作减压
+		case 3:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_3];
+			break;
+			
+			// 肩颈重点
+		case 4:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
+			break;
+			
+			// 腰椎舒缓
+		case 5:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
+			break;
+			
+			// 云养程序一
+		case 6:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
+			break;
+			// 云养程序二
+		case 7:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
+			break;
+			// 云养程序三
+		case 8:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
+			break;
+			// 云养程序四
+		case 9:
+			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
+			break;
+	}
+	
+	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
+	
+	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
+		
+		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+			
+			[self jumpToCorrespondingControllerByMassageStatus];
+			
+		} else {
+			
+			// 延迟1.5秒再进入按摩界面
+			
+			double delayInSeconds = 1.5;
+			
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+			
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				[self jumpToCorrespondingControllerByMassageStatus];
+			});
+		}
+	}
 }
 
 #pragma mark - 计算按摩时间

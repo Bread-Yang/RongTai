@@ -20,4 +20,6 @@
 
 @property (nonatomic, assign) BOOL isAlreadyDownload;
 
+@property (nonatomic, assign) BOOL isLocalProgram;
+
 @end

@@ -199,6 +199,30 @@
 	[self.navigationController pushViewController:finishViewController animated:YES];
 }
 
+#pragma mark - 根据当前自动按摩的状态,跳进自动按摩界面
+- (void)jumpToCorrespondingControllerByMassageStatus {
+	
+	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
+	
+	if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+		
+		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
+			
+			//先跳进自动按摩页面，再由自动按摩跳进去扫描页面，如果直接跳到自动按摩页面，则会在扫描完成后，扫描页面push一个自动按摩页面，导致自动按摩轻扫后退会回到扫描页面
+			
+			//			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
+			//
+			//				[self jumpToScanViewConroller];
+			//
+			//			} else { // 自动按摩
+			
+			[self jumpToAutoMassageViewConroller];
+			
+			//			}
+		}
+	}
+}
+
 /*
 #pragma mark - Navigation
 

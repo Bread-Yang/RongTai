@@ -39,11 +39,9 @@
 @interface MainViewController ()<SlideNavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate, UIGestureRecognizerDelegate>
 {
     UITableView* _table;
-    NSMutableArray *_massageArr;
 	NSMutableDictionary *_networkMassageDic;
     MassageProgramRequest* _networkMassageProgramRequest;
-	NSArray *_modeNameArray;
-	NSArray *_modeDescriptionArray;
+	NSArray *_localProgramArray;
     WLWeatherView* _weatherView;
 	CustomIOSAlertView *reconnectDialog;
     NSUInteger _vcCount;
@@ -181,38 +179,8 @@
     _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
 	
-	_modeNameArray = @[NSLocalizedString(@"运动恢复", nil),
-					   NSLocalizedString(@"舒展活络", nil),
-					   NSLocalizedString(@"休憩促眠", nil),
-					   NSLocalizedString(@"工作减压", nil),
-					   NSLocalizedString(@"肩颈重点", nil),
-					   NSLocalizedString(@"腰椎舒缓", nil),
-					   NSLocalizedString(@"云养程序一", nil),
-					   NSLocalizedString(@"云养程序二", nil),
-					   NSLocalizedString(@"云养程序三", nil),
-					   NSLocalizedString(@"云养程序四", nil),];
-	
-	_modeDescriptionArray = @[NSLocalizedString(@"运动恢复简介", nil),
-							  NSLocalizedString(@"舒展活络简介", nil),
-							  NSLocalizedString(@"休憩促眠简介", nil),
-							  NSLocalizedString(@"工作减压简介", nil),
-							  NSLocalizedString(@"肩颈重点简介", nil),
-							  NSLocalizedString(@"腰椎舒缓简介", nil),
-							  NSLocalizedString(@"腰椎舒缓简介", nil),
-							  NSLocalizedString(@"腰椎舒缓简介", nil),
-							  NSLocalizedString(@"腰椎舒缓简介", nil),
-							  NSLocalizedString(@"腰椎舒缓简介", nil),];
-	
-	_massageArr = [NSMutableArray new];
-	for (int i = 0; i < [_modeNameArray count]; i++) {
-		MassageProgram *m = [MassageProgram MR_createEntity];
-		m.name = _modeNameArray[i];
-		m.mDescription = _modeDescriptionArray[i];
-		m.imageUrl = [NSString stringWithFormat:@"mode_%d",i + 1];
-		m.isLocalDummyData = @YES;
-		[_massageArr addObject:m];
-	}
-
+	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
+	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
 	reconnectDialog.isReconnectDialog = YES;
@@ -289,6 +257,7 @@
 
     imView = [UIImageView new];
     _massageFlag = 0;
+	
 }
 
 #pragma mark - 请求网络按摩程序
@@ -441,7 +410,7 @@
 #pragma mark - tableView代理
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_modeNameArray count];
+    return [_localProgramArray count] + 4;  // 除了本地程序,还有4个云养程序
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -458,27 +427,28 @@
         [cell sendSubviewToBack:bg];
         cell.backgroundColor = [UIColor clearColor];
     }
-    
-    MassageProgram *massage = _massageArr[indexPath.row];
-    if (massage) {
-        cell.textLabel.text = massage.name;
-        cell.textLabel.textColor = BLACK;
-        cell.textLabel.font = [UIFont systemFontOfSize:18];
-        cell.detailTextLabel.text = massage.mDescription;
-        cell.detailTextLabel.numberOfLines = 0;
-        cell.detailTextLabel.textColor = BLACK;
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
-        cell.imageView.image = [UIImage imageNamed:massage.imageUrl];
-    }
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
 	UIView *bgColorView = [[UIView alloc] init];
 	bgColorView.backgroundColor = [UIColor colorWithRed:176.0 / 255.0 green:215.0 / 255.0 blue:233.0 / 255.0 alpha:1];
 	[cell setSelectedBackgroundView:bgColorView];
 	
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
+	cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow"]];
 	
-	if (indexPath.row >= 6) {
-		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6];
+	if (indexPath.row < [_localProgramArray count]) {		//	自带程序显示
+		NSDictionary *programDic = _localProgramArray[indexPath.row];
+		if (programDic) {
+			cell.textLabel.text = programDic[@"programName"];
+			cell.textLabel.textColor = BLACK;
+			cell.textLabel.font = [UIFont systemFontOfSize:18];
+			cell.detailTextLabel.text = programDic[@"programDescription"];
+			cell.detailTextLabel.numberOfLines = 0;
+			cell.detailTextLabel.textColor = BLACK;
+			cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
+			cell.imageView.image = [UIImage imageNamed:programDic[@"programImageUrl"]];
+		}
+		
+	} else {			// 云养程序显示
+		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - [_localProgramArray count]];
 		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || commandId == 0) {
 			cell.hidden = YES;
 		} else {
@@ -487,6 +457,25 @@
 				cell.textLabel.text = networkMassage.name;
 				cell.detailTextLabel.text = networkMassage.mDescription;
 				[UIImageView loadImageByURL:networkMassage.imageUrl imageView:cell.imageView];
+			} else {
+				switch (indexPath.row - [_localProgramArray count]) {
+					case 0:
+						cell.textLabel.text = NSLocalizedString(@"云养程序一", nil);
+						break;
+					
+					case 1:
+						cell.textLabel.text = NSLocalizedString(@"云养程序二", nil);
+						break;
+																
+					case 2:
+						cell.textLabel.text = NSLocalizedString(@"云养程序三", nil);
+						break;
+						
+					case 3:
+						cell.textLabel.text = NSLocalizedString(@"云养程序四", nil);
+						break;
+					
+				}
 			}
 		}
 	}
@@ -494,18 +483,18 @@
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //	UITableViewCell *cell = [self tableView:_table cellForRowAtIndexPath:indexPath];
 	
-	if (indexPath.row >= 6) {
-		if (![RTBleConnector isBleTurnOn] || [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - 6] == 0) {
+	if (indexPath.row >= [_localProgramArray count]) {
+		if (![RTBleConnector isBleTurnOn] || [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - [_localProgramArray count]] == 0) {
 			return 0;
 		}
 	}
 	return 80;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 //	NSIndexPath *alreadySelectIndexPath = [_table indexPathForSelectedRow];
 //	
@@ -600,30 +589,6 @@
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				[self jumpToCorrespondingControllerByMassageStatus];
 			});
-		}
-	}
-}
-
-#pragma mark - 根据当前自动按摩的状态,跳进自动按摩界面
-- (void)jumpToCorrespondingControllerByMassageStatus {
-	
-	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
-	
-	if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-		
-		if (rtMassageChairStatus.programType == RtMassageChairProgramAuto || rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {
-			
-            //先跳进自动按摩页面，再由自动按摩跳进去扫描页面，如果直接跳到自动按摩页面，则会在扫描完成后，扫描页面push一个自动按摩页面，导致自动按摩轻扫后退会回到扫描页面
-            
-//			if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
-//				
-//				[self jumpToScanViewConroller];
-//				
-//			} else { // 自动按摩
-				
-            [self jumpToAutoMassageViewConroller];
-				
-//			}
 		}
 	}
 }

@@ -65,7 +65,7 @@
 					MassageProgram *massage = [MassageProgram MR_createEntity];
 //                    NSLog(@"😄%d：%@",i,arr[i]);
 					[massage setValueByJSON:arr[i]];
-                    massage.isLocalDummyData = [NSNumber numberWithBool:NO];
+//                    massage.isLocalDummyData = [NSNumber numberWithBool:NO];
                     [networkMassageProgramArray addObject:massage];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 				}

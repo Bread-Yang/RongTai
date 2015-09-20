@@ -208,6 +208,7 @@
 		56E9E4E11B5907E600F01ECB /* NAPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4DD1B5907E600F01ECB /* NAPickerCell.m */; };
 		56E9E4E21B5907E600F01ECB /* NAPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E4DF1B5907E600F01ECB /* NAPickerView.m */; };
 		56F2DA3D1B7455B400C8086D /* UIView+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F2DA3C1B7455B400C8086D /* UIView+RT.m */; };
+		56F77C781BABF1CE00DE76A9 /* LocalProgramList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56F77C7A1BABF1CE00DE76A9 /* LocalProgramList.plist */; };
 		56FD78121B9ECDD40085232E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56FD78111B9ECDD40085232E /* Images.xcassets */; };
 		A2993692B75CBACAF5B83686 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6451AA21F7E52CA86CBED01E /* libPods.a */; };
 		B9753791FF9087817B7084C4 /* libPods-rongtai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EB319425DAD68EACB31C14B /* libPods-rongtai.a */; };
@@ -586,6 +587,8 @@
 		56E9E4DF1B5907E600F01ECB /* NAPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAPickerView.m; sourceTree = "<group>"; };
 		56F2DA3B1B7455B400C8086D /* UIView+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RT.h"; sourceTree = "<group>"; };
 		56F2DA3C1B7455B400C8086D /* UIView+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RT.m"; sourceTree = "<group>"; };
+		56F77C791BABF1CE00DE76A9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/LocalProgramList.plist"; sourceTree = "<group>"; };
+		56F77C7B1BABF1D100DE76A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/LocalProgramList.plist; sourceTree = "<group>"; };
 		56FD78111B9ECDD40085232E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6451AA21F7E52CA86CBED01E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB319425DAD68EACB31C14B /* libPods-rongtai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rongtai.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -891,6 +894,7 @@
 				DF9C7CE01B147A36005617DA /* Classes */,
 				DF9C7CFB1B147B07005617DA /* StoryBoard */,
 				3D783D301B12FD0300A893D9 /* Supporting Files */,
+				568EC5631B40EB960036AF9E /* PrefixHeader.pch */,
 				3DCD122C1B4148A700890164 /* Image */,
 			);
 			path = rongtai;
@@ -904,7 +908,7 @@
 				3D783D311B12FD0300A893D9 /* Info.plist */,
 				3D783D321B12FD0300A893D9 /* main.m */,
 				3D5E901C1B26C43E00B03107 /* Localizable.strings */,
-				568EC5631B40EB960036AF9E /* PrefixHeader.pch */,
+				56F77C7A1BABF1CE00DE76A9 /* LocalProgramList.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1760,6 +1764,7 @@
 				3D9E89691B3968D8002E0962 /* b27_icon_star_yellow@2x.png in Resources */,
 				3D0B4C841B3ABBE100FF97C6 /* mini-sunhaze@2x.png in Resources */,
 				565E71961B5E547200E51C1C /* Resource.bundle in Resources */,
+				56F77C781BABF1CE00DE76A9 /* LocalProgramList.plist in Resources */,
 				3D30B59B1BA966A200BD2C41 /* IQKeyboardManager.bundle in Resources */,
 				565E719B1B5E547200E51C1C /* WeiboSDK.bundle in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
@@ -2005,6 +2010,15 @@
 				565E71741B5E547200E51C1C /* zh-Hans */,
 			);
 			name = ShareSDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		56F77C7A1BABF1CE00DE76A9 /* LocalProgramList.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56F77C791BABF1CE00DE76A9 /* zh-Hans */,
+				56F77C7B1BABF1D100DE76A9 /* en */,
+			);
+			name = LocalProgramList.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

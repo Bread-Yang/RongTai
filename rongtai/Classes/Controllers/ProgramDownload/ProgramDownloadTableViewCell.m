@@ -48,14 +48,30 @@
 	
 }
 
+- (void)setIsLocalProgram:(BOOL)isLocalProgram {
+	_isLocalProgram = isLocalProgram;
+	if (isLocalProgram) {
+//		[self.downloadOrDeleteButton removeTarget:self action:@selector(downloadOrDeleteProgram:) forControlEvents:UIControlEventTouchDragInside];
+		[self.downloadOrDeleteButton removeTarget:nil
+						   action:NULL
+				 forControlEvents:UIControlEventAllEvents];
+	} else {
+		[self.downloadOrDeleteButton addTarget:self action:@selector(downloadOrDeleteProgram:) forControlEvents:UIControlEventTouchUpInside];
+	}
+}
+
 - (void)setIsAlreadyDownload:(BOOL)isAlreadyDownload {
 	_isAlreadyDownload = isAlreadyDownload;
-	if (isAlreadyDownload) {
-		[self.downloadOrDeleteButton setImage:[UIImage imageNamed:@"program_icon_delete"] forState:UIControlStateNormal];
-		[self.downloadOrDeleteButton.currentImage setAccessibilityIdentifier:@"delete"];
+	if (self.isLocalProgram) {
+		[self.downloadOrDeleteButton setImage:[UIImage imageNamed:@"arrow"] forState:UIControlStateNormal];
 	} else {
-		[self.downloadOrDeleteButton setImage:[UIImage imageNamed:@"program_icon_download"] forState:UIControlStateNormal];
-		[self.downloadOrDeleteButton.currentImage setAccessibilityIdentifier:@"download"];
+		if (isAlreadyDownload) {
+			[self.downloadOrDeleteButton setImage:[UIImage imageNamed:@"program_icon_delete"] forState:UIControlStateNormal];
+			[self.downloadOrDeleteButton.currentImage setAccessibilityIdentifier:@"delete"];
+		} else {
+			[self.downloadOrDeleteButton setImage:[UIImage imageNamed:@"program_icon_download"] forState:UIControlStateNormal];
+			[self.downloadOrDeleteButton.currentImage setAccessibilityIdentifier:@"download"];
+		}
 	}
 }
 
