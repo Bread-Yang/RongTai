@@ -74,7 +74,13 @@
 }
 
 -(void)goBack {
-	[self backToMainViewController];
+    if (_backVC) {
+        [self.navigationController popToViewController:_backVC animated:YES];
+    }
+    else
+    {
+        [self backToMainViewController];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated

@@ -15,4 +15,6 @@
 
 @property(nonatomic, strong) MassageProgram *massage;
 
+@property(nonatomic, weak) UIViewController* backVC;
+
 @end

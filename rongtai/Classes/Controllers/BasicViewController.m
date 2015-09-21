@@ -133,6 +133,7 @@
 		
 		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 		AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
+        autoVC.backVC = self.navigationController.viewControllers[self.navigationController.viewControllers.count-1];
 		[self.navigationController pushViewController:autoVC animated:YES];
 		
 	}
@@ -143,7 +144,7 @@
 	if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
 		
 //		[RTBleConnector shareManager].delegate = nil;
-		
+        AutoMassageViewController* autoVC;
 		for (int i = 0; i < [self.navigationController.viewControllers count]; i++)
         {
 			UIViewController *temp = self.navigationController.viewControllers[i];
@@ -152,12 +153,18 @@
                 NSLog(@"在栈中找的到扫描的vc就不要跳转");
 				return;
 			}
+            else if ([temp isKindOfClass:[AutoMassageViewController class]])
+            {
+                autoVC = (AutoMassageViewController*)temp;
+            }
 		}
         NSLog(@"找不到跳转:%@",self.navigationController.viewControllers);
-		
+        
 		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-		ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
-		
+        ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+        if (autoVC) {
+            scan.backVC = autoVC.backVC;
+        }
 		[self.navigationController pushViewController:scan animated:YES];
 		
 	}

@@ -223,17 +223,25 @@
 #pragma mark - 返回按钮方法
 -(void)goBack
 {
-    MainViewController* main;
-    NSArray* viewControllers = self.navigationController.viewControllers;
-    for (UIViewController* vc in viewControllers) {
-        if ([vc isKindOfClass:[MainViewController class]]) {
-            main = (MainViewController*)vc;
-            break;
-        }
+    
+    if (_backVC) {
+        [self.navigationController popToViewController:_backVC animated:YES];
     }
-    if (main) {
-        [self.navigationController popToViewController:main animated:YES];
+    else
+    {
+        [self backToMainViewController];
     }
+//    MainViewController* main;
+//    NSArray* viewControllers = self.navigationController.viewControllers;
+//    for (UIViewController* vc in viewControllers) {
+//        if ([vc isKindOfClass:[MainViewController class]]) {
+//            main = (MainViewController*)vc;
+//            break;
+//        }
+//    }
+//    if (main) {
+//        [self.navigationController popToViewController:main animated:YES];
+//    }
 }
 
 #pragma mark - 停止按摩
