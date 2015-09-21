@@ -182,6 +182,7 @@
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
 	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
+    //
 	reconnectDialog = [[CustomIOSAlertView alloc] init];
 	reconnectDialog.isReconnectDialog = YES;
 	
@@ -329,16 +330,24 @@
     else
     {
         NSLog(@"找不到用户");
-        NSArray* ms = [Member MR_findAll];
-        NSMutableArray* arr = [NSMutableArray new];
-        for (int i = 0; i < ms.count; i++) {
-            Member* m = ms[i];
-            NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[m memberToDictionary]];
-            [dic setObject:m.uid forKey:@"uid"];
-            [arr addObject:dic];
+        NSArray* ms = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];;
+//        NSMutableArray* arr = [NSMutableArray new];
+//        for (int i = 0; i < ms.count; i++) {
+//            Member* m = ms[i];
+//            NSMutableDictionary* dic = [[NSMutableDictionary alloc]initWithDictionary:[m memberToDictionary]];
+//            [dic setObject:m.uid forKey:@"uid"];
+//            [arr addObject:dic];
+//        }
+        
+//        NSLog(@"成员数据:%@",arr);
+        if (ms.count>0) {
+            Member* m = ms[0];
+            [self changeUser:m.imageURL];
         }
-        NSLog(@"成员数据:%@",arr);
-        [self changeUser:nil];
+        else
+        {
+            [self changeUser:nil];
+        }
     }
 }
 

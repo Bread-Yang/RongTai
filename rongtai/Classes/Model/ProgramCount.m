@@ -52,7 +52,8 @@
     NSLog(@"读取统计次数服务器数据");
     DataRequest* request = [DataRequest new];
     [request getFavoriteProgramCountSuccess:^(NSArray *programs) {
-        NSArray* counts = [ProgramCount MR_findAll];
+        NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+        NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"uid == %@",uid]];
         NSMutableArray* mutPrograms = [NSMutableArray arrayWithArray:programs];
         NSLog(@"统计次数数据同步至本地");
         for (NSDictionary* dic in mutPrograms) {
@@ -70,7 +71,7 @@
             //本地不存在这样的数据记录，则需要生成一条新数据
             if (!isExist) {
                 ProgramCount* new = [ProgramCount MR_createEntity];
-                new.uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
+                new.uid = uid;
                 [new setValueByDictionary:dic];
             }
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -105,7 +106,7 @@
     for (ProgramCount* p in counts) {
         [jsons addObject:[p toDictionary]];
     }
-
+    NSLog(@"同步记录为:%@",jsons);
     //有数据的话才进行服务器同步
     if (jsons.count>0) {
         DataRequest* request = [DataRequest new];

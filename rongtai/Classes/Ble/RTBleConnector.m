@@ -199,7 +199,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
 			self.currentConnectedPeripheral = nil;
-			[self showConnectDialog];
+//			[self showConnectDialog];
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
