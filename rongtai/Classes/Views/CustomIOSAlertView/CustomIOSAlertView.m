@@ -218,15 +218,19 @@ CGFloat buttonSpacerHeight = 0;
 - (UIView *)createReconnectDialog {
 	if (containerView == nil) {
 		containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 150)];
-		if (self.reconnectTipsString) {
-			UILabel *reconnectTipsLabel = [[UILabel alloc] initWithFrame:containerView.frame];
-			reconnectTipsLabel.textAlignment = NSTextAlignmentCenter;
-			reconnectTipsLabel.text = self.reconnectTipsString;
-			reconnectTipsLabel.textColor = [UIColor whiteColor];
-			reconnectTipsLabel.numberOfLines = 0;
-			
-			[containerView addSubview:reconnectTipsLabel];
+	}
+	
+	if (self.reconnectTipsString) {
+		for (UIView *v in [containerView subviews]) {
+			[v removeFromSuperview];
 		}
+		UILabel *reconnectTipsLabel = [[UILabel alloc] initWithFrame:containerView.frame];
+		reconnectTipsLabel.textAlignment = NSTextAlignmentCenter;
+		reconnectTipsLabel.text = self.reconnectTipsString;
+		reconnectTipsLabel.textColor = [UIColor whiteColor];
+		reconnectTipsLabel.numberOfLines = 0;
+		
+		[containerView addSubview:reconnectTipsLabel];
 	}
 	
 	CGSize screenSize = [self countScreenSize];

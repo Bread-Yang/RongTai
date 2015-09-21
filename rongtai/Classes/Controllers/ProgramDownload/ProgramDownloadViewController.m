@@ -53,8 +53,6 @@
 	
 	self.httpRequestManager = [AFHTTPRequestOperationManager manager];
 	
-	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"安装中", nil);
-	
 	//MBProgressHUD
     _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
     _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
@@ -161,7 +159,7 @@
 #pragma mark - 返回
 
 - (void)goBack {
-	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
+//	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
     [self.navigationController popViewControllerAnimated:YES];
 //	[self backToMainViewController];
 }
@@ -255,7 +253,21 @@
 	[_tableView reloadData];
 }
 
+- (void)didStartDownloadProgramMassage {
+//	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"下载中", nil);
+//	[self.resettingDialog show];
+}
+
+- (void)didSuccessDownloadProgramMassage {
+//	[self.resettingDialog close];
+}
+
+- (void)didFailDownloadProgramMassage {
+//	[self.resettingDialog close];
+}
+
 - (void)didStartInstallProgramMassage {
+	self.resettingDialog.reconnectTipsString = NSLocalizedString(@"安装中", nil);
 	[self.resettingDialog show];
 }
 
@@ -284,8 +296,6 @@
 		return nil;
 	}
 }
-
-
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 // 	UITableViewHeaderFooterView *headerFoorterView = [[self tableView] dequeueReusableHeaderFooterViewWithIdentifier:@"headerFooterReuseIdentifier"];

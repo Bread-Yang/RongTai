@@ -200,6 +200,7 @@
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
 		56C668A41B3026A500CDC72B /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A31B3026A500CDC72B /* CircleButton.m */; };
+		56D6D54B1BB00D420000ECBF /* FilteringResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */; settings = {ASSET_TAGS = (); }; };
 		56E6B3291B29295A000178BD /* AddOrEditTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */; };
 		56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */; };
 		56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32E1B2932FF000178BD /* TimingMassageModel.m */; };
@@ -571,6 +572,8 @@
 		56C668A01B300F7800CDC72B /* VerticalSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerticalSlider.m; path = VerticalSlider/VerticalSlider.m; sourceTree = "<group>"; };
 		56C668A21B3026A500CDC72B /* CircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleButton.h; path = CircleButton/CircleButton.h; sourceTree = "<group>"; };
 		56C668A31B3026A500CDC72B /* CircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleButton.m; path = CircleButton/CircleButton.m; sourceTree = "<group>"; };
+		56D6D5491BB00D420000ECBF /* FilteringResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilteringResultViewController.h; sourceTree = "<group>"; };
+		56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilteringResultViewController.m; sourceTree = "<group>"; };
 		56E6B3271B29295A000178BD /* AddOrEditTimingMassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddOrEditTimingMassageViewController.h; path = TimingMassage/AddOrEditTimingMassageViewController.h; sourceTree = "<group>"; };
 		56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddOrEditTimingMassageViewController.m; path = TimingMassage/AddOrEditTimingMassageViewController.m; sourceTree = "<group>"; };
 		56E6B32A1B292997000178BD /* TimingMassageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimingMassageTableViewController.h; sourceTree = "<group>"; };
@@ -763,6 +766,8 @@
 				3D1063981B2D5D6A00266D9A /* ProcedureManageViewController.m */,
 				3DF2256B1B33BAA20054F0C1 /* ProcedureManageTableViewCell.h */,
 				3DF2256C1B33BAA20054F0C1 /* ProcedureManageTableViewCell.m */,
+				56D6D5491BB00D420000ECBF /* FilteringResultViewController.h */,
+				56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */,
 			);
 			path = CustomProcedure;
 			sourceTree = "<group>";
@@ -1944,6 +1949,7 @@
 				3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */,
 				3D9E892F1B39503D002E0962 /* UILabel+WLAttributedString.m in Sources */,
 				3DF304261B38FE2500DD51D3 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
+				56D6D54B1BB00D420000ECBF /* FilteringResultViewController.m in Sources */,
 				3D1063901B2D559000266D9A /* CustomProcedureViewController.m in Sources */,
 				3D65A4881B25841800B7B411 /* MainViewController.m in Sources */,
 				3D0258DA1B1D5173006C9179 /* RegisterViewController.m in Sources */,
@@ -2121,6 +2127,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
@@ -2160,6 +2167,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ShareSDK/Connection",
