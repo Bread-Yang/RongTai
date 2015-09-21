@@ -405,7 +405,7 @@ NSString * NSDataToHex(NSData *data) {
 - (void)sendControlMode:(NSInteger)mode {
     //	NSInteger commnad[] = {NORMAL_CTRL,ENGGER_CTRL,H10_KEY_CHAIR_AUTO_0};
 	
-	if (self.currentConnectedPeripheral == nil || !isBleTurnOn) {
+	if (self.currentConnectedPeripheral == nil || !isBleTurnOn || !self.isConnectedDevice) {
 		
 		[self showConnectDialog];
 
@@ -440,7 +440,7 @@ NSString * NSDataToHex(NSData *data) {
 }
 
 - (void)sendControlByBytes:(NSData *)data {
-	if (self.currentConnectedPeripheral == nil) {
+	if (self.currentConnectedPeripheral == nil || !isBleTurnOn || !self.isConnectedDevice) {
 		[self showConnectDialog];
 	}
 	
@@ -500,6 +500,10 @@ NSString * NSDataToHex(NSData *data) {
 		
 		[afOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 			
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didSuccessDownloadProgramMassage)]) {
+				[self.delegate didSuccessDownloadProgramMassage];
+			}
+			
 			weakSelf.bytesTotal = [weakSelf formatByteCount:operation.response.expectedContentLength];
 			weakSelf.isCompleted = YES;
 			
@@ -513,10 +517,18 @@ NSString * NSDataToHex(NSData *data) {
 				[[NSFileManager defaultManager] removeItemAtPath:binPath error:nil];
 			}
 			
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didFailDownloadProgramMassage)]) {
+				[self.delegate didFailDownloadProgramMassage];
+			}
+			
 			weakSelf.error = error.localizedDescription;
 			weakSelf.isCompleted = YES;
 			
 		}];
+		
+		if (self.delegate && [self.delegate respondsToSelector:@selector(didStartDownloadProgramMassage)]) {
+			[self.delegate didStartDownloadProgramMassage];
+		}
 		
 		[afOperation start];
 	}

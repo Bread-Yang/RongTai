@@ -14,6 +14,10 @@
 @implementation UIImageView (ImageBlur)
 
 + (void)loadImageByURL:(NSString *)imageURL imageView:(UIImageView *)imageView {
+	if (!imageURL) {
+		return;
+	}
+	NSLog(@"massageProgram.imageUrl : %@", imageURL);
 	// 图片
 	UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", imageURL]];
 	if (img) {			// 本地图片
@@ -29,6 +33,8 @@
 		
 		[imageView setImageWithURLRequest:request placeholderImage:placeHolderImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 			NSLog(@"请求图片成功");
+			
+			[image saveImageByName:[NSString stringWithFormat:@"%@.jpg", imageURL]];
 			
 			weakImage.image = image;
 			

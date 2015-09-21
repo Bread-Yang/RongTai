@@ -100,6 +100,7 @@
 "韩式按摩" = "韩式按摩";
 "老年按摩" = "老年按摩";
 "安装中" = "Installing";
+"下载中" = "Downloading";
 "确定" = "confirm";
 "网络程序安装位已满" = "Network Program Slot Full,Please Delete";
 
@@ -188,6 +189,7 @@
 "请选择" = "Unselected";
 "立即体验" = "立即体验";
 "非待机状态,不能操作" = "非待机状态,不能操作";
+"是否确认删除" = "Confirm to delete?";
 "周一" = "Mon";
 "周二" = "Tue";
 "周三" = "Wed";

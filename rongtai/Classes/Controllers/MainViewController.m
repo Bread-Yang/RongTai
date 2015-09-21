@@ -82,8 +82,6 @@
     [_downloadButtonItem setSelected:NO];
     SlideNavigationController* slideNav = (SlideNavigationController *)self.navigationController;
     slideNav.enableSwipeGesture = YES;
-	
-	[_table reloadData];
     
     _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
@@ -124,6 +122,8 @@
         //同步家庭管理成员
         [self synchroFamily];
     }
+	
+	[self refreshTableView];
 }
 
 - (void)viewDidLoad {
@@ -283,11 +283,26 @@
 		if (localMassageProgramArray.count > 0) {
 			for (int i = 0; i < localMassageProgramArray.count; i++) {
 				MassageProgram *massage = [localMassageProgramArray objectAtIndex:i];
-				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", massage.commandId]];
+				[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", [massage.commandId integerValue]]];
 			}
 			[_table reloadData];
 		}
 	}];
+}
+
+- (void)refreshTableView {
+	
+	@synchronized(self) {
+		_networkMassageDic = [NSMutableDictionary new];
+		_networkMassageProgramRequest = [[MassageProgramRequest alloc]init];
+		
+		NSArray *localMassageProgramArray = [_networkMassageProgramRequest getAlreadySaveNetworkMassageProgramList];
+		for (int i = 0; i < localMassageProgramArray.count; i++) {
+			MassageProgram *massage = [localMassageProgramArray objectAtIndex:i];
+			[_networkMassageDic setObject:massage forKey:[NSString stringWithFormat:@"%zd", [massage.commandId integerValue]]];
+		}
+		[_table reloadData];
+	}
 }
 
 #pragma mark - 同步使用次数数据
@@ -463,7 +478,7 @@
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
 			cell.detailTextLabel.text = @"";
-			if (networkMassage) {
+			if (networkMassage != nil) {
 				cell.textLabel.text = networkMassage.name;
 				cell.detailTextLabel.text = networkMassage.mDescription;
 				[UIImageView loadImageByURL:networkMassage.imageUrl imageView:cell.imageView];
@@ -658,7 +673,8 @@
 
 - (void)didUpdateNetworkMassageStatus:(RTNetworkProgramStatus *)rtNetwrokProgramStatus {
 	//	NSLog(@"didUpdateNetworkMassageStatus");
-	[self requestNetworkMassageProgram];
+//	[self requestNetworkMassageProgram];
+	[self refreshTableView];
 }
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {

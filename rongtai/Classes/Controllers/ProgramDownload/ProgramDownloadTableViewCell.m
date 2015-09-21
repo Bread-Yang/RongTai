@@ -38,6 +38,8 @@
 - (void)setMassageProgram:(MassageProgram *)massageProgram {
 	_massageProgram = massageProgram;
 	
+	NSLog(@"massageProgram.imageUrl : %@", massageProgram.imageUrl);
+	
 	[UIImageView loadImageByURL:massageProgram.imageUrl imageView:self.programImageView];
 	
 	// 网络程序名
@@ -109,11 +111,7 @@
 			}
 			
 		} else {
-			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:[self.massageProgram.commandId integerValue]]];
-			
-			[NSThread sleepForTimeInterval:0.3f];
-			
-			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
+			[self showConfirmDeleteDialog];
 		}
 		
 	}
@@ -133,6 +131,29 @@
 	
 }
 
+#pragma mark - 确实删除对话框
+
+- (void)showConfirmDeleteDialog {
+	CustomIOSAlertView *dialog = [[CustomIOSAlertView alloc] init];
+	dialog.isReconnectDialog = YES;
+	
+	dialog.reconnectTipsString = NSLocalizedString(@"是否确认删除", nil);
+	[dialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"取消", nil), NSLocalizedString(@"确定", nil), nil]];
+	[dialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+		if (buttonIndex == 1) {
+			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] deleteProgramMassage:[self.massageProgram.commandId integerValue]]];
+			
+			[NSThread sleepForTimeInterval:0.3f];
+			
+			[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
+
+		}
+		[alertView close];
+	}];
+	
+	[dialog show];
+}
+
 #pragma mark - 快速提示
 -(void)showProgressHUDByString:(NSString*)message
 {
@@ -143,7 +164,7 @@
     hud.labelText = message;
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:0.7];
+    [hud hide:YES afterDelay:1.5];
 }
 
 @end
