@@ -58,11 +58,11 @@
         NSLog(@"统计次数数据同步至本地");
         for (NSDictionary* dic in mutPrograms) {
             BOOL isExist = NO;
-            NSString* name = [dic objectForKey:@"name"];
-            
+            NSString* programIdStr = [dic objectForKey:@"programId"];
+            NSUInteger programId = [programIdStr integerValue];
             //按名字遍历数据库，存在同样名称的按摩程序则用网络数据覆盖掉本地数据，但不覆盖未更新使用次数
             for (ProgramCount* p in counts) {
-                if ([p.name isEqualToString:name]) {
+                if ([p.programId integerValue] == programId) {
                     isExist = YES;
                     [p setValueByDictionary:dic];
                 }
@@ -99,7 +99,7 @@
 {
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     NSLog(@"开始同步统计次数到服务器");
-    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (unUpdateCount > 0)",uid]];
+    NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@)",uid]];
     
     //生成请求参数数组
     NSMutableArray* jsons = [NSMutableArray new];

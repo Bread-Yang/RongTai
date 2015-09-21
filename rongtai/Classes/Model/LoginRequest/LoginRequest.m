@@ -151,8 +151,9 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _isTimeOut = NO;
         NSLog(@"登录失败:%@",error);
+        NSDictionary* dic = @{@"error":error};
         if ([self.delegate respondsToSelector:@selector(loginRequestLoginFinished:Result:)]) {
-            [self.delegate loginRequestLoginFinished:NO Result:nil];
+            [self.delegate loginRequestLoginFinished:NO Result:dic];
         }
     }];
 }

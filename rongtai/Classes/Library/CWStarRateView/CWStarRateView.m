@@ -67,6 +67,13 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTapRateView:)];
     tapGesture.numberOfTapsRequired = 1;
     [self addGestureRecognizer:tapGesture];
+    
+    //加入拖拽手势
+    UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(userPanRateView:)];
+    [self addGestureRecognizer:pan];
+    
+    [tapGesture requireGestureRecognizerToFail:pan];
+    
 }
 
 - (void)userTapRateView:(UITapGestureRecognizer *)gesture {
@@ -89,6 +96,29 @@
             break;
     }
 //    NSLog(@"%lf",starScore);
+    self.scorePercent = starScore / self.numberOfStars;
+}
+
+-(void)userPanRateView:(UIPanGestureRecognizer*)pan
+{
+    CGPoint tapPoint = [pan locationInView:self];
+    CGFloat offset = tapPoint.x;
+    CGFloat realStarScore = offset / (self.bounds.size.width / self.numberOfStars);
+    //    CGFloat starScore = self.allowIncompleteStar ? realStarScore : ceilf(realStarScore);
+    CGFloat starScore;
+    switch (_starRateType) {
+        case WLStarRateViewContinuousType:
+            starScore = realStarScore;
+            break;
+        case WLStarRateViewCompleteType:
+            starScore = ceilf(realStarScore);
+            break;
+        case WLStarRateViewHalfType:
+            starScore = [self halfOperation:realStarScore];
+            break;
+        default:
+            break;
+    }
     self.scorePercent = starScore / self.numberOfStars;
 }
 
@@ -136,16 +166,15 @@
         return;
     }
     
-    if (scroePercent < 0) {
+    if (scroePercent <= 0) {
         _scorePercent = 0;
-    } else if (scroePercent > 1) {
+    } else if (scroePercent >= 1) {
         _scorePercent = 1;
     } else {
         _scorePercent = scroePercent;
     }
-    
     if ([self.delegate respondsToSelector:@selector(starRateView:scroePercentDidChange:)]) {
-        [self.delegate starRateView:self scroePercentDidChange:scroePercent];
+        [self.delegate starRateView:self scroePercentDidChange:_scorePercent];
     }
     [self setNeedsLayout];
 }

@@ -202,7 +202,20 @@
     else
     {
         [_loading hide:YES];
-        [self showProgressHUDByString:@"登录失败，请检查账号密码"];
+        if (result) {
+            NSError* error = [result objectForKey:@"error"];
+            if (error.code == -1009) {
+                [self showProgressHUDByString:@"网络连接已断开,请检查！"];
+            }
+            else
+            {
+                [self showProgressHUDByString:@"网络请求出错，请检测网络"];
+            }
+        }
+        else
+        {
+            [self showProgressHUDByString:@"登录失败，请检查账号密码"];
+        }
     }
 }
 

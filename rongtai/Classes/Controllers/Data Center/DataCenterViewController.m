@@ -129,44 +129,57 @@
     [_loading show:YES];
     _totalTime = 0;
     _todayUseTime = 0;
-    DataRequest* r = [DataRequest new];
-    [r getMassageRecordFrom:[NSDate dateWithTimeIntervalSince1970:0] To:[NSDate dateWithTimeIntervalSinceNow:0] Success:^(NSArray *arr) {
-        [_loading hide:YES];
-        //统计时间
-        NSDate* date = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-        NSString* todayIndex = [dateFormatter stringFromDate:date];
-        NSMutableArray* todayRecord = [NSMutableArray new];
-        for (NSDictionary* dic in arr) {
-            NSString* date = [dic objectForKey:@"useDate"];
-            NSUInteger useTime = [[dic objectForKey:@"useTime"] integerValue];
-            if ([date isEqualToString:todayIndex]) {
-                _todayUseTime += useTime;
-                [todayRecord addObject:dic];
+    [DataRequest synchroMassageRecordSuccess:^{
+        DataRequest* r = [DataRequest new];
+        [r getMassageRecordFrom:[NSDate dateWithTimeIntervalSince1970:0] To:[NSDate dateWithTimeIntervalSinceNow:0] Success:^(NSArray *arr) {
+            [_loading hide:YES];
+            //统计时间
+            NSDate* date = [NSDate date];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+            NSString* todayIndex = [dateFormatter stringFromDate:date];
+            NSMutableArray* todayRecord = [NSMutableArray new];
+            for (NSDictionary* dic in arr) {
+                NSString* date = [dic objectForKey:@"useDate"];
+                NSUInteger useTime = [[dic objectForKey:@"useTime"] integerValue];
+                if ([date isEqualToString:todayIndex]) {
+                    _todayUseTime += useTime;
+                    [todayRecord addObject:dic];
+                }
+                _totalTime += useTime;
             }
-            _totalTime += useTime;
-        }
+            
+            //数据传到耗电量页面
+            [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
+            
+            //数据传到使用时长页面
+            [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
+            [_useTimeVc setWeekData:arr ByDataCenterVC:self];
+            
+            //设置该页面的总使用时长
+            if (_totalTime<60) {
+                _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+            }
+            else
+            {
+                NSUInteger h = _totalTime/60;
+                NSUInteger m = _totalTime%60;
+                _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+            }
+            [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
+            
+        } fail:^(NSDictionary *dic) {
+            [_loading hide:YES];
+            //数据传到耗电量页面
+            [_powerConsumeVC setTotalTime:0 AndTodayUseTime:0];
+            
+            //数据传到使用时长页面
+            [_useTimeVc setTodayRecord:nil AndTodayUseTime:0];
+            [_useTimeVc setWeekData:nil ByDataCenterVC:self];
+            
+            [self showProgressHUDByString:@"读取数据失败，请检测网络"];
+        }];
 
-        //数据传到耗电量页面
-        [_powerConsumeVC setTotalTime:_totalTime AndTodayUseTime:_todayUseTime];
-        
-        //数据传到使用时长页面
-        [_useTimeVc setTodayRecord:todayRecord AndTodayUseTime:_todayUseTime];
-        [_useTimeVc setWeekData:arr ByDataCenterVC:self];
-        
-        //设置该页面的总使用时长
-        if (_totalTime<60) {
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
-        }
-        else
-        {
-            NSUInteger h = _totalTime/60;
-            NSUInteger m = _totalTime%60;
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
-        }
-        [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
-        
     } fail:^(NSDictionary *dic) {
         [_loading hide:YES];
         //数据传到耗电量页面
@@ -175,9 +188,11 @@
         //数据传到使用时长页面
         [_useTimeVc setTodayRecord:nil AndTodayUseTime:0];
         [_useTimeVc setWeekData:nil ByDataCenterVC:self];
-
+        
         [self showProgressHUDByString:@"读取数据失败，请检测网络"];
     }];
+
+
 }
 
 #pragma mark - 返回

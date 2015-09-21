@@ -206,7 +206,7 @@
     [self synchroUseTimeData];
     
     //对 使用时间 数据进行同步
-    [DataRequest synchroMassageRecord];
+    [DataRequest synchroMassageRecordSuccess:nil fail:nil];
     
     //底部菜单
     _menuView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT-49-64, SCREENWIDTH, 49)];
