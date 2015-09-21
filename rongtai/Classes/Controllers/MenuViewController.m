@@ -19,12 +19,13 @@
 #import "RTBleConnector.h"
 #import "AppDelegate.h"
 #import "MainViewController.h"
-
+#import <MessageUI/MessageUI.h>
+#import "MBProgressHUD.h"
 //测试
 #import "FinishMassageViewController.h"
 
 
-@interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate,MFMailComposeViewControllerDelegate>
 {
     NSArray* _menuName;  //菜单名字
     UITableView* _menu;  //菜单列表
@@ -198,10 +199,47 @@
         //我要反馈
         
         //测试，跳转到按摩结束
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-//        [fVC saveMode];
-        [sl pushViewController:fVC animated:YES];
+//        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        FinishMassageViewController* fVC = [s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+////        [fVC saveMode];
+//        [sl pushViewController:fVC animated:YES];
+        
+        Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+        if (!mailClass) {
+            [[SlideNavigationController sharedInstance] toggleLeftMenu];
+            [self showProgressHUDByString:@"当前系统版本不支持应用内发送邮件功能"];
+            return;
+        }
+        if (![mailClass canSendMail]) {
+            [[SlideNavigationController sharedInstance] toggleLeftMenu];
+            [self showProgressHUDByString:@"您没有设置邮件账户，请打开系统邮件进行设置"];
+            return;
+        }
+
+        MainViewController* main;
+        
+        for (int i = 0; i<[SlideNavigationController sharedInstance].viewControllers.count; i++) {
+            UIViewController* vc = [SlideNavigationController sharedInstance].viewControllers[i];
+            if ([vc isKindOfClass:[MainViewController class]]) {
+                main = (MainViewController*)vc;
+                NSLog(@"找到main");
+            }
+        }
+        if (main) {
+            MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
+            mailVC.mailComposeDelegate = self;
+            [mailVC setSubject:@"我要反馈"];
+            [mailVC setToRecipients:[NSArray arrayWithObjects:@"2581583292@qq.com",nil]];
+            [mailVC setCcRecipients:[NSArray arrayWithObjects:@"2581583292@qq.com",nil]];
+            [mailVC setBccRecipients:[NSArray arrayWithObjects:@"2581583292@qq.com",nil]];
+            [[SlideNavigationController sharedInstance] toggleLeftMenu];
+            [main presentViewController:mailVC animated:YES completion:nil];
+
+        }
+        else
+        {
+            NSLog(@"vcs:%@",[SlideNavigationController sharedInstance].viewControllers);
+        }
         
     }
     else if (indexPath.row == 6)
@@ -274,6 +312,50 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString* message;
+    switch (result) {
+        case MFMailComposeResultFailed:
+            message = @"邮件发送失败";
+            break;
+        case MFMailComposeResultSent:
+            message = @"邮件发送成功";
+        case MFMailComposeResultSaved:
+            message = @"邮件保存成功";
+        case MFMailComposeResultCancelled:
+            message = @"取消发送邮件";
+        default:
+            break;
+    }
+    NSLog(@"邮件发送结果:%@",error);
+    MainViewController* main;
+    for (int i = 0; i<[SlideNavigationController sharedInstance].viewControllers.count; i++) {
+        UIViewController* vc = [SlideNavigationController sharedInstance].viewControllers[i];
+        if ([vc isKindOfClass:[MainViewController class]]) {
+            main = (MainViewController*)vc;
+        }
+    }
+    if (main) {
+       [main dismissViewControllerAnimated:controller completion:^{
+           [self showProgressHUDByString:message];
+       }];
+    }
+}
+
+
+#pragma mark - 快速提示
+-(void)showProgressHUDByString:(NSString*)message
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[SlideNavigationController sharedInstance].view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = message;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:0.7];
 }
 
 /*
