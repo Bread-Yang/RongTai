@@ -220,42 +220,72 @@
 -(void)setWeekData:(NSArray*)weekRecords ByDataCenterVC:(DataCenterViewController*)dataCenterVC
 {
 //    NSLog(@"weekRecord:%@",weekRecords);
-    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    
-    NSDateFormatter* shortFormatter = [[NSDateFormatter alloc]init];
-    [shortFormatter setDateFormat:@"M.d"];
-    
-    NSMutableArray* xValue = [NSMutableArray new];
-    NSMutableArray* points = [NSMutableArray new];
-    NSMutableArray* records = [NSMutableArray arrayWithArray:weekRecords];
-    NSDate* now = [NSDate date];
-    for (int i = 0; i<7; i++) {
-        NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:now];
-        NSString* dateStr = [formatter stringFromDate:date];
-        NSUInteger useTime = 0;
-        for (int j = 0; j<records.count; j++) {
-            NSDictionary* dic = records[j];
-            if ([dateStr isEqualToString:[dic objectForKey:@"useDate"]]) {
-                NSUInteger time = [[dic objectForKey:@"useTime"] integerValue];
-                useTime += time;
-                [records removeObject:dic];
+    if (weekRecords.count>0) {
+        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"YYYY-MM-dd"];
+        
+        NSDateFormatter* shortFormatter = [[NSDateFormatter alloc]init];
+        [shortFormatter setDateFormat:@"M.d"];
+        
+        NSMutableArray* xValue = [NSMutableArray new];
+        NSMutableArray* points = [NSMutableArray new];
+        NSMutableArray* records = [NSMutableArray arrayWithArray:weekRecords];
+        NSDate* now = [NSDate date];
+        for (int i = 0; i<7; i++) {
+            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:now];
+            NSString* dateStr = [formatter stringFromDate:date];
+            NSUInteger useTime = 0;
+            for (int j = 0; j<records.count; j++) {
+                NSDictionary* dic = records[j];
+                if ([dateStr isEqualToString:[dic objectForKey:@"useDate"]]) {
+                    NSUInteger time = [[dic objectForKey:@"useTime"] integerValue];
+                    useTime += time;
+                    [records removeObject:dic];
+                }
             }
+            [xValue addObject:[shortFormatter stringFromDate:date]];
+            //计算各个点的坐标
+            [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
         }
-        [xValue addObject:[shortFormatter stringFromDate:date]];
-        //计算各个点的坐标
-        [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, useTime)]];
+        
+        _lineChart_Back.xValues = xValue;
+        _lineChart_Back.points = points;
+        //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
+        _lineChart_Back.xSection = CGPointMake(0, 120);
+        
+        _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart_Back.ySection = CGPointMake(0, 8*60);
+        
+        _dateCenterVC = dataCenterVC;
+    }
+    else
+    {
+        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"YYYY-MM-dd"];
+        
+        NSDateFormatter* shortFormatter = [[NSDateFormatter alloc]init];
+        [shortFormatter setDateFormat:@"M.d"];
+        
+        NSMutableArray* xValue = [NSMutableArray new];
+        NSMutableArray* points = [NSMutableArray new];
+        NSDate* now = [NSDate date];
+        for (int i = 0; i<7; i++) {
+            NSDate* date = [NSDate dateWithTimeInterval:-24*3600*(6-i) sinceDate:now];
+            [xValue addObject:[shortFormatter stringFromDate:date]];
+            //计算各个点的坐标
+            [points addObject:[NSValue valueWithCGPoint:CGPointMake(20*i, 0)]];
+        }
+        
+        _lineChart_Back.xValues = xValue;
+        _lineChart_Back.points = points;
+        //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
+        _lineChart_Back.xSection = CGPointMake(0, 120);
+        
+        _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
+        _lineChart_Back.ySection = CGPointMake(0, 8*60);
+        _dateCenterVC = dataCenterVC;
     }
     
-    _lineChart_Back.xValues = xValue;
-    _lineChart_Back.points = points;
-    //由于x轴是日期，需要数值来代表各个点的x坐标，固以20为间距，有7个点，最大值为120
-    _lineChart_Back.xSection = CGPointMake(0, 120);
-    
-    _lineChart_Back.yValues = @[@"0",@"2",@"4",@"6",@"8"];
-    _lineChart_Back.ySection = CGPointMake(0, 8*60);
-    
-    _dateCenterVC = dataCenterVC;
 }
 
 #pragma mark - ScrollView代理

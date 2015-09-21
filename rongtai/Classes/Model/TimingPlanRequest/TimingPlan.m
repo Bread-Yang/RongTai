@@ -226,8 +226,9 @@
 #pragma mark - 根据TimingPlan来更新本地通知
 +(void)updateLocalNotificationByNetworkData:(NSArray*)arr Finish:(void(^)())finish
 {
+    NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
     NSMutableArray* networkData = [NSMutableArray arrayWithArray:arr];
-    NSArray* localData = [TimingPlan MR_findAll];
+    NSArray* localData = [TimingPlan MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"uid == %@",uid]];
     for (int i = 0; i < localData.count; i++) {
         TimingPlan* t = localData[i];
         BOOL isExist = NO;

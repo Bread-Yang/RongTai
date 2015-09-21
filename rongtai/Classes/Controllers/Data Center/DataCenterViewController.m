@@ -169,6 +169,13 @@
         
     } fail:^(NSDictionary *dic) {
         [_loading hide:YES];
+        //数据传到耗电量页面
+        [_powerConsumeVC setTotalTime:0 AndTodayUseTime:0];
+        
+        //数据传到使用时长页面
+        [_useTimeVc setTodayRecord:nil AndTodayUseTime:0];
+        [_useTimeVc setWeekData:nil ByDataCenterVC:self];
+
         [self showProgressHUDByString:@"读取数据失败，请检测网络"];
     }];
 }
