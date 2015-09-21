@@ -190,7 +190,7 @@
 }
 
 #pragma mark - 同步按摩记录
-+(void)synchroMassageRecord
++(void)synchroMassageRecordSuccess:(void (^)())success fail:(void (^)(NSDictionary *))fail
 {
     DataRequest* r = [DataRequest new];
     NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
@@ -212,12 +212,21 @@
                 [r MR_deleteEntity];
             }
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+            if (success) {
+                success();
+            }
         } fail:^(NSDictionary *dic) {
+            if (fail) {
+                fail(dic);
+            }
             NSLog(@"按摩记录同步失败");
         }];
     }
     else
     {
+        if (success) {
+            success();
+        }
         NSLog(@"没有需要同步的按摩记录数据");
     }
 }

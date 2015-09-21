@@ -74,7 +74,7 @@
         }
         [self totalUseCount];
         [_collectView reloadData];
-        [vc showHUD];
+        [vc hideHUD];
         [self showProgressHUDByString:@"读取数据失败，请检测网络"];
     }];
 }
@@ -164,7 +164,6 @@
     }
     return cell;
 }
-
 
 #pragma mark - 快速提示
 -(void)showProgressHUDByString:(NSString*)message

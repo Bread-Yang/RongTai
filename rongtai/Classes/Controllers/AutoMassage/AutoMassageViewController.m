@@ -608,7 +608,7 @@
                     }
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                     //把本地所有未同步到服务器的按摩记录都推到服务器
-                    [DataRequest synchroMassageRecord];
+                    [DataRequest synchroMassageRecordSuccess:nil fail:nil];
                 }
             }
             else

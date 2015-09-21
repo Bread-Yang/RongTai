@@ -40,6 +40,6 @@
 /**
  *  同步按摩记录
  */
-+(void)synchroMassageRecord;
++(void)synchroMassageRecordSuccess:(void (^)())success fail:(void (^)(NSDictionary *))fail;
 
 @end

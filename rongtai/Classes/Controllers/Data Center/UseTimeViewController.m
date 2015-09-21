@@ -82,8 +82,17 @@
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.delegate = self;
+    _scrollView.exclusiveTouch = YES;
+//    _scrollView.panGestureRecognizer.delaysTouchesBegan = YES;
+//    _scrollView.panGestureRecognizer.delaysTouchesEnded = NO;
+    _scrollView.panGestureRecognizer.cancelsTouchesInView = NO;
     [_scrollView addSubview:_lineChart_Back];
     [_storeLineChartView addSubview:_scrollView];
+    
+    
+    UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan)];
+    [_storeLineChartView addGestureRecognizer:pan];
+//    _storeLineChartView.exclusiveTouch = YES;
     _scrollView.contentOffset = CGPointMake(SCREENWIDTH*0.9*2, 0);
     _contentX = SCREENWIDTH*0.9*2;
     
@@ -190,19 +199,20 @@
 //        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
         
         //设置文字
+        _usingTime.textColor = [UIColor lightGrayColor];
         if (useTime>60) {
             NSUInteger h = useTime/60;
             NSUInteger m = useTime%60;
             _usingTime.text = [NSString stringWithFormat:@"%ldh%ldm",(unsigned long)h,(unsigned long)m];
         }
-        else if(useTime<=60 && useTime>0)
+        else if(useTime<=60 && useTime>=0)
         {
             if (useTime == 60) {
-                _usingTime.text = @"1h";
+                _usingTime.text = @"1h00m";
             }
             else
             {
-                _usingTime.text = [NSString stringWithFormat:@"%ldm",(unsigned long)useTime];
+                _usingTime.text = [NSString stringWithFormat:@"00h%ldm",(unsigned long)useTime];
             }
         }
         [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
@@ -214,6 +224,7 @@
         _doughnutView.percents = @[@1];
         _doughnutView.colors  = @[[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]];
         _usingTime.text= @"今天未使用该APP";
+        _usingTime.textColor = BLUE;
     }
 }
 
@@ -368,6 +379,16 @@
         _lineChart_Back.frame = CGRectMake(SCREENWIDTH*0.9, 0,  0.9*SCREENWIDTH, 0.9*h);
         _contentX = SCREENWIDTH*0.9;
     }
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    NSLog(@"WillBeginDragging");
+}
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"WillBeginDragging");
 }
 
 #pragma mark - 底部年月日按钮
@@ -655,6 +676,12 @@
     [view addSubview:pL];
     
     return view;
+}
+
+#pragma mark - pan
+-(void)pan
+{
+    NSLog(@"Pan");
 }
 
 - (void)didReceiveMemoryWarning {

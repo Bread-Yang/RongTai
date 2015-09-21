@@ -101,6 +101,11 @@
 		segment[i] = [[_weekSC subviews] objectAtIndex:i];
 	}
     
+    //MBProgressHUD
+    _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
+    _loadingHUD.labelText = NSLocalizedString(@"保存中...", nil);
+    [self.view addSubview:_loadingHUD];
+    
     //
     _timingPlanRequest = [TimingPlanRequest new];
     
@@ -289,6 +294,7 @@
     __weak MBProgressHUD *weakHUB = _loadingHUD;
     __weak AddOrEditTimingMassageViewController *weakSelf = self;
     self.timingPlan.uid = _uid;
+    [weakHUB show:YES];
     [_timingPlanRequest addTimingPlan:self.timingPlan success:^(NSUInteger timingPlanId) {
         NSLog(@"定时计划 添加成功");
         //网络添加成功，要改变数据状态为0
@@ -312,6 +318,7 @@
 {
     __weak MBProgressHUD *weakHUB = _loadingHUD;
     __weak AddOrEditTimingMassageViewController *weakSelf = self;
+    [weakHUB show:YES];
     [_timingPlanRequest updateTimingPlan:self.timingPlan success:^(NSDictionary *dic) {
         NSLog(@"定时计划 编辑成功");
         //网络编辑成功，要改变数据状态为0

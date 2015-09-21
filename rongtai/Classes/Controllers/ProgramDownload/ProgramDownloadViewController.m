@@ -87,7 +87,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
+//	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
 //	if (reachability.reachable) {
 		//网络请求
 		_loadingHUD.labelText = @"读取中...";
@@ -611,7 +611,7 @@
                     }
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                     //把本地所有未同步到服务器的按摩记录都推到服务器
-                    [DataRequest synchroMassageRecord];
+                    [DataRequest synchroMassageRecordSuccess:nil fail:nil];
                 }
             }
             else
