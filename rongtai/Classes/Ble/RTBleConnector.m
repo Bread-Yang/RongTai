@@ -751,7 +751,7 @@ NSString * NSDataToHex(NSData *data) {
 		[self installCommandSend];
 	} else {
 		NSLog(@"传输结束,发送04");
-		Byte byte[] = {4};  // EOT 0X04 传输结束标志，所有数据包数据传输完成后，APP只发一个字节的EOT信息给主板，主板收到EOT后，发送ACK信息给APP 表示本次传输完毕
+		Byte byte[] = {0x04};  // EOT 0X04 传输结束标志，所有数据包数据传输完成后，APP只发一个字节的EOT信息给主板，主板收到EOT后，发送ACK信息给APP 表示本次传输完毕
 		[self sendControlByBytes:[NSData dataWithBytes:byte length:1]];
 		self.isStartInstall = false;
 		[self.installEachDataMutableArray removeAllObjects];
@@ -783,6 +783,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 - (void)parseInstallingStatus:(NSData *)data {
 	Byte *response = (Byte *)[data bytes];
 	switch (response[0]) {
+			
 		case 0x43:		// NCG     0x43     主板上传给APP的请求发送数据包标志位
 			if(!_isStartInstall) {
 				[self startInstallMassage];
@@ -792,17 +793,15 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 				}
 			}
 			break;
+			
 		case 0x06:		// ACK     0X06     数据被正确接收标志
-			if (self.isStartInstall) {
-				[self installNext];
-			} else {
-				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
-				
-			}
+			[self installNext];
 			break;
+			
 		case 0x15:		// NAK     0X15     数据包接收出错，请求重发当前数据包标志
 			[self installCommandSend];
 			break;
+			
 	}
 
 }
