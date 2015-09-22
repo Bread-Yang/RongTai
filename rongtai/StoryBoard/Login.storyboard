@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oLk-FT-Anx">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -205,12 +205,16 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="feU-ML-MSh">
-                                <rect key="frame" x="60" y="98" width="480" height="111"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="feU-ML-MSh">
+                                <rect key="frame" x="60" y="148" width="480" height="111"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="feU-ML-MSh" secondAttribute="height" multiplier="13:3" id="2ub-En-T3h"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hoG-bi-LZ4">
+                                <rect key="frame" x="157" y="64" width="300" height="76"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -220,18 +224,22 @@
                             <constraint firstItem="9Hq-M1-KEr" firstAttribute="width" secondItem="9Hq-M1-KEr" secondAttribute="height" multiplier="267:46" id="6Bp-lB-U0a"/>
                             <constraint firstAttribute="centerX" secondItem="9m8-5A-Onu" secondAttribute="centerX" id="7z4-Ap-nqQ"/>
                             <constraint firstAttribute="centerX" secondItem="MkA-Ml-jXH" secondAttribute="centerX" constant="0.5" id="8gn-gW-UlR"/>
+                            <constraint firstAttribute="width" secondItem="hoG-bi-LZ4" secondAttribute="width" id="9F6-aq-rPT"/>
                             <constraint firstItem="9m8-5A-Onu" firstAttribute="top" secondItem="9Hq-M1-KEr" secondAttribute="bottom" constant="10" id="9jZ-Ad-CqW"/>
                             <constraint firstAttribute="centerX" secondItem="CeL-xi-fng" secondAttribute="centerX" id="AAn-wU-LBN"/>
                             <constraint firstItem="9m8-5A-Onu" firstAttribute="height" secondItem="uy7-e7-eTh" secondAttribute="height" id="EZw-Vz-XTq"/>
                             <constraint firstAttribute="centerX" secondItem="uy7-e7-eTh" secondAttribute="centerX" id="FgW-Zo-5oT"/>
                             <constraint firstItem="9Hq-M1-KEr" firstAttribute="width" secondItem="jr6-9W-8VF" secondAttribute="width" multiplier="0.8" id="GwW-4p-EoF"/>
+                            <constraint firstItem="feU-ML-MSh" firstAttribute="top" secondItem="hoG-bi-LZ4" secondAttribute="bottom" id="KtU-e5-OpH"/>
                             <constraint firstItem="VyA-Zv-oCZ" firstAttribute="top" secondItem="MkA-Ml-jXH" secondAttribute="bottom" constant="10" id="Mi1-mh-mrY"/>
                             <constraint firstItem="uy7-e7-eTh" firstAttribute="top" secondItem="feU-ML-MSh" secondAttribute="bottom" constant="8" id="SV6-zN-ctT"/>
                             <constraint firstItem="VyA-Zv-oCZ" firstAttribute="width" secondItem="jr6-9W-8VF" secondAttribute="width" multiplier="0.3" id="V2P-Wi-VlN"/>
                             <constraint firstItem="9m8-5A-Onu" firstAttribute="trailing" secondItem="wRS-GH-p16" secondAttribute="trailing" id="YFw-zC-RT8"/>
                             <constraint firstItem="Taw-2h-xjx" firstAttribute="top" secondItem="VyA-Zv-oCZ" secondAttribute="bottom" constant="30" id="YZi-wg-d3u"/>
+                            <constraint firstAttribute="centerX" secondItem="hoG-bi-LZ4" secondAttribute="centerX" id="eME-fG-kEZ"/>
                             <constraint firstItem="9Hq-M1-KEr" firstAttribute="height" secondItem="uy7-e7-eTh" secondAttribute="height" id="ela-Za-Xj1"/>
                             <constraint firstAttribute="centerX" secondItem="VyA-Zv-oCZ" secondAttribute="centerX" id="fQh-Rf-yHm"/>
+                            <constraint firstItem="hoG-bi-LZ4" firstAttribute="height" secondItem="jr6-9W-8VF" secondAttribute="height" multiplier="0.18" id="fc3-Jl-XHm"/>
                             <constraint firstItem="Ul6-9T-y2v" firstAttribute="width" secondItem="jr6-9W-8VF" secondAttribute="width" multiplier="0.8" id="ftG-rG-CT1"/>
                             <constraint firstItem="Ul6-9T-y2v" firstAttribute="leading" secondItem="PmW-D2-hcd" secondAttribute="leading" id="fz9-gx-2k1"/>
                             <constraint firstItem="Ul6-9T-y2v" firstAttribute="top" secondItem="9Hq-M1-KEr" secondAttribute="bottom" constant="10" id="h0i-Ps-1xg"/>
@@ -240,8 +248,8 @@
                             <constraint firstItem="9Hq-M1-KEr" firstAttribute="top" secondItem="feU-ML-MSh" secondAttribute="bottom" constant="8" id="kJ5-uT-hqg"/>
                             <constraint firstAttribute="centerX" secondItem="feU-ML-MSh" secondAttribute="centerX" id="rYT-Fa-zlr"/>
                             <constraint firstItem="wRS-GH-p16" firstAttribute="top" secondItem="9m8-5A-Onu" secondAttribute="bottom" constant="11" id="tKr-Zn-YI8"/>
-                            <constraint firstAttribute="centerY" secondItem="feU-ML-MSh" secondAttribute="centerY" constant="146.5" id="vBJ-S1-Mlw"/>
                             <constraint firstItem="uy7-e7-eTh" firstAttribute="width" secondItem="9Hq-M1-KEr" secondAttribute="width" multiplier="0.9" id="wnv-4t-RMP"/>
+                            <constraint firstItem="hoG-bi-LZ4" firstAttribute="top" secondItem="9nL-Z9-lKf" secondAttribute="bottom" id="xpc-ld-lK6"/>
                             <constraint firstAttribute="centerX" secondItem="9Hq-M1-KEr" secondAttribute="centerX" id="z7o-lP-SlI"/>
                             <constraint firstItem="feU-ML-MSh" firstAttribute="width" secondItem="jr6-9W-8VF" secondAttribute="width" multiplier="0.8" id="zMu-cK-u5P"/>
                         </constraints>

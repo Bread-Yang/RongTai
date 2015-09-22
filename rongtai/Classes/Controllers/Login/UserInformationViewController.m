@@ -219,6 +219,7 @@
     key.enable = YES;
 }
 
+#pragma mark - pickerView的代理
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return _component;
 }

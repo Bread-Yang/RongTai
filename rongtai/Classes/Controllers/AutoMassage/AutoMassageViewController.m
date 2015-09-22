@@ -45,6 +45,7 @@
     NSArray* _skillsPreferenceArray;
     BOOL _isJumpFinish;
     NSString *functionString;
+    BOOL _isJumpScan;
 }
 @end
 
@@ -82,12 +83,13 @@
     
     _isJumpFinish = YES;
     
+    
     _skillsPreferenceArray = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    _isJumpScan = YES;
     //获取按摩椅自动按摩名称
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
@@ -208,7 +210,6 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     //按摩调节View消失
     [[AdjustView shareView] hidden];
 }
@@ -310,7 +311,11 @@
 	// 以下是界面跳转
 	
 	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
-		[self jumpToScanViewConroller];
+        if (_isJumpScan) {
+            _isJumpScan = NO;
+            [self jumpToScanViewConroller];
+        }
+		
 	}
 	
 	// 定时时间
