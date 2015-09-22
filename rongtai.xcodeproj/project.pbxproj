@@ -65,6 +65,7 @@
 		3D797C6B1B8C1698007046CF /* ProgramCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D797C6A1B8C1698007046CF /* ProgramCount.m */; };
 		3D7D19BD1B5CEE510057B955 /* ManualTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */; };
 		3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */; };
+		3D87A45C1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D87A45B1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m */; };
 		3D8EEBBB1B5DF07A00626EB2 /* ManualHumanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */; };
 		3D8EEBC61B5E1E7D00626EB2 /* LineLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBC51B5E1E7D00626EB2 /* LineLabel.m */; };
 		3D8EEBCB1B5E43EF00626EB2 /* WLYAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EEBCA1B5E43EF00626EB2 /* WLYAxis.m */; };
@@ -142,7 +143,6 @@
 		3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m */; };
 		3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF304201B38FE2500DD51D3 /* MagicalRecord.m */; };
 		3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD18FE1B8B033800BED437 /* CustomProgram.m */; };
-		561A55441BB148210072079F /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */; settings = {ASSET_TAGS = (); }; };
 		561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */; };
 		563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */; };
 		565E718A1B5E547200E51C1C /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71641B5E547200E51C1C /* CopyConnection.framework */; };
@@ -201,7 +201,7 @@
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
 		56C668A41B3026A500CDC72B /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A31B3026A500CDC72B /* CircleButton.m */; };
-		56D6D54B1BB00D420000ECBF /* FilteringResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */; settings = {ASSET_TAGS = (); }; };
+		56D6D54B1BB00D420000ECBF /* FilteringResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */; };
 		56E6B3291B29295A000178BD /* AddOrEditTimingMassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B3281B29295A000178BD /* AddOrEditTimingMassageViewController.m */; };
 		56E6B32C1B292997000178BD /* TimingMassageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32B1B292997000178BD /* TimingMassageTableViewController.m */; };
 		56E6B32F1B2932FF000178BD /* TimingMassageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E6B32E1B2932FF000178BD /* TimingMassageModel.m */; };
@@ -339,6 +339,8 @@
 		3D7D19BA1B5CEE510057B955 /* ManualTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualTableViewCell.h; sourceTree = "<group>"; };
 		3D7D19BB1B5CEE510057B955 /* ManualTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewCell.m; sourceTree = "<group>"; };
 		3D7D19BC1B5CEE510057B955 /* ManualTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualTableViewCell.xib; sourceTree = "<group>"; };
+		3D87A45A1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
+		3D87A45B1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
 		3D8EEBB91B5DF07A00626EB2 /* ManualHumanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualHumanView.h; sourceTree = "<group>"; };
 		3D8EEBBA1B5DF07A00626EB2 /* ManualHumanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualHumanView.m; sourceTree = "<group>"; };
 		3D8EEBC41B5E1E7D00626EB2 /* LineLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLabel.h; sourceTree = "<group>"; };
@@ -488,8 +490,6 @@
 		3DF304241B38FE2500DD51D3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		3DFD18FD1B8B033800BED437 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
 		3DFD18FE1B8B033800BED437 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
-		561A55421BB148210072079F /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
-		561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFHTTPRequestOperationManager+timeout.m"; path = "../../../../../gitlab/rongtai_ios/rongtai/Classes/Categories/AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
 		561BC3541B5CEEF200F2E63F /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleBaseBusinessViewController.h; sourceTree = "<group>"; };
@@ -966,8 +966,8 @@
 		3D9E89291B39503D002E0962 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				561A55421BB148210072079F /* AFHTTPRequestOperationManager+timeout.h */,
-				561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */,
+				3D87A45A1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.h */,
+				3D87A45B1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m */,
 				3D9E892A1B39503D002E0962 /* NSString+RT.h */,
 				3D9E892B1B39503D002E0962 /* NSString+RT.m */,
 				3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */,
@@ -1903,7 +1903,7 @@
 				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,
-				561A55441BB148210072079F /* AFHTTPRequestOperationManager+timeout.m in Sources */,
+				3D87A45C1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
 				3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */,
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,

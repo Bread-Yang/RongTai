@@ -20,8 +20,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="login_input" translatesAutoresizingMaskIntoConstraints="NO" id="9Hq-M1-KEr">
-                                <rect key="frame" x="60" y="217" width="480" height="50"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_input" translatesAutoresizingMaskIntoConstraints="NO" id="9Hq-M1-KEr">
+                                <rect key="frame" x="60" y="291" width="480" height="82.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9Hq-M1-KEr" secondAttribute="height" multiplier="24:5" id="ICE-fh-nx3"/>
                                     <constraint firstAttribute="width" secondItem="9Hq-M1-KEr" secondAttribute="height" multiplier="267:46" id="lHM-EH-n0w"/>
@@ -32,8 +32,8 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="login_input" translatesAutoresizingMaskIntoConstraints="NO" id="Ul6-9T-y2v">
-                                <rect key="frame" x="60" y="275" width="480" height="50"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_input" translatesAutoresizingMaskIntoConstraints="NO" id="Ul6-9T-y2v">
+                                <rect key="frame" x="60" y="383.5" width="480" height="83"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ul6-9T-y2v" secondAttribute="height" multiplier="24:5" id="HzL-S1-WAC"/>
                                     <constraint firstAttribute="width" secondItem="Ul6-9T-y2v" secondAttribute="height" multiplier="267:46" id="zmR-z7-jgs"/>
@@ -44,8 +44,8 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uy7-e7-eTh">
-                                <rect key="frame" x="116" y="217" width="432" height="20"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uy7-e7-eTh">
+                                <rect key="frame" x="84" y="291" width="432" height="82.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="98F-cc-4UE"/>
                                     <constraint firstAttribute="width" secondItem="uy7-e7-eTh" secondAttribute="height" multiplier="267:46" id="UXT-9W-Ype"/>
@@ -64,8 +64,8 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wRS-GH-p16">
-                                <rect key="frame" x="420" y="326" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wRS-GH-p16">
+                                <rect key="frame" x="396" y="477.5" width="120" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hfk-dt-i0j"/>
@@ -81,8 +81,8 @@
                                     <segue destination="bp3-x7-Kbp" kind="push" id="nQe-Rp-Wjc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeL-xi-fng">
-                                <rect key="frame" x="224" y="371" width="150" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeL-xi-fng">
+                                <rect key="frame" x="225" y="516.5" width="150" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="EGX-pz-xMo"/>
@@ -102,8 +102,8 @@
                                 <color key="textColor" red="0.45490196078431372" green="0.60392156862745094" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PmW-D2-hcd">
-                                <rect key="frame" x="60" y="326" width="120" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PmW-D2-hcd">
+                                <rect key="frame" x="60" y="477.5" width="120" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="Jci-Ik-CCZ"/>
                                     <constraint firstAttribute="height" constant="30" id="lbg-H9-XhH"/>
@@ -185,8 +185,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9m8-5A-Onu">
-                                <rect key="frame" x="108" y="285" width="432" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9m8-5A-Onu">
+                                <rect key="frame" x="84" y="383.5" width="432" height="83"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9m8-5A-Onu" secondAttribute="height" multiplier="267:46" id="KXQ-JA-M5u"/>
                                     <constraint firstAttribute="height" constant="30" id="ZMA-cy-TpA"/>
@@ -205,14 +205,15 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="feU-ML-MSh">
-                                <rect key="frame" x="60" y="148" width="480" height="111"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="feU-ML-MSh">
+                                <rect key="frame" x="60" y="172" width="480" height="111"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="feU-ML-MSh" secondAttribute="height" multiplier="13:3" id="2ub-En-T3h"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hoG-bi-LZ4">
-                                <rect key="frame" x="157" y="64" width="300" height="76"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hoG-bi-LZ4">
+                                <rect key="frame" x="0.0" y="64" width="600" height="108"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
