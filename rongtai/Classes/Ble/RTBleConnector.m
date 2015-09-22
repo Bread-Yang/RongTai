@@ -331,6 +331,12 @@ static Byte const BYTE_ExitCode = 0x82;
 //			
 //			NSLog(@"[rawData subdataWithRange:NSMakeRange(2, 8)] : %@", networkStatusData);
 			
+			Byte *response = (Byte *)[data bytes];
+			
+			if (response[1] == 0xa5) {
+				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+			}
+			
 			NSString *newNetworkStatusString = NSDataToHex(data);
 			
 			if (![newNetworkStatusString isEqualToString:_oldMassageChairNetworkStatusString]) {
@@ -346,8 +352,11 @@ static Byte const BYTE_ExitCode = 0x82;
 					[self.delegate didUpdateNetworkMassageStatus:self.rtNetworkProgramStatus];
 				}
 			}
-		} else {  // 不等于11位或者17位 : 编辑模式
-			
+		}
+//		else {  // 不等于11位或者17位 : 编辑模式
+		
+		else if (data.length == 1) { // 改成一位, 如果有错,讲上面的那一行注释回来
+		
 //			if (data.length == 12) {
 //				
 //				if (![newStatusString isEqualToString:_oldMassageChairNetworkStatusString]) {
@@ -657,7 +666,7 @@ NSString * NSDataToHex(NSData *data) {
 	}
 }
 
-#pragma mark - 开始发送安装程序
+#pragma mark - 开始发送程序
 
 - (void)startInstallMassage {
 	self.installCount = 1;
@@ -730,6 +739,10 @@ NSString * NSDataToHex(NSData *data) {
 		[self sendControlByBytes:[NSData dataWithBytes:byte length:1]];
 		self.isStartInstall = false;
 		[self.installEachDataMutableArray removeAllObjects];
+		
+		if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+			[self.delegate didEndInstallProgramMassage];
+		}
 	}
 }
 
@@ -769,9 +782,6 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			} else {
 				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
 				
-				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
-					[self.delegate didEndInstallProgramMassage];
-				}
 			}
 			break;
 		case 0x15:		// NAK     0X15     数据包接收出错，请求重发当前数据包标志

@@ -310,6 +310,7 @@
 	// 以下是界面跳转
 	
 	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
+		_bleConnector.delegate = nil;
 		[self jumpToScanViewConroller];
 	}
 	

@@ -874,8 +874,8 @@
                                                             </userDefinedRuntimeAttributes>
                                                             <variation key="default">
                                                                 <mask key="constraints">
-                                                                    <exclude reference="CHV-Xr-OSa"/>
                                                                     <exclude reference="4QA-jp-N1A"/>
+                                                                    <exclude reference="CHV-Xr-OSa"/>
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
@@ -943,8 +943,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="wI3-Ej-ZVl" id="ojC-h5-DdV"/>
-                                    <outlet property="delegate" destination="wI3-Ej-ZVl" id="Vu6-9j-myX"/>
+                                    <outlet property="dataSource" destination="wI3-Ej-ZVl" id="NCS-SW-j8l"/>
+                                    <outlet property="delegate" destination="wI3-Ej-ZVl" id="moq-qG-w11"/>
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="igY-4w-6bo">
@@ -1048,8 +1048,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="wI3-Ej-ZVl" id="hlT-d7-M0M"/>
-                                    <outlet property="delegate" destination="wI3-Ej-ZVl" id="JNx-Jl-rBA"/>
+                                    <outlet property="dataSource" destination="wI3-Ej-ZVl" id="kaR-bQ-wy3"/>
+                                    <outlet property="delegate" destination="wI3-Ej-ZVl" id="KKA-UA-KQV"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1072,7 +1072,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="tEC-oR-VIW" id="iFV-ci-KNG"/>
+                        <outlet property="alreadyInstallProgramTableView" destination="igY-4w-6bo" id="dQb-tC-6cV"/>
+                        <outlet property="selectableProgramTableView" destination="tEC-oR-VIW" id="ofg-NF-Sey"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Oj-gr-gKl" userLabel="First Responder" sceneMemberID="firstResponder"/>

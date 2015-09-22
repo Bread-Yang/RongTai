@@ -36,8 +36,6 @@
 
 }
 
-@property(nonatomic, strong) AFHTTPRequestOperationManager *httpRequestManager;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -51,10 +49,8 @@
 	
 	self.isListenBluetoothStatus = YES;
 	
-	self.httpRequestManager = [AFHTTPRequestOperationManager manager];
-	
 	//MBProgressHUD
-    _loadingHUD = [[MBProgressHUD alloc]initWithView:self.view];
+    _loadingHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
     [self.view addSubview:_loadingHUD];
 	
@@ -85,31 +81,23 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-//	AFNetworkReachabilityManager *reachability = [AFNetworkReachabilityManager sharedManager];
-//	if (reachability.reachable) {
-		//网络请求
-		_loadingHUD.labelText = @"读取中...";
-		[_loadingHUD show:YES];
+	//网络请求
+	[_loadingHUD show:YES];
+	
+	MassageProgramRequest *request = [[MassageProgramRequest alloc] init];
+	
+	[request requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
 		
-		MassageProgramRequest *request = [[MassageProgramRequest alloc] init];
+		[self refreshTableViewAfterRequest:networkMassageProgramArray];
 		
-		[request requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
-			
-			[self refreshTableViewAfterRequest:networkMassageProgramArray];
-			
-		} failure:^(NSArray *localMassageProgramArray) {
-            NSLog(@"下载程序：读取本地记录：%@",localMassageProgramArray);
-			[self refreshTableViewAfterRequest:localMassageProgramArray];
-			
-		}];
-//	} else {
-//		NSLog(@"没网，本地记录读取成员");
-//        [self showProgressHUDByString:@"无法访问网络"];
-//	}
+	} failure:^(NSArray *localMassageProgramArray) {
+		NSLog(@"下载程序：读取本地记录：%@",localMassageProgramArray);
+		[self refreshTableViewAfterRequest:localMassageProgramArray];
+		
+	}];
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
         _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;

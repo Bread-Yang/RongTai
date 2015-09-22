@@ -145,11 +145,11 @@ CGFloat buttonSpacerHeight = 0;
 	dialogView.layer.transform = CATransform3DMakeScale(1.3f, 1.3f, 1.0);
     
     //改变只有单独一个按钮样式
-    if (buttonTitles.count == 1) {
-        UIButton* btn = (UIButton*)[dialogView viewWithTag:6701];
-        btn.backgroundColor = [UIColor colorWithRed:3.0 / 255.0 green:150.0 / 255.0 blue:253 / 255.0 alpha:1.0];
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    }
+//    if (buttonTitles.count == 1) {
+//        UIButton* btn = (UIButton*)[dialogView viewWithTag:6701];
+//        btn.backgroundColor = [UIColor colorWithRed:3.0 / 255.0 green:150.0 / 255.0 blue:253 / 255.0 alpha:1.0];
+//        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    }
 	
 	[UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
 					 animations:^{
@@ -282,6 +282,7 @@ CGFloat buttonSpacerHeight = 0;
 			
 			UIButton *closeButton =
 			[UIButton buttonWithType:UIButtonTypeCustom];
+			[closeButton setTag:(i + 6701)];
 			
 			[closeButton
 			 setFrame:CGRectMake(i * buttonWidth,
@@ -293,7 +294,6 @@ CGFloat buttonSpacerHeight = 0;
 			 addTarget:self
 			 action:@selector(customIOS7dialogButtonTouchUpInside:)
 			 forControlEvents:UIControlEventTouchUpInside];
-			[closeButton setTag:i];
 			
 			[closeButton setTitle:[buttonTitles objectAtIndex:i]
 						 forState:UIControlStateNormal];
