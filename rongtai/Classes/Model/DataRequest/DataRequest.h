@@ -14,7 +14,7 @@
 /**
  *  超时设置，若设置时间小于等于0，则不启用超时检测，默认为0
  */
-@property(nonatomic)NSTimeInterval overTime;
+@property(nonatomic) NSTimeInterval overTime;
 
 
 /**

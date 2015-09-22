@@ -17,7 +17,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "UIBarButtonItem+goBack.h"
 #import "SegmentTableViewCell.h"
-#import "ProgramDownloadViewController.h"
+#import "FilteringResultViewController.h"
 
 @interface CustomProcedureViewController ()<UITableViewDataSource,UITableViewDelegate,SegmentTableViewCellDelegate>
 {
@@ -293,8 +293,7 @@
         return;
     }
 	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	ProgramDownloadViewController *pVC = (ProgramDownloadViewController*)[s instantiateViewControllerWithIdentifier:@"ProgramDownloadVC"];
-	pVC.isDownloadCustomProgram = YES;
+	FilteringResultViewController *pVC = (FilteringResultViewController *)[s instantiateViewControllerWithIdentifier:@"FilteringResultVC"];
 	[self.navigationController pushViewController:pVC animated:YES];
 }
 

@@ -11,13 +11,21 @@
 #import "MassageProgramRequest.h"
 #import "CoreData+MagicalRecord.h"
 #import "RongTaiConstant.h"
+#import "MBProgressHUD.h"
+#import "AppDelegate.h"
+#import "AFHTTPRequestOperationManager+timeout.h"
 
 #define REQUESTURL @"http://recipe.xtremeprog.com/RongTaiWeb/"
 
 
 @interface MassageProgramRequest () {
+	
     AFHTTPRequestOperationManager* _manager;
+	
 }
+
+@property(nonatomic) NSTimeInterval overTime;
+
 @end
 
 @implementation MassageProgramRequest
@@ -27,6 +35,8 @@
         _manager = [AFHTTPRequestOperationManager manager];
         //不加这句会导致请求失败
         _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+		
+		_overTime = 30;
     }
     return self;
 }
@@ -43,7 +53,7 @@
 	[parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
-	[_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	[_manager POST:url parameters:parameters timeoutInterval:_overTime success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"获取按摩程序列表成功:%@",responseObject);
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
@@ -81,9 +91,14 @@
 		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		NSLog(@"获取按摩程序列表失败:%@",error);
+		NSLog(@"error._code : %zd", error.code);
 		
 		if (failure) {
 			failure([self getAlreadySaveNetworkMassageProgramList]);
+		}
+		
+		if (error.code == NSURLErrorTimedOut) {  // 超时
+			[self requestTimeOut];
 		}
 		
 	}];
@@ -320,9 +335,21 @@
     }];
 }
 
+#pragma mark - 超时方法
+-(void)requestTimeOut {
+	AppDelegate *app = [UIApplication sharedApplication].delegate;
+	UIWindow *appWindow = app.window;
+	MBProgressHUD *alert = [MBProgressHUD showHUDAddedTo:appWindow animated:YES];
+	alert.mode = MBProgressHUDModeText;
+	alert.labelText = NSLocalizedString(@"请求超时，请检测网络", nil);
+	alert.margin = 10.f;
+	alert.removeFromSuperViewOnHide = YES;
+	[alert hide:YES afterDelay:1.5];
+}
+
 #pragma mark - 取消请求
--(void)cancelRequest
-{
+
+-(void)cancelRequest {
     [_manager.operationQueue cancelAllOperations];
 }
 

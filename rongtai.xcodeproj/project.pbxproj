@@ -142,6 +142,7 @@
 		3DF3043E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF3041E1B38FE2500DD51D3 /* MagicalRecord+ShorthandSupport.m */; };
 		3DF3043F1B38FE2500DD51D3 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF304201B38FE2500DD51D3 /* MagicalRecord.m */; };
 		3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD18FE1B8B033800BED437 /* CustomProgram.m */; };
+		561A55441BB148210072079F /* AFHTTPRequestOperationManager+timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = 561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */; settings = {ASSET_TAGS = (); }; };
 		561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */; };
 		563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */; };
 		565E718A1B5E547200E51C1C /* CopyConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71641B5E547200E51C1C /* CopyConnection.framework */; };
@@ -487,6 +488,8 @@
 		3DF304241B38FE2500DD51D3 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		3DFD18FD1B8B033800BED437 /* CustomProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomProgram.h; path = Model/CustomProgram.h; sourceTree = "<group>"; };
 		3DFD18FE1B8B033800BED437 /* CustomProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomProgram.m; path = Model/CustomProgram.m; sourceTree = "<group>"; };
+		561A55421BB148210072079F /* AFHTTPRequestOperationManager+timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+timeout.h"; sourceTree = "<group>"; };
+		561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFHTTPRequestOperationManager+timeout.m"; path = "../../../../../gitlab/rongtai_ios/rongtai/Classes/Categories/AFHTTPRequestOperationManager+timeout.m"; sourceTree = "<group>"; };
 		561BC3541B5CEEF200F2E63F /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleBaseBusinessViewController.h; sourceTree = "<group>"; };
@@ -963,6 +966,8 @@
 		3D9E89291B39503D002E0962 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				561A55421BB148210072079F /* AFHTTPRequestOperationManager+timeout.h */,
+				561A55431BB148210072079F /* AFHTTPRequestOperationManager+timeout.m */,
 				3D9E892A1B39503D002E0962 /* NSString+RT.h */,
 				3D9E892B1B39503D002E0962 /* NSString+RT.m */,
 				3D9E892C1B39503D002E0962 /* UILabel+WLAttributedString.h */,
@@ -1898,6 +1903,7 @@
 				3DDEE1C21B4A6EAB005F8324 /* WLDoughnutStatsView.m in Sources */,
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,
+				561A55441BB148210072079F /* AFHTTPRequestOperationManager+timeout.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
 				3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */,
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,

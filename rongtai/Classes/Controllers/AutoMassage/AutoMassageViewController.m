@@ -315,7 +315,6 @@
             _isJumpScan = NO;
             [self jumpToScanViewConroller];
         }
-		
 	}
 	
 	// 定时时间
