@@ -483,6 +483,7 @@
 				cell.detailTextLabel.text = networkMassage.mDescription;
 				[UIImageView loadImageByURL:networkMassage.imageUrl imageView:cell.imageView];
 			} else {
+				cell.imageView.image = [UIImage imageNamed:@"mode_10"];
 				switch (indexPath.row - [_localProgramArray count]) {
 					case 0:
 						cell.textLabel.text = NSLocalizedString(@"云养程序一", nil);
