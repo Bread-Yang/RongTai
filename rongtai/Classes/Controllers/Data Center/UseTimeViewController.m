@@ -632,7 +632,7 @@
             [points addObject:[NSValue valueWithCGPoint:CGPointMake(10*i, useTime)]];
             
             //把月份作为x轴数据源
-            [xValue addObject:[NSString stringWithFormat:@"%d",i+1]];
+            [xValue addObject:[NSString stringWithFormat:@"%d月",i+1]];
         }
         NSLog(@"月份xValues:%@",xValue);
         

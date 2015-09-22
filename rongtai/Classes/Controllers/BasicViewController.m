@@ -364,7 +364,7 @@
             //属于网络按摩的统计
             NSLog(@"网络按摩统计");
             MassageProgram* p = [bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
-            programId = [p.massageId integerValue];
+            programId = [p.commandId integerValue];
             _programName = p.name;
             function = p.mDescription;
         }

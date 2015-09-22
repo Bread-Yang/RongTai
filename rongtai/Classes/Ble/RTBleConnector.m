@@ -98,9 +98,16 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (MassageProgram *)getNetworkProgramNameBySlotIndex:(NSInteger)slotIndex {
     NSInteger massageId = [self getMassageIdBySlotIndex:slotIndex];
-    
+    MassageProgram *massageProgram = nil;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"commandId = %@", [NSNumber numberWithInteger:massageId]];
-    MassageProgram *massageProgram = [MassageProgram MR_findAllWithPredicate:predicate][0];
+    NSArray* arr = [MassageProgram MR_findAllWithPredicate:predicate];
+    if (arr.count>0) {
+        massageProgram = arr[0];
+    }
+    else
+    {
+        NSLog(@"找不到云养程序💢 massageId:%ld, slotIndex:%ld",massageId,slotIndex);
+    }
     
     return massageProgram;
 }
@@ -311,8 +318,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-	NSLog(@"data : %@", data);
+//	NSLog(@"data.length : %zd", data.length);
+//	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		

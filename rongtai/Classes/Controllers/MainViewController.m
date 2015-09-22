@@ -462,12 +462,12 @@
 		NSDictionary *programDic = _localProgramArray[indexPath.row];
 		if (programDic) {
 			cell.textLabel.text = programDic[@"programName"];
-			cell.textLabel.textColor = BLACK;
-			cell.textLabel.font = [UIFont systemFontOfSize:18];
+//			cell.textLabel.textColor = BLACK;
+//			cell.textLabel.font = [UIFont systemFontOfSize:18];
 			cell.detailTextLabel.text = programDic[@"programDescription"];
 			cell.detailTextLabel.numberOfLines = 0;
-			cell.detailTextLabel.textColor = BLACK;
-			cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
+//			cell.detailTextLabel.textColor = BLACK;
+//			cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
 			cell.imageView.image = [UIImage imageNamed:programDic[@"programImageUrl"]];
 		}
 		
@@ -504,7 +504,11 @@
 			}
 		}
 	}
-	
+    cell.textLabel.textColor = BLACK;
+    cell.textLabel.font = [UIFont systemFontOfSize:18];
+    cell.detailTextLabel.textColor = BLACK;
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
+	cell.detailTextLabel.numberOfLines = 0;
     return cell;
 }
 
@@ -918,9 +922,9 @@
             else if (_massageFlag<11&&_massageFlag>7)
             {
                 //属于网络按摩的统计
-                NSLog(@"网络按摩统计");
+                 NSLog(@"网络按摩统计:%ld",_massageFlag);
                 MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
-                programId = [p.massageId integerValue];
+                programId = [p.commandId integerValue];
                 _programName = p.name;
             }
             else
