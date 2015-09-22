@@ -67,8 +67,8 @@
                           NSLocalizedString(@"气压", nil):@[NSLocalizedString(@"偏大", nil),NSLocalizedString(@"偏小", nil)]};
     
     //添加导航栏右边按钮
-    UIBarButtonItem* select = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_collect"] style:UIBarButtonItemStylePlain target:self action:@selector(selectEsxistingProcedure)];
-    self.navigationItem.rightBarButtonItem = select;
+//    UIBarButtonItem* select = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_collect"] style:UIBarButtonItemStylePlain target:self action:@selector(selectEsxistingProcedure)];
+//    self.navigationItem.rightBarButtonItem = select;
     
     //返回按钮设置
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];

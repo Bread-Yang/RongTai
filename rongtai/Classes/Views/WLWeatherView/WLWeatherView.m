@@ -125,7 +125,8 @@
     _icon.frame = CGRectMake(w*(1-0.6), 0, w*0.25, h*hscale);
     _temperature.frame = CGRectMake(w*(1-0.35), 0, w*0.25, h*hscale);
     _o.frame = CGRectMake(w*(1-0.13), h*0.14, w*0.1, w*0.1);
-    _aqi.frame = CGRectMake(w*0.2, h*(hscale-0.05), w*0.8, h*(1-hscale-0.1));
+    _aqi.frame = CGRectMake(w*0.2, h*(hscale-0.1), w*0.8, h*(1-hscale));
+//    _aqi.frame = CGRectMake(w*0.2, h*(hscale-0.05), w*0.8, h*(1-hscale-0.1));
 }
 
 #pragma mark - 更新天气

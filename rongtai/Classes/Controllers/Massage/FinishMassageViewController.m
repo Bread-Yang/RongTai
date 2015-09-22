@@ -81,7 +81,7 @@
     
     [_functionTextView scrollRangeToVisible:NSMakeRange(0, 1)];
     
-    _functionTextView.text = @"为您匠心定制，享誉业内的肩颈重点按摩程序，80%时间集中肩部和颈部，缓解用户最为关心的肩颈酸痛症状。椅身靠背的曲线设计使得按摩滚轮完全触及颈部部位，结合荣泰独有的颈部“揉捏和摁压”技法，此程序有效缓解用户该部位的疲劳和僵硬。";
+//    _functionTextView.text = @"为您匠心定制，享誉业内的肩颈重点按摩程序，80%时间集中肩部和颈部，缓解用户最为关心的肩颈酸痛症状。椅身靠背的曲线设计使得按摩滚轮完全触及颈部部位，结合荣泰独有的颈部“揉捏和摁压”技法，此程序有效缓解用户该部位的疲劳和僵硬。";
     // Do any additional setup after loading the view.
 }
 

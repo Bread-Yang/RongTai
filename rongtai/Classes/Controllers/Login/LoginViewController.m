@@ -67,7 +67,7 @@
     silder.enableSwipeGesture = NO;
     silder.enableShadow = NO;
     silder.navigationBar.translucent = NO;
-    silder.portraitSlideOffset = 0.3*[UIScreen mainScreen].bounds.size.width;
+    silder.portraitSlideOffset = 0.29*[UIScreen mainScreen].bounds.size.width;
     [silder.navigationBar setTintColor:[UIColor whiteColor]];
     [silder.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];

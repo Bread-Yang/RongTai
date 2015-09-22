@@ -83,7 +83,7 @@
     slide.leftMenu = menu;
     slide.enableSwipeGesture = YES;
     slide.enableShadow = NO;
-    slide.portraitSlideOffset = 0.3 * SCREENWIDTH;
+    slide.portraitSlideOffset = 0.29 * SCREENWIDTH;
     [slide.navigationBar setTintColor:[UIColor whiteColor]];
 //    [slide.navigationBar setBarTintColor:[UIColor colorWithRed:48/255.0 green:65/255.0 blue:77/255.0 alpha:1.0]];
     slide.navigationBar.translucent = NO;

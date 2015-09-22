@@ -100,7 +100,7 @@
     _menuIcons = @[@"menu_icon_user",@"menu_icon_member",@"menu_icon_data",@"menu_icon_plan",@"menu_icon_weather",@"menu_icon_message",@"menu_icon_help",@"menu_icon_shop"];
     
     //菜单列表
-    _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, 0.71*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
+    _menu = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, 0.73*SCREENWIDTH, _menuName.count*_rowHeight) style:UITableViewStyleGrouped];
     _menu.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _menu.tag = 2002;
     _menu.backgroundColor = [UIColor clearColor];
@@ -116,7 +116,7 @@
         loadWeather = [NSNumber numberWithBool:YES];
         [defaults setValue:loadWeather forKey:@"weather"];
     }
-    _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, -4, 300, 100)];
+    _weatherSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(0, -4, 100, 80)];
     _weatherSwitch.on = [loadWeather boolValue];
     [_weatherSwitch addTarget:self action:@selector(switchChangeValue:) forControlEvents:UIControlEventValueChanged];
 }
@@ -236,7 +236,7 @@
             MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
             mailVC.mailComposeDelegate = self;
             [mailVC setSubject:@"我要反馈"];
-            [mailVC setToRecipients:[NSArray arrayWithObjects:@"2581583292@qq.com",nil]];
+            [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
 //            [mailVC setCcRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
 //            [mailVC setBccRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
             [[SlideNavigationController sharedInstance] toggleLeftMenu];

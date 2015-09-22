@@ -680,7 +680,7 @@
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
 //	NSLog(@"didUpdateMassageChairStatus");
-	
+    
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
         [_anionButtonItem setSelected:NO];
 	} else {
