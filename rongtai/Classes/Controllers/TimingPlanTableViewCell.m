@@ -47,8 +47,8 @@
 	
 	if (![timingPlan.days isEqualToString:@"0"]) {
 		NSArray *splitDayArray = [self.timingPlan.days componentsSeparatedByString:@","];
+//        NSLog(@"定时计划:%@",splitDayArray);
 		if (splitDayArray.count == 7) {
-			
 			_loopDaysLabel.text = NSLocalizedString(@"每天", nil);
 
 		} else {

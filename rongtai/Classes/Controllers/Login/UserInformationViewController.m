@@ -305,7 +305,7 @@
 - (void)onDatePickerValueChanged:(UIDatePicker *)datePicker {
 	NSDate *birthday = datePicker.date;
 	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"yyyy/MM/dd"];
+	[dateFormat setDateFormat:@"yyyy-MM-dd"];
 	NSString *dateString = [dateFormat stringFromDate:birthday];
 	 _birthday.text = [NSString stringWithFormat:@"%@", dateString];
 }
@@ -682,7 +682,7 @@
     _heightUnitSelectedIndex = _heightUnitSegmentView.selectIndex;
     _birthdayDatePicker.date = _user.birthday;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy/MM/dd"];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
     NSString *dateString = [dateFormat stringFromDate:_user.birthday];
     _birthday.text = [NSString stringWithFormat:@"%@", dateString];
 

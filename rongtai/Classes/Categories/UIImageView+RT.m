@@ -39,6 +39,11 @@
 			weakImage.image = image;
 			
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            //网络失败请求本地
+//            UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", imageURL]];
+//            if (img) {
+//                weakImage.image = img;
+//            }
 			NSLog(@"请求图片失败");
 		}];
 	}

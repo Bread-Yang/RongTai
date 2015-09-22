@@ -222,7 +222,7 @@
         NSLog(@"今天没有按摩数据");
         //今天暂时没使用该app进行按摩
         _doughnutView.percents = @[@1];
-        _doughnutView.colors  = @[[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]];
+        _doughnutView.colors  = @[[UIColor colorWithRed:242/255.0 green:116/255.0 blue:93/255.0 alpha:1]];
         _usingTime.text= @"今天未使用该APP";
         _usingTime.textColor = BLUE;
     }

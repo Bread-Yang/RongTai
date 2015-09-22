@@ -120,7 +120,7 @@
 	if (self.timingPlan) {
 		
 		// LineCollectionView的显示
-		NSInteger selectIndex = [self.timingPlan.massageProgamId integerValue];
+		NSInteger selectIndex = [self.timingPlan.massageProgamId integerValue]-1;
 		if (selectIndex < 6) {
 			[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 			self.modeLabel.text = [self.modeNameArray objectAtIndex:selectIndex];

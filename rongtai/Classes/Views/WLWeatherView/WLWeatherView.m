@@ -223,7 +223,7 @@
         }
         else
         {
-            //            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
             NSError* error;
             NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             if (error) {
@@ -242,7 +242,7 @@
                         NSArray* weatherData = [weather objectForKey:@"weather_data"];
                         if (weatherData.count>0) {
                             NSDictionary* today = weatherData[0];
-                            
+                            NSLog(@"今天的天气:%@",today);
                             //更新温度
                             NSString* date = [today objectForKey:@"date"];
                             NSRange r = [date rangeOfString:@"："];
@@ -268,9 +268,9 @@
                             if (self.hidden) {
                                 self.hidden = NO;
                             }
-                            if (!_timer) {
-                                _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
-                            }
+//                            if (!_timer) {
+//                                _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
+//                            }
                         }
                         else
                         {
@@ -310,7 +310,7 @@
     [dic setObject:_temperature.text forKey:TEMPERATURE];
     [dic setObject:_aqi.text forKey:WIND];
     [dic setObject:_imageName forKey:IMAGENAME];
-    [dic setObject:[NSDate distantPast] forKey:UPDATEDATE];
+    [dic setObject:[NSDate date] forKey:UPDATEDATE];
 }
 
 #pragma mark - timer方法

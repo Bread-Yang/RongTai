@@ -133,6 +133,10 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @property (nonatomic, assign) NSInteger updateNetworkStatusCount;
 
+
+//蓝牙断开时是否弹框
+@property (nonatomic, assign) BOOL isSendMessage;
+
 @end
 
 
@@ -168,6 +172,8 @@ static Byte const BYTE_ExitCode = 0x82;
         _characteristicDicionary = [[NSMutableDictionary alloc] init];
 		
 		_reconnectInterval = 10;
+        
+        _isSendMessage = NO;
 
     }
     return self;
@@ -199,11 +205,14 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
 			self.currentConnectedPeripheral = nil;
-//			[self showConnectDialog];
+            if (_isSendMessage) {
+                [self showConnectDialog];
+            }
 			break;
 		case CBCentralManagerStatePoweredOn:
 			message = @"蓝牙已经成功开启，稍后……";
 			isBleTurnOn = YES;
+            _isSendMessage = YES;
 			break;
         case CBCentralManagerStateUnknown:
             message = @"蓝牙发生未知错误，请重新打开……";

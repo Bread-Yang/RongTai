@@ -231,14 +231,14 @@
 //            FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
 //            [sl pushViewController:finishViewController animated:YES];
 
-            //我要反馈页面，调用系统发邮件
+            //我要反馈页面，调用系统发邮件:info@chinarongtai.com
             
             MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
             mailVC.mailComposeDelegate = self;
             [mailVC setSubject:@"我要反馈"];
             [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
-//            [mailVC setCcRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
-//            [mailVC setBccRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
+            [mailVC setCcRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
+            [mailVC setBccRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
             [[SlideNavigationController sharedInstance] toggleLeftMenu];
             [main presentViewController:mailVC animated:YES completion:nil];
         }
@@ -330,10 +330,13 @@
             break;
         case MFMailComposeResultSent:
             message = @"邮件发送成功";
+            break;
         case MFMailComposeResultSaved:
             message = @"邮件保存成功";
+            break;
         case MFMailComposeResultCancelled:
             message = @"取消发送邮件";
+            break;
         default:
             break;
     }
