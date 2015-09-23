@@ -5,7 +5,6 @@
 //  Created by William-zhang on 15/6/15.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
-#import <ShareSDK/ShareSDK.h>
 
 #import "FinishMassageViewController.h"
 #import "RongTaiConstant.h"
