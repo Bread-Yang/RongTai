@@ -94,8 +94,8 @@
 			localNofication.alertBody = message;
 			localNofication.repeatInterval = NSCalendarUnitWeekOfYear;
             localNofication.timeZone = [NSTimeZone defaultTimeZone];
-			localNofication.alertLaunchImage = @"image";
-			localNofication.alertAction = @"action";
+//			localNofication.alertLaunchImage = @"image";
+            localNofication.alertAction = NSLocalizedString(@"打开", nil);
 			localNofication.hasAction = YES;
 			
 //			NSLog(@"localNofication.repeatInterval : %zd", localNofication.repeatInterval);

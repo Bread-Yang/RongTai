@@ -210,7 +210,7 @@
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL* url = [NSURL URLWithString:str];
-    NSURLRequest* request = [[NSURLRequest alloc]initWithURL:url];
+    NSURLRequest* request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:3*60];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError) {
             NSLog(@"请求出错:%@",connectionError);
@@ -223,7 +223,7 @@
         }
         else
         {
-            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+//            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
             NSError* error;
             NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             if (error) {
@@ -242,7 +242,7 @@
                         NSArray* weatherData = [weather objectForKey:@"weather_data"];
                         if (weatherData.count>0) {
                             NSDictionary* today = weatherData[0];
-                            NSLog(@"今天的天气:%@",today);
+//                            NSLog(@"今天的天气:%@",today);
                             //更新温度
                             NSString* date = [today objectForKey:@"date"];
                             NSRange r = [date rangeOfString:@"："];
@@ -268,9 +268,9 @@
                             if (self.hidden) {
                                 self.hidden = NO;
                             }
-//                            if (!_timer) {
-//                                _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
-//                            }
+                            if (!_timer) {
+                                _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
+                            }
                         }
                         else
                         {
@@ -329,8 +329,8 @@
         self.lManager.delegate = self;
         self.lManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.lManager.distanceFilter = kCLDistanceFilterNone;
-        [self.lManager requestAlwaysAuthorization];
-        [self.lManager requestWhenInUseAuthorization];
+//        [self.lManager requestAlwaysAuthorization];
+//        [self.lManager requestWhenInUseAuthorization];
         [self.lManager startUpdatingLocation];
     }
     else

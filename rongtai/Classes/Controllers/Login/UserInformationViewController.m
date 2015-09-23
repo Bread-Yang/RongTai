@@ -57,7 +57,7 @@
     MBProgressHUD* _loadingHUD;
     
     //约束
-    __weak IBOutlet NSLayoutConstraint *_inputViewConstraint;
+//    __weak IBOutlet NSLayoutConstraint *_inputViewConstraint;
     __weak IBOutlet NSLayoutConstraint *_bottomConstraint;
     
     //网络
@@ -173,7 +173,7 @@
     //
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
     //
-    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
+//    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
     
     //
     _tapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
@@ -491,7 +491,7 @@
     //保存按钮
     CGFloat h = MIN(SCREENHEIGHT*0.2*0.45, 44);
     CGFloat w = h*2.8;
-    UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, SCREENHEIGHT - h*1.05-64, w, h*0.8)];
+    UIButton* saveBtn = [[UIButton alloc]initWithFrame:CGRectMake((SCREENWIDTH-w)/2, (SCREENHEIGHT-64)*0.85+ ((SCREENHEIGHT-64)*0.15-h*0.8)/2, w, h*0.8)];
     [saveBtn setBackgroundImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
     [saveBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonClicked) forControlEvents:UIControlEventTouchUpInside];

@@ -64,7 +64,7 @@
 			
 			NSArray *arr = [responseObject objectForKey:@"result"];
 			
-//			NSLog(@"用户下载列表:%@",arr);
+			NSLog(@"用户下载列表:%@",arr);
 			
 			NSMutableArray *networkMassageProgramArray = [[NSMutableArray alloc] init];
 			
