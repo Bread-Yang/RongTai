@@ -146,6 +146,8 @@
     if (indexPath.row < _progarmCounts.count) {
         ProgramCount* program = _progarmCounts[indexPath.row];
         cell.nameLabel.text = program.name;
+        cell.nameLabel.adjustsFontSizeToFitWidth = NO;
+        cell.nameLabel.font = [UIFont systemFontOfSize:12*WSCALE];
         NSNumber* c = program.useCount;
         NSNumber* unC = program.unUpdateCount;
         NSUInteger count = [c integerValue]+[unC integerValue];

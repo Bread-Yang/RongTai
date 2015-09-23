@@ -94,7 +94,7 @@
         NSInteger useTime = [useTimeStr integerValue];
         if (useTime>=60) {
 //            if (useTime>=3600) {
-                _usingTime.text = [NSString stringWithFormat:@"共%d分钟",(int)round(useTime/60.0)];
+                _usingTime.text = [NSString stringWithFormat:@"共%d分",(int)round(useTime/60.0)];
 //            }
 //            else
 //            {

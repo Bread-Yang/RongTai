@@ -29,6 +29,7 @@
 	
 	__weak IBOutlet UITextField *_password;  //密码TextField
 	
+    __weak IBOutlet UIImageView *_RTIcon;
 	LoginRequest* _loginRequest;
     
     MBProgressHUD* _loading;
@@ -93,7 +94,9 @@
         _phoneNum.text = phone;
     }
     _password.text = nil;
+//    NSLog(@"Icon Frame:%@",NSStringFromCGRect(_RTIcon.frame));
 }
+
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
