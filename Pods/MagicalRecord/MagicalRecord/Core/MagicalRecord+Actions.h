@@ -6,9 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MagicalRecord/MagicalRecordInternal.h>
-#import <MagicalRecord/MagicalRecordDeprecationMacros.h>
-#import <MagicalRecord/NSManagedObjectContext+MagicalSaves.h>
+#import <MagicalRecordInternal.h>
+#import <MagicalRecordDeprecationMacros.h>
+#import <NSManagedObjectContext+MagicalSaves.h>
 
 @interface MagicalRecord (Actions)
 
