@@ -58,7 +58,7 @@
 -(void)setUp
 {
     self.backgroundColor = [UIColor clearColor];
-    _colors = @[[UIColor colorWithRed:143/255.0 green:82/255.0 blue:235/255.0 alpha:1],[UIColor colorWithRed:51/255.0 green:148/255.0 blue:215/255.0 alpha:1],[UIColor colorWithRed:233/255.0 green:152/255.0 blue:38/255.0 alpha:1],[UIColor colorWithRed:75/255.0 green:204/255.0 blue:73/255.0 alpha:1],[UIColor colorWithRed:235/255.0 green:112/255.0 blue:86/255.0 alpha:1],[UIColor colorWithRed:242/255.0 green:113/255.0 blue:111/255.0 alpha:1],[UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1]];
+    _colors = @[[UIColor colorWithRed:143/255.0 green:82/255.0 blue:235/255.0 alpha:1],[UIColor colorWithRed:51/255.0 green:148/255.0 blue:215/255.0 alpha:1],[UIColor colorWithRed:233/255.0 green:152/255.0 blue:38/255.0 alpha:1],[UIColor colorWithRed:75/255.0 green:204/255.0 blue:73/255.0 alpha:1],[UIColor colorWithRed:235/255.0 green:112/255.0 blue:86/255.0 alpha:1],[UIColor colorWithRed:242/255.0 green:113/255.0 blue:111/255.0 alpha:1],[UIColor colorWithRed:178/255.0 green:151/255.0 blue:134/255.0 alpha:1]];
     _percents = @[@0.1,@0.2,@0.3,@0.4];
     _doughnutDistance = 20;
     _doughnutWidth = 20;

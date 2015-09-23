@@ -212,7 +212,7 @@
             }
             else
             {
-                [self showProgressHUDByString:@"网络请求出错，请检测网络"];
+                [self showProgressHUDByString:@"登录失败，请检查账号密码"];
             }
         }
         else

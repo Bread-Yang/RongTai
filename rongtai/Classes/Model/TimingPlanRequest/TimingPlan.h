@@ -72,7 +72,7 @@
 /**
  *  根据TimingPlan来更新本地通知
  */
-+(void)updateLocalNotificationByNetworkData:(NSArray*)arr;
+//+(void)updateLocalNotificationByNetworkData:(NSArray*)arr;
 
 /**
  * 同步定时计划

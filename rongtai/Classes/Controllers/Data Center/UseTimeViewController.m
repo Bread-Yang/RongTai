@@ -103,6 +103,15 @@
     [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
     _dataRequest = [DataRequest new];
     
+    //
+    [_dayBtn setTitleColor:BLUE forState:UIControlStateNormal];
+    [_dayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [_monthBtn setTitleColor:BLUE forState:UIControlStateNormal];
+    [_monthBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [_yeayBtn setTitleColor:BLUE forState:UIControlStateNormal];
+    [_yeayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+
+    [_dayBtn setSelected:YES];
 //    [self weekData:[NSDate date] From:[NSDate dateWithTimeIntervalSinceNow:0]];
 //    [self monthDataByYear:2015 AndMonth:9];
 //    [self yearData:2015];
@@ -200,20 +209,14 @@
         
         //设置文字
         _usingTime.textColor = [UIColor lightGrayColor];
-        if (useTime>60) {
+        if (useTime>=60) {
             NSUInteger h = useTime/60;
             NSUInteger m = useTime%60;
-            _usingTime.text = [NSString stringWithFormat:@"%ldh%ldm",(unsigned long)h,(unsigned long)m];
+            _usingTime.text = [NSString stringWithFormat:@"%ldh%02zdm",(unsigned long)h,(unsigned long)m];
         }
-        else if(useTime<=60 && useTime>=0)
+        else if(useTime<60 && useTime>=0)
         {
-            if (useTime == 60) {
-                _usingTime.text = @"1h00m";
-            }
-            else
-            {
-                _usingTime.text = [NSString stringWithFormat:@"00h%ldm",(unsigned long)useTime];
-            }
+            _usingTime.text = [NSString stringWithFormat:@"00h%02zdm",(unsigned long)useTime];
         }
         [_usingTime setNumebrByFont:[UIFont fontWithName:@"Helvetica" size:20*HSCALE] Color:BLUE];
     }
@@ -222,7 +225,7 @@
         NSLog(@"今天没有按摩数据");
         //今天暂时没使用该app进行按摩
         _doughnutView.percents = @[@1];
-        _doughnutView.colors  = @[[UIColor colorWithRed:242/255.0 green:116/255.0 blue:93/255.0 alpha:1]];
+        _doughnutView.colors  = @[[UIColor colorWithRed:138/255.0 green:154/255.0 blue:167/255.0 alpha:1]];
         _usingTime.text= @"今天未使用该APP";
         _usingTime.textColor = BLUE;
     }
@@ -381,15 +384,6 @@
     }
 }
 
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    NSLog(@"WillBeginDragging");
-}
-
--(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
-    NSLog(@"WillBeginDragging");
-}
 
 #pragma mark - 底部年月日按钮
 - (IBAction)dateSelected:(UIButton*)sender {
@@ -403,8 +397,11 @@
     {
         //日
         _dayBtn.backgroundColor = BLUE;
+        [_dayBtn setSelected:YES];
         _monthBtn.backgroundColor = [UIColor clearColor];
+        [_monthBtn setSelected:NO];
         _yeayBtn.backgroundColor = [UIColor clearColor];
+        [_monthBtn setSelected:NO];
         NSDate* weekAgo = [NSDate dateWithTimeIntervalSinceNow:-24*2600*6];
         [self weekData:weekAgo From:now];
         _day = now;
@@ -415,8 +412,11 @@
     {
         //月
         _monthBtn.backgroundColor = BLUE;
+        [_monthBtn setSelected:YES];
         _dayBtn.backgroundColor = [UIColor clearColor];
+        [_dayBtn setSelected:NO];
         _yeayBtn.backgroundColor = [UIColor clearColor];
+        [_yeayBtn setSelected:NO];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *dateComponent = [calendar components:NSCalendarUnitMonth|NSCalendarUnitYear fromDate:now];
         _month = [dateComponent month];
@@ -429,8 +429,11 @@
     {
         //年
         _yeayBtn.backgroundColor = BLUE;
+        [_yeayBtn setSelected:YES];
         _dayBtn.backgroundColor = [UIColor clearColor];
+        [_dayBtn setSelected:NO];
         _monthBtn.backgroundColor = [UIColor clearColor];
+        [_monthBtn setSelected:NO];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *dateComponent = [calendar components:NSCalendarUnitYear fromDate:now];
         _year = [dateComponent year];
