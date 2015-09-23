@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 
 //以下是腾讯QQ和QQ空间
-#import <TencentOpenAPI/QQApi.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 

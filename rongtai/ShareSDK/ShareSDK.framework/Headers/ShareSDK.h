@@ -39,7 +39,7 @@
 
 ///#begin zh-cn
 /**
- *	@brief	ShareSDK类，为整个SDK的顶层接口类，所有功能都由此类进行提供（包括分享、授权等等）v2.11.0
+ *	@brief	ShareSDK类，为整个SDK的顶层接口类，所有功能都由此类进行提供（包括分享、授权等等）v2.11.2
  */
 ///#end
 ///#begin en
@@ -148,7 +148,7 @@
  *	@param 	statEnabled 	YES indicates the use of statistical functions, NO indicates they did not use statistical functions
  */
 ///#end
-+ (void)statEnabled:(BOOL)statEnabled;
++ (void)statEnabled:(BOOL)statEnabled __deprecated;
 
 ///#begin zh-cn
 /**
@@ -647,34 +647,6 @@
 + (void)connectWeChatWithAppId:(NSString *)appId
                      appSecret:(NSString *)appSecret
                      wechatCls:(Class)wechatCls;
-
-///#begin zh-cn
-/**
- *	@brief	链接搜狐随身看应用以使用相关功能，此应用需要引用SohuConnection.framework
- *          http://open.sohu.com/上注册应用，并将相关信息填写以下字段
- *
- *  @since  ver2.1.0
- *
- *	@param 	appKey 	应用Key
- *	@param 	appSecret 	应用密钥
- *	@param 	redirectUri 	回调地址
- */
-///#end
-///#begin en
-/**
- *	@brief	Initialize Sohu SuiShenKan platform，This platform need import SohuConnection.framework
- *          Go to http://open.sohu.com/ register app，Then fill in the relevant information into the field below
- *
- *  @since  ver2.1.0
- *
- *	@param 	appKey 	App key.
- *	@param 	appSecret 	App secret.
- *	@param 	redirectUri 	Redirect url.
- */
-///#end
-+ (void)connectSohuKanWithAppKey:(NSString *)appKey
-                       appSecret:(NSString *)appSecret
-                     redirectUri:(NSString *)redirectUri;
 
 ///#begin zh-cn
 /**
@@ -1232,6 +1204,44 @@
 
 ///#begin zh-cn
 /**
+ *	@brief	链接支付宝朋友以使用相关功能
+ *
+ *  @since  ver2.11.2
+ *
+ *	@param 	appId               应用ID
+ *  @param 	openApiCls          头文件导入文件"APOpenAPI.h",将[APOpenAPI class]传入此参数
+ *  @param 	mediaMessageCls     将[APMediaMessage class]传入此参数
+ *  @param 	shareTextObjectCls  将[APShareTextObject class]传入此参数
+ *  @param 	shareImgObjectCls   将[APShareImageObject class]传入此参数
+ *  @param 	webObjectCls        将[APShareWebObject class]传入此参数
+ *  @param 	sendMsgToAPReqCls   将[APSendMessageToAPReq class]传入此参数
+ */
+///#end
+///#begin en
+/**
+ *	@brief	Initialize YiXin Session platform.
+ *
+ *  @since  ver2.11.2
+ *
+ *	@param 	appId 	App id
+ *  @param 	openApiCls          import "APOpenAPI.h",then passed [APOpenAPI class] this parameter.
+ *  @param 	mediaMessageCls     passed [APMediaMessage class] this parameter
+ *  @param 	shareTextObjectCls  passed [APShareTextObject class] this parameter
+ *  @param 	shareImgObjectCls   passed [APShareImageObject class] this parameter
+ *  @param 	webObjectCls        passed [APShareWebObject class] this parameter
+ *  @param 	sendMsgToAPReqCls   passed [APSendMessageToAPReq class] this parameter
+ */
+///#end
++ (void)connectAliPaySocialWithAppID:(NSString*)appId
+                          openApiCls:(Class)openApiCls
+                     mediaMessageCls:(Class)mediaMessageCls
+                  shareTextObjectCls:(Class)shareTextObjectCls
+                   shareImgObjectCls:(Class)shareImgObjectCls
+                   shareWebObjectCls:(Class)webObjectCls
+               sendMessageToAPReqCls:(Class)sendMsgToAPReqCls;
+
+///#begin zh-cn
+/**
  *	@brief	处理请求打开链接,如果集成新浪微博(SSO)、Facebook(SSO)、微信、QQ分享功能需要加入此方法
  *
  *	@param 	url 	链接
@@ -1407,6 +1417,68 @@
 ///#end
 + (void)importYiXinClass:(Class)yixinClass;
 
+
+///#begin zh-cn
+/**
+ *	@brief	导入支付宝朋友所需要的类型，如果不使用支付宝朋友可以不调用
+ *
+ *  @since  ver2.11.2
+ *
+ *  @param 	openApiCls          头文件导入文件"APOpenAPI.h",将[APOpenAPI class]传入此参数
+ *  @param 	mediaMessageCls     将[APMediaMessage class]传入此参数
+ *  @param 	shareTextObjectCls  将[APShareTextObject class]传入此参数
+ *  @param 	shareImgObjectCls   将[APShareImageObject class]传入此参数
+ *  @param 	webObjectCls        将[APShareWebObject class]传入此参数
+ *  @param 	sendMsgToAPReqCls   将[APSendMessageToAPReq class]传入此参数
+ */
+///#end
+///#begin en
+/**
+ *	@brief	Import Alipay classes，If you not use the Alipay platform when not in call
+ *
+ *  @since  ver2.11.2
+ *
+ *  @param 	openApiCls          import "APOpenAPI.h",then passed [APOpenAPI class] this parameter.
+ *  @param 	mediaMessageCls     passed [APMediaMessage class] this parameter
+ *  @param 	shareTextObjectCls  passed [APShareTextObject class] this parameter
+ *  @param 	shareImgObjectCls   passed [APShareImageObject class] this parameter
+ *  @param 	webObjectCls        passed [APShareWebObject class] this parameter
+ *  @param 	sendMsgToAPReqCls   passed [APSendMessageToAPReq class] this parameter
+ */
+///#end
+
++ (void)importAlipayOpenApiCls:(Class)openApiCls
+               mediaMessageCls:(Class)mediaMessageCls
+            shareTextObjectCls:(Class)shareTextObjectCls
+             shareImgObjectCls:(Class)shareImgObjectCls
+             shareWebObjectCls:(Class)webObjectCls
+         sendMessageToAPReqCls:(Class)sendMsgToAPReqCls;
+
+///#begin zh-cn
+/**
+ *	@brief	如果你需要使用Facebook App（AppInvite）分享的功能,请导入Facebook SDK所需要的类型，
+ *  @brief  头文件处请 import <FBSDKCoreKit/FBSDKCoreKit.h> 和 <FBSDKShareKit/FBSDKShareKit.h>
+ *  @since  ver2.11.2
+ 
+ *  @param 	applicationDelegateCls  将[FBSDKApplicationDelegate class]传入此参数
+ *  @param 	appInviteDialogCls      将[FBSDKAppInviteDialog class]传入此参数
+ *  @param 	appInviteContentCls     将[FBSDKAppInviteContent class]传入此参数
+ */
+///#end
+///#begin en
+/**
+ *	@brief	Import Facebook classes，If you need Share App(AppInvite) to Facebook.
+ *  @brief 	You need to import <FBSDKCoreKit/FBSDKCoreKit.h> and <FBSDKShareKit/FBSDKShareKit.h>.
+ *  @since  ver2.11.2
+ 
+ *  @param 	applicationDelegateCls  passed [FBSDKApplicationDelegate class] this parameter
+ *  @param 	appInviteDialogCls      passed [FBSDKAppInviteDialog class] this parameter
+ *  @param 	appInviteContentCls     passed [APShareImageObject class] this parameter
+ */
+///#end
++ (void)importFacebookShareAppWithApplicationDelegateCls:(Class)applicationDelegateCls
+                                      appInviteDialogCls:(Class)appInviteDialogCls
+                                     appInviteContentCls:(Class)appInviteContentCls;
 
 #pragma mark 辅助
 
@@ -2165,6 +2237,13 @@
  */
 ///#end
 + (NSString *)version;
+
+/**
+ *  获取SDK版本，等同于+ (NSString *)version，接口兼容需要。
+ *
+ *  @return 版本号
+ */
++ (NSString *)sdkVer;
 
 ///#begin zh-cn
 /**
@@ -3240,6 +3319,19 @@
              statusBarTips:(BOOL)statusBarTips
                    targets:(NSArray *)targets
                     result:(SSPublishContentEventHandler)result;
+
+#pragma mark - 分享推荐页面
+
+/**
+ *  显示自定义cell模块，用法类似如下
+ *  
+    [ShareSDK onShowWidgets:^NSArray *{
+        UIView *view1 = [[UIView alloc] initWithFrame:CGRectZero];
+        UIView *view2 = [[UIView alloc] initWithFrame:CGRectZero];
+        return @[view1, view2];
+    }];
+ */
++ (void)onShowWidgets:(NSArray *(^)())block;
 
 
 @end
