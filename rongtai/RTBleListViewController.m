@@ -118,7 +118,7 @@
 	cell.backgroundColor = [UIColor clearColor];
 	cell.contentView.backgroundColor = [UIColor clearColor];
 
-    
+		
     NSDictionary *peripheralInfo = blePeriphrals[indexPath.row];
     CBPeripheral *peripheral = peripheralInfo[RTBle_Periperal];
 	
