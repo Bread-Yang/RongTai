@@ -82,16 +82,11 @@
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"登录中...", nil);
     [self.view addSubview:_loading];
-    
-//    [_placeholderView setTranslatesAutoresizingMaskIntoConstraints:NO];
-//    [_RTIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
-
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     NSString* phone = [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
@@ -99,43 +94,14 @@
         _phoneNum.text = phone;
     }
     _password.text = nil;
-    NSLog(@"Will Appear Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
-    
-//    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-//    NSLog(@"Icon Frame:%@",NSStringFromCGRect(_RTIcon.frame));
 }
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-     NSLog(@"Did Appear Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
-}
-
--(void)viewWillLayoutSubviews
-{
-    NSLog(@"WillLayoutSubviews Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
-    
-    [super viewWillLayoutSubviews];
-    
-}
-
--(void)viewDidLayoutSubviews
-{
-    
-    NSLog(@"DidLayoutSubviews Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
-//    [_logo setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [super viewDidLayoutSubviews];
-    
-//    [_phoneNum setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
 
 #pragma mark - 登陆按钮方法
 - (IBAction)login:(id)sender {
-    /*
-     在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
-    */
-    [[IQKeyboardManager sharedManager] resignFirstResponder];
+//    /*
+//     在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
+//    */
+//    [[IQKeyboardManager sharedManager] resignFirstResponder];
     
     NSString* phone = _phoneNum.text;
     //去掉首尾空格

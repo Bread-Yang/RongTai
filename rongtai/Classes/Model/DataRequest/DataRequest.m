@@ -126,7 +126,7 @@
     }
     [_manager POST:url parameters:parmeters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _isTimeOut = NO;
-//        NSLog(@"获取按摩记录:%@",responseObject);
+        NSLog(@"获取按摩记录:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         //        NSString* message = [responseObject objectForKey:@"responseMessage"];
         //        NSLog(@"请求结果:%@",message);

@@ -72,6 +72,19 @@
     UIView* _tapView;
     __weak IBOutlet NSLayoutConstraint *_topConstraint;
     CGFloat _y;
+    
+    //调试使用
+    
+    __weak IBOutlet UITextField *_nameView;
+    
+    __weak IBOutlet UIView *_sexSuperView;
+    
+    __weak IBOutlet UIView *_heightSuperView;
+    
+    __weak IBOutlet UIView *_unitSuperView;
+    
+    __weak IBOutlet UIView *_birthdaySuperView;
+    
 }
 @end
 
