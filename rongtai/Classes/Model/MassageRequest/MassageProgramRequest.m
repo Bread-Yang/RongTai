@@ -15,7 +15,7 @@
 #import "AppDelegate.h"
 #import "AFHTTPRequestOperationManager+timeout.h"
 
-#define REQUESTURL @"http://recipe.xtremeprog.com/RongTaiWeb/"
+#define REQUESTURL @"http://rongtai.xtremeprog.com/RongTaiWeb/"
 
 
 @interface MassageProgramRequest () {

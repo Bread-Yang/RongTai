@@ -21,6 +21,7 @@
 #import "MemberRequest.h"
 #import "RegisterViewController.h"
 #import "UserInformationViewController.h"
+#import "IQKeyboardManager.h"
 
 @interface LoginViewController ()<AppIntroduceViewDelegate, LoginRequestDelegate> {
 	__weak IBOutlet UIButton *_registerBtn;  //注册按钮
@@ -103,7 +104,7 @@
     /*
      在4s使用时，如果不加这句，推到主界面后会出现整个view上移，而导致下边出现黑边
     */
-//    [[IQKeyboardManager sharedManager] resignFirstResponder];
+    [[IQKeyboardManager sharedManager] resignFirstResponder];
     
     NSString* phone = _phoneNum.text;
     //去掉首尾空格
