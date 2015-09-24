@@ -27,9 +27,9 @@
 #define HSCALE [UIScreen mainScreen].bounds.size.height/480
 
 // 荣泰服务器域名
-#define RongTaiDefaultDomain	@"http://recipe.xtremeprog.com/RongTaiWeb/"
+#define RongTaiDefaultDomain	@"http://rongtai.xtremeprog.com/RongTaiWeb/"
 
 // 荣泰服务器文件路径
-#define RongTaiFileDomain		@"http://recipe.xtremeprog.com/file/g/"
+#define RongTaiFileDomain		@"http://rongtai.xtremeprog.com/file/g/"
 
 #endif

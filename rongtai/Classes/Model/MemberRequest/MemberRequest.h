@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking.h>
 #import "Member.h"
+#import <UIKit/UIKit.h>
 
 @class MemberRequest;
 

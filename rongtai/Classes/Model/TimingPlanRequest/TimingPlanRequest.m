@@ -29,7 +29,7 @@
         _uid = [defaults objectForKey:@"uid"];
         _overTime = 0;
         _isTimeOut = NO;
-        _requestURL = @"http://recipe.xtremeprog.com/RongTaiWeb/";
+        _requestURL = @"http://rongtai.xtremeprog.com/RongTaiWeb/";
     }
     return self;
 }

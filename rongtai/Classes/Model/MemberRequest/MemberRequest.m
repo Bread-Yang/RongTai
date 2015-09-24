@@ -8,7 +8,8 @@
 
 #import "MemberRequest.h"
 
-#define REQUESTURL @"http://recipe.xtremeprog.com/RongTaiWeb/"
+#define REQUESTURL @"http://rongtai.xtremeprog.com/RongTaiWeb/"
+//  rongtai.xtremeprog.com/RongTaiWeb
 
 @interface MemberRequest ()
 {

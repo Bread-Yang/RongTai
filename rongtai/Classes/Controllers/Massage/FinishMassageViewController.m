@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
+#import <ShareSDK/ShareSDK.h>
+
 #import "FinishMassageViewController.h"
 #import "RongTaiConstant.h"
 #import "CWStarRateView.h"
