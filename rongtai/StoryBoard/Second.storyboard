@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gXq-IF-yGb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gXq-IF-yGb">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +20,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bRh-0u-lZ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1231.5" y="436.99999999999994"/>
+            <point key="canvasLocation" x="-656.79999999999995" y="413.69333333333327"/>
         </scene>
         <!--Scale View Controller-->
         <scene sceneID="ScU-9d-nAN">
@@ -31,7 +31,7 @@
                         <viewControllerLayoutGuide type="bottom" id="eap-9U-eVq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Sd8-lT-4Pc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ex-Lt-2IU">
@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rrq-FO-1Sf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1231.875" y="1335.2112676056338"/>
+            <point key="canvasLocation" x="-657" y="1264"/>
         </scene>
         <!--Thermometer View Controller-->
         <scene sceneID="cRZ-D8-B9P">
@@ -195,7 +195,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6gh-5a-CVI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ufX-pC-WMm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="电量" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVO-iq-ARQ">
@@ -369,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ew0-EK-KgF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="354.375" y="1335.2112676056338"/>
+            <point key="canvasLocation" x="189" y="1264"/>
         </scene>
         <!--Controller-->
         <scene sceneID="5Nc-BQ-4jz">
@@ -380,7 +380,7 @@
                         <viewControllerLayoutGuide type="bottom" id="4E8-xc-l2Y"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Xbc-Dx-Gfh">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cya-6j-Hqo">
@@ -417,7 +417,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tgq-8L-Yf9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1228.125" y="1335.2112676056338"/>
+            <point key="canvasLocation" x="655" y="1264"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2ec-CY-Ohh">
@@ -428,7 +428,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DSs-GC-q2t"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kyj-3q-3p7">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yM5-cr-wR3">
@@ -628,7 +628,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tu7-QY-cVY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1966.875" y="1335.2112676056338"/>
+            <point key="canvasLocation" x="1049" y="1264"/>
         </scene>
         <!--Ble List View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -639,31 +639,23 @@
                         <viewControllerLayoutGuide type="bottom" id="nge-9c-NLx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请打开蓝牙开关" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwZ-Xe-Lvh">
-                                <rect key="frame" x="240" y="202.5" width="119" height="20.5"/>
+                                <rect key="frame" x="100" y="186" width="119" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_bluetooth" translatesAutoresizingMaskIntoConstraints="NO" id="uYB-CJ-6Ls">
-                                <rect key="frame" x="230" y="242.5" width="139" height="175"/>
+                                <rect key="frame" x="90" y="226" width="139" height="175"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="139" id="K6m-pp-wOV"/>
-                                    <constraint firstAttribute="width" constant="150" id="LPJ-Mv-JXO"/>
-                                    <constraint firstAttribute="height" constant="150" id="f5F-rb-3E6"/>
                                     <constraint firstAttribute="height" constant="175" id="oNx-9g-8Yg"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="LPJ-Mv-JXO"/>
-                                        <exclude reference="f5F-rb-3E6"/>
-                                    </mask>
-                                </variation>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eYb-zC-nzK">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eYb-zC-nzK">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -676,7 +668,6 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="qwZ-Xe-Lvh" secondAttribute="centerX" id="5LS-Hc-0Mp"/>
                             <constraint firstItem="eYb-zC-nzK" firstAttribute="top" secondItem="tR0-w0-hhR" secondAttribute="bottom" id="C6s-ga-YA2"/>
-                            <constraint firstItem="uYB-CJ-6Ls" firstAttribute="top" secondItem="qwZ-Xe-Lvh" secondAttribute="bottom" constant="75" id="Df8-js-vfn"/>
                             <constraint firstAttribute="centerX" secondItem="uYB-CJ-6Ls" secondAttribute="centerX" id="LTa-N1-zpA"/>
                             <constraint firstItem="uYB-CJ-6Ls" firstAttribute="top" secondItem="qwZ-Xe-Lvh" secondAttribute="bottom" constant="20" id="LkO-ET-AVM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eYb-zC-nzK" secondAttribute="trailing" constant="-16" id="SJ2-JP-MBC"/>
@@ -684,27 +675,22 @@
                             <constraint firstItem="nge-9c-NLx" firstAttribute="top" secondItem="eYb-zC-nzK" secondAttribute="bottom" id="nCm-K9-MAW"/>
                             <constraint firstAttribute="centerY" secondItem="uYB-CJ-6Ls" secondAttribute="centerY" constant="-30" id="u7Z-aI-uLl"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Df8-js-vfn"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="avD-wc-afb"/>
                     <connections>
                         <outlet property="bleImageView" destination="uYB-CJ-6Ls" id="Xy5-Vy-1ru"/>
                         <outlet property="bleTurnOnTipsLabel" destination="qwZ-Xe-Lvh" id="QFS-xq-95D"/>
                         <outlet property="periphralTableView" destination="eYb-zC-nzK" id="wLF-nw-P4f"/>
-                        <segue destination="0Xh-i8-gxI" kind="show" identifier="timerViewController" id="ed5-Dp-No0"/>
-                        <segue destination="MF0-ci-nqD" kind="show" identifier="scaleViewController" id="u3d-OP-zbE"/>
-                        <segue destination="b9p-Kd-DsG" kind="show" identifier="thermometerViewController" id="O6s-tj-bkh"/>
-                        <segue destination="mwd-AX-x19" kind="show" identifier="mpSegue" id="9CA-9Y-7Au"/>
-                        <segue destination="lNz-CJ-1re" kind="show" identifier="rtSegue" id="UG7-Bf-zyO"/>
+                        <segue destination="0Xh-i8-gxI" kind="push" identifier="timerViewController" id="ed5-Dp-No0"/>
+                        <segue destination="MF0-ci-nqD" kind="push" identifier="scaleViewController" id="u3d-OP-zbE"/>
+                        <segue destination="b9p-Kd-DsG" kind="push" identifier="thermometerViewController" id="O6s-tj-bkh"/>
+                        <segue destination="mwd-AX-x19" kind="push" identifier="mpSegue" id="9CA-9Y-7Au"/>
+                        <segue destination="lNz-CJ-1re" kind="push" identifier="rtSegue" id="UG7-Bf-zyO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-441" y="437"/>
+            <point key="canvasLocation" x="-235.19999999999999" y="413.69333333333333"/>
         </scene>
         <!--Timer View Controller-->
         <scene sceneID="fgY-Vc-CuQ">
@@ -715,7 +701,7 @@
                         <viewControllerLayoutGuide type="bottom" id="loH-d0-q6k"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="B8D-p6-Gtg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="电量" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVT-oZ-gnY">
@@ -1052,10 +1038,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afm-dq-kqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-440.625" y="1335.2112676056338"/>
+            <point key="canvasLocation" x="-235" y="1264"/>
         </scene>
     </scenes>
     <resources>
         <image name="icon_bluetooth" width="139" height="175"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

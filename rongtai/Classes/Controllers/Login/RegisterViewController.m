@@ -47,12 +47,13 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [_phoneNum becomeFirstResponder];
+//    [_phoneNum becomeFirstResponder];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //返回按钮设置
+    self.isListenBluetoothStatus = NO;
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(goBack)];
     
     _loginRequest = [LoginRequest new];
@@ -297,7 +298,6 @@
         [self showProgressHUDByString:@"请输入手机号码"];
     }
 }
-
 
 
 - (void)didReceiveMemoryWarning {

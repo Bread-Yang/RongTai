@@ -30,10 +30,12 @@
 	
 	__weak IBOutlet UITextField *_password;  //密码TextField
 	
+    __weak IBOutlet UIView *_placeholderView;
     __weak IBOutlet UIImageView *_RTIcon;
 	LoginRequest* _loginRequest;
     
     MBProgressHUD* _loading;
+    
 }
 
 @property AppIntrouceView *introduceView;
@@ -44,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    self.isListenBluetoothStatus = NO;
 	// 品牌及产品特色界面
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (![defaults objectForKey:@"intro_screen_viewed"]) {
@@ -74,28 +76,57 @@
     [silder.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     //MBProgressHUD
     _loading = [[MBProgressHUD alloc]initWithView:self.view];
     _loading.labelText = NSLocalizedString(@"登录中...", nil);
     [self.view addSubview:_loading];
+    
+//    [_placeholderView setTranslatesAutoresizingMaskIntoConstraints:NO];
+//    [_RTIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
     NSString* phone = [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
     if (phone) {
         _phoneNum.text = phone;
     }
     _password.text = nil;
+    NSLog(@"Will Appear Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
+    
+//    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
 //    NSLog(@"Icon Frame:%@",NSStringFromCGRect(_RTIcon.frame));
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+     NSLog(@"Did Appear Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
+}
+
+-(void)viewWillLayoutSubviews
+{
+    NSLog(@"WillLayoutSubviews Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
+    
+    [super viewWillLayoutSubviews];
+    
+}
+
+-(void)viewDidLayoutSubviews
+{
+    
+    NSLog(@"DidLayoutSubviews Logo:%d",[_RTIcon translatesAutoresizingMaskIntoConstraints]);
+//    [_logo setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [super viewDidLayoutSubviews];
+    
+//    [_phoneNum setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 
@@ -149,7 +180,7 @@
 }
 
 #pragma mark - 忘记密码方法
-- (IBAction)forgetPassword:(id)sender {
+- (IBAction)forgetPassword:(id)sender {    
     UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     RegisterViewController* rVC = [s instantiateViewControllerWithIdentifier:@"RegisterVC"];
     [rVC forgetPasswordMode];
@@ -263,10 +294,6 @@
             [self showProgressHUDByString:@"用户数据加载失败，请重新登录"];
             NSLog(@"有网，本地记录读取成员");
         }];
-
-//		MainViewController *vc = [MainViewController new];
-//		vc.isFromLoginViewController = true;
-//		[self.navigationController pushViewController:vc animated:YES];
 	}
     else
     {
