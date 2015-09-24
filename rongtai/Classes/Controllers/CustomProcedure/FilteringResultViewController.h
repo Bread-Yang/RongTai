@@ -11,4 +11,6 @@
 
 @interface FilteringResultViewController : BasicViewController
 
+@property (nonatomic, assign) NSInteger programId;
+
 @end

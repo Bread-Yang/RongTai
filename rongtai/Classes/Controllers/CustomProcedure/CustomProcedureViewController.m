@@ -42,6 +42,15 @@
     
     //各个选项的单元格
     NSMutableArray* _cells;
+	
+	// 速度, 1 : 偏快, 0 : 偏慢
+	NSInteger _speedTag;
+	
+	// 技术编号, 00 : 揉捏, 01 : 推拿, 10 : 敲打, 11 : 组合
+	NSInteger _skillPreference;
+	
+	// 重点部位, 00 : 肩部, 01 : 背部, 10 : 腰部, 11 : 臀部
+	NSInteger _criticalPart;
     
 }
 @end
@@ -140,22 +149,20 @@
             break;
         case 2:  //重点部位
             [self importantPartSelected:index];
+			
+			_criticalPart = index;
             break;
         case 3: //按摩手法
             [self massageWaySelected:index];
             break;
         case 4: //技术偏好
-            [self skillPreferenceSelected:index];
+			_skillPreference = index;
+			
+//            [self skillPreferenceSelected:index];
             break;
         case 5:  //速度
-            if (index == 0)
-            {   //偏快
-                
-            }
-            else
-            {   //偏慢
-                
-            }
+			_speedTag = index;
+			
             break;
         case 6:  //气压
             if (index == 0)
@@ -294,6 +301,7 @@
     }
 	UIStoryboard *s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	FilteringResultViewController *pVC = (FilteringResultViewController *)[s instantiateViewControllerWithIdentifier:@"FilteringResultVC"];
+	pVC.programId = _speedTag + _skillPreference * 2 + _criticalPart * 8;
 	[self.navigationController pushViewController:pVC animated:YES];
 }
 

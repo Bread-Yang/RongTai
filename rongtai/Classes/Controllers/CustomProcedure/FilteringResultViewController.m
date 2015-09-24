@@ -20,6 +20,7 @@
 	NSArray *_localProgramArray, *_allNetworkProgramArray;
 	NSMutableArray *_notYetInstallProgramArray, *_alreadyInstallProgramArray;
 	RTBleConnector* _bleConnector;
+	MassageProgram *_filterPrgoram;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *selectableProgramTableView, *alreadyInstallProgramTableView;
@@ -96,6 +97,11 @@
 		if (networkMassageId != 0) {
 			
 			for (MassageProgram *program in _allNetworkProgramArray) {
+				
+				if ([program.massageId integerValue] == self.programId) {
+					_filterPrgoram = program;
+				}
+				
 				if ([program.commandId intValue] == networkMassageId) {
 					[_alreadyInstallProgramArray addObject:program];
 					[_notYetInstallProgramArray removeObject:program];
@@ -165,7 +171,13 @@
 	if (tableView == self.selectableProgramTableView) {
 		
 		// 显示自带程序 + 已经安装的云养程序 + 未安装的云养程序
-		return [_localProgramArray count] + [_alreadyInstallProgramArray count] + [_notYetInstallProgramArray count];
+//		return [_localProgramArray count] + [_alreadyInstallProgramArray count] + [_notYetInstallProgramArray count];
+		
+		if (_filterPrgoram) {
+			return 1;
+		} else {
+			return 0;
+		}
 		
 	} else {
 		
@@ -188,33 +200,33 @@
 	cell.isLocalProgram = NO;
 	
 	if (tableView == self.selectableProgramTableView) {
-		if (indexPath.row < [_localProgramArray count]) {
-			NSDictionary *localProgramDic = _localProgramArray[indexPath.row];
-			
-//			[UIImageView loadImageByURL:massageProgramDic[@"imageUrl"] imageView:cell.programImageView];
-			
-			cell.isLocalProgram = YES;
-			
-			cell.programImageView.image = [UIImage imageNamed:localProgramDic[@"programImageUrl"]];
-			
-			// 程序名
-			cell.programNameLabel.text = localProgramDic[@"programName"];
-			
-			// 网络程序描述
-			cell.programDescriptionLabel.text = localProgramDic[@"programDescription"];
-			
-			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-			
-		} else if (indexPath.row >= [_localProgramArray count] && indexPath.row < ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
-			cell.isLocalProgram = YES;
-			
-			cell.massageProgram = [_alreadyInstallProgramArray objectAtIndex:indexPath.row - [_localProgramArray count]];
-			
-			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-		} else {
-			
-			cell.massageProgram = [_notYetInstallProgramArray objectAtIndex:indexPath.row - ([_localProgramArray count] + [_alreadyInstallProgramArray count])];
-		}
+//		if (indexPath.row < [_localProgramArray count]) {
+//			NSDictionary *localProgramDic = _localProgramArray[indexPath.row];
+//			
+//			cell.isLocalProgram = YES;
+//			
+//			cell.programImageView.image = [UIImage imageNamed:localProgramDic[@"programImageUrl"]];
+//			
+//			// 程序名
+//			cell.programNameLabel.text = localProgramDic[@"programName"];
+//			
+//			// 网络程序描述
+//			cell.programDescriptionLabel.text = localProgramDic[@"programDescription"];
+//			
+//			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//			
+//		} else if (indexPath.row >= [_localProgramArray count] && indexPath.row < ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
+//			cell.isLocalProgram = YES;
+//			
+//			cell.massageProgram = [_alreadyInstallProgramArray objectAtIndex:indexPath.row - [_localProgramArray count]];
+//			
+//			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//		} else {
+//			
+//			cell.massageProgram = [_notYetInstallProgramArray objectAtIndex:indexPath.row - ([_localProgramArray count] + [_alreadyInstallProgramArray count])];
+//		}
+		cell.massageProgram = _filterPrgoram;
+		
 		
 	} else {
 		
@@ -239,88 +251,88 @@
 	return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	if (indexPath.section == 1) {   //已有程序点击没有点击事件
-		return;
-	}
-	
-	if (indexPath.row >= ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
-		return;
-	}
-	
-	switch (indexPath.row) {
-			
-			// 运动恢复
-		case 0:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
-			break;
-			
-			// 舒展活络
-		case 1:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_1];
-			break;
-			
-			// 休憩促眠
-		case 2:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_2];
-			break;
-			
-			// 工作减压
-		case 3:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_3];
-			break;
-			
-			// 肩颈重点
-		case 4:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
-			break;
-			
-			// 腰椎舒缓
-		case 5:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
-			break;
-			
-			// 云养程序一
-		case 6:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
-			break;
-			// 云养程序二
-		case 7:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
-			break;
-			// 云养程序三
-		case 8:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
-			break;
-			// 云养程序四
-		case 9:
-			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
-			break;
-	}
-	
-	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
-	
-	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
-		
-		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-			
-			[self jumpToCorrespondingControllerByMassageStatus];
-			
-		} else {
-			
-			// 延迟1.5秒再进入按摩界面
-			
-			double delayInSeconds = 1.5;
-			
-			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-			
-			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-				[self jumpToCorrespondingControllerByMassageStatus];
-			});
-		}
-	}
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//	
+//	if (indexPath.section == 1) {   //已有程序点击没有点击事件
+//		return;
+//	}
+//	
+//	if (indexPath.row >= ([_localProgramArray count] + [_alreadyInstallProgramArray count])) {
+//		return;
+//	}
+//	
+//	switch (indexPath.row) {
+//			
+//			// 运动恢复
+//		case 0:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_0];
+//			break;
+//			
+//			// 舒展活络
+//		case 1:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_1];
+//			break;
+//			
+//			// 休憩促眠
+//		case 2:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_2];
+//			break;
+//			
+//			// 工作减压
+//		case 3:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_3];
+//			break;
+//			
+//			// 肩颈重点
+//		case 4:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_4];
+//			break;
+//			
+//			// 腰椎舒缓
+//		case 5:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_5];
+//			break;
+//			
+//			// 云养程序一
+//		case 6:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_1];
+//			break;
+//			// 云养程序二
+//		case 7:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_2];
+//			break;
+//			// 云养程序三
+//		case 8:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_3];
+//			break;
+//			// 云养程序四
+//		case 9:
+//			[[RTBleConnector shareManager] sendControlMode:H10_KEY_CHAIR_AUTO_NETCLOUD_4];
+//			break;
+//	}
+//	
+//	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
+//	
+//	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
+//		
+//		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//			
+//			[self jumpToCorrespondingControllerByMassageStatus];
+//			
+//		} else {
+//			
+//			// 延迟1.5秒再进入按摩界面
+//			
+//			double delayInSeconds = 1.5;
+//			
+//			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//			
+//			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//				[self jumpToCorrespondingControllerByMassageStatus];
+//			});
+//		}
+//	}
+//}
 
 
 - (void)didReceiveMemoryWarning {

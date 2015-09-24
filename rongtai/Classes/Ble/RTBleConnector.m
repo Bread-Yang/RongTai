@@ -685,14 +685,15 @@ NSString * NSDataToHex(NSData *data) {
 #pragma mark - 开始发送程序
 
 - (void)startInstallMassage {
-	self.installCount = 1;
-	self.isStartInstall = YES;
 	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
 
     if (self.readFile.resultData.length < 1) {
         NSLog(@"读取文件长度为零😱");
         return;
     }
+	
+	self.installCount = 1;
+	self.isStartInstall = YES;
 	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
 	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
 	for (int i = 0; i < self.installAllCount; i++) {
