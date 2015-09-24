@@ -120,7 +120,7 @@
 //		if (index < self.items.count - 2) {
 //			self.highlightIndex = [NSIndexPath indexPathForItem:index + self.items.count inSection:0];
 //		}
-		if (index > self.items.count - 3) {
+		if (index > self.items.count - 5) {
 			self.highlightIndex = [NSIndexPath indexPathForItem:index inSection:0];
 			
 			//			NSLog(@"self.current : %i", self.currentIndex.row);
@@ -133,6 +133,7 @@
 	[self.tableView scrollToRowAtIndexPath:self.highlightIndex
 						  atScrollPosition:UITableViewScrollPositionMiddle
 								  animated:NO];
+	[self.tableView reloadData];
 }
 
 - (void)setOverlayView {
