@@ -22,7 +22,8 @@
 
 @interface FamilyManageViewController ()<UICollectionViewDataSource,UICollectionViewDelegate, MemberRequestDelegate> {
     UICollectionView* _collectView;
-    CGFloat _matgin;
+    CGFloat _wMatgin;
+    CGFloat _hMatgin;
     NSInteger _countInRow;
     NSString* _reuseIdentifier;
     AFNetworkReachabilityManager* _reachability;
@@ -49,16 +50,18 @@
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    _matgin = width*0.8*0.05;
+    _wMatgin = width*0.8*0.05;
+    _hMatgin = (height-64-30)*0.05;
     _countInRow = 2;
     _reuseIdentifier = @"FamilyCell";
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
-    CGFloat cellWidth = (width*0.8- _countInRow* _matgin) / 2;
-    CGFloat cellHeight = (height - 3*_matgin)/3;
-    cellHeight = MIN(cellHeight, 170);
+    CGFloat cellWidth = (width*0.8- _countInRow* _wMatgin) / 2;
+//    CGFloat cellHeight = (height - 3*_hMatgin)/3;
+    CGFloat cellHeight = cellWidth*7/5;
+    cellHeight = MAX(cellHeight, 150);
     flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight);
-    flowLayout.minimumInteritemSpacing = _matgin;
-    flowLayout.minimumLineSpacing = _matgin;
+    flowLayout.minimumInteritemSpacing = _wMatgin;
+    flowLayout.minimumLineSpacing = _hMatgin;
     
     _collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0.1*width, 30, width*0.8, height -64-30) collectionViewLayout:flowLayout];
     _collectView.backgroundColor = [UIColor clearColor];
