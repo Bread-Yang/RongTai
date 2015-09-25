@@ -19,12 +19,13 @@
 static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
+static Byte const BYTE_CodeMode = 0xA5;
 
 //===== wl:Xmodem
-static Byte const BYTE_Download = 0x01;
-static Byte const BYTE_Delete = 0x02;
-static Byte const BYTE_CodeMode = 0xA5;
-static Byte const BYTE_ExitCode = 0x82;
+//static Byte const BYTE_Download = 0x01;
+//static Byte const BYTE_Delete = 0x02;
+
+//static Byte const BYTE_ExitCode = 0x82;
 //=====
 
 
