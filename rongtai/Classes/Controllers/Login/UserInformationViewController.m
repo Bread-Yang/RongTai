@@ -72,6 +72,19 @@
     UIView* _tapView;
     __weak IBOutlet NSLayoutConstraint *_topConstraint;
     CGFloat _y;
+    
+    //调试使用
+    
+    __weak IBOutlet UITextField *_nameView;
+    
+    __weak IBOutlet UIView *_sexSuperView;
+    
+    __weak IBOutlet UIView *_heightSuperView;
+    
+    __weak IBOutlet UIView *_unitSuperView;
+    
+    __weak IBOutlet UIView *_birthdaySuperView;
+    
 }
 @end
 
@@ -100,7 +113,7 @@
     _name.returnKeyType = UIReturnKeyDone;
     _name.delegate = self;
     _name.tag = 4301;
-    
+
     //改写_hegiht的键盘为身高选择器
     UIView* inputView = [[UIView alloc]initWithFrame:f];
     inputView.backgroundColor = [UIColor whiteColor];
@@ -110,6 +123,7 @@
     [_heightPicker selectRow:(174-140) inComponent:0 animated:NO];
     _heightPicker.tag = 1001;
     [inputView addSubview:_heightPicker];
+    
     _height.inputView = inputView;
     _height.text = _heightArr[174-140];
     _height.tag = 4302;
@@ -123,6 +137,7 @@
     _birthdayDatePicker.date = [NSDate dateWithTimeIntervalSince1970:3652*24*3600];
 	[_birthdayDatePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 	[inputView2 addSubview:_birthdayDatePicker];
+    
     _birthday.inputView = inputView2;
     _birthday.tag = 4303;
     _birthday.delegate = self;
@@ -131,7 +146,7 @@
     //头像按钮设置白色边框
     _userIcon.layer.borderColor = [UIColor whiteColor].CGColor;
     _userIcon.layer.borderWidth = 3;
-    _userIcon.layer.cornerRadius = 0.125*[UIScreen mainScreen].bounds.size.width;
+    _userIcon.layer.cornerRadius = 0.4*0.4*[UIScreen mainScreen].bounds.size.height/2;
     
     //默认头像
     _userImage = [UIImage imageNamed:@"userIcon"];
@@ -185,6 +200,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    if (self.isRegister) {
+        self.isListenBluetoothStatus = NO;
+    }
     [super viewWillAppear:animated];
    
     self.navigationController.navigationBarHidden = NO;
@@ -207,7 +225,6 @@
     key.enable = NO;
 }
 
-
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -217,6 +234,28 @@
     IQKeyboardManager* key = [IQKeyboardManager sharedManager];
     key.enableAutoToolbar = YES;
     key.enable = YES;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    NSLog(@"View:%@",self.view);
+    NSLog(@"Cons:%@",self.view.constraints);
+    for (UIView* view in self.view.subviews) {
+        NSLog(@"view:%@",view);
+        NSLog(@"cons:%@",view.constraints);
+        NSArray* subviews = view.subviews;
+        if (subviews.count>0) {
+            NSLog(@"==================");
+            for (UIView* subView in subviews) {
+                NSLog(@"subView:%@",subView);
+                NSLog(@"sub-Con:%@",subView.constraints);
+            }
+            NSLog(@"\n");
+        }
+    }
+    
+//    NSLog(@"Name TextFiled:%@",_name.constraints);
 }
 
 #pragma mark - pickerView的代理

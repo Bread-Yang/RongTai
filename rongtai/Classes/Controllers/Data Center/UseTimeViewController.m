@@ -141,7 +141,7 @@
             NSNumber* rID = [r objectForKey:@"massageId"];
             NSNumber* s = [r objectForKey:@"useTime"];
             NSInteger time = [s integerValue];
-            if ([rID integerValue]>6) {
+            if ([rID integerValue]>6||[rID integerValue]<1) {
                 //云养程序
                 otherTime += time;
                 continue;

@@ -150,6 +150,7 @@
 #pragma mark - drawRect
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
+     _r = MIN(self.frame.size.width, self.frame.size.height)/2;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGFloat disAngle = _doughnutDistance/(M_PI*2*_r);
     CGFloat start = M_PI*1.5;

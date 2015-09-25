@@ -128,11 +128,11 @@
     NSString* title = _firstLevelItems[indexPath.row];
     NSArray* names = [_secondLevelItems objectForKey:title];
     if (names.count > 2) {
-        return MAX(SCREENHEIGHT*0.13, 70) ;
+        return MAX(SCREENHEIGHT*0.14, 70) ;
     }
     else
     {
-        return MAX(SCREENHEIGHT*0.1, 54);
+        return MAX(SCREENHEIGHT*0.11, 54);
     }
 }
 
