@@ -96,8 +96,7 @@
 }
 
 #pragma mark - 返回按钮方法
--(void)back
-{
+-(void)back {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

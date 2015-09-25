@@ -134,7 +134,7 @@ static Byte const BYTE_ExitCode = 0x82;
 
 @property (nonatomic, retain) NSTimer *turnOnTimer;
 
-@property (nonatomic, retain) CustomIOSAlertView *reconnectDialog;
+@property (nonatomic, retain) CustomIOSAlertView *reconnectDialog, *chairInstallExceptionDialog;
 
 @property (nonatomic, retain) NSString *oldMassageChairRunningStatusString, *oldMassageChairNetworkStatusString;
 
@@ -212,6 +212,7 @@ static Byte const BYTE_ExitCode = 0x82;
 			message = @"尚未打开蓝牙，请在设置中打开……";
 			isBleTurnOn = NO;
 			self.currentConnectedPeripheral = nil;
+			self.isStartInstall = false;
             if (_isSendMessage) {
                 [self showConnectDialog];
             }
@@ -251,6 +252,8 @@ static Byte const BYTE_ExitCode = 0x82;
 	
 	self.currentConnectedPeripheral = periphral;
 	
+	[self.chairInstallExceptionDialog close];
+	
     if (self.delegate && [self.delegate respondsToSelector:@selector(didConnectRTBlePeripheral:)]) {
         [self.delegate didConnectRTBlePeripheral:periphral];
     }
@@ -270,7 +273,8 @@ static Byte const BYTE_ExitCode = 0x82;
 	NSLog(@"didDisconnectPeriphral()");
 	
 	self.isConnectedDevice = NO;
-	
+	self.isStartInstall = false;
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(didDisconnectRTBlePeripheral:)]) {
         [self.delegate didDisconnectRTBlePeripheral:periphral];
     }
@@ -318,8 +322,8 @@ static Byte const BYTE_ExitCode = 0x82;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-//	NSLog(@"data.length : %zd", data.length);
-//	NSLog(@"data : %@", data);
+	NSLog(@"data.length : %zd", data.length);
+	NSLog(@"data : %@", data);
 	
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
@@ -685,16 +689,18 @@ NSString * NSDataToHex(NSData *data) {
 #pragma mark - 开始发送程序
 
 - (void)startInstallMassage {
-	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
-
-    if (self.readFile.resultData.length < 1) {
-        NSLog(@"读取文件长度为零😱");
-        return;
-    }
 	
 	self.installCount = 1;
 	self.isStartInstall = YES;
 	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
+
+	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
+    if (self.readFile.resultData.length < 1) {
+        NSLog(@"读取文件长度为零😱");
+//		self.isStartInstall = NO;
+        return;
+    }
+	
 	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
 	for (int i = 0; i < self.installAllCount; i++) {
 		Byte data[128];
@@ -791,6 +797,12 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 				
 				if (self.delegate && [self.delegate respondsToSelector:@selector(didStartInstallProgramMassage)]) {
 					[self.delegate didStartInstallProgramMassage];
+				}
+			} else {   // 之后如果还是返回0x43,则弹出错误提示框
+				[self showChairInstallExceptionDialog];
+				
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+					[self.delegate didEndInstallProgramMassage];
 				}
 			}
 			break;
@@ -1493,6 +1505,25 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 		}];
 		
 		[self.reconnectDialog show];
+	}
+}
+
+#pragma mark - chair install program exception dialog
+
+- (void)showChairInstallExceptionDialog {
+	
+	if (!self.chairInstallExceptionDialog) {
+		self.chairInstallExceptionDialog = [[CustomIOSAlertView alloc] init];
+		self.chairInstallExceptionDialog.isReconnectDialog = YES;
+		
+		self.chairInstallExceptionDialog.reconnectTipsString = NSLocalizedString(@"重启按摩椅", nil);
+		[self.chairInstallExceptionDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确认", nil), nil]];
+	}
+	
+	if (self.delegate && [self.delegate isKindOfClass:[UIViewController class]]) {
+		[self.reconnectDialog close];
+		
+		[self.chairInstallExceptionDialog show];
 	}
 }
 
