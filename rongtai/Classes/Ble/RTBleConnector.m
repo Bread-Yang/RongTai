@@ -356,6 +356,10 @@ static Byte const BYTE_CodeMode = 0xA5;
 			
 			if (response[1] == 0xa5) {
 				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+				
+				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+					[self.delegate didEndInstallProgramMassage];
+				}
 			}
 			
 			NSString *newNetworkStatusString = NSDataToHex(data);
@@ -694,13 +698,6 @@ NSString * NSDataToHex(NSData *data) {
 	self.installCount = 1;
 	self.isStartInstall = YES;
 	self.installAllCount = (self.readFile.resultData.length / 128) + 1;
-
-	NSLog(@"readfile.resultData.length : %zd", self.readFile.resultData.length);
-    if (self.readFile.resultData.length < 1) {
-        NSLog(@"读取文件长度为零😱");
-//		self.isStartInstall = NO;
-        return;
-    }
 	
 	Byte *fileData = (Byte *)[self.readFile.resultData bytes];
 	for (int i = 0; i < self.installAllCount; i++) {
@@ -764,6 +761,8 @@ NSString * NSDataToHex(NSData *data) {
 		self.isStartInstall = false;
 		[self.installEachDataMutableArray removeAllObjects];
 		
+		[self.readFile.resultData setLength:0];
+		
 		if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
 			[self.delegate didEndInstallProgramMassage];
 		}
@@ -793,7 +792,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 	switch (response[0]) {
 			
 		case 0x43:		// NCG     0x43     主板上传给APP的请求发送数据包标志位
-			if(!_isStartInstall) {
+			if(!_isStartInstall && self.readFile.resultData.length > 0) {
 				[self startInstallMassage];
 				
 				if (self.delegate && [self.delegate respondsToSelector:@selector(didStartInstallProgramMassage)]) {
@@ -809,11 +808,17 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			break;
 			
 		case 0x06:		// ACK     0X06     数据被正确接收标志
-			[self installNext];
+			if(_isStartInstall) {
+				[self installNext];
+			}
+			
 			break;
 			
 		case 0x15:		// NAK     0X15     数据包接收出错，请求重发当前数据包标志
-			[self installCommandSend];
+			if(_isStartInstall) {
+				[self installCommandSend];
+			}
+			
 			break;
 			
 	}
