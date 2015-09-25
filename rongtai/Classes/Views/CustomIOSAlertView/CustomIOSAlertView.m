@@ -92,6 +92,7 @@ CGFloat buttonSpacerHeight = 0;
 	
 	[self addSubview:dialogView];
 	
+	
 	// Can be attached to a view or to the top most window
 	// Attached to a view:
 	if (parentView != NULL) {
@@ -183,7 +184,6 @@ CGFloat buttonSpacerHeight = 0;
 
 // Dialog close animation then cleaning and removing the view from the parent
 - (void)close {
-	self.isShowing = NO;
 	
 	CATransform3D currentTransform = dialogView.layer.transform;
 	
@@ -207,6 +207,8 @@ CGFloat buttonSpacerHeight = 0;
 							 [v removeFromSuperview];
 						 }
 						 [self removeFromSuperview];
+						 
+						 self.isShowing = NO;
 					 }
 	 ];
 }
