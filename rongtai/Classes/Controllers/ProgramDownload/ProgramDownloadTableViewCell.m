@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 
+static BOOL isClickable = YES;
 
 @implementation ProgramDownloadTableViewCell 
 
@@ -38,7 +39,7 @@
 - (void)setMassageProgram:(MassageProgram *)massageProgram {
 	_massageProgram = massageProgram;
 	
-	NSLog(@"massageProgram.imageUrl : %@", massageProgram.imageUrl);
+//	NSLog(@"massageProgram.imageUrl : %@", massageProgram.imageUrl);
 	
 	[UIImageView loadImageByURL:massageProgram.imageUrl imageView:self.programImageView];
 	
@@ -82,39 +83,52 @@
 
 - (void)downloadOrDeleteProgram:(UIButton *)button {
 	
-	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
+	if (isClickable) {
+		isClickable = false;
 		
-		[[RTBleConnector shareManager] showConnectDialog];
+		dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC);
 		
-	} else {
+		dispatch_after(time, dispatch_get_main_queue(), ^{
+			isClickable = true;
+		});
 		
-		if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus != RtMassageChairStatusStandby) {
-			[self showCannotInstallDialog];
-			return;
-		}
+		NSLog(@"downloadOrDeleteProgram() has be clicked!!!");
 		
-		if ([[button.currentImage accessibilityIdentifier] isEqualToString:@"download"]) {
+		if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
 			
-			// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
-			if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptySlotIndex] == -1) {
-				
-                [self showProgressHUDByString: @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载"];
-
-//				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
-//				tipsDialog.isReconnectDialog = YES;
-//				tipsDialog.reconnectTipsString = @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载";
-//				[tipsDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
-//				
-//				[tipsDialog show];
-			} else {
-				[[RTBleConnector shareManager] installProgramMassageByBinName:_massageProgram.binUrl];
-			}
+			[[RTBleConnector shareManager] showConnectDialog];
 			
 		} else {
-			[self showConfirmDeleteDialog];
+			
+			if ([RTBleConnector shareManager].rtMassageChairStatus.deviceStatus != RtMassageChairStatusStandby) {
+				[self showCannotInstallDialog];
+				return;
+			}
+			
+			if ([[button.currentImage accessibilityIdentifier] isEqualToString:@"download"]) {
+				
+				// 网络4个位都已经安装了程序, 提醒用户删除其中一个才可以安装
+				if ([[RTBleConnector shareManager].rtNetworkProgramStatus getEmptySlotIndex] == -1) {
+					
+					[self showProgressHUDByString: @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载"];
+					
+					//				CustomIOSAlertView *tipsDialog = [[CustomIOSAlertView alloc] init];
+					//				tipsDialog.isReconnectDialog = YES;
+					//				tipsDialog.reconnectTipsString = @"安装的云养程序已达4个，请先删除其他的云养程序再进行下载";
+					//				[tipsDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
+					//
+					//				[tipsDialog show];
+				} else {
+					[[RTBleConnector shareManager] installProgramMassageByBinName:_massageProgram.binUrl];
+				}
+				
+			} else {
+				[self showConfirmDeleteDialog];
+			}
+			
 		}
-		
 	}
+
 }
 
 #pragma mark - 显示按摩椅正在运行,不能安装对话框
