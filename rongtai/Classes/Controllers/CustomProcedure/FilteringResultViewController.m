@@ -154,6 +154,21 @@
 	}
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.frame), 30)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, 200, 25)];
+	
+	// 15 pixel padding will come from CGRectMake(15, 5, 200, 25).
+	
+	if (tableView == self.selectableProgramTableView) {
+		label.text = NSLocalizedString(@"可选择按摩程序", nil);
+	} else {
+		label.text = NSLocalizedString(@"已有按摩程序", nil);
+	}
+	[view addSubview: label];
+	return view;
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
 	if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
 		UITableViewHeaderFooterView *headerView = (UITableViewHeaderFooterView *)view;
