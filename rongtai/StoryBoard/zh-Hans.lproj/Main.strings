@@ -1,0 +1,126 @@
+
+/* Class = "UIButton"; normalTitle = "定时计划"; ObjectID = "045-CT-wlD"; */
+"045-CT-wlD.normalTitle" = "定时计划";
+
+/* Class = "UIViewController"; title = "添加定时计划"; ObjectID = "0k6-pQ-v5b"; */
+"0k6-pQ-v5b.title" = "添加定时计划";
+
+/* Class = "UIViewController"; title = "使用帮助"; ObjectID = "0zq-hf-YUu"; */
+"0zq-hf-YUu.title" = "使用帮助";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[0] = "日"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[0]" = "日";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[1] = "一"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[1]" = "一";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[2] = "二"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[2]" = "二";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[3] = "三"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[3]" = "三";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[4] = "四"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[4]" = "四";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[5] = "五"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[5]" = "五";
+
+/* Class = "UISegmentedControl"; 4dd-PN-1eM.segmentTitles[6] = "六"; ObjectID = "4dd-PN-1eM"; */
+"4dd-PN-1eM.segmentTitles[6]" = "六";
+
+/* Class = "UILabel"; text = "韩式按摩"; ObjectID = "6cn-XF-bHd"; */
+"6cn-XF-bHd.text" = "韩式按摩";
+
+/* Class = "UIButton"; normalTitle = "Pick Music"; ObjectID = "8RN-nf-xhV"; */
+"8RN-nf-xhV.normalTitle" = "Pick Music";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "CWp-2m-iEi"; */
+"CWp-2m-iEi.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "韩式按摩"; ObjectID = "FDg-qB-2c8"; */
+"FDg-qB-2c8.text" = "韩式按摩";
+
+/* Class = "UIButton"; normalTitle = "Previous"; ObjectID = "Gc7-Kt-Sab"; */
+"Gc7-Kt-Sab.normalTitle" = "Previous";
+
+/* Class = "UIButton"; normalTitle = "手动按摩"; ObjectID = "KVQ-9d-xAT"; */
+"KVQ-9d-xAT.normalTitle" = "手动按摩";
+
+/* Class = "UILabel"; text = "重复"; ObjectID = "LHJ-Qi-tpy"; */
+"LHJ-Qi-tpy.text" = "重复";
+
+/* Class = "UILabel"; text = "外壳以24K纯金50道工序铸造.椅侧手工镶嵌千克水晶钻石.金质人生.用\"芯\"体验"; ObjectID = "Lcp-Cv-hgZ"; */
+"Lcp-Cv-hgZ.text" = "外壳以24K纯金50道工序铸造.椅侧手工镶嵌千克水晶钻石.金质人生.用\"芯\"体验";
+
+/* Class = "UILabel"; text = "舒展活络"; ObjectID = "Mjb-Au-DsN"; */
+"Mjb-Au-DsN.text" = "舒展活络";
+
+/* Class = "UIButton"; normalTitle = "Logo"; ObjectID = "OAo-0O-eJc"; */
+"OAo-0O-eJc.normalTitle" = "Logo";
+
+/* Class = "UILabel"; text = "社交平台登录"; ObjectID = "Q5F-HE-lFL"; */
+"Q5F-HE-lFL.text" = "社交平台登录";
+
+/* Class = "UIButton"; normalTitle = "bluetooth"; ObjectID = "Uy4-ap-g8S"; */
+"Uy4-ap-g8S.normalTitle" = "bluetooth";
+
+/* Class = "UILabel"; text = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅"; ObjectID = "Va2-TA-yp2"; */
+"Va2-TA-yp2.text" = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅";
+
+/* Class = "UIBarButtonItem"; title = "返回"; ObjectID = "Ybx-w2-3Vo"; */
+"Ybx-w2-3Vo.title" = "返回";
+
+/* Class = "UIButton"; normalTitle = "ShareSDK share "; ObjectID = "Ygh-nL-1nV"; */
+"Ygh-nL-1nV.normalTitle" = "ShareSDK share ";
+
+/* Class = "UIButton"; normalTitle = "更多程序下载"; ObjectID = "YmG-BG-hhl"; */
+"YmG-BG-hhl.normalTitle" = "更多程序下载";
+
+/* Class = "UIButton"; normalTitle = "使用帮助"; ObjectID = "ZOR-1q-IkZ"; */
+"ZOR-1q-IkZ.normalTitle" = "使用帮助";
+
+/* Class = "UIButton"; normalTitle = "QQ Login"; ObjectID = "arn-14-Qtk"; */
+"arn-14-Qtk.normalTitle" = "QQ Login";
+
+/* Class = "UIButton"; normalTitle = "跳到登录界面"; ObjectID = "bTc-F4-IcJ"; */
+"bTc-F4-IcJ.normalTitle" = "跳到登录界面";
+
+/* Class = "UILabel"; text = "未来太空舱按摩椅"; ObjectID = "cjh-8E-lDu"; */
+"cjh-8E-lDu.text" = "未来太空舱按摩椅";
+
+/* Class = "UILabel"; text = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅"; ObjectID = "dNp-Uh-Rnp"; */
+"dNp-Uh-Rnp.text" = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅";
+
+/* Class = "UILabel"; text = "RT8600S"; ObjectID = "gof-bX-03M"; */
+"gof-bX-03M.text" = "RT8600S";
+
+/* Class = "UIButton"; normalTitle = "我要购买"; ObjectID = "jr3-py-b2t"; */
+"jr3-py-b2t.normalTitle" = "我要购买";
+
+/* Class = "UILabel"; text = ":"; ObjectID = "kXp-Be-yJb"; */
+"kXp-Be-yJb.text" = ":";
+
+/* Class = "UIButton"; normalTitle = "Sina Login"; ObjectID = "krZ-xU-typ"; */
+"krZ-xU-typ.normalTitle" = "Sina Login";
+
+/* Class = "UIButton"; normalTitle = "播放"; ObjectID = "noK-ap-YdI"; */
+"noK-ap-YdI.normalTitle" = "播放";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "pVy-mx-Bh4"; */
+"pVy-mx-Bh4.normalTitle" = "保存";
+
+/* Class = "UILabel"; text = "因为爱情-陈奕迅 王菲"; ObjectID = "skx-4K-WTA"; */
+"skx-4K-WTA.text" = "因为爱情-陈奕迅 王菲";
+
+/* Class = "UILabel"; text = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅"; ObjectID = "tfw-eE-nPH"; */
+"tfw-eE-nPH.text" = "以颈部、肩部、背部按摩为主,腰部、尾椎骨按摩为辅";
+
+/* Class = "UINavigationItem"; title = "音乐列表"; ObjectID = "xTD-zp-aRQ"; */
+"xTD-zp-aRQ.title" = "音乐列表";
+
+/* Class = "UIButton"; normalTitle = "Log out"; ObjectID = "xgb-Eg-cbL"; */
+"xgb-Eg-cbL.normalTitle" = "Log out";
+
+/* Class = "UILabel"; text = "韩式按摩"; ObjectID = "z2e-eh-dpu"; */
+"z2e-eh-dpu.text" = "韩式按摩";

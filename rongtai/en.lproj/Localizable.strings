@@ -19,6 +19,7 @@
 "切换按摩椅" = "Chair";
 "退出登录" = "Logout";
 "分享" = "Share";
+"蓝牙连接" = "Bluetooth Connect";
 "家庭成员" = "Family";
 "编辑" = "Edit";
 "编辑定时计划" = "Edit Timing Plan";
@@ -200,6 +201,11 @@
 "周六" = "Sat";
 "周日" = "Sun";
 "每天" = "Every day";
+"肩部位置:" = "Shoulder Position:";
+"背部升降:" = "Back Lift:";
+"小腿升降:" = "Calf Lift:";
+"小腿伸缩:" = "Calf Stretch:";
+"零重力:" = "Zero-G:";
 
 
 
