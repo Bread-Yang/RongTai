@@ -167,6 +167,7 @@
     slideNav.view.layer.shadowOpacity  = 5;
     slideNav.view.layer.shadowRadius = 10;
     
+    //
     CGFloat sWidth = SCREENWIDTH;
     CGFloat sHeight = SCREENHEIGHT;
 
@@ -258,6 +259,13 @@
 
     imView = [UIImageView new];
     _massageFlag = 0;
+    
+    //检测云养程序本地记录
+    NSArray* arr = [MassageProgram MR_findAll];
+    if (arr.count<1) {
+        //如果本地记录为空，则启动程序需要请求
+        [self requestNetworkMassageProgram];
+    }
 	
 }
 
@@ -322,7 +330,7 @@
     NSString* mid = [defaults objectForKey:@"currentMemberId"];
     NSArray* arr;
     if (mid.length<1) {
-        NSLog(@"默认第一个成员");
+//        NSLog(@"默认第一个成员");
         arr = [Member MR_findByAttribute:@"uid" withValue:self.uid andOrderBy:@"memberId" ascending:YES];
         if (arr.count>0) {
             Member* r = arr[0];
@@ -332,15 +340,15 @@
     }
     else
     {
-        NSLog(@"有默认成员:%@",mid);
+//        NSLog(@"有默认成员:%@",mid);
         arr = [Member MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(uid == %@) AND (memberId == %d)",self.uid, [mid intValue]]];
-        NSLog(@"%@",arr);
+//        NSLog(@"%@",arr);
     }
 
     if (arr.count > 0) {
         Member* m = arr[0];
         [self changeUser:m.imageURL];
-        NSLog(@"有用户:%@",m.name);
+//        NSLog(@"有用户:%@",m.name);
     }
     else
     {
@@ -685,6 +693,12 @@
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
 	
 //	NSLog(@"didUpdateMassageChairStatus");
+//    NSLog(@"state:%ld",rtMassageChairStatus.deviceStatus);
+    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusError) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请重启按摩椅" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [alert show];
+    }
+    
     
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
         [_anionButtonItem setSelected:NO];

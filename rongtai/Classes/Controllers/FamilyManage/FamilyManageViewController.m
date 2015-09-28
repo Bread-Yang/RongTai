@@ -86,9 +86,6 @@
     _mr.delegate = self;
     
     _currentMemberId = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentMemberId"];
-    
-    
-    
     // Do any additional setup after loading the view.
 }
 

@@ -15,7 +15,7 @@
 @interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
     
-    NSArray *segueIdentifiers;
+//    NSArray *segueIdentifiers;
     
     RTBleConnector *bleConnector;
     UIBarButtonItem *refreshItem;
@@ -44,7 +44,7 @@
     
     blePeriphrals = [[NSMutableArray alloc] init];
 	
-    segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
+//    segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
     
     _cView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
     _cView.userInteractionEnabled = YES;
@@ -89,11 +89,11 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"mpSegue"]) {
-        
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if ([segue.identifier isEqualToString:@"mpSegue"]) {
+//        
+//    }
+//}
 
 #pragma mark - 返回按钮方法
 -(void)back {

@@ -19,12 +19,13 @@
 static Byte const BYTE_iOS_Mark = 0x84;
 static Byte const BYTE_Head = 0xf0;
 static Byte const BYTE_Tail = 0xf1;
+static Byte const BYTE_CodeMode = 0xA5;
 
 //===== wl:Xmodem
-static Byte const BYTE_Download = 0x01;
-static Byte const BYTE_Delete = 0x02;
-static Byte const BYTE_CodeMode = 0xA5;
-static Byte const BYTE_ExitCode = 0x82;
+//static Byte const BYTE_Download = 0x01;
+//static Byte const BYTE_Delete = 0x02;
+
+//static Byte const BYTE_ExitCode = 0x82;
 //=====
 
 
@@ -323,8 +324,10 @@ static Byte const BYTE_ExitCode = 0x82;
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
 	NSLog(@"data.length : %zd", data.length);
-	NSLog(@"data : %@", data);
-	
+    NSLog(@"data : %@", data);
+    NSLog(@"CBPeripheral:%@",peripheral);
+    NSLog(@"CBCharacteristic:%@",characteristic);
+//
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		
 		if (data.length == 17) {	// 等于17位 : 按摩模式下返回的状态
@@ -1224,8 +1227,12 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 			if (_rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || _rtMassageChairStatus.deviceStatus == RtMassageChairStatusWaiting) {  // 开始计时
 				
 			}
-			_rtMassageChairStatus.deviceStatus = RtMassageChairStatusMassaging;
-			break;
+            _rtMassageChairStatus.deviceStatus = RtMassageChairStatusMassaging;
+            break;
+        case 5:
+            _rtMassageChairStatus.deviceStatus = RtMassageChairStatusError;
+            break;
+			
 	}
 }
 

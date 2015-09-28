@@ -148,31 +148,38 @@
             {  // 当前为网络程序
                 
                 MassageProgram *networkProgram = nil;
-                
+                NSString* name = nil;
                 switch (_bleConnector.rtMassageChairStatus.networkProgramType) {
                         
                     case RTMassageChairProgramNetwork1:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
+                        name = NSLocalizedString(@"云养程序一", nil);
                         break;
                         
                     case RTMassageChairProgramNetwork2:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
+                        name  = NSLocalizedString(@"云养程序二", nil);;
                         break;
                         
                     case RTMassageChairProgramNetwork3:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
+                        name = NSLocalizedString(@"云养程序三", nil);
                         break;
                         
                     case RTMassageChairProgramNetwork4:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
-                        break;
-                    default:
+                        name = NSLocalizedString(@"云养程序四", nil);;
                         break;
                 }
                 
                 if (networkProgram) {
                     self.title = networkProgram.name;
                     functionString = networkProgram.mDescription;
+                }
+                else
+                {
+                    self.title = name;
+                    functionString = @"获取服务器信息失败，暂无描述";
                 }
             }
             
@@ -390,29 +397,38 @@
             } else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
                 
                 MassageProgram *networkProgram = nil;
-                
+                NSString* name = nil;
                 switch (rtMassageChairStatus.networkProgramType) {
                         
                     case RTMassageChairProgramNetwork1:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:0];
+                        name = NSLocalizedString(@"云养程序一", nil);
                         break;
                         
                     case RTMassageChairProgramNetwork2:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:1];
+                        name  = NSLocalizedString(@"云养程序二", nil);;
                         break;
                         
                     case RTMassageChairProgramNetwork3:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:2];
+                        name = NSLocalizedString(@"云养程序三", nil);
                         break;
                         
                     case RTMassageChairProgramNetwork4:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
+                        name = NSLocalizedString(@"云养程序四", nil);;
                         break;
                 }
                 
                 if (networkProgram) {
                     self.title = networkProgram.name;
                     functionString = networkProgram.mDescription;
+                }
+                else
+                {
+                    self.title = name;
+                    functionString = @"获取服务器信息失败，暂无描述";
                 }
             }
             
@@ -533,17 +549,42 @@
             programId = _massageFlag;
             function = functionString;
         }
-        else if (_massageFlag<11&&_massageFlag>7)
+        else if (_massageFlag<12&&_massageFlag>7)
         {
             //属于网络按摩的统计
              NSLog(@"网络按摩统计:%ld",_massageFlag);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
-            programId = [p.commandId integerValue];
-            _programName = p.name;
-            function = functionString;
+            if (p) {
+                programId = [p.commandId integerValue];
+                _programName = p.name;
+                function = functionString;
+            }
+            else
+            {
+                programId = [_bleConnector.rtNetworkProgramStatus getSlotIndexByMassageId:_massageFlag-8];
+                switch (_massageFlag-8) {
+                    case 0:
+                        _programName = NSLocalizedString(@"云养程序一", nil);
+                        break;
+                        
+                    case 1:
+                        _programName = NSLocalizedString(@"云养程序二", nil);
+                        break;
+                        
+                    case 2:
+                        _programName = NSLocalizedString(@"云养程序三", nil);
+                        break;
+                        
+                    case 3:
+                        _programName = NSLocalizedString(@"云养程序四", nil);
+                        break;
+                }
+                function = @"获取服务器信息失败，暂无描述";
+            }
         }
         else
         {
+            NSLog(@"手动按摩:%ld",_massageFlag);
             NSInteger massageTechniqueFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (massageTechniqueFlag>0&&massageTechniqueFlag<7) {
                 _programName = _skillsPreferenceArray[massageTechniqueFlag-1];

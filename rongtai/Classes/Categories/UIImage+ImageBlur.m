@@ -24,7 +24,7 @@
     r.origin.y += 4*blur;
     r.size.width  -= 8*blur;
     r.size.height -= 8*blur;
-    NSLog(@"rect:%@",NSStringFromCGRect(r));
+//    NSLog(@"rect:%@",NSStringFromCGRect(r));
 
     CGImageRef ref  = [context createCGImage:output fromRect:r];
     UIImage* new = [UIImage imageWithCGImage:ref];

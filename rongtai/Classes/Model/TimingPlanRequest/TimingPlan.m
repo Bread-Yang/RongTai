@@ -78,14 +78,14 @@
 			
 			NSDateComponents *setDateComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitHour |NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear fromDate:todayDate];
             NSNumber* n = [weekdays objectAtIndex:i];
-            NSLog(@"星期：%ld❤️",(long)[n integerValue]);
+//            NSLog(@"星期：%ld❤️",(long)[n integerValue]);
 			[setDateComponents setWeekday:[n integerValue]+1];  // 星期日: 1, 星期一 : 2, ..., 星期六 : 7
 			[setDateComponents setHour:hour];
 			[setDateComponents setMinute:minute];
             [setDateComponents setSecond:0];
 			
 			NSDate *fireDate = [calendar dateFromComponents:setDateComponents]; // 0时区开始计算
-            NSLog(@"通知时间：%@",fireDate);
+//            NSLog(@"通知时间：%@",fireDate);
 			UILocalNotification *localNofication = [[UILocalNotification alloc] init];
 			localNofication.fireDate = fireDate;
 			
@@ -103,7 +103,7 @@
 			[self addLocalNotification:localNofication];
 			[[UIApplication sharedApplication] scheduleLocalNotification:localNofication];
 		}
-        NSLog(@"加入通知:%@",self.localNotifications);
+//        NSLog(@"加入通知:%@",self.localNotifications);
 		
 	}
     else {	// 不循环

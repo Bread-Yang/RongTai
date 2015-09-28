@@ -161,14 +161,14 @@
     _bgImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     //性别选择
-    _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
+    _sexSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.4)];
     _sexSegmentView.tag = 3201;
     [_sexSegmentView setItems:@[NSLocalizedString(@"男", nil),NSLocalizedString(@"女", nil)]];
     _sexSegmentView.delegate = self;
     [_sexView addSubview:_sexSegmentView];
     
     //身高单位选择
-    _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.45)];
+    _heightUnitSegmentView = [[RFSegmentView alloc]initWithFrame:CGRectMake(0, 0, 0.35*SCREENWIDTH, SCREENHEIGHT*0.2*0.6*0.4)];
     _heightUnitSegmentView.tag = 3202;
     [_heightUnitSegmentView setItems:@[NSLocalizedString(@"cm", nil),NSLocalizedString(@"inch", nil)]];
     _heightUnitSegmentView.delegate = self;
@@ -239,21 +239,21 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    NSLog(@"View:%@",self.view);
-    NSLog(@"Cons:%@",self.view.constraints);
-    for (UIView* view in self.view.subviews) {
-        NSLog(@"view:%@",view);
-        NSLog(@"cons:%@",view.constraints);
-        NSArray* subviews = view.subviews;
-        if (subviews.count>0) {
-            NSLog(@"==================");
-            for (UIView* subView in subviews) {
-                NSLog(@"subView:%@",subView);
-                NSLog(@"sub-Con:%@",subView.constraints);
-            }
-            NSLog(@"\n");
-        }
-    }
+//    NSLog(@"View:%@",self.view);
+//    NSLog(@"Cons:%@",self.view.constraints);
+//    for (UIView* view in self.view.subviews) {
+//        NSLog(@"view:%@",view);
+//        NSLog(@"cons:%@",view.constraints);
+//        NSArray* subviews = view.subviews;
+//        if (subviews.count>0) {
+//            NSLog(@"==================");
+//            for (UIView* subView in subviews) {
+//                NSLog(@"subView:%@",subView);
+//                NSLog(@"sub-Con:%@",subView.constraints);
+//            }
+//            NSLog(@"\n");
+//        }
+//    }
     
 //    NSLog(@"Name TextFiled:%@",_name.constraints);
 }
