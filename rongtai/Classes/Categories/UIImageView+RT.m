@@ -17,7 +17,7 @@
 	if (!imageURL) {
 		return;
 	}
-	NSLog(@"massageProgram.imageUrl : %@", imageURL);
+//	NSLog(@"massageProgram.imageUrl : %@", imageURL);
 	// 图片
 	UIImage *img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg", imageURL]];
 	if (img) {			// 本地图片

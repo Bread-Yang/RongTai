@@ -348,6 +348,10 @@ static Byte const BYTE_CodeMode = 0xA5;
 				}
 			}
 			
+			if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+				[self.delegate didEndInstallProgramMassage];
+			}
+			
 		} else if (data.length == 11 || data.length == 12) {	// 等于11位或者12位 : 返回按摩椅网络程序状态
 //
 //			NSData *networkStatusData = [data subdataWithRange:NSMakeRange(2, 8)];
@@ -359,9 +363,9 @@ static Byte const BYTE_CodeMode = 0xA5;
 			if (response[1] == 0xa5) {
 				[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
 				
-				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
-					[self.delegate didEndInstallProgramMassage];
-				}
+//				if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+//					[self.delegate didEndInstallProgramMassage];
+//				}
 			}
 			
 			NSString *newNetworkStatusString = NSDataToHex(data);
@@ -398,7 +402,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 //					}
 //				}
 //			}
-            NSLog(@"进入安装状态，此时返回数据长度为:%ld",data.length);
+            NSLog(@"安装状态，此时返回数据长度为:%ld",data.length);
 			[self parseInstallingStatus:data];
 			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateStatusInProgramMode:)]) {
@@ -732,7 +736,7 @@ NSString * NSDataToHex(NSData *data) {
 		
 		[self sendControlByBytes:[[self makeInstallCommand:testByte] subdataWithRange:NSMakeRange(100, 33)]];
 	} else {
-		[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
+//		[self sendControlByBytes:[self exitEditMode]];  // 退出编辑模式
 	}
 }
 
@@ -765,9 +769,9 @@ NSString * NSDataToHex(NSData *data) {
 		
 		[self.readFile.resultData setLength:0];
 		
-		if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
-			[self.delegate didEndInstallProgramMassage];
-		}
+//		if (self.delegate && [self.delegate respondsToSelector:@selector(didEndInstallProgramMassage)]) {
+//			[self.delegate didEndInstallProgramMassage];
+//		}
 	}
 }
 

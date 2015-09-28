@@ -21,6 +21,7 @@
 
 - (void)read:(NSString *)binName {
 	[resultData setLength:0]; // 清空数据
+	
     //沙盒路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
