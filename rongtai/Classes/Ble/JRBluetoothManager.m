@@ -126,6 +126,7 @@
 		NSLog(@"periperal Name: %@",peripheral.name);
 		NSLog(@"periperal RSSI: %@",RSSI);
 		NSLog(@"periperal UUID: %@",[peripheral.identifier UUIDString]);
+        NSLog(@"periperal Services:%@",peripheral.services);
 		NSLog(@"periperal advertisemenetData:%@",advertisementData);
 	}
 	
