@@ -235,7 +235,7 @@
             
             MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
             mailVC.mailComposeDelegate = self;
-            [mailVC setSubject:@"我要反馈"];
+            [mailVC setSubject:NSLocalizedString(@"我要反馈",nil)];
             [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
             [[SlideNavigationController sharedInstance] toggleLeftMenu];
             [main presentViewController:mailVC animated:YES completion:nil];

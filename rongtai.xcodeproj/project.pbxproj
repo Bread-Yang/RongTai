@@ -165,6 +165,8 @@
 		3DFD18FF1B8B033800BED437 /* CustomProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD18FE1B8B033800BED437 /* CustomProgram.m */; };
 		561BC3561B5CEEF200F2E63F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */; };
 		563194D81B4146EE00F476C4 /* RTBleBaseBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */; };
+		563C91DE1BB93F36003E4F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 563C91E01BB93F36003E4F56 /* Main.storyboard */; };
+		563C91E31BB9405C003E4F56 /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 563C91E51BB9405C003E4F56 /* Second.storyboard */; };
 		565E71A31B5E59BD00E51C1C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71A21B5E59BD00E51C1C /* ImageIO.framework */; };
 		565E71A51B5E5A8B00E51C1C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565E71A41B5E5A8B00E51C1C /* MessageUI.framework */; };
 		5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5661F69F1B281302006066A0 /* LineUICollectionViewCell.m */; };
@@ -217,8 +219,6 @@
 		DF9C7CF71B147A36005617DA /* RTBleConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CE81B147A36005617DA /* RTBleConnector.m */; };
 		DF9C7CF81B147A36005617DA /* RTMassageChairStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */; };
 		DF9C7CF91B147A36005617DA /* RTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7CED1B147A36005617DA /* RTViewController.m */; };
-		DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFC1B147B07005617DA /* Main.storyboard */; };
-		DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9C7CFD1B147B07005617DA /* Second.storyboard */; };
 		DF9C7D041B147D59005617DA /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF9C7D031B147D59005617DA /* WelcomeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -525,6 +525,10 @@
 		561BC3551B5CEEF200F2E63F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTBleBaseBusinessViewController.h; sourceTree = "<group>"; };
 		563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTBleBaseBusinessViewController.m; sourceTree = "<group>"; };
+		563C91DF1BB93F36003E4F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		563C91E21BB93F39003E4F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		563C91E41BB9405C003E4F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Second.storyboard; sourceTree = "<group>"; };
+		563C91E91BB9410F003E4F56 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Second.strings"; sourceTree = "<group>"; };
 		565E71A21B5E59BD00E51C1C /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		565E71A41B5E5A8B00E51C1C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5661F69E1B281302006066A0 /* LineUICollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineUICollectionViewCell.h; path = LineUICollectionViewFlowLayout/LineUICollectionViewCell.h; sourceTree = "<group>"; };
@@ -615,8 +619,6 @@
 		DF9C7CEB1B147A36005617DA /* RTMassageChairStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTMassageChairStatus.m; sourceTree = "<group>"; };
 		DF9C7CEC1B147A36005617DA /* RTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTViewController.h; sourceTree = "<group>"; };
 		DF9C7CED1B147A36005617DA /* RTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTViewController.m; sourceTree = "<group>"; };
-		DF9C7CFC1B147B07005617DA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		DF9C7CFD1B147B07005617DA /* Second.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
 		DF9C7D021B147D59005617DA /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		DF9C7D031B147D59005617DA /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1616,8 +1618,8 @@
 			isa = PBXGroup;
 			children = (
 				3D783D3F1B12FD0300A893D9 /* LaunchScreen.xib */,
-				DF9C7CFC1B147B07005617DA /* Main.storyboard */,
-				DF9C7CFD1B147B07005617DA /* Second.storyboard */,
+				563C91E01BB93F36003E4F56 /* Main.storyboard */,
+				563C91E51BB9405C003E4F56 /* Second.storyboard */,
 				3DBE05B41B28154D0008EFCA /* Login.storyboard */,
 			);
 			path = StoryBoard;
@@ -1746,7 +1748,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D02E57B1BA6A60100CE0652 /* LaunchScreen.xib in Resources */,
-				DF9C7CFF1B147B07005617DA /* Second.storyboard in Resources */,
+				563C91E31BB9405C003E4F56 /* Second.storyboard in Resources */,
 				3D0B4C851B3ABBE100FF97C6 /* mini-sunlightningrain@2x.png in Resources */,
 				3DBE05B51B28154D0008EFCA /* Login.storyboard in Resources */,
 				3D0B4C861B3ABBE100FF97C6 /* mini-sunrain@2x.png in Resources */,
@@ -1756,7 +1758,7 @@
 				3D7D19BE1B5CEE510057B955 /* ManualTableViewCell.xib in Resources */,
 				56FD78121B9ECDD40085232E /* Images.xcassets in Resources */,
 				3D4CF7F21BB3A1DB00DC53ED /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
-				DF9C7CFE1B147B07005617DA /* Main.storyboard in Resources */,
+				563C91DE1BB93F36003E4F56 /* Main.storyboard in Resources */,
 				3D0B4C7E1B3ABBE100FF97C6 /* mini-lightningrain@2x.png in Resources */,
 				3D0B4C7C1B3ABBE100FF97C6 /* mini-hail@2x.png in Resources */,
 				3D4CF7E81BB3A1DB00DC53ED /* Resource.bundle in Resources */,
@@ -2020,6 +2022,24 @@
 			);
 			name = LaunchScreen.xib;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		563C91E01BB93F36003E4F56 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				563C91DF1BB93F36003E4F56 /* Base */,
+				563C91E21BB93F39003E4F56 /* zh-Hans */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		563C91E51BB9405C003E4F56 /* Second.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				563C91E41BB9405C003E4F56 /* Base */,
+				563C91E91BB9410F003E4F56 /* zh-Hans */,
+			);
+			name = Second.storyboard;
 			sourceTree = "<group>";
 		};
 		56F77C7A1BABF1CE00DE76A9 /* LocalProgramList.plist */ = {

@@ -1,0 +1,282 @@
+
+/* Class = "UILabel"; text = "当前温度"; ObjectID = "0Er-Hz-j6j"; */
+"0Er-Hz-j6j.text" = "当前温度";
+
+/* Class = "UIButton"; normalTitle = "单位：g/ml"; ObjectID = "0bq-US-7Fz"; */
+"0bq-US-7Fz.normalTitle" = "单位：g/ml";
+
+/* Class = "UITextField"; placeholder = "温度"; ObjectID = "1LB-kR-t9s"; */
+"1LB-kR-t9s.placeholder" = "温度";
+
+/* Class = "UIButton"; normalTitle = "单位：℃"; ObjectID = "2pI-ak-4vR"; */
+"2pI-ak-4vR.normalTitle" = "单位：℃";
+
+/* Class = "UILabel"; text = "——"; ObjectID = "34g-Qf-WGz"; */
+"34g-Qf-WGz.text" = "——";
+
+/* Class = "UIButton"; normalTitle = "Roller Speed Med"; ObjectID = "39q-gG-Cvs"; */
+"39q-gG-Cvs.normalTitle" = "Roller Speed Med";
+
+/* Class = "UIButton"; normalTitle = "清零"; ObjectID = "4Tr-d0-bSD"; */
+"4Tr-d0-bSD.normalTitle" = "清零";
+
+/* Class = "UITextField"; placeholder = "G"; ObjectID = "4UB-YI-ojx"; */
+"4UB-YI-ojx.placeholder" = "G";
+
+/* Class = "UIButton"; normalTitle = "Massage Speed 3"; ObjectID = "5QN-vM-9i9"; */
+"5QN-vM-9i9.normalTitle" = "Massage Speed 3";
+
+/* Class = "UIButton"; normalTitle = "恢复出厂"; ObjectID = "6Z2-FV-lNQ"; */
+"6Z2-FV-lNQ.normalTitle" = "恢复出厂";
+
+/* Class = "UIButton"; normalTitle = "Massage Speed 2"; ObjectID = "7yU-gb-wc6"; */
+"7yU-gb-wc6.normalTitle" = "Massage Speed 2";
+
+/* Class = "UIButton"; normalTitle = "单位：g"; ObjectID = "9Ex-Lt-2IU"; */
+"9Ex-Lt-2IU.normalTitle" = "单位：g";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 2"; ObjectID = "9Lz-Md-cgj"; */
+"9Lz-Md-cgj.normalTitle" = "Auto Mode 2";
+
+/* Class = "UIButton"; normalTitle = "Massage Speed 1"; ObjectID = "9hu-zv-mmf"; */
+"9hu-zv-mmf.normalTitle" = "Massage Speed 1";
+
+/* Class = "UIButton"; normalTitle = "复位"; ObjectID = "A3l-3b-cPb"; */
+"A3l-3b-cPb.normalTitle" = "复位";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "CPE-J7-9FV"; */
+"CPE-J7-9FV.normalTitle" = "确认";
+
+/* Class = "UILabel"; text = "ms"; ObjectID = "DE4-rO-pi0"; */
+"DE4-rO-pi0.text" = "ms";
+
+/* Class = "UITextField"; placeholder = "设定延时"; ObjectID = "DHy-UT-vjp"; */
+"DHy-UT-vjp.placeholder" = "设定延时";
+
+/* Class = "UILabel"; text = "报警颜色"; ObjectID = "DLI-RH-VRr"; */
+"DLI-RH-VRr.text" = "报警颜色";
+
+/* Class = "UIButton"; normalTitle = "同步参数"; ObjectID = "Dpj-zh-jLx"; */
+"Dpj-zh-jLx.normalTitle" = "同步参数";
+
+/* Class = "UIButton"; normalTitle = "开始"; ObjectID = "Dqs-9W-bbW"; */
+"Dqs-9W-bbW.normalTitle" = "开始";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 4"; ObjectID = "FIL-mG-1Ze"; */
+"FIL-mG-1Ze.normalTitle" = "Auto Mode 4";
+
+/* Class = "UITextField"; placeholder = "频率"; ObjectID = "G43-ZI-qdq"; */
+"G43-ZI-qdq.placeholder" = "频率";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "GKh-ji-W6b"; */
+"GKh-ji-W6b.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "暂停"; ObjectID = "IOx-9G-rhx"; */
+"IOx-9G-rhx.normalTitle" = "暂停";
+
+/* Class = "UIButton"; normalTitle = "复位"; ObjectID = "Ivn-TM-Ua7"; */
+"Ivn-TM-Ua7.normalTitle" = "复位";
+
+/* Class = "UIButton"; normalTitle = "同步参数"; ObjectID = "JJ3-K5-Wcm"; */
+"JJ3-K5-Wcm.normalTitle" = "同步参数";
+
+/* Class = "UILabel"; text = "电量"; ObjectID = "K3r-YW-r1B"; */
+"K3r-YW-r1B.text" = "电量";
+
+/* Class = "UITextField"; placeholder = "重量"; ObjectID = "KfF-W7-dZD"; */
+"KfF-W7-dZD.placeholder" = "重量";
+
+/* Class = "UIButton"; normalTitle = "暂停"; ObjectID = "LX0-6H-WK4"; */
+"LX0-6H-WK4.normalTitle" = "暂停";
+
+/* Class = "UIButton"; normalTitle = "去皮"; ObjectID = "Lai-sN-c4C"; */
+"Lai-sN-c4C.normalTitle" = "去皮";
+
+/* Class = "UITextField"; placeholder = "设定时间"; ObjectID = "MIp-e3-vq3"; */
+"MIp-e3-vq3.placeholder" = "设定时间";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "NCg-kd-9Zt"; */
+"NCg-kd-9Zt.normalTitle" = "确认";
+
+/* Class = "UILabel"; text = "当前重量"; ObjectID = "NaP-Kp-eDn"; */
+"NaP-Kp-eDn.text" = "当前重量";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "O5v-9P-OUF"; */
+"O5v-9P-OUF.text" = "0.0";
+
+/* Class = "UIButton"; normalTitle = "Roller Speed Off"; ObjectID = "O85-qI-AtF"; */
+"O85-qI-AtF.normalTitle" = "Roller Speed Off";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "OJ3-Ru-smm"; */
+"OJ3-Ru-smm.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "OaP-8W-IMo"; */
+"OaP-8W-IMo.normalTitle" = "确认";
+
+/* Class = "UITextField"; placeholder = "设定延时"; ObjectID = "Oz6-j4-bDA"; */
+"Oz6-j4-bDA.placeholder" = "设定延时";
+
+/* Class = "UITextField"; placeholder = "设定时间"; ObjectID = "PLP-dY-cfg"; */
+"PLP-dY-cfg.placeholder" = "设定时间";
+
+/* Class = "UIButton"; normalTitle = "清零"; ObjectID = "PqZ-un-e8S"; */
+"PqZ-un-e8S.normalTitle" = "清零";
+
+/* Class = "UIButton"; normalTitle = "同步参数"; ObjectID = "QPz-he-ah6"; */
+"QPz-he-ah6.normalTitle" = "同步参数";
+
+/* Class = "UITextField"; placeholder = "设定延时"; ObjectID = "QhZ-hy-HSJ"; */
+"QhZ-hy-HSJ.placeholder" = "设定延时";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "RUV-oN-vac"; */
+"RUV-oN-vac.normalTitle" = "确认";
+
+/* Class = "UITextField"; placeholder = "R"; ObjectID = "RXy-ZE-5CV"; */
+"RXy-ZE-5CV.placeholder" = "R";
+
+/* Class = "UITextField"; placeholder = "B"; ObjectID = "SqU-u9-X6M"; */
+"SqU-u9-X6M.placeholder" = "B";
+
+/* Class = "UIButton"; normalTitle = "开始"; ObjectID = "Szb-50-GHc"; */
+"Szb-50-GHc.normalTitle" = "开始";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "TBm-la-wCt"; */
+"TBm-la-wCt.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "UnQ-ua-Q1Z"; */
+"UnQ-ua-Q1Z.normalTitle" = "确认";
+
+/* Class = "UILabel"; text = "定时器1"; ObjectID = "Vkj-mP-Bc3"; */
+"Vkj-mP-Bc3.text" = "定时器1";
+
+/* Class = "UILabel"; text = "报警温度"; ObjectID = "WH6-FG-25Y"; */
+"WH6-FG-25Y.text" = "报警温度";
+
+/* Class = "UIButton"; normalTitle = "write2"; ObjectID = "XGf-aQ-7yZ"; */
+"XGf-aQ-7yZ.normalTitle" = "write2";
+
+/* Class = "UIButton"; normalTitle = "暂停"; ObjectID = "Y2Z-m3-cVf"; */
+"Y2Z-m3-cVf.normalTitle" = "暂停";
+
+/* Class = "UILabel"; text = "——"; ObjectID = "Ydz-E2-zEE"; */
+"Ydz-E2-zEE.text" = "——";
+
+/* Class = "UILabel"; text = "报警温度"; ObjectID = "YnE-Gk-RAd"; */
+"YnE-Gk-RAd.text" = "报警温度";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 0"; ObjectID = "aMx-5M-Ugk"; */
+"aMx-5M-Ugk.normalTitle" = "Auto Mode 0";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "cRx-IC-cG2"; */
+"cRx-IC-cG2.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "write1"; ObjectID = "cya-6j-Hqo"; */
+"cya-6j-Hqo.normalTitle" = "write1";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "d8M-qT-ZmU"; */
+"d8M-qT-ZmU.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "dly-a6-Yc5"; */
+"dly-a6-Yc5.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "wrtie3"; ObjectID = "duc-xr-U1X"; */
+"duc-xr-U1X.normalTitle" = "wrtie3";
+
+/* Class = "UIButton"; normalTitle = "Power Switch"; ObjectID = "eco-UY-K8q"; */
+"eco-UY-K8q.normalTitle" = "Power Switch";
+
+/* Class = "UIButton"; normalTitle = "清零"; ObjectID = "fQU-0Q-Who"; */
+"fQU-0Q-Who.normalTitle" = "清零";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 3"; ObjectID = "fTu-yi-C3i"; */
+"fTu-yi-C3i.normalTitle" = "Auto Mode 3";
+
+/* Class = "UILabel"; text = "总重量"; ObjectID = "fsb-zr-9mt"; */
+"fsb-zr-9mt.text" = "总重量";
+
+/* Class = "UILabel"; text = "电量"; ObjectID = "gVT-oZ-gnY"; */
+"gVT-oZ-gnY.text" = "电量";
+
+/* Class = "UIButton"; normalTitle = "Massage Speed 4"; ObjectID = "hdq-fy-ckG"; */
+"hdq-fy-ckG.normalTitle" = "Massage Speed 4";
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "i67-Ei-aIj"; */
+"i67-Ei-aIj.text" = "0.0";
+
+/* Class = "UILabel"; text = "闪烁频率"; ObjectID = "ibx-lZ-yHD"; */
+"ibx-lZ-yHD.text" = "闪烁频率";
+
+/* Class = "UIButton"; normalTitle = "单位：℃"; ObjectID = "kzh-FA-KWz"; */
+"kzh-FA-KWz.normalTitle" = "单位：℃";
+
+/* Class = "UITextField"; placeholder = "温度"; ObjectID = "mBx-Bi-EFU"; */
+"mBx-Bi-EFU.placeholder" = "温度";
+
+/* Class = "UIButton"; normalTitle = "恢复出厂"; ObjectID = "msV-XS-9hv"; */
+"msV-XS-9hv.normalTitle" = "恢复出厂";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 5"; ObjectID = "mwX-2I-CJX"; */
+"mwX-2I-CJX.normalTitle" = "Auto Mode 5";
+
+/* Class = "UILabel"; text = "定时器3"; ObjectID = "n3W-dM-WYO"; */
+"n3W-dM-WYO.text" = "定时器3";
+
+/* Class = "UILabel"; text = "定时器2"; ObjectID = "nIi-9m-ut8"; */
+"nIi-9m-ut8.text" = "定时器2";
+
+/* Class = "UIButton"; normalTitle = "Auto Mode 1"; ObjectID = "ntH-0B-syw"; */
+"ntH-0B-syw.normalTitle" = "Auto Mode 1";
+
+/* Class = "UIButton"; normalTitle = "复位"; ObjectID = "pS4-r0-8XZ"; */
+"pS4-r0-8XZ.normalTitle" = "复位";
+
+/* Class = "UIButton"; normalTitle = "开始"; ObjectID = "pc8-QO-BeK"; */
+"pc8-QO-BeK.normalTitle" = "开始";
+
+/* Class = "UITextField"; placeholder = "设定时间"; ObjectID = "q4B-z5-xSf"; */
+"q4B-z5-xSf.placeholder" = "设定时间";
+
+/* Class = "UILabel"; text = "Please turn on Bluetooth"; ObjectID = "qwZ-Xe-Lvh"; */
+"qwZ-Xe-Lvh.text" = "请打开蓝牙连接";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "uVZ-jk-hvK"; */
+"uVZ-jk-hvK.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "Roller Speed Slow"; ObjectID = "ufA-Ol-Cpw"; */
+"ufA-Ol-Cpw.normalTitle" = "Roller Speed Slow";
+
+/* Class = "UIButton"; normalTitle = "Massage Speed 5"; ObjectID = "v22-zi-p4a"; */
+"v22-zi-p4a.normalTitle" = "Massage Speed 5";
+
+/* Class = "UILabel"; text = "电量"; ObjectID = "vVO-iq-ARQ"; */
+"vVO-iq-ARQ.text" = "电量";
+
+/* Class = "UIViewController"; title = "Bluetooth Connect"; ObjectID = "vXZ-lx-hvc"; */
+"vXZ-lx-hvc.title" = "Bluetooth Connect";
+
+/* Class = "UIButton"; normalTitle = "同步时间"; ObjectID = "vuT-RM-KeG"; */
+"vuT-RM-KeG.normalTitle" = "同步时间";
+
+/* Class = "UIButton"; normalTitle = "清零"; ObjectID = "w2K-SS-Ysm"; */
+"w2K-SS-Ysm.normalTitle" = "清零";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "wXU-4S-rdE"; */
+"wXU-4S-rdE.normalTitle" = "确认";
+
+/* Class = "UILabel"; text = "当前温度："; ObjectID = "xQT-OW-Ubn"; */
+"xQT-OW-Ubn.text" = "当前温度：";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "xUF-WF-LqB"; */
+"xUF-WF-LqB.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "Roller Speed Fast"; ObjectID = "xUG-CE-FcP"; */
+"xUG-CE-FcP.normalTitle" = "Roller Speed Fast";
+
+/* Class = "UIButton"; normalTitle = "确认"; ObjectID = "xdc-uH-MPA"; */
+"xdc-uH-MPA.normalTitle" = "确认";
+
+/* Class = "UIButton"; normalTitle = "恢复出厂"; ObjectID = "xoV-vk-VC3"; */
+"xoV-vk-VC3.normalTitle" = "恢复出厂";
+
+/* Class = "UITextField"; placeholder = "液体密度"; ObjectID = "zBi-KM-Jeq"; */
+"zBi-KM-Jeq.placeholder" = "液体密度";

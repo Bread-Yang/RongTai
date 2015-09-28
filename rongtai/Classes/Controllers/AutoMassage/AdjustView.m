@@ -128,6 +128,8 @@ static AdjustView* share;
 {
     ManualTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:_reuseIdentifier];
     cell.titleLabel.text = _menu[indexPath.row];
+	cell.titleLabel.adjustsFontSizeToFitWidth = YES;
+	cell.titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;

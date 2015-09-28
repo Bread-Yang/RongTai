@@ -38,7 +38,7 @@
 	self.periphralTableView.backgroundView = [[UIImageView alloc] initWithImage:
 									 [UIImage imageNamed:@"bg"]];
 	
-    self.title = @"蓝牙连接";
+	self.title = NSLocalizedString(@"蓝牙连接", nil);
 	
 	bleConnector = [RTBleConnector shareManager];
     
