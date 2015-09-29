@@ -119,10 +119,11 @@
 "偏大" = "Big";
 "偏小" = "Small";
 "负离子" = "Anion";
-"手动" = "Manual";
 "自定义" = "Custom";
 "下载" = "Download";
 "取消" = "Cancel";
+"程序下载" = "Program Download";
+"DIY按摩" = "DIY Massage";
 "访问相册失败" = "Access Album Failed";
 "访问相机失败" = "Access Camera Failed";
 "删除成员成功" = "Delete Family Successful";

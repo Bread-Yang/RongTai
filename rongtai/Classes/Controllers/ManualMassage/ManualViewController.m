@@ -80,6 +80,8 @@
     
     ProgramCount* _programCount;
     
+    UIButton* _anionBtn;
+    
     BOOL _isJumpFinish;
     
     //测试用
@@ -154,8 +156,11 @@
     [_addPageControl addSubview:_pageControl];
     
     //导航栏右边按钮
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
-    
+    _anionBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
+    [_anionBtn addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_anionBtn];
     self.navigationItem.rightBarButtonItem = right;
  
     //返回按钮设置
@@ -552,7 +557,6 @@
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender {
 	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
-    
 }
 
 #pragma mark - 更新背部加热View
@@ -685,6 +689,19 @@
 //        _scan=0;
 //    }
 //    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
+//    NSLog(@"========================");
+//    NSLog(@"脚步气囊程序:%ld",rtMassageChairStatus.legAndFootAirBagProgramFlag);
+//    NSLog(@"背腰气囊程序:%ld",rtMassageChairStatus.backAndWaistAirBagProgramFlag);
+//    NSLog(@"臂肩气囊程序:%ld",rtMassageChairStatus.armAndShoulderAirBagProgramFlag);
+//    NSLog(@"坐垫气囊程序:%ld",rtMassageChairStatus.buttockAirBagProgramFlag);
+//    NSLog(@"全身气囊程序:%ld",rtMassageChairStatus.FullBodyAirBagProgramFlag);
+    
+
+    if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
     
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
@@ -858,6 +875,12 @@
 #pragma mark - 更新界面
 -(void)updateUI
 {
+    if (_bleConnector.rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
+    
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
         //按摩中
@@ -876,7 +899,7 @@
             }
             
             //按摩模式
-            NSInteger flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+            flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (flag>0&&flag<7) {
                 _skillsPreferenceLabel.text = _skillsPreferenceName[flag-1];
                 [self updateSkillsPreferenceView:YES];

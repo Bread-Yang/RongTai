@@ -85,8 +85,8 @@
     
     _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
-    NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
-    NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
+//    NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
+//    NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
     if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
         [_anionButtonItem setSelected:NO];
         [_manualMassageButtonItem setSelected:NO];
@@ -96,7 +96,7 @@
         if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
             if (_bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
                 _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
-                NSLog(@"按摩记录：%ld",_massageFlag);
+                NSLog(@"按摩记录：%ld",(unsigned long)_massageFlag);
             }
             else
             {
@@ -180,6 +180,7 @@
     _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
 	
+    //读取按摩椅固定的按摩程序
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
 	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
@@ -227,7 +228,7 @@
     
     //手动 按钮
     _manualMassageButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
-    _manualMassageButtonItem.title = NSLocalizedString(@"手动", nil);
+    _manualMassageButtonItem.title = NSLocalizedString(@"手动按摩", nil);
     [_manualMassageButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_manualMassageButtonItem setImage:[UIImage imageNamed:@"icon_hand"]];
     [_manualMassageButtonItem setSelectedImage:[UIImage imageNamed:@"icon_hand2"]];
@@ -237,7 +238,7 @@
     
     //自定义按钮
     _customProgramButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*2, 0, btnWidth, 49)];
-    _customProgramButtonItem.title = NSLocalizedString(@"自定义", nil);
+    _customProgramButtonItem.title = NSLocalizedString(@"DIY按摩", nil);
     [_customProgramButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_customProgramButtonItem setImage:[UIImage imageNamed:@"icon_user"]];
     [_customProgramButtonItem setSelectedImage:[UIImage imageNamed:@"icon_user2"]];
@@ -247,7 +248,7 @@
 
     //下载按钮
     _downloadButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*3, 0, btnWidth, 49)];
-    _downloadButtonItem.title = NSLocalizedString(@"下载", nil);
+    _downloadButtonItem.title = NSLocalizedString(@"程序下载", nil);
     [_downloadButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_downloadButtonItem setImage:[UIImage imageNamed:@"icon_download"]];
     [_downloadButtonItem setSelectedImage:[UIImage imageNamed:@"icon_download2"]];
@@ -256,7 +257,6 @@
     [_menuView addSubview:_downloadButtonItem];
     
     //
-
     imView = [UIImageView new];
     _massageFlag = 0;
     
@@ -379,7 +379,7 @@
 {
     //读取家庭成员
     //网络请求
-    NSLog(@"请求成员");
+//    NSLog(@"请求成员");
     MemberRequest* mr = [MemberRequest new];
     [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
         //            NSLog(@"成员:%@",members);
@@ -862,13 +862,13 @@
 {
     UIButton* btn = (UIButton*)_leftBtn.customView;
     if ([imageUrl isEqualToString:@"default"]||imageUrl.length < 1) {
-        NSLog(@"头像链接为默认");
+//        NSLog(@"头像链接为默认");
         //空的用默认头像
         [btn setImage:[UIImage imageNamed:@"userIcon"] forState:UIControlStateNormal];
     }
     else
     {
-        NSLog(@"读取头像");
+//        NSLog(@"读取头像");
         //先使用本地图片，若本地读不到图片则使用网络请求
         UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",imageUrl]];
         //网络请求
@@ -1058,6 +1058,30 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.7];
 }
+
+
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
 
 
 /*

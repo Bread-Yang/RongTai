@@ -260,7 +260,8 @@
         [timer invalidate];
         _count = 40;
         _isRefresh = NO;
-        [self.periphralTableView reloadData];
+        [bleConnector stopScanRTPeripheral];
+//        [self.periphralTableView reloadData];
     }
     else
     {

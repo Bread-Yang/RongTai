@@ -153,6 +153,11 @@
             }
         }
 	}
+    else
+    {
+        NSLog(@"肩部调节:%ld",rtMassageChairStatus.shoulderAjustFlag);
+        NSLog(@"肩部位置:%ld",rtMassageChairStatus.figureCheckPositionFlag);
+    }
 
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
         [self countMassageTime];

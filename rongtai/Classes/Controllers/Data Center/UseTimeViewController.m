@@ -203,7 +203,7 @@
             NSNumber* p = percents[i];
             [_makerScrollView addSubview:[self makerViewByColor:colors[i] String:[NSString stringWithFormat:@"%@  %@",names[i],useTimes[i]] Percent:[p floatValue] Index:i]];
         }
-        _makerScrollView.contentSize = CGSizeMake(SCREENWIDTH*0.3, (SCREENHEIGHT-64-50)*0.4*0.9*0.3*names.count);
+        _makerScrollView.contentSize = CGSizeMake(SCREENWIDTH*0.35, (SCREENHEIGHT-64-50)*0.4*0.9*0.3*names.count);
 //        _doughnutView.makersName = [NSArray arrayWithArray:names];
 //        _doughnutView.makersDescription = [NSArray arrayWithArray:useTimes];
         
@@ -658,7 +658,7 @@
 #pragma mark - 生成一个标注的View
 -(UIView*)makerViewByColor:(UIColor*)color String:(NSString*)string Percent:(CGFloat)percent Index:(NSUInteger)index
 {
-    CGFloat w = SCREENWIDTH*0.3;
+    CGFloat w = SCREENWIDTH*0.35;
     CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9*0.3;
     UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 15+h*index, w, h)];
     view.backgroundColor = [UIColor clearColor];
@@ -675,7 +675,7 @@
     UILabel* pL = [[UILabel alloc]initWithFrame:CGRectMake(h*0.35, h*0.3, w-h*0.35, h*0.5)];
     pL.text = [NSString stringWithFormat:@"%d%%",(int)(percent*100)];
     pL.font = [UIFont systemFontOfSize:14*WSCALE];
-    [pL setNumebrByFont:[UIFont systemFontOfSize:17*WSCALE] Color:color];
+//    [pL setNumebrByFont:[UIFont systemFontOfSize:17*WSCALE] Color:color];
     [view addSubview:pL];
     
     return view;
@@ -684,7 +684,7 @@
 #pragma mark - pan
 -(void)pan
 {
-    NSLog(@"Pan");
+//    NSLog(@"Pan");
 }
 
 - (void)didReceiveMemoryWarning {

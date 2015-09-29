@@ -24,16 +24,15 @@
 @interface ProgramDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, RTBleConnectorDelegate> {
 	
 	MBProgressHUD *_loadingHUD;
-	NSArray *_localProgramArray, *_allNetworkProgramArray;
+    NSArray* _localProgramArray;
+    NSArray* _allNetworkProgramArray;
 	NSMutableArray *_notYetInstallProgramArray, *_alreadyInstallProgramArray;
     NSInteger _massageFlag;
     RTBleConnector* _bleConnector;
     NSArray* _skillsPreferenceName;
     ProgramCount* _programCount;
     NSString* _programName;
-    
     NSInteger flag;
-
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,9 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.isListenBluetoothStatus = YES;
-	
-	//MBProgressHUD
+    //MBProgressHUD
     _loadingHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
     [self.view addSubview:_loadingHUD];
@@ -65,17 +62,18 @@
 		UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, dummyViewHeight)];
 		self.tableView.tableHeaderView = dummyView;
 		self.tableView.contentInset = UIEdgeInsetsMake(-dummyViewHeight, 0, 0, 0);
-	} else {
+	}
+    else
+    {
 		self.title = NSLocalizedString(@"程序下载", nil);
 	}
 	self.tableView.hidden = YES;
     _bleConnector = [RTBleConnector shareManager];
     
     _skillsPreferenceName = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
-	
+    
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
 	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -153,7 +151,6 @@
 }
 
 #pragma mark - RTBleConnectorDelegate
-
 - (void)didUpdateStatusInProgramMode:(NSData *)rawData {
 	
 }

@@ -48,7 +48,6 @@ static BOOL isClickable = YES;
 	
 	// 网络程序描述
 	self.programDescriptionLabel.text = massageProgram.mDescription;
-	
 }
 
 - (void)setIsLocalProgram:(BOOL)isLocalProgram {

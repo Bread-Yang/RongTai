@@ -323,10 +323,10 @@ static Byte const BYTE_CodeMode = 0xA5;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-    NSLog(@"data : %@", data);
-    NSLog(@"CBPeripheral:%@",peripheral);
-    NSLog(@"CBCharacteristic:%@",characteristic);
+//	NSLog(@"data.length : %zd", data.length);
+//    NSLog(@"data : %@", data);
+//    NSLog(@"CBPeripheral:%@",peripheral);
+//    NSLog(@"CBCharacteristic:%@",characteristic);
 //
     if ([[characteristic.UUID UUIDString] isEqualToString:RT_N_ChracteristicUUID]) {
 		

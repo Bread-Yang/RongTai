@@ -265,7 +265,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
-        return _heightArr.count;
+        return _heightArr.count*5;
     }
     else
     {
@@ -276,7 +276,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (component == 0) {
-        return _heightArr[row];
+        return _heightArr[row%_heightArr.count];
     }
     else
     {
@@ -287,15 +287,16 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (_heightUnitSelectedIndex == 0) {
-        _height.text = _heightArr[row];
+        _height.text = _heightArr[row%_heightArr.count];
     }
     else
     {
-        NSString* integer = _heightArr[[pickerView selectedRowInComponent:0]];
+        NSString* integer = _heightArr[[pickerView selectedRowInComponent:0]%_heightArr.count];
         NSString* decimal = _decimals[[pickerView selectedRowInComponent:1]];
         NSString* height = [NSString stringWithFormat:@"%@.%@",integer,decimal];
         _height.text = height;
     }
+    [pickerView selectRow:(row%_heightArr.count)+2*_heightArr.count inComponent:0 animated:NO];
 }
 
 #pragma mark - 键盘出现方法
@@ -651,7 +652,7 @@
     }
     else
     {
-        NSUInteger integer = [_heightPicker selectedRowInComponent:0];
+        NSUInteger integer = [_heightPicker selectedRowInComponent:0]%_heightArr.count;
         NSUInteger decimal = [_heightPicker selectedRowInComponent:1];
         _user.height = [NSNumber numberWithFloat:(integer+55+0.1*decimal)];
     }
@@ -706,7 +707,7 @@
         _heightUnitSegmentView.selectIndex = 0;
         NSUInteger height = [_user.height integerValue];
         _height.text = [NSString stringWithFormat:@"%ld",height];
-        [_heightPicker selectRow:(height-140) inComponent:0 animated:NO];
+        [_heightPicker selectRow:(height-140)+2*_heightArr.count inComponent:0 animated:NO];
     } else {
         [self setSelectedInchUnit];
         _heightUnitSegmentView.selectIndex = 1;
@@ -715,7 +716,7 @@
         int decimal = (int)(round((height - integer)*10)); //取小数点后1位
     
         _height.text =[NSString stringWithFormat:@"%ld.%d",(unsigned long)integer,decimal];
-        [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];
+        [_heightPicker selectRow:(integer-55)+2*_heightArr.count inComponent:0 animated:NO];
         [_heightPicker selectRow:(decimal-0) inComponent:1 animated:NO];
     }
     _heightUnitSelectedIndex = _heightUnitSegmentView.selectIndex;
@@ -816,11 +817,11 @@
         if (index == 0) {
             //男
             if (_heightUnitSegmentView.selectIndex == 0) {
-                [_heightPicker selectRow:(174-140) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(174-140)+2*_heightArr.count inComponent:0 animated:NO];
             }
             else
             {
-                [_heightPicker selectRow:(69-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(69-55)+2*_heightArr.count inComponent:0 animated:NO];
                 [_heightPicker selectRow:0 inComponent:1 animated:NO];
             }
         }
@@ -828,22 +829,22 @@
         {
             //女
             if (_heightUnitSegmentView.selectIndex == 0) {
-                [_heightPicker selectRow:(160-140) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(160-140)+2*_heightArr.count inComponent:0 animated:NO];
             }
             else
             {
-                [_heightPicker selectRow:(63-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(63-55)+2*_heightArr.count inComponent:0 animated:NO];
                 [_heightPicker selectRow:0 inComponent:1 animated:NO];
             }
         }
-         _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+         _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]%_heightArr.count];
     }
     else if (segmentView.tag == 3202)
     {
         if (index != _heightUnitSelectedIndex) {
             //单位改变时，身高数值要改变
             _heightUnitSelectedIndex = index;
-            NSUInteger selectedInedx = [_heightPicker selectedRowInComponent:0];
+            NSUInteger selectedInedx = [_heightPicker selectedRowInComponent:0]%_heightArr.count;
             if (index == 0) {
                 //cm
                 NSUInteger decimal = [_heightPicker selectedRowInComponent:1];
@@ -857,8 +858,8 @@
                 {
                     index = 300;
                 }
-                [_heightPicker selectRow:(index-140) inComponent:0 animated:NO];
-                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]];
+                [_heightPicker selectRow:(index-140)+2*_heightArr.count inComponent:0 animated:NO];
+                _height.text = _heightArr[[_heightPicker selectedRowInComponent:0]%_heightArr.count];
             }
             else
             {
@@ -877,7 +878,7 @@
                     decimal = 9;
                 }
                 
-                [_heightPicker selectRow:(integer-55) inComponent:0 animated:NO];
+                [_heightPicker selectRow:(integer-55)+2*_heightArr.count inComponent:0 animated:NO];
                 [_heightPicker selectRow:(decimal-0) inComponent:1 animated:NO];
                 _height.text = [NSString stringWithFormat:@"%d.%d",integer,decimal];
             }

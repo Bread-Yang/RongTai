@@ -46,6 +46,7 @@
     BOOL _isJumpFinish;
     NSString *functionString;
     BOOL _isJumpScan;
+    UIButton* _anionBtn;
 }
 @end
 
@@ -71,7 +72,11 @@
     [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
     
     //
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
+    _anionBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
+    [_anionBtn addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_anionBtn];
     self.navigationItem.rightBarButtonItem = right;
     
 	// 时间view加入单击手势
@@ -90,6 +95,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _isJumpScan = YES;
+    if (_bleConnector.rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
     //获取按摩椅自动按摩名称
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
@@ -170,6 +180,8 @@
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
                         name = NSLocalizedString(@"云养程序四", nil);;
                         break;
+                    default:
+                        break;
                 }
                 
                 if (networkProgram) {
@@ -224,14 +236,12 @@
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender
 {
-	NSLog(@"rightItemClicked");
 	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
 }
 
 #pragma mark - 返回按钮方法
 -(void)goBack
 {
-    
     if (_backVC) {
         [self.navigationController popToViewController:_backVC animated:YES];
     }
@@ -239,17 +249,6 @@
     {
         [self backToMainViewController];
     }
-//    MainViewController* main;
-//    NSArray* viewControllers = self.navigationController.viewControllers;
-//    for (UIViewController* vc in viewControllers) {
-//        if ([vc isKindOfClass:[MainViewController class]]) {
-//            main = (MainViewController*)vc;
-//            break;
-//        }
-//    }
-//    if (main) {
-//        [self.navigationController popToViewController:main animated:YES];
-//    }
 }
 
 #pragma mark - 停止按摩
@@ -315,8 +314,15 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
 {
-	// 以下是界面跳转
 	
+    
+    if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
+	
+    // 以下是界面跳转
 	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
         if (_isJumpScan) {
             _isJumpScan = NO;

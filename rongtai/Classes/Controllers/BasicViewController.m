@@ -93,7 +93,7 @@
         else
         {
             _massageFlag = 0;
-            NSLog(@"按摩记录，没有按摩");
+//            NSLog(@"按摩记录，没有按摩");
         }
 	}
 }
