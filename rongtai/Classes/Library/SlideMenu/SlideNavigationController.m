@@ -623,9 +623,19 @@ static SlideNavigationController *singletonInstance;
         }
         else
         {
-            return (orientation == UIDeviceOrientationPortrait)
-            ? rect.origin.x
-            : rect.origin.x*-1;
+            if (orientation == UIDeviceOrientationPortrait) {
+                NSLog(@"portrait:%f",rect.origin.x);
+                return rect.origin.x;
+            }
+            else
+            {
+                NSLog(@"UpsideDown:%f",rect.origin.x*-1);
+                return rect.origin.x*-1;
+            }
+            
+//            return (orientation == UIDeviceOrientationPortrait)
+//            ? rect.origin.x
+//            : rect.origin.x*-1;
         }
     }
 }

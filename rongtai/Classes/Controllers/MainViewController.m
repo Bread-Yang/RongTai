@@ -473,7 +473,7 @@
 //			cell.textLabel.textColor = BLACK;
 //			cell.textLabel.font = [UIFont systemFontOfSize:18];
 			cell.detailTextLabel.text = programDic[@"programDescription"];
-			cell.detailTextLabel.numberOfLines = 0;
+//			cell.detailTextLabel.numberOfLines = 0;
 //			cell.detailTextLabel.textColor = BLACK;
 //			cell.detailTextLabel.font = [UIFont systemFontOfSize:10];
 			cell.imageView.image = [UIImage imageNamed:programDic[@"programImageUrl"]];
