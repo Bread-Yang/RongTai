@@ -197,6 +197,20 @@
             [useTimes addObject:ut];
         }
         
+        //从大到小排序
+        for (int i = 0; i<percents.count; i++) {
+            NSNumber* num1 = percents[i];
+            for (int j = i+1; j<percents.count ;j++) {
+                NSNumber* num2 = percents[j];
+                if ([num1 floatValue] < [num2 floatValue]) {
+                    [percents exchangeObjectAtIndex:i withObjectAtIndex:j];
+                    [useTimes exchangeObjectAtIndex:i withObjectAtIndex:j];
+                    [names exchangeObjectAtIndex:i withObjectAtIndex:j];
+                    [colors exchangeObjectAtIndex:i withObjectAtIndex:j];
+                }
+            }
+        }
+        
         _doughnutView.percents = [NSArray arrayWithArray:percents];
         _doughnutView.colors = colors;
         for (int i = 0; i<names.count; i++) {

@@ -91,12 +91,12 @@
                 success([self getAlreadySaveNetworkMassageProgramList]);
             }
 			
-        } else {
-			NSLog(@"获取按摩程序列表失败:responseCode不等于200");
-            if (failure) {
-                failure([self getAlreadySaveNetworkMassageProgramList]);
-            }
-        }
+		} else {
+			
+			if (failure) {
+				failure([self getAlreadySaveNetworkMassageProgramList]);
+			}
+		}
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		NSLog(@"获取按摩程序列表失败:%@",error);
 		NSLog(@"error._code : %zd", error.code);

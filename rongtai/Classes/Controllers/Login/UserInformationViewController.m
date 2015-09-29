@@ -146,7 +146,7 @@
     //头像按钮设置白色边框
     _userIcon.layer.borderColor = [UIColor whiteColor].CGColor;
     _userIcon.layer.borderWidth = 3;
-    _userIcon.layer.cornerRadius = 0.4*0.4*[UIScreen mainScreen].bounds.size.height/2;
+    _userIcon.layer.cornerRadius = 0.2*([UIScreen mainScreen].bounds.size.height-64)/2;
     
     //默认头像
     _userImage = [UIImage imageNamed:@"userIcon"];

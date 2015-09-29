@@ -1608,7 +1608,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekt-vL-LFR">
-                                <rect key="frame" x="216" y="56" width="168" height="168"/>
+                                <rect key="frame" x="240" y="80" width="120" height="120"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ekt-vL-LFR" secondAttribute="height" multiplier="1:1" id="VRc-cg-Hcc"/>
@@ -1622,7 +1622,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAr-KF-paP">
-                                <rect key="frame" x="555" y="220" width="28.5" height="24"/>
+                                <rect key="frame" x="555.5" y="220" width="28.5" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="kAr-KF-paP" secondAttribute="height" multiplier="626:517" id="pVW-DA-50p"/>
                                 </constraints>
@@ -1645,7 +1645,7 @@
                             <constraint firstItem="Ekt-vL-LFR" firstAttribute="height" secondItem="lQ3-po-mxo" secondAttribute="height" multiplier="0.45" id="UcA-RO-WWG"/>
                             <constraint firstItem="lQ3-po-mxo" firstAttribute="top" secondItem="AKT-XM-a6e" secondAttribute="bottom" id="ZvD-X6-63X"/>
                             <constraint firstItem="kAr-KF-paP" firstAttribute="height" secondItem="lQ3-po-mxo" secondAttribute="height" multiplier="0.1" id="a5s-Xe-AJB"/>
-                            <constraint firstItem="Ekt-vL-LFR" firstAttribute="height" secondItem="KKh-cG-Ix8" secondAttribute="height" multiplier="0.28" id="cR5-Ci-bVI"/>
+                            <constraint firstItem="Ekt-vL-LFR" firstAttribute="height" secondItem="KKh-cG-Ix8" secondAttribute="height" multiplier="0.2" id="cR5-Ci-bVI"/>
                             <constraint firstItem="9YU-tm-6q0" firstAttribute="height" secondItem="KKh-cG-Ix8" secondAttribute="height" multiplier="0.4" id="inQ-cE-H0T"/>
                             <constraint firstItem="lQ3-po-mxo" firstAttribute="centerX" secondItem="Ekt-vL-LFR" secondAttribute="centerX" id="qBk-CS-56C"/>
                             <constraint firstItem="9YU-tm-6q0" firstAttribute="width" secondItem="KKh-cG-Ix8" secondAttribute="width" id="qxW-5g-2yg"/>
