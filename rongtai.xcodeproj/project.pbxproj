@@ -181,7 +181,6 @@
 		569360201B799900001B9BF5 /* ReadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5693601F1B799900001B9BF5 /* ReadFile.m */; };
 		569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */; };
 		569360271B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */; };
-		569360291B79E910001B9BF5 /* 003.bin in Resources */ = {isa = PBXBuildFile; fileRef = 569360281B79E910001B9BF5 /* 003.bin */; };
 		56B0E26F1B96980B001C96FA /* UIImageView+RT.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B0E26E1B96980B001C96FA /* UIImageView+RT.m */; };
 		56C349431B15A689007C8B3F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349421B15A689007C8B3F /* SystemConfiguration.framework */; };
 		56C349451B15A699007C8B3F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C349441B15A699007C8B3F /* QuartzCore.framework */; };
@@ -556,7 +555,6 @@
 		569360231B79E30F001B9BF5 /* ProgramDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadViewController.m; sourceTree = "<group>"; };
 		569360251B79E33C001B9BF5 /* ProgramDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramDownloadTableViewCell.h; sourceTree = "<group>"; };
 		569360261B79E33C001B9BF5 /* ProgramDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramDownloadTableViewCell.m; sourceTree = "<group>"; };
-		569360281B79E910001B9BF5 /* 003.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 003.bin; sourceTree = "<group>"; };
 		56B0E26D1B96980B001C96FA /* UIImageView+RT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+RT.h"; sourceTree = "<group>"; };
 		56B0E26E1B96980B001C96FA /* UIImageView+RT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RT.m"; sourceTree = "<group>"; };
 		56C349421B15A689007C8B3F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1009,7 +1007,6 @@
 			isa = PBXGroup;
 			children = (
 				56FD78111B9ECDD40085232E /* Images.xcassets */,
-				569360281B79E910001B9BF5 /* 003.bin */,
 				3D783D311B12FD0300A893D9 /* Info.plist */,
 				3D783D321B12FD0300A893D9 /* main.m */,
 				3D5E901C1B26C43E00B03107 /* Localizable.strings */,
@@ -1779,7 +1776,6 @@
 				56F77C781BABF1CE00DE76A9 /* LocalProgramList.plist in Resources */,
 				3D30B59B1BA966A200BD2C41 /* IQKeyboardManager.bundle in Resources */,
 				3D0B4C7F1B3ABBE100FF97C6 /* mini-rain@2x.png in Resources */,
-				569360291B79E910001B9BF5 /* 003.bin in Resources */,
 				3D0B4C821B3ABBE100FF97C6 /* mini-sun@2x.png in Resources */,
 				3D0B4C831B3ABBE100FF97C6 /* mini-suncloud@2x.png in Resources */,
 				3D4CF7E61BB3A1DB00DC53ED /* ShareSDKLocalizable.strings in Resources */,

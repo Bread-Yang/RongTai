@@ -1533,7 +1533,7 @@ unsigned short CRC_calc(unsigned char *start, unsigned char *end) {
 		self.chairInstallExceptionDialog.isReconnectDialog = YES;
 		
 		self.chairInstallExceptionDialog.reconnectTipsString = NSLocalizedString(@"重启按摩椅", nil);
-		[self.chairInstallExceptionDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确认", nil), nil]];
+		[self.chairInstallExceptionDialog setButtonTitles:[NSMutableArray arrayWithObjects:NSLocalizedString(@"确定", nil), nil]];
 	}
 	
 	if (self.delegate && [self.delegate isKindOfClass:[UIViewController class]]) {
