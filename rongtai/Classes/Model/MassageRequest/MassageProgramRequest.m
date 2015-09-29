@@ -83,7 +83,6 @@
 			}
 			
 		} else {
-//			NSLog(@"获取按摩程序列表失败:responseCode不等于200");
 			
 			if (failure) {
 				failure([self getAlreadySaveNetworkMassageProgramList]);
