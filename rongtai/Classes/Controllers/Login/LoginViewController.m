@@ -20,7 +20,8 @@
 #import "AppIntrouceView.h"
 #import "MemberRequest.h"
 #import "RegisterViewController.h"
-#import "UserInformationViewController.h"
+//#import "UserInformationViewController.h"
+#import "UserViewController.h"
 #import "IQKeyboardManager.h"
 
 @interface LoginViewController ()<AppIntroduceViewDelegate, LoginRequestDelegate> {
@@ -174,8 +175,9 @@
                 //没有家庭成员，要跳到添加成员页面
                 [_loading hide:YES];
                 [ud setObject:nil forKey:@"uid"];
-                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                UserInformationViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+//                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//                UserViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+                UserViewController* vc = [UserViewController new];
                 vc.isRegister = YES;
                 [vc setUid:uid AndToken:token];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -235,8 +237,9 @@
                 //没有家庭成员，要跳到添加成员页面
                 [_loading hide:YES];
                 [ud setObject:nil forKey:@"uid"];
-                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-                UserInformationViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+//                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//                UserViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
+                UserViewController* vc = [UserViewController new];
                 vc.isRegister = YES;
                 [vc setUid:uid AndToken:token];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -350,23 +353,8 @@
 	// Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-- (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
-	[super didUpdateMassageChairStatus:rtMassageChairStatus];
-	NSLog(@"didUpdateMassageChairStatus:");
-}
 
 #pragma mark - AppIntroduceViewDelegate
-
 - (void)onDoneButtonPressed {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:@"YES"forKey:@"intro_screen_viewed"];
@@ -374,9 +362,6 @@
 	
 	[UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
 		self.introduceView.alpha = 0;
-		
-		// 清空所有本地的UILocalNotification
-		[[UIApplication sharedApplication] cancelAllLocalNotifications];
 	} completion:^(BOOL finished) {
 		[self.introduceView removeFromSuperview];
 	}];

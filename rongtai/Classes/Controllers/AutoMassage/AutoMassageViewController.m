@@ -24,7 +24,7 @@
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate,UIAlertViewDelegate> {
     __weak IBOutlet UILabel *_timeSetLabel;
-    __weak IBOutlet UILabel *_functionLabel;
+//    __weak IBOutlet UILabel *_functionLabel;
 	__weak IBOutlet UITextView *_functionTextView;
     __weak IBOutlet UILabel *_usingTimeLabel;
     __weak IBOutlet UIButton *_stopBtn;
@@ -195,8 +195,8 @@
                 }
             }
             
-            _functionLabel.text = functionString;
-            [_functionLabel sizeToFit];
+//            _functionLabel.text = functionString;
+//            [_functionLabel sizeToFit];
             
             if (![_functionTextView.text isEqualToString:functionString]) {
                 _functionTextView.text = functionString;
@@ -437,9 +437,9 @@
                     functionString = @"获取服务器信息失败，暂无描述";
                 }
             }
-            
-            _functionLabel.text = functionString;
-            [_functionLabel sizeToFit];
+//            
+//            _functionLabel.text = functionString;
+//            [_functionLabel sizeToFit];
             
             if (![_functionTextView.text isEqualToString:functionString]) {
                 _functionTextView.text = functionString;

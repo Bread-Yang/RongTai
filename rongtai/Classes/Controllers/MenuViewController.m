@@ -227,18 +227,18 @@
         }
         if (main) {
             //测试用，跳到按摩完毕页面
-//            UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-//            FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-//            [sl pushViewController:finishViewController animated:YES];
+            UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+            [sl pushViewController:finishViewController animated:YES];
 
             //我要反馈页面，调用系统发邮件:info@chinarongtai.com
             
-            MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
-            mailVC.mailComposeDelegate = self;
-            [mailVC setSubject:NSLocalizedString(@"我要反馈",nil)];
-            [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
-            [[SlideNavigationController sharedInstance] toggleLeftMenu];
-            [main presentViewController:mailVC animated:YES completion:nil];
+//            MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
+//            mailVC.mailComposeDelegate = self;
+//            [mailVC setSubject:NSLocalizedString(@"我要反馈",nil)];
+//            [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
+//            [[SlideNavigationController sharedInstance] toggleLeftMenu];
+//            [main presentViewController:mailVC animated:YES completion:nil];
         }
         else
         {

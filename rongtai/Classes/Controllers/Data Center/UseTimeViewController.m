@@ -56,7 +56,7 @@
     [super viewDidLoad];
     CGFloat h = (SCREENHEIGHT-64-50)*0.4*0.9;
     
-    _doughnutView = [[WLDoughnutStatsView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.7, SCREENHEIGHT*0.3)];
+    _doughnutView = [[WLDoughnutStatsView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH*0.65, SCREENHEIGHT*0.3)];
 //    _doughnutView.layer.borderWidth = 1;
     _doughnutView.r = h/2;
     _doughnutView.doughnutWidth = _doughnutView.r*0.25;
@@ -180,22 +180,6 @@
             NSString* name = [r objectForKey:@"name"];
             [names addObject:name];
         }
-        if (otherTime > 0) {
-            [colors addObject:_doughnutView.colors[6]];
-            [percents addObject:[NSNumber numberWithFloat:otherTime/(float)useTime]];
-            [names addObject:@"其他"];
-            NSString* ut;
-            if (otherTime>60) {
-                int h = (int)otherTime/60;
-                int m = otherTime%60;
-                ut = [NSString stringWithFormat:@"%dh%dm",h,m];
-            }
-            else
-            {
-                ut = [NSString stringWithFormat:@"%lum",otherTime];
-            }
-            [useTimes addObject:ut];
-        }
         
         //从大到小排序
         for (int i = 0; i<percents.count; i++) {
@@ -210,6 +194,25 @@
                 }
             }
         }
+        
+        if (otherTime > 0) {
+            [colors addObject:_doughnutView.colors[6]];
+            [percents addObject:[NSNumber numberWithFloat:otherTime/(float)useTime]];
+            [names addObject:@"其他"];
+            NSString* ut;
+            if (otherTime>60) {
+                int h = (int)otherTime/60;
+                int m = otherTime%60;
+                ut = [NSString stringWithFormat:@"%dh%dm",h,m];
+            }
+            else
+            {
+                ut = [NSString stringWithFormat:@"%lum",(unsigned long)otherTime];
+            }
+            [useTimes addObject:ut];
+        }
+        
+       
         
         _doughnutView.percents = [NSArray arrayWithArray:percents];
         _doughnutView.colors = colors;

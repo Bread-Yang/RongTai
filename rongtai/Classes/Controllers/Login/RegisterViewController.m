@@ -10,7 +10,8 @@
 #import "LoginRequest.h"
 #import "UIBarButtonItem+goBack.h"
 #import "MBProgressHUD.h"
-#import "UserInformationViewController.h"
+//#import "UserInformationViewController.h"
+#import "UserViewController.h"
 
 @interface RegisterViewController ()<LoginRequestDelegate>
 {
@@ -192,8 +193,9 @@
         phone = [phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [defaults setObject:phone forKey:@"phone"];
         [self showProgressHUDByString:@"注册成功"];
-        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        UserInformationViewController* rVC = (UserInformationViewController*)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+//        UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        UserViewController* rVC = (UserInformationViewController*)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+        UserViewController* rVC = [UserViewController new];
         rVC.isRegister = YES;
         [self.navigationController pushViewController:rVC animated:YES];
     }

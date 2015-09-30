@@ -14,9 +14,6 @@
 
 @interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
-    
-//    NSArray *segueIdentifiers;
-    
     RTBleConnector *bleConnector;
     UIBarButtonItem *refreshItem;
     UIImageView* _cView;
@@ -43,8 +40,6 @@
 	bleConnector = [RTBleConnector shareManager];
     
     blePeriphrals = [[NSMutableArray alloc] init];
-	
-//    segueIdentifiers = @[@"scaleViewController", @"timerViewController", @"thermometerViewController"];
     
     _cView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
     _cView.userInteractionEnabled = YES;
@@ -73,27 +68,16 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	NSLog(@"viewWillDisappear()");
+//	NSLog(@"viewWillDisappear()");
 	[super viewWillDisappear:animated];
 	
 	[bleConnector stopScanRTPeripheral];
 	//    bleConnector.delegate = nil;
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-	NSLog(@"viewDidDisappear()");
-    [super viewDidDisappear:animated];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"mpSegue"]) {
-//        
-//    }
-//}
 
 #pragma mark - 返回按钮方法
 -(void)back {
@@ -164,16 +148,6 @@
 		[bleConnector cancelCurrentConnectedRTPeripheral];  // cancal current device connection, then connect another device
         [bleConnector connectRTPeripheral:peripheral];
     }
-    
-    //    if ([peripheral.name isEqualToString:kDeviceThermometerName]) {
-    //        [self performSegueWithIdentifier:@"thermometerViewController" sender:nil];
-    //
-    //    }else if([peripheral.name isEqualToString:kDeviceTimerName]) {
-    //        [self performSegueWithIdentifier:@"timerViewController" sender:nil];
-    //
-    //    }else if([peripheral.name isEqualToString:kDeviceScaleName]) {
-    //        [self performSegueWithIdentifier:@"scaleViewController" sender:nil];
-    //    }
 }
 
 #pragma mark - RTBleConnectorDelegate

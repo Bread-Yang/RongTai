@@ -1,8 +1,8 @@
 //
-//  UserInformationViewController.h
+//  UserViewController.h
 //  rongtai
 //
-//  Created by William-zhang on 15/6/2.
+//  Created by William-zhang on 15/9/30.
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @class Member;
 
-@interface UserInformationViewController : BasicViewController
+@interface UserViewController : BasicViewController
 
 @property(nonatomic)BOOL isRegister;
 
@@ -23,5 +23,6 @@
  *  设置uid和token
  */
 -(void)setUid:(NSString *)uid AndToken:(NSString*)token;
+
 
 @end

@@ -126,6 +126,14 @@
     _humanView.delegate = self;
     [_scroll addSubview:_humanView];
     
+    //创建拖拽提醒
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(w, 0.9*h, w, 0.1*h)];
+    label.text = @"请拖动圆点进行调节";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = ORANGE;
+    label.font = [UIFont systemFontOfSize:15];
+    [_scroll addSubview:label];
+    
     //创建 极线图
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(w, 0, w, h)];
     _polar.dataSeries = @[@(6), @(6), @(6), @(6)];
@@ -203,6 +211,10 @@
     _delayOfHumanView = 0;
     
     _isJumpFinish = YES;
+    
+    //
+    _timeLabel.adjustsFontSizeToFitWidth = YES;
+    _timeLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

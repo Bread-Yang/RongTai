@@ -130,7 +130,7 @@
 				return;
 			}
 		}
-		
+        NSLog(@"跳转到自动页面3");
 		UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 		AutoMassageViewController *autoVC = (AutoMassageViewController*)[s instantiateViewControllerWithIdentifier:@"AutoMassageVC"];
         autoVC.backVC = self.navigationController.viewControllers[self.navigationController.viewControllers.count-1];
@@ -222,7 +222,7 @@
 			//				[self jumpToScanViewConroller];
 			//
 			//			} else { // 自动按摩
-			
+            NSLog(@"跳转到自动页面2");
 			[self jumpToAutoMassageViewConroller];
 			
 			//			}

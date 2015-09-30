@@ -30,6 +30,7 @@
     BOOL _toRequest;     //是否请求数据
     NSTimer* _timer;
     UIColor* _oColor;
+    BOOL _isRequseting;  //是否正在请求中
 }
 @end
 
@@ -70,6 +71,7 @@
 -(void)setUp
 {
     _toRequest = YES;
+    _isRequseting = NO;
     _icon = [[UIImageView alloc]init];
     _icon.contentMode = UIViewContentModeScaleAspectFit;
     _temperature = [self newLabel];
@@ -137,7 +139,9 @@
     
     NSURL* url = [NSURL URLWithString:str];
     NSURLRequest* request = [[NSURLRequest alloc]initWithURL:url];
+    _isRequseting = YES;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        _isRequseting = NO;
         if (connectionError) {
             NSLog(@"请求出错:%@",connectionError);
             if (_toRequest) {
@@ -205,71 +209,79 @@
 #pragma mark - 更新天气
 -(void)updateWeather2
 {
-//    _city = @"北京";
-    NSString* str = [NSString stringWithFormat:@"http://api.map.baidu.com/telematics/v3/weather?location=%@&output=json&ak=UoG0srrPtrPLFempBHRRBhis",_city];
-    str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSURL* url = [NSURL URLWithString:str];
-    NSURLRequest* request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:3*60];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError) {
-            NSLog(@"请求出错:%@",connectionError);
-            if (_toRequest) {
-                _hud.labelText = @"网络出错，请检测网络";
-                [_hud show:YES];
-                [_hud hide:YES afterDelay:0.7];
-                _toRequest = NO;
-            }
-        }
-        else
-        {
-//            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
-            NSError* error;
-            NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            if (error) {
-                NSLog(@"解析出错:%@",error);
+    if (!_isRequseting) {
+        NSString* str = [NSString stringWithFormat:@"http://api.map.baidu.com/telematics/v3/weather?location=%@&output=json&ak=UoG0srrPtrPLFempBHRRBhis",_city];
+        str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSURL* url = [NSURL URLWithString:str];
+        NSURLRequest* request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:3*60];
+        _isRequseting = YES;
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            _isRequseting = NO;
+            if (connectionError) {
+                NSLog(@"请求出错:%@",connectionError);
                 if (_toRequest) {
-                    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"数据解析出错" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重新请求", nil];
-                    [alert show];
+                    _hud.labelText = @"网络出错，请检测网络";
+                    [_hud show:YES];
+                    [_hud hide:YES afterDelay:0.7];
+                    _toRequest = NO;
                 }
             }
             else
             {
-                NSArray* results = [dic objectForKey:@"results"];
-                if (results.count>0) {
-                    NSDictionary* weather = results[0];
-                    if (weather) {
-                        NSArray* weatherData = [weather objectForKey:@"weather_data"];
-                        if (weatherData.count>0) {
-                            NSDictionary* today = weatherData[0];
-//                            NSLog(@"今天的天气:%@",today);
-                            //更新温度
-                            NSString* date = [today objectForKey:@"date"];
-                            NSRange r = [date rangeOfString:@"："];
-                            NSRange subR = NSMakeRange(r.location+1, 2);
-                            NSString* temp = [date substringWithRange:subR];
-                            _temperature.text = temp;
-                            
-                            //更新天气图标
-                            [self updateWeatherIconByName:[today objectForKey:@"weather"]];
-                            _icon.image = [UIImage imageNamed:_imageName];
-                            
-                            //更新城市风向情况
-                            NSString* wind = [today objectForKey:@"wind"];
-                            NSRange wR = [wind rangeOfString:@"风"];
-                            NSString* shortWind = [wind substringWithRange:NSMakeRange(0, wR.location+1)];
-                            NSString* aqi = [NSString stringWithFormat:@"%@  %@",_city,shortWind];
-                            _aqi.text = aqi;
-                            _o.textColor  = _oColor;
-//                            NSLog(@"天气状况:%@",today);
-                            //数据保存到本地
-                            [self saveWeather];
-                            _toRequest = YES;
-                            if (self.hidden) {
-                                self.hidden = NO;
+                //            NSLog(@"data:%@",[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+                NSError* error;
+                NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                if (error) {
+                    NSLog(@"解析出错:%@",error);
+                    if (_toRequest) {
+                        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"数据解析出错" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"重新请求", nil];
+                        [alert show];
+                    }
+                }
+                else
+                {
+                    NSArray* results = [dic objectForKey:@"results"];
+                    if (results.count>0) {
+                        NSDictionary* weather = results[0];
+                        if (weather) {
+                            NSArray* weatherData = [weather objectForKey:@"weather_data"];
+                            if (weatherData.count>0) {
+                                NSDictionary* today = weatherData[0];
+                                //                            NSLog(@"今天的天气:%@",today);
+                                //更新温度
+                                NSString* date = [today objectForKey:@"date"];
+                                NSRange r = [date rangeOfString:@"："];
+                                NSRange subR = NSMakeRange(r.location+1, 2);
+                                NSString* temp = [date substringWithRange:subR];
+                                _temperature.text = temp;
+                                
+                                //更新天气图标
+                                [self updateWeatherIconByName:[today objectForKey:@"weather"]];
+                                _icon.image = [UIImage imageNamed:_imageName];
+                                
+                                //更新城市风向情况
+                                NSString* wind = [today objectForKey:@"wind"];
+                                NSRange wR = [wind rangeOfString:@"风"];
+                                NSString* shortWind = [wind substringWithRange:NSMakeRange(0, wR.location+1)];
+                                NSString* aqi = [NSString stringWithFormat:@"%@  %@",_city,shortWind];
+                                _aqi.text = aqi;
+                                _o.textColor  = _oColor;
+                                //                            NSLog(@"天气状况:%@",today);
+                                //数据保存到本地
+                                [self saveWeather];
+                                _toRequest = YES;
+                                if (self.hidden) {
+                                    self.hidden = NO;
+                                }
+                                if (!_timer) {
+                                    _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
+                                }
                             }
-                            if (!_timer) {
-                                _timer = [NSTimer scheduledTimerWithTimeInterval:TIME target:self selector:@selector(updateWeatherByTimer:) userInfo:nil repeats:YES];
+                            else
+                            {
+                                NSLog(@"当前城市查询不到天气");
+                                [self setDefaultCity:@"当前城市未提供天气服务"];
                             }
                         }
                         else
@@ -280,18 +292,13 @@
                     }
                     else
                     {
-                        NSLog(@"当前城市查询不到天气");
+                        NSLog(@"当前城市未提供天气服务");
                         [self setDefaultCity:@"当前城市未提供天气服务"];
                     }
                 }
-                else
-                {
-                    NSLog(@"当前城市未提供天气服务");
-                    [self setDefaultCity:@"当前城市未提供天气服务"];
-                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 #pragma mark - 取消更新天气

@@ -68,6 +68,8 @@
     WLButtonItem* _downloadButtonItem;  //下载按钮
     
     NSUInteger _timingPlanCount; //记录未同步的定时计划
+    
+    BOOL _isClicked;   //是否点击了按摩模式
 }
 @end
 
@@ -77,6 +79,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _isClicked = NO;
     self.navigationController.navigationBarHidden = NO;
     [_customProgramButtonItem setSelected:NO];
     [_downloadButtonItem setSelected:NO];
@@ -270,7 +273,6 @@
 }
 
 #pragma mark - 请求网络按摩程序
-
 - (void)requestNetworkMassageProgram {
 	// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 	_networkMassageDic = [NSMutableDictionary new];
@@ -547,6 +549,7 @@
 //		[reconnectDialog show];
 //		return;
 //	}
+    _isClicked = YES;
 	
 	switch (indexPath.row) {
 			
@@ -612,22 +615,23 @@
 //			
 //		}
 		
-		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-			
-			[self jumpToCorrespondingControllerByMassageStatus];
-			
-		} else {
-			
+//		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//			
+//			[self jumpToCorrespondingControllerByMassageStatus];
+//			
+//		} else {
+//			
 			// 延迟1.5秒再进入按摩界面
 			
-			double delayInSeconds = 1.5;
-			
-			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-			
-			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-				[self jumpToCorrespondingControllerByMassageStatus];
-			});
-		}
+//			double delayInSeconds = 1.5;
+//			
+//			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//			
+//			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"跳转到自动按摩");
+				[self jumpToAutoMassageViewConroller];
+//			});
+//		}
 	}
 }
 
@@ -694,10 +698,12 @@
 	
 //	NSLog(@"didUpdateMassageChairStatus");
 //    NSLog(@"state:%ld",rtMassageChairStatus.deviceStatus);
-    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusError) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请重启按摩椅" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [alert show];
-    }
+    
+    //错误状态代码
+//    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusError) {
+//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请重启按摩椅" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [alert show];
+//    }
     
     
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
@@ -722,6 +728,11 @@
         {
             //自动时设置手动按钮不为高亮
             [_manualMassageButtonItem setSelected:NO];
+            
+            if (_isClicked) {
+                [self jumpToAutoMassageViewConroller];
+                _isClicked = NO;
+            }
 			
             if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
                 switch (rtMassageChairStatus.autoProgramType) {

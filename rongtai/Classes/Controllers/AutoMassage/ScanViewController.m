@@ -83,35 +83,24 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-//	if (_t && [_t isValid]) {
-//		[_t invalidate];
-//	}
-//      _t = [NSTimer scheduledTimerWithTimeInterval:1.05 target:self selector:@selector(timerScan:) userInfo:nil repeats:YES];
-//	[self scanAnimation];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [_t invalidate];
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
         _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
     }
-    [self scanAnimation];
 }
 
-//-(void)timerScan:(NSTimer*)timer {
-//	_scanLight.frame = frame;
-//	[self scanAnimation];
-//}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scanAnimation];
+    for (int j  = 0; j<self.view.subviews.count; j++) {
+        UIView* view = self.view.subviews[j];
+        NSLog(@"SubView:%@",view);
+        NSLog(@"Con:%@",view.constraints);
+    }
+}
 
 #pragma mark - 扫描动画
 -(void)scanAnimation
@@ -155,8 +144,8 @@
 	}
     else
     {
-        NSLog(@"肩部调节:%ld",rtMassageChairStatus.shoulderAjustFlag);
-        NSLog(@"肩部位置:%ld",rtMassageChairStatus.figureCheckPositionFlag);
+//        NSLog(@"肩部调节:%ld",(long)rtMassageChairStatus.shoulderAjustFlag);
+//        NSLog(@"肩部位置:%ld",(long)rtMassageChairStatus.figureCheckPositionFlag);
     }
 
 	if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby || rtMassageChairStatus.deviceStatus == RtMassageChairStatusResetting) {
