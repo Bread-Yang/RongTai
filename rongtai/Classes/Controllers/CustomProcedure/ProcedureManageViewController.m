@@ -179,7 +179,7 @@
 {
     if (success) {
         NSLog(@"成功啦");
-        NSLog(@"%ld",[customProgram.programId integerValue]);
+        NSLog(@"%d",[customProgram.programId integerValue]);
     }
     else
     {

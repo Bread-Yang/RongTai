@@ -20,6 +20,7 @@
 #import "MainViewController.h"
 #import "UIBarButtonItem+goBack.h"
 #import "IQKeyboardManager.h"
+#import "SlideNavigationController.h"
 
 @interface UserInformationViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, RFSegmentViewDelegate, UITextFieldDelegate> {
     __weak IBOutlet UITextField *_name; //用户昵称TextField
@@ -187,6 +188,7 @@
     
     //
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
+    
     //
 //    _bottomConstraint.constant = SCREENHEIGHT*0.2*0.55;
     
@@ -706,7 +708,7 @@
         [self setSelectedCMUnit];
         _heightUnitSegmentView.selectIndex = 0;
         NSUInteger height = [_user.height integerValue];
-        _height.text = [NSString stringWithFormat:@"%ld",height];
+        _height.text = [NSString stringWithFormat:@"%d",height];
         [_heightPicker selectRow:(height-140)+2*_heightArr.count inComponent:0 animated:NO];
     } else {
         [self setSelectedInchUnit];

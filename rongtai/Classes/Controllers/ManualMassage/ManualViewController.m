@@ -156,7 +156,7 @@
     [_polar setPoint:0 MaxLimit:12 MinLimit:4];
     
     //创建 自定义分页控制器
-    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
+    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 0.1*SCREENWIDTH, SCREENHEIGHT*0.03)];
     _pageControl.numberOfPages = 2;
     _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
     _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
@@ -788,7 +788,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -1085,7 +1085,7 @@
         else if (_massageFlag<11&&_massageFlag>7)
         {
             //属于网络按摩的统计
-            NSLog(@"网络按摩统计:%ld",_massageFlag);
+            NSLog(@"网络按摩统计:%d",_massageFlag);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             programId = [p.commandId integerValue];
             _programName = p.name;
@@ -1122,7 +1122,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
             
                 if (programId>0)
                 {

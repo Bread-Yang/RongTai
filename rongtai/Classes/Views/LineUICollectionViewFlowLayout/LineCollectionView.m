@@ -53,8 +53,8 @@
 
 - (void)currentHighlightItem:(NSIndexPath *)indexPath {
 	self.currentSelectItemIndex = indexPath.row;
-	if (self.delegate && [self.delegate respondsToSelector:@selector(currentHighlightItemIndex:)]) {
-		[self.delegate currentHighlightItemIndex:indexPath];
+	if (self.lineDelegate && [self.lineDelegate respondsToSelector:@selector(currentHighlightItemIndex:)]) {
+		[self.lineDelegate currentHighlightItemIndex:indexPath];
 	}
 }
 

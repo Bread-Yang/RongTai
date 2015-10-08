@@ -483,7 +483,7 @@
 		
 	} else {			// 云养程序显示
 		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - [_localProgramArray count]];
-		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || commandId == 0) {
+		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || ![RTBleConnector shareManager].isConnectedDevice ||commandId == 0) {
 			cell.hidden = YES;
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
@@ -544,11 +544,6 @@
 	
 //	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-//        NSLog(@"连接设备为空");
-//		[reconnectDialog show];
-//		return;
-//	}
     _isClicked = YES;
 	
 	switch (indexPath.row) {
@@ -603,7 +598,7 @@
 	
 	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
 	
-	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
+	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil && [RTBleConnector shareManager].isConnectedDevice) {
 		
 //		if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 //			
@@ -842,7 +837,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -866,6 +861,13 @@
             }
         }
     }
+}
+
+-(void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral
+{
+    NSLog(@"main 断开设备");
+    [super didDisconnectRTBlePeripheral:peripheral];
+    [self clearHightlightView];
 }
 
 #pragma mark - 切换用户
@@ -933,7 +935,7 @@
             {
                 min = (int)round(time/60);
             }
-            NSLog(@"此次按摩了%ld分钟",min);
+            NSLog(@"此次按摩了%d分钟",min);
             //将开始按摩的日期转成字符串
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"YYYY-MM-dd"];
@@ -948,7 +950,7 @@
             else if (_massageFlag<11&&_massageFlag>7)
             {
                 //属于网络按摩的统计
-                 NSLog(@"网络按摩统计:%ld",_massageFlag);
+                 NSLog(@"网络按摩统计:%d",_massageFlag);
                 MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
                 programId = [p.commandId integerValue];
                 _programName = p.name;
@@ -1029,7 +1031,7 @@
 #pragma mark - 手动方法
 -(void)manualButtonClicked
 {
-    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]|| !_bleConnector.isConnectedDevice) {
         [_bleConnector showConnectDialog];
         return;
     }
@@ -1069,8 +1071,6 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.7];
 }
-
-
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {

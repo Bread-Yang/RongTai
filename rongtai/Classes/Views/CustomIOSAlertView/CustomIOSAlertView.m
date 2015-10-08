@@ -23,6 +23,12 @@ const static CGFloat kCustomIOSAlertViewDefaultButtonSpacerHeight = 1;
 const static CGFloat kCustomIOSAlertViewCornerRadius              = 0;
 const static CGFloat kCustomIOS7MotionEffectExtent                = 10.0;
 
+@interface CustomIOSAlertView ()
+{
+    CGSize _keyBoardSize;
+}
+@end
+
 @implementation CustomIOSAlertView
 
 CGFloat titleHeight = 0;
@@ -166,7 +172,7 @@ CGFloat buttonSpacerHeight = 0;
 - (IBAction)customIOS7dialogButtonTouchUpInside:(id)sender
 {
 	if (delegate != NULL) {
-        NSLog(@"按钮tag%ld",[sender tag]);
+        NSLog(@"按钮tag%d",[sender tag]);
 		[delegate customIOS7dialogButtonTouchUpInside:self clickedButtonAtIndex:[sender tag]-6701];
 	}
 	
@@ -179,7 +185,9 @@ CGFloat buttonSpacerHeight = 0;
 - (void)customIOS7dialogButtonTouchUpInside: (CustomIOSAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	NSLog(@"Button Clicked! %d, %d", (int)buttonIndex, (int)[alertView tag]);
-	[self close];
+    if (buttonIndex == 0) {
+        [self close];
+    }
 }
 
 // Dialog close animation then cleaning and removing the view from the parent
@@ -541,7 +549,6 @@ CGFloat buttonSpacerHeight = 0;
 					 }
 					 completion:nil
 	 ];
-	
 }
 
 // Rotation changed, on iOS8
@@ -553,14 +560,13 @@ CGFloat buttonSpacerHeight = 0;
 	[UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionTransitionNone
 					 animations:^{
 						 CGSize dialogSize = [self countDialogSize];
-						 CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//						 CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//                         NSLog(@"KeyBoard Size:%@",NSStringFromCGSize(keyboardSize));
 						 self.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-						 dialogView.frame = CGRectMake((screenWidth - dialogSize.width) / 2, (screenHeight - keyboardSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height);
+						 dialogView.frame = CGRectMake((screenWidth - dialogSize.width) / 2, (screenHeight - _keyBoardSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height);
 					 }
 					 completion:nil
 	 ];
-	
-	
 }
 
 // Handle device orientation changes
@@ -583,18 +589,18 @@ CGFloat buttonSpacerHeight = 0;
 {
 	CGSize screenSize = [self countScreenSize];
 	CGSize dialogSize = [self countDialogSize];
-	CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+	_keyBoardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 	
 	UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
 	if (UIInterfaceOrientationIsLandscape(interfaceOrientation) && NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) {
-		CGFloat tmp = keyboardSize.height;
-		keyboardSize.height = keyboardSize.width;
-		keyboardSize.width = tmp;
+		CGFloat tmp = _keyBoardSize.height;
+		_keyBoardSize.height = _keyBoardSize.width;
+		_keyBoardSize.width = tmp;
 	}
 	
 	[UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionTransitionNone
 					 animations:^{
-						 dialogView.frame = CGRectMake((screenSize.width - dialogSize.width) / 2, (screenSize.height - keyboardSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height);
+						 dialogView.frame = CGRectMake((screenSize.width - dialogSize.width) / 2, (screenSize.height - _keyBoardSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height);
 					 }
 					 completion:nil
 	 ];

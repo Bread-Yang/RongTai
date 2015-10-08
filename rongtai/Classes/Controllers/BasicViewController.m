@@ -77,9 +77,8 @@
 		
 		__weak RTBleConnector *weakPointer = bleConnector;
 		[reconnectDialog setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-			if (weakPointer.reconnectTimer && [weakPointer.reconnectTimer isValid]) {
-				[weakPointer.reconnectTimer invalidate];
-			}
+            weakPointer.isReconnect = NO;
+            weakPointer.isConnectedDevice = NO;
 			[alertView close];
 		}];
         
@@ -87,7 +86,7 @@
         if (bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
             if (bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
                 _massageFlag = bleConnector.rtMassageChairStatus.massageProgramFlag;
-                NSLog(@"按摩记录：%ld",_massageFlag);
+                NSLog(@"按摩记录：%d",_massageFlag);
             }
         }
         else
@@ -330,6 +329,7 @@
 
 - (void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral {
 	// show reconnect dialog
+    NSLog(@"basic 弹框");
 	[_resettingDialog close];
 	[reconnectDialog show];
 }
@@ -399,7 +399,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                 if (programId>0) {
                     NSLog(@"统计一次");
                     NSArray* result = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"(programId == %ld) AND (uid == %@)",programId,self.uid]];

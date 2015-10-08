@@ -54,11 +54,16 @@
 
 - (void)connectPeripheral:(CBPeripheral *)peripheral {
 	NSLog(@"connectPeripheral()");
-    [centerManager connectPeripheral:peripheral options:nil];
+    if (peripheral) {
+        [centerManager connectPeripheral:peripheral options:nil];
+    }
 }
 
 - (void)cancelConnectPeriphral:(CBPeripheral *)peripheral {
-    [centerManager cancelPeripheralConnection:peripheral];
+    if (peripheral) {
+        [centerManager cancelPeripheralConnection:peripheral];
+    }
+    
 }
 
 - (void)readDataFromPeriperal:(CBPeripheral *)peripheral inCharacteristic:(CBCharacteristic *)characteristic {

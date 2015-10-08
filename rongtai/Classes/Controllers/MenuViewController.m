@@ -23,6 +23,7 @@
 #import "MBProgressHUD.h"
 //测试
 #import "FinishMassageViewController.h"
+#import "ScanViewController.h"
 
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate,MFMailComposeViewControllerDelegate>
@@ -227,24 +228,23 @@
         }
         if (main) {
             //测试用，跳到按摩完毕页面
-            UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
-            [sl pushViewController:finishViewController animated:YES];
+//            UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//            FinishMassageViewController *finishViewController = (FinishMassageViewController *)[s instantiateViewControllerWithIdentifier:@"FinishMassageVC"];
+//            [sl pushViewController:finishViewController animated:YES];
 
             //我要反馈页面，调用系统发邮件:info@chinarongtai.com
             
-//            MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
-//            mailVC.mailComposeDelegate = self;
-//            [mailVC setSubject:NSLocalizedString(@"我要反馈",nil)];
-//            [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
-//            [[SlideNavigationController sharedInstance] toggleLeftMenu];
-//            [main presentViewController:mailVC animated:YES completion:nil];
+            MFMailComposeViewController* mailVC = [[MFMailComposeViewController alloc]init];
+            mailVC.mailComposeDelegate = self;
+            [mailVC setSubject:NSLocalizedString(@"我要反馈",nil)];
+            [mailVC setToRecipients:[NSArray arrayWithObjects:@"info@chinarongtai.com",nil]];
+            [[SlideNavigationController sharedInstance] toggleLeftMenu];
+            [main presentViewController:mailVC animated:YES completion:nil];
         }
         else
         {
             NSLog(@"vcs:%@",[SlideNavigationController sharedInstance].viewControllers);
         }
-        
     }
     else if (indexPath.row == 6)
     {
@@ -252,6 +252,10 @@
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
         [sl pushViewController:pVC animated:YES];
+        
+//        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+//        [sl pushViewController:scan animated:YES];
     }
     else if (indexPath.row == 7)
     {
@@ -339,7 +343,7 @@
             break;
     }
     NSLog(@"邮件发送结果:%@",error);
-    MainViewController* main;
+    MainViewController* main = nil;
     for (int i = 0; i<[SlideNavigationController sharedInstance].viewControllers.count; i++) {
         UIViewController* vc = [SlideNavigationController sharedInstance].viewControllers[i];
         if ([vc isKindOfClass:[MainViewController class]]) {
@@ -347,7 +351,7 @@
         }
     }
     if (main) {
-       [main dismissViewControllerAnimated:controller completion:^{
+       [main dismissViewControllerAnimated:YES completion:^{
            [self showProgressHUDByString:message];
        }];
     }

@@ -20,7 +20,6 @@
 #import "AppIntrouceView.h"
 #import "MemberRequest.h"
 #import "RegisterViewController.h"
-//#import "UserInformationViewController.h"
 #import "UserViewController.h"
 #import "IQKeyboardManager.h"
 
@@ -179,6 +178,7 @@
 //                UserViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
                 UserViewController* vc = [UserViewController new];
                 vc.isRegister = YES;
+                vc.title = @"个人信息";
                 [vc setUid:uid AndToken:token];
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -187,7 +187,6 @@
                 [Member updateLocalDataByNetworkData:members];
                 
                 [ud setObject:token forKey:@"token"];
-                
                 
                 [_loading hide:YES];
                 MainViewController *vc = [MainViewController new];
@@ -240,6 +239,7 @@
 //                UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
 //                UserViewController* vc = [s instantiateViewControllerWithIdentifier:@"UserInformation"];
                 UserViewController* vc = [UserViewController new];
+                vc.title = @"个人信息";
                 vc.isRegister = YES;
                 [vc setUid:uid AndToken:token];
                 [self.navigationController pushViewController:vc animated:YES];

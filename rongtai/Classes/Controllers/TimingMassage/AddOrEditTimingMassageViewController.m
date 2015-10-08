@@ -85,7 +85,8 @@
 		[self.minuteArray addObject:[NSString stringWithFormat:@"%02zd", i]];
 	}
 	
-	self.collectionView.delegate = self;
+	self.collectionView.lineDelegate = self;
+    self.collectionView.delegate = self;
 	
 	[self.collectionView registerClass:[LineUICollectionViewCell class] forCellWithReuseIdentifier:@"MY_CELL"];
 	
@@ -168,7 +169,7 @@
 		
 		NSInteger hour = [dateComponent hour];
 		NSInteger minute = [dateComponent minute];
-		int week = [dateComponent weekday]; // 1 : 星期天, 7 : 星期六
+		NSInteger week = [dateComponent weekday]; // 1 : 星期天, 7 : 星期六
 		
 		[_leftPickView setIndex:hour];
 		[_rightPickView setIndex:minute];
@@ -417,7 +418,7 @@
 //			cell.hidden = NO;
 //		}
 	}
-	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%li", indexPath.row + 1]];
+	cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"mode_%d", indexPath.row + 1]];
 
 	return cell;
 }

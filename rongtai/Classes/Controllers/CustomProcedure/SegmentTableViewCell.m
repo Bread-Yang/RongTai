@@ -117,7 +117,7 @@
 }
 
 #pragma mark - segmentView代理
--(void)segmentViewSelectIndex:(NSInteger)index
+-(void)segmentView:(RFSegmentView *)segmentView SelectIndex:(NSInteger)index
 {
     _selectedIndex = index;
     if ([self.delegate respondsToSelector:@selector(segmentTableViewCell:Clicked:)]) {

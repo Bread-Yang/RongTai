@@ -12,6 +12,7 @@
 #import "MassageProgram.h"
 #import "RTBleConnector.h"
 #import "CoreData+MagicalRecord.h"
+#import "RTCommand.h"
 
 @interface ScanViewController () {
     UIImageView* _scanLight;
@@ -29,6 +30,12 @@
     RTBleConnector* _bleConnector;
     NSArray* _skillsPreferenceName;    //技法偏好选项数组
     CustomIOSAlertView* _alert;
+    __weak IBOutlet UIButton *_upButton;
+    
+    __weak IBOutlet UIButton *_downButton;
+    
+    __weak IBOutlet UIView *_adjustView;  //肩部调节按钮的View
+    
 }
 @end
 
@@ -70,6 +77,11 @@
     }];
     [_alert setUseMotionEffects:true];
     
+    [_upButton setImage:[UIImage imageNamed:@"selected_up"] forState:UIControlStateHighlighted];
+    [_downButton setImage:[UIImage imageNamed:@"selected_down"] forState:UIControlStateHighlighted];
+    
+    _adjustView.hidden = YES;
+    
     // Do any additional setup after loading the view.
 }
 
@@ -95,11 +107,11 @@
 {
     [super viewDidAppear:animated];
     [self scanAnimation];
-    for (int j  = 0; j<self.view.subviews.count; j++) {
-        UIView* view = self.view.subviews[j];
-        NSLog(@"SubView:%@",view);
-        NSLog(@"Con:%@",view.constraints);
-    }
+//    for (int j  = 0; j<self.view.subviews.count; j++) {
+//        UIView* view = self.view.subviews[j];
+//        NSLog(@"SubView:%@",view);
+//        NSLog(@"Con:%@",view.constraints);
+//    }
 }
 
 #pragma mark - 扫描动画
@@ -114,6 +126,33 @@
         [self scanAnimation];
     }];
 }
+
+#pragma mark - 肩部向上调节
+- (IBAction)upAdjustTouchDown:(id)sender {
+    NSLog(@"按下");
+    [_bleConnector sendControlMode:H10_KEY_WALK_UP_START];
+}
+
+- (IBAction)upAdjustTouchUpInside:(id)sender {
+    NSLog(@"按一次");
+    [_bleConnector sendControlMode:H10_KEY_WALK_UP_STOP];
+//    [self performSelector:@selector(walkUpStop) withObject:nil afterDelay:0.2];
+}
+
+//-(void)walkUpStop
+//{
+//    [_bleConnector sendControlMode:H10_KEY_WALK_UP_STOP];
+//}
+
+#pragma mark - 肩部向下调节
+- (IBAction)downAdjustTouchDown:(id)sender {
+    [_bleConnector sendControlMode:H10_KEY_WALK_DOWN_START];
+}
+
+- (IBAction)downAdjustTouchUpInside:(id)sender {
+   [_bleConnector sendControlMode:H10_KEY_WALK_DOWN_STOP];
+}
+
 
 #pragma mark - RTBleConnectorDelegate
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus {
@@ -144,6 +183,13 @@
 	}
     else
     {
+        if (rtMassageChairStatus.shoulderAjustFlag == 1) {
+            _adjustView.hidden = NO;
+        }
+        else
+        {
+            _adjustView.hidden = YES;
+        }
 //        NSLog(@"肩部调节:%ld",(long)rtMassageChairStatus.shoulderAjustFlag);
 //        NSLog(@"肩部位置:%ld",(long)rtMassageChairStatus.figureCheckPositionFlag);
     }
@@ -218,7 +264,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                 
                 if (programId>0)
                 {

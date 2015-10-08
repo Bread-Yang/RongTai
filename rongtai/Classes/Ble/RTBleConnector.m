@@ -107,7 +107,7 @@ static Byte const BYTE_CodeMode = 0xA5;
     }
     else
     {
-        NSLog(@"找不到云养程序💢 massageId:%ld, slotIndex:%ld",massageId,slotIndex);
+        NSLog(@"找不到云养程序💢 massageId:%d, slotIndex:%d",massageId,slotIndex);
     }
     
     return massageProgram;
@@ -133,7 +133,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 
 @property (readonly) NSTimeInterval reconnectInterval;
 
-@property (nonatomic, retain) NSTimer *turnOnTimer;
+//@property (nonatomic, retain) NSTimer *turnOnTimer;
 
 @property (nonatomic, retain) CustomIOSAlertView *reconnectDialog, *chairInstallExceptionDialog;
 
@@ -142,14 +142,10 @@ static Byte const BYTE_CodeMode = 0xA5;
 @property (nonatomic, assign) NSInteger updateNetworkStatusCount;
 
 
-//蓝牙断开时是否弹框
-@property (nonatomic, assign) BOOL isSendMessage;
-
 @end
 
 
 @implementation RTBleConnector
-
 
 + (instancetype)shareManager {
     static RTBleConnector *shareManager = nil;
@@ -182,6 +178,8 @@ static Byte const BYTE_CodeMode = 0xA5;
 		_reconnectInterval = 10;
         
         _isSendMessage = NO;
+        
+        _isReconnect = YES;
 
     }
     return self;
@@ -189,7 +187,15 @@ static Byte const BYTE_CodeMode = 0xA5;
 
 - (void)handleReconnect {
 	NSLog(@"handleReconnect()");
-	[[JRBluetoothManager shareManager] connectPeripheral:self.currentConnectedPeripheral];
+    if (_isReconnect) {
+        [[JRBluetoothManager shareManager] connectPeripheral:self.currentConnectedPeripheral];
+    }
+    else
+    {
+        NSLog(@"取消连接");
+        [_reconnectTimer invalidate];
+        [[JRBluetoothManager shareManager] cancelConnectPeriphral:self.currentConnectedPeripheral];
+    }
 }
 
 #pragma mark - JRBluetoothManagerDelegate
@@ -222,6 +228,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 			message = @"蓝牙已经成功开启，稍后……";
 			isBleTurnOn = YES;
             _isSendMessage = YES;
+            _isReconnect = YES;
 			break;
         case CBCentralManagerStateUnknown:
             message = @"蓝牙发生未知错误，请重新打开……";
@@ -252,6 +259,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 	self.isConnectedDevice = YES;
 	
 	self.currentConnectedPeripheral = periphral;
+    
 	
 	[self.chairInstallExceptionDialog close];
 	
@@ -262,6 +270,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 	if (_reconnectTimer && [_reconnectTimer isValid]) {
 		[_reconnectTimer invalidate];
 	}
+     _isReconnect = YES;
 }
 
 - (void)didFailToConnectPeriphral:(CBPeripheral *)periphral {
@@ -286,8 +295,16 @@ static Byte const BYTE_CodeMode = 0xA5;
 		if (_reconnectTimer && [_reconnectTimer isValid]) {
 			[_reconnectTimer invalidate];
 		}
-		_reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
-		[_reconnectTimer fire];
+        
+        if (_isReconnect) {
+            _reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:_reconnectInterval target:self selector:@selector(handleReconnect) userInfo:nil repeats:YES];
+        }
+//        else
+//        {
+//            NSLog(@"取消连接");
+//            [[JRBluetoothManager shareManager] cancelConnectPeriphral:self.currentConnectedPeripheral];
+//        }
+//		[_reconnectTimer fire];
 	}
 }
 
@@ -323,8 +340,8 @@ static Byte const BYTE_CodeMode = 0xA5;
 
 - (void)didUpdateValue:(NSData *)data fromPeripheral:(CBPeripheral *)peripheral characteritic:(CBCharacteristic *)characteristic {
 	
-	NSLog(@"data.length : %zd", data.length);
-    NSLog(@"data : %@", data);
+//	NSLog(@"data.length : %zd", data.length);
+//    NSLog(@"data : %@", data);
 //    NSLog(@"CBPeripheral:%@",peripheral);
 //    NSLog(@"CBCharacteristic:%@",characteristic);
 //
@@ -371,8 +388,8 @@ static Byte const BYTE_CodeMode = 0xA5;
 			NSString *newNetworkStatusString = NSDataToHex(data);
 			
 			if (![newNetworkStatusString isEqualToString:_oldMassageChairNetworkStatusString]) {
-				NSLog(@"newNetworkStatusString : %@", newNetworkStatusString);
-				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairNetworkStatusString);
+//				NSLog(@"newNetworkStatusString : %@", newNetworkStatusString);
+//				NSLog(@"_oldMassageChairStatus : %@", _oldMassageChairNetworkStatusString);
 				
 				_oldMassageChairNetworkStatusString = newNetworkStatusString;
 				
@@ -402,7 +419,7 @@ static Byte const BYTE_CodeMode = 0xA5;
 //					}
 //				}
 //			}
-            NSLog(@"安装状态，此时返回数据长度为:%ld",data.length);
+            NSLog(@"安装状态，此时返回数据长度为:%d",data.length);
 			[self parseInstallingStatus:data];
 			
 			if (self.delegate && [self.delegate respondsToSelector:@selector(didUpdateStatusInProgramMode:)]) {
@@ -458,16 +475,19 @@ NSString * NSDataToHex(NSData *data) {
 			return;
 		}
 		
-		if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) { // 先发开机指令,过一秒再发模式指令
-			if  (_turnOnTimer && [_turnOnTimer isValid]) {
-				[_turnOnTimer invalidate];
-			}
+		if (self.rtMassageChairStatus.deviceStatus == RtMassageChairStatusStandby) {
+            // 先发开机指令,过一秒再发模式指令
+            
+//			if  (_turnOnTimer && [_turnOnTimer isValid]) {
+//				[_turnOnTimer invalidate];
+//			}
 			// 先开机
 			NSData *bodyData = [self dataWithFuc:H10_KEY_POWER_SWITCH];
 			NSData *sendData = [self fillDataHeadAndTail:bodyData];
 			[self sendDataToPeripheral:sendData];
-			
-			_turnOnTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(delaySendCommand:) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], @"mode", nil] repeats:NO];
+            [self performSelector:@selector(delaySendCommand:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], @"mode", nil] afterDelay:1.0f];
+            
+//			_turnOnTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(delaySendCommand:) userInfo: repeats:NO];
 		} else {
 			NSData *bodyData = [self dataWithFuc:mode];
 			NSData *sendData = [self fillDataHeadAndTail:bodyData];
@@ -496,8 +516,8 @@ NSString * NSDataToHex(NSData *data) {
 	}
 }
 
-- (void)delaySendCommand:(NSTimer *)timer {
-	NSInteger mode = [[[timer userInfo] objectForKey:@"mode"] integerValue];
+- (void)delaySendCommand:(NSDictionary *)dic {
+	NSInteger mode = [[dic objectForKey:@"mode"] integerValue];
 	NSData *bodyData = [self dataWithFuc:mode];
 	NSData *sendData = [self fillDataHeadAndTail:bodyData];
 	[self sendDataToPeripheral:sendData];

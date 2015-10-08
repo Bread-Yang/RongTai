@@ -52,7 +52,7 @@
 #define H10_KEY_NONE			        0x7f
 //Power Switch Key
 #define H10_KEY_POWER_SWITCH			0x01
-#define H10_KEY_MENU                    0x02
+//#define H10_KEY_MENU                    0x02
 //ZONE1:自动程序键值
 #define H10_KEY_CHAIR_AUTO_0			0x10 //疲劳恢复 recovery
 #define H10_KEY_CHAIR_AUTO_1			0x11 //舒展按摩 extend

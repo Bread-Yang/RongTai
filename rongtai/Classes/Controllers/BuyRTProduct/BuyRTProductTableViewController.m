@@ -78,11 +78,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	
 	UIImageView *productImageView = (UIImageView *)[cell viewWithTag:1];
-	UILabel *productModelLabel = (UILabel *)[cell viewWithTag:2];
+//	UILabel *productModelLabel = (UILabel *)[cell viewWithTag:2];
 	UILabel *productAliasLabel = (UILabel *)[cell viewWithTag:3];
 	UILabel *productDescriptionLabel = (UILabel *)[cell viewWithTag:4];
 	
-	NSLog(@"当前行 : %li", indexPath.row);
+	NSLog(@"当前行 : %d", indexPath.row);
 	
 	switch (indexPath.row) {
   		case 0:

@@ -62,6 +62,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    self.title = @"个人信息";
     //
     _manager = [AFNetworkReachabilityManager sharedManager];
     _memberRequest = [MemberRequest new];
@@ -214,6 +216,9 @@
     //返回按钮
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem goBackItemByTarget:self Action:@selector(back)];
     
+    UIBarButtonItem* rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_confirm"] style:UIBarButtonItemStylePlain target:self action:@selector(save:)];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     //
     _tapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h+64)];
     _tapView.backgroundColor = [UIColor clearColor];
@@ -309,7 +314,7 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     CGFloat keyBoardHeight = keyboardSize.height;
-    CGFloat imgH = _bgImageView.frame.size.height;
+//    CGFloat imgH = _bgImageView.frame.size.height;
     //    NSLog(@"键盘高度:%f",keyBoardHeight);
     CGRect f;
     if ([_height isFirstResponder]) {
@@ -324,9 +329,9 @@
         f = _name.frame;
     }
     _y = SCREENHEIGHT -70 - keyBoardHeight - f.size.height;
-        NSLog(@"文本框y值:%f",f.origin.y);
+//        NSLog(@"文本框y值:%f",f.origin.y);
     _y = _y - f.origin.y;
-        NSLog(@"偏移高度:%f",_y);
+//        NSLog(@"偏移高度:%f",_y);
     if (_y<0) {
         f = self.view.frame;
         f.origin.y += _y;

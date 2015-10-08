@@ -352,7 +352,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -398,6 +398,8 @@
                         self.title = NSLocalizedString(@"腰椎舒缓", nil);
                         functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
                         break;
+                    default:
+                        break;
                 }
                 
             } else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
@@ -424,6 +426,8 @@
                     case RTMassageChairProgramNetwork4:
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
                         name = NSLocalizedString(@"云养程序四", nil);;
+                        break;
+                    default:
                         break;
                 }
                 
@@ -558,7 +562,7 @@
         else if (_massageFlag<12&&_massageFlag>7)
         {
             //属于网络按摩的统计
-             NSLog(@"网络按摩统计:%ld",_massageFlag);
+             NSLog(@"网络按摩统计:%d",_massageFlag);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             if (p) {
                 programId = [p.commandId integerValue];
@@ -590,7 +594,7 @@
         }
         else
         {
-            NSLog(@"手动按摩:%ld",_massageFlag);
+            NSLog(@"手动按摩:%d",_massageFlag);
             NSInteger massageTechniqueFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (massageTechniqueFlag>0&&massageTechniqueFlag<7) {
                 _programName = _skillsPreferenceArray[massageTechniqueFlag-1];
@@ -616,7 +620,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                
                 if (programId>0) {
                     NSLog(@"统计一次");

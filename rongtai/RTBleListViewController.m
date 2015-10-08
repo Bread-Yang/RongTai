@@ -11,6 +11,7 @@
 #import "RTBleConnector.h"
 #import "MainViewController.h"
 #import "UIBarButtonItem+goBack.h"
+#import "RTPeripheralTableViewCell.h"
 
 @interface RTBleListViewController () <RTBleConnectorDelegate> {
     NSMutableArray *blePeriphrals;
@@ -55,10 +56,15 @@
     
     _isRefresh = NO;
     _count = 40;
+    if (bleConnector.isConnectedDevice&&bleConnector.currentConnectedPeripheral)
+    {
+        [blePeriphrals addObject:[NSDictionary dictionaryWithObject:bleConnector.currentConnectedPeripheral forKey:RTBle_Periperal]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     bleConnector.delegate = self;
+    bleConnector.isSendMessage = NO;
 	[bleConnector startScanRTPeripheral:nil];
 	
 	if (![RTBleConnector isBleTurnOn]) {
@@ -73,6 +79,12 @@
 	
 	[bleConnector stopScanRTPeripheral];
 	//    bleConnector.delegate = nil;
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    bleConnector.isSendMessage = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,10 +105,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *reuserId = @"BLE_PERIPHRAL_CELL";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuserId];
+    RTPeripheralTableViewCell *cell = (RTPeripheralTableViewCell*)[tableView dequeueReusableCellWithIdentifier:reuserId];
 	
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuserId];
+        cell = [[RTPeripheralTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuserId];
     }
 	cell.backgroundColor = [UIColor clearColor];
 	cell.contentView.backgroundColor = [UIColor clearColor];
@@ -109,7 +121,7 @@
 	
 	UIImage *image;
 	
-	switch (remainder) {
+	switch (remainder%3) {
   		case 0:
 			image = [UIImage imageNamed:@"connect_device_1"];
 			break;
@@ -120,13 +132,19 @@
 			image = [UIImage imageNamed:@"connect_device_3"];
 			break;
 	}
-	
 	cell.imageView.image = image;
     cell.textLabel.text = peripheral.name?:@"Periphral";
     cell.detailTextLabel.text = [peripheral.identifier UUIDString];
-	
+    cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+    cell.detailTextLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    if (peripheral == bleConnector.currentConnectedPeripheral) {
+        cell.stateLabel.text = @"已连接";
+    }
+    else
+    {
+        cell.stateLabel.text = @"未连接";
+    }
     return cell;
 }
 
@@ -148,6 +166,11 @@
 		[bleConnector cancelCurrentConnectedRTPeripheral];  // cancal current device connection, then connect another device
         [bleConnector connectRTPeripheral:peripheral];
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 
 #pragma mark - RTBleConnectorDelegate
@@ -254,6 +277,9 @@
             [NSTimer scheduledTimerWithTimeInterval:0.25 target:self
                                            selector:@selector(refreshTimer:) userInfo:nil repeats:YES];
             [blePeriphrals removeAllObjects];
+            if (bleConnector.isConnectedDevice&&bleConnector.currentConnectedPeripheral) {
+                [blePeriphrals addObject:[NSDictionary dictionaryWithObject:bleConnector.currentConnectedPeripheral forKey:RTBle_Periperal]];
+            }
             [self.periphralTableView reloadData];
             [bleConnector stopScanRTPeripheral];
             [bleConnector startScanRTPeripheral:nil];

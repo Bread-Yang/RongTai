@@ -21,8 +21,8 @@
     NoteDb *aNoteDb;
 }
 
-@property (nonatomic,retain) NoteDb *aNoteDb;
-@property (nonatomic, retain) NSMutableData *resultData;
+@property (nonatomic,strong) NoteDb *aNoteDb;
+@property (nonatomic, strong) NSMutableData *resultData;
 
 //开始读数据
 - (void)read:(NSString *)binName;

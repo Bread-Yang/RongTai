@@ -9,7 +9,6 @@
 #import "ProgramDownloadViewController.h"
 #import "UIBarButtonItem+goBack.h"
 #import "RTBleConnector.h"
-#import "ReadFile.h"
 #import "ProgramDownloadTableViewCell.h"
 #import "MBProgressHUD.h"
 #import "AFHTTPRequestOperationManager.h"
@@ -189,7 +188,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -219,8 +218,9 @@
 
 -(void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral
 {
+    [super didDisconnectRTBlePeripheral:peripheral];
 //    NSLog(@"设备断开了");
-//    [_tableView reloadData];
+    [_tableView reloadData];
 }
 
 -(void)didUpdateRTBleState:(CBCentralManagerState)state
@@ -376,7 +376,7 @@
 	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
     RTBleConnector* bleconnector = [RTBleConnector shareManager];
-    if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+    if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn] || !bleconnector.isConnectedDevice) {
 		
         cell.isAlreadyDownload = false;
 		
@@ -518,7 +518,7 @@
         else if (_massageFlag<11&&_massageFlag>7)
         {
             //属于网络按摩的统计
-            NSLog(@"网络按摩统计：%ld",programId);
+            NSLog(@"网络按摩统计：%d",programId);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             programId = [p.commandId integerValue];
             _programName = p.name;
@@ -555,7 +555,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                 
                 if (programId>0)
                 {

@@ -331,7 +331,7 @@
 
 
 + (unsigned long long) getItemIdFrom:(MPMediaItem*)item {
-    unsigned long itemID = [[item valueForProperty: MPMediaItemPropertyPersistentID] longLongValue];
+    unsigned long long itemID = [[item valueForProperty: MPMediaItemPropertyPersistentID] longLongValue];
         return itemID;
 }
 

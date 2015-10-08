@@ -50,7 +50,7 @@
 	[parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
-	[_manager POST:url parameters:parameters timeoutInterval:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	[_manager POST:url parameters:parameters timeoutInterval:_overTime success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //		NSLog(@"获取按摩程序列表成功:%@",responseObject);
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
@@ -189,7 +189,7 @@
 {
 //    [self cancelRequest];
     NSString* url = [NSString stringWithFormat:@"%@/loadCustomProgram",RongTaiDefaultDomain];
-    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
+    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%d\n size:%d\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];

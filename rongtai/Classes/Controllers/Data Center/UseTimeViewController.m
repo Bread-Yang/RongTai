@@ -173,7 +173,7 @@
             }
             else
             {
-                ut = [NSString stringWithFormat:@"%lum",time];
+                ut = [NSString stringWithFormat:@"%dm",time];
             }
             [useTimes addObject:ut];
             

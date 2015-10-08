@@ -84,9 +84,9 @@
 		}
 			
 		case NSStreamEventErrorOccurred: {
-            NSLog(@"读取文件 : %@", @"读取出错");
 			//读的时候出错了
 			NSError *error = [theStream streamError];
+            NSLog(@"读取文件 : %@", error);
             shouldClose = YES;
 			break;
 		}
@@ -98,6 +98,8 @@
 			[theStream close];
 			break;
 		}
+        default:
+            break;
 	}
 	
     if (shouldClose) {
@@ -125,8 +127,4 @@
 - (NoteDb*)getNoteDb {
     return self.aNoteDb;
 }
-- (void)dealloc {
-	
-}
-
 @end
