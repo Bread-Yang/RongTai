@@ -68,6 +68,8 @@
     WLButtonItem* _downloadButtonItem;  //下载按钮
     
     NSUInteger _timingPlanCount; //记录未同步的定时计划
+    
+    BOOL _isClicked;   //是否点击了按摩模式
 }
 @end
 
@@ -77,6 +79,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _isClicked = NO;
     self.navigationController.navigationBarHidden = NO;
     [_customProgramButtonItem setSelected:NO];
     [_downloadButtonItem setSelected:NO];
@@ -85,8 +88,8 @@
     
     _bleConnector = [RTBleConnector shareManager];
     //页面出现就记录当前按摩椅按摩状态
-    NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
-    NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
+//    NSLog(@"连接设备:%@",_bleConnector.currentConnectedPeripheral);
+//    NSLog(@"蓝牙是否打开:%d",[RTBleConnector isBleTurnOn]);
     if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
         [_anionButtonItem setSelected:NO];
         [_manualMassageButtonItem setSelected:NO];
@@ -96,7 +99,7 @@
         if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
             if (_bleConnector.rtMassageChairStatus.massageProgramFlag != 7) {
                 _massageFlag = _bleConnector.rtMassageChairStatus.massageProgramFlag;
-                NSLog(@"按摩记录：%ld",_massageFlag);
+                NSLog(@"按摩记录：%ld",(unsigned long)_massageFlag);
             }
             else
             {
@@ -180,6 +183,7 @@
     _table.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_table];
 	
+    //读取按摩椅固定的按摩程序
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
 	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
     
@@ -227,7 +231,7 @@
     
     //手动 按钮
     _manualMassageButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth, 0, btnWidth, 49)];
-    _manualMassageButtonItem.title = NSLocalizedString(@"手动", nil);
+    _manualMassageButtonItem.title = NSLocalizedString(@"手动按摩", nil);
     [_manualMassageButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_manualMassageButtonItem setImage:[UIImage imageNamed:@"icon_hand"]];
     [_manualMassageButtonItem setSelectedImage:[UIImage imageNamed:@"icon_hand2"]];
@@ -237,7 +241,7 @@
     
     //自定义按钮
     _customProgramButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*2, 0, btnWidth, 49)];
-    _customProgramButtonItem.title = NSLocalizedString(@"自定义", nil);
+    _customProgramButtonItem.title = NSLocalizedString(@"DIY按摩", nil);
     [_customProgramButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_customProgramButtonItem setImage:[UIImage imageNamed:@"icon_user"]];
     [_customProgramButtonItem setSelectedImage:[UIImage imageNamed:@"icon_user2"]];
@@ -247,7 +251,7 @@
 
     //下载按钮
     _downloadButtonItem = [[WLButtonItem alloc]initWithFrame:CGRectMake(btnWidth*3, 0, btnWidth, 49)];
-    _downloadButtonItem.title = NSLocalizedString(@"下载", nil);
+    _downloadButtonItem.title = NSLocalizedString(@"程序下载", nil);
     [_downloadButtonItem setTitleSelectedColor:[UIColor colorWithRed:64/255.0 green:178/255.0 blue:223/255.0 alpha:1]];
     [_downloadButtonItem setImage:[UIImage imageNamed:@"icon_download"]];
     [_downloadButtonItem setSelectedImage:[UIImage imageNamed:@"icon_download2"]];
@@ -256,7 +260,6 @@
     [_menuView addSubview:_downloadButtonItem];
     
     //
-
     imView = [UIImageView new];
     _massageFlag = 0;
     
@@ -270,7 +273,6 @@
 }
 
 #pragma mark - 请求网络按摩程序
-
 - (void)requestNetworkMassageProgram {
 	// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 	_networkMassageDic = [NSMutableDictionary new];
@@ -379,7 +381,7 @@
 {
     //读取家庭成员
     //网络请求
-    NSLog(@"请求成员");
+//    NSLog(@"请求成员");
     MemberRequest* mr = [MemberRequest new];
     [mr requestMemberListByIndex:0 Size:2000 success:^(NSArray *members) {
         //            NSLog(@"成员:%@",members);
@@ -481,7 +483,7 @@
 		
 	} else {			// 云养程序显示
 		NSInteger commandId = [[RTBleConnector shareManager].rtNetworkProgramStatus getMassageIdBySlotIndex:indexPath.row - [_localProgramArray count]];
-		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || commandId == 0) {
+		if (![RTBleConnector shareManager].currentConnectedPeripheral || ![RTBleConnector isBleTurnOn] || ![RTBleConnector shareManager].isConnectedDevice ||commandId == 0) {
 			cell.hidden = YES;
 		} else {
 			MassageProgram *networkMassage = [_networkMassageDic objectForKey:[NSString stringWithFormat:@"%zd", commandId]];
@@ -542,11 +544,7 @@
 	
 //	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-//	if ([RTBleConnector shareManager].currentConnectedPeripheral == nil) {
-//        NSLog(@"连接设备为空");
-//		[reconnectDialog show];
-//		return;
-//	}
+    _isClicked = YES;
 	
 	switch (indexPath.row) {
 			
@@ -600,7 +598,7 @@
 	
 	RTMassageChairStatus *rtMassageChairStatus = [RTBleConnector shareManager].rtMassageChairStatus;
 	
-	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil) {
+	if ([RTBleConnector shareManager].currentConnectedPeripheral != nil && rtMassageChairStatus != nil && [RTBleConnector shareManager].isConnectedDevice) {
 		
 //		if (rtMassageChairStatus.figureCheckFlag == 1) {  // 执行体型检测程序
 //			
@@ -612,22 +610,23 @@
 //			
 //		}
 		
-		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
-			
-			[self jumpToCorrespondingControllerByMassageStatus];
-			
-		} else {
-			
+//		if (rtMassageChairStatus && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging) {
+//			
+//			[self jumpToCorrespondingControllerByMassageStatus];
+//			
+//		} else {
+//			
 			// 延迟1.5秒再进入按摩界面
 			
-			double delayInSeconds = 1.5;
-			
-			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-			
-			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-				[self jumpToCorrespondingControllerByMassageStatus];
-			});
-		}
+//			double delayInSeconds = 1.5;
+//			
+//			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//			
+//			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSLog(@"跳转到自动按摩");
+				[self jumpToAutoMassageViewConroller];
+//			});
+//		}
 	}
 }
 
@@ -694,10 +693,12 @@
 	
 //	NSLog(@"didUpdateMassageChairStatus");
 //    NSLog(@"state:%ld",rtMassageChairStatus.deviceStatus);
-    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusError) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请重启按摩椅" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [alert show];
-    }
+    
+    //错误状态代码
+//    if (rtMassageChairStatus.deviceStatus == RtMassageChairStatusError) {
+//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请重启按摩椅" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [alert show];
+//    }
     
     
 	if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
@@ -722,6 +723,11 @@
         {
             //自动时设置手动按钮不为高亮
             [_manualMassageButtonItem setSelected:NO];
+            
+            if (_isClicked) {
+                [self jumpToAutoMassageViewConroller];
+                _isClicked = NO;
+            }
 			
             if (rtMassageChairStatus.programType == RtMassageChairProgramAuto) {
                 switch (rtMassageChairStatus.autoProgramType) {
@@ -831,7 +837,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -857,18 +863,25 @@
     }
 }
 
+-(void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral
+{
+    NSLog(@"main 断开设备");
+    [super didDisconnectRTBlePeripheral:peripheral];
+    [self clearHightlightView];
+}
+
 #pragma mark - 切换用户
 -(void)changeUser:(NSString *)imageUrl
 {
     UIButton* btn = (UIButton*)_leftBtn.customView;
     if ([imageUrl isEqualToString:@"default"]||imageUrl.length < 1) {
-        NSLog(@"头像链接为默认");
+//        NSLog(@"头像链接为默认");
         //空的用默认头像
         [btn setImage:[UIImage imageNamed:@"userIcon"] forState:UIControlStateNormal];
     }
     else
     {
-        NSLog(@"读取头像");
+//        NSLog(@"读取头像");
         //先使用本地图片，若本地读不到图片则使用网络请求
         UIImage* img = [UIImage imageInLocalByName:[NSString stringWithFormat:@"%@.jpg",imageUrl]];
         //网络请求
@@ -922,7 +935,7 @@
             {
                 min = (int)round(time/60);
             }
-            NSLog(@"此次按摩了%ld分钟",min);
+            NSLog(@"此次按摩了%d分钟",min);
             //将开始按摩的日期转成字符串
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"YYYY-MM-dd"];
@@ -937,7 +950,7 @@
             else if (_massageFlag<11&&_massageFlag>7)
             {
                 //属于网络按摩的统计
-                 NSLog(@"网络按摩统计:%ld",_massageFlag);
+                 NSLog(@"网络按摩统计:%d",_massageFlag);
                 MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
                 programId = [p.commandId integerValue];
                 _programName = p.name;
@@ -1018,7 +1031,7 @@
 #pragma mark - 手动方法
 -(void)manualButtonClicked
 {
-    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+    if (_bleConnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]|| !_bleConnector.isConnectedDevice) {
         [_bleConnector showConnectDialog];
         return;
     }
@@ -1058,6 +1071,28 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:0.7];
 }
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
 
 
 /*

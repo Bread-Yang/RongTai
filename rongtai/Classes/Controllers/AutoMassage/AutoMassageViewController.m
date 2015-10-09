@@ -24,7 +24,7 @@
 
 @interface AutoMassageViewController ()<RTBleConnectorDelegate,UIAlertViewDelegate> {
     __weak IBOutlet UILabel *_timeSetLabel;
-    __weak IBOutlet UILabel *_functionLabel;
+//    __weak IBOutlet UILabel *_functionLabel;
 	__weak IBOutlet UITextView *_functionTextView;
     __weak IBOutlet UILabel *_usingTimeLabel;
     __weak IBOutlet UIButton *_stopBtn;
@@ -46,6 +46,7 @@
     BOOL _isJumpFinish;
     NSString *functionString;
     BOOL _isJumpScan;
+    UIButton* _anionBtn;
 }
 @end
 
@@ -71,7 +72,11 @@
     [_usingTimeLabel setNumebrByFont:[UIFont systemFontOfSize:16] Color:BLUE];
     
     //
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
+    _anionBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
+    [_anionBtn addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_anionBtn];
     self.navigationItem.rightBarButtonItem = right;
     
 	// 时间view加入单击手势
@@ -90,6 +95,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _isJumpScan = YES;
+    if (_bleConnector.rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
     //获取按摩椅自动按摩名称
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
@@ -170,6 +180,8 @@
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
                         name = NSLocalizedString(@"云养程序四", nil);;
                         break;
+                    default:
+                        break;
                 }
                 
                 if (networkProgram) {
@@ -183,8 +195,8 @@
                 }
             }
             
-            _functionLabel.text = functionString;
-            [_functionLabel sizeToFit];
+//            _functionLabel.text = functionString;
+//            [_functionLabel sizeToFit];
             
             if (![_functionTextView.text isEqualToString:functionString]) {
                 _functionTextView.text = functionString;
@@ -224,14 +236,12 @@
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender
 {
-	NSLog(@"rightItemClicked");
 	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
 }
 
 #pragma mark - 返回按钮方法
 -(void)goBack
 {
-    
     if (_backVC) {
         [self.navigationController popToViewController:_backVC animated:YES];
     }
@@ -239,17 +249,6 @@
     {
         [self backToMainViewController];
     }
-//    MainViewController* main;
-//    NSArray* viewControllers = self.navigationController.viewControllers;
-//    for (UIViewController* vc in viewControllers) {
-//        if ([vc isKindOfClass:[MainViewController class]]) {
-//            main = (MainViewController*)vc;
-//            break;
-//        }
-//    }
-//    if (main) {
-//        [self.navigationController popToViewController:main animated:YES];
-//    }
 }
 
 #pragma mark - 停止按摩
@@ -315,8 +314,15 @@
 
 - (void)didUpdateMassageChairStatus:(RTMassageChairStatus *)rtMassageChairStatus
 {
-	// 以下是界面跳转
 	
+    
+    if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
+	
+    // 以下是界面跳转
 	if (rtMassageChairStatus.figureCheckFlag == 1 && rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging){  // 执行体型检测程序
         if (_isJumpScan) {
             _isJumpScan = NO;
@@ -346,7 +352,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -392,6 +398,8 @@
                         self.title = NSLocalizedString(@"腰椎舒缓", nil);
                         functionString = NSLocalizedString(@"腰椎舒缓功能", nil);
                         break;
+                    default:
+                        break;
                 }
                 
             } else if (rtMassageChairStatus.programType == RtMassageChairProgramNetwork) {  // 当前为网络程序
@@ -419,6 +427,8 @@
                         networkProgram = [[RTBleConnector shareManager].rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:3];
                         name = NSLocalizedString(@"云养程序四", nil);;
                         break;
+                    default:
+                        break;
                 }
                 
                 if (networkProgram) {
@@ -431,9 +441,9 @@
                     functionString = @"获取服务器信息失败，暂无描述";
                 }
             }
-            
-            _functionLabel.text = functionString;
-            [_functionLabel sizeToFit];
+//            
+//            _functionLabel.text = functionString;
+//            [_functionLabel sizeToFit];
             
             if (![_functionTextView.text isEqualToString:functionString]) {
                 _functionTextView.text = functionString;
@@ -552,7 +562,7 @@
         else if (_massageFlag<12&&_massageFlag>7)
         {
             //属于网络按摩的统计
-             NSLog(@"网络按摩统计:%ld",_massageFlag);
+             NSLog(@"网络按摩统计:%d",_massageFlag);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             if (p) {
                 programId = [p.commandId integerValue];
@@ -584,7 +594,7 @@
         }
         else
         {
-            NSLog(@"手动按摩:%ld",_massageFlag);
+            NSLog(@"手动按摩:%d",_massageFlag);
             NSInteger massageTechniqueFlag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (massageTechniqueFlag>0&&massageTechniqueFlag<7) {
                 _programName = _skillsPreferenceArray[massageTechniqueFlag-1];
@@ -610,7 +620,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                
                 if (programId>0) {
                     NSLog(@"统计一次");

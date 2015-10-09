@@ -145,6 +145,7 @@ static AdjustView* share;
     {
         [cell.leftButton setImage:[UIImage imageNamed:_images[_images.count -1]] forState:0];
         [cell.leftButton setImage:[UIImage imageNamed:_selectImage[_images.count-1]] forState:UIControlStateHighlighted];
+        [cell.leftButton setImage:[UIImage imageNamed:_selectImage[_images.count-1]] forState:UIControlStateSelected];
         [cell.rightButton setHidden:YES];
     }
     return cell;

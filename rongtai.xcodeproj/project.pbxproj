@@ -69,6 +69,7 @@
 		3D4CF7F31BB3A1DB00DC53ED /* ShareSDKiPhoneSimpleShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4CF7DF1BB3A1DB00DC53ED /* ShareSDKiPhoneSimpleShareViewUI.framework */; };
 		3D4CF7F41BB3A1DB00DC53ED /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4CF7E01BB3A1DB00DC53ED /* ShareSDKShareActionSheet.framework */; };
 		3D4D1B5A1B8316DD00CFD151 /* AdjustView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4D1B591B8316DD00CFD151 /* AdjustView.m */; };
+		3D5991931BBB7AF00058AB8B /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5991921BBB7AF00058AB8B /* UserViewController.m */; };
 		3D5E901A1B26C43E00B03107 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D5E901C1B26C43E00B03107 /* Localizable.strings */; };
 		3D65A4851B25792800B7B411 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4841B25792800B7B411 /* MenuViewController.m */; };
 		3D65A4881B25841800B7B411 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D65A4871B25841800B7B411 /* MainViewController.m */; };
@@ -104,6 +105,7 @@
 		3DA8D6111B21B226002328DF /* WLDoughnut.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DA8D6101B21B226002328DF /* WLDoughnut.m */; };
 		3DAC3C681B43D7FF0087F699 /* TimingPlanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */; };
 		3DAE1A6F1B3C0B8700B0CA3C /* LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */; };
+		3DB703691BC6920500B51F50 /* RTPeripheralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB703681BC6920500B51F50 /* RTPeripheralTableViewCell.m */; };
 		3DB8DF531B82DDD90009F480 /* stopButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DB8DF521B82DDD90009F480 /* stopButtonBg.png */; };
 		3DBDCE9D1B549E270006EA18 /* BasicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */; };
 		3DBE05AF1B27F2A20008EFCA /* DataCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBE05AE1B27F2A20008EFCA /* DataCenterViewController.m */; };
@@ -197,7 +199,6 @@
 		56C6688D1B2D590600CDC72B /* ProductInstructionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C6688C1B2D590600CDC72B /* ProductInstructionViewController.m */; };
 		56C668971B2E848200CDC72B /* BuyRTProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */; };
 		56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A01B300F7800CDC72B /* VerticalSlider.m */; };
-		56C668A41B3026A500CDC72B /* CircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C668A31B3026A500CDC72B /* CircleButton.m */; };
 		56D6D54B1BB00D420000ECBF /* FilteringResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */; };
 		56E0637E1BB2B2A700734463 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E0637D1BB2B2A700734463 /* JavaScriptCore.framework */; };
 		56E063801BB2B2D600734463 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E0637F1BB2B2D600734463 /* CoreText.framework */; };
@@ -335,6 +336,8 @@
 		3D4CF7E01BB3A1DB00DC53ED /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
 		3D4D1B581B8316DD00CFD151 /* AdjustView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustView.h; sourceTree = "<group>"; };
 		3D4D1B591B8316DD00CFD151 /* AdjustView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustView.m; sourceTree = "<group>"; };
+		3D5991911BBB7AF00058AB8B /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
+		3D5991921BBB7AF00058AB8B /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
 		3D5E901B1B26C43E00B03107 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D5E901D1B26C43F00B03107 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3D65A4831B25792800B7B411 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
@@ -403,6 +406,8 @@
 		3DAC3C671B43D7FF0087F699 /* TimingPlanTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimingPlanTableViewCell.m; sourceTree = "<group>"; };
 		3DAE1A6D1B3C0B8700B0CA3C /* LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRequest.h; sourceTree = "<group>"; };
 		3DAE1A6E1B3C0B8700B0CA3C /* LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRequest.m; sourceTree = "<group>"; };
+		3DB703671BC6920500B51F50 /* RTPeripheralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTPeripheralTableViewCell.h; sourceTree = "<group>"; };
+		3DB703681BC6920500B51F50 /* RTPeripheralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTPeripheralTableViewCell.m; sourceTree = "<group>"; };
 		3DB8DF521B82DDD90009F480 /* stopButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopButtonBg.png; sourceTree = "<group>"; };
 		3DBDCE9B1B549E270006EA18 /* BasicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTableViewCell.h; sourceTree = "<group>"; };
 		3DBDCE9C1B549E270006EA18 /* BasicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTableViewCell.m; sourceTree = "<group>"; };
@@ -576,8 +581,6 @@
 		56C668961B2E848200CDC72B /* BuyRTProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyRTProductTableViewController.m; path = BuyRTProduct/BuyRTProductTableViewController.m; sourceTree = "<group>"; };
 		56C6689F1B300F7800CDC72B /* VerticalSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VerticalSlider.h; path = VerticalSlider/VerticalSlider.h; sourceTree = "<group>"; };
 		56C668A01B300F7800CDC72B /* VerticalSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VerticalSlider.m; path = VerticalSlider/VerticalSlider.m; sourceTree = "<group>"; };
-		56C668A21B3026A500CDC72B /* CircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleButton.h; path = CircleButton/CircleButton.h; sourceTree = "<group>"; };
-		56C668A31B3026A500CDC72B /* CircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleButton.m; path = CircleButton/CircleButton.m; sourceTree = "<group>"; };
 		56D6D5491BB00D420000ECBF /* FilteringResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilteringResultViewController.h; sourceTree = "<group>"; };
 		56D6D54A1BB00D420000ECBF /* FilteringResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilteringResultViewController.m; sourceTree = "<group>"; };
 		56E0637D1BB2B2A700734463 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -691,6 +694,8 @@
 				3D0258D61B1D5173006C9179 /* LoginViewController.m */,
 				3D0258D71B1D5173006C9179 /* RegisterViewController.h */,
 				3D0258D81B1D5173006C9179 /* RegisterViewController.m */,
+				3D5991911BBB7AF00058AB8B /* UserViewController.h */,
+				3D5991921BBB7AF00058AB8B /* UserViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1452,15 +1457,6 @@
 			name = VerticalSlider;
 			sourceTree = "<group>";
 		};
-		56C668A51B30395000CDC72B /* CircleButton */ = {
-			isa = PBXGroup;
-			children = (
-				56C668A21B3026A500CDC72B /* CircleButton.h */,
-				56C668A31B3026A500CDC72B /* CircleButton.m */,
-			);
-			name = CircleButton;
-			sourceTree = "<group>";
-		};
 		56E6B3261B292932000178BD /* TimingMassage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1532,6 +1528,8 @@
 				3D783D381B12FD0300A893D9 /* RTBleListViewController.m */,
 				563194D61B4146EE00F476C4 /* RTBleBaseBusinessViewController.h */,
 				563194D71B4146EE00F476C4 /* RTBleBaseBusinessViewController.m */,
+				3DB703671BC6920500B51F50 /* RTPeripheralTableViewCell.h */,
+				3DB703681BC6920500B51F50 /* RTPeripheralTableViewCell.m */,
 			);
 			path = Ble;
 			sourceTree = "<group>";
@@ -1601,7 +1599,6 @@
 				3DDEE1BF1B4A6EAB005F8324 /* WLDoughnutStatsView */,
 				3D0B4C691B3ABBE100FF97C6 /* WLWeatherView */,
 				567281531B32A0860059C18E /* MBProgressHUD */,
-				56C668A51B30395000CDC72B /* CircleButton */,
 				56C6689E1B300F6700CDC72B /* VerticalSlider */,
 				3D1063A01B2D8E4A00266D9A /* WLCheckButton */,
 				5661F6971B2812A9006066A0 /* LineUICollectionViewFlowLayout */,
@@ -1832,7 +1829,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D3E712F1B5F3DA900C47CD0 /* ScanViewController.m in Sources */,
-				56C668A41B3026A500CDC72B /* CircleButton.m in Sources */,
 				569360241B79E30F001B9BF5 /* ProgramDownloadViewController.m in Sources */,
 				3D7754E01BAE60F100E47C8C /* WLButtonItem.m in Sources */,
 				3DF304381B38FE2500DD51D3 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
@@ -1887,6 +1883,7 @@
 				3D2C82F51B2A93DB00F52352 /* FamilyCollectionViewCell.m in Sources */,
 				3DF304391B38FE2500DD51D3 /* MagicalRecord+Actions.m in Sources */,
 				DF9C7D041B147D59005617DA /* WelcomeViewController.m in Sources */,
+				3DB703691BC6920500B51F50 /* RTPeripheralTableViewCell.m in Sources */,
 				3D48BF1D1B53A72B004EE243 /* ChangeUserViewController.m in Sources */,
 				56C668A11B300F7800CDC72B /* VerticalSlider.m in Sources */,
 				3D30B59D1BA966A200BD2C41 /* IQSegmentedNextPrevious.m in Sources */,
@@ -1900,6 +1897,7 @@
 				5661F6A21B281302006066A0 /* LineUICollectionViewCell.m in Sources */,
 				3D8F37B31B55F78900C135A8 /* SegmentTableViewCell.m in Sources */,
 				3D87A45C1BB15C6800A75434 /* AFHTTPRequestOperationManager+timeout.m in Sources */,
+				3D5991931BBB7AF00058AB8B /* UserViewController.m in Sources */,
 				3DF3042B1B38FE2500DD51D3 /* NSString+MagicalDataImport.m in Sources */,
 				3D0B4C871B3ABBE100FF97C6 /* WLWeatherView.m in Sources */,
 				5672800D1B31845B0059C18E /* RongTai.xcdatamodeld in Sources */,

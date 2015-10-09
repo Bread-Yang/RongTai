@@ -52,7 +52,7 @@
     
     _partLabel = [[UILabel alloc]init];
     _partLabel.font = [UIFont systemFontOfSize:15];
-    _partLabel.text = NSLocalizedString(@"请选择需要按摩的部位", nil);
+    _partLabel.text = NSLocalizedString(@"请点选气压按摩部位", nil);
     _partLabel.textColor = ORANGE;
     _partLabel.textAlignment = NSTextAlignmentCenter;
 //    _partLabel.backgroundColor = [UIColor lightGrayColor];
@@ -233,7 +233,7 @@
     else
     {
         _isSelected = NO;
-        _partLabel.text = NSLocalizedString(@"请选择需要按摩的部位", nil);
+        _partLabel.text = NSLocalizedString(@"请点选气压按摩部位", nil);
         _partLabel.textColor = ORANGE;
     }
 }

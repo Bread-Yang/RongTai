@@ -18,7 +18,7 @@
 
 @interface LineCollectionView : UICollectionView<LineUICollectionViewFlowLayoutDelegate>
 
-@property(assign, nonatomic) id<LineUICollectionViewDelegate> delegate;
+@property(weak, nonatomic) id<LineUICollectionViewDelegate> lineDelegate;
 
 @property(assign, nonatomic) NSInteger currentSelectItemIndex;
 

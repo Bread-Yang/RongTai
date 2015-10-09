@@ -80,6 +80,8 @@
     
     ProgramCount* _programCount;
     
+    UIButton* _anionBtn;
+    
     BOOL _isJumpFinish;
     
     //测试用
@@ -124,6 +126,14 @@
     _humanView.delegate = self;
     [_scroll addSubview:_humanView];
     
+    //创建拖拽提醒
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(w, 0.9*h, w, 0.1*h)];
+    label.text = @"请拖动圆点进行调节";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = ORANGE;
+    label.font = [UIFont systemFontOfSize:15];
+    [_scroll addSubview:label];
+    
     //创建 极线图
     _polar = [[WLPolar alloc]initWithFrame:CGRectMake(w, 0, w, h)];
     _polar.dataSeries = @[@(6), @(6), @(6), @(6)];
@@ -146,7 +156,7 @@
     [_polar setPoint:0 MaxLimit:12 MinLimit:4];
     
     //创建 自定义分页控制器
-    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 30, SCREENHEIGHT*0.03)];
+    _pageControl = [[SMPageControl alloc]initWithFrame:CGRectMake(0, 0, 0.1*SCREENWIDTH, SCREENHEIGHT*0.03)];
     _pageControl.numberOfPages = 2;
     _pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"page_piont_1"];
     _pageControl.pageIndicatorImage = [UIImage imageNamed:@"page_piont_2"];
@@ -154,8 +164,11 @@
     [_addPageControl addSubview:_pageControl];
     
     //导航栏右边按钮
-    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_set"] style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked:)];
-    
+    _anionBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set"] forState:UIControlStateNormal];
+    [_anionBtn setImage:[UIImage imageNamed:@"icon_set2"] forState:UIControlStateSelected];
+    [_anionBtn addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithCustomView:_anionBtn];
     self.navigationItem.rightBarButtonItem = right;
  
     //返回按钮设置
@@ -198,6 +211,10 @@
     _delayOfHumanView = 0;
     
     _isJumpFinish = YES;
+    
+    //
+    _timeLabel.adjustsFontSizeToFitWidth = YES;
+    _timeLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -552,7 +569,6 @@
 #pragma mark - 导航栏右边按钮方法
 -(void)rightItemClicked:(id)sender {
 	[[RTBleConnector shareManager] sendControlMode:H10_KEY_OZON_SWITCH];
-    
 }
 
 #pragma mark - 更新背部加热View
@@ -685,6 +701,19 @@
 //        _scan=0;
 //    }
 //    NSLog(@"机芯位置：%ld",rtMassageChairStatus.kneadWidthFlag);
+//    NSLog(@"========================");
+//    NSLog(@"脚步气囊程序:%ld",rtMassageChairStatus.legAndFootAirBagProgramFlag);
+//    NSLog(@"背腰气囊程序:%ld",rtMassageChairStatus.backAndWaistAirBagProgramFlag);
+//    NSLog(@"臂肩气囊程序:%ld",rtMassageChairStatus.armAndShoulderAirBagProgramFlag);
+//    NSLog(@"坐垫气囊程序:%ld",rtMassageChairStatus.buttockAirBagProgramFlag);
+//    NSLog(@"全身气囊程序:%ld",rtMassageChairStatus.FullBodyAirBagProgramFlag);
+    
+
+    if (rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
     
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
@@ -759,7 +788,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -858,6 +887,12 @@
 #pragma mark - 更新界面
 -(void)updateUI
 {
+    if (_bleConnector.rtMassageChairStatus.anionSwitchFlag == 0) {   // 负离子关
+        [_anionBtn setSelected:NO];
+    } else {
+        [_anionBtn setSelected:YES];
+    }
+    
     if (_bleConnector.rtMassageChairStatus.deviceStatus == RtMassageChairStatusMassaging)
     {
         //按摩中
@@ -876,7 +911,7 @@
             }
             
             //按摩模式
-            NSInteger flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
+            flag = _bleConnector.rtMassageChairStatus.massageTechniqueFlag;
             if (flag>0&&flag<7) {
                 _skillsPreferenceLabel.text = _skillsPreferenceName[flag-1];
                 [self updateSkillsPreferenceView:YES];
@@ -1050,7 +1085,7 @@
         else if (_massageFlag<11&&_massageFlag>7)
         {
             //属于网络按摩的统计
-            NSLog(@"网络按摩统计:%ld",_massageFlag);
+            NSLog(@"网络按摩统计:%d",_massageFlag);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             programId = [p.commandId integerValue];
             _programName = p.name;
@@ -1087,7 +1122,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
             
                 if (programId>0)
                 {

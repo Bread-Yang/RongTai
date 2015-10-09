@@ -78,7 +78,7 @@
 -(void)setCount:(NSUInteger)count
 {
     _count = count;
-    _countLabel.text = [NSString stringWithFormat:@"%lu",_count];
+    _countLabel.text = [NSString stringWithFormat:@"%d",_count];
 }
 
 -(void)setIsHiddenDougnut:(BOOL)isHiddenDougnut

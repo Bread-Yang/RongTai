@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 William-zhang. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "BasicViewController.h"
 
 @class Member;

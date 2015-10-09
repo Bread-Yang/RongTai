@@ -263,7 +263,7 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-	NSLog(@"pointInside:");
+//	NSLog(@"pointInside:");
 
 	for (int i = 0; i<_points.count; i++) {
         NSNumber* n = _canMove[i];
@@ -403,8 +403,8 @@
     NSLog(@"触摸结束");
 //    [super touchesEnded:touches withEvent:event];
     _dataSeries = [NSArray arrayWithArray:_values];
-	NSLog(@"Points:%@",_points);
-	NSLog(@"_dataSeries : %@", _dataSeries);
+//	NSLog(@"Points:%@",_points);
+//	NSLog(@"_dataSeries : %@", _dataSeries);
     _isTouchInPoint = NO;
     [self setNeedsDisplay];
     if ([self.delegate respondsToSelector:@selector(WLPolarMoveFinished:index:)]) {

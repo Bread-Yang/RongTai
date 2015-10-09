@@ -52,6 +52,7 @@
     NSLog(@"读取统计次数服务器数据");
     DataRequest* request = [DataRequest new];
     [request getFavoriteProgramCountSuccess:^(NSArray *programs) {
+//        NSLog(@"按摩次数:%@",programs);
         NSString* uid = [[NSUserDefaults standardUserDefaults] objectForKey:@"uid"];
         NSArray* counts = [ProgramCount MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"uid == %@",uid]];
         NSMutableArray* mutPrograms = [NSMutableArray arrayWithArray:programs];

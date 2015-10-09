@@ -15,13 +15,10 @@
 #import "AppDelegate.h"
 #import "AFHTTPRequestOperationManager+timeout.h"
 
-#define REQUESTURL @"http://rongtai.xtremeprog.com/RongTaiWeb/"
-
-
 @interface MassageProgramRequest () {
 	
     AFHTTPRequestOperationManager* _manager;
-	
+    
 }
 
 @property (nonatomic) NSTimeInterval overTime;
@@ -70,30 +67,42 @@
 		NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
-		
 		if ([code integerValue] == 200) {
-			
-			[MassageProgram MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
-			
 			NSArray *arr = [responseObject objectForKey:@"result"];
 			
-//			NSLog(@"用户下载列表:%@",arr);
-			
-			NSMutableArray *networkMassageProgramArray = [[NSMutableArray alloc] init];
-			
 			if (arr.count > 0) {
+                NSMutableArray* localRecords = [NSMutableArray arrayWithArray: [MassageProgram MR_findAll]];
 				for (int i = 0; i < arr.count; i++) {
-					MassageProgram *massage = [MassageProgram MR_createEntity];
-//                    NSLog(@"😄%d：%@",i,arr[i]);
-					[massage setValueByJSON:arr[i]];
-                    [networkMassageProgramArray addObject:massage];
-                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                    NSDictionary* dic = arr[i];
+                    NSNumber* commandId = [dic objectForKey:@"commandId"];
+                    MassageProgram* massage;
+                    for (MassageProgram* m in localRecords) {
+                        if ([m.commandId integerValue]==[commandId integerValue])
+                        {
+                            massage = m;
+                            [localRecords removeObject:m];
+                            break;
+                        }
+                    }
+                   
+                    if (!massage) {
+                        //本地没记录就新建一条记录
+                        massage = [MassageProgram MR_createEntity];
+                    }
+                    [massage setValueByJSON:dic];
 				}
+                if (localRecords.count>0) {
+                    for (MassageProgram* m in localRecords) {
+                        //服务器上没有的就删除
+                        [m MR_deleteEntity];
+                    }
+                }
+                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 			}
 			
-			if (success) {
-				success([networkMassageProgramArray copy]);
-			}
+            if (success) {
+                success([self getAlreadySaveNetworkMassageProgramList]);
+            }
 			
 		} else {
 			
@@ -106,19 +115,18 @@
 		NSLog(@"error._code : %zd", error.code);
 		
 		if (failure) {
+            NSLog(@"网络程序请求失败");
 			failure([self getAlreadySaveNetworkMassageProgramList]);
 		}
 		
 		if (error.code == NSURLErrorTimedOut) {  // 超时
 			[self requestTimeOut];
 		}
-		
 	}];
 }
 
 - (NSArray *)getAlreadySaveNetworkMassageProgramList {
-	NSArray *localMassageProgram = [MassageProgram MR_findAll];
-	
+	NSArray *localMassageProgram = [MassageProgram MR_findAllSortedBy:@"commandId" ascending:YES];
 	return localMassageProgram;
 }
 
@@ -126,8 +134,8 @@
 -(void)requestFavoriteMassageListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/loadFavoriteMassage",REQUESTURL];
-    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,(long)index,size);
+    NSString* url = [NSString stringWithFormat:@"%@/loadFavoriteMassage",RongTaiDefaultDomain];
+    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,(long)index,(long)size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
@@ -159,7 +167,7 @@
 -(void)requestAddFavoriteMassageByUid:(NSString*)uid MassageIds:(NSString*)masssageIds
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/addFavorite",REQUESTURL];
+    NSString* url = [NSString stringWithFormat:@"%@/addFavorite",RongTaiDefaultDomain];
     NSLog(@"请求链接：%@\n请求参数：uids:%@\n MassageIds：%@",url,uid,masssageIds);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
@@ -195,8 +203,8 @@
 -(void)requsetCustomProgramListByUid:(NSString*)uid Index:(NSInteger)index Size:(NSInteger)size
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/loadCustomProgram",REQUESTURL];
-    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%ld\n size:%ld\n",url,uid,index,size);
+    NSString* url = [NSString stringWithFormat:@"%@/loadCustomProgram",RongTaiDefaultDomain];
+    NSLog(@"请求链接：%@\n请求参数：uid：%@\n index:%d\n size:%d\n",url,uid,index,size);
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
@@ -229,7 +237,7 @@
 -(void)addCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/addCustomProgram",REQUESTURL];
+    NSString* url = [NSString stringWithFormat:@"%@/addCustomProgram",RongTaiDefaultDomain];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:customProgram.name forKey:@"name"];
@@ -274,7 +282,7 @@
 -(void)updateCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/updateCustomProgram",REQUESTURL];
+    NSString* url = [NSString stringWithFormat:@"%@/updateCustomProgram",RongTaiDefaultDomain];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:customProgram.name forKey:@"name"];
@@ -320,7 +328,7 @@
 -(void)deleteCustomProgram:(CustomProgram*)customProgram Uid:(NSString*)uid
 {
 //    [self cancelRequest];
-    NSString* url = [NSString stringWithFormat:@"%@/deleteCustomProgram",REQUESTURL];
+    NSString* url = [NSString stringWithFormat:@"%@/deleteCustomProgram",RongTaiDefaultDomain];
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:customProgram.programId forKey:@"programId"];

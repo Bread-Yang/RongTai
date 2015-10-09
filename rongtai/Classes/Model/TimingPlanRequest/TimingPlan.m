@@ -91,7 +91,7 @@
 			
 			localNofication.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"时间:%@",fireDate] forKey:@"time"];
 			localNofication.soundName = UILocalNotificationDefaultSoundName;
-			localNofication.alertBody = message;
+			localNofication.alertBody =  [NSString stringWithFormat:@"亲，您预约了“%@”按摩程序，赶快去放松下吧~",message];
 			localNofication.repeatInterval = NSCalendarUnitWeekOfYear;
             localNofication.timeZone = [NSTimeZone defaultTimeZone];
 //			localNofication.alertLaunchImage = @"image";
@@ -125,7 +125,7 @@
 		localNofication.fireDate = fireDate;
 		localNofication.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"时间:%@",fireDate] forKey:@"time"];
 		localNofication.soundName = UILocalNotificationDefaultSoundName;
-		localNofication.alertBody = message;
+		localNofication.alertBody = [NSString stringWithFormat:@"亲，您预约了“%@”按摩程序，赶快去放松下吧~",message];
 		localNofication.timeZone = [NSTimeZone defaultTimeZone];
 		localNofication.alertLaunchImage = @"image";
 		localNofication.alertAction = @"action";

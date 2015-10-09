@@ -9,7 +9,6 @@
 #import "ProgramDownloadViewController.h"
 #import "UIBarButtonItem+goBack.h"
 #import "RTBleConnector.h"
-#import "ReadFile.h"
 #import "ProgramDownloadTableViewCell.h"
 #import "MBProgressHUD.h"
 #import "AFHTTPRequestOperationManager.h"
@@ -24,16 +23,15 @@
 @interface ProgramDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, RTBleConnectorDelegate> {
 	
 	MBProgressHUD *_loadingHUD;
-	NSArray *_localProgramArray, *_allNetworkProgramArray;
+    NSArray* _localProgramArray;
+    NSArray* _allNetworkProgramArray;
 	NSMutableArray *_notYetInstallProgramArray, *_alreadyInstallProgramArray;
     NSInteger _massageFlag;
     RTBleConnector* _bleConnector;
     NSArray* _skillsPreferenceName;
     ProgramCount* _programCount;
     NSString* _programName;
-    
     NSInteger flag;
-
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,9 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.isListenBluetoothStatus = YES;
-	
-	//MBProgressHUD
+    //MBProgressHUD
     _loadingHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _loadingHUD.labelText = NSLocalizedString(@"读取中...", nil);
     [self.view addSubview:_loadingHUD];
@@ -65,17 +61,18 @@
 		UIView *dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, dummyViewHeight)];
 		self.tableView.tableHeaderView = dummyView;
 		self.tableView.contentInset = UIEdgeInsetsMake(-dummyViewHeight, 0, 0, 0);
-	} else {
+	}
+    else
+    {
 		self.title = NSLocalizedString(@"程序下载", nil);
 	}
 	self.tableView.hidden = YES;
     _bleConnector = [RTBleConnector shareManager];
     
     _skillsPreferenceName = @[NSLocalizedString(@"揉捏", nil), NSLocalizedString(@"敲击", nil), NSLocalizedString(@"揉敲", nil), NSLocalizedString(@"叩击", nil), NSLocalizedString(@"指压", nil), NSLocalizedString(@"韵律", nil)];
-	
+    
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"LocalProgramList" ofType:@"plist"];
 	_localProgramArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -154,7 +151,6 @@
 }
 
 #pragma mark - RTBleConnectorDelegate
-
 - (void)didUpdateStatusInProgramMode:(NSData *)rawData {
 	
 }
@@ -193,7 +189,7 @@
                 }
                 else
                 {
-                    NSLog(@"更换自动按摩种类:%ld",_massageFlag);
+                    NSLog(@"更换自动按摩种类:%d",_massageFlag);
                     //切换自动按摩程序种类，需要进行按摩时间和次数统计
                     [self countMassageTime];
                     //再次设置开始时间
@@ -223,8 +219,9 @@
 
 -(void)didDisconnectRTBlePeripheral:(CBPeripheral *)peripheral
 {
+    [super didDisconnectRTBlePeripheral:peripheral];
 //    NSLog(@"设备断开了");
-//    [_tableView reloadData];
+    [_tableView reloadData];
 }
 
 -(void)didUpdateRTBleState:(CBCentralManagerState)state
@@ -380,7 +377,7 @@
 	NSInteger isAlreadyInstall = [[RTBleConnector shareManager].rtNetworkProgramStatus isAlreadyIntall:[cell.massageProgram.commandId integerValue]];
 	
     RTBleConnector* bleconnector = [RTBleConnector shareManager];
-    if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+    if (bleconnector.currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn] || !bleconnector.isConnectedDevice) {
 		
         cell.isAlreadyDownload = false;
 		
@@ -522,7 +519,7 @@
         else if (_massageFlag<11&&_massageFlag>7)
         {
             //属于网络按摩的统计
-            NSLog(@"网络按摩统计：%ld",programId);
+            NSLog(@"网络按摩统计：%d",programId);
             MassageProgram* p = [_bleConnector.rtNetworkProgramStatus getNetworkProgramNameBySlotIndex:_massageFlag-8];
             programId = [p.commandId integerValue];
             _programName = p.name;
@@ -559,7 +556,7 @@
                 {
                     min = (int)round(time/60);
                 }
-                NSLog(@"此次按摩了%ld分钟",min);
+                NSLog(@"此次按摩了%d分钟",min);
                 
                 if (programId>0)
                 {

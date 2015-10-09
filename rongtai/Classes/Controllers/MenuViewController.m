@@ -23,6 +23,7 @@
 #import "MBProgressHUD.h"
 //测试
 #import "FinishMassageViewController.h"
+#import "ScanViewController.h"
 
 
 @interface MenuViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate,MFMailComposeViewControllerDelegate>
@@ -244,7 +245,6 @@
         {
             NSLog(@"vcs:%@",[SlideNavigationController sharedInstance].viewControllers);
         }
-        
     }
     else if (indexPath.row == 6)
     {
@@ -252,6 +252,10 @@
         UIStoryboard* s = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ProductInstructionViewController* pVC = [s instantiateViewControllerWithIdentifier:@"ProductInstructionVC"];
         [sl pushViewController:pVC animated:YES];
+        
+//        UIStoryboard *s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//        ScanViewController *scan = (ScanViewController *)[s instantiateViewControllerWithIdentifier:@"ScanVC"];
+//        [sl pushViewController:scan animated:YES];
     }
     else if (indexPath.row == 7)
     {
@@ -339,7 +343,7 @@
             break;
     }
     NSLog(@"邮件发送结果:%@",error);
-    MainViewController* main;
+    MainViewController* main = nil;
     for (int i = 0; i<[SlideNavigationController sharedInstance].viewControllers.count; i++) {
         UIViewController* vc = [SlideNavigationController sharedInstance].viewControllers[i];
         if ([vc isKindOfClass:[MainViewController class]]) {
@@ -347,7 +351,7 @@
         }
     }
     if (main) {
-       [main dismissViewControllerAnimated:controller completion:^{
+       [main dismissViewControllerAnimated:YES completion:^{
            [self showProgressHUDByString:message];
        }];
     }

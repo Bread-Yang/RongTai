@@ -9,7 +9,7 @@
 #import "FamilyManageViewController.h"
 #import "FamilyCollectionViewCell.h"
 #import "UserInformationViewController.h"
-
+#import "UserViewController.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AFURLResponseSerialization.h"
 #import "CoreData+MagicalRecord.h"
@@ -166,8 +166,9 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+//    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//    UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+    UserViewController* uVC = [[UserViewController alloc]init];
     Member* user = _memberArray[indexPath.row];
     [uVC editMode:user WithIndex:indexPath.row];
     [self.navigationController pushViewController:uVC animated:YES];
@@ -176,8 +177,9 @@
 #pragma mark - 添加成员方法
 -(void)addMember:(id)sender
 {
-    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+//    UIStoryboard* s = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//    UserInformationViewController *uVC = (UserInformationViewController *)[s instantiateViewControllerWithIdentifier:@"UserInformation"];
+    UserViewController* uVC = [[UserViewController alloc]init];
     uVC.title = NSLocalizedString(@"添加成员", nil);
     [self.navigationController pushViewController:uVC animated:YES];
 }

@@ -114,6 +114,11 @@ static BOOL isBleTurnOn;
 @property (nonatomic, retain) CBPeripheral *currentConnectedPeripheral;
 
 /**
+ *  是否重新连接当前断开设备
+ */
+@property (nonatomic) BOOL isReconnect;
+
+/**
  *  开始按摩时间，只用于自动按摩的时间统计
  */
 @property (nonatomic, strong) NSDate* startTime;
@@ -122,6 +127,11 @@ static BOOL isBleTurnOn;
  *  最后一次按摩信息
  */
 @property (nonatomic, strong) NSDictionary* massageRecord;
+
+
+//蓝牙断开时是否弹框
+@property (nonatomic, assign) BOOL isSendMessage;
+
 
 #pragma mark - download network program field
 

@@ -158,13 +158,13 @@
             
             //设置该页面的总使用时长
             if (_totalTime<60) {
-                _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+                _titleLabel.text = [NSString stringWithFormat:@"%@: %dm",NSLocalizedString(@"总使用时长", nil),_totalTime];
             }
             else
             {
                 NSUInteger h = _totalTime/60;
                 NSUInteger m = _totalTime%60;
-                _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+                _titleLabel.text = [NSString stringWithFormat:@"%@: %dh %dm",NSLocalizedString(@"总使用时长", nil),h,m];
             }
             [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
             
@@ -244,13 +244,13 @@
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
         if (_totalTime<60) {
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil), (unsigned long)_totalTime];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %dm",NSLocalizedString(@"总使用时长", nil), _totalTime];
         }
         else
         {
             NSUInteger h = _totalTime/60;
             NSUInteger m = _totalTime%60;
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),(unsigned long)h,m];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %dh %dm",NSLocalizedString(@"总使用时长", nil),h,m];
         }
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }
@@ -271,13 +271,13 @@
     _pageControl.currentPage = page;
     if (_pageControl.currentPage == 0) {
         if (_totalTime<60) {
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldm",NSLocalizedString(@"总使用时长", nil),_totalTime];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %dm",NSLocalizedString(@"总使用时长", nil),_totalTime];
         }
         else
         {
             NSUInteger h = _totalTime/60;
             NSUInteger m = _totalTime%60;
-            _titleLabel.text = [NSString stringWithFormat:@"%@: %ldh %ldm",NSLocalizedString(@"总使用时长", nil),h,m];
+            _titleLabel.text = [NSString stringWithFormat:@"%@: %dh %dm",NSLocalizedString(@"总使用时长", nil),h,m];
         }
         [_titleLabel setNumebrByFont:[UIFont systemFontOfSize:18] Color:BLUE];
     }

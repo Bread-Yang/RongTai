@@ -314,7 +314,7 @@ UISegmentedControl *segmentedControl;
                                NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
                                
-                               NSString *info = [uid stringByAppendingString:token];
+//                               NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
 							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];
@@ -340,7 +340,7 @@ UISegmentedControl *segmentedControl;
 							   NSString *nickName = [userInfo nickname];
 							   NSString *token = [[userInfo credential] token];
 							   
-							   NSString *info = [uid stringByAppendingString:token];
+//							   NSString *info = [uid stringByAppendingString:token];
 							   NSString *information = [NSString stringWithFormat:@"uid : %@, nickName : %@, token : %@",uid, nickName, token];
 							   NSLog(@"第三方登录之前, %@", information);
 							   [self.loginRequest thirdLoginBySrc:@"sina" Uid:uid Token:token];

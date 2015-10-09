@@ -295,7 +295,7 @@
 
 #pragma mark - 开始按摩按钮
 - (IBAction)startMassage:(UIButton *)sender {
-    if ([RTBleConnector shareManager].currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]) {
+    if ([RTBleConnector shareManager].currentConnectedPeripheral == nil || ![RTBleConnector isBleTurnOn]|| ![RTBleConnector shareManager].isConnectedDevice) {
         [[RTBleConnector shareManager] showConnectDialog];
         return;
     }

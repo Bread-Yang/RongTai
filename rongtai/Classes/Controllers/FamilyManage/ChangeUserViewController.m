@@ -185,7 +185,7 @@
     //更改当前用户mid
     Member* m = _users[indexPath.row];
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSString* mid = [NSString stringWithFormat:@"%ld",[m.memberId integerValue]];
+    NSString* mid = [NSString stringWithFormat:@"%d",[m.memberId integerValue]];
     [defaults setObject:mid forKey:@"currentMemberId"];
     NSLog(@"切换用户:%@",m.name);
 }
