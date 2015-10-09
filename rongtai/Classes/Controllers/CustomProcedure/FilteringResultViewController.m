@@ -61,7 +61,7 @@
 	// 网络程序请求
 	[_loadingHUD show:YES];
 	
-	MassageProgramRequest *request = [[MassageProgramRequest alloc] init];
+	MassageProgramRequest *request = [MassageProgramRequest sharedInstance];
 	
 	[request requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
 		
@@ -122,7 +122,7 @@
 	//	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
 	[self.navigationController popViewControllerAnimated:YES];
 	//	[self backToMainViewController];
-	[[[MassageProgramRequest alloc] init] cancelRequest];
+	[[MassageProgramRequest sharedInstance] cancelRequest];
 }
 
 #pragma mark - RTBleConnectorDelegate

@@ -56,7 +56,7 @@
 
 @property(nonatomic, weak)id<MassageRequestDelegate> delegate;
 
-+ (instancetype)shareManager;
++ (instancetype)sharedInstance;
 
 /**
  *  获取网络按摩程序列表

@@ -276,7 +276,7 @@
 - (void)requestNetworkMassageProgram {
 	// 获取网络按摩程序列表, 并保存在本地,如果获取失败,使用本地的
 	_networkMassageDic = [NSMutableDictionary new];
-	_networkMassageProgramRequest = [[MassageProgramRequest alloc]init];
+	_networkMassageProgramRequest = [MassageProgramRequest sharedInstance];
 	
 	[_networkMassageProgramRequest requestNetworkMassageProgramListByIndex:0 Size:100 success:^(NSArray *networkMassageProgramArray) {
 		
@@ -304,7 +304,7 @@
 	
 	@synchronized(self) {
 		_networkMassageDic = [NSMutableDictionary new];
-		_networkMassageProgramRequest = [[MassageProgramRequest alloc]init];
+		_networkMassageProgramRequest = [MassageProgramRequest sharedInstance];
 		
 		NSArray *localMassageProgramArray = [_networkMassageProgramRequest getAlreadySaveNetworkMassageProgramList];
 		for (int i = 0; i < localMassageProgramArray.count; i++) {

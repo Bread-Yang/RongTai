@@ -27,9 +27,40 @@
 
 @end
 
+static MassageProgramRequest *class = nil;
+
 @implementation MassageProgramRequest
 
--(instancetype)init {
++ (MassageProgramRequest *)sharedInstance{
+	
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		class = [[MassageProgramRequest alloc] init];
+		// Do any other initialisation stuff here
+	});
+	
+	return class;
+	
+}
+
++ (id)allocWithZone:(NSZone *)zone{
+	
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		class = [super allocWithZone:zone];
+	});
+	return class;
+	
+}
+
+- (id)copyWithZone:(NSZone *)zone;{
+	
+	return self; //确保copy对象也是唯一
+	
+}
+
+
+- (instancetype)init {
     if (self = [super init]) {
         _manager = [AFHTTPRequestOperationManager manager];
         //不加这句会导致请求失败
