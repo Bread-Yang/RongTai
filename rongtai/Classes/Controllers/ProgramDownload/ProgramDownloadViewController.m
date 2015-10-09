@@ -150,6 +150,7 @@
 //	[[RTBleConnector shareManager] sendControlByBytes:[[RTBleConnector shareManager] exitEditMode]];  // 退出编辑模式
     [self.navigationController popViewControllerAnimated:YES];
 //	[self backToMainViewController];
+	[[[MassageProgramRequest alloc] init] cancelRequest];
 }
 
 #pragma mark - RTBleConnectorDelegate

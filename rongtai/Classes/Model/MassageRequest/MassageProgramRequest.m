@@ -24,7 +24,9 @@
 	
 }
 
-@property(nonatomic) NSTimeInterval overTime;
+@property (nonatomic) NSTimeInterval overTime;
+
+@property (nonatomic, retain) AFHTTPRequestOperation *requestOperation;
 
 @end
 
@@ -41,6 +43,15 @@
     return self;
 }
 
++ (instancetype)shareManager {
+	static MassageProgramRequest *shareManager = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		shareManager =[[MassageProgramRequest alloc] init];
+	});
+	return shareManager;
+}
+
 #pragma mark - 获取网络按摩程序列表
 
 - (void)requestNetworkMassageProgramListByIndex:(NSInteger)index Size:(NSInteger)size success:(void (^)(NSArray *))success failure:(void (^)(NSArray *))failure {
@@ -53,8 +64,10 @@
 	[parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
 	[parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
 	
-	[_manager POST:url parameters:parameters timeoutInterval:_overTime success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	self.requestOperation = [_manager POST:url parameters:parameters timeoutInterval:_overTime success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //		NSLog(@"获取按摩程序列表成功:%@",responseObject);
+		
+		NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		
@@ -119,7 +132,8 @@
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
     [parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"获取用户下载的按摩程序列表成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -150,7 +164,8 @@
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:masssageIds forKey:@"massageIds"];
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"添加用户按摩程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -186,7 +201,8 @@
     [parameters setObject:uid forKey:@"uid"];
     [parameters setObject:[NSNumber numberWithInteger:index] forKey:@"index"];
     [parameters setObject:[NSNumber numberWithInteger:size] forKey:@"size"];
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"获取自定义程序列表成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -228,7 +244,7 @@
     [parameters setObject:customProgram.width forKey:@"width"];
     
     NSLog(@"请求链接：%@\n请求参数：customProgram:%@\n",url,parameters);
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"添加自定义程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -274,7 +290,7 @@
     [parameters setObject:customProgram.width forKey:@"width"];
     
     NSLog(@"请求链接：%@\n请求参数：customProgram:%@\n",url,parameters);
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        NSLog(@"编辑自定义程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -310,7 +326,8 @@
     [parameters setObject:customProgram.programId forKey:@"programId"];
     
     NSLog(@"请求链接：%@\n请求参数：customProgram:%@\n",url,parameters);
-    [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	
+    self.requestOperation = [_manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"删除自定义程序成功:%@",responseObject);
         NSNumber* code = [responseObject objectForKey:@"responseCode"];
         if ([code integerValue] == 200) {
@@ -349,10 +366,11 @@
 #pragma mark - 取消请求
 
 -(void)cancelRequest {
+	
+	if (self.requestOperation) {
+		[self.requestOperation cancel];
+	}
     [_manager.operationQueue cancelAllOperations];
 }
-
-
-
 
 @end
