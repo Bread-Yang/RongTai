@@ -53,12 +53,6 @@ static MassageProgramRequest *class = nil;
 	
 }
 
-- (id)copyWithZone:(NSZone *)zone;{
-	
-	return self; //确保copy对象也是唯一
-	
-}
-
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -94,8 +88,6 @@ static MassageProgramRequest *class = nil;
 	
 	self.requestOperation = [_manager POST:url parameters:parameters timeoutInterval:_overTime success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //		NSLog(@"获取按摩程序列表成功:%@",responseObject);
-		
-		NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		NSNumber *code = [responseObject objectForKey:@"responseCode"];
 		if ([code integerValue] == 200) {
