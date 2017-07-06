@@ -401,7 +401,7 @@ static MassageProgramRequest *class = nil;
 	if (self.requestOperation) {
 		[self.requestOperation cancel];
 	}
-    [_manager.operationQueue cancelAllOperations];
+//    [_manager.operationQueue cancelAllOperations];
 }
 
 @end

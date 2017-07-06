@@ -92,6 +92,16 @@
 		[self refreshTableViewAfterRequest:localMassageProgramArray];
 		
 	}];
+	
+	MassageProgramRequest *A = [[MassageProgramRequest alloc] init];
+	
+	NSLog(@"A:%@",A);
+	
+	MassageProgramRequest *B = [MassageProgramRequest sharedInstance];
+	
+	NSLog(@"B:%@",B);
+	
+	
 }
 
 -(void)viewWillAppear:(BOOL)animated {
